@@ -35,6 +35,8 @@ async def test_async_create_profile_inherits_sensors_from_existing_profile(hass,
     assert clone["sensors"] == {"temp": "sensor.base"}
     assert clone["resolved_targets"]["temp"]["value"] == 20
     assert clone["resolved_targets"]["temp"]["annotation"]["source_type"] == "manual"
+    assert clone["library"]["profile_id"] == clone["plant_id"]
+    assert clone["local"]["general"]["sensors"]["temp"] == "sensor.base"
 
 
 @pytest.mark.asyncio
@@ -62,6 +64,8 @@ async def test_async_create_profile_clones_sensors_from_dict_payload(hass, tmp_p
     assert clone["sensors"] == {"ec": "sensor.clone"}
     assert clone["resolved_targets"]["ec"]["value"] == 1.2
     assert clone["variables"]["ec"]["value"] == 1.2
+    assert clone["library"]["profile_id"] == clone["plant_id"]
+    assert clone["local"]["general"]["sensors"]["ec"] == "sensor.clone"
 
 
 @pytest.mark.asyncio
@@ -94,3 +98,5 @@ async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypat
     data = json.loads(saved_path.read_text(encoding="utf-8"))
     assert data["display_name"] == "Fancy Basil"
     assert data["thresholds"] == {}
+    assert data["library"]["profile_id"] == data["plant_id"]
+    assert data["local"]["general"] == {}

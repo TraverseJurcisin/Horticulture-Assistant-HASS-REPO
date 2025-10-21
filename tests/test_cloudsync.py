@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
 from typing import cast
@@ -17,6 +17,7 @@ from custom_components.horticulture_assistant.cloudsync import (
     EdgeSyncWorker,
     SyncEvent,
     VectorClock,
+    resolve_result_to_resolved_target,
 )
 
 
@@ -100,6 +101,43 @@ def test_edge_resolver_prefers_local_override(tmp_path: Path) -> None:
     assert result.overlay == 0.8
     assert result.provenance[0] == "local:cultivar-1"
     assert result.overlay_provenance == ["computed:species-1"]
+    assert result.annotations.source_type == "local_override"
+    assert result.annotations.source_ref == ["cultivar-1"]
+    assert result.annotations.method == "inheritance"
+    assert result.annotations.overlay_source_type == "computed_stats"
+    assert result.annotations.overlay_source_ref == ["species-1"]
+    assert result.annotations.overlay_method == "data_driven"
+    assert result.annotations.staleness_days == pytest.approx(1.0)
+    assert not result.annotations.is_stale
+
+    resolved_target = resolve_result_to_resolved_target(result)
+    assert resolved_target.value == 1.1
+    assert resolved_target.annotation.overlay == 0.8
+    assert resolved_target.annotation.overlay_source_type == "computed_stats"
+    assert resolved_target.annotation.extras["provenance"] == ["local:cultivar-1"]
+
+    direct_target = resolver.resolve_target(
+        "cultivar-1", "targets.vpd.vegetative", now=datetime(2025, 10, 20, tzinfo=UTC)
+    )
+    assert direct_target.value == 1.1
+    assert direct_target.annotation.overlay == 0.8
+
+
+def test_edge_resolver_marks_stale_stats(tmp_path: Path) -> None:
+    store = EdgeSyncStore(tmp_path / "sync.db")
+    species_payload = {"curated_targets": {"targets": {"vpd": {"vegetative": 0.75}}}, "parents": []}
+    store.update_cloud_cache("profile", "species-1", "tenant-1", species_payload)
+    stats_payload = {
+        "computed_at": "2024-01-01T00:00:00Z",
+        "payload": {"targets": {"vpd": {"vegetative": 0.7}}},
+    }
+    store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload)
+    resolver = EdgeResolverService(store, stats_ttl=timedelta(days=30))
+    result = resolver.resolve_field("species-1", "targets.vpd.vegetative", now=datetime(2024, 3, 15, tzinfo=UTC))
+    assert result.value == 0.75
+    assert result.overlay == 0.7
+    assert result.annotations.is_stale
+    assert result.annotations.staleness_days == pytest.approx(74.0, rel=1e-2)
 
 
 @pytest.mark.parametrize(
