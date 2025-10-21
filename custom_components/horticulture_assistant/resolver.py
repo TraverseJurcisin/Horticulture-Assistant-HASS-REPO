@@ -9,7 +9,11 @@ from homeassistant.core import HomeAssistant
 from .const import OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.options import options_profile_to_dataclass
 from .profile.schema import FieldAnnotation, ResolvedTarget
-from .profile.utils import citations_map_to_list
+from .profile.utils import (
+    citations_map_to_list,
+    determine_species_slug,
+    ensure_sections,
+)
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
@@ -283,14 +287,27 @@ async def generate_profile(
 
     opts = dict(entry.options)
     prof = dict(opts.get("profiles", {}).get(profile_id, {}))
+    library_section, local_section = ensure_sections(
+        prof,
+        plant_id=profile_id,
+        display_name=prof.get("name") or profile_id,
+    )
     sources = dict(prof.get("sources", {}))
-    species = prof.get("species")
-    slug = species.get("slug") if isinstance(species, dict) else species
+    slug = determine_species_slug(
+        library=library_section,
+        local=local_section,
+        raw=prof.get("species"),
+    )
 
     if mode == "clone":
         if not source_profile_id:
             raise ValueError("source_profile_id required for clone")
-        other = opts.get("profiles", {}).get(source_profile_id, {})
+        other = dict(opts.get("profiles", {}).get(source_profile_id, {}))
+        ensure_sections(
+            other,
+            plant_id=source_profile_id,
+            display_name=other.get("name") or source_profile_id,
+        )
         thresholds = dict(other.get("thresholds", {}))
         prof["thresholds"] = thresholds
         for key, *_ in VARIABLE_SPECS:

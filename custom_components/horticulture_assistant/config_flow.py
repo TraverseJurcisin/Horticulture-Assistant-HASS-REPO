@@ -37,6 +37,7 @@ from .const import (
 )
 from .opb_client import OpenPlantbookClient
 from .profile.compat import sync_thresholds
+from .profile.utils import determine_species_slug, ensure_sections
 from .utils import profile_generator
 from .utils.json_io import load_json, save_json
 from .utils.plant_registry import register_plant
@@ -924,11 +925,17 @@ class OptionsFlow(config_entries.OptionsFlow):
         )
 
     def _profiles(self):
-        return dict(self._entry.options.get("profiles", {}))
+        profiles: dict[str, dict[str, Any]] = {}
+        for pid, payload in (self._entry.options.get("profiles", {}) or {}).items():
+            copy = dict(payload)
+            ensure_sections(copy, plant_id=pid, display_name=copy.get("name") or pid)
+            profiles[pid] = copy
+        return profiles
 
     def _set_source(self, src: dict):
         opts = dict(self._entry.options)
         prof = dict(opts.get("profiles", {}).get(self._pid, {}))
+        ensure_sections(prof, plant_id=self._pid, display_name=prof.get("name") or self._pid)
         sources = dict(prof.get("sources", {}))
         sources[self._var] = src
         prof["sources"] = sources
@@ -943,13 +950,26 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         opts = dict(self._entry.options)
         prof = dict(opts.get("profiles", {}).get(self._pid, {}))
+        library_section, local_section = ensure_sections(
+            prof,
+            plant_id=self._pid,
+            display_name=prof.get("name") or self._pid,
+        )
         sources = dict(prof.get("sources", {}))
-        species = prof.get("species")
-        slug = species.get("slug") if isinstance(species, dict) else species
+        slug = determine_species_slug(
+            library=library_section,
+            local=local_section,
+            raw=prof.get("species"),
+        )
         if mode == "clone":
             if not source_profile_id:
                 raise ValueError("source_profile_id required for clone")
-            other = opts.get("profiles", {}).get(source_profile_id, {})
+            other = dict(opts.get("profiles", {}).get(source_profile_id, {}))
+            ensure_sections(
+                other,
+                plant_id=source_profile_id,
+                display_name=other.get("name") or source_profile_id,
+            )
             prof["thresholds"] = dict(other.get("thresholds", {}))
             if isinstance(other.get("resolved_targets"), dict):
                 prof["resolved_targets"] = deepcopy(other.get("resolved_targets"))

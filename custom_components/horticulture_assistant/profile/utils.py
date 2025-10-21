@@ -4,7 +4,12 @@ from collections.abc import Mapping, MutableMapping
 from typing import Any
 
 from ..const import CONF_PROFILE_SCOPE
-from .schema import Citation, PlantProfile, ProfileLibrarySection, ProfileLocalSection
+from .schema import (
+    Citation,
+    PlantProfile,
+    ProfileLibrarySection,
+    ProfileLocalSection,
+)
 
 
 def _ensure_string(value: Any, fallback: str) -> str:
@@ -122,8 +127,99 @@ def citations_map_to_list(citations_map: Mapping[str, Any]) -> list[Citation]:
     return items
 
 
+def _coerce_mapping(value: Any) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return value
+    if isinstance(value, Mapping):
+        return {str(key): item for key, item in value.items()}
+    return {}
+
+
+def _extract_species_candidate(value: Any) -> str | None:
+    if value is None:
+        return None
+    if isinstance(value, str) and value:
+        return value
+    if isinstance(value, Mapping):
+        mapping = _coerce_mapping(value)
+        for key in (
+            "slug",
+            "scientific_name",
+            "species",
+            "name",
+            "id",
+            "identifier",
+            "value",
+        ):
+            candidate = mapping.get(key)
+            if isinstance(candidate, str) and candidate:
+                return candidate
+        # Fall back to nested ``species`` payloads commonly shaped as
+        # ``{"taxonomy": {"species": "..."}}``.
+        taxonomy = mapping.get("taxonomy")
+        if isinstance(taxonomy, Mapping):
+            nested = _extract_species_candidate(taxonomy)
+            if nested:
+                return nested
+    return None
+
+
+def determine_species_slug(
+    *,
+    library: ProfileLibrarySection | None = None,
+    local: ProfileLocalSection | None = None,
+    raw: Any = None,
+) -> str | None:
+    """Return the best species identifier for an options payload."""
+
+    for candidate in (
+        getattr(local, "species", None),
+        raw,
+    ):
+        slug = _extract_species_candidate(candidate)
+        if slug:
+            return slug
+
+    if library is not None:
+        identity = _coerce_mapping(library.identity)
+        for key in ("slug", "scientific_name", "species", "name"):
+            slug = _extract_species_candidate(identity.get(key))
+            if slug:
+                return slug
+        taxonomy = _coerce_mapping(library.taxonomy)
+        for key in ("slug", "scientific_name", "species", "binomial"):
+            slug = _extract_species_candidate(taxonomy.get(key))
+            if slug:
+                return slug
+    return None
+
+
+def sync_general_section(
+    payload: MutableMapping[str, Any],
+    general: Mapping[str, Any],
+) -> None:
+    """Persist ``general`` metadata while mirroring into the local section."""
+
+    general_map = _coerce_mapping(general)
+    payload["general"] = general_map
+
+    local_payload = payload.get("local")
+    if isinstance(local_payload, MutableMapping):
+        local_map = local_payload
+    else:
+        local_map = _coerce_mapping(local_payload)
+
+    existing_general = _coerce_mapping(local_map.get("general"))
+    merged_general = dict(existing_general)
+    merged_general.update(general_map)
+    local_map["general"] = merged_general
+    payload["local"] = local_map
+
+
 __all__ = [
     "citations_map_to_list",
     "ensure_sections",
     "normalise_profile_payload",
+    "determine_species_slug",
+    "sync_general_section",
 ]

@@ -26,7 +26,9 @@ from .const import (
     PROFILE_SCOPE_CHOICES,
     PROFILE_SCOPE_DEFAULT,
 )
+from .profile.options import options_profile_to_dataclass
 from .profile.schema import PlantProfile
+from .profile.utils import ensure_sections, sync_general_section
 
 STORAGE_VERSION = 2
 STORAGE_KEY = "horticulture_assistant_profiles"
@@ -54,46 +56,33 @@ class ProfileRegistry:
         if isinstance(data, list):  # pragma: no cover - legacy format
             data = {"profiles": {p["plant_id"]: p for p in data if "plant_id" in p}}
 
-        profiles = data.get("profiles", {})
-        self._profiles = {pid: PlantProfile.from_json(p) for pid, p in profiles.items()}
+        stored_profiles = data.get("profiles", {})
+        profiles: dict[str, PlantProfile] = {}
 
-        # Merge in any profiles referenced only in config entry options.
-        for pid, data in self.entry.options.get(CONF_PROFILES, {}).items():
-            prof = self._profiles.get(pid)
-            scope = data.get(CONF_PROFILE_SCOPE, data.get("scope"))
-            if prof:
-                prof.display_name = data.get("name", prof.display_name)
-                if sensors := data.get("sensors"):
-                    if isinstance(sensors, Mapping):
-                        merged: dict[str, Any] = {}
-                        existing = prof.general.get("sensors")
-                        if isinstance(existing, Mapping):
-                            merged.update(existing)
-                        merged.update(dict(sensors))
-                        prof.general["sensors"] = merged
-                    elif "sensors" not in prof.general:
-                        prof.general["sensors"] = sensors
-                if scope:
-                    prof.general[CONF_PROFILE_SCOPE] = scope
-                elif CONF_PROFILE_SCOPE not in prof.general:
-                    prof.general[CONF_PROFILE_SCOPE] = PROFILE_SCOPE_DEFAULT
+        options_profiles = self.entry.options.get(CONF_PROFILES, {}) or {}
+        for pid, payload in options_profiles.items():
+            display_name = payload.get("name") or pid
+            try:
+                profile = options_profile_to_dataclass(
+                    pid,
+                    payload,
+                    display_name=display_name,
+                )
+            except Exception:
+                copy = dict(payload)
+                ensure_sections(copy, plant_id=pid, display_name=display_name)
+                profile = PlantProfile.from_json(copy)
+            profiles[pid] = profile
+
+        for pid, payload in stored_profiles.items():
+            if pid in profiles:
                 continue
-            prof_obj = PlantProfile(
-                plant_id=pid,
-                display_name=data.get("name", pid),
-                species=data.get("species"),
-            )
-            if sensors := data.get("sensors"):
-                if isinstance(sensors, Mapping):
-                    prof_obj.general["sensors"] = dict(sensors)
-                else:
-                    prof_obj.general["sensors"] = sensors
-            if scope:
-                prof_obj.general[CONF_PROFILE_SCOPE] = scope
-            self._profiles[pid] = prof_obj
+            profiles[pid] = PlantProfile.from_json(payload)
 
-        for profile in self._profiles.values():
+        for profile in profiles.values():
             profile.general.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
+
+        self._profiles = profiles
 
     async def async_save(self) -> None:
         await self._store.async_save({"profiles": {pid: prof.to_json() for pid, prof in self._profiles.items()}})
@@ -131,10 +120,19 @@ class ProfileRegistry:
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
-        sensors = dict(profile.get("sensors", {}))
+        prof_payload = dict(profile)
+        ensure_sections(
+            prof_payload,
+            plant_id=profile_id,
+            display_name=prof_payload.get("name") or profile_id,
+        )
+        general = dict(prof_payload.get("general", {})) if isinstance(prof_payload.get("general"), Mapping) else {}
+        sensors = dict(general.get("sensors", {}))
         sensors[measurement] = entity_id
-        profile["sensors"] = sensors
-        profiles[profile_id] = profile
+        general["sensors"] = sensors
+        sync_general_section(prof_payload, general)
+        prof_payload["sensors"] = dict(sensors)
+        profiles[profile_id] = prof_payload
         new_opts = dict(self.entry.options)
         new_opts[CONF_PROFILES] = profiles
         # Update config entry and keep local copy in sync for tests.
@@ -143,7 +141,15 @@ class ProfileRegistry:
 
         # Mirror changes into in-memory structure if profile exists.
         if prof_obj := self._profiles.get(profile_id):
-            prof_obj.general.setdefault("sensors", {})[measurement] = entity_id
+            general_map = dict(prof_obj.general)
+            current = general_map.get("sensors")
+            if isinstance(current, Mapping):
+                merged = dict(current)
+            else:
+                merged = {}
+            merged[measurement] = entity_id
+            general_map["sensors"] = merged
+            prof_obj.general = general_map
         await self.async_save()
 
     async def async_refresh_species(self, profile_id: str) -> None:
@@ -199,9 +205,18 @@ class ProfileRegistry:
         resolved_scope = scope or PROFILE_SCOPE_DEFAULT
         if resolved_scope not in PROFILE_SCOPE_CHOICES:
             raise ValueError(f"invalid scope {resolved_scope}")
-        new_profile[CONF_PROFILE_SCOPE] = resolved_scope
-        new_profile.pop("scope", None)
 
+        ensure_sections(
+            new_profile,
+            plant_id=candidate,
+            display_name=name,
+        )
+        general = dict(new_profile.get("general", {})) if isinstance(new_profile.get("general"), Mapping) else {}
+        sensors_map = dict(general.get("sensors", {}))
+        general[CONF_PROFILE_SCOPE] = resolved_scope
+        sync_general_section(new_profile, general)
+        new_profile["sensors"] = sensors_map
+        new_profile.pop("scope", None)
         new_profile["plant_id"] = candidate
         profiles[candidate] = new_profile
         new_opts = dict(self.entry.options)
@@ -209,14 +224,11 @@ class ProfileRegistry:
         self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
         self.entry.options = new_opts
 
-        prof_obj = PlantProfile(
-            plant_id=candidate,
+        prof_obj = options_profile_to_dataclass(
+            candidate,
+            new_profile,
             display_name=name,
-            species=new_profile.get("species"),
         )
-        if sensors := new_profile.get("sensors"):
-            prof_obj.general.setdefault("sensors", sensors)
-        prof_obj.general[CONF_PROFILE_SCOPE] = resolved_scope
         self._profiles[candidate] = prof_obj
         await self.async_save()
         return candidate
@@ -247,22 +259,28 @@ class ProfileRegistry:
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
-        updates = dict(sensors)
-        existing = profile.get("sensors")
-        if isinstance(existing, Mapping):
-            merged: dict[str, Any] = dict(existing)
-            merged.update(updates)
-        else:
-            merged = updates
-        prof = dict(profile)
-        prof["sensors"] = merged
-        profiles[profile_id] = prof
+        prof_payload = dict(profile)
+        ensure_sections(
+            prof_payload,
+            plant_id=profile_id,
+            display_name=prof_payload.get("name") or profile_id,
+        )
+        general = dict(prof_payload.get("general", {})) if isinstance(prof_payload.get("general"), Mapping) else {}
+        merged = dict(general.get("sensors", {}))
+        for key, value in sensors.items():
+            merged[str(key)] = value
+        general["sensors"] = merged
+        sync_general_section(prof_payload, general)
+        prof_payload["sensors"] = dict(merged)
+        profiles[profile_id] = prof_payload
         new_opts = dict(self.entry.options)
         new_opts[CONF_PROFILES] = profiles
         self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
         self.entry.options = new_opts
         if prof_obj := self._profiles.get(profile_id):
-            prof_obj.general["sensors"] = dict(merged)
+            general_map = dict(prof_obj.general)
+            general_map["sensors"] = dict(merged)
+            prof_obj.general = general_map
         await self.async_save()
 
     async def async_import_template(self, template: str, name: str | None = None) -> str:
