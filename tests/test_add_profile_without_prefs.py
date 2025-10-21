@@ -29,3 +29,4 @@ async def test_create_profile_without_prefs(hass, tmp_path: Path):
     profile_path = next(profiles_dir.glob("*.json"))
     data = json.loads(profile_path.read_text(encoding="utf-8"))
     assert data["thresholds"] == {}
+    assert data["resolved_targets"] == {}

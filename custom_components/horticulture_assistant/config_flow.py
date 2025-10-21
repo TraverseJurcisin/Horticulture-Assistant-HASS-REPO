@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -624,25 +625,16 @@ class OptionsFlow(config_entries.OptionsFlow):
                 if new_profile is not None:
                     profile_json = new_profile.to_json()
                     sensors = profile_json.get("general", {}).get("sensors", {})
-                    resolved = profile_json.get("resolved_targets") or {}
-                    thresholds: dict[str, Any] = {}
-                    if isinstance(resolved, dict):
-                        for key, value in resolved.items():
-                            if isinstance(value, dict):
-                                thresholds[key] = value.get("value")
-                            else:
-                                thresholds[key] = value
-                    else:
-                        for key, value in (profile_json.get("variables") or {}).items():
-                            if isinstance(value, dict):
-                                thresholds[key] = value.get("value")
-                            else:
-                                thresholds[key] = value
-                    clone_payload = {
-                        "thresholds": thresholds,
-                        "template": profile_json.get("species"),
-                        CONF_PROFILE_SCOPE: scope,
-                    }
+                    clone_payload = deepcopy(profile_json)
+                    general = clone_payload.setdefault("general", {})
+                    if isinstance(sensors, dict):
+                        general.setdefault("sensors", dict(sensors))
+                        clone_payload["sensors"] = dict(sensors)
+                    if scope is not None:
+                        general[CONF_PROFILE_SCOPE] = scope
+                    elif CONF_PROFILE_SCOPE not in general:
+                        general[CONF_PROFILE_SCOPE] = PROFILE_SCOPE_DEFAULT
+                    clone_payload["name"] = profile_json.get("display_name", user_input["name"])
                     await store.async_create_profile(
                         name=profile_json.get("display_name", user_input["name"]),
                         sensors=sensors,
