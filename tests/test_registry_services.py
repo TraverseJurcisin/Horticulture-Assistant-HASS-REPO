@@ -223,12 +223,15 @@ async def test_replace_sensor_migrates_legacy_options(hass, tmp_path):
         mock_local.return_value.async_config_entry_first_refresh = AsyncMock()
         await hca.async_setup_entry(hass, entry)
 
+    profiles = entry.options["profiles"]
+    pid = next(iter(profiles))
+    assert profiles[pid]["plant_id"] == pid
+
     reg = er.async_get(hass)
     reg.async_get_or_create("sensor", "test", "sensor_old", suggested_object_id="old", original_device_class="moisture")
     reg.async_get_or_create("sensor", "test", "sensor_new", suggested_object_id="new", original_device_class="moisture")
     hass.states.async_set("sensor.old", 1)
     hass.states.async_set("sensor.new", 2)
-    pid = next(iter(entry.options["profiles"].keys()))
     await hass.services.async_call(
         DOMAIN,
         "replace_sensor",
