@@ -27,7 +27,7 @@ class FieldMeta:
     clock: VectorClock
     ts: datetime
 
-    def dominates(self, other: "FieldMeta") -> bool:
+    def dominates(self, other: FieldMeta) -> bool:
         cmp_result = self.clock.compare(other.clock)
         if cmp_result > 0:
             return True
@@ -39,7 +39,7 @@ class FieldMeta:
         return {"clock": self.clock.to_dict(), "ts": self.ts.isoformat()}
 
     @classmethod
-    def from_dict(cls, payload: Mapping[str, Any]) -> "FieldMeta":
+    def from_dict(cls, payload: Mapping[str, Any]) -> FieldMeta:
         clock = VectorClock.from_dict(payload["clock"])
         ts_raw = str(payload["ts"])
         ts = datetime.fromisoformat(ts_raw.replace("Z", "+00:00"))
@@ -118,16 +118,13 @@ class ConflictResolver:
 
     def _apply_or_set(self, current: Any, value: Any) -> set[Any]:
         result: set[Any]
-        if isinstance(current, Iterable) and not isinstance(current, (str, bytes, dict)):
+        if isinstance(current, Iterable) and not isinstance(current, str | bytes | dict):
             result = set(current)
         else:
             result = set()
-        if isinstance(value, Mapping):
-            adds = value.get("add", [])
-            removes = value.get("remove", [])
-        else:
-            adds = value or []
-            removes = []
+        value_is_mapping = isinstance(value, Mapping)
+        adds = value.get("add", []) if value_is_mapping else value or []
+        removes = value.get("remove", []) if value_is_mapping else []
         for item in adds:
             result.add(item)
         for item in removes:
@@ -136,14 +133,11 @@ class ConflictResolver:
 
     def _apply_mv_register(self, current: Any, value: Any) -> list[Any]:
         seen: list[Any] = []
-        if isinstance(current, Iterable) and not isinstance(current, (str, bytes, dict)):
+        if isinstance(current, Iterable) and not isinstance(current, str | bytes | dict):
             for item in current:
                 if item not in seen:
                     seen.append(item)
-        if isinstance(value, Mapping):
-            new_values = value.get("values", [])
-        else:
-            new_values = value or []
+        new_values = value.get("values", []) if isinstance(value, Mapping) else value or []
         for item in new_values:
             if item not in seen:
                 seen.append(item)
@@ -154,4 +148,3 @@ class ConflictResolver:
         if META_KEY in state:
             copy[META_KEY] = dict(state[META_KEY])
         return copy
-

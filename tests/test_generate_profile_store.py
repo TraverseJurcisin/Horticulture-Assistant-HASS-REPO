@@ -187,9 +187,7 @@ async def test_async_save_profile_accepts_dataclass(monkeypatch):
     profile = PlantProfile(
         plant_id="p1",
         display_name="Plant",
-        resolved_targets={
-            "temp": ResolvedTarget(value=1, annotation=FieldAnnotation(source_type="manual"))
-        },
+        resolved_targets={"temp": ResolvedTarget(value=1, annotation=FieldAnnotation(source_type="manual"))},
     )
 
     await async_save_profile(None, profile)

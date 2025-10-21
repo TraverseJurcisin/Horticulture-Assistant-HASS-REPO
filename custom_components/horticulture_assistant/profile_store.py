@@ -64,7 +64,9 @@ class ProfileStore:
             payload = self._profile_to_payload(profile_obj)
             target_name = name or profile_obj.display_name or profile_obj.plant_id
         else:
-            fallback = name or profile.get("display_name") or profile.get("name") or profile.get("plant_id") or "profile"
+            fallback = (
+                name or profile.get("display_name") or profile.get("name") or profile.get("plant_id") or "profile"
+            )
             payload = self._normalise_payload(profile, fallback_name=fallback)
             target_name = fallback
         await self._atomic_write(self._path_for(target_name), payload)

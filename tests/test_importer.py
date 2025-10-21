@@ -20,10 +20,7 @@ async def test_async_import_profiles_overwrites(tmp_path, monkeypatch, hass):
     }
 
     async def fake_save_profile(_hass, profile):
-        if isinstance(profile, PlantProfile):
-            payload = profile.to_json()
-        else:
-            payload = profile
+        payload = profile.to_json() if isinstance(profile, PlantProfile) else profile
         saved[payload["plant_id"]] = payload
 
     monkeypatch.setattr(
@@ -54,10 +51,7 @@ async def test_async_import_profiles_supports_list(tmp_path, monkeypatch, hass):
     saved: list[dict] = []
 
     async def fake_save_profile(_hass, profile):
-        if isinstance(profile, PlantProfile):
-            payload = profile.to_json()
-        else:
-            payload = profile
+        payload = profile.to_json() if isinstance(profile, PlantProfile) else profile
         saved.append(payload)
 
     monkeypatch.setattr(

@@ -5,8 +5,8 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
-from .schema import PlantProfile
 from .options import options_profile_to_dataclass
+from .schema import PlantProfile
 from .utils import normalise_profile_payload
 
 STORE_VERSION = 1

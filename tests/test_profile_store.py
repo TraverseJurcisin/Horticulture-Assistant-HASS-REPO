@@ -1,5 +1,4 @@
 import json
-
 import types
 from typing import Any
 
@@ -13,10 +12,10 @@ from custom_components.horticulture_assistant.profile.schema import (
     ProfileLocalSection,
     ResolvedTarget,
 )
-from custom_components.horticulture_assistant.profile_store import ProfileStore
 from custom_components.horticulture_assistant.profile.store import (
     async_save_profile_from_options,
 )
+from custom_components.horticulture_assistant.profile_store import ProfileStore
 
 
 @pytest.mark.asyncio
@@ -30,9 +29,7 @@ async def test_async_create_profile_inherits_sensors_from_existing_profile(hass,
     base_profile = PlantProfile(
         plant_id="base_profile",
         display_name="Base Profile",
-        resolved_targets={
-            "temp": ResolvedTarget(value=20, annotation=FieldAnnotation(source_type="manual"))
-        },
+        resolved_targets={"temp": ResolvedTarget(value=20, annotation=FieldAnnotation(source_type="manual"))},
         general={"sensors": {"temp": "sensor.base"}},
     )
     await store.async_save(base_profile, name="base_profile")
@@ -112,9 +109,7 @@ async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypat
 
 
 @pytest.mark.asyncio
-async def test_async_save_profile_from_options_preserves_local_sections(
-    hass, tmp_path, monkeypatch
-) -> None:
+async def test_async_save_profile_from_options_preserves_local_sections(hass, tmp_path, monkeypatch) -> None:
     """Saving from options should materialise library/local sections."""
 
     monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))

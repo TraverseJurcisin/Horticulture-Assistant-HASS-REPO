@@ -143,10 +143,7 @@ class ProfileRegistry:
         if prof_obj := self._profiles.get(profile_id):
             general_map = dict(prof_obj.general)
             current = general_map.get("sensors")
-            if isinstance(current, Mapping):
-                merged = dict(current)
-            else:
-                merged = {}
+            merged = dict(current) if isinstance(current, Mapping) else {}
             merged[measurement] = entity_id
             general_map["sensors"] = merged
             prof_obj.general = general_map

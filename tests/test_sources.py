@@ -114,7 +114,8 @@ async def test_opb_source_maps_field():
     ):
         await PreferenceResolver(hass).resolve_profile(entry, "p1")
     assert entry.options["profiles"]["p1"]["thresholds"]["temp_c_min"] == 3
-    assert entry.options["profiles"]["p1"]["resolved_targets"]["temp_c_min"]["annotation"]["source_type"] == "openplantbook"
+    annotation = entry.options["profiles"]["p1"]["resolved_targets"]["temp_c_min"]["annotation"]
+    assert annotation["source_type"] == "openplantbook"
     local = entry.options["profiles"]["p1"]["local"]
     assert local["citations"][0]["source"] == "openplantbook"
     assert local["resolver_state"]["sources"]["temp_c_min"]["mode"] == "opb"
@@ -192,7 +193,9 @@ async def test_options_flow_per_variable_steps():
     await flow.async_step_src_manual({"value": 2.0})
     await flow.async_step_apply({"resolve_now": False})
     assert entry.options["profiles"]["p1"]["sources"]["temp_c_min"]["mode"] == "manual"
-    assert "resolved_targets" not in entry.options["profiles"]["p1"] or "temp_c_min" not in entry.options["profiles"]["p1"].get("resolved_targets", {})
+    profile_options = entry.options["profiles"]["p1"]
+    resolved_targets = profile_options.get("resolved_targets", {})
+    assert "resolved_targets" not in profile_options or "temp_c_min" not in resolved_targets
 
 
 @pytest.mark.asyncio

@@ -31,10 +31,7 @@ async def async_export_profiles(hass: HomeAssistant, path: str | Path) -> Path:
     import json
 
     data: dict[str, Any] = await async_load_all(hass)
-    normalised = {
-        pid: _normalise_payload(payload, pid)
-        for pid, payload in data.items()
-    }
+    normalised = {pid: _normalise_payload(payload, pid) for pid, payload in data.items()}
     out_path = Path(hass.config.path(str(path)))
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(normalised, indent=2, sort_keys=True), encoding="utf-8")

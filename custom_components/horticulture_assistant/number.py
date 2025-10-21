@@ -9,10 +9,10 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import CATEGORY_CONTROL, DOMAIN
+from .entity_base import HorticultureBaseEntity
 from .profile.citations import manual_note
 from .profile.compat import get_resolved_target, set_resolved_target
 from .profile.schema import FieldAnnotation, ResolvedTarget
-from .entity_base import HorticultureBaseEntity
 from .utils.entry_helpers import get_entry_data, store_entry_data
 
 THRESHOLD_SPECS = [

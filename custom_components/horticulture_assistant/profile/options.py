@@ -11,9 +11,10 @@ from .schema import (
     ComputedStatSnapshot,
     FieldAnnotation,
     PlantProfile,
+    ProfileLibrarySection,
+    ProfileLocalSection,
     ResolvedTarget,
 )
-from .schema import ProfileLibrarySection, ProfileLocalSection
 from .utils import ensure_sections
 
 
@@ -26,7 +27,7 @@ def _as_dict(value: Any) -> dict[str, Any]:
 
 
 def _coerce_str_list(value: Any) -> list[str]:
-    if isinstance(value, (list, tuple, set)):
+    if isinstance(value, list | tuple | set):
         return [str(item) for item in value]
     if value is None:
         return []
@@ -182,11 +183,7 @@ def options_profile_to_dataclass(
         if isinstance(item, Mapping)
     ]
 
-    profile_citations = [
-        Citation(**item)
-        for item in options.get("profile_citations", [])
-        if isinstance(item, Mapping)
-    ]
+    profile_citations = [Citation(**item) for item in options.get("profile_citations", []) if isinstance(item, Mapping)]
     local_citations_payload = local_payload.get("citations")
     if isinstance(local_citations_payload, list):
         for item in local_citations_payload:
@@ -202,15 +199,9 @@ def options_profile_to_dataclass(
         tags = _coerce_str_list(library_payload.get("tags"))
 
     profile_type = str(library_payload.get("profile_type") or options.get("profile_type", "line"))
-    species = (
-        local_payload.get("species")
-        if local_payload.get("species") is not None
-        else options.get("species")
-    )
+    species = local_payload.get("species") if local_payload.get("species") is not None else options.get("species")
     tenant_id = (
-        library_payload.get("tenant_id")
-        if library_payload.get("tenant_id") is not None
-        else options.get("tenant_id")
+        library_payload.get("tenant_id") if library_payload.get("tenant_id") is not None else options.get("tenant_id")
     )
 
     identity = _merge_dict(options.get("identity"), library_payload.get("identity"))
@@ -267,7 +258,7 @@ def options_profile_to_dataclass(
 
     return profile
 
+
 __all__ = [
     "options_profile_to_dataclass",
 ]
-

@@ -35,10 +35,7 @@ def ensure_sections(
     data.setdefault("display_name", display_name or fallback_id)
 
     general = data.get("general")
-    if isinstance(general, Mapping):
-        general_dict = dict(general)
-    else:
-        general_dict = {}
+    general_dict = dict(general) if isinstance(general, Mapping) else {}
 
     sensors = data.get("sensors")
     if isinstance(sensors, Mapping):
@@ -80,10 +77,7 @@ def normalise_profile_payload(
     data.setdefault("display_name", display_name or fallback_id)
 
     general = data.get("general")
-    if isinstance(general, Mapping):
-        general_dict = dict(general)
-    else:
-        general_dict = {}
+    general_dict = dict(general) if isinstance(general, Mapping) else {}
 
     sensors = data.get("sensors")
     if isinstance(sensors, Mapping):
@@ -204,10 +198,7 @@ def sync_general_section(
     payload["general"] = general_map
 
     local_payload = payload.get("local")
-    if isinstance(local_payload, MutableMapping):
-        local_map = local_payload
-    else:
-        local_map = _coerce_mapping(local_payload)
+    local_map = local_payload if isinstance(local_payload, MutableMapping) else _coerce_mapping(local_payload)
 
     existing_general = _coerce_mapping(local_map.get("general"))
     merged_general = dict(existing_general)

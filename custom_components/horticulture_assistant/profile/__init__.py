@@ -1,5 +1,6 @@
 """Profile utilities for Horticulture Assistant."""
 
+from .options import options_profile_to_dataclass
 from .schema import (
     Citation,
     ComputedStatSnapshot,
@@ -10,7 +11,6 @@ from .schema import (
     ProfileLocalSection,
     ResolvedTarget,
 )
-from .options import options_profile_to_dataclass
 from .utils import (
     citations_map_to_list,
     determine_species_slug,

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import asdict, dataclass, field
-from typing import Any, Mapping
+from typing import Any
 
 
 def _as_dict(value: Any) -> dict[str, Any]:
@@ -10,6 +11,7 @@ def _as_dict(value: Any) -> dict[str, Any]:
     if isinstance(value, Mapping):
         return {str(key): item for key, item in value.items()}
     return {}
+
 
 SourceType = str  # manual|clone|openplantbook|ai|curated|computed
 
@@ -69,15 +71,12 @@ class FieldAnnotation:
         return payload
 
     @staticmethod
-    def from_json(data: dict[str, Any]) -> "FieldAnnotation":
+    def from_json(data: dict[str, Any]) -> FieldAnnotation:
         source_type = data.get("source_type") or data.get("source") or "unknown"
         extras = data.get("extras") or {}
         overlay_provenance = data.get("overlay_provenance") or []
         source_ref_raw = data.get("source_ref") or []
-        if isinstance(source_ref_raw, str):
-            source_ref = [source_ref_raw]
-        else:
-            source_ref = [str(item) for item in source_ref_raw]
+        source_ref = [source_ref_raw] if isinstance(source_ref_raw, str) else [str(item) for item in source_ref_raw]
         return FieldAnnotation(
             source_type=source_type,
             source_ref=source_ref,
@@ -88,9 +87,7 @@ class FieldAnnotation:
             overlay=data.get("overlay"),
             overlay_provenance=[str(item) for item in overlay_provenance],
             overlay_source_type=data.get("overlay_source_type"),
-            overlay_source_ref=[
-                str(item) for item in (data.get("overlay_source_ref") or [])
-            ],
+            overlay_source_ref=[str(item) for item in (data.get("overlay_source_ref") or [])],
             overlay_method=data.get("overlay_method"),
             extras=dict(extras) if isinstance(extras, dict) else {},
         )
@@ -143,17 +140,11 @@ class ProfileLibrarySection:
         return payload
 
     @staticmethod
-    def from_json(data: Mapping[str, Any], *, fallback_id: str) -> "ProfileLibrarySection":
+    def from_json(data: Mapping[str, Any], *, fallback_id: str) -> ProfileLibrarySection:
         parents_raw = data.get("parents") or []
-        if isinstance(parents_raw, str):
-            parents = [parents_raw]
-        else:
-            parents = [str(item) for item in parents_raw]
+        parents = [parents_raw] if isinstance(parents_raw, str) else [str(item) for item in parents_raw]
         tags_raw = data.get("tags") or []
-        if isinstance(tags_raw, str):
-            tags = [tags_raw]
-        else:
-            tags = [str(item) for item in tags_raw]
+        tags = [tags_raw] if isinstance(tags_raw, str) else [str(item) for item in tags_raw]
         return ProfileLibrarySection(
             profile_id=str(data.get("profile_id") or fallback_id),
             profile_type=str(data.get("profile_type", "line")),
@@ -208,18 +199,12 @@ class ProfileLocalSection:
         return payload
 
     @staticmethod
-    def from_json(data: Mapping[str, Any]) -> "ProfileLocalSection":
-        citations = [
-            Citation(**item)
-            for item in data.get("citations", []) or []
-            if isinstance(item, Mapping)
-        ]
+    def from_json(data: Mapping[str, Any]) -> ProfileLocalSection:
+        citations = [Citation(**item) for item in data.get("citations", []) or [] if isinstance(item, Mapping)]
         return ProfileLocalSection(
             species=data.get("species"),
             general=_as_dict(data.get("general")),
-            local_overrides=_as_dict(
-                data.get("local_overrides") or data.get("overrides")
-            ),
+            local_overrides=_as_dict(data.get("local_overrides") or data.get("overrides")),
             resolver_state=_as_dict(data.get("resolver_state")),
             citations=citations,
             last_resolved=data.get("last_resolved"),
@@ -257,7 +242,7 @@ class ResolvedTarget:
         return payload
 
     @staticmethod
-    def from_json(data: dict[str, Any]) -> "ResolvedTarget":
+    def from_json(data: dict[str, Any]) -> ResolvedTarget:
         if "annotation" in data and isinstance(data["annotation"], dict):
             annotation = FieldAnnotation.from_json(data["annotation"])
         else:
@@ -296,7 +281,7 @@ class ProfileContribution:
         return payload
 
     @staticmethod
-    def from_json(data: dict[str, Any]) -> "ProfileContribution":
+    def from_json(data: dict[str, Any]) -> ProfileContribution:
         return ProfileContribution(
             profile_id=str(data.get("profile_id", "")),
             child_id=str(data.get("child_id", "")),
@@ -329,7 +314,7 @@ class ComputedStatSnapshot:
         return payload
 
     @staticmethod
-    def from_json(data: dict[str, Any]) -> "ComputedStatSnapshot":
+    def from_json(data: dict[str, Any]) -> ComputedStatSnapshot:
         contributions = [
             ProfileContribution.from_json(item)
             for item in data.get("contributions", []) or []
@@ -384,12 +369,8 @@ class PlantProfile:
         return {key: target.value for key, target in self.resolved_targets.items()}
 
     def to_json(self) -> dict[str, Any]:
-        resolved_payload = {
-            key: value.to_json() for key, value in self.resolved_targets.items()
-        }
-        variables_payload = {
-            key: value.to_legacy() for key, value in self.resolved_targets.items()
-        }
+        resolved_payload = {key: value.to_json() for key, value in self.resolved_targets.items()}
+        variables_payload = {key: value.to_legacy() for key, value in self.resolved_targets.items()}
         thresholds_payload = self.resolved_values()
 
         library_section = self.library_section()
@@ -442,10 +423,7 @@ class PlantProfile:
         """Return a lightweight summary of the profile."""
 
         sensors = self.general.get("sensors")
-        if isinstance(sensors, dict):
-            sensor_summary = dict(sensors)
-        else:
-            sensor_summary = {}
+        sensor_summary = dict(sensors) if isinstance(sensors, dict) else {}
         return {
             "plant_id": self.plant_id,
             "name": self.display_name,
@@ -460,7 +438,7 @@ class PlantProfile:
         }
 
     @staticmethod
-    def from_json(data: dict[str, Any]) -> "PlantProfile":
+    def from_json(data: dict[str, Any]) -> PlantProfile:
         """Create a PlantProfile from a dictionary."""
 
         plant_id = str(data.get("plant_id"))
@@ -493,7 +471,9 @@ class PlantProfile:
                 source_type=value.get("source") or "unknown",
             )
             citations = [Citation(**cit) for cit in value.get("citations", []) if isinstance(cit, dict)]
-            resolved_targets[str(key)] = ResolvedTarget(value=value.get("value"), annotation=annotation, citations=citations)
+            resolved_targets[str(key)] = ResolvedTarget(
+                value=value.get("value"), annotation=annotation, citations=citations
+            )
 
         legacy_thresholds = data.get("thresholds") or {}
         if isinstance(legacy_thresholds, dict):
@@ -504,14 +484,8 @@ class PlantProfile:
                 annotation = FieldAnnotation(source_type="unknown")
                 resolved_targets[key_str] = ResolvedTarget(value=value, annotation=annotation, citations=[])
 
-        top_level_citations = [
-            Citation(**cit) for cit in data.get("citations", []) if isinstance(cit, dict)
-        ]
-        citations = (
-            local_section.citations
-            if local_section and local_section.citations
-            else top_level_citations
-        )
+        top_level_citations = [Citation(**cit) for cit in data.get("citations", []) if isinstance(cit, dict)]
+        citations = local_section.citations if local_section and local_section.citations else top_level_citations
         computed_stats = [
             ComputedStatSnapshot.from_json(item)
             for item in data.get("computed_stats", []) or []
@@ -535,16 +509,10 @@ class PlantProfile:
             library_updated_at = library_section.updated_at
         else:
             parents_raw = data.get("parents") or []
-            if isinstance(parents_raw, str):
-                parents = [parents_raw]
-            else:
-                parents = [str(parent) for parent in parents_raw]
+            parents = [parents_raw] if isinstance(parents_raw, str) else [str(parent) for parent in parents_raw]
 
             tags_raw = data.get("tags") or []
-            if isinstance(tags_raw, str):
-                tags = [tags_raw]
-            else:
-                tags = [str(tag) for tag in tags_raw]
+            tags = [tags_raw] if isinstance(tags_raw, str) else [str(tag) for tag in tags_raw]
 
             identity = _as_dict(data.get("identity"))
             taxonomy = _as_dict(data.get("taxonomy"))
@@ -571,9 +539,7 @@ class PlantProfile:
         else:
             species = data.get("species")
             general = _as_dict(data.get("general"))
-            local_overrides = _as_dict(
-                data.get("local_overrides") or data.get("overrides")
-            )
+            local_overrides = _as_dict(data.get("local_overrides") or data.get("overrides"))
             resolver_state = _as_dict(data.get("resolver_state"))
             last_resolved = data.get("last_resolved")
             created_at = data.get("created_at")
@@ -582,12 +548,8 @@ class PlantProfile:
 
         return PlantProfile(
             plant_id=plant_id,
-            display_name=data.get("display_name")
-            or data.get("name")
-            or plant_id,
-            profile_type=(
-                library_section.profile_type if library_section else data.get("profile_type") or "line"
-            ),
+            display_name=data.get("display_name") or data.get("name") or plant_id,
+            profile_type=(library_section.profile_type if library_section else data.get("profile_type") or "line"),
             species=species,
             tenant_id=tenant_id,
             parents=parents,

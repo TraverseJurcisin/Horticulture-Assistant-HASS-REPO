@@ -17,6 +17,7 @@ from .profile.utils import (
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
+
 class PreferenceResolver:
     """Resolves per-variable values from manual/clone/opb/ai with TTL + citations."""
 
@@ -54,11 +55,7 @@ class PreferenceResolver:
             detail: str | None = None
             extras = target.annotation.extras or {}
             if isinstance(extras, dict):
-                detail = (
-                    extras.get("source_detail")
-                    or extras.get("summary")
-                    or extras.get("notes")
-                )
+                detail = extras.get("source_detail") or extras.get("summary") or extras.get("notes")
             if not detail and target.annotation.method:
                 detail = target.annotation.method
             if not detail and target.annotation.source_ref:
@@ -240,7 +237,6 @@ class PreferenceResolver:
                     ai_args=src.get("ai"),
                 )
                 if result is not None:
-                    ai_meta = src.get("ai", {}) or {}
                     self._update_ai_cache(
                         entry,
                         profile_id,
