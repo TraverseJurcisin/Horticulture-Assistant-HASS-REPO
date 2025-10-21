@@ -39,7 +39,7 @@ sys.modules.setdefault("homeassistant.util", util)
 async def test_resolve_manual(hass):
     res = await resolve_variable_from_source(hass, plant_id="p1", key="temp", source="manual", manual_value=21)
     assert res.value == 21
-    assert res.source == "manual"
+    assert res.annotation.source_type == "manual"
     assert res.citations[0].source == "manual"
     assert res.citations[0].details["note"] == "Set via options UI"
 
@@ -65,7 +65,8 @@ async def test_resolve_clone(hass, monkeypatch):
         clone_from="src",
     )
     assert res.value == 10
-    assert res.source == "clone"
+    assert res.annotation.source_type == "clone"
+    assert res.annotation.source_ref == ["src"]
     assert res.citations[0].details["profile_id"] == "src"
 
 
@@ -86,6 +87,7 @@ async def test_resolve_opb(hass, monkeypatch):
         opb_args={"species": "mint", "field": "temperature"},
     )
     assert res.value == 7
+    assert res.annotation.source_type == "openplantbook"
     assert res.citations[0].url == "http://example.com"
 
 
@@ -105,4 +107,5 @@ async def test_resolve_ai(hass, monkeypatch):
         source="ai",
     )
     assert res.value == 5
+    assert res.annotation.source_type == "ai"
     assert res.citations[0].details["links"] == ["http://ai"]

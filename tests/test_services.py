@@ -591,7 +591,7 @@ async def test_export_profile_service(hass, tmp_path):
             return {
                 "plant_id": "p1",
                 "display_name": "Plant 1",
-                "variables": {},
+                "resolved_targets": {},
             }
         return None
 
@@ -635,7 +635,13 @@ async def test_import_profiles_service(hass, tmp_path):
     registry = hass.data[DOMAIN]["registry"]
     assert registry.get("p1") is None
 
-    profiles = {"p1": {"plant_id": "p1", "display_name": "Plant 1", "variables": {}}}
+    profiles = {
+        "p1": {
+            "plant_id": "p1",
+            "display_name": "Plant 1",
+            "resolved_targets": {},
+        }
+    }
     (tmp_path / "profiles.json").write_text(json.dumps(profiles))
 
     await hass.services.async_call(DOMAIN, "import_profiles", {"path": "profiles.json"}, blocking=True)
@@ -725,8 +731,9 @@ async def test_resolve_profile_persists_to_store(hass):
     )
 
     prof = await async_get_profile(hass, "p1")
-    assert prof["variables"]["temp_c_min"]["value"] == 10
-    assert prof["variables"]["temp_c_min"]["citations"][0]["source"] == "manual"
+    target = prof["resolved_targets"]["temp_c_min"]
+    assert target["value"] == 10
+    assert target["citations"][0]["source"] == "manual"
 
 
 async def test_resolve_all_persists_every_profile(hass):
@@ -770,8 +777,8 @@ async def test_resolve_all_persists_every_profile(hass):
 
     prof1 = await async_get_profile(hass, "p1")
     prof2 = await async_get_profile(hass, "p2")
-    assert prof1["variables"]["temp_c_min"]["value"] == 5
-    assert prof2["variables"]["temp_c_min"]["value"] == 7
+    assert prof1["resolved_targets"]["temp_c_min"]["value"] == 5
+    assert prof2["resolved_targets"]["temp_c_min"]["value"] == 7
 
 
 async def test_recommend_watering_service(hass):

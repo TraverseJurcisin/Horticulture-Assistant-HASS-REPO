@@ -8,7 +8,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import OPB_FIELD_MAP, VARIABLE_SPECS
-from .profile.schema import VariableValue
+from .profile.schema import FieldAnnotation, ResolvedTarget
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
@@ -228,39 +228,70 @@ async def resolve_variable_from_source(
     clone_from: str | None = None,
     opb_args: dict[str, Any] | None = None,
     ai_args: dict[str, Any] | None = None,
-) -> VariableValue:
-    """Resolve a single variable based on the selected source."""
+) -> ResolvedTarget:
+    """Resolve a single target value based on the selected source."""
+
     from .ai_client import async_recommend_variable
     from .opb_client import async_fetch_field
     from .profile.citations import ai_ref, clone_ref, manual_note, opb_ref
-    from .profile.schema import VariableValue
     from .profile.store import async_get_profile
 
     citations = []
     if source == "manual":
         citations.append(manual_note("Set via options UI"))
-        return VariableValue(value=manual_value, source=source, citations=citations)
+        annotation = FieldAnnotation(source_type=source, method=source)
+        return ResolvedTarget(value=manual_value, annotation=annotation, citations=citations)
 
     if source == "clone":
         if not clone_from:
             raise ValueError("clone_from required")
         src = await async_get_profile(hass, clone_from)
-        if not src or key not in src.get("variables", {}):
+        value: Any | None = None
+        if src:
+            resolved_section = src.get("resolved_targets")
+            if isinstance(resolved_section, dict) and key in resolved_section:
+                payload = resolved_section[key]
+                if isinstance(payload, dict):
+                    value = payload.get("value")
+            elif key in (src.get("variables") or {}):
+                value = src["variables"][key].get("value")
+        if value is None:
             raise ValueError("Clone source missing variable")
-        val = src["variables"][key]["value"]
         citations.append(clone_ref(clone_from, key))
-        return VariableValue(value=val, source=source, citations=citations)
+        annotation = FieldAnnotation(
+            source_type=source,
+            method=source,
+            source_ref=[clone_from],
+            extras={"clone_profile_id": clone_from},
+        )
+        return ResolvedTarget(value=value, annotation=annotation, citations=citations)
 
     if source == "openplantbook":
         field = (opb_args or {}).get("field")
         species = (opb_args or {}).get("species")
-        val, url = await async_fetch_field(hass, species=species, field=field)
+        value, url = await async_fetch_field(hass, species=species, field=field)
         citations.append(opb_ref(species, field, url))
-        return VariableValue(value=val, source=source, citations=citations)
+        extras = {key: val for key, val in (("field", field), ("url", url)) if val}
+        annotation = FieldAnnotation(
+            source_type=source,
+            method=source,
+            source_ref=[species] if species else [],
+            extras=extras,
+        )
+        return ResolvedTarget(value=value, annotation=annotation, citations=citations)
 
     if source == "ai":
         result = await async_recommend_variable(hass, key=key, plant_id=plant_id, **(ai_args or {}))
-        citations.append(ai_ref(result.get("summary", ""), result.get("links", [])))
-        return VariableValue(value=result["value"], source=source, citations=citations)
+        value = result.get("value")
+        summary = result.get("summary", "AI generated recommendation")
+        links = result.get("links", [])
+        citations.append(ai_ref(summary, links))
+        annotation = FieldAnnotation(
+            source_type=source,
+            method=result.get("model") or result.get("provider") or source,
+            confidence=result.get("confidence"),
+            extras={"summary": summary, "links": links},
+        )
+        return ResolvedTarget(value=value, annotation=annotation, citations=citations)
 
     raise ValueError(f"Unknown source: {source}")

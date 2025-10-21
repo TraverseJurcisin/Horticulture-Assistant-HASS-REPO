@@ -85,7 +85,8 @@ async def test_generate_profile_persists_to_store(monkeypatch):
     ):
         await generate_profile(hass, entry, "p1", "clone", source_profile_id="src")
     assert saved and saved[0]["plant_id"] == "p1"
-    assert saved[0]["variables"]["temp_c_min"]["source"] == "clone"
+    target = saved[0]["resolved_targets"]["temp_c_min"]
+    assert target["annotation"]["source_type"] == "clone"
 
 
 @pytest.mark.asyncio
@@ -93,7 +94,13 @@ async def test_async_load_profile_returns_dataclass(monkeypatch):
     sample = {
         "plant_id": "p1",
         "display_name": "Plant",
-        "variables": {"temp": {"value": 1, "source": "manual", "citations": []}},
+        "resolved_targets": {
+            "temp": {
+                "value": 1,
+                "annotation": {"source_type": "manual"},
+                "citations": [],
+            }
+        },
     }
 
     async def fake_get(_hass, _pid):
@@ -110,18 +117,24 @@ async def test_async_load_profile_returns_dataclass(monkeypatch):
 
     profile = await async_load_profile(None, "p1")
     assert profile.plant_id == "p1"
-    assert profile.variables["temp"].value == 1
-    assert profile.variables["temp"].source == "manual"
+    assert profile.resolved_targets["temp"].value == 1
+    assert profile.resolved_targets["temp"].annotation.source_type == "manual"
 
 
 @pytest.mark.asyncio
 async def test_async_load_profiles_returns_dataclasses(monkeypatch):
     samples = {
-        "p1": {"plant_id": "p1", "display_name": "One", "variables": {}},
+        "p1": {"plant_id": "p1", "display_name": "One", "resolved_targets": {}},
         "p2": {
             "plant_id": "p2",
             "display_name": "Two",
-            "variables": {"temp": {"value": 2, "source": "manual", "citations": []}},
+            "resolved_targets": {
+                "temp": {
+                    "value": 2,
+                    "annotation": {"source_type": "manual"},
+                    "citations": [],
+                }
+            },
         },
     }
 
@@ -139,7 +152,7 @@ async def test_async_load_profiles_returns_dataclasses(monkeypatch):
 
     profiles = await async_load_profiles(None)
     assert set(profiles) == {"p1", "p2"}
-    assert profiles["p2"].variables["temp"].value == 2
+    assert profiles["p2"].resolved_targets["temp"].value == 2
 
 
 @pytest.mark.asyncio
@@ -163,8 +176,9 @@ async def test_async_save_profile_accepts_dataclass(monkeypatch):
     )
 
     from custom_components.horticulture_assistant.profile.schema import (
+        FieldAnnotation,
         PlantProfile,
-        VariableValue,
+        ResolvedTarget,
     )
     from custom_components.horticulture_assistant.profile.store import (
         async_save_profile,
@@ -173,9 +187,11 @@ async def test_async_save_profile_accepts_dataclass(monkeypatch):
     profile = PlantProfile(
         plant_id="p1",
         display_name="Plant",
-        variables={"temp": VariableValue(1, "manual", [])},
+        resolved_targets={
+            "temp": ResolvedTarget(value=1, annotation=FieldAnnotation(source_type="manual"))
+        },
     )
 
     await async_save_profile(None, profile)
     assert saved["p1"]["display_name"] == "Plant"
-    assert saved["p1"]["variables"]["temp"]["value"] == 1
+    assert saved["p1"]["resolved_targets"]["temp"]["value"] == 1

@@ -145,9 +145,14 @@ async def test_summaries_return_serialisable_data(hass):
         {
             "plant_id": "p1",
             "name": "Plant",
+            "profile_type": "line",
             "species": None,
+            "tenant_id": None,
+            "parents": [],
             "sensors": {"humidity": "sensor.h"},
-            "variables": {},
+            "targets": {},
+            "tags": [],
+            "last_resolved": None,
         }
     ]
 
