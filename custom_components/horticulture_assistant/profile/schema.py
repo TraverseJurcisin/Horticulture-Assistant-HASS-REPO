@@ -85,6 +85,18 @@ class ResolvedTarget:
             "citations": [asdict(cit) for cit in self.citations],
         }
 
+    def to_legacy(self) -> dict[str, Any]:
+        """Return a legacy ``variables`` style payload for compatibility."""
+
+        payload: dict[str, Any] = {
+            "value": self.value,
+            "source": self.annotation.source_type,
+            "annotation": self.annotation.to_json(),
+        }
+        if self.citations:
+            payload["citations"] = [asdict(cit) for cit in self.citations]
+        return payload
+
     @staticmethod
     def from_json(data: dict[str, Any]) -> "ResolvedTarget":
         if "annotation" in data and isinstance(data["annotation"], dict):
@@ -209,6 +221,14 @@ class PlantProfile:
         return {key: target.value for key, target in self.resolved_targets.items()}
 
     def to_json(self) -> dict[str, Any]:
+        resolved_payload = {
+            key: value.to_json() for key, value in self.resolved_targets.items()
+        }
+        variables_payload = {
+            key: value.to_legacy() for key, value in self.resolved_targets.items()
+        }
+        thresholds_payload = self.resolved_values()
+
         return {
             "plant_id": self.plant_id,
             "display_name": self.display_name,
@@ -227,9 +247,9 @@ class PlantProfile:
             "diffs_vs_parent": self.diffs_vs_parent,
             "local_overrides": self.local_overrides,
             "resolver_state": self.resolver_state,
-            "resolved_targets": {
-                key: value.to_json() for key, value in self.resolved_targets.items()
-            },
+            "resolved_targets": resolved_payload,
+            "variables": variables_payload,
+            "thresholds": thresholds_payload,
             "computed_stats": [snapshot.to_json() for snapshot in self.computed_stats],
             "general": self.general,
             "citations": [asdict(cit) for cit in self.citations],
@@ -280,6 +300,15 @@ class PlantProfile:
             )
             citations = [Citation(**cit) for cit in value.get("citations", []) if isinstance(cit, dict)]
             resolved_targets[str(key)] = ResolvedTarget(value=value.get("value"), annotation=annotation, citations=citations)
+
+        legacy_thresholds = data.get("thresholds") or {}
+        if isinstance(legacy_thresholds, dict):
+            for key, value in legacy_thresholds.items():
+                key_str = str(key)
+                if key_str in resolved_targets:
+                    continue
+                annotation = FieldAnnotation(source_type="unknown")
+                resolved_targets[key_str] = ResolvedTarget(value=value, annotation=annotation, citations=[])
 
         citations = [Citation(**cit) for cit in data.get("citations", []) if isinstance(cit, dict)]
         computed_stats = [

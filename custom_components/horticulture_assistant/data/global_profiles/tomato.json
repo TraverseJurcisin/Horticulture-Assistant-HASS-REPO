@@ -9,6 +9,27 @@
       "temperature_sensors": []
     }
   },
+  "resolved_targets": {
+    "soil_moisture_pct": {
+      "value": 30,
+      "annotation": {
+        "source_type": "manual",
+        "method": "manual"
+      },
+      "citations": []
+    }
+  },
+  "variables": {
+    "soil_moisture_pct": {
+      "value": 30,
+      "source": "manual",
+      "annotation": {
+        "source_type": "manual",
+        "method": "manual"
+      },
+      "citations": []
+    }
+  },
   "thresholds": {
     "soil_moisture_pct": 30
   },

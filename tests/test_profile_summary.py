@@ -74,3 +74,22 @@ def test_summary_returns_fresh_copy_each_call():
     s2 = prof.summary()
     s1["targets"]["temp"] = 99
     assert s2["targets"]["temp"] == 20
+
+
+def test_to_json_includes_legacy_views():
+    prof = _make_profile()
+    payload = prof.to_json()
+    assert payload["thresholds"] == {"temp": 20, "rh": 50}
+    assert payload["variables"]["temp"]["value"] == 20
+    assert payload["variables"]["temp"]["source"] == "manual"
+
+
+def test_from_json_thresholds_fallback():
+    data = {
+        "plant_id": "p4",
+        "display_name": "Legacy",
+        "thresholds": {"temp": 12.5},
+    }
+    prof = PlantProfile.from_json(data)
+    assert prof.resolved_targets["temp"].value == 12.5
+    assert prof.resolved_targets["temp"].annotation.source_type == "unknown"
