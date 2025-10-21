@@ -1,14 +1,22 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Iterable
-from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from collections.abc import Callable, Iterable, Mapping
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timedelta
 from typing import Any
 
+from ..profile.schema import (
+    Citation,
+    ComputedStatSnapshot,
+    FieldAnnotation,
+    PlantProfile,
+    ProfileLibrarySection,
+    ProfileLocalSection,
+    ResolvedTarget,
+)
 from .edge_store import EdgeSyncStore
-from ..profile.schema import FieldAnnotation, ResolvedTarget
 
-UTC = getattr(datetime, "UTC", timezone.utc)
+UTC = datetime.UTC
 
 
 @dataclass(slots=True)
@@ -65,15 +73,20 @@ class EdgeResolverService:
         confidence: float | None = None
 
         for entry in lineage:
-            local_value = self._extract(entry.local_overrides, field_path)
-            if local_value is not None:
-                value = local_value
-                provenance.append(f"local:{entry.profile_id}")
-                source_type = "local_override"
-                source_ref = [entry.profile_id]
-                method = "inheritance"
-                confidence = 1.0
-                found = True
+            local_found = False
+            for candidate in self._iter_local_candidates(entry.local_overrides):
+                local_value = self._extract(candidate, field_path)
+                if local_value is not None:
+                    value = local_value
+                    provenance.append(f"local:{entry.profile_id}")
+                    source_type = "local_override"
+                    source_ref = [entry.profile_id]
+                    method = "inheritance"
+                    confidence = 1.0
+                    found = True
+                    local_found = True
+                    break
+            if local_found:
                 break
             curated = self._extract(entry.cloud_payload.get("curated_targets", {}), field_path)
             if curated is not None:
@@ -135,10 +148,12 @@ class EdgeResolverService:
             annotations=annotations,
         )
 
-    def resolve_many(self, profile_id: str, fields: Iterable[str], *, now: datetime | None = None) -> dict[str, ResolveResult]:
+    def resolve_many(
+        self, profile_id: str, fields: Iterable[str], *, now: datetime | None = None
+    ) -> dict[str, ResolveResult]:
         results: dict[str, ResolveResult] = {}
-        for field in fields:
-            results[field] = self.resolve_field(profile_id, field, now=now)
+        for field_name in fields:
+            results[field_name] = self.resolve_field(profile_id, field_name, now=now)
         return results
 
     def resolve_target(
@@ -151,8 +166,110 @@ class EdgeResolverService:
         result = self.resolve_field(profile_id, field_path, now=now)
         return resolve_result_to_resolved_target(result)
 
+    def resolve_profile(
+        self,
+        profile_id: str,
+        *,
+        now: datetime | None = None,
+        fields: Iterable[str] | None = None,
+        local_payload: Mapping[str, Any] | None = None,
+    ) -> PlantProfile:
+        """Resolve all relevant fields for ``profile_id``."""
+
+        now = now or datetime.now(tz=UTC)
+        lineage = self._load_lineage(profile_id)
+        if not lineage:
+            raise ValueError(f"unknown profile {profile_id}")
+        subject = lineage[0]
+
+        library_payload = dict(subject.cloud_payload)
+        library_payload.setdefault("profile_id", profile_id)
+        library = ProfileLibrarySection.from_json(library_payload, fallback_id=profile_id)
+
+        local_payload_obj = subject.local_overrides if local_payload is None else local_payload
+        local_payload_map = dict(local_payload_obj) if isinstance(local_payload_obj, Mapping) else {}
+        local = ProfileLocalSection.from_json(local_payload_map)
+
+        species_id = lineage[-1].profile_id
+        stats_payload = self.store.fetch_cloud_cache("computed", species_id)
+        computed_snapshot = (
+            ComputedStatSnapshot.from_json(stats_payload) if isinstance(stats_payload, Mapping) else None
+        )
+
+        target_fields: set[str] = set(fields or [])
+        candidate_maps: list[Mapping[str, Any] | None] = [
+            library.curated_targets,
+            library.diffs_vs_parent,
+            local.local_overrides,
+        ]
+        if computed_snapshot:
+            candidate_maps.append(computed_snapshot.payload)
+        for mapping in candidate_maps:
+            target_fields.update(self._collect_target_fields(mapping))
+        if not target_fields:
+            resolved_keys = local.resolver_state.get("resolved_keys")
+            if isinstance(resolved_keys, Iterable):
+                for key in resolved_keys:
+                    key_str = str(key)
+                    if self._allowed_field(key_str):
+                        target_fields.add(key_str)
+
+        resolved_targets: dict[str, ResolvedTarget] = {}
+        for field_path in sorted(target_fields):
+            result = self.resolve_field(profile_id, field_path, now=now)
+            resolved_targets[field_path] = resolve_result_to_resolved_target(result)
+
+        citations = [Citation(**asdict(cit)) for cit in local.citations]
+        computed_stats = [computed_snapshot] if computed_snapshot else []
+
+        display_name = (
+            (local.general.get("name") if isinstance(local.general, Mapping) else None)
+            or library.identity.get("name")
+            or library.identity.get("common_name")
+            or profile_id
+        )
+
+        species = local.species
+        if species is None:
+            taxonomy_species = library.taxonomy.get("species")
+            if isinstance(taxonomy_species, str):
+                species = taxonomy_species
+
+        profile = PlantProfile(
+            plant_id=profile_id,
+            display_name=str(display_name),
+            profile_type=library.profile_type,
+            species=species,
+            tenant_id=library.tenant_id,
+            parents=list(library.parents),
+            identity=dict(library.identity),
+            taxonomy=dict(library.taxonomy),
+            policies=dict(library.policies),
+            stable_knowledge=dict(library.stable_knowledge),
+            lifecycle=dict(library.lifecycle),
+            traits=dict(library.traits),
+            tags=list(library.tags),
+            curated_targets=dict(library.curated_targets),
+            diffs_vs_parent=dict(library.diffs_vs_parent),
+            library_metadata=dict(library.metadata),
+            library_created_at=library.created_at,
+            library_updated_at=library.updated_at,
+            local_overrides=dict(local.local_overrides),
+            resolver_state=dict(local.resolver_state),
+            resolved_targets=resolved_targets,
+            computed_stats=computed_stats,
+            general=dict(local.general),
+            citations=citations,
+            local_metadata=dict(local.metadata),
+            last_resolved=local.last_resolved,
+            created_at=local.created_at,
+            updated_at=local.updated_at,
+        )
+
+        return profile
+
     # ------------------------------------------------------------------
-    def _load_lineage(self, profile_id: str) -> list["LineageEntry"]:
+    def _load_lineage(self, profile_id: str) -> list[LineageEntry]:
         lineage: list[LineageEntry] = []
         queue: list[tuple[str, int]] = [(profile_id, 0)]
         visited: set[str] = set()
@@ -180,9 +297,17 @@ class EdgeResolverService:
         lineage.sort(key=lambda entry: entry.depth)
         return lineage
 
+    def _iter_local_candidates(self, payload: Any) -> Iterable[Mapping[str, Any]]:
+        if isinstance(payload, Mapping):
+            yield payload
+            for key in ("local_overrides", "curated_targets", "diffs_vs_parent", "overrides"):
+                nested = payload.get(key)
+                if isinstance(nested, Mapping):
+                    yield nested
+
     def _resolve_overlay(
         self,
-        lineage: list["LineageEntry"],
+        lineage: list[LineageEntry],
         field_path: str,
         now: datetime,
     ) -> tuple[Any | None, dict[str, Any]]:
@@ -224,6 +349,25 @@ class EdgeResolverService:
                 return None
         return current
 
+    def _collect_target_fields(self, payload: Any, prefix: str = "") -> set[str]:
+        results: set[str] = set()
+        if isinstance(payload, Mapping):
+            for key, value in payload.items():
+                key_str = str(key)
+                next_prefix = f"{prefix}.{key_str}" if prefix else key_str
+                if isinstance(value, Mapping):
+                    if prefix or self._allowed_field(next_prefix):
+                        results.update(self._collect_target_fields(value, next_prefix))
+                else:
+                    if self._allowed_field(next_prefix):
+                        results.add(next_prefix)
+        elif prefix and self._allowed_field(prefix):
+            results.add(prefix)
+        return results
+
+    def _allowed_field(self, field_path: str) -> bool:
+        return field_path.startswith(("targets", "thresholds", "setpoints"))
+
 
 @dataclass(slots=True)
 class LineageEntry:
@@ -262,4 +406,3 @@ def resolve_result_to_annotation(result: ResolveResult) -> FieldAnnotation:
 def resolve_result_to_resolved_target(result: ResolveResult) -> ResolvedTarget:
     annotation = resolve_result_to_annotation(result)
     return ResolvedTarget(value=result.value, annotation=annotation, citations=[])
-

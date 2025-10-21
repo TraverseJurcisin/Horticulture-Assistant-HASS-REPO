@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping
 from dataclasses import asdict, dataclass
-from datetime import datetime, timezone
-from typing import Any, Mapping
+from datetime import datetime
+from typing import Annotated, Any
 
 from fastapi import FastAPI, Header, HTTPException, Query, Request, Response
 
@@ -16,7 +17,7 @@ from custom_components.horticulture_assistant.cloudsync import (
     encode_ndjson,
 )
 
-UTC = getattr(datetime, "UTC", timezone.utc)
+UTC = datetime.UTC
 GLOBAL_TENANTS = {"public", "shared", "global"}
 
 
@@ -110,7 +111,12 @@ class CloudState:
                 str(stats_payload.tenant_id),
                 stats_payload.payload,
             )
-        resolver = EdgeResolverService(store)
+        local_payload = self._prepare_local_payload(profile_payload.payload)
+
+        def local_loader(pid: str) -> dict[str, Any]:
+            return dict(local_payload) if pid == profile_id else {}
+
+        resolver = EdgeResolverService(store, local_profile_loader=local_loader)
         result = resolver.resolve_field(profile_id, field)
         return {
             "value": result.value,
@@ -120,6 +126,52 @@ class CloudState:
             "staleness_days": result.staleness_days,
             "annotations": asdict(result.annotations),
         }
+
+    def resolve_profile(
+        self,
+        tenant_id: str,
+        profile_id: str,
+        *,
+        fields: Iterable[str] | None = None,
+    ) -> dict[str, Any]:
+        profile_payload = self._get_entity("profile", profile_id, tenant_id)
+        if not profile_payload:
+            raise HTTPException(status_code=404, detail=f"Profile {profile_id} not found")
+        store = EdgeSyncStore(":memory:")
+        store.update_cloud_cache(
+            "profile",
+            profile_id,
+            str(profile_payload.tenant_id),
+            profile_payload.payload,
+        )
+        parents = profile_payload.payload.get("parents") or []
+        for parent_id in parents:
+            parent_payload = self._get_entity("profile", str(parent_id), tenant_id)
+            if parent_payload:
+                store.update_cloud_cache(
+                    "profile",
+                    str(parent_id),
+                    str(parent_payload.tenant_id),
+                    parent_payload.payload,
+                )
+        species_id = str(parents[-1]) if parents else profile_id
+        stats_payload = self._get_entity("computed", species_id, tenant_id)
+        if stats_payload:
+            store.update_cloud_cache(
+                "computed",
+                species_id,
+                str(stats_payload.tenant_id),
+                stats_payload.payload,
+            )
+
+        local_payload = self._prepare_local_payload(profile_payload.payload)
+
+        def local_loader(pid: str) -> dict[str, Any]:
+            return dict(local_payload) if pid == profile_id else {}
+
+        resolver = EdgeResolverService(store, local_profile_loader=local_loader)
+        profile = resolver.resolve_profile(profile_id, fields=fields, local_payload=local_payload)
+        return profile.to_json()
 
     def list_profiles(self, tenant_id: str, profile_type: str | None = None) -> list[dict[str, Any]]:
         items: list[dict[str, Any]] = []
@@ -159,6 +211,33 @@ class CloudState:
             if entity:
                 return entity
         return None
+
+    def _prepare_local_payload(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        local_section = payload.get("local")
+        local_map = dict(local_section) if isinstance(local_section, Mapping) else {}
+
+        def merge(key: str, source: str | None = None) -> None:
+            src_key = source or key
+            value = payload.get(src_key)
+            if value is None or key in local_map:
+                return
+            if isinstance(value, Mapping):
+                local_map[key] = dict(value)
+            elif isinstance(value, list):
+                local_map[key] = [dict(item) if isinstance(item, Mapping) else item for item in value]
+            else:
+                local_map[key] = value
+
+        merge("species")
+        merge("general")
+        merge("local_overrides")
+        merge("resolver_state")
+        merge("citations")
+        merge("metadata", "local_metadata")
+        merge("last_resolved")
+        merge("created_at")
+        merge("updated_at")
+        return local_map
 
 
 def create_app() -> FastAPI:
@@ -209,6 +288,15 @@ def create_app() -> FastAPI:
         items = state.list_profiles(tenant, profile_type)
         return {"profiles": items}
 
+    @app.get("/profiles/{profile_id}")
+    async def handle_profile_detail(
+        profile_id: str,
+        tenant: str = Header(..., alias="X-Tenant-ID"),
+        fields: Annotated[list[str] | None, Query(alias="field")] = None,
+    ) -> dict[str, Any]:
+        resolved = state.resolve_profile(tenant, profile_id, fields=fields)
+        return {"profile": resolved}
+
     @app.post("/profiles")
     async def handle_profiles_post(
         data: dict[str, Any],
@@ -226,6 +314,31 @@ def create_app() -> FastAPI:
             entity_id=str(profile_id),
             op=str(data.get("op", "upsert")),
             patch=data.get("patch", {}),
+            vector=VectorClock(device="cloud", counter=int(len(state.events) + 1)),
+            actor=str(data.get("actor", "api")),
+        )
+        acked = state.ingest(event.to_json_line(), tenant_id=tenant)
+        return {"acked": acked, "profile_id": profile_id}
+
+    @app.post("/stats")
+    async def handle_stats_post(
+        data: dict[str, Any],
+        tenant: str = Header(..., alias="X-Tenant-ID"),
+    ) -> dict[str, Any]:
+        profile_id = data.get("profile_id")
+        if not profile_id:
+            raise HTTPException(status_code=400, detail="profile_id required")
+        meta_keys = {"profile_id", "event_id", "tenant_id", "device_id", "actor"}
+        patch = {key: value for key, value in data.items() if key not in meta_keys}
+        event = SyncEvent(
+            event_id=str(data.get("event_id", f"stats-{profile_id}")),
+            tenant_id=str(data.get("tenant_id", tenant)),
+            device_id=str(data.get("device_id", "cloud")),
+            ts=datetime.now(tz=UTC),
+            entity_type="computed",
+            entity_id=str(profile_id),
+            op=str(data.get("op", "upsert")),
+            patch=patch,
             vector=VectorClock(device="cloud", counter=int(len(state.events) + 1)),
             actor=str(data.get("actor", "api")),
         )

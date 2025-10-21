@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
 import json
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import cast
 
 import pytest
-
 from aiohttp import ClientSession
 
 from custom_components.horticulture_assistant.cloudsync import (
@@ -20,8 +19,7 @@ from custom_components.horticulture_assistant.cloudsync import (
     resolve_result_to_resolved_target,
 )
 
-
-UTC = getattr(datetime, "UTC", timezone.utc)
+UTC = datetime.UTC
 
 
 def make_event(event_id: str, entity_type: str, patch: dict) -> SyncEvent:
@@ -57,6 +55,18 @@ def test_edge_store_outbox(tmp_path: Path) -> None:
     store.mark_outbox_attempt(["01J9"])
     store.mark_outbox_acked(["01J9"])
     assert store.get_outbox_batch() == []
+
+
+def test_edge_store_list_cloud_cache(tmp_path: Path) -> None:
+    store = EdgeSyncStore(tmp_path / "sync.db")
+    payload = {"curated_targets": {"targets": {"vpd": {"vegetative": 0.9}}}}
+    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", payload)
+    items = store.list_cloud_cache("profile")
+    assert len(items) == 1
+    entry = items[0]
+    assert entry["entity_id"] == "cultivar-1"
+    assert entry["tenant_id"] == "tenant-1"
+    assert entry["payload"]["curated_targets"]["targets"]["vpd"]["vegetative"] == 0.9
 
 
 def test_conflict_resolver_or_set() -> None:
@@ -140,6 +150,56 @@ def test_edge_resolver_marks_stale_stats(tmp_path: Path) -> None:
     assert result.annotations.staleness_days == pytest.approx(74.0, rel=1e-2)
 
 
+def test_edge_resolver_resolve_profile(tmp_path: Path) -> None:
+    store = EdgeSyncStore(tmp_path / "sync.db")
+    cultivar_payload = {
+        "profile_id": "cultivar-1",
+        "profile_type": "line",
+        "parents": ["species-1"],
+        "identity": {"name": "Tophat"},
+        "curated_targets": {"targets": {"vpd": {"vegetative": 0.9}}},
+    }
+    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", cultivar_payload)
+    species_payload = {
+        "profile_id": "species-1",
+        "profile_type": "species",
+        "curated_targets": {"targets": {"vpd": {"vegetative": 0.7}}},
+        "parents": [],
+    }
+    store.update_cloud_cache("profile", "species-1", "tenant-1", species_payload)
+    stats_payload = {
+        "computed_at": "2025-10-19T00:00:00Z",
+        "payload": {"targets": {"vpd": {"vegetative": 0.8}}},
+    }
+    store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload)
+
+    local_payload = {
+        "general": {"name": "Tophat"},
+        "local_overrides": {"targets": {"vpd": {"vegetative": 1.1}}},
+        "resolver_state": {"resolved_keys": ["targets.vpd.vegetative"]},
+        "citations": [{"source": "manual", "title": "operator"}],
+    }
+
+    def local_loader(pid: str) -> dict:
+        if pid == "cultivar-1":
+            return dict(local_payload)
+        return {}
+
+    resolver = EdgeResolverService(store, local_profile_loader=local_loader)
+    profile = resolver.resolve_profile(
+        "cultivar-1",
+        now=datetime(2025, 10, 20, tzinfo=UTC),
+        local_payload=local_payload,
+    )
+
+    target = profile.resolved_targets["targets.vpd.vegetative"]
+    assert target.value == 1.1
+    assert target.annotation.overlay == 0.8
+    assert profile.library_section().curated_targets["targets"]["vpd"]["vegetative"] == 0.9
+    assert profile.computed_stats[0].payload["targets"]["vpd"]["vegetative"] == 0.8
+    assert profile.general["name"] == "Tophat"
+
+
 @pytest.mark.parametrize(
     "body, content_type, expected_cursor",
     [
@@ -156,4 +216,3 @@ def test_edge_worker_response_parsing(body: bytes, content_type: str, expected_c
     else:
         assert ndjson == "{ }\n{ }"
     assert cursor == expected_cursor
-

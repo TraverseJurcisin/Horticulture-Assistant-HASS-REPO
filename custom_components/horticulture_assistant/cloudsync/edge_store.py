@@ -1,16 +1,16 @@
 from __future__ import annotations
 
-from collections.abc import Iterable
-from contextlib import contextmanager
-from datetime import datetime, timezone
 import json
 import sqlite3
+from collections.abc import Iterable, Iterator
+from contextlib import contextmanager
+from datetime import datetime
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 from .events import SyncEvent, decode_ndjson, encode_ndjson
 
-UTC = getattr(datetime, "UTC", timezone.utc)
+UTC = datetime.UTC
 
 
 class EdgeSyncStore:
@@ -174,15 +174,33 @@ class EdgeSyncStore:
             return None
         return json.loads(row["payload"])
 
-    def all_cloud_cache(self, entity_type: str | None = None) -> list[dict[str, Any]]:
-        query = "SELECT payload FROM cloud_cache"
+    def list_cloud_cache(self, entity_type: str | None = None) -> list[dict[str, Any]]:
+        """Return cached cloud entities with metadata."""
+
+        query = "SELECT entity_type, entity_id, tenant_id, payload, updated_at FROM cloud_cache"
         params: tuple[Any, ...] = ()
         if entity_type:
             query += " WHERE entity_type = ?"
             params = (entity_type,)
         with self._connection() as conn:
             rows = conn.execute(query, params).fetchall()
-        return [json.loads(row["payload"]) for row in rows]
+        results: list[dict[str, Any]] = []
+        for row in rows:
+            results.append(
+                {
+                    "entity_type": row["entity_type"],
+                    "entity_id": row["entity_id"],
+                    "tenant_id": row["tenant_id"],
+                    "payload": json.loads(row["payload"]),
+                    "updated_at": row["updated_at"],
+                }
+            )
+        return results
+
+    def all_cloud_cache(self, entity_type: str | None = None) -> list[dict[str, Any]]:
+        """Return cached payloads without metadata (legacy helper)."""
+
+        return [item["payload"] for item in self.list_cloud_cache(entity_type)]
 
     # ------------------------------------------------------------------
     def get_cursor(self, stream: str) -> str | None:
@@ -210,4 +228,3 @@ class EdgeSyncStore:
     def export_outbox_ndjson(self) -> str:
         events = self.get_outbox_batch(limit=10_000)
         return encode_ndjson(events)
-
