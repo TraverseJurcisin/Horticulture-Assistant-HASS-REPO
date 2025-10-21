@@ -119,4 +119,3 @@ CREATE VIEW IF NOT EXISTS run_latest_events AS
 SELECT DISTINCT ON (entity_id) entity_id, event_id, ts
 FROM sync_events
 ORDER BY entity_id, ts DESC;
-
