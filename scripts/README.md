@@ -10,6 +10,7 @@ Utility scripts ship with the repository to keep datasets healthy and to aid mig
 | `validate_fertilizers_v3e.py` | Validates fertilizer detail files against the 2025-09-V3e schema (runs in CI). |
 | `migrate_fertilizer_schema.py` | Migrates legacy fertilizer detail records into the latest schema version. Useful when upstream data sources change. |
 | `fertilizer_search.py` | CLI utility for searching the fertilizer dataset and printing formatted summaries. |
+| `edge_sync_agent.py` | Minimal asyncio loop that posts local outbox events to the cloud service and pulls library/stat deltas. |
 
 ## Running Scripts
 
