@@ -1,14 +1,18 @@
 from __future__ import annotations
 
+import asyncio
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import cast
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from aiohttp import ClientSession
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.cloudsync import (
+    CloudSyncManager,
     ConflictPolicy,
     ConflictResolver,
     EdgeResolverService,
@@ -17,6 +21,14 @@ from custom_components.horticulture_assistant.cloudsync import (
     SyncEvent,
     VectorClock,
     resolve_result_to_resolved_target,
+)
+from custom_components.horticulture_assistant.const import (
+    CONF_CLOUD_BASE_URL,
+    CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_SYNC_ENABLED,
+    CONF_CLOUD_SYNC_INTERVAL,
+    CONF_CLOUD_TENANT_ID,
+    DOMAIN,
 )
 
 UTC = datetime.UTC
@@ -216,3 +228,56 @@ def test_edge_worker_response_parsing(body: bytes, content_type: str, expected_c
     else:
         assert ndjson == "{ }\n{ }"
     assert cursor == expected_cursor
+
+
+@pytest.mark.asyncio
+async def test_cloud_sync_manager_disabled(hass, tmp_path):
+    entry = MockConfigEntry(domain=DOMAIN, entry_id="entry", data={}, options={})
+    manager = CloudSyncManager(hass, entry, store_path=tmp_path / "sync.db")
+    await manager.async_start()
+    status = manager.status()
+    assert status["enabled"] is False
+    assert status["configured"] is False
+    await manager.async_stop()
+
+
+@pytest.mark.asyncio
+async def test_cloud_sync_manager_starts_worker(hass, tmp_path):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        entry_id="entry2",
+        data={},
+        options={
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+            CONF_CLOUD_TENANT_ID: "tenant-1",
+            CONF_CLOUD_DEVICE_TOKEN: "token",
+            CONF_CLOUD_SYNC_INTERVAL: 60,
+        },
+    )
+    session = MagicMock()
+    session.close = AsyncMock()
+    worker = MagicMock()
+    worker.run_forever = AsyncMock()
+    worker.status.return_value = {"cursor": "abc"}
+
+    with (
+        patch(
+            "custom_components.horticulture_assistant.cloudsync.manager.ClientSession",
+            return_value=session,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.cloudsync.manager.EdgeSyncWorker",
+            return_value=worker,
+        ),
+    ):
+        manager = CloudSyncManager(hass, entry, store_path=tmp_path / "sync2.db")
+        await manager.async_start()
+        await asyncio.sleep(0)
+        status = manager.status()
+        assert status["enabled"] is True
+        assert status["configured"] is True
+        assert status["cursor"] == "abc"
+        worker.run_forever.assert_awaited()
+        await manager.async_stop()
+        session.close.assert_awaited()
