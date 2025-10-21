@@ -7,9 +7,9 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 
 from .const import OPB_FIELD_MAP, VARIABLE_SPECS
-from .profile.compat import set_resolved_target
+from .profile.options import options_profile_to_dataclass
 from .profile.schema import FieldAnnotation, ResolvedTarget
-from .profile.utils import citations_map_to_list, ensure_sections
+from .profile.utils import citations_map_to_list
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
@@ -20,19 +20,18 @@ class PreferenceResolver:
         self.hass = hass
 
     async def resolve_profile(self, entry, profile_id: str) -> dict[str, Any]:
-        prof = entry.options.get("profiles", {}).get(profile_id, {})
-        ensure_sections(prof, plant_id=profile_id, display_name=prof.get("name") or profile_id)
+        prof = dict(entry.options.get("profiles", {}).get(profile_id, {}))
+        profile = options_profile_to_dataclass(
+            profile_id,
+            prof,
+            display_name=prof.get("name") or profile_id,
+        )
         sources = dict(prof.get("sources", {}))
         thresholds = dict(prof.get("thresholds", {}))
         citations = dict(prof.get("citations", {}))
-        resolved_section = dict(prof.get("resolved_targets", {}))
-        variables_section = dict(prof.get("variables", {}))
-        profile_sections = {
-            "thresholds": thresholds,
-            "resolved_targets": resolved_section,
-            "variables": variables_section,
-        }
+        resolved_targets: dict[str, ResolvedTarget] = dict(profile.resolved_targets)
         changed = False
+        changed_fields: list[str] = []
 
         for key, *_ in VARIABLE_SPECS:
             target = await self._resolve_variable(
@@ -72,39 +71,14 @@ class PreferenceResolver:
                 "source_detail": detail,
             }
 
-            set_resolved_target(profile_sections, key, target)
+            resolved_targets[str(key)] = target
+            changed_fields.append(str(key))
             changed = True
 
         if changed:
-            # Persist back to options
-            opts = dict(entry.options)
-            prof = dict(opts.get("profiles", {}).get(profile_id, {}))
-            prof["thresholds"] = thresholds
-            prof["citations"] = citations
-            if profile_sections["resolved_targets"]:
-                prof["resolved_targets"] = profile_sections["resolved_targets"]
-            else:
-                prof.pop("resolved_targets", None)
-            if profile_sections["variables"]:
-                prof["variables"] = profile_sections["variables"]
-            else:
-                prof.pop("variables", None)
-
             resolved_at = datetime.now(UTC).isoformat()
-            prof["needs_resolution"] = False
-            prof["last_resolved"] = resolved_at
-
-            library_section, local_section = ensure_sections(
-                prof,
-                plant_id=profile_id,
-                display_name=prof.get("name") or profile_id,
-            )
-
-            local_metadata = dict(local_section.metadata)
-            local_metadata["citation_map"] = citations
-            local_metadata["resolved_fields"] = sorted(profile_sections["resolved_targets"].keys())
-            local_metadata["resolved_at"] = resolved_at
-
+            profile.resolved_targets = resolved_targets
+            profile.citations = citations_map_to_list(citations)
             source_snapshot: dict[str, Any] = {}
             if isinstance(sources, Mapping):
                 for key, value in sources.items():
@@ -113,23 +87,51 @@ class PreferenceResolver:
                     else:
                         source_snapshot[key] = value
 
-            resolver_state = {
+            profile.resolver_state = {
                 "sources": source_snapshot,
                 "resolved_keys": sorted(thresholds.keys()),
                 "updated_at": resolved_at,
             }
+            local_metadata = dict(profile.local_metadata)
+            local_metadata["citation_map"] = citations
+            local_metadata["resolved_fields"] = sorted(set(changed_fields))
+            local_metadata["resolved_at"] = resolved_at
+            profile.local_metadata = local_metadata
+            profile.last_resolved = resolved_at
+            profile.updated_at = resolved_at
 
-            local_section.general = dict(prof.get("general", {}))
-            local_section.local_overrides = dict(prof.get("local_overrides", {}))
-            local_section.resolver_state = resolver_state
-            local_section.citations = citations_map_to_list(citations)
-            local_section.last_resolved = resolved_at
-            local_section.metadata = local_metadata
-            prof["local"] = local_section.to_json()
-            prof["library"] = library_section.to_json()
+            general = dict(profile.general)
+            if isinstance(prof.get("general"), Mapping):
+                general.update(dict(prof["general"]))
+            profile.general = general
 
-            allp = dict(opts.get("profiles", {}))
+            profile_payload = profile.to_json()
+            prof.update(
+                {
+                    "thresholds": profile_payload.get("thresholds", {}),
+                    "resolved_targets": profile_payload.get("resolved_targets", {}),
+                    "variables": profile_payload.get("variables", {}),
+                    "general": profile_payload.get("general", {}),
+                    "citations": citations,
+                    "profile_citations": profile_payload.get("citations", []),
+                    "local": profile_payload.get("local", {}),
+                    "library": profile_payload.get("library", {}),
+                    "needs_resolution": False,
+                    "last_resolved": resolved_at,
+                    "resolver_state": profile.resolver_state,
+                    "local_overrides": profile.local_overrides,
+                    "local_metadata": profile.local_metadata,
+                    "library_metadata": profile.library_metadata,
+                    "library_created_at": profile.library_created_at,
+                    "library_updated_at": profile.library_updated_at,
+                }
+            )
+            if profile_payload.get("computed_stats"):
+                prof["computed_stats"] = profile_payload["computed_stats"]
+
+            allp = dict(entry.options.get("profiles", {}))
             allp[profile_id] = prof
+            opts = dict(entry.options)
             opts["profiles"] = allp
             self.hass.config_entries.async_update_entry(entry, options=opts)
 

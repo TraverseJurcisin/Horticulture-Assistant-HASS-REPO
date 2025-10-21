@@ -2,6 +2,26 @@
   "plant_id": "avocado",
   "display_name": "Avocado",
   "species": "Persea americana",
+  "library": {
+    "profile_id": "avocado",
+    "profile_type": "line",
+    "identity": {
+      "common_name": "Avocado"
+    },
+    "taxonomy": {
+      "species": "Persea americana"
+    },
+    "metadata": {
+      "template": "avocado"
+    }
+  },
+  "local": {
+    "species": "Persea americana",
+    "general": {},
+    "local_overrides": {},
+    "resolver_state": {},
+    "citations": []
+  },
   "resolved_targets": {
     "min_moisture": {
       "value": 25,
