@@ -10,6 +10,7 @@ from typing import Any
 
 from homeassistant.core import HomeAssistant
 
+from custom_components.horticulture_assistant.profile.compat import sync_thresholds
 from custom_components.horticulture_assistant.utils.path_utils import (
     data_path,
     plants_path,
@@ -161,6 +162,7 @@ def apply_threshold_approvals(hass: HomeAssistant | None = None) -> int:
 
         # Save updated thresholds back to the plant profile file
         profile["thresholds"] = thresholds
+        sync_thresholds(profile, default_source="approval", touched_keys=approved_nutrients)
         try:
             _save_json(plant_file_path, profile)
         except Exception as e:  # pragma: no cover - unexpected errors

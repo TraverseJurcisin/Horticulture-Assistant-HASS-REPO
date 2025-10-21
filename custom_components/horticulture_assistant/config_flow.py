@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -35,6 +36,7 @@ from .const import (
     PROFILE_SCOPE_DEFAULT,
 )
 from .opb_client import OpenPlantbookClient
+from .profile.compat import sync_thresholds
 from .utils import profile_generator
 from .utils.json_io import load_json, save_json
 from .utils.plant_registry import register_plant
@@ -386,7 +388,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         data = {**(self._config or {}), **self._profile}
         options = dict(user_input)
         options["sensors"] = mapped
-        options["thresholds"] = self._thresholds
+        thresholds_payload = {"thresholds": dict(self._thresholds)}
+        sync_thresholds(thresholds_payload, default_source="manual")
+        options["thresholds"] = thresholds_payload["thresholds"]
+        options["resolved_targets"] = thresholds_payload["resolved_targets"]
+        options["variables"] = thresholds_payload["variables"]
         if self._species_display:
             options["species_display"] = self._species_display
         if self._species_pid:
@@ -624,15 +630,16 @@ class OptionsFlow(config_entries.OptionsFlow):
                 if new_profile is not None:
                     profile_json = new_profile.to_json()
                     sensors = profile_json.get("general", {}).get("sensors", {})
-                    thresholds = {
-                        key: (value.get("value") if isinstance(value, dict) else value)
-                        for key, value in profile_json.get("variables", {}).items()
-                    }
-                    clone_payload = {
-                        "thresholds": thresholds,
-                        "template": profile_json.get("species"),
-                        CONF_PROFILE_SCOPE: scope,
-                    }
+                    clone_payload = deepcopy(profile_json)
+                    general = clone_payload.setdefault("general", {})
+                    if isinstance(sensors, dict):
+                        general.setdefault("sensors", dict(sensors))
+                        clone_payload["sensors"] = dict(sensors)
+                    if scope is not None:
+                        general[CONF_PROFILE_SCOPE] = scope
+                    elif CONF_PROFILE_SCOPE not in general:
+                        general[CONF_PROFILE_SCOPE] = PROFILE_SCOPE_DEFAULT
+                    clone_payload["name"] = profile_json.get("display_name", user_input["name"])
                     await store.async_create_profile(
                         name=profile_json.get("display_name", user_input["name"]),
                         sensors=sensors,
@@ -944,6 +951,15 @@ class OptionsFlow(config_entries.OptionsFlow):
                 raise ValueError("source_profile_id required for clone")
             other = opts.get("profiles", {}).get(source_profile_id, {})
             prof["thresholds"] = dict(other.get("thresholds", {}))
+            if isinstance(other.get("resolved_targets"), dict):
+                prof["resolved_targets"] = deepcopy(other.get("resolved_targets"))
+            else:
+                prof.pop("resolved_targets", None)
+            if isinstance(other.get("variables"), dict):
+                prof["variables"] = deepcopy(other.get("variables"))
+            else:
+                prof.pop("variables", None)
+            sync_thresholds(prof, default_source="clone")
             for key, *_ in VARIABLE_SPECS:
                 sources[key] = {"mode": "clone", "copy_from": source_profile_id}
         else:

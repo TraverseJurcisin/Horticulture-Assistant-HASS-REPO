@@ -14,15 +14,15 @@ async def test_status_sensor_citation_summary(hass: HomeAssistant):
         "plant_id": "p1",
         "display_name": "Plant 1",
         "last_resolved": "2024-01-02T00:00:00+00:00",
-        "variables": {
+        "resolved_targets": {
             "air_temp_min": {
                 "value": 10,
-                "source": "manual",
+                "annotation": {"source_type": "manual"},
                 "citations": [{"source": "manual", "title": "note", "url": "http://a"}],
             },
             "air_temp_max": {
                 "value": 20,
-                "source": "manual",
+                "annotation": {"source_type": "manual"},
                 "citations": [
                     {"source": "clone", "title": "", "url": "http://b"},
                     {"source": "manual", "title": "", "url": "http://c"},

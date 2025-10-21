@@ -15,6 +15,8 @@ except ImportError:  # pragma: no cover - fallback when run as standalone
     from custom_components.horticulture_assistant.utils.plant_profile_loader import (
         load_profile_by_id,
     )
+from custom_components.horticulture_assistant.profile.compat import sync_thresholds
+
 from .ai_model import analyze
 from .approval_queue import queue_threshold_updates
 from .compute_transpiration import compute_transpiration
@@ -190,6 +192,7 @@ def run_daily_cycle(plant_id: str) -> dict[str, Any]:
     # Step 8: Auto-approve or queue
     if profile.get("auto_approve_all", False):
         profile["thresholds"] = recommendations
+        sync_thresholds(profile, default_source="ai")
         save_json(plant_file, profile)
         _LOGGER.info("Auto-applied AI threshold updates for %s", plant_id)
     else:

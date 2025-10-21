@@ -31,6 +31,9 @@ async def test_threshold_numbers_persist_options(hass):
     await hass.async_block_till_done()
 
     assert entry.options["thresholds"]["temperature_min"] == 7.0
+    target = entry.options["resolved_targets"]["temperature_min"]
+    assert target["value"] == 7.0
+    assert target["annotation"]["source_type"] == "manual"
 
 
 async def test_threshold_numbers_follow_unit_system(hass):
@@ -62,3 +65,5 @@ async def test_threshold_numbers_follow_unit_system(hass):
     await hass.async_block_till_done()
 
     assert entry.options["thresholds"]["temperature_min"] == pytest.approx(20)
+    target = entry.options["resolved_targets"]["temperature_min"]
+    assert pytest.approx(target["value"], rel=1e-3) == 20

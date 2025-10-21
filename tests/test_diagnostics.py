@@ -30,7 +30,20 @@ DOMAIN = "horticulture_assistant"
 
 class DummyRegistry:
     def summaries(self):
-        return [{"plant_id": "p1", "name": "P1", "sensors": {}, "variables": {}, "species": None}]
+        return [
+            {
+                "plant_id": "p1",
+                "name": "P1",
+                "profile_type": "line",
+                "species": None,
+                "tenant_id": None,
+                "parents": [],
+                "sensors": {},
+                "targets": {},
+                "tags": [],
+                "last_resolved": None,
+            }
+        ]
 
 
 class DummyCoordinator:

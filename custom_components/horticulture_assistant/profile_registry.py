@@ -285,10 +285,25 @@ class ProfileRegistry:
         pid = await self.async_add_profile(name or prof.display_name, scope=scope)
         new_prof = self._profiles[pid]
         new_prof.species = prof.species
-        new_prof.variables = prof.variables
+        new_prof.profile_type = prof.profile_type
+        new_prof.parents = list(prof.parents)
+        new_prof.identity = dict(prof.identity)
+        new_prof.taxonomy = dict(prof.taxonomy)
+        new_prof.policies = dict(prof.policies)
+        new_prof.stable_knowledge = dict(prof.stable_knowledge)
+        new_prof.lifecycle = dict(prof.lifecycle)
+        new_prof.traits = dict(prof.traits)
+        new_prof.tags = list(prof.tags)
+        new_prof.curated_targets = dict(prof.curated_targets)
+        new_prof.diffs_vs_parent = dict(prof.diffs_vs_parent)
+        new_prof.local_overrides = dict(prof.local_overrides)
+        new_prof.resolver_state = dict(prof.resolver_state)
+        new_prof.resolved_targets = {k: deepcopy(v) for k, v in prof.resolved_targets.items()}
+        new_prof.computed_stats = [deepcopy(stat) for stat in prof.computed_stats]
         new_prof.general.update(prof.general)
         new_prof.general.setdefault(CONF_PROFILE_SCOPE, scope or PROFILE_SCOPE_DEFAULT)
-        new_prof.citations = prof.citations
+        new_prof.citations = [deepcopy(cit) for cit in prof.citations]
+        new_prof.last_resolved = prof.last_resolved
         await self.async_save()
         return pid
 

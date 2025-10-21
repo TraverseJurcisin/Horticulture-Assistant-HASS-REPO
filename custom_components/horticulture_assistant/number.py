@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from homeassistant.components.number import NumberEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import EVENT_CORE_CONFIG_UPDATE, UnitOfTemperature
@@ -7,6 +9,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import CATEGORY_CONTROL, DOMAIN
+from .profile.citations import manual_note
+from .profile.compat import get_resolved_target, set_resolved_target
+from .profile.schema import FieldAnnotation, ResolvedTarget
 from .entity_base import HorticultureBaseEntity
 from .utils.entry_helpers import get_entry_data, store_entry_data
 
@@ -105,6 +110,30 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
         thresholds = dict(opts.get("thresholds", {}))
         thresholds[self._key] = self._value
         opts["thresholds"] = thresholds
+
+        citation = manual_note("Adjusted via number control")
+        target = ResolvedTarget(
+            value=self._value,
+            annotation=FieldAnnotation(source_type="manual", method="manual"),
+            citations=[citation],
+        )
+
+        set_resolved_target(opts, self._key, target)
+
+        profiles = dict(opts.get("profiles", {}))
+        if self._plant_id in profiles:
+            prof = dict(profiles[self._plant_id])
+            set_resolved_target(prof, self._key, target)
+            citations_map = dict(prof.get("citations", {}))
+            citations_map[self._key] = {
+                "mode": citation.source,
+                "ts": citation.accessed,
+                "source_detail": (citation.details or {}).get("note"),
+            }
+            prof["citations"] = citations_map
+            profiles[self._plant_id] = prof
+            opts["profiles"] = profiles
+
         self.hass.config_entries.async_update_entry(self._entry, options=opts)
         self.async_write_ha_state()
 
@@ -121,11 +150,32 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
     @property
     def extra_state_attributes(self):
         prof = self.coordinator_entry_profile()
+        attrs: dict[str, Any] = {}
+
+        target = get_resolved_target(prof, self._key)
+        if target:
+            extras = target.annotation.extras or {}
+            detail = None
+            if isinstance(extras, dict):
+                detail = extras.get("summary") or extras.get("notes")
+            if not detail and target.annotation.method:
+                detail = target.annotation.method
+            first = target.citations[0] if target.citations else None
+            if not detail and first:
+                if isinstance(first.details, dict):
+                    detail = first.details.get("note") or first.details.get("summary")
+                detail = detail or first.title
+            attrs["source_mode"] = target.annotation.source_type
+            attrs["source_detail"] = detail
+            attrs["ai_confidence"] = target.annotation.confidence
+            if first:
+                attrs["last_resolved"] = first.accessed
+
         prov = (prof.get("citations", {}) or {}).get(self._key)
         src = (prof.get("sources", {}) or {}).get(self._key, {})
-        return {
-            "source_mode": src.get("mode"),
-            "source_detail": (prov or {}).get("source_detail"),
-            "ai_confidence": (src.get("ai") or {}).get("confidence"),
-            "last_resolved": (prov or {}).get("ts"),
-        }
+        attrs.setdefault("source_mode", src.get("mode"))
+        attrs.setdefault("source_detail", (prov or {}).get("source_detail"))
+        if attrs.get("ai_confidence") is None:
+            attrs["ai_confidence"] = (src.get("ai") or {}).get("confidence")
+        attrs.setdefault("last_resolved", (prov or {}).get("ts"))
+        return attrs

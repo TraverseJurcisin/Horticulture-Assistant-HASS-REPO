@@ -2,14 +2,46 @@
   "plant_id": "avocado",
   "display_name": "Avocado",
   "species": "Persea americana",
-  "variables": {
+  "resolved_targets": {
     "min_moisture": {
       "value": 25,
-      "source": "manual"
+      "annotation": {
+        "source_type": "manual",
+        "method": "manual"
+      },
+      "citations": []
     },
     "max_moisture": {
       "value": 55,
-      "source": "manual"
+      "annotation": {
+        "source_type": "manual",
+        "method": "manual"
+      },
+      "citations": []
     }
+  },
+  "variables": {
+    "min_moisture": {
+      "value": 25,
+      "source": "manual",
+      "annotation": {
+        "source_type": "manual",
+        "method": "manual"
+      },
+      "citations": []
+    },
+    "max_moisture": {
+      "value": 55,
+      "source": "manual",
+      "annotation": {
+        "source_type": "manual",
+        "method": "manual"
+      },
+      "citations": []
+    }
+  },
+  "thresholds": {
+    "min_moisture": 25,
+    "max_moisture": 55
   }
 }
