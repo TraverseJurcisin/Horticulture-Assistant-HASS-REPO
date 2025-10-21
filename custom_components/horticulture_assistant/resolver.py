@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
@@ -8,6 +9,7 @@ from homeassistant.core import HomeAssistant
 from .const import OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.compat import set_resolved_target
 from .profile.schema import FieldAnnotation, ResolvedTarget
+from .profile.utils import citations_map_to_list, ensure_sections
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
@@ -19,6 +21,7 @@ class PreferenceResolver:
 
     async def resolve_profile(self, entry, profile_id: str) -> dict[str, Any]:
         prof = entry.options.get("profiles", {}).get(profile_id, {})
+        ensure_sections(prof, plant_id=profile_id, display_name=prof.get("name") or profile_id)
         sources = dict(prof.get("sources", {}))
         thresholds = dict(prof.get("thresholds", {}))
         citations = dict(prof.get("citations", {}))
@@ -86,8 +89,45 @@ class PreferenceResolver:
                 prof["variables"] = profile_sections["variables"]
             else:
                 prof.pop("variables", None)
+
+            resolved_at = datetime.now(UTC).isoformat()
             prof["needs_resolution"] = False
-            prof["last_resolved"] = datetime.now(UTC).isoformat()
+            prof["last_resolved"] = resolved_at
+
+            library_section, local_section = ensure_sections(
+                prof,
+                plant_id=profile_id,
+                display_name=prof.get("name") or profile_id,
+            )
+
+            local_metadata = dict(local_section.metadata)
+            local_metadata["citation_map"] = citations
+            local_metadata["resolved_fields"] = sorted(profile_sections["resolved_targets"].keys())
+            local_metadata["resolved_at"] = resolved_at
+
+            source_snapshot: dict[str, Any] = {}
+            if isinstance(sources, Mapping):
+                for key, value in sources.items():
+                    if isinstance(value, Mapping):
+                        source_snapshot[key] = dict(value)
+                    else:
+                        source_snapshot[key] = value
+
+            resolver_state = {
+                "sources": source_snapshot,
+                "resolved_keys": sorted(thresholds.keys()),
+                "updated_at": resolved_at,
+            }
+
+            local_section.general = dict(prof.get("general", {}))
+            local_section.local_overrides = dict(prof.get("local_overrides", {}))
+            local_section.resolver_state = resolver_state
+            local_section.citations = citations_map_to_list(citations)
+            local_section.last_resolved = resolved_at
+            local_section.metadata = local_metadata
+            prof["local"] = local_section.to_json()
+            prof["library"] = library_section.to_json()
+
             allp = dict(opts.get("profiles", {}))
             allp[profile_id] = prof
             opts["profiles"] = allp

@@ -1,13 +1,22 @@
 import json
 
+import types
+from typing import Any
+
 import pytest
 
 from custom_components.horticulture_assistant.profile.schema import (
+    Citation,
     FieldAnnotation,
     PlantProfile,
+    ProfileLibrarySection,
+    ProfileLocalSection,
     ResolvedTarget,
 )
 from custom_components.horticulture_assistant.profile_store import ProfileStore
+from custom_components.horticulture_assistant.profile.store import (
+    async_save_profile_from_options,
+)
 
 
 @pytest.mark.asyncio
@@ -100,3 +109,83 @@ async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypat
     assert data["thresholds"] == {}
     assert data["library"]["profile_id"] == data["plant_id"]
     assert data["local"]["general"] == {}
+
+
+@pytest.mark.asyncio
+async def test_async_save_profile_from_options_preserves_local_sections(
+    hass, tmp_path, monkeypatch
+) -> None:
+    """Saving from options should materialise library/local sections."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+
+    saved: dict[str, dict[str, Any]] = {}
+
+    class DummyStore:
+        async def async_save(self, data):
+            saved.update(data)
+
+        async def async_load(self):
+            return saved
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile.store._store",
+        lambda _hass: DummyStore(),
+    )
+
+    entry = types.SimpleNamespace(
+        options={
+            "profiles": {
+                "p1": {
+                    "name": "Plant",
+                    "thresholds": {"temp_c_min": 5.0},
+                    "sources": {"temp_c_min": {"mode": "manual", "value": 5.0}},
+                    "citations": {
+                        "temp_c_min": {
+                            "mode": "manual",
+                            "source_detail": "Manual entry",
+                            "ts": "2025-01-01T00:00:00Z",
+                        }
+                    },
+                    "library": ProfileLibrarySection(
+                        profile_id="p1",
+                        profile_type="line",
+                        curated_targets={"temp_c_min": 3.0},
+                    ).to_json(),
+                    "local": ProfileLocalSection(
+                        general={"note": "local"},
+                        resolver_state={
+                            "sources": {"temp_c_min": {"mode": "manual"}},
+                            "resolved_keys": ["temp_c_min"],
+                        },
+                        citations=[
+                            Citation(
+                                source="manual",
+                                title="Manual temp",
+                                details={"field": "temp_c_min"},
+                                accessed="2025-01-01T00:00:00Z",
+                            )
+                        ],
+                        metadata={
+                            "citation_map": {
+                                "temp_c_min": {
+                                    "mode": "manual",
+                                    "source_detail": "Manual entry",
+                                    "ts": "2025-01-01T00:00:00Z",
+                                }
+                            }
+                        },
+                        last_resolved="2025-01-01T00:00:00Z",
+                    ).to_json(),
+                }
+            }
+        }
+    )
+
+    await async_save_profile_from_options(hass, entry, "p1")
+    await hass.async_block_till_done()
+    profile = saved.get("p1")
+    assert profile is not None
+    local = PlantProfile.from_json(profile).local_section()
+    assert local.metadata["citation_map"]["temp_c_min"]["mode"] == "manual"
+    assert local.citations and local.citations[0].source == "manual"

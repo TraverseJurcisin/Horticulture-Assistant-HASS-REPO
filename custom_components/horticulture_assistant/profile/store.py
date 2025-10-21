@@ -13,6 +13,7 @@ from .schema import (
     PlantProfile,
     ResolvedTarget,
 )
+from .utils import ensure_sections
 
 STORE_VERSION = 1
 STORE_KEY = "horticulture_assistant_profiles"
@@ -43,8 +44,13 @@ async def async_save_profile_from_options(hass: HomeAssistant, entry, profile_id
     prof = entry.options.get("profiles", {}).get(profile_id, {})
     sources = prof.get("sources") or {}
     citations_map = prof.get("citations") or {}
-    library_payload = prof.get("library") if isinstance(prof.get("library"), dict) else {}
-    local_payload = prof.get("local") if isinstance(prof.get("local"), dict) else {}
+    library_section, local_section = ensure_sections(
+        prof,
+        plant_id=profile_id,
+        display_name=prof.get("name") or profile_id,
+    )
+    library_payload = library_section.to_json()
+    local_payload = local_section.to_json()
 
     def _dict_copy(value: Any) -> dict[str, Any]:
         return dict(value) if isinstance(value, dict) else {}

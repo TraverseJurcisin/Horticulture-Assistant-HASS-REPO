@@ -11,6 +11,7 @@ from homeassistant.util import slugify
 
 from .const import CONF_PROFILE_SCOPE
 from .profile.schema import PlantProfile
+from .profile.utils import normalise_profile_payload
 
 LOCAL_RELATIVE_PATH = "custom_components/horticulture_assistant/data/local"
 PROFILES_DIRNAME = "profiles"
@@ -154,34 +155,18 @@ class ProfileStore:
         return self._base / f"{slug}.json"
 
     def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: str) -> dict[str, Any]:
-        profile = self._as_profile(payload, fallback_name=fallback_name)
-        data = self._profile_to_payload(profile)
-        return data
+        slug = slugify(fallback_name) or fallback_name or "profile"
+        normalised = normalise_profile_payload(payload, fallback_id=str(slug), display_name=fallback_name)
+        profile = PlantProfile.from_json(normalised)
+        return self._profile_to_payload(profile)
 
     def _as_profile(self, payload: dict[str, Any], *, fallback_name: str) -> PlantProfile:
         data = deepcopy(payload)
         display_name = data.get("display_name") or data.get("name") or fallback_name
         slug = data.get("plant_id") or slugify(display_name) or slugify(fallback_name) or "profile"
-        general = data.get("general") if isinstance(data.get("general"), dict) else {}
-
-        sensors = data.get("sensors") if isinstance(data.get("sensors"), dict) else None
-        if sensors:
-            general.setdefault("sensors", dict(sensors))
-
-        scope = data.get(CONF_PROFILE_SCOPE) or data.get("scope")
-        if scope is not None:
-            general.setdefault(CONF_PROFILE_SCOPE, scope)
-
-        template = data.get("template")
-        if template is not None:
-            general.setdefault("template", template)
-
-        data["display_name"] = display_name
-        data["name"] = display_name
-        data["plant_id"] = slug
-        data["general"] = general
-
-        return PlantProfile.from_json(data)
+        normalised = normalise_profile_payload(data, fallback_id=str(slug), display_name=display_name)
+        normalised.setdefault("name", normalised.get("display_name"))
+        return PlantProfile.from_json(normalised)
 
     def _profile_to_payload(self, profile: PlantProfile) -> dict[str, Any]:
         data = profile.to_json()
