@@ -528,6 +528,10 @@ async def test_config_flow_openplantbook_prefill(hass):
         "humidity_min": 3,
         "humidity_max": 4,
     }
+    resolved = result["options"]["resolved_targets"]
+    assert resolved["temperature_min"]["value"] == 1
+    assert resolved["temperature_min"]["annotation"]["source_type"] == "manual"
+    assert result["options"]["variables"]["temperature_min"]["value"] == 1
     assert result["options"]["image_url"] == "/local/mint.jpg"
     assert result["options"]["species_pid"] == "pid123"
     assert result["options"]["opb_credentials"] == {"client_id": "id", "secret": "sec"}

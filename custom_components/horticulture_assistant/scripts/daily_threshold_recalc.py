@@ -5,6 +5,7 @@ from typing import Any
 from plant_engine.utils import load_json, save_json
 from water_deficit_tracker import update_water_balance
 
+from custom_components.horticulture_assistant.profile.compat import sync_thresholds
 from custom_components.horticulture_assistant.utils.load_plant_profile import (
     load_plant_profile,
 )
@@ -76,6 +77,7 @@ def update_plant_profile(plant_path: str, updated_thresholds: dict[str, float]) 
     else:
         profile = load_json(plant_path)
         profile["thresholds"] = updated_thresholds
+        sync_thresholds(profile, default_source="automation")
         save_json(plant_path, profile)
 
 

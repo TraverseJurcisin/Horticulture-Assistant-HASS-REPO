@@ -393,6 +393,7 @@ async def test_duplicate_profile_service(hass):
     new_id = next(pid for pid, p in profiles.items() if p["name"] == "Copy")
     assert profiles[new_id]["sensors"] == {"temperature": "sensor.temp"}
     assert profiles[new_id]["thresholds"] == {"temp_min": 1}
+    assert profiles[new_id]["resolved_targets"]["temp_min"]["value"] == 1
 
     with pytest.raises(exceptions.HomeAssistantError):
         await hass.services.async_call(
