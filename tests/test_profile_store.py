@@ -43,6 +43,7 @@ async def test_async_create_profile_inherits_sensors_from_existing_profile(hass,
     assert clone["resolved_targets"]["temp"]["annotation"]["source_type"] == "manual"
     assert clone["library"]["profile_id"] == clone["plant_id"]
     assert clone["local"]["general"]["sensors"]["temp"] == "sensor.base"
+    assert clone["sections"]["resolved"]["thresholds"]["temp"] == 20
 
 
 @pytest.mark.asyncio
@@ -72,6 +73,7 @@ async def test_async_create_profile_clones_sensors_from_dict_payload(hass, tmp_p
     assert clone["variables"]["ec"]["value"] == 1.2
     assert clone["library"]["profile_id"] == clone["plant_id"]
     assert clone["local"]["general"]["sensors"]["ec"] == "sensor.clone"
+    assert clone["sections"]["resolved"]["thresholds"]["ec"] == 1.2
 
 
 @pytest.mark.asyncio
@@ -106,6 +108,7 @@ async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypat
     assert data["thresholds"] == {}
     assert data["library"]["profile_id"] == data["plant_id"]
     assert data["local"]["general"] == {}
+    assert "sections" in data
 
 
 @pytest.mark.asyncio
@@ -181,6 +184,7 @@ async def test_async_save_profile_from_options_preserves_local_sections(hass, tm
     await hass.async_block_till_done()
     profile = saved.get("p1")
     assert profile is not None
+    assert profile["sections"]["resolved"]["thresholds"]["temp_c_min"] == 5.0
     local = PlantProfile.from_json(profile).local_section()
     assert local.metadata["citation_map"]["temp_c_min"]["mode"] == "manual"
     assert local.citations and local.citations[0].source == "manual"

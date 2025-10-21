@@ -142,6 +142,7 @@ class ProfileStore:
         if resolved_scope is not None:
             new_profile.general[CONF_PROFILE_SCOPE] = resolved_scope
 
+        new_profile.refresh_sections()
         await self.async_save(new_profile, name=name)
 
     async def _atomic_write(self, path: Path, payload: dict[str, Any]) -> None:

@@ -96,6 +96,13 @@ The Home Assistant add-on ships an async worker that:
 
 Reference implementation: [`custom_components/horticulture_assistant/cloudsync/edge_worker.py`](../custom_components/horticulture_assistant/cloudsync/edge_worker.py).
 
+Home Assistant exposes the sync status through dedicated diagnostics entities:
+
+- `binary_sensor.cloud_connected` — connectivity to the cloud service.
+- `binary_sensor.local_only_mode` — true when running in offline fallback.
+- `sensor.cloud_snapshot_age_days` — days since the newest cached snapshot.
+- `sensor.cloud_outbox_size` — pending events queued for upload.
+
 ## Cloud API Surfaces
 
 - **Auth:** OIDC/OAuth2 for users (PKCE) plus device credentials.

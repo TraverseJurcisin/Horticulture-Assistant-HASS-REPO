@@ -98,6 +98,8 @@ async def test_diagnostics_redaction(hass: HomeAssistant, enable_custom_integrat
     assert result["entry"]["data"]["api_key"] == "**REDACTED**"
     assert result["schema_version"] == 2
     assert "profile_count" in result
+    assert "cloud_sync_status" in result
+    assert result["cloud_sync_status"]["configured"] is False
 
 
 @pytest.mark.asyncio

@@ -81,6 +81,36 @@ def test_edge_store_list_cloud_cache(tmp_path: Path) -> None:
     assert entry["payload"]["curated_targets"]["targets"]["vpd"]["vegetative"] == 0.9
 
 
+def test_edge_store_cloud_cache_age(tmp_path: Path, monkeypatch) -> None:
+    store = EdgeSyncStore(tmp_path / "sync.db")
+    base = datetime(2025, 10, 20, tzinfo=UTC)
+
+    class DummyDateTime(datetime):
+        current = base
+
+        @classmethod
+        def now(cls, tz=None):  # type: ignore[override]
+            return cls.current
+
+    from custom_components.horticulture_assistant.cloudsync import edge_store as edge_store_module
+
+    monkeypatch.setattr(edge_store_module, "datetime", DummyDateTime)
+
+    DummyDateTime.current = base - timedelta(days=3)
+    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", {"value": 1})
+
+    DummyDateTime.current = base - timedelta(days=1)
+    store.update_cloud_cache("computed", "species-1", "tenant-1", {"payload": {"value": 2}})
+
+    age_latest = store.cloud_cache_age(now=base)
+    age_oldest = store.cloud_cache_oldest_age(now=base)
+
+    assert store.count_cloud_cache() == 2
+    assert store.outbox_size() == 0
+    assert age_latest == pytest.approx(1.0, rel=1e-3)
+    assert age_oldest == pytest.approx(3.0, rel=1e-3)
+
+
 def test_conflict_resolver_or_set() -> None:
     resolver = ConflictResolver(field_policies={"tags": ConflictPolicy.OR_SET})
     initial = {"tags": ["a"]}
@@ -238,6 +268,9 @@ async def test_cloud_sync_manager_disabled(hass, tmp_path):
     status = manager.status()
     assert status["enabled"] is False
     assert status["configured"] is False
+    assert status["cloud_snapshot_age_days"] is None
+    assert status["connection"]["configured"] is False
+    assert status["connection"]["local_only"] is True
     await manager.async_stop()
 
 
@@ -274,10 +307,15 @@ async def test_cloud_sync_manager_starts_worker(hass, tmp_path):
         manager = CloudSyncManager(hass, entry, store_path=tmp_path / "sync2.db")
         await manager.async_start()
         await asyncio.sleep(0)
-        status = manager.status()
+        status = manager.status(now=datetime(2025, 1, 1, tzinfo=UTC))
         assert status["enabled"] is True
         assert status["configured"] is True
         assert status["cursor"] == "abc"
+        assert status["outbox_size"] == 0
+        assert status["cloud_cache_entries"] == 0
+        assert status["connection"]["configured"] is True
+        assert status["connection"]["connected"] is False
+        assert status["connection"]["reason"] == "never_synced"
         worker.run_forever.assert_awaited()
         await manager.async_stop()
         session.close.assert_awaited()

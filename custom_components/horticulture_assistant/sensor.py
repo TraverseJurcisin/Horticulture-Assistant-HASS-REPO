@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any
 
 from homeassistant.components.sensor import (
@@ -10,7 +10,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE, UnitOfTemperature
+from homeassistant.const import PERCENTAGE, UnitOfTemperature, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -93,6 +93,81 @@ PROFILE_SENSOR_DESCRIPTIONS = {
 }
 
 
+class CloudSyncSensor(SensorEntity):
+    """Base class for cloud sync diagnostic sensors."""
+
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_has_entity_name = True
+    _attr_should_poll = True
+    SCAN_INTERVAL = timedelta(minutes=1)
+
+    def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        self._manager = manager
+        self._entry_id = entry_id
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"cloud:{entry_id}")},
+            name=f"{plant_name} Cloud Sync",
+            manufacturer="Horticulture Assistant",
+            model="Cloud Service",
+        )
+
+    # pylint: disable=missing-return-doc
+    def _cloud_status(self) -> dict[str, Any]:
+        status = self._manager.status()
+        configured = bool(status.get("configured"))
+        self._attr_available = configured
+        return status
+
+
+class CloudSnapshotAgeSensor(CloudSyncSensor):
+    """Expose the age of the freshest cloud snapshot in days."""
+
+    _attr_icon = "mdi:cloud-refresh"
+    _attr_native_unit_of_measurement = UnitOfTime.DAYS
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        super().__init__(manager, entry_id, plant_name)
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_cloud_snapshot_age"
+        self._attr_name = "Cloud Snapshot Age"
+
+    async def async_update(self) -> None:
+        status = self._cloud_status()
+        age = status.get("cloud_snapshot_age_days")
+        self._attr_native_value = round(age, 3) if isinstance(age, int | float) else age
+        self._attr_extra_state_attributes = {
+            "oldest_age_days": status.get("cloud_snapshot_oldest_age_days"),
+            "cloud_cache_entries": status.get("cloud_cache_entries"),
+            "last_success_at": status.get("last_success_at"),
+            "connection_reason": (status.get("connection") or {}).get("reason"),
+        }
+
+
+class CloudOutboxSensor(CloudSyncSensor):
+    """Expose the number of pending events awaiting upload."""
+
+    _attr_icon = "mdi:cloud-upload"
+    _attr_native_unit_of_measurement = "events"
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        super().__init__(manager, entry_id, plant_name)
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_cloud_outbox_events"
+        self._attr_name = "Cloud Outbox Size"
+
+    async def async_update(self) -> None:
+        status = self._cloud_status()
+        outbox = status.get("outbox_size")
+        self._attr_native_value = int(outbox) if isinstance(outbox, int | float) else outbox
+        connection = status.get("connection") or {}
+        self._attr_extra_state_attributes = {
+            "last_push_error": status.get("last_push_error"),
+            "last_pull_error": status.get("last_pull_error"),
+            "connected": connection.get("connected"),
+            "local_only": connection.get("local_only"),
+        }
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
     stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
@@ -135,6 +210,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             if prof_sensors.get("moisture"):
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["moisture"]))
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["status"]))
+
+    cloud_manager = stored.get("cloud_sync_manager")
+    if cloud_manager:
+        sensors.append(CloudSnapshotAgeSensor(cloud_manager, entry.entry_id, plant_name))
+        sensors.append(CloudOutboxSensor(cloud_manager, entry.entry_id, plant_name))
 
     async_add_entities(sensors, True)
 

@@ -331,6 +331,237 @@ class ComputedStatSnapshot:
 
 
 @dataclass
+class ProfileResolvedSection:
+    """Runtime resolved data derived from local/cloud/manual sources."""
+
+    thresholds: dict[str, Any] = field(default_factory=dict)
+    resolved_targets: dict[str, ResolvedTarget] = field(default_factory=dict)
+    variables: dict[str, Any] = field(default_factory=dict)
+    citation_map: dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+    last_resolved: str | None = None
+
+    def to_json(self) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "thresholds": dict(self.thresholds),
+            "resolved_targets": {key: value.to_json() for key, value in self.resolved_targets.items()},
+        }
+        if self.variables:
+            payload["variables"] = dict(self.variables)
+        if self.citation_map:
+            payload["citation_map"] = dict(self.citation_map)
+        if self.metadata:
+            payload["metadata"] = dict(self.metadata)
+        if self.last_resolved is not None:
+            payload["last_resolved"] = self.last_resolved
+        return payload
+
+    @staticmethod
+    def from_json(data: Mapping[str, Any]) -> ProfileResolvedSection:
+        thresholds = _as_dict(data.get("thresholds"))
+        resolved_targets: dict[str, ResolvedTarget] = {}
+        resolved_payload = data.get("resolved_targets") or {}
+        if isinstance(resolved_payload, Mapping):
+            for key, value in resolved_payload.items():
+                if isinstance(value, Mapping):
+                    resolved_targets[str(key)] = ResolvedTarget.from_json(dict(value))
+        variables = _as_dict(data.get("variables"))
+        for key, target in resolved_targets.items():
+            variables.setdefault(str(key), target.to_legacy())
+        citation_map = _as_dict(data.get("citation_map"))
+        metadata = _as_dict(data.get("metadata"))
+        last_resolved = data.get("last_resolved")
+        return ProfileResolvedSection(
+            thresholds=thresholds,
+            resolved_targets=resolved_targets,
+            variables=variables,
+            citation_map=citation_map,
+            metadata=metadata,
+            last_resolved=last_resolved,
+        )
+
+
+@dataclass
+class ProfileComputedSection:
+    """Computed statistics cached from the cloud resolver."""
+
+    snapshots: list[ComputedStatSnapshot] = field(default_factory=list)
+    latest: ComputedStatSnapshot | None = None
+    contributions: list[ProfileContribution] = field(default_factory=list)
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def to_json(self) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "snapshots": [snapshot.to_json() for snapshot in self.snapshots],
+        }
+        if self.latest is not None:
+            payload["latest"] = self.latest.to_json()
+        if self.contributions:
+            payload["contributions"] = [contrib.to_json() for contrib in self.contributions]
+        if self.metadata:
+            payload["metadata"] = dict(self.metadata)
+        return payload
+
+    @staticmethod
+    def from_json(data: Mapping[str, Any]) -> ProfileComputedSection:
+        snapshots: list[ComputedStatSnapshot] = []
+        snapshot_payloads = data.get("snapshots")
+        if isinstance(snapshot_payloads, list):
+            for item in snapshot_payloads:
+                if isinstance(item, Mapping):
+                    snapshots.append(ComputedStatSnapshot.from_json(dict(item)))
+        latest_payload = data.get("latest")
+        latest = ComputedStatSnapshot.from_json(dict(latest_payload)) if isinstance(latest_payload, Mapping) else None
+        contributions_payload = data.get("contributions")
+        contributions: list[ProfileContribution] = []
+        if isinstance(contributions_payload, list):
+            for item in contributions_payload:
+                if isinstance(item, Mapping):
+                    contributions.append(ProfileContribution.from_json(dict(item)))
+        metadata = _as_dict(data.get("metadata"))
+        if latest and all(latest is not snap for snap in snapshots):
+            snapshots.insert(0, latest)
+        return ProfileComputedSection(
+            snapshots=snapshots,
+            latest=latest or (snapshots[0] if snapshots else None),
+            contributions=contributions,
+            metadata=metadata,
+        )
+
+
+@dataclass
+class ProfileLineageEntry:
+    """An entry in the lineage chain used for inheritance."""
+
+    profile_id: str
+    profile_type: str = "line"
+    depth: int = 0
+    role: str = "self"
+    tenant_id: str | None = None
+    parents: list[str] = field(default_factory=list)
+    tags: list[str] = field(default_factory=list)
+    identity: dict[str, Any] = field(default_factory=dict)
+    taxonomy: dict[str, Any] = field(default_factory=dict)
+    policies: dict[str, Any] = field(default_factory=dict)
+    stable_knowledge: dict[str, Any] = field(default_factory=dict)
+    lifecycle: dict[str, Any] = field(default_factory=dict)
+    traits: dict[str, Any] = field(default_factory=dict)
+    curated_targets: dict[str, Any] = field(default_factory=dict)
+    diffs_vs_parent: dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+    created_at: str | None = None
+    updated_at: str | None = None
+
+    def to_json(self) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "profile_id": self.profile_id,
+            "profile_type": self.profile_type,
+            "depth": self.depth,
+            "role": self.role,
+            "parents": list(self.parents),
+            "tags": list(self.tags),
+            "identity": dict(self.identity),
+            "taxonomy": dict(self.taxonomy),
+            "policies": dict(self.policies),
+            "stable_knowledge": dict(self.stable_knowledge),
+            "lifecycle": dict(self.lifecycle),
+            "traits": dict(self.traits),
+            "curated_targets": dict(self.curated_targets),
+            "diffs_vs_parent": dict(self.diffs_vs_parent),
+        }
+        if self.tenant_id is not None:
+            payload["tenant_id"] = self.tenant_id
+        if self.metadata:
+            payload["metadata"] = dict(self.metadata)
+        if self.created_at is not None:
+            payload["created_at"] = self.created_at
+        if self.updated_at is not None:
+            payload["updated_at"] = self.updated_at
+        return payload
+
+    @staticmethod
+    def from_json(data: Mapping[str, Any]) -> ProfileLineageEntry:
+        parents_raw = data.get("parents") or []
+        parents = [parents_raw] if isinstance(parents_raw, str) else [str(item) for item in parents_raw]
+        tags_raw = data.get("tags") or []
+        tags = [tags_raw] if isinstance(tags_raw, str) else [str(item) for item in tags_raw]
+        return ProfileLineageEntry(
+            profile_id=str(data.get("profile_id")),
+            profile_type=str(data.get("profile_type", "line")),
+            depth=int(data.get("depth", 0)),
+            role=str(data.get("role", "self")),
+            tenant_id=data.get("tenant_id"),
+            parents=parents,
+            tags=tags,
+            identity=_as_dict(data.get("identity")),
+            taxonomy=_as_dict(data.get("taxonomy")),
+            policies=_as_dict(data.get("policies")),
+            stable_knowledge=_as_dict(data.get("stable_knowledge")),
+            lifecycle=_as_dict(data.get("lifecycle")),
+            traits=_as_dict(data.get("traits")),
+            curated_targets=_as_dict(data.get("curated_targets")),
+            diffs_vs_parent=_as_dict(data.get("diffs_vs_parent")),
+            metadata=_as_dict(data.get("metadata")),
+            created_at=data.get("created_at"),
+            updated_at=data.get("updated_at"),
+        )
+
+
+@dataclass
+class ProfileSections:
+    """Grouped sections that compose the full profile envelope."""
+
+    library: ProfileLibrarySection
+    local: ProfileLocalSection
+    resolved: ProfileResolvedSection
+    computed: ProfileComputedSection
+
+    def to_json(self) -> dict[str, Any]:
+        return {
+            "library": self.library.to_json(),
+            "local": self.local.to_json(),
+            "resolved": self.resolved.to_json(),
+            "computed": self.computed.to_json(),
+        }
+
+    @staticmethod
+    def from_json(data: Mapping[str, Any], *, fallback_id: str) -> ProfileSections:
+        library_payload = data.get("library")
+        if isinstance(library_payload, Mapping):
+            library = ProfileLibrarySection.from_json(library_payload, fallback_id=fallback_id)
+        else:
+            library = ProfileLibrarySection(profile_id=fallback_id)
+
+        local_payload = data.get("local")
+        local = (
+            ProfileLocalSection.from_json(local_payload)
+            if isinstance(local_payload, Mapping)
+            else ProfileLocalSection()
+        )
+
+        resolved_payload = data.get("resolved")
+        resolved = (
+            ProfileResolvedSection.from_json(resolved_payload)
+            if isinstance(resolved_payload, Mapping)
+            else ProfileResolvedSection()
+        )
+
+        computed_payload = data.get("computed")
+        computed = (
+            ProfileComputedSection.from_json(computed_payload)
+            if isinstance(computed_payload, Mapping)
+            else ProfileComputedSection()
+        )
+
+        return ProfileSections(
+            library=library,
+            local=local,
+            resolved=resolved,
+            computed=computed,
+        )
+
+
+@dataclass
 class PlantProfile:
     """Comprehensive offline profile representation used by the add-on."""
 
@@ -362,6 +593,8 @@ class PlantProfile:
     last_resolved: str | None = None
     created_at: str | None = None
     updated_at: str | None = None
+    sections: ProfileSections | None = None
+    lineage: list[ProfileLineageEntry] = field(default_factory=list)
 
     def resolved_values(self) -> dict[str, Any]:
         """Return the resolved values without metadata."""
@@ -373,8 +606,9 @@ class PlantProfile:
         variables_payload = {key: value.to_legacy() for key, value in self.resolved_targets.items()}
         thresholds_payload = self.resolved_values()
 
-        library_section = self.library_section()
-        local_section = self.local_section()
+        sections = self._ensure_sections()
+        library_section = sections.library
+        local_section = sections.local
 
         payload = {
             "plant_id": self.plant_id,
@@ -416,6 +650,9 @@ class PlantProfile:
 
         payload["library"] = library_section.to_json()
         payload["local"] = local_section.to_json()
+        payload["sections"] = sections.to_json()
+        if self.lineage:
+            payload["lineage"] = [entry.to_json() for entry in self.lineage]
 
         return payload
 
@@ -441,42 +678,73 @@ class PlantProfile:
     def from_json(data: dict[str, Any]) -> PlantProfile:
         """Create a PlantProfile from a dictionary."""
 
-        plant_id = str(data.get("plant_id"))
-        library_section: ProfileLibrarySection | None = None
-        library_payload = data.get("library")
-        if isinstance(library_payload, Mapping):
-            library_section = ProfileLibrarySection.from_json(
-                library_payload,
-                fallback_id=plant_id,
-            )
+        fallback_id = data.get("plant_id") or data.get("profile_id") or data.get("name") or "profile"
+        plant_id = str(fallback_id)
 
-        local_section: ProfileLocalSection | None = None
-        local_payload = data.get("local")
-        if isinstance(local_payload, Mapping):
-            local_section = ProfileLocalSection.from_json(local_payload)
+        sections_payload = data.get("sections")
+        sections = (
+            ProfileSections.from_json(sections_payload, fallback_id=plant_id)
+            if isinstance(sections_payload, Mapping)
+            else None
+        )
+
+        if sections is not None:
+            library_section = sections.library
+            local_section = sections.local
+            resolved_section = sections.resolved
+            computed_section = sections.computed
+        else:
+            library_payload = data.get("library")
+            library_section = (
+                ProfileLibrarySection.from_json(library_payload, fallback_id=plant_id)
+                if isinstance(library_payload, Mapping)
+                else None
+            )
+            local_payload = data.get("local")
+            local_section = ProfileLocalSection.from_json(local_payload) if isinstance(local_payload, Mapping) else None
+            resolved_section = None
+            computed_section = None
 
         resolved_targets: dict[str, ResolvedTarget] = {}
-        for key, value in (data.get("resolved_targets") or {}).items():
-            if isinstance(value, dict):
-                resolved_targets[str(key)] = ResolvedTarget.from_json(value)
-
-        # Backwards compatibility for older ``variables`` representation
-        legacy_variables = data.get("variables") or {}
-        for key, value in legacy_variables.items():
-            if str(key) in resolved_targets:
-                continue
-            if not isinstance(value, dict):
-                continue
-            annotation = FieldAnnotation(
-                source_type=value.get("source") or "unknown",
+        if resolved_section is not None:
+            resolved_source = resolved_section.resolved_targets
+        else:
+            resolved_source = (
+                data.get("resolved_targets") if isinstance(data.get("resolved_targets"), Mapping) else None
             )
-            citations = [Citation(**cit) for cit in value.get("citations", []) if isinstance(cit, dict)]
-            resolved_targets[str(key)] = ResolvedTarget(
-                value=value.get("value"), annotation=annotation, citations=citations
-            )
+        if resolved_source:
+            for key, value in resolved_source.items():
+                if isinstance(value, ResolvedTarget):
+                    resolved_targets[str(key)] = value
+                elif isinstance(value, Mapping):
+                    resolved_targets[str(key)] = ResolvedTarget.from_json(dict(value))
 
-        legacy_thresholds = data.get("thresholds") or {}
-        if isinstance(legacy_thresholds, dict):
+        if resolved_section is not None:
+            legacy_variables = resolved_section.variables
+        elif isinstance(data.get("variables"), Mapping):
+            legacy_variables = data.get("variables")
+        else:
+            legacy_variables = None
+        if isinstance(legacy_variables, Mapping):
+            for key, value in legacy_variables.items():
+                key_str = str(key)
+                if key_str in resolved_targets or not isinstance(value, Mapping):
+                    continue
+                annotation = FieldAnnotation(source_type=value.get("source") or "unknown")
+                citations = [Citation(**cit) for cit in value.get("citations", []) if isinstance(cit, Mapping)]
+                resolved_targets[key_str] = ResolvedTarget(
+                    value=value.get("value"),
+                    annotation=annotation,
+                    citations=citations,
+                )
+
+        if resolved_section is not None:
+            legacy_thresholds = resolved_section.thresholds
+        elif isinstance(data.get("thresholds"), Mapping):
+            legacy_thresholds = data.get("thresholds")
+        else:
+            legacy_thresholds = None
+        if isinstance(legacy_thresholds, Mapping):
             for key, value in legacy_thresholds.items():
                 key_str = str(key)
                 if key_str in resolved_targets:
@@ -485,12 +753,16 @@ class PlantProfile:
                 resolved_targets[key_str] = ResolvedTarget(value=value, annotation=annotation, citations=[])
 
         top_level_citations = [Citation(**cit) for cit in data.get("citations", []) if isinstance(cit, dict)]
-        citations = local_section.citations if local_section and local_section.citations else top_level_citations
-        computed_stats = [
-            ComputedStatSnapshot.from_json(item)
-            for item in data.get("computed_stats", []) or []
-            if isinstance(item, dict)
-        ]
+        citations = list(local_section.citations) if local_section and local_section.citations else top_level_citations
+
+        if computed_section is not None:
+            computed_stats = list(computed_section.snapshots)
+        else:
+            computed_stats = [
+                ComputedStatSnapshot.from_json(item)
+                for item in data.get("computed_stats", []) or []
+                if isinstance(item, dict)
+            ]
 
         if library_section:
             parents = list(library_section.parents)
@@ -510,10 +782,8 @@ class PlantProfile:
         else:
             parents_raw = data.get("parents") or []
             parents = [parents_raw] if isinstance(parents_raw, str) else [str(parent) for parent in parents_raw]
-
             tags_raw = data.get("tags") or []
             tags = [tags_raw] if isinstance(tags_raw, str) else [str(tag) for tag in tags_raw]
-
             identity = _as_dict(data.get("identity"))
             taxonomy = _as_dict(data.get("taxonomy"))
             policies = _as_dict(data.get("policies"))
@@ -535,7 +805,7 @@ class PlantProfile:
             last_resolved = local_section.last_resolved
             created_at = local_section.created_at
             updated_at = local_section.updated_at
-            local_metadata = local_section.metadata
+            local_metadata = dict(local_section.metadata)
         else:
             species = data.get("species")
             general = _as_dict(data.get("general"))
@@ -546,7 +816,16 @@ class PlantProfile:
             updated_at = data.get("updated_at")
             local_metadata = _as_dict(data.get("local_metadata"))
 
-        return PlantProfile(
+        if resolved_section is not None:
+            if resolved_section.metadata:
+                local_metadata.update(resolved_section.metadata)
+            if resolved_section.last_resolved and not last_resolved:
+                last_resolved = resolved_section.last_resolved
+            citation_map = resolved_section.citation_map
+            if citation_map:
+                local_metadata.setdefault("citation_map", dict(citation_map))
+
+        profile = PlantProfile(
             plant_id=plant_id,
             display_name=data.get("display_name") or data.get("name") or plant_id,
             profile_type=(library_section.profile_type if library_section else data.get("profile_type") or "line"),
@@ -575,7 +854,13 @@ class PlantProfile:
             last_resolved=last_resolved,
             created_at=created_at,
             updated_at=updated_at,
+            sections=sections,
+            lineage=[
+                ProfileLineageEntry.from_json(item) for item in data.get("lineage", []) if isinstance(item, Mapping)
+            ],
         )
+
+        return profile
 
     # ------------------------------------------------------------------
     def library_section(self) -> ProfileLibrarySection:
@@ -610,3 +895,83 @@ class PlantProfile:
             updated_at=self.updated_at,
             metadata=dict(self.local_metadata),
         )
+
+    def resolved_section(self) -> ProfileResolvedSection:
+        resolved_targets = dict(self.resolved_targets)
+        thresholds = self.resolved_values()
+        variables = {key: target.to_legacy() for key, target in resolved_targets.items()}
+        metadata = dict(self.local_metadata)
+        citation_map = {}
+        raw_citation_map = metadata.get("citation_map") if isinstance(metadata.get("citation_map"), Mapping) else None
+        if isinstance(raw_citation_map, Mapping):
+            citation_map = dict(raw_citation_map)
+        return ProfileResolvedSection(
+            thresholds=thresholds,
+            resolved_targets=resolved_targets,
+            variables=variables,
+            citation_map=citation_map,
+            metadata=metadata,
+            last_resolved=self.last_resolved,
+        )
+
+    def computed_section(self) -> ProfileComputedSection:
+        snapshots = list(self.computed_stats)
+        latest = snapshots[0] if snapshots else None
+        contributions: list[ProfileContribution] = []
+        if latest:
+            contributions = list(latest.contributions)
+        return ProfileComputedSection(
+            snapshots=snapshots,
+            latest=latest,
+            contributions=contributions,
+            metadata={},
+        )
+
+    def refresh_sections(self) -> ProfileSections:
+        """Refresh cached :class:`ProfileSections` to match current fields."""
+
+        library = self.library_section()
+        local = self.local_section()
+        resolved = self.resolved_section()
+        computed = self.computed_section()
+
+        if self.sections is None:
+            self.sections = ProfileSections(
+                library=library,
+                local=local,
+                resolved=resolved,
+                computed=computed,
+            )
+            return self.sections
+
+        existing = self.sections
+
+        merged_resolved_metadata = dict(existing.resolved.metadata)
+        merged_resolved_metadata.update(resolved.metadata)
+        resolved.metadata = merged_resolved_metadata
+
+        merged_citation_map = dict(existing.resolved.citation_map)
+        if resolved.citation_map:
+            merged_citation_map.update(resolved.citation_map)
+        resolved.citation_map = merged_citation_map
+
+        merged_computed_metadata = dict(existing.computed.metadata)
+        merged_computed_metadata.update(computed.metadata)
+        computed.metadata = merged_computed_metadata
+
+        if computed.latest is None and existing.computed.latest is not None:
+            computed.latest = existing.computed.latest
+        if not computed.snapshots and existing.computed.snapshots:
+            computed.snapshots = list(existing.computed.snapshots)
+        if not computed.contributions and existing.computed.contributions:
+            computed.contributions = list(existing.computed.contributions)
+
+        existing.library = library
+        existing.local = local
+        existing.resolved = resolved
+        existing.computed = computed
+        self.sections = existing
+        return self.sections
+
+    def _ensure_sections(self) -> ProfileSections:
+        return self.refresh_sections()

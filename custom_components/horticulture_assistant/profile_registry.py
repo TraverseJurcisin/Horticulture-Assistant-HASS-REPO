@@ -147,6 +147,7 @@ class ProfileRegistry:
             merged[measurement] = entity_id
             general_map["sensors"] = merged
             prof_obj.general = general_map
+            prof_obj.refresh_sections()
         await self.async_save()
 
     async def async_refresh_species(self, profile_id: str) -> None:
@@ -161,6 +162,7 @@ class ProfileRegistry:
         if not prof:
             raise ValueError(f"unknown profile {profile_id}")
         prof.last_resolved = "1970-01-01T00:00:00Z"
+        prof.refresh_sections()
         await self.async_save()
 
     async def async_export(self, path: str | Path) -> Path:
@@ -226,6 +228,7 @@ class ProfileRegistry:
             new_profile,
             display_name=name,
         )
+        prof_obj.refresh_sections()
         self._profiles[candidate] = prof_obj
         await self.async_save()
         return candidate
@@ -278,6 +281,7 @@ class ProfileRegistry:
             general_map = dict(prof_obj.general)
             general_map["sensors"] = dict(merged)
             prof_obj.general = general_map
+            prof_obj.refresh_sections()
         await self.async_save()
 
     async def async_import_template(self, template: str, name: str | None = None) -> str:
@@ -319,6 +323,7 @@ class ProfileRegistry:
         new_prof.general.setdefault(CONF_PROFILE_SCOPE, scope or PROFILE_SCOPE_DEFAULT)
         new_prof.citations = [deepcopy(cit) for cit in prof.citations]
         new_prof.last_resolved = prof.last_resolved
+        new_prof.refresh_sections()
         await self.async_save()
         return pid
 

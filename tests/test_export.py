@@ -38,6 +38,7 @@ async def test_async_export_profiles(tmp_path, monkeypatch, hass):
     assert data["p1"]["resolved_targets"]["temp"]["value"] == 20
     assert data["p1"]["library"]["profile_id"] == "p1"
     assert data["p1"]["local"]["general"] == {}
+    assert "sections" in data["p1"]
 
 
 @pytest.mark.asyncio
@@ -70,6 +71,7 @@ async def test_async_export_profile(tmp_path, monkeypatch, hass):
     assert data["plant_id"] == "p1"
     assert data["library"]["profile_id"] == "p1"
     assert data["local"]["general"] == {}
+    assert "sections" in data
 
     with pytest.raises(ValueError):
         await async_export_profile(hass, "missing", "missing.json")
