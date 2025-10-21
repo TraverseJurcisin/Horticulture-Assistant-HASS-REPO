@@ -1,11 +1,24 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
 from homeassistant.core import HomeAssistant
 
+from .schema import PlantProfile
 from .store import async_get_profile, async_load_all
+from .utils import normalise_profile_payload
+
+
+def _normalise_payload(payload: Mapping[str, Any], fallback_id: str) -> dict[str, Any]:
+    """Return a serialisable payload with structured sections."""
+
+    raw = dict(payload)
+    display_name = raw.get("display_name") or raw.get("name") or fallback_id
+    normalised = normalise_profile_payload(raw, fallback_id=fallback_id, display_name=display_name)
+    profile = PlantProfile.from_json(normalised)
+    return profile.to_json()
 
 
 async def async_export_profiles(hass: HomeAssistant, path: str | Path) -> Path:
@@ -18,9 +31,13 @@ async def async_export_profiles(hass: HomeAssistant, path: str | Path) -> Path:
     import json
 
     data: dict[str, Any] = await async_load_all(hass)
+    normalised = {
+        pid: _normalise_payload(payload, pid)
+        for pid, payload in data.items()
+    }
     out_path = Path(hass.config.path(str(path)))
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
+    out_path.write_text(json.dumps(normalised, indent=2, sort_keys=True), encoding="utf-8")
     return out_path
 
 
@@ -34,5 +51,6 @@ async def async_export_profile(hass: HomeAssistant, plant_id: str, path: str | P
 
     out_path = Path(hass.config.path(str(path)))
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(profile, indent=2, sort_keys=True), encoding="utf-8")
+    payload = _normalise_payload(profile, plant_id)
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
     return out_path

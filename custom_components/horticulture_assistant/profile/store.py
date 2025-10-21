@@ -7,6 +7,7 @@ from homeassistant.helpers.storage import Store
 
 from .schema import PlantProfile
 from .options import options_profile_to_dataclass
+from .utils import normalise_profile_payload
 
 STORE_VERSION = 1
 STORE_KEY = "horticulture_assistant_profiles"
@@ -24,10 +25,19 @@ async def async_save_profile(hass: HomeAssistant, profile: PlantProfile | dict[s
     """Persist a profile dictionary or dataclass to storage."""
 
     if isinstance(profile, PlantProfile):
-        profile = profile.to_json()
+        profile_obj = profile
+    else:
+        raw: dict[str, Any] = dict(profile)
+        candidate_id = raw.get("plant_id") or raw.get("profile_id") or raw.get("name") or "profile"
+        fallback_id = str(candidate_id)
+        display_name = raw.get("display_name") or raw.get("name") or fallback_id
+        normalised = normalise_profile_payload(raw, fallback_id=fallback_id, display_name=display_name)
+        profile_obj = PlantProfile.from_json(normalised)
+
+    payload = profile_obj.to_json()
 
     data = await async_load_all(hass)
-    data[profile["plant_id"]] = profile
+    data[payload["plant_id"]] = payload
     await _store(hass).async_save(data)
 
 

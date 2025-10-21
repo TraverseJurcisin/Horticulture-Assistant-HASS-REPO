@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 from homeassistant.core import HomeAssistant
 
 from .store import async_save_profile
+from .schema import PlantProfile
+from .utils import normalise_profile_payload
 
 
 async def async_import_profiles(hass: HomeAssistant, path: str | Path) -> int:
@@ -33,6 +36,14 @@ async def async_import_profiles(hass: HomeAssistant, path: str | Path) -> int:
     for profile in profiles:
         if not isinstance(profile, dict):
             raise ValueError("Invalid profile entry: expected mapping")
-        await async_save_profile(hass, profile)
+
+        raw: dict[str, Any] = dict(profile)
+        candidate_id = raw.get("plant_id") or raw.get("profile_id") or raw.get("name") or "profile"
+        fallback_id = str(candidate_id)
+        display_name = raw.get("display_name") or raw.get("name") or fallback_id
+        normalised = normalise_profile_payload(raw, fallback_id=fallback_id, display_name=display_name)
+        profile_obj = PlantProfile.from_json(normalised)
+
+        await async_save_profile(hass, profile_obj)
         count += 1
     return count

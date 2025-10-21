@@ -195,3 +195,5 @@ async def test_async_save_profile_accepts_dataclass(monkeypatch):
     await async_save_profile(None, profile)
     assert saved["p1"]["display_name"] == "Plant"
     assert saved["p1"]["resolved_targets"]["temp"]["value"] == 1
+    assert saved["p1"]["library"]["profile_id"] == "p1"
+    assert saved["p1"]["local"]["general"] == {}
