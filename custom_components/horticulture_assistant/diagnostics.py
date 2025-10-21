@@ -15,6 +15,7 @@ TO_REDACT = {CONF_API_KEY}
 async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict[str, Any]:
     """Return diagnostics for a config entry."""
     data = hass.data.get(DOMAIN, {})
+    entry_data = data.get(entry.entry_id)
     reg: ProfileRegistry | None = data.get("registry")
     payload: dict[str, Any] = {
         "entry": {
@@ -40,6 +41,11 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
             "last_update": getattr(coord, "last_update", None),
             "last_exception": getattr(coord, "last_exception", None),
         }
+
+    if isinstance(entry_data, dict):
+        manager = entry_data.get("cloud_sync_manager")
+        if manager:
+            payload["cloud_sync_status"] = manager.status()
 
     payload["log_tail"] = _read_log_tail(hass, entry)
     return async_redact_data(payload, TO_REDACT)

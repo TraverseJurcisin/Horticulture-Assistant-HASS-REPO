@@ -6,9 +6,10 @@ from typing import Any
 
 from homeassistant.core import HomeAssistant
 
-from .const import OPB_FIELD_MAP, VARIABLE_SPECS
+from .cloudsync import EdgeResolverService
+from .const import DOMAIN, OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.options import options_profile_to_dataclass
-from .profile.schema import FieldAnnotation, ResolvedTarget
+from .profile.schema import FieldAnnotation, PlantProfile, ResolvedTarget
 from .profile.utils import (
     citations_map_to_list,
     determine_species_slug,
@@ -23,6 +24,85 @@ class PreferenceResolver:
 
     def __init__(self, hass: HomeAssistant):
         self.hass = hass
+
+    def _cloud_store(self, entry) -> Any:
+        """Return the cloud sync store when a manager is configured."""
+
+        domain_data = self.hass.data.get(DOMAIN)
+        if not isinstance(domain_data, Mapping):
+            return None
+        entry_id = getattr(entry, "entry_id", None)
+        if entry_id is None:
+            return None
+        entry_data = domain_data.get(entry_id)
+        if not isinstance(entry_data, Mapping):
+            return None
+        manager = entry_data.get("cloud_sync_manager")
+        if manager is None:
+            return None
+        return getattr(manager, "store", None)
+
+    def _load_local_payload(self, entry, profile_id: str) -> dict[str, Any]:
+        """Return a local payload mapping for ``profile_id``."""
+
+        profiles = entry.options.get("profiles", {}) if isinstance(entry.options, Mapping) else {}
+        payload = profiles.get(profile_id)
+        if not isinstance(payload, Mapping):
+            return {}
+        data = dict(payload)
+        ensure_sections(data, plant_id=profile_id, display_name=data.get("name") or profile_id)
+        local_section = data.get("local")
+        if isinstance(local_section, Mapping):
+            return {str(key): value for key, value in local_section.items()}
+        return {}
+
+    def _overlay_cloud_profile(
+        self,
+        entry,
+        profile_id: str,
+        profile: PlantProfile,
+        profile_payload: Mapping[str, Any],
+    ) -> PlantProfile | None:
+        """Combine cloud snapshots with local profile state if available."""
+
+        store = self._cloud_store(entry)
+        if store is None:
+            return None
+
+        local_payload = profile_payload.get("local") if isinstance(profile_payload, Mapping) else {}
+        local_map = dict(local_payload) if isinstance(local_payload, Mapping) else {}
+
+        def local_loader(pid: str) -> dict[str, Any]:
+            if pid == profile_id:
+                return dict(local_map)
+            return self._load_local_payload(entry, pid)
+
+        resolver = EdgeResolverService(store, local_profile_loader=local_loader)
+        try:
+            resolved = resolver.resolve_profile(profile_id, local_payload=local_map)
+        except Exception:  # pragma: no cover - defensive fallback
+            return None
+
+        for key, target in profile.resolved_targets.items():
+            resolved.resolved_targets.setdefault(key, target)
+        if profile.resolver_state:
+            resolved.resolver_state = dict(profile.resolver_state)
+        if profile.local_overrides:
+            merged_overrides = dict(resolved.local_overrides)
+            for key, value in profile.local_overrides.items():
+                merged_overrides.setdefault(key, value)
+            resolved.local_overrides = merged_overrides
+        resolved.local_metadata = dict(profile.local_metadata)
+        resolved.general = dict(profile.general)
+        resolved.citations = list(profile.citations)
+        resolved.last_resolved = profile.last_resolved
+        resolved.created_at = profile.created_at
+        resolved.updated_at = profile.updated_at
+        if profile.lineage and not resolved.lineage:
+            resolved.lineage = list(profile.lineage)
+        resolved.sections = None
+        resolved._ensure_sections()
+        return resolved
 
     async def resolve_profile(self, entry, profile_id: str) -> dict[str, Any]:
         prof = dict(entry.options.get("profiles", {}).get(profile_id, {}))
@@ -106,7 +186,13 @@ class PreferenceResolver:
                 general.update(dict(prof["general"]))
             profile.general = general
 
+            profile.sections = None
             profile_payload = profile.to_json()
+            cloud_profile = self._overlay_cloud_profile(entry, profile_id, profile, profile_payload)
+            if cloud_profile is not None:
+                profile = cloud_profile
+                profile_payload = profile.to_json()
+
             prof.update(
                 {
                     "thresholds": profile_payload.get("thresholds", {}),
@@ -117,6 +203,8 @@ class PreferenceResolver:
                     "profile_citations": profile_payload.get("citations", []),
                     "local": profile_payload.get("local", {}),
                     "library": profile_payload.get("library", {}),
+                    "sections": profile_payload.get("sections", {}),
+                    "lineage": profile_payload.get("lineage", []),
                     "needs_resolution": False,
                     "last_resolved": resolved_at,
                     "resolver_state": profile.resolver_state,
@@ -125,10 +213,22 @@ class PreferenceResolver:
                     "library_metadata": profile.library_metadata,
                     "library_created_at": profile.library_created_at,
                     "library_updated_at": profile.library_updated_at,
+                    "profile_type": profile.profile_type,
+                    "species": profile.species,
+                    "tenant_id": profile.tenant_id,
+                    "parents": list(profile.parents),
+                    "tags": list(profile.tags),
+                    "identity": dict(profile.identity),
+                    "taxonomy": dict(profile.taxonomy),
+                    "policies": dict(profile.policies),
+                    "stable_knowledge": dict(profile.stable_knowledge),
+                    "lifecycle": dict(profile.lifecycle),
+                    "traits": dict(profile.traits),
+                    "curated_targets": dict(profile.curated_targets),
+                    "diffs_vs_parent": dict(profile.diffs_vs_parent),
                 }
             )
-            if profile_payload.get("computed_stats"):
-                prof["computed_stats"] = profile_payload["computed_stats"]
+            prof["computed_stats"] = profile_payload.get("computed_stats", [])
 
             allp = dict(entry.options.get("profiles", {}))
             allp[profile_id] = prof

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from ..profile.schema import (
@@ -10,13 +10,28 @@ from ..profile.schema import (
     ComputedStatSnapshot,
     FieldAnnotation,
     PlantProfile,
+    ProfileComputedSection,
     ProfileLibrarySection,
+    ProfileLineageEntry,
     ProfileLocalSection,
+    ProfileResolvedSection,
+    ProfileSections,
     ResolvedTarget,
 )
 from .edge_store import EdgeSyncStore
 
-UTC = datetime.UTC
+try:
+    UTC = datetime.UTC  # type: ignore[attr-defined]
+except AttributeError:  # pragma: no cover - Python <3.11 fallback
+    UTC = timezone.utc  # noqa: UP017
+
+
+def _coerce_dict(value: Any) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return dict(value)
+    if isinstance(value, Mapping):
+        return {str(key): item for key, item in value.items()}
+    return {}
 
 
 @dataclass(slots=True)
@@ -235,6 +250,31 @@ class EdgeResolverService:
             if isinstance(taxonomy_species, str):
                 species = taxonomy_species
 
+        resolved_section = ProfileResolvedSection(
+            thresholds={key: target.value for key, target in resolved_targets.items()},
+            resolved_targets=resolved_targets,
+            variables={key: target.to_legacy() for key, target in resolved_targets.items()},
+            citation_map=_coerce_dict((local.metadata or {}).get("citation_map")),
+            metadata=dict(local.metadata),
+            last_resolved=local.last_resolved,
+        )
+
+        computed_metadata: dict[str, Any] = {}
+        if computed_snapshot and computed_snapshot.computed_at:
+            computed_at_dt = datetime.fromisoformat(str(computed_snapshot.computed_at).replace("Z", "+00:00"))
+            staleness = now - computed_at_dt
+            computed_metadata["computed_at"] = computed_snapshot.computed_at
+            computed_metadata["staleness_days"] = staleness.total_seconds() / 86400
+            if self.stats_ttl and staleness > self.stats_ttl:
+                computed_metadata["is_stale"] = True
+
+        computed_section = ProfileComputedSection(
+            snapshots=[computed_snapshot] if computed_snapshot else [],
+            latest=computed_snapshot,
+            contributions=list(computed_snapshot.contributions) if computed_snapshot else [],
+            metadata=computed_metadata,
+        )
+
         profile = PlantProfile(
             plant_id=profile_id,
             display_name=str(display_name),
@@ -264,7 +304,15 @@ class EdgeResolverService:
             last_resolved=local.last_resolved,
             created_at=local.created_at,
             updated_at=local.updated_at,
+            sections=ProfileSections(
+                library=library,
+                local=local,
+                resolved=resolved_section,
+                computed=computed_section,
+            ),
         )
+
+        profile.lineage = [self._lineage_entry(entry) for entry in lineage]
 
         return profile
 
@@ -296,6 +344,33 @@ class EdgeResolverService:
                         queue.append((parent_id, depth + 1))
         lineage.sort(key=lambda entry: entry.depth)
         return lineage
+
+    def _lineage_entry(self, entry: LineageEntry) -> ProfileLineageEntry:
+        cloud = entry.cloud_payload or {}
+        parents_raw = cloud.get("parents") or []
+        parents = [parents_raw] if isinstance(parents_raw, str) else [str(item) for item in parents_raw]
+        tags_raw = cloud.get("tags") or []
+        tags = [tags_raw] if isinstance(tags_raw, str) else [str(item) for item in tags_raw]
+        return ProfileLineageEntry(
+            profile_id=entry.profile_id,
+            profile_type=str(cloud.get("profile_type", "line")),
+            depth=entry.depth,
+            role="self" if entry.depth == 0 else "ancestor",
+            tenant_id=cloud.get("tenant_id"),
+            parents=parents,
+            tags=tags,
+            identity=_coerce_dict(cloud.get("identity")),
+            taxonomy=_coerce_dict(cloud.get("taxonomy")),
+            policies=_coerce_dict(cloud.get("policies")),
+            stable_knowledge=_coerce_dict(cloud.get("stable_knowledge")),
+            lifecycle=_coerce_dict(cloud.get("lifecycle")),
+            traits=_coerce_dict(cloud.get("traits")),
+            curated_targets=_coerce_dict(cloud.get("curated_targets")),
+            diffs_vs_parent=_coerce_dict(cloud.get("diffs_vs_parent")),
+            metadata=_coerce_dict(cloud.get("metadata")),
+            created_at=cloud.get("created_at"),
+            updated_at=cloud.get("updated_at"),
+        )
 
     def _iter_local_candidates(self, payload: Any) -> Iterable[Mapping[str, Any]]:
         if isinstance(payload, Mapping):

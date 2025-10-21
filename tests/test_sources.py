@@ -1,15 +1,47 @@
 import asyncio
+import importlib
+import importlib.util
 import os
+import sys
 import tempfile
 import types
+from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
 pytest.importorskip("homeassistant.exceptions")
 
+_BASE_DIR = Path(__file__).resolve().parents[1]
+_PACKAGE_DIR = _BASE_DIR / "custom_components" / "horticulture_assistant"
+_CLOUDSYNC_DIR = _PACKAGE_DIR / "cloudsync"
+
+if "custom_components" not in sys.modules:
+    cc_pkg = types.ModuleType("custom_components")
+    cc_pkg.__path__ = [str((_BASE_DIR / "custom_components").resolve())]
+    sys.modules["custom_components"] = cc_pkg
+
+ha_pkg = sys.modules.setdefault(
+    "custom_components.horticulture_assistant",
+    types.ModuleType("custom_components.horticulture_assistant"),
+)
+ha_pkg.__path__ = [str(_PACKAGE_DIR.resolve())]
+
+cloudsync_spec = importlib.util.spec_from_file_location(
+    "custom_components.horticulture_assistant.cloudsync",
+    _CLOUDSYNC_DIR / "__init__.py",
+    submodule_search_locations=[str(_CLOUDSYNC_DIR.resolve())],
+)
+if cloudsync_spec is None or cloudsync_spec.loader is None:  # pragma: no cover - defensive
+    raise ImportError("Unable to load cloudsync package")
+cloudsync_module = importlib.util.module_from_spec(cloudsync_spec)
+cloudsync_spec.loader.exec_module(cloudsync_module)
+sys.modules["custom_components.horticulture_assistant.cloudsync"] = cloudsync_module
+ha_pkg.cloudsync = cloudsync_module
+
+EdgeSyncStore = cloudsync_module.EdgeSyncStore
 from custom_components.horticulture_assistant.config_flow import OptionsFlow  # noqa: E402
-from custom_components.horticulture_assistant.const import OPB_FIELD_MAP  # noqa: E402
+from custom_components.horticulture_assistant.const import DOMAIN, OPB_FIELD_MAP  # noqa: E402
 from custom_components.horticulture_assistant.resolver import (  # noqa: E402
     PreferenceResolver,
     generate_profile,
@@ -17,8 +49,9 @@ from custom_components.horticulture_assistant.resolver import (  # noqa: E402
 
 
 class DummyEntry:
-    def __init__(self, options):
+    def __init__(self, options, entry_id="test_entry"):
         self.options = options
+        self.entry_id = entry_id
 
 
 def make_hass():
@@ -139,6 +172,78 @@ async def test_ai_source_respects_ttl_and_caches():
     local = entry.options["profiles"]["p1"]["local"]
     assert local["citations"][0]["source"] == "ai"
     assert "temp_c_max" in local["metadata"]["citation_map"]
+
+
+@pytest.mark.asyncio
+async def test_resolver_uses_cloud_overlay_when_available():
+    hass = make_hass()
+    entry = DummyEntry(
+        {
+            "profiles": {
+                "p1": {
+                    "name": "Tophat Local",
+                    "sources": {"temp_c_min": {"mode": "manual", "value": 5.0}},
+                    "general": {"name": "Tophat Local"},
+                }
+            }
+        }
+    )
+
+    store = EdgeSyncStore(":memory:")
+    store.update_cloud_cache(
+        "profile",
+        "p1",
+        "tenant-1",
+        {
+            "profile_id": "p1",
+            "profile_type": "line",
+            "parents": ["species-1"],
+            "identity": {"name": "Tophat Cloud"},
+            "taxonomy": {"species": "Vaccinium tophat"},
+            "curated_targets": {"targets": {"vpd": {"vegetative": 0.9}}},
+        },
+    )
+    store.update_cloud_cache(
+        "profile",
+        "species-1",
+        "tenant-1",
+        {
+            "profile_id": "species-1",
+            "profile_type": "species",
+            "parents": [],
+            "curated_targets": {"targets": {"vpd": {"vegetative": 0.85}}},
+        },
+    )
+    store.update_cloud_cache(
+        "computed",
+        "species-1",
+        "tenant-1",
+        {
+            "computed_at": "2025-10-19T00:00:00Z",
+            "payload": {"targets": {"vpd": {"vegetative": 0.8}}},
+        },
+    )
+
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {"cloud_sync_manager": types.SimpleNamespace(store=store)}
+
+    await PreferenceResolver(hass).resolve_profile(entry, "p1")
+
+    profile_options = entry.options["profiles"]["p1"]
+    assert profile_options["thresholds"]["temp_c_min"] == 5.0
+    assert profile_options["library"]["curated_targets"]["targets"]["vpd"]["vegetative"] == 0.9
+    assert profile_options["identity"]["name"] == "Tophat Cloud"
+    computed = profile_options["computed_stats"]
+    assert computed and computed[0]["payload"]["targets"]["vpd"]["vegetative"] == 0.8
+    resolved = profile_options["resolved_targets"]["targets.vpd.vegetative"]
+    assert resolved["value"] == 0.9
+    assert resolved["annotation"]["overlay"] == 0.8
+    sections = profile_options["sections"]
+    assert sections["library"]["profile_id"] == "p1"
+    assert sections["resolved"]["thresholds"]["temp_c_min"] == 5.0
+    assert sections["resolved"]["resolved_targets"]["targets.vpd.vegetative"]["value"] == 0.9
+    assert sections["computed"]["snapshots"][0]["payload"]["targets"]["vpd"]["vegetative"] == 0.8
+    lineage = profile_options.get("lineage", [])
+    assert lineage and lineage[0]["profile_id"] == "p1"
 
 
 @pytest.mark.asyncio

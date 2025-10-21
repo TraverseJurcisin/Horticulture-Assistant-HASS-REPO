@@ -4,13 +4,16 @@ import json
 import sqlite3
 from collections.abc import Iterable, Iterator
 from contextlib import contextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from .events import SyncEvent, decode_ndjson, encode_ndjson
 
-UTC = datetime.UTC
+try:
+    UTC = datetime.UTC
+except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    UTC = timezone.utc  # noqa: UP017
 
 
 class EdgeSyncStore:
@@ -228,3 +231,63 @@ class EdgeSyncStore:
     def export_outbox_ndjson(self) -> str:
         events = self.get_outbox_batch(limit=10_000)
         return encode_ndjson(events)
+
+    # ------------------------------------------------------------------
+    def outbox_size(self) -> int:
+        with self._connection() as conn:
+            row = conn.execute("SELECT COUNT(*) AS total FROM outbox_events").fetchone()
+        if not row:
+            return 0
+        total = row["total"]
+        return int(total) if total is not None else 0
+
+    def count_cloud_cache(self) -> int:
+        with self._connection() as conn:
+            row = conn.execute("SELECT COUNT(*) AS total FROM cloud_cache").fetchone()
+        if not row:
+            return 0
+        total = row["total"]
+        return int(total) if total is not None else 0
+
+    def newest_cloud_cache_update(self) -> datetime | None:
+        return self._fetch_cloud_cache_timestamp("MAX")
+
+    def oldest_cloud_cache_update(self) -> datetime | None:
+        return self._fetch_cloud_cache_timestamp("MIN")
+
+    def cloud_cache_age(self, *, now: datetime | None = None) -> float | None:
+        latest = self.newest_cloud_cache_update()
+        if latest is None:
+            return None
+        now = now or datetime.now(tz=UTC)
+        delta = now - latest.astimezone(UTC)
+        return max(delta.total_seconds() / 86400, 0.0)
+
+    def cloud_cache_oldest_age(self, *, now: datetime | None = None) -> float | None:
+        oldest = self.oldest_cloud_cache_update()
+        if oldest is None:
+            return None
+        now = now or datetime.now(tz=UTC)
+        delta = now - oldest.astimezone(UTC)
+        return max(delta.total_seconds() / 86400, 0.0)
+
+    # ------------------------------------------------------------------
+    def _fetch_cloud_cache_timestamp(self, aggregate: str) -> datetime | None:
+        query = f"SELECT {aggregate}(updated_at) AS ts FROM cloud_cache"
+        with self._connection() as conn:
+            row = conn.execute(query).fetchone()
+        if not row:
+            return None
+        raw = row["ts"]
+        if raw is None:
+            return None
+        return self._parse_timestamp(str(raw))
+
+    def _parse_timestamp(self, value: str) -> datetime | None:
+        try:
+            ts = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+        if ts.tzinfo is None:
+            ts = ts.replace(tzinfo=UTC)
+        return ts.astimezone(UTC)

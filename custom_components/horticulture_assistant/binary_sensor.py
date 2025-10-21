@@ -8,6 +8,7 @@ from homeassistant.components.binary_sensor import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import CATEGORY_CONTROL, CATEGORY_DIAGNOSTIC, DOMAIN
@@ -56,6 +57,11 @@ async def async_setup_entry(
         IrrigationReadinessBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
         FaultDetectionBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
     ]
+
+    manager = stored.get("cloud_sync_manager")
+    if manager:
+        sensors.append(CloudConnectionBinarySensor(manager, entry.entry_id, plant_name))
+        sensors.append(LocalOnlyModeBinarySensor(manager, entry.entry_id, plant_name))
 
     async_add_entities(sensors)
 
@@ -225,3 +231,81 @@ class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
 
         # device_class 'safety': True means unsafe (fault), False means safe
         self._attr_is_on = fault
+
+
+class CloudSyncBinarySensor(BinarySensorEntity):
+    """Base class for cloud sync diagnostic binary sensors."""
+
+    _attr_entity_category = CATEGORY_DIAGNOSTIC
+    _attr_should_poll = True
+
+    def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        self._manager = manager
+        self._entry_id = entry_id
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"cloud:{entry_id}")},
+            name=f"{plant_name} Cloud Sync",
+            manufacturer="Horticulture Assistant",
+            model="Cloud Service",
+        )
+
+    def _cloud_status(self) -> tuple[dict, dict, bool]:  # type: ignore[override]
+        status = self._manager.status()
+        connection = status.get("connection") or {}
+        configured = bool(connection.get("configured", status.get("configured")))
+        self._attr_available = configured
+        return status, connection, configured
+
+
+class CloudConnectionBinarySensor(CloudSyncBinarySensor):
+    """Indicate whether the edge is connected to the cloud service."""
+
+    def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        super().__init__(manager, entry_id, plant_name)
+        self._attr_name = "Cloud Connected"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_cloud_connected"
+        self._attr_device_class = BinarySensorDeviceClass.CONNECTIVITY
+        self._attr_icon = "mdi:cloud-check"
+
+    async def async_update(self) -> None:
+        status, connection, _configured = self._cloud_status()
+        self._attr_is_on = bool(connection.get("connected"))
+        self._attr_extra_state_attributes = {
+            "reason": connection.get("reason"),
+            "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
+            "last_success_age_seconds": connection.get("last_success_age_seconds"),
+            "cloud_snapshot_age_days": status.get("cloud_snapshot_age_days"),
+            "outbox_size": status.get("outbox_size"),
+            "cloud_cache_entries": status.get("cloud_cache_entries"),
+            "last_pull_error": status.get("last_pull_error"),
+            "last_push_error": status.get("last_push_error"),
+        }
+
+
+class LocalOnlyModeBinarySensor(CloudSyncBinarySensor):
+    """Signal when the integration is operating in offline-only mode."""
+
+    def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        super().__init__(manager, entry_id, plant_name)
+        self._attr_name = "Local Only Mode"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_local_only"
+        self._attr_device_class = BinarySensorDeviceClass.PROBLEM
+        self._attr_icon = "mdi:home-off"
+
+    async def async_update(self) -> None:
+        status, connection, _configured = self._cloud_status()
+        local_only = connection.get("local_only")
+        if local_only is None:
+            local_only = not bool(connection.get("connected"))
+        self._attr_is_on = bool(local_only)
+        self._attr_extra_state_attributes = {
+            "reason": connection.get("reason"),
+            "connected": connection.get("connected"),
+            "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
+            "last_success_age_seconds": connection.get("last_success_age_seconds"),
+            "cloud_snapshot_age_days": status.get("cloud_snapshot_age_days"),
+            "outbox_size": status.get("outbox_size"),
+            "cloud_cache_entries": status.get("cloud_cache_entries"),
+            "last_pull_error": status.get("last_pull_error"),
+            "last_push_error": status.get("last_push_error"),
+        }

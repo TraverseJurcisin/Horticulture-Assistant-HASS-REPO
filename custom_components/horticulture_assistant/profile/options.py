@@ -11,8 +11,12 @@ from .schema import (
     ComputedStatSnapshot,
     FieldAnnotation,
     PlantProfile,
+    ProfileComputedSection,
     ProfileLibrarySection,
+    ProfileLineageEntry,
     ProfileLocalSection,
+    ProfileResolvedSection,
+    ProfileSections,
     ResolvedTarget,
 )
 from .utils import ensure_sections
@@ -225,6 +229,22 @@ def options_profile_to_dataclass(
     created_at = local_payload.get("created_at") or options.get("created_at")
     updated_at = local_payload.get("updated_at") or options.get("updated_at")
 
+    resolved_section = ProfileResolvedSection(
+        thresholds=dict(thresholds),
+        resolved_targets=resolved_targets,
+        variables={key: target.to_legacy() for key, target in resolved_targets.items()},
+        citation_map=dict(citations_map) if isinstance(citations_map, Mapping) else dict(citations_map),
+        metadata=dict(local_metadata),
+        last_resolved=last_resolved,
+    )
+
+    computed_section = ProfileComputedSection(
+        snapshots=list(computed_stats),
+        latest=computed_stats[0] if computed_stats else None,
+        contributions=list(computed_stats[0].contributions) if computed_stats else [],
+        metadata=_as_dict(options.get("computed_metadata")),
+    )
+
     profile = PlantProfile(
         plant_id=profile_id,
         display_name=name,
@@ -254,7 +274,36 @@ def options_profile_to_dataclass(
         last_resolved=last_resolved,
         created_at=created_at,
         updated_at=updated_at,
+        sections=ProfileSections(
+            library=library_section,
+            local=local_section,
+            resolved=resolved_section,
+            computed=computed_section,
+        ),
     )
+
+    profile.lineage = [
+        ProfileLineageEntry(
+            profile_id=profile_id,
+            profile_type=profile_type,
+            depth=0,
+            role="self",
+            tenant_id=tenant_id,
+            parents=list(parents),
+            tags=list(tags),
+            identity=dict(identity),
+            taxonomy=dict(taxonomy),
+            policies=dict(policies),
+            stable_knowledge=dict(stable_knowledge),
+            lifecycle=dict(lifecycle),
+            traits=dict(traits),
+            curated_targets=dict(curated_targets),
+            diffs_vs_parent=dict(diffs_vs_parent),
+            metadata=dict(library_metadata),
+            created_at=library_created_at,
+            updated_at=library_updated_at,
+        )
+    ]
 
     return profile
 

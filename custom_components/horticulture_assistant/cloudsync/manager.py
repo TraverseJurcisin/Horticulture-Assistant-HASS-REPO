@@ -6,6 +6,7 @@ import asyncio
 from collections.abc import Mapping
 from contextlib import suppress
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +23,11 @@ from ..const import (
 )
 from .edge_store import EdgeSyncStore
 from .edge_worker import EdgeSyncWorker
+
+try:
+    UTC = datetime.UTC
+except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    UTC = timezone.utc  # noqa: UP017
 
 
 @dataclass(slots=True)
@@ -121,14 +127,76 @@ class CloudSyncManager:
         await self.async_stop()
         await self.async_start()
 
-    def status(self) -> dict[str, Any]:
-        """Return runtime status information for diagnostics."""
+    def status(self, now: datetime | None = None) -> dict[str, Any]:
+        """Return runtime status information for diagnostics and sensors."""
 
+        now = now or datetime.now(tz=UTC)
         status: dict[str, Any] = {
             "enabled": self.config.enabled,
             "configured": self.config.ready,
             "store_path": str(self.store_path),
+            "outbox_size": self.store.outbox_size(),
+            "cloud_cache_entries": self.store.count_cloud_cache(),
+            "cloud_snapshot_age_days": self.store.cloud_cache_age(now=now),
+            "cloud_snapshot_oldest_age_days": self.store.cloud_cache_oldest_age(now=now),
         }
         if self._worker:
             status.update(self._worker.status())
+        status["connection"] = self._connection_summary(status, now)
         return status
+
+    # ------------------------------------------------------------------
+    def _connection_summary(self, status: Mapping[str, Any], now: datetime) -> dict[str, Any]:
+        configured = bool(status.get("configured"))
+        summary: dict[str, Any] = {
+            "configured": configured,
+            "connected": False,
+            "local_only": not configured,
+            "reason": "not_configured" if not configured else None,
+            "last_success_at": status.get("last_success_at"),
+            "last_success_age_seconds": None,
+            "last_success_age_days": None,
+        }
+        if not configured:
+            return summary
+
+        last_success_raw = status.get("last_success_at")
+        if not last_success_raw:
+            summary["local_only"] = True
+            summary["reason"] = "never_synced"
+            return summary
+
+        last_success = self._parse_timestamp(str(last_success_raw))
+        if last_success is None:
+            summary["local_only"] = True
+            summary["reason"] = "invalid_timestamp"
+            return summary
+
+        age_seconds = max((now - last_success).total_seconds(), 0.0)
+        summary["last_success_age_seconds"] = age_seconds
+        summary["last_success_age_days"] = age_seconds / 86400 if age_seconds else 0.0
+
+        error = status.get("last_pull_error") or status.get("last_push_error")
+        threshold_seconds = max(self.config.interval * 2, 300)
+        if error:
+            summary["reason"] = "recent_error"
+            summary["local_only"] = True
+            return summary
+        if age_seconds > threshold_seconds:
+            summary["reason"] = "stale"
+            summary["local_only"] = True
+            return summary
+
+        summary["connected"] = True
+        summary["local_only"] = False
+        summary["reason"] = None
+        return summary
+
+    def _parse_timestamp(self, raw: str) -> datetime | None:
+        try:
+            ts = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+        if ts.tzinfo is None:
+            ts = ts.replace(tzinfo=UTC)
+        return ts.astimezone(UTC)

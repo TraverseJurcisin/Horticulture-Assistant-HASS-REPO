@@ -95,6 +95,10 @@ async def test_replace_sensor_updates_entry_and_registry(hass):
     assert entry.options[CONF_PROFILES]["p1"]["sensors"]["temperature"] == "sensor.temp"
     prof = reg.get("p1")
     assert prof.general["sensors"]["temperature"] == "sensor.temp"
+    sections = entry.options[CONF_PROFILES]["p1"].get("sections", {})
+    assert sections["local"]["general"]["sensors"]["temperature"] == "sensor.temp"
+    refreshed_local = prof.refresh_sections().local
+    assert refreshed_local.general["sensors"]["temperature"] == "sensor.temp"
 
 
 async def test_replace_sensor_unknown_profile_raises(hass):
@@ -285,6 +289,8 @@ async def test_add_profile_copy_from(hass):
     prof = reg.get(pid)
     assert prof.general["sensors"]["temperature"] == "sensor.t"
     assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
+    sections = entry.options[CONF_PROFILES][pid]["sections"]
+    assert sections["local"]["general"]["sensors"]["temperature"] == "sensor.t"
 
 
 async def test_add_profile_sets_new_plant_id_in_options(hass):
@@ -310,6 +316,9 @@ async def test_add_profile_sets_plant_id_for_new_entries(hass):
     pid = await reg.async_add_profile("Rosemary")
 
     assert entry.options[CONF_PROFILES][pid]["plant_id"] == pid
+    sections = entry.options[CONF_PROFILES][pid]["sections"]
+    assert sections["local"]["general"].get("sensors", {}) == {}
+    assert reg.get(pid).refresh_sections().local.general.get("sensors", {}) == {}
 
 
 async def test_add_profile_generates_sequential_suffixes(hass):

@@ -1,7 +1,10 @@
 from custom_components.horticulture_assistant.profile.schema import (
     Citation,
+    ComputedStatSnapshot,
     FieldAnnotation,
     PlantProfile,
+    ProfileComputedSection,
+    ProfileSections,
     ResolvedTarget,
 )
 
@@ -90,6 +93,7 @@ def test_to_json_includes_legacy_views():
     assert payload["library"]["metadata"]["curation"] == "expert"
     assert payload["local"]["general"]["note"] == "test"
     assert payload["local"]["metadata"]["note"] == "local"
+    assert payload["sections"]["resolved"]["thresholds"]["temp"] == 20
 
 
 def test_from_json_thresholds_fallback():
@@ -112,3 +116,46 @@ def test_roundtrip_structured_sections():
     assert reconstructed.library_updated_at == "2024-01-02T00:00:00Z"
     assert reconstructed.local_metadata == {"note": "local"}
     assert reconstructed.general["note"] == "test"
+    assert payload["sections"]["library"]["profile_id"] == "p1"
+    assert reconstructed.sections is not None
+
+
+def test_refresh_sections_preserves_computed_metadata():
+    snapshot = ComputedStatSnapshot(
+        stats_version="v1",
+        computed_at="2025-01-01T00:00:00Z",
+        snapshot_id="sha256:abc",
+        payload={"targets": {"temp": 19.5}},
+    )
+    profile = PlantProfile(
+        plant_id="p-computed",
+        display_name="Computed",
+        resolved_targets={
+            "targets.temp.day": ResolvedTarget(
+                value=20.0,
+                annotation=FieldAnnotation(source_type="manual"),
+            )
+        },
+        computed_stats=[snapshot],
+    )
+    profile.sections = ProfileSections(
+        library=profile.library_section(),
+        local=profile.local_section(),
+        resolved=profile.resolved_section(),
+        computed=ProfileComputedSection(
+            snapshots=[snapshot],
+            latest=snapshot,
+            contributions=[],
+            metadata={"computed_at": "2025-01-01T00:00:00Z", "staleness_days": 1.0},
+        ),
+    )
+
+    profile.general.setdefault("sensors", {})
+    profile.general["sensors"]["temp"] = "sensor.one"
+    profile.refresh_sections()
+    profile.general["sensors"]["temp"] = "sensor.two"
+
+    payload = profile.to_json()
+    sections = payload["sections"]
+    assert sections["computed"]["metadata"]["computed_at"] == "2025-01-01T00:00:00Z"
+    assert sections["local"]["general"]["sensors"]["temp"] == "sensor.two"

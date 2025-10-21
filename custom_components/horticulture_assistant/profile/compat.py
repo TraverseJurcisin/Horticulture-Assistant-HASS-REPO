@@ -28,6 +28,14 @@ def ensure_profile_sections(profile: MutableMapping[str, Any]) -> tuple[dict[str
     variables = _coerce_dict(profile.get("variables"))
     profile["variables"] = variables
 
+    sections = _coerce_dict(profile.get("sections"))
+    resolved_section = _coerce_dict(sections.get("resolved"))
+    resolved_section["thresholds"] = thresholds
+    resolved_section["resolved_targets"] = resolved
+    resolved_section["variables"] = variables
+    sections["resolved"] = resolved_section
+    profile["sections"] = sections
+
     return thresholds, resolved, variables
 
 

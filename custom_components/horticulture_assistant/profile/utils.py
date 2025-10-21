@@ -49,13 +49,15 @@ def ensure_sections(
     data["general"] = general_dict
 
     profile = PlantProfile.from_json(data)
-    library = profile.library_section()
-    local = profile.local_section()
+    sections = profile.refresh_sections()
+    library = sections.library
+    local = sections.local
 
     payload["plant_id"] = profile.plant_id
     payload["display_name"] = profile.display_name
     payload["library"] = library.to_json()
     payload["local"] = local.to_json()
+    payload["sections"] = sections.to_json()
 
     return library, local
 
@@ -91,7 +93,8 @@ def normalise_profile_payload(
     data["general"] = general_dict
 
     profile = PlantProfile.from_json(data)
-    return profile.to_json()
+    payload = profile.to_json()
+    return payload
 
 
 def citations_map_to_list(citations_map: Mapping[str, Any]) -> list[Citation]:
@@ -205,6 +208,12 @@ def sync_general_section(
     merged_general.update(general_map)
     local_map["general"] = merged_general
     payload["local"] = local_map
+
+    ensure_sections(
+        payload,
+        plant_id=payload.get("plant_id") or payload.get("profile_id") or payload.get("name"),
+        display_name=payload.get("display_name") or payload.get("name"),
+    )
 
 
 __all__ = [
