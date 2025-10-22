@@ -11,7 +11,7 @@ from custom_components.horticulture_assistant.const import (
     PROFILE_SCOPE_DEFAULT,
 )
 from custom_components.horticulture_assistant.profile import store as profile_store
-from custom_components.horticulture_assistant.profile.schema import BioProfile
+from custom_components.horticulture_assistant.profile.schema import BioProfile, SpeciesProfile
 from custom_components.horticulture_assistant.profile_registry import ProfileRegistry
 
 pytestmark = pytest.mark.asyncio
@@ -258,6 +258,32 @@ async def test_record_harvest_event_updates_statistics(hass):
 
     stored_cultivar = await profile_store.async_load_profile(hass, "cultivar.1")
     assert stored_cultivar is not None and len(stored_cultivar.harvest_history) == 1
+
+
+async def test_relink_profiles_populates_species_relationships(hass):
+    species = SpeciesProfile(profile_id="species.alpha", display_name="Alpha")
+    cultivar = BioProfile(
+        profile_id="cultivar.beta",
+        display_name="Beta",
+        profile_type="cultivar",
+    )
+    cultivar.parents = ["species.alpha"]
+
+    await profile_store.async_save_profile(hass, species)
+    await profile_store.async_save_profile(hass, cultivar)
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    species_prof = reg.get("species.alpha")
+    cultivar_prof = reg.get("cultivar.beta")
+
+    assert species_prof is not None
+    assert cultivar_prof is not None
+    assert cultivar_prof.species_profile_id == "species.alpha"
+    assert species_prof.cultivar_ids == ["cultivar.beta"]
+    assert cultivar_prof.parents[0] == "species.alpha"
 
 
 async def test_export_uses_hass_config_path(hass, tmp_path, monkeypatch):

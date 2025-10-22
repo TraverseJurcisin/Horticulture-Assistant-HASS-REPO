@@ -30,7 +30,7 @@ from .const import (
 from .profile.options import options_profile_to_dataclass
 from .profile.schema import BioProfile, HarvestEvent, RunEvent
 from .profile.statistics import recompute_statistics
-from .profile.utils import ensure_sections, sync_general_section
+from .profile.utils import ensure_sections, link_species_and_cultivars, sync_general_section
 
 STORAGE_VERSION = 2
 STORAGE_KEY = "horticulture_assistant_profiles"
@@ -46,6 +46,13 @@ class ProfileRegistry:
         self.entry = entry
         self._store: Store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
         self._profiles: dict[str, BioProfile] = {}
+
+    def _relink_profiles(self) -> None:
+        if not self._profiles:
+            return
+        link_species_and_cultivars(self._profiles.values())
+        for profile in self._profiles.values():
+            profile.refresh_sections()
 
     # ---------------------------------------------------------------------
     # Initialization and access helpers
@@ -93,9 +100,11 @@ class ProfileRegistry:
             profile.general.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
 
         self._profiles = profiles
+        self._relink_profiles()
         recompute_statistics(self._profiles.values())
 
     async def async_save(self) -> None:
+        self._relink_profiles()
         recompute_statistics(self._profiles.values())
         await self._store.async_save({"profiles": {pid: prof.to_json() for pid, prof in self._profiles.items()}})
 
@@ -243,6 +252,7 @@ class ProfileRegistry:
         )
         prof_obj.refresh_sections()
         self._profiles[candidate] = prof_obj
+        self._relink_profiles()
         await self.async_save()
         return candidate
 
@@ -263,6 +273,7 @@ class ProfileRegistry:
         self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
         self.entry.options = new_opts
         self._profiles.pop(profile_id, None)
+        self._relink_profiles()
         await self.async_save()
 
     async def async_link_sensors(self, profile_id: str, sensors: dict[str, str]) -> None:
@@ -401,6 +412,7 @@ class ProfileRegistry:
         new_prof.citations = [deepcopy(cit) for cit in prof.citations]
         new_prof.last_resolved = prof.last_resolved
         new_prof.refresh_sections()
+        self._relink_profiles()
         await self.async_save()
         return pid
 

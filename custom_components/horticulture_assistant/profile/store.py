@@ -7,7 +7,7 @@ from homeassistant.helpers.storage import Store
 
 from .options import options_profile_to_dataclass
 from .schema import BioProfile
-from .utils import normalise_profile_payload
+from .utils import link_species_and_cultivars, normalise_profile_payload
 
 STORE_VERSION = 1
 STORE_KEY = "horticulture_assistant_profiles"
@@ -68,7 +68,9 @@ async def async_load_profiles(hass: HomeAssistant) -> dict[str, BioProfile]:
     """Load all stored profiles as dataclasses."""
 
     data = await async_load_all(hass)
-    return {pid: BioProfile.from_json(p) for pid, p in data.items()}
+    profiles = {pid: BioProfile.from_json(p) for pid, p in data.items()}
+    link_species_and_cultivars(profiles.values())
+    return profiles
 
 
 async def async_delete_profile(hass: HomeAssistant, plant_id: str) -> None:

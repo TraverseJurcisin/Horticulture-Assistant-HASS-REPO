@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Iterable, Mapping, MutableMapping
 from typing import Any
 
 from ..const import CONF_PROFILE_SCOPE
@@ -9,6 +9,7 @@ from .schema import (
     BioProfile,
     ProfileLibrarySection,
     ProfileLocalSection,
+    SpeciesProfile,
 )
 
 
@@ -218,10 +219,65 @@ def sync_general_section(
     )
 
 
+def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
+    """Backfill species↔cultivar relationships for a collection of profiles."""
+
+    species_map: dict[str, BioProfile] = {}
+    for profile in profiles:
+        if profile.profile_type == "species":
+            species_map[profile.profile_id] = profile
+            if isinstance(profile, SpeciesProfile):
+                profile.cultivar_ids = []
+            else:  # pragma: no cover - safety for partially migrated data
+                setattr(profile, "cultivar_ids", [])
+
+    for profile in profiles:
+        if profile.profile_type == "species":
+            continue
+
+        species_id = profile.species_profile_id
+        if not species_id:
+            for parent in profile.parents:
+                parent_id = str(parent)
+                if parent_id in species_map:
+                    species_id = parent_id
+                    break
+
+        if not species_id or species_id not in species_map:
+            continue
+
+        profile.species_profile_id = species_id
+        species = species_map[species_id]
+
+        deduped_parents: list[str] = []
+        seen_parent: set[str] = set()
+        for parent in profile.parents:
+            parent_id = str(parent)
+            if not parent_id or parent_id in seen_parent:
+                continue
+            seen_parent.add(parent_id)
+            deduped_parents.append(parent_id)
+        if species.profile_id not in seen_parent:
+            deduped_parents.insert(0, species.profile_id)
+        profile.parents = deduped_parents
+
+        cultivar_ids = list(getattr(species, "cultivar_ids", []))
+        if profile.profile_id not in cultivar_ids:
+            cultivar_ids.append(profile.profile_id)
+        setattr(species, "cultivar_ids", cultivar_ids)
+
+    for species in species_map.values():
+        cultivar_ids = getattr(species, "cultivar_ids", [])
+        if cultivar_ids:
+            deduped = list(dict.fromkeys(cultivar_ids))
+            setattr(species, "cultivar_ids", deduped)
+
+
 __all__ = [
     "citations_map_to_list",
     "ensure_sections",
     "normalise_profile_payload",
     "determine_species_slug",
+    "link_species_and_cultivars",
     "sync_general_section",
 ]

@@ -1,11 +1,17 @@
 from datetime import datetime
 
+import pytest
+
+pytest.importorskip("httpx")
+
 from fastapi.testclient import TestClient
 
 from cloud.api.main import create_app
 from custom_components.horticulture_assistant.cloudsync import SyncEvent, VectorClock
 
 UTC = datetime.UTC
+
+AUTH_HEADERS = {"X-Tenant-ID": "tenant-1", "X-Roles": "admin,device,analytics"}
 
 
 def _make_event(event_id: str, entity_id: str, patch: dict) -> SyncEvent:
@@ -27,7 +33,7 @@ def _post_event(client: TestClient, event: SyncEvent) -> None:
     resp = client.post(
         "/sync/up",
         data=event.to_json_line(),
-        headers={"X-Tenant-ID": "tenant-1"},
+        headers=AUTH_HEADERS.copy(),
     )
     assert resp.status_code == 200
 
@@ -82,13 +88,13 @@ def test_profile_detail_and_stats_resolution() -> None:
             }
         ],
     }
-    resp = client.post("/stats", json=stats_payload, headers={"X-Tenant-ID": "tenant-1"})
+    resp = client.post("/stats", json=stats_payload, headers=AUTH_HEADERS.copy())
     assert resp.status_code == 200
     assert resp.json()["acked"]
 
     detail_resp = client.get(
         "/profiles/cultivar-1",
-        headers={"X-Tenant-ID": "tenant-1"},
+        headers=AUTH_HEADERS.copy(),
     )
     assert detail_resp.status_code == 200
     profile = detail_resp.json()["profile"]
@@ -104,13 +110,33 @@ def test_profile_detail_and_stats_resolution() -> None:
     resolve_resp = client.get(
         "/resolve",
         params={"profile": "cultivar-1", "field": "targets.vpd.vegetative"},
-        headers={"X-Tenant-ID": "tenant-1"},
+        headers=AUTH_HEADERS.copy(),
     )
     assert resolve_resp.status_code == 200
     resolved = resolve_resp.json()
     assert resolved["value"] == 1.1
     assert resolved["overlay"] == 0.8
 
-    list_resp = client.get("/profiles", headers={"X-Tenant-ID": "tenant-1"})
+    list_resp = client.get("/profiles", headers=AUTH_HEADERS.copy())
     assert list_resp.status_code == 200
     assert len(list_resp.json()["profiles"]) == 2
+
+
+def test_stats_requires_analytics_role() -> None:
+    app = create_app()
+    client = TestClient(app)
+
+    stats_payload = {
+        "profile_id": "species-x",
+        "stats_version": "2024.10",
+        "computed_at": "2025-10-20T00:00:00Z",
+    }
+
+    resp = client.post(
+        "/stats",
+        json=stats_payload,
+        headers={"X-Tenant-ID": "tenant-1", "X-Roles": "viewer"},
+    )
+    assert resp.status_code == 403
+    body = resp.json()
+    assert body["detail"]["error"] == "insufficient_role"

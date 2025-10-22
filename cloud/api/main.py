@@ -5,7 +5,7 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import Annotated, Any
 
-from fastapi import FastAPI, Header, HTTPException, Query, Request, Response
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 
 from custom_components.horticulture_assistant.cloudsync import (
     ConflictResolver,
@@ -15,6 +15,16 @@ from custom_components.horticulture_assistant.cloudsync import (
     VectorClock,
     decode_ndjson,
     encode_ndjson,
+)
+
+from .auth import (
+    Principal,
+    ROLE_ADMIN,
+    ROLE_ANALYTICS,
+    ROLE_DEVICE,
+    ROLE_EDITOR,
+    ROLE_VIEWER,
+    principal_dependency,
 )
 
 UTC = datetime.UTC
@@ -248,23 +258,25 @@ def create_app() -> FastAPI:
     @app.post("/sync/up")
     async def handle_sync_up(
         request: Request,
-        tenant: str = Header(..., alias="X-Tenant-ID"),
+        principal: Principal = Depends(principal_dependency),
     ) -> dict[str, Any]:
+        principal.require(ROLE_ADMIN, ROLE_DEVICE)
         payload = (await request.body()).decode()
         if not payload.strip():
             return {"acked": []}
         try:
-            acked = state.ingest(payload, tenant_id=tenant)
+            acked = state.ingest(payload, tenant_id=principal.tenant_id)
         except ValueError as err:  # pragma: no cover - defensive
             raise HTTPException(status_code=400, detail=str(err)) from err
         return {"acked": acked}
 
     @app.get("/sync/down")
     async def handle_sync_down(
-        tenant: str = Header(..., alias="X-Tenant-ID"),
+        principal: Principal = Depends(principal_dependency),
         cursor: int | None = Query(None),
     ) -> Response:
-        ndjson_payload, next_cursor = state.stream(cursor, tenant_id=tenant)
+        principal.require(ROLE_ADMIN, ROLE_DEVICE, ROLE_VIEWER)
+        ndjson_payload, next_cursor = state.stream(cursor, tenant_id=principal.tenant_id)
         if not ndjson_payload:
             return Response(status_code=204)
         headers: dict[str, str] = {}
@@ -274,40 +286,44 @@ def create_app() -> FastAPI:
 
     @app.get("/resolve")
     async def handle_resolve(
-        tenant: str = Header(..., alias="X-Tenant-ID"),
+        principal: Principal = Depends(principal_dependency),
         profile: str = Query(...),
         field: str = Query(...),
     ) -> Mapping[str, Any]:
-        return state.resolve(tenant, profile, field)
+        principal.require(ROLE_VIEWER, ROLE_EDITOR, ROLE_ADMIN, ROLE_ANALYTICS)
+        return state.resolve(principal.tenant_id, profile, field)
 
     @app.get("/profiles")
     async def handle_profiles(
-        tenant: str = Header(..., alias="X-Tenant-ID"),
+        principal: Principal = Depends(principal_dependency),
         profile_type: str | None = Query(None, alias="type"),
     ) -> dict[str, Any]:
-        items = state.list_profiles(tenant, profile_type)
+        principal.require(ROLE_VIEWER, ROLE_EDITOR, ROLE_ADMIN, ROLE_ANALYTICS)
+        items = state.list_profiles(principal.tenant_id, profile_type)
         return {"profiles": items}
 
     @app.get("/profiles/{profile_id}")
     async def handle_profile_detail(
         profile_id: str,
-        tenant: str = Header(..., alias="X-Tenant-ID"),
+        principal: Principal = Depends(principal_dependency),
         fields: Annotated[list[str] | None, Query(alias="field")] = None,
     ) -> dict[str, Any]:
-        resolved = state.resolve_profile(tenant, profile_id, fields=fields)
+        principal.require(ROLE_VIEWER, ROLE_EDITOR, ROLE_ADMIN, ROLE_ANALYTICS)
+        resolved = state.resolve_profile(principal.tenant_id, profile_id, fields=fields)
         return {"profile": resolved}
 
     @app.post("/profiles")
     async def handle_profiles_post(
         data: dict[str, Any],
-        tenant: str = Header(..., alias="X-Tenant-ID"),
+        principal: Principal = Depends(principal_dependency),
     ) -> dict[str, Any]:
+        principal.require(ROLE_EDITOR, ROLE_ADMIN)
         profile_id = data.get("profile_id")
         if not profile_id:
             raise HTTPException(status_code=400, detail="profile_id required")
         event = SyncEvent(
             event_id=str(data.get("event_id", profile_id)),
-            tenant_id=str(data.get("tenant_id", tenant)),
+            tenant_id=str(data.get("tenant_id", principal.tenant_id)),
             device_id=str(data.get("device_id", "cloud")),
             ts=datetime.now(tz=UTC),
             entity_type="profile",
@@ -317,14 +333,15 @@ def create_app() -> FastAPI:
             vector=VectorClock(device="cloud", counter=int(len(state.events) + 1)),
             actor=str(data.get("actor", "api")),
         )
-        acked = state.ingest(event.to_json_line(), tenant_id=tenant)
+        acked = state.ingest(event.to_json_line(), tenant_id=principal.tenant_id)
         return {"acked": acked, "profile_id": profile_id}
 
     @app.post("/stats")
     async def handle_stats_post(
         data: dict[str, Any],
-        tenant: str = Header(..., alias="X-Tenant-ID"),
+        principal: Principal = Depends(principal_dependency),
     ) -> dict[str, Any]:
+        principal.require(ROLE_ANALYTICS, ROLE_ADMIN)
         profile_id = data.get("profile_id")
         if not profile_id:
             raise HTTPException(status_code=400, detail="profile_id required")
@@ -332,7 +349,7 @@ def create_app() -> FastAPI:
         patch = {key: value for key, value in data.items() if key not in meta_keys}
         event = SyncEvent(
             event_id=str(data.get("event_id", f"stats-{profile_id}")),
-            tenant_id=str(data.get("tenant_id", tenant)),
+            tenant_id=str(data.get("tenant_id", principal.tenant_id)),
             device_id=str(data.get("device_id", "cloud")),
             ts=datetime.now(tz=UTC),
             entity_type="computed",
@@ -342,7 +359,7 @@ def create_app() -> FastAPI:
             vector=VectorClock(device="cloud", counter=int(len(state.events) + 1)),
             actor=str(data.get("actor", "api")),
         )
-        acked = state.ingest(event.to_json_line(), tenant_id=tenant)
+        acked = state.ingest(event.to_json_line(), tenant_id=principal.tenant_id)
         return {"acked": acked, "profile_id": profile_id}
 
     return app

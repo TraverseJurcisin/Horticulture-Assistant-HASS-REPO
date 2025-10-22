@@ -21,6 +21,7 @@ from .utils import (
     citations_map_to_list,
     determine_species_slug,
     ensure_sections,
+    link_species_and_cultivars,
     normalise_profile_payload,
     sync_general_section,
 )
@@ -44,6 +45,7 @@ __all__ = [
     "citations_map_to_list",
     "determine_species_slug",
     "ensure_sections",
+    "link_species_and_cultivars",
     "normalise_profile_payload",
     "sync_general_section",
 ]
