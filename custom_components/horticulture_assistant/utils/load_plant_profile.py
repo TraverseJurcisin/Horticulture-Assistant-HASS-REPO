@@ -15,11 +15,11 @@ from typing import Any
 
 _LOGGER = logging.getLogger(__name__)
 
-__all__ = ["PlantProfile", "load_plant_profile", "clear_profile_cache"]
+__all__ = ["LoadedBioProfile", "load_plant_profile", "clear_profile_cache"]
 
 
 @dataclass(slots=True)
-class PlantProfile:
+class LoadedBioProfile:
     """Loaded plant profile data."""
 
     plant_id: str
@@ -34,14 +34,18 @@ class PlantProfile:
         return self.as_dict()[item]
 
 
+# Backwards compatibility alias for callers still importing ``BioProfile`` directly.
+BioProfile = LoadedBioProfile
+
+
 @cache
 def load_plant_profile(
     plant_id: str,
     base_path: str | None = None,
     *,
     include_validation_files: bool = False,
-) -> PlantProfile | dict:
-    """Return a :class:`PlantProfile` for ``plant_id``.
+) -> LoadedBioProfile | dict:
+    """Return a :class:`LoadedBioProfile` for ``plant_id``.
 
     All ``*.json`` files found under ``plants/<plant_id>/`` are parsed and
     merged into one profile. ``profile_index.json`` and, by default,
@@ -64,7 +68,7 @@ def load_plant_profile(
 
     Returns
     -------
-    PlantProfile | dict
+    LoadedBioProfile | dict
         The aggregated profile information, or ``{}`` if nothing was loaded.
     """
     # Determine the base directory and plant profile directory
@@ -126,7 +130,7 @@ def load_plant_profile(
     # Log summary of modules loaded
     _LOGGER.info("Loaded %d profile modules for plant '%s'.", count_loaded, plant_id)
 
-    return PlantProfile(plant_id=str(plant_id), profile_data=profile_data)
+    return LoadedBioProfile(plant_id=str(plant_id), profile_data=profile_data)
 
 
 def clear_profile_cache() -> None:

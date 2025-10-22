@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 from collections.abc import Iterable, Mapping
 from copy import deepcopy
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -27,11 +28,14 @@ from .const import (
     PROFILE_SCOPE_DEFAULT,
 )
 from .profile.options import options_profile_to_dataclass
-from .profile.schema import PlantProfile
+from .profile.schema import BioProfile, HarvestEvent, RunEvent
+from .profile.statistics import recompute_statistics
 from .profile.utils import ensure_sections, sync_general_section
 
 STORAGE_VERSION = 2
 STORAGE_KEY = "horticulture_assistant_profiles"
+
+UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 
 class ProfileRegistry:
@@ -41,7 +45,7 @@ class ProfileRegistry:
         self.hass = hass
         self.entry = entry
         self._store: Store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
-        self._profiles: dict[str, PlantProfile] = {}
+        self._profiles: dict[str, BioProfile] = {}
 
     # ---------------------------------------------------------------------
     # Initialization and access helpers
@@ -52,12 +56,18 @@ class ProfileRegistry:
         data = await self._store.async_load() or {}
 
         # Older versions stored profiles as a list; convert to the new mapping
-        # structure keyed by ``plant_id``.
+        # structure keyed by the legacy ``plant_id`` identifier.
         if isinstance(data, list):  # pragma: no cover - legacy format
-            data = {"profiles": {p["plant_id"]: p for p in data if "plant_id" in p}}
+            data = {
+                "profiles": {
+                    p["plant_id"]: p
+                    for p in data
+                    if isinstance(p, Mapping) and p.get("plant_id")
+                }
+            }
 
         stored_profiles = data.get("profiles", {})
-        profiles: dict[str, PlantProfile] = {}
+        profiles: dict[str, BioProfile] = {}
 
         options_profiles = self.entry.options.get(CONF_PROFILES, {}) or {}
         for pid, payload in options_profiles.items():
@@ -71,34 +81,36 @@ class ProfileRegistry:
             except Exception:
                 copy = dict(payload)
                 ensure_sections(copy, plant_id=pid, display_name=display_name)
-                profile = PlantProfile.from_json(copy)
+                profile = BioProfile.from_json(copy)
             profiles[pid] = profile
 
         for pid, payload in stored_profiles.items():
             if pid in profiles:
                 continue
-            profiles[pid] = PlantProfile.from_json(payload)
+            profiles[pid] = BioProfile.from_json(payload)
 
         for profile in profiles.values():
             profile.general.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
 
         self._profiles = profiles
+        recompute_statistics(self._profiles.values())
 
     async def async_save(self) -> None:
+        recompute_statistics(self._profiles.values())
         await self._store.async_save({"profiles": {pid: prof.to_json() for pid, prof in self._profiles.items()}})
 
     # Backwards compatibility for previous method name
     async_initialize = async_load
 
-    def list_profiles(self) -> list[PlantProfile]:
+    def list_profiles(self) -> list[BioProfile]:
         """Return all known profiles."""
 
         return list(self._profiles.values())
 
-    def iter_profiles(self) -> list[PlantProfile]:
+    def iter_profiles(self) -> list[BioProfile]:
         return self.list_profiles()
 
-    def get_profile(self, plant_id: str) -> PlantProfile | None:
+    def get_profile(self, plant_id: str) -> BioProfile | None:
         """Return a specific profile by id."""
 
         return self._profiles.get(plant_id)
@@ -216,6 +228,7 @@ class ProfileRegistry:
         sync_general_section(new_profile, general)
         new_profile["sensors"] = sensors_map
         new_profile.pop("scope", None)
+        new_profile["profile_id"] = candidate
         new_profile["plant_id"] = candidate
         profiles[candidate] = new_profile
         new_opts = dict(self.entry.options)
@@ -284,11 +297,75 @@ class ProfileRegistry:
             prof_obj.refresh_sections()
         await self.async_save()
 
+    async def async_record_run_event(
+        self,
+        profile_id: str,
+        payload: Mapping[str, Any] | RunEvent,
+    ) -> RunEvent:
+        """Append a cultivation run event for ``profile_id``.
+
+        Parameters
+        ----------
+        profile_id: str
+            Identifier of the cultivar or species profile.
+        payload: Mapping[str, Any] | RunEvent
+            Raw event data or an already-instantiated :class:`RunEvent`.
+
+        Returns
+        -------
+        RunEvent
+            The normalised event that was stored.
+        """
+
+        prof = self._profiles.get(profile_id)
+        if prof is None:
+            raise ValueError(f"unknown profile {profile_id}")
+
+        event = payload if isinstance(payload, RunEvent) else RunEvent.from_json(payload)
+        prof.add_run_event(event)
+        prof.updated_at = datetime.now(tz=UTC).isoformat()
+        prof.refresh_sections()
+        await self.async_save()
+        return prof.run_history[-1]
+
+    async def async_record_harvest_event(
+        self,
+        profile_id: str,
+        payload: Mapping[str, Any] | HarvestEvent,
+    ) -> HarvestEvent:
+        """Append a harvest event and recompute statistics for ``profile_id``.
+
+        Parameters
+        ----------
+        profile_id: str
+            Identifier of the cultivar being harvested.
+        payload: Mapping[str, Any] | HarvestEvent
+            Raw event data or an already-instantiated :class:`HarvestEvent`.
+
+        Returns
+        -------
+        HarvestEvent
+            The normalised event that was stored.
+        """
+
+        prof = self._profiles.get(profile_id)
+        if prof is None:
+            raise ValueError(f"unknown profile {profile_id}")
+
+        event = (
+            payload if isinstance(payload, HarvestEvent) else HarvestEvent.from_json(payload)
+        )
+        prof.add_harvest_event(event)
+        prof.updated_at = datetime.now(tz=UTC).isoformat()
+        prof.refresh_sections()
+        await self.async_save()
+        return prof.harvest_history[-1]
+
     async def async_import_template(self, template: str, name: str | None = None) -> str:
         """Create a profile from a bundled template.
 
         Templates are stored under ``data/templates/<template>.json`` and
-        contain a serialised :class:`PlantProfile`.  The new profile will copy
+        contain a serialised :class:`BioProfile`.  The new profile will copy
         variables and metadata from the template while generating a unique
         identifier based on ``name`` or the template's display name.
         """
@@ -299,7 +376,7 @@ class ProfileRegistry:
 
         text = template_path.read_text(encoding="utf-8")
         data = json.loads(text)
-        prof = PlantProfile.from_json(data)
+        prof = BioProfile.from_json(data)
         scope = (prof.general or {}).get(CONF_PROFILE_SCOPE)
         pid = await self.async_add_profile(name or prof.display_name, scope=scope)
         new_prof = self._profiles[pid]
@@ -351,7 +428,23 @@ class ProfileRegistry:
 
         return [p.summary() for p in self._profiles.values()]
 
-    def __iter__(self) -> Iterable[PlantProfile]:
+    def diagnostics_snapshot(self) -> list[dict[str, Any]]:
+        """Return expanded diagnostics data for every profile."""
+
+        snapshot: list[dict[str, Any]] = []
+        for profile in self._profiles.values():
+            snapshot.append(
+                {
+                    "summary": profile.summary(),
+                    "run_history": [event.to_json() for event in profile.run_history],
+                    "harvest_history": [event.to_json() for event in profile.harvest_history],
+                    "statistics": [stat.to_json() for stat in profile.statistics],
+                    "lineage": [entry.to_json() for entry in profile.lineage],
+                }
+            )
+        return snapshot
+
+    def __iter__(self) -> Iterable[BioProfile]:
         return iter(self._profiles.values())
 
     def __len__(self) -> int:  # pragma: no cover - trivial

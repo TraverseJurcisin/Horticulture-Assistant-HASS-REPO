@@ -90,6 +90,8 @@ SERVICE_RESOLVE_PROFILE = "resolve_profile"
 SERVICE_RESOLVE_ALL = "resolve_all"
 SERVICE_GENERATE_PROFILE = "generate_profile"
 SERVICE_CLEAR_CACHES = "clear_caches"
+SERVICE_RECORD_RUN_EVENT = "record_run_event"
+SERVICE_RECORD_HARVEST_EVENT = "record_harvest_event"
 
 SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_REPLACE_SENSOR,
@@ -114,6 +116,8 @@ SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_RESOLVE_ALL,
     SERVICE_GENERATE_PROFILE,
     SERVICE_CLEAR_CACHES,
+    SERVICE_RECORD_RUN_EVENT,
+    SERVICE_RECORD_HARVEST_EVENT,
 )
 
 
@@ -239,6 +243,58 @@ async def async_register_all(
         except ValueError as err:
             raise HomeAssistantError(str(err)) from err
         _LOGGER.info("Exported profile %s to %s", pid, out)
+
+    async def _srv_record_run_event(call) -> ServiceResponse:
+        profile_id: str = call.data["profile_id"]
+        event_payload = {
+            "run_id": call.data["run_id"],
+            "started_at": call.data["started_at"],
+        }
+        if species_id := call.data.get("species_id"):
+            event_payload["species_id"] = species_id
+        if ended := call.data.get("ended_at"):
+            event_payload["ended_at"] = ended
+        if environment := call.data.get("environment"):
+            event_payload["environment"] = dict(environment)
+        if metadata := call.data.get("metadata"):
+            event_payload["metadata"] = dict(metadata)
+
+        try:
+            stored = await registry.async_record_run_event(profile_id, event_payload)
+        except ValueError as err:
+            raise HomeAssistantError(str(err)) from err
+
+        return {"run_event": stored.to_json()}
+
+    async def _srv_record_harvest_event(call) -> ServiceResponse:
+        profile_id: str = call.data["profile_id"]
+        event_payload = {
+            "harvest_id": call.data["harvest_id"],
+            "harvested_at": call.data["harvested_at"],
+            "yield_grams": call.data["yield_grams"],
+        }
+        for key in ("species_id", "run_id"):
+            if value := call.data.get(key):
+                event_payload[key] = value
+        for key in ("area_m2", "wet_weight_grams", "dry_weight_grams"):
+            if key in call.data and call.data[key] is not None:
+                event_payload[key] = call.data[key]
+        if call.data.get("fruit_count") is not None:
+            event_payload["fruit_count"] = call.data["fruit_count"]
+        if metadata := call.data.get("metadata"):
+            event_payload["metadata"] = dict(metadata)
+
+        try:
+            stored = await registry.async_record_harvest_event(profile_id, event_payload)
+        except ValueError as err:
+            raise HomeAssistantError(str(err)) from err
+
+        profile = registry.get_profile(profile_id)
+        statistics = [stat.to_json() for stat in profile.statistics] if profile else []
+        return {
+            "harvest_event": stored.to_json(),
+            "statistics": statistics,
+        }
 
     async def _srv_import_profiles(call) -> None:
         path = call.data["path"]
@@ -476,6 +532,44 @@ async def async_register_all(
         SERVICE_EXPORT_PROFILE,
         _srv_export_profile,
         schema=vol.Schema({vol.Required("profile_id"): str, vol.Required("path"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_RECORD_RUN_EVENT,
+        _srv_record_run_event,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Required("run_id"): str,
+                vol.Required("started_at"): str,
+                vol.Optional("species_id"): str,
+                vol.Optional("ended_at"): str,
+                vol.Optional("environment"): dict,
+                vol.Optional("metadata"): dict,
+            }
+        ),
+        supports_response=True,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_RECORD_HARVEST_EVENT,
+        _srv_record_harvest_event,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Required("harvest_id"): str,
+                vol.Required("harvested_at"): str,
+                vol.Required("yield_grams"): vol.Coerce(float),
+                vol.Optional("species_id"): str,
+                vol.Optional("run_id"): str,
+                vol.Optional("area_m2"): vol.Coerce(float),
+                vol.Optional("wet_weight_grams"): vol.Coerce(float),
+                vol.Optional("dry_weight_grams"): vol.Coerce(float),
+                vol.Optional("fruit_count"): vol.Coerce(int),
+                vol.Optional("metadata"): dict,
+            }
+        ),
+        supports_response=True,
     )
     hass.services.async_register(
         DOMAIN,

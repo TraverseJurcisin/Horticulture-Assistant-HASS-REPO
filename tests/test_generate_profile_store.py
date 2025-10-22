@@ -176,16 +176,16 @@ async def test_async_save_profile_accepts_dataclass(monkeypatch):
     )
 
     from custom_components.horticulture_assistant.profile.schema import (
+        BioProfile,
         FieldAnnotation,
-        PlantProfile,
         ResolvedTarget,
     )
     from custom_components.horticulture_assistant.profile.store import (
         async_save_profile,
     )
 
-    profile = PlantProfile(
-        plant_id="p1",
+    profile = BioProfile(
+        profile_id="p1",
         display_name="Plant",
         resolved_targets={"temp": ResolvedTarget(value=1, annotation=FieldAnnotation(source_type="manual"))},
     )

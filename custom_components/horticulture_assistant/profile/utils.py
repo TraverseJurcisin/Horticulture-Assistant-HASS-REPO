@@ -6,7 +6,7 @@ from typing import Any
 from ..const import CONF_PROFILE_SCOPE
 from .schema import (
     Citation,
-    PlantProfile,
+    BioProfile,
     ProfileLibrarySection,
     ProfileLocalSection,
 )
@@ -48,12 +48,13 @@ def ensure_sections(
         general_dict.setdefault("template", template)
     data["general"] = general_dict
 
-    profile = PlantProfile.from_json(data)
+    profile = BioProfile.from_json(data)
     sections = profile.refresh_sections()
     library = sections.library
     local = sections.local
 
-    payload["plant_id"] = profile.plant_id
+    payload["profile_id"] = profile.profile_id
+    payload["plant_id"] = profile.profile_id
     payload["display_name"] = profile.display_name
     payload["library"] = library.to_json()
     payload["local"] = local.to_json()
@@ -72,7 +73,8 @@ def normalise_profile_payload(
 
     data = dict(payload)
     if fallback_id is None:
-        fallback_id = _ensure_string(data.get("plant_id") or data.get("profile_id"), "profile")
+        fallback_id = _ensure_string(data.get("profile_id") or data.get("plant_id"), "profile")
+    data.setdefault("profile_id", fallback_id)
     data.setdefault("plant_id", fallback_id)
     if display_name is None:
         display_name = data.get("display_name") or data.get("name")
@@ -92,7 +94,7 @@ def normalise_profile_payload(
         general_dict.setdefault("template", template)
     data["general"] = general_dict
 
-    profile = PlantProfile.from_json(data)
+    profile = BioProfile.from_json(data)
     payload = profile.to_json()
     return payload
 

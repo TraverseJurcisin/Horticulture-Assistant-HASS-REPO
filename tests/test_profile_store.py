@@ -5,9 +5,9 @@ from typing import Any
 import pytest
 
 from custom_components.horticulture_assistant.profile.schema import (
+    BioProfile,
     Citation,
     FieldAnnotation,
-    PlantProfile,
     ProfileLibrarySection,
     ProfileLocalSection,
     ResolvedTarget,
@@ -26,8 +26,8 @@ async def test_async_create_profile_inherits_sensors_from_existing_profile(hass,
     store = ProfileStore(hass)
     await store.async_init()
 
-    base_profile = PlantProfile(
-        plant_id="base_profile",
+    base_profile = BioProfile(
+        profile_id="base_profile",
         display_name="Base Profile",
         resolved_targets={"temp": ResolvedTarget(value=20, annotation=FieldAnnotation(source_type="manual"))},
         general={"sensors": {"temp": "sensor.base"}},
@@ -85,8 +85,8 @@ async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypat
     await store.async_init()
 
     await store.async_save(
-        PlantProfile(
-            plant_id="fancy_basil",
+        BioProfile(
+            profile_id="fancy_basil",
             display_name="Fancy Basil",
         ),
         name="Fancy Basil",
@@ -185,6 +185,6 @@ async def test_async_save_profile_from_options_preserves_local_sections(hass, tm
     profile = saved.get("p1")
     assert profile is not None
     assert profile["sections"]["resolved"]["thresholds"]["temp_c_min"] == 5.0
-    local = PlantProfile.from_json(profile).local_section()
+    local = BioProfile.from_json(profile).local_section()
     assert local.metadata["citation_map"]["temp_c_min"]["mode"] == "manual"
     assert local.citations and local.citations[0].source == "manual"

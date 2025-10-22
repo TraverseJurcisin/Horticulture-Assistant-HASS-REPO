@@ -26,12 +26,23 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
         "profile_count": 0,
         "profiles": [],
         "coordinators": {},
-        "schema_version": 2,
+        "schema_version": 3,
     }
     if reg:
-        profiles = reg.summaries()
-        payload["profiles"] = profiles
-        payload["profile_count"] = len(profiles)
+        if hasattr(reg, "diagnostics_snapshot"):
+            profiles = reg.diagnostics_snapshot()
+            payload["profiles"] = profiles
+            payload["profile_count"] = len(profiles)
+            totals = {
+                "run_events": sum(len(item.get("run_history", ())) for item in profiles),
+                "harvest_events": sum(len(item.get("harvest_history", ())) for item in profiles),
+                "statistics": sum(len(item.get("statistics", ())) for item in profiles),
+            }
+            payload["profile_totals"] = totals
+        else:
+            profiles = reg.summaries()
+            payload["profiles"] = profiles
+            payload["profile_count"] = len(profiles)
 
     for key, coord in data.items():
         if not key.startswith("coordinator"):

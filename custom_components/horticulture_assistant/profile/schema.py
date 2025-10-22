@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass, field
-from typing import Any
+from typing import Any, Literal
 
 
 def _as_dict(value: Any) -> dict[str, Any]:
@@ -24,6 +24,172 @@ class Citation:
     details: dict[str, Any] | None = None
     accessed: str | None = None
 
+
+@dataclass
+class RunEvent:
+    """Represents a cultivation run lifecycle event."""
+
+    run_id: str
+    profile_id: str
+    species_id: str | None
+    started_at: str
+    ended_at: str | None = None
+    environment: dict[str, Any] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def to_json(self) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "run_id": self.run_id,
+            "profile_id": self.profile_id,
+            "species_id": self.species_id,
+            "started_at": self.started_at,
+        }
+        if self.ended_at is not None:
+            payload["ended_at"] = self.ended_at
+        if self.environment:
+            payload["environment"] = dict(self.environment)
+        if self.metadata:
+            payload["metadata"] = dict(self.metadata)
+        return payload
+
+    @staticmethod
+    def from_json(data: Mapping[str, Any]) -> RunEvent:
+        return RunEvent(
+            run_id=str(data.get("run_id") or data.get("id") or "run"),
+            profile_id=str(data.get("profile_id") or data.get("cultivar_id") or ""),
+            species_id=(str(data.get("species_id")) if data.get("species_id") else None),
+            started_at=str(data.get("started_at") or data.get("start")),
+            ended_at=(str(data.get("ended_at")) if data.get("ended_at") else None),
+            environment=_as_dict(data.get("environment")),
+            metadata=_as_dict(data.get("metadata")),
+        )
+
+
+@dataclass
+class HarvestEvent:
+    """Represents a single harvest outcome."""
+
+    harvest_id: str
+    profile_id: str
+    species_id: str | None
+    run_id: str | None
+    harvested_at: str
+    yield_grams: float
+    area_m2: float | None = None
+    wet_weight_grams: float | None = None
+    dry_weight_grams: float | None = None
+    fruit_count: int | None = None
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def to_json(self) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "harvest_id": self.harvest_id,
+            "profile_id": self.profile_id,
+            "species_id": self.species_id,
+            "run_id": self.run_id,
+            "harvested_at": self.harvested_at,
+            "yield_grams": self.yield_grams,
+        }
+        if self.area_m2 is not None:
+            payload["area_m2"] = self.area_m2
+        if self.wet_weight_grams is not None:
+            payload["wet_weight_grams"] = self.wet_weight_grams
+        if self.dry_weight_grams is not None:
+            payload["dry_weight_grams"] = self.dry_weight_grams
+        if self.fruit_count is not None:
+            payload["fruit_count"] = self.fruit_count
+        if self.metadata:
+            payload["metadata"] = dict(self.metadata)
+        return payload
+
+    @staticmethod
+    def from_json(data: Mapping[str, Any]) -> HarvestEvent:
+        area = data.get("area_m2")
+        try:
+            area_value = float(area) if area is not None else None
+        except (TypeError, ValueError):
+            area_value = None
+        yield_grams = data.get("yield_grams")
+        try:
+            yield_value = float(yield_grams) if yield_grams is not None else 0.0
+        except (TypeError, ValueError):
+            yield_value = 0.0
+        wet_weight = data.get("wet_weight_grams")
+        dry_weight = data.get("dry_weight_grams")
+        try:
+            wet_value = float(wet_weight) if wet_weight is not None else None
+        except (TypeError, ValueError):
+            wet_value = None
+        try:
+            dry_value = float(dry_weight) if dry_weight is not None else None
+        except (TypeError, ValueError):
+            dry_value = None
+        fruit_count = data.get("fruit_count")
+        try:
+            fruit_value = int(fruit_count) if fruit_count is not None else None
+        except (TypeError, ValueError):
+            fruit_value = None
+        return HarvestEvent(
+            harvest_id=str(data.get("harvest_id") or data.get("id") or "harvest"),
+            profile_id=str(data.get("profile_id") or data.get("cultivar_id") or ""),
+            species_id=(str(data.get("species_id")) if data.get("species_id") else None),
+            run_id=(str(data.get("run_id")) if data.get("run_id") else None),
+            harvested_at=str(data.get("harvested_at") or data.get("timestamp") or ""),
+            yield_grams=yield_value,
+            area_m2=area_value,
+            wet_weight_grams=wet_value,
+            dry_weight_grams=dry_value,
+            fruit_count=fruit_value,
+            metadata=_as_dict(data.get("metadata")),
+        )
+
+    def yield_density(self) -> float | None:
+        if not self.area_m2 or self.area_m2 <= 0:
+            return None
+        return round(self.yield_grams / self.area_m2, 3)
+
+
+@dataclass
+class YieldStatistic:
+    """Summarised statistic for a profile or species."""
+
+    stat_id: str
+    scope: Literal["species", "cultivar"]
+    profile_id: str
+    computed_at: str
+    metrics: dict[str, float] = field(default_factory=dict)
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def to_json(self) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "stat_id": self.stat_id,
+            "scope": self.scope,
+            "profile_id": self.profile_id,
+            "computed_at": self.computed_at,
+            "metrics": dict(self.metrics),
+        }
+        if self.metadata:
+            payload["metadata"] = dict(self.metadata)
+        return payload
+
+    @staticmethod
+    def from_json(data: Mapping[str, Any]) -> YieldStatistic:
+        metrics: dict[str, float] = {}
+        metric_payload = data.get("metrics")
+        if isinstance(metric_payload, Mapping):
+            for key, value in metric_payload.items():
+                try:
+                    metrics[str(key)] = float(value)
+                except (TypeError, ValueError):
+                    continue
+        return YieldStatistic(
+            stat_id=str(data.get("stat_id") or data.get("id") or "stat"),
+            scope=str(data.get("scope") or "cultivar"),
+            profile_id=str(data.get("profile_id") or ""),
+            computed_at=str(data.get("computed_at") or data.get("timestamp") or ""),
+            metrics=metrics,
+            metadata=_as_dict(data.get("metadata")),
+        )
 
 @dataclass
 class FieldAnnotation:
@@ -174,6 +340,9 @@ class ProfileLocalSection:
     local_overrides: dict[str, Any] = field(default_factory=dict)
     resolver_state: dict[str, Any] = field(default_factory=dict)
     citations: list[Citation] = field(default_factory=list)
+    run_history: list[RunEvent] = field(default_factory=list)
+    harvest_history: list[HarvestEvent] = field(default_factory=list)
+    statistics: list[YieldStatistic] = field(default_factory=list)
     last_resolved: str | None = None
     created_at: str | None = None
     updated_at: str | None = None
@@ -185,6 +354,9 @@ class ProfileLocalSection:
             "local_overrides": self.local_overrides,
             "resolver_state": self.resolver_state,
             "citations": [asdict(cit) for cit in self.citations],
+            "run_history": [event.to_json() for event in self.run_history],
+            "harvest_history": [event.to_json() for event in self.harvest_history],
+            "statistics": [stat.to_json() for stat in self.statistics],
         }
         if self.species is not None:
             payload["species"] = self.species
@@ -201,12 +373,27 @@ class ProfileLocalSection:
     @staticmethod
     def from_json(data: Mapping[str, Any]) -> ProfileLocalSection:
         citations = [Citation(**item) for item in data.get("citations", []) or [] if isinstance(item, Mapping)]
+        run_history: list[RunEvent] = []
+        for item in data.get("run_history", []) or []:
+            if isinstance(item, Mapping):
+                run_history.append(RunEvent.from_json(item))
+        harvest_history: list[HarvestEvent] = []
+        for item in data.get("harvest_history", []) or []:
+            if isinstance(item, Mapping):
+                harvest_history.append(HarvestEvent.from_json(item))
+        statistics: list[YieldStatistic] = []
+        for item in data.get("statistics", []) or []:
+            if isinstance(item, Mapping):
+                statistics.append(YieldStatistic.from_json(item))
         return ProfileLocalSection(
             species=data.get("species"),
             general=_as_dict(data.get("general")),
             local_overrides=_as_dict(data.get("local_overrides") or data.get("overrides")),
             resolver_state=_as_dict(data.get("resolver_state")),
             citations=citations,
+            run_history=run_history,
+            harvest_history=harvest_history,
+            statistics=statistics,
             last_resolved=data.get("last_resolved"),
             created_at=data.get("created_at"),
             updated_at=data.get("updated_at"),
@@ -562,10 +749,10 @@ class ProfileSections:
 
 
 @dataclass
-class PlantProfile:
+class BioProfile:
     """Comprehensive offline profile representation used by the add-on."""
 
-    plant_id: str
+    profile_id: str
     display_name: str
     profile_type: str = "line"
     species: str | None = None
@@ -590,16 +777,61 @@ class PlantProfile:
     general: dict[str, Any] = field(default_factory=dict)
     citations: list[Citation] = field(default_factory=list)
     local_metadata: dict[str, Any] = field(default_factory=dict)
+    run_history: list[RunEvent] = field(default_factory=list)
+    harvest_history: list[HarvestEvent] = field(default_factory=list)
+    statistics: list[YieldStatistic] = field(default_factory=list)
     last_resolved: str | None = None
     created_at: str | None = None
     updated_at: str | None = None
     sections: ProfileSections | None = None
     lineage: list[ProfileLineageEntry] = field(default_factory=list)
 
+    @property
+    def plant_id(self) -> str:
+        """Backward compatible alias for :attr:`profile_id`."""
+
+        return self.profile_id
+
+    @plant_id.setter
+    def plant_id(self, value: str) -> None:
+        self.profile_id = value
+
+    @property
+    def species_profile_id(self) -> str | None:
+        """Return the associated species identifier, if any."""
+
+        return self.species
+
+    @species_profile_id.setter
+    def species_profile_id(self, value: str | None) -> None:
+        self.species = value
+
     def resolved_values(self) -> dict[str, Any]:
         """Return the resolved values without metadata."""
 
         return {key: target.value for key, target in self.resolved_targets.items()}
+
+    def add_run_event(self, event: RunEvent) -> None:
+        """Append a normalised run event to the local history."""
+
+        normalised = RunEvent.from_json(event.to_json())
+        if not normalised.profile_id:
+            normalised.profile_id = self.profile_id
+        if not normalised.species_id and self.species_profile_id:
+            normalised.species_id = self.species_profile_id
+        self.run_history.append(normalised)
+
+    def add_harvest_event(self, event: HarvestEvent) -> None:
+        """Append a harvest event and keep identifiers consistent."""
+
+        normalised = HarvestEvent.from_json(event.to_json())
+        if not normalised.profile_id:
+            normalised.profile_id = self.profile_id
+        if not normalised.species_id and self.species_profile_id:
+            normalised.species_id = self.species_profile_id
+        if normalised.run_id is None and self.run_history:
+            normalised.run_id = self.run_history[-1].run_id
+        self.harvest_history.append(normalised)
 
     def to_json(self) -> dict[str, Any]:
         resolved_payload = {key: value.to_json() for key, value in self.resolved_targets.items()}
@@ -611,7 +843,8 @@ class PlantProfile:
         local_section = sections.local
 
         payload = {
-            "plant_id": self.plant_id,
+            "profile_id": self.profile_id,
+            "plant_id": self.profile_id,
             "display_name": self.display_name,
             "profile_type": self.profile_type,
             "species": self.species,
@@ -634,6 +867,9 @@ class PlantProfile:
             "computed_stats": [snapshot.to_json() for snapshot in self.computed_stats],
             "general": self.general,
             "citations": [asdict(cit) for cit in self.citations],
+            "run_history": [event.to_json() for event in self.run_history],
+            "harvest_history": [event.to_json() for event in self.harvest_history],
+            "statistics": [stat.to_json() for stat in self.statistics],
             "last_resolved": self.last_resolved,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
@@ -662,7 +898,8 @@ class PlantProfile:
         sensors = self.general.get("sensors")
         sensor_summary = dict(sensors) if isinstance(sensors, dict) else {}
         return {
-            "plant_id": self.plant_id,
+            "profile_id": self.profile_id,
+            "plant_id": self.profile_id,
             "name": self.display_name,
             "profile_type": self.profile_type,
             "species": self.species,
@@ -675,15 +912,15 @@ class PlantProfile:
         }
 
     @staticmethod
-    def from_json(data: dict[str, Any]) -> PlantProfile:
-        """Create a PlantProfile from a dictionary."""
+    def from_json(data: dict[str, Any]) -> BioProfile:
+        """Create a BioProfile from a dictionary."""
 
-        fallback_id = data.get("plant_id") or data.get("profile_id") or data.get("name") or "profile"
-        plant_id = str(fallback_id)
+        fallback_id = data.get("profile_id") or data.get("plant_id") or data.get("name") or "profile"
+        profile_id = str(fallback_id)
 
         sections_payload = data.get("sections")
         sections = (
-            ProfileSections.from_json(sections_payload, fallback_id=plant_id)
+            ProfileSections.from_json(sections_payload, fallback_id=profile_id)
             if isinstance(sections_payload, Mapping)
             else None
         )
@@ -696,7 +933,7 @@ class PlantProfile:
         else:
             library_payload = data.get("library")
             library_section = (
-                ProfileLibrarySection.from_json(library_payload, fallback_id=plant_id)
+                ProfileLibrarySection.from_json(library_payload, fallback_id=profile_id)
                 if isinstance(library_payload, Mapping)
                 else None
             )
@@ -704,6 +941,11 @@ class PlantProfile:
             local_section = ProfileLocalSection.from_json(local_payload) if isinstance(local_payload, Mapping) else None
             resolved_section = None
             computed_section = None
+
+        if library_section:
+            profile_type = str(library_section.profile_type or "line")
+        else:
+            profile_type = str(data.get("profile_type") or "line")
 
         resolved_targets: dict[str, ResolvedTarget] = {}
         if resolved_section is not None:
@@ -806,6 +1048,9 @@ class PlantProfile:
             created_at = local_section.created_at
             updated_at = local_section.updated_at
             local_metadata = dict(local_section.metadata)
+            run_history = list(local_section.run_history)
+            harvest_history = list(local_section.harvest_history)
+            statistics = list(local_section.statistics)
         else:
             species = data.get("species")
             general = _as_dict(data.get("general"))
@@ -815,6 +1060,21 @@ class PlantProfile:
             created_at = data.get("created_at")
             updated_at = data.get("updated_at")
             local_metadata = _as_dict(data.get("local_metadata"))
+            run_history = [
+                RunEvent.from_json(item)
+                for item in data.get("run_history", []) or []
+                if isinstance(item, Mapping)
+            ]
+            harvest_history = [
+                HarvestEvent.from_json(item)
+                for item in data.get("harvest_history", []) or []
+                if isinstance(item, Mapping)
+            ]
+            statistics = [
+                YieldStatistic.from_json(item)
+                for item in data.get("statistics", []) or []
+                if isinstance(item, Mapping)
+            ]
 
         if resolved_section is not None:
             if resolved_section.metadata:
@@ -825,10 +1085,34 @@ class PlantProfile:
             if citation_map:
                 local_metadata.setdefault("citation_map", dict(citation_map))
 
-        profile = PlantProfile(
-            plant_id=plant_id,
-            display_name=data.get("display_name") or data.get("name") or plant_id,
-            profile_type=(library_section.profile_type if library_section else data.get("profile_type") or "line"),
+        extra_kwargs: dict[str, Any] = {}
+        if profile_type == "species":
+            profile_cls: type[BioProfile] = SpeciesProfile
+            cultivar_ids_raw = data.get("cultivar_ids")
+            if not isinstance(cultivar_ids_raw, list):
+                cultivar_ids_raw = local_metadata.get("cultivar_ids") if isinstance(local_metadata, Mapping) else []
+            cultivar_ids: list[str] = []
+            if isinstance(cultivar_ids_raw, list):
+                for item in cultivar_ids_raw:
+                    cultivar_ids.append(str(item))
+            extra_kwargs["cultivar_ids"] = cultivar_ids
+        elif profile_type in {"cultivar", "line"}:
+            profile_cls = CultivarProfile
+            area = data.get("area_m2")
+            if area is None:
+                meta_area = local_metadata.get("area_m2") if isinstance(local_metadata, Mapping) else None
+                area = meta_area
+            try:
+                extra_kwargs["area_m2"] = float(area) if area is not None else None
+            except (TypeError, ValueError):
+                extra_kwargs["area_m2"] = None
+        else:
+            profile_cls = BioProfile
+
+        profile = profile_cls(
+            profile_id=profile_id,
+            display_name=data.get("display_name") or data.get("name") or profile_id,
+            profile_type=profile_type,
             species=species,
             tenant_id=tenant_id,
             parents=parents,
@@ -851,6 +1135,9 @@ class PlantProfile:
             general=general,
             citations=citations,
             local_metadata=local_metadata,
+            run_history=run_history,
+            harvest_history=harvest_history,
+            statistics=statistics,
             last_resolved=last_resolved,
             created_at=created_at,
             updated_at=updated_at,
@@ -858,6 +1145,7 @@ class PlantProfile:
             lineage=[
                 ProfileLineageEntry.from_json(item) for item in data.get("lineage", []) if isinstance(item, Mapping)
             ],
+            **extra_kwargs,
         )
 
         return profile
@@ -865,7 +1153,7 @@ class PlantProfile:
     # ------------------------------------------------------------------
     def library_section(self) -> ProfileLibrarySection:
         return ProfileLibrarySection(
-            profile_id=self.plant_id,
+            profile_id=self.profile_id,
             profile_type=self.profile_type,
             tenant_id=self.tenant_id,
             identity=dict(self.identity),
@@ -890,6 +1178,9 @@ class PlantProfile:
             local_overrides=dict(self.local_overrides),
             resolver_state=dict(self.resolver_state),
             citations=[Citation(**asdict(cit)) for cit in self.citations],
+            run_history=[RunEvent.from_json(event.to_json()) for event in self.run_history],
+            harvest_history=[HarvestEvent.from_json(event.to_json()) for event in self.harvest_history],
+            statistics=[YieldStatistic.from_json(stat.to_json()) for stat in self.statistics],
             last_resolved=self.last_resolved,
             created_at=self.created_at,
             updated_at=self.updated_at,
@@ -975,3 +1266,37 @@ class PlantProfile:
 
     def _ensure_sections(self) -> ProfileSections:
         return self.refresh_sections()
+
+
+@dataclass
+class SpeciesProfile(BioProfile):
+    """Represents a species-level BioProfile that can be inherited from."""
+
+    profile_type: str = "species"
+    cultivar_ids: list[str] = field(default_factory=list)
+
+    def __post_init__(self) -> None:
+        if not self.species:
+            self.species = self.profile_id
+
+    def to_json(self) -> dict[str, Any]:
+        payload = super().to_json()
+        payload["profile_type"] = "species"
+        if self.cultivar_ids:
+            payload["cultivar_ids"] = list({str(cid) for cid in self.cultivar_ids})
+        return payload
+
+
+@dataclass
+class CultivarProfile(BioProfile):
+    """Represents a cultivar profile inheriting from a species entry."""
+
+    profile_type: str = "cultivar"
+    area_m2: float | None = None
+
+    def to_json(self) -> dict[str, Any]:
+        payload = super().to_json()
+        payload["profile_type"] = "cultivar"
+        if self.area_m2 is not None:
+            payload["area_m2"] = self.area_m2
+        return payload

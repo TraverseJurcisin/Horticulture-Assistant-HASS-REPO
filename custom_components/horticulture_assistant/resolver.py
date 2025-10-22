@@ -9,7 +9,7 @@ from homeassistant.core import HomeAssistant
 from .cloudsync import EdgeResolverService
 from .const import DOMAIN, OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.options import options_profile_to_dataclass
-from .profile.schema import FieldAnnotation, PlantProfile, ResolvedTarget
+from .profile.schema import FieldAnnotation, BioProfile, ResolvedTarget
 from .profile.utils import (
     citations_map_to_list,
     determine_species_slug,
@@ -60,9 +60,9 @@ class PreferenceResolver:
         self,
         entry,
         profile_id: str,
-        profile: PlantProfile,
+        profile: BioProfile,
         profile_payload: Mapping[str, Any],
-    ) -> PlantProfile | None:
+    ) -> BioProfile | None:
         """Combine cloud snapshots with local profile state if available."""
 
         store = self._cloud_store(entry)
@@ -226,6 +226,9 @@ class PreferenceResolver:
                     "traits": dict(profile.traits),
                     "curated_targets": dict(profile.curated_targets),
                     "diffs_vs_parent": dict(profile.diffs_vs_parent),
+                    "run_history": [event.to_json() for event in profile.run_history],
+                    "harvest_history": [event.to_json() for event in profile.harvest_history],
+                    "statistics": [stat.to_json() for stat in profile.statistics],
                 }
             )
             prof["computed_stats"] = profile_payload.get("computed_stats", [])

@@ -8,8 +8,9 @@ from typing import Any
 from ..profile.schema import (
     Citation,
     ComputedStatSnapshot,
+    CultivarProfile,
     FieldAnnotation,
-    PlantProfile,
+    BioProfile,
     ProfileComputedSection,
     ProfileLibrarySection,
     ProfileLineageEntry,
@@ -17,6 +18,7 @@ from ..profile.schema import (
     ProfileResolvedSection,
     ProfileSections,
     ResolvedTarget,
+    SpeciesProfile,
 )
 from .edge_store import EdgeSyncStore
 
@@ -188,7 +190,7 @@ class EdgeResolverService:
         now: datetime | None = None,
         fields: Iterable[str] | None = None,
         local_payload: Mapping[str, Any] | None = None,
-    ) -> PlantProfile:
+    ) -> BioProfile:
         """Resolve all relevant fields for ``profile_id``."""
 
         now = now or datetime.now(tz=UTC)
@@ -275,42 +277,57 @@ class EdgeResolverService:
             metadata=computed_metadata,
         )
 
-        profile = PlantProfile(
-            plant_id=profile_id,
-            display_name=str(display_name),
-            profile_type=library.profile_type,
-            species=species,
-            tenant_id=library.tenant_id,
-            parents=list(library.parents),
-            identity=dict(library.identity),
-            taxonomy=dict(library.taxonomy),
-            policies=dict(library.policies),
-            stable_knowledge=dict(library.stable_knowledge),
-            lifecycle=dict(library.lifecycle),
-            traits=dict(library.traits),
-            tags=list(library.tags),
-            curated_targets=dict(library.curated_targets),
-            diffs_vs_parent=dict(library.diffs_vs_parent),
-            library_metadata=dict(library.metadata),
-            library_created_at=library.created_at,
-            library_updated_at=library.updated_at,
-            local_overrides=dict(local.local_overrides),
-            resolver_state=dict(local.resolver_state),
-            resolved_targets=resolved_targets,
-            computed_stats=computed_stats,
-            general=dict(local.general),
-            citations=citations,
-            local_metadata=dict(local.metadata),
-            last_resolved=local.last_resolved,
-            created_at=local.created_at,
-            updated_at=local.updated_at,
-            sections=ProfileSections(
+        profile_kwargs: dict[str, Any] = {
+            "profile_id": profile_id,
+            "display_name": str(display_name),
+            "profile_type": library.profile_type,
+            "species": species,
+            "tenant_id": library.tenant_id,
+            "parents": list(library.parents),
+            "identity": dict(library.identity),
+            "taxonomy": dict(library.taxonomy),
+            "policies": dict(library.policies),
+            "stable_knowledge": dict(library.stable_knowledge),
+            "lifecycle": dict(library.lifecycle),
+            "traits": dict(library.traits),
+            "tags": list(library.tags),
+            "curated_targets": dict(library.curated_targets),
+            "diffs_vs_parent": dict(library.diffs_vs_parent),
+            "library_metadata": dict(library.metadata),
+            "library_created_at": library.created_at,
+            "library_updated_at": library.updated_at,
+            "local_overrides": dict(local.local_overrides),
+            "resolver_state": dict(local.resolver_state),
+            "resolved_targets": resolved_targets,
+            "computed_stats": computed_stats,
+            "general": dict(local.general),
+            "citations": citations,
+            "local_metadata": dict(local.metadata),
+            "run_history": list(local.run_history),
+            "harvest_history": list(local.harvest_history),
+            "statistics": list(local.statistics),
+            "last_resolved": local.last_resolved,
+            "created_at": local.created_at,
+            "updated_at": local.updated_at,
+            "sections": ProfileSections(
                 library=library,
                 local=local,
                 resolved=resolved_section,
                 computed=computed_section,
             ),
-        )
+        }
+
+        if library.profile_type == "species":
+            profile = SpeciesProfile(**profile_kwargs)
+        else:
+            area = local.metadata.get("area_m2") if isinstance(local.metadata, Mapping) else None
+            if area is None:
+                area = getattr(local, "area_m2", None)
+            try:
+                area_value = float(area) if area is not None else None
+            except (TypeError, ValueError):
+                area_value = None
+            profile = CultivarProfile(area_m2=area_value, **profile_kwargs)
 
         profile.lineage = [self._lineage_entry(entry) for entry in lineage]
 

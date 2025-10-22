@@ -73,3 +73,55 @@ import_profiles:
 refresh:
   name: "Refresh computations"
   description: "Triggers a data refresh (coordinator update) for all profiles."
+
+record_run_event:
+  name: "Record cultivation run"
+  description: "Append a run lifecycle event to the profile history."
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    run_id:
+      required: true
+      selector: { text: {} }
+    started_at:
+      required: true
+      selector: { datetime: {} }
+    ended_at:
+      required: false
+      selector: { datetime: {} }
+    environment:
+      required: false
+      description: "Additional environment metadata captured during the run."
+      selector: { object: {} }
+    metadata:
+      required: false
+      description: "Arbitrary metadata describing the run."
+      selector: { object: {} }
+
+record_harvest_event:
+  name: "Record harvest event"
+  description: "Log a harvest result and recompute yield statistics."
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    harvest_id:
+      required: true
+      selector: { text: {} }
+    harvested_at:
+      required: true
+      selector: { datetime: {} }
+    yield_grams:
+      required: true
+      selector: { number: { min: 0 } }
+    area_m2:
+      required: false
+      selector: { number: { min: 0 } }
+    run_id:
+      required: false
+      selector: { text: {} }
+    metadata:
+      required: false
+      description: "Additional harvest metadata such as cultivar phenotype notes."
+      selector: { object: {} }

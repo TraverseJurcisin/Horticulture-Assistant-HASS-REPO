@@ -29,19 +29,25 @@ DOMAIN = "horticulture_assistant"
 
 
 class DummyRegistry:
-    def summaries(self):
+    def diagnostics_snapshot(self):
         return [
             {
-                "plant_id": "p1",
-                "name": "P1",
-                "profile_type": "line",
-                "species": None,
-                "tenant_id": None,
-                "parents": [],
-                "sensors": {},
-                "targets": {},
-                "tags": [],
-                "last_resolved": None,
+                "summary": {
+                    "plant_id": "p1",
+                    "name": "P1",
+                    "profile_type": "line",
+                    "species": None,
+                    "tenant_id": None,
+                    "parents": [],
+                    "sensors": {},
+                    "targets": {},
+                    "tags": [],
+                    "last_resolved": None,
+                },
+                "run_history": [{"run_id": "run-1", "profile_id": "p1", "species_id": None, "started_at": "2024-01-01"}],
+                "harvest_history": [],
+                "statistics": [],
+                "lineage": [],
             }
         ]
 
@@ -70,8 +76,9 @@ async def test_async_get_config_entry_diagnostics(hass):
 
     assert result["entry"]["options"]["api_key"] is REDACTED
     assert result["profile_count"] == 1
-    assert result["profiles"][0]["plant_id"] == "p1"
+    assert result["profiles"][0]["summary"]["plant_id"] == "p1"
+    assert result["profile_totals"]["run_events"] == 1
     assert result["coordinators"]["coordinator_ai"]["last_update_success"] is True
     assert "last_update" in result["coordinators"]["coordinator_ai"]
     assert "last_exception" in result["coordinators"]["coordinator_ai"]
-    assert result["schema_version"] == 2
+    assert result["schema_version"] == 3

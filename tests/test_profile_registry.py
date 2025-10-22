@@ -11,9 +11,7 @@ from custom_components.horticulture_assistant.const import (
     PROFILE_SCOPE_DEFAULT,
 )
 from custom_components.horticulture_assistant.profile import store as profile_store
-from custom_components.horticulture_assistant.profile.schema import (
-    PlantProfile,
-)
+from custom_components.horticulture_assistant.profile.schema import BioProfile
 from custom_components.horticulture_assistant.profile_registry import ProfileRegistry
 
 pytestmark = pytest.mark.asyncio
@@ -28,14 +26,14 @@ async def _make_entry(hass, options=None):
 async def test_initialize_merges_storage_and_options(hass):
     """Profiles in storage and options are merged."""
 
-    prof = PlantProfile(plant_id="p1", display_name="Stored")
+    prof = BioProfile(profile_id="p1", display_name="Stored")
     await profile_store.async_save_profile(hass, prof)
 
     entry = await _make_entry(hass, {CONF_PROFILES: {"p2": {"name": "Opt"}}})
     reg = ProfileRegistry(hass, entry)
     await reg.async_load()
 
-    ids = {p.plant_id for p in reg.list_profiles()}
+    ids = {p.profile_id for p in reg.list_profiles()}
     assert ids == {"p1", "p2"}
     assert reg.get("p2").display_name == "Opt"
 
@@ -55,7 +53,7 @@ async def test_async_load_migrates_list_format(hass):
 async def test_async_load_merges_option_sensors_overrides_storage(hass):
     """Sensors from config entry options override stored mappings."""
 
-    stored = PlantProfile(plant_id="p1", display_name="Stored")
+    stored = BioProfile(profile_id="p1", display_name="Stored")
     stored.general["sensors"] = {"temperature": "sensor.old", "moisture": "sensor.m"}
     await profile_store.async_save_profile(hass, stored)
 
@@ -166,7 +164,7 @@ async def test_iteration_and_len(hass):
     reg = ProfileRegistry(hass, entry)
     await reg.async_load()
     assert len(reg) == 1
-    assert [p.plant_id for p in reg] == ["p1"]
+    assert [p.profile_id for p in reg] == ["p1"]
 
 
 async def test_multiple_sensor_replacements(hass):
@@ -182,6 +180,84 @@ async def test_multiple_sensor_replacements(hass):
     assert sensors == {"temperature": "sensor.t2", "humidity": "sensor.h1"}
     prof = reg.get("p1")
     assert prof.general["sensors"] == sensors
+
+
+async def test_record_run_event_appends_and_persists(hass):
+    species = BioProfile(profile_id="species.1", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar.1",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species.1",
+    )
+    await profile_store.async_save_profile(hass, species)
+    await profile_store.async_save_profile(hass, cultivar)
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    result = await reg.async_record_run_event(
+        "cultivar.1",
+        {"run_id": "run-1", "started_at": "2024-01-01T00:00:00Z"},
+    )
+
+    profile = reg.get("cultivar.1")
+    assert profile is not None
+    assert len(profile.run_history) == 1
+    assert result.profile_id == "cultivar.1"
+    assert profile.run_history[0].species_id == "species.1"
+    assert profile.updated_at is not None
+
+    stored = await profile_store.async_load_profile(hass, "cultivar.1")
+    assert stored is not None and len(stored.run_history) == 1
+
+
+async def test_record_harvest_event_updates_statistics(hass):
+    species = BioProfile(profile_id="species.1", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar.1",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species.1",
+    )
+    await profile_store.async_save_profile(hass, species)
+    await profile_store.async_save_profile(hass, cultivar)
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    await reg.async_record_run_event(
+        "cultivar.1",
+        {"run_id": "run-1", "started_at": "2024-01-01T00:00:00Z"},
+    )
+    event = await reg.async_record_harvest_event(
+        "cultivar.1",
+        {
+            "harvest_id": "harvest-1",
+            "harvested_at": "2024-02-01T00:00:00Z",
+            "yield_grams": 125.5,
+            "area_m2": 2.5,
+        },
+    )
+
+    cultivar_prof = reg.get("cultivar.1")
+    assert cultivar_prof is not None
+    assert len(cultivar_prof.harvest_history) == 1
+    assert event.run_id == "run-1"
+    assert cultivar_prof.statistics and cultivar_prof.statistics[0].scope == "cultivar"
+    metrics = cultivar_prof.statistics[0].metrics
+    assert metrics["total_yield_grams"] == 125.5
+    assert metrics["average_yield_density_g_m2"] == round(125.5 / 2.5, 3)
+
+    species_prof = reg.get("species.1")
+    assert species_prof is not None
+    species_metrics = species_prof.statistics[0].metrics
+    assert species_metrics["total_yield_grams"] == 125.5
+
+    stored_cultivar = await profile_store.async_load_profile(hass, "cultivar.1")
+    assert stored_cultivar is not None and len(stored_cultivar.harvest_history) == 1
 
 
 async def test_export_uses_hass_config_path(hass, tmp_path, monkeypatch):
