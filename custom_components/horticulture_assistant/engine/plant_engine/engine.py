@@ -10,9 +10,9 @@ from typing import Any
 from .utils import save_json
 
 try:
-    from ..utils.plant_profile_loader import load_profile_by_id
+    from ..utils.bio_profile_loader import load_profile_by_id
 except ImportError:  # pragma: no cover - fallback when run as standalone
-    from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+    from custom_components.horticulture_assistant.utils.bio_profile_loader import (
         load_profile_by_id,
     )
 from custom_components.horticulture_assistant.profile.compat import sync_thresholds

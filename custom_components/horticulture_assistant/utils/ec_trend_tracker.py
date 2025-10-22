@@ -36,7 +36,7 @@ except ImportError:
 
 # Import plant profile loader to retrieve sensor mapping and thresholds
 try:
-    from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
+    from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile
 except ImportError:
     load_profile = None
 

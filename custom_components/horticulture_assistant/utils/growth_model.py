@@ -53,7 +53,7 @@ def update_growth_index(
     # Load plant profile to get current stage and any relevant parameters
     profile = {}
     try:
-        from custom_components.horticulture_assistant.utils.plant_profile_loader import load_profile
+        from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile
 
         base_dir = plants_path(hass)
         profile = load_profile(plant_id=plant_id, base_dir=base_dir)

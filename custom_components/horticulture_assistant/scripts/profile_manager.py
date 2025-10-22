@@ -11,7 +11,7 @@ from scripts import ensure_repo_root_on_path
 ROOT = ensure_repo_root_on_path()
 
 from custom_components.horticulture_assistant.utils import (
-    plant_profile_loader as loader,
+    bio_profile_loader as loader,
 )
 from custom_components.horticulture_assistant.utils.json_io import load_json
 

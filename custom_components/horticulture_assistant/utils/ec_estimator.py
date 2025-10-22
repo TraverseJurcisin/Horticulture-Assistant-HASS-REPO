@@ -30,7 +30,7 @@ from plant_engine.utils import load_dataset
 
 from .json_io import load_json, save_json
 from .path_utils import data_path, plants_path
-from .plant_profile_loader import load_profile_by_id
+from .bio_profile_loader import load_profile_by_id
 
 _LOGGER = logging.getLogger(__name__)
 

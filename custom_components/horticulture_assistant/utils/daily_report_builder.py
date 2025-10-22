@@ -16,7 +16,7 @@ from custom_components.horticulture_assistant.utils.path_utils import (
     data_path,
     plants_path,
 )
-from custom_components.horticulture_assistant.utils.plant_profile_loader import (
+from custom_components.horticulture_assistant.utils.bio_profile_loader import (
     load_profile,
 )
 from custom_components.horticulture_assistant.utils.plant_registry import (

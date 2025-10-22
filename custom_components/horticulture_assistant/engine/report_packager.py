@@ -3,13 +3,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    data_path,
-    plants_path,
-)
-from custom_components.horticulture_assistant.utils.plant_profile_loader import (
-    load_plant_profile,
-)
+from custom_components.horticulture_assistant.utils.load_bio_profile import load_bio_profile
+from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
 
 from ..utils.json_io import load_json, save_json
 
@@ -61,7 +56,7 @@ def build_daily_report(
     }
 
     # Load profile and current thresholds
-    profile = load_plant_profile(plant_id, base_path)
+    profile = load_bio_profile(plant_id, base_path)
     profile_data = profile.get("profile_data", {}) if isinstance(profile, dict) else profile.profile_data
     stage_data = profile_data.get("stage", {})
     thresholds = profile_data.get("thresholds", {})
