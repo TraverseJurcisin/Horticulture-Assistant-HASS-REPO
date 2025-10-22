@@ -20,7 +20,7 @@ from ..profile.schema import (
     ResolvedTarget,
     SpeciesProfile,
 )
-from .edge_store import EdgeSyncStore
+from .edge_store import CloudCacheRecord, EdgeSyncStore
 
 try:
     UTC = datetime.UTC  # type: ignore[attr-defined]
@@ -71,11 +71,55 @@ class EdgeResolverService:
         local_profile_loader: Callable[[str], dict[str, Any]] | None = None,
         fallback_provider: Callable[[str], Any] | None = None,
         stats_ttl: timedelta | None = None,
+        tenant_id: str | None = None,
+        public_tenants: Iterable[str] | None = None,
     ) -> None:
         self.store = store
         self.local_profile_loader = local_profile_loader or (lambda _pid: {})
         self.fallback_provider = fallback_provider or (lambda _field: None)
         self.stats_ttl = stats_ttl or timedelta(days=30)
+        tenant = tenant_id.strip() if isinstance(tenant_id, str) else None
+        self.tenant_id = tenant or None
+        public = public_tenants or ("public", "shared", "global")
+        self.public_tenants = tuple(
+            dict.fromkeys(
+                str(item).strip()
+                for item in public
+                if isinstance(item, str) and str(item).strip()
+            )
+        )
+
+    # ------------------------------------------------------------------
+    def _fetch_cloud_entry(
+        self, entity_type: str, entity_id: str, tenant_hint: str | None = None
+    ) -> CloudCacheRecord | None:
+        """Return the most suitable cached entity for ``entity_id``."""
+
+        tried: set[str] = set()
+        candidates: list[str] = []
+        if tenant_hint:
+            candidates.append(str(tenant_hint).strip())
+        if self.tenant_id:
+            candidates.append(self.tenant_id)
+        for candidate in candidates:
+            if not candidate or candidate in tried:
+                continue
+            tried.add(candidate)
+            entry = self.store.fetch_cloud_cache_entry(
+                entity_type, entity_id, tenant_id=candidate
+            )
+            if entry:
+                return entry
+        for tenant in self.public_tenants:
+            if tenant in tried:
+                continue
+            tried.add(tenant)
+            entry = self.store.fetch_cloud_cache_entry(
+                entity_type, entity_id, tenant_id=tenant
+            )
+            if entry:
+                return entry
+        return self.store.fetch_cloud_cache_entry(entity_type, entity_id)
 
     # ------------------------------------------------------------------
     def resolve_field(self, profile_id: str, field_path: str, *, now: datetime | None = None) -> ResolveResult:
@@ -201,16 +245,21 @@ class EdgeResolverService:
 
         library_payload = dict(subject.cloud_payload)
         library_payload.setdefault("profile_id", profile_id)
+        if subject.tenant_id and "tenant_id" not in library_payload:
+            library_payload["tenant_id"] = subject.tenant_id
         library = ProfileLibrarySection.from_json(library_payload, fallback_id=profile_id)
 
         local_payload_obj = subject.local_overrides if local_payload is None else local_payload
         local_payload_map = dict(local_payload_obj) if isinstance(local_payload_obj, Mapping) else {}
         local = ProfileLocalSection.from_json(local_payload_map)
 
-        species_id = lineage[-1].profile_id
-        stats_payload = self.store.fetch_cloud_cache("computed", species_id)
+        species_entry = lineage[-1]
+        species_id = species_entry.profile_id
+        stats_record = self._fetch_cloud_entry("computed", species_id, species_entry.tenant_id)
         computed_snapshot = (
-            ComputedStatSnapshot.from_json(stats_payload) if isinstance(stats_payload, Mapping) else None
+            ComputedStatSnapshot.from_json(stats_record.payload)
+            if stats_record and isinstance(stats_record.payload, Mapping)
+            else None
         )
 
         target_fields: set[str] = set(fields or [])
@@ -336,29 +385,36 @@ class EdgeResolverService:
     # ------------------------------------------------------------------
     def _load_lineage(self, profile_id: str) -> list[LineageEntry]:
         lineage: list[LineageEntry] = []
-        queue: list[tuple[str, int]] = [(profile_id, 0)]
-        visited: set[str] = set()
+        queue: list[tuple[str, int, str | None]] = [(profile_id, 0, self.tenant_id)]
+        visited: set[tuple[str, str]] = set()
         while queue:
-            current, depth = queue.pop(0)
-            if current in visited:
+            current, depth, tenant_hint = queue.pop(0)
+            tenant_key = (current, (tenant_hint or "").lower())
+            if tenant_key in visited:
                 continue
-            visited.add(current)
-            cloud_payload = self.store.fetch_cloud_cache("profile", current) or {}
+            visited.add(tenant_key)
+            record = self._fetch_cloud_entry("profile", current, tenant_hint)
+            raw_cloud = record.payload if record else {}
+            cloud_payload = dict(raw_cloud) if isinstance(raw_cloud, Mapping) else {}
+            tenant_id = record.tenant_id if record else (tenant_hint or None)
             local_payload = self.local_profile_loader(current) or {}
+            local_map = dict(local_payload) if isinstance(local_payload, Mapping) else {}
             lineage.append(
                 LineageEntry(
                     profile_id=current,
                     depth=depth,
+                    tenant_id=tenant_id,
                     cloud_payload=cloud_payload,
-                    local_overrides=local_payload,
+                    local_overrides=local_map,
                 )
             )
             parents = cloud_payload.get("parents")
             if isinstance(parents, list):
                 for parent in parents:
                     parent_id = str(parent)
-                    if parent_id not in visited:
-                        queue.append((parent_id, depth + 1))
+                    if not parent_id:
+                        continue
+                    queue.append((parent_id, depth + 1, tenant_id))
         lineage.sort(key=lambda entry: entry.depth)
         return lineage
 
@@ -373,7 +429,7 @@ class EdgeResolverService:
             profile_type=str(cloud.get("profile_type", "line")),
             depth=entry.depth,
             role="self" if entry.depth == 0 else "ancestor",
-            tenant_id=cloud.get("tenant_id"),
+            tenant_id=entry.tenant_id or cloud.get("tenant_id"),
             parents=parents,
             tags=tags,
             identity=_coerce_dict(cloud.get("identity")),
@@ -405,10 +461,12 @@ class EdgeResolverService:
     ) -> tuple[Any | None, dict[str, Any]]:
         if not lineage:
             return None, {"provenance": []}
-        species_id = lineage[-1].profile_id
-        stats_payload = self.store.fetch_cloud_cache("computed", species_id)
-        if not stats_payload:
+        species_entry = lineage[-1]
+        species_id = species_entry.profile_id
+        stats_record = self._fetch_cloud_entry("computed", species_id, species_entry.tenant_id)
+        if not stats_record:
             return None, {"provenance": []}
+        stats_payload = stats_record.payload
         computed_at_raw = stats_payload.get("computed_at")
         staleness_days: float | None = None
         is_stale = False
@@ -465,6 +523,7 @@ class EdgeResolverService:
 class LineageEntry:
     profile_id: str
     depth: int
+    tenant_id: str | None
     cloud_payload: dict[str, Any]
     local_overrides: dict[str, Any]
 

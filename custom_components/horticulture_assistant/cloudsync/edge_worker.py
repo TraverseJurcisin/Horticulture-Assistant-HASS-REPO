@@ -166,7 +166,12 @@ class EdgeSyncWorker:
         return body.decode(), cursor
 
     def _apply_to_cache(self, event: SyncEvent) -> None:
-        current = self.store.fetch_cloud_cache(event.entity_type, event.entity_id) or {}
+        record = self.store.fetch_cloud_cache_entry(
+            event.entity_type,
+            event.entity_id,
+            tenant_id=event.tenant_id,
+        )
+        current = record.payload if record else {}
         merged = self.conflicts.apply(current, event)
         merged.pop("__meta__", None)
         self.store.update_cloud_cache(event.entity_type, event.entity_id, event.tenant_id, merged)

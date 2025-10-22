@@ -224,7 +224,12 @@ async def test_resolver_uses_cloud_overlay_when_available():
         },
     )
 
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {"cloud_sync_manager": types.SimpleNamespace(store=store)}
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
+        "cloud_sync_manager": types.SimpleNamespace(
+            store=store,
+            config=types.SimpleNamespace(tenant_id="tenant-1"),
+        )
+    }
 
     await PreferenceResolver(hass).resolve_profile(entry, "p1")
 

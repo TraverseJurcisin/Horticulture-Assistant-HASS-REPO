@@ -126,7 +126,12 @@ class CloudState:
         def local_loader(pid: str) -> dict[str, Any]:
             return dict(local_payload) if pid == profile_id else {}
 
-        resolver = EdgeResolverService(store, local_profile_loader=local_loader)
+        resolver = EdgeResolverService(
+            store,
+            local_profile_loader=local_loader,
+            tenant_id=tenant_id,
+            public_tenants=GLOBAL_TENANTS,
+        )
         result = resolver.resolve_field(profile_id, field)
         return {
             "value": result.value,
@@ -179,7 +184,12 @@ class CloudState:
         def local_loader(pid: str) -> dict[str, Any]:
             return dict(local_payload) if pid == profile_id else {}
 
-        resolver = EdgeResolverService(store, local_profile_loader=local_loader)
+        resolver = EdgeResolverService(
+            store,
+            local_profile_loader=local_loader,
+            tenant_id=tenant_id,
+            public_tenants=GLOBAL_TENANTS,
+        )
         profile = resolver.resolve_profile(profile_id, fields=fields, local_payload=local_payload)
         return profile.to_json()
 
