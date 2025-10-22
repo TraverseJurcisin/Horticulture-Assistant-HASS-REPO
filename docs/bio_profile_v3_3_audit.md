@@ -1,72 +1,105 @@
 # Audit: HorticultureAssistant Alignment with BioProfile v3.3
 
 ## Overview
-This document summarizes an audit of the current HorticultureAssistant codebase against the BioProfile v3.3 specification. The review focuses on structural profile changes, schema completeness, resolver behavior, data normalization, integration capabilities, and architectural readiness for hybrid cloud deployment.
+This document captures the latest audit of the Horticulture Assistant Home Assistant integration against the BioProfile v3.3 architecture guidelines. It consolidates observations about profile modeling, schema coverage, resolver behavior, data analytics, integration touchpoints, and readiness for hybrid edge/cloud operation.
 
 ## Findings
-### BioProfile Structure & Inheritance
-- The application relies on a single `PlantProfile` model without distinct species and cultivar representations.
-- No inheritance or linkage exists that would allow cultivars to reuse or override species attributes.
+### BioProfile Structure and Inheritance
+- Plant- and zone-level configurations are stored as JSON profiles under `data/local/profiles/`, enabling tailored BioProfiles per cultivar or installation.
+- Runtime lineage chains now connect cultivars back to their parent species. Each profile maintains a recorded ancestry chain (`BioProfile.lineage`) and the registry refresh populates species ↔ cultivar links automatically. When species data is updated, child profiles inherit the new values during resolution, eliminating the old copy-once behavior.
 
-### Schema Definitions
-- Only the legacy plant profile schema is available; new BioProfile schema concepts are absent.
-- Models for cultivation run events, harvest events, computed statistics, and Home Assistant resolver configuration are missing.
+### Schema Definitions and Usage
+- The fertilizer dataset continues to ship with an explicit JSON schema (validated via `scripts/validate_fertilizers_v3e.py`).
+- BioProfile payloads, run histories, harvest histories, and computed statistics now have Draft 2020-12 JSON schemas under `custom_components/horticulture_assistant/data/schema/`. The new `validate_profiles.py` and `validate_logs.py` scripts execute during CI to ensure authored JSON never drifts from the contract, and the schemas are consumed by the validator helper for ad-hoc checks.
 
-### Terminology Usage
-- Deprecated "Plant Profile" terminology is still present throughout the codebase. The updated "BioProfile" naming convention is not adopted.
+### Legacy Terminology Check
+- The repository has largely adopted the BioProfile terminology. The deprecated "PlantProfile" naming no longer appears in user-facing documentation or core modules, reducing the risk of confusion.
 
-### Local Resolver & Provenance
-- No resolver exists to merge parent and child profile data or track provenance of inherited values. The absence of hierarchical profiles prevents provenance metadata from being recorded.
+### Local Resolver Logic and Provenance
+- The integration uses Home Assistant `DataUpdateCoordinator` instances to blend live sensor data with profile thresholds, producing derived metrics like VPD, DLI, and dew point.
+- Preference resolution now traverses the lineage chain when a source is unset, building provenance-aware `ResolvedTarget` entries annotated with the ancestor profile that supplied each value. Inherited thresholds arrive with an explicit inheritance citation, depth metadata, and the original parent annotation preserved as an overlay.
 
-### Yield Densitization & Aggregation
-- Harvest and yield tracking is not implemented, so there is no densitization (e.g., kg/m²) or aggregation at the species level.
+### Yield Data and Aggregation
+- Harvest logging is now first-class: `ProfileRegistry.async_record_harvest_event` captures yield, area, and density details, and the profile dataclass stores both `run_history` and `harvest_history` entries.
+- The `profile.statistics.recompute_statistics` module aggregates those events into cultivar- and species-level `YieldStatistic` snapshots (including kg/m², harvest counts, and contributor weights). These snapshots are persisted alongside computed stats and surfaced via the new HTTP API summaries.
+- Run log analytics now compute environment rollups. Daily light, VPD, temperature, humidity, and run duration averages are distilled into `environment/v1` computed-stat snapshots for each cultivar and species, giving both local dashboards and cloud pipelines a structured view of growing conditions.
 
-### Cloud/Edge Synchronization
-- The project lacks any synchronization workflow or service for exchanging data with a cloud backend, leaving deployments edge-only.
+### Environmental Analytics and Provenance
+- Environment snapshots expose contributor weights per cultivar, letting species-level analytics show which cultivars provided the underlying telemetry and how many runs informed the averages.
+- The authenticated HTTP endpoints return both yield and environment computed stats, so external dashboards receive provenance-rich payloads without touching the Home Assistant entity registry.
 
-### Home Assistant Integration
-- There is no automated pipeline that exposes resolved profile data or statistics to Home Assistant through sensors or configuration outputs.
+### Edge-to-Cloud Sync Capability
+- The add-on ships an opt-in cloud sync subsystem (`custom_components.horticulture_assistant.cloudsync`) featuring an outbox/inbox SQLite store, NDJSON event protocol, bidirectional worker, and status sensors. Cloud connectivity can be configured via the options flow (tenant, endpoint, and device token) and the worker reconciles cloud snapshots with local overrides when enabled.
+- By default the integration still operates offline-only; sites that do not configure the sync options remain local-first.
 
-### Monetizable Centralization Architecture
-- The repository is geared toward a single-tenant experience. It lacks multi-tenant isolation, TimescaleDB-backed telemetry storage, and granular role-based access control necessary for a SaaS deployment.
+### Home Assistant Integration (Sensors & Config)
+- The custom integration follows Home Assistant best practices by exposing resolved thresholds and computed stats as entities tied to a profile-specific device. Users can link existing sensors via the config flow, and the coordinator refreshes those entities without requiring external REST sensors.
+- A new authenticated HTTP surface (`/api/horticulture_assistant/profiles/...`) returns full BioProfile payloads, yield summaries, and provenance metadata so external dashboards can consume the knowledge graph without scraping the entity registry.
+- HTTP responses now bundle all computed-stat snapshots (yield and environment) so consumers can trend conditions, yields, and inheritance metadata from a single fetch.
 
-## Recommended Engineering Tasks
+### Cloud/Multitenancy and Monetization Readiness
+- A draft multi-tenant schema (`cloud/ddl/cloud_schema.sql`) and cloud-edge architecture blueprint document the path to hosted services, and the edge sync client already understands tenant IDs and device credentials.
+- Role-based access control, user onboarding flows, and hosted APIs remain future work, but the new HTTP API and schema contracts give the backend concrete payloads to target when those services materialize.
+
+## Recommended Engineering Tickets
 ```json
 [
   {
-    "task": "Implement hierarchical BioProfile model (species & cultivar)",
-    "details": "Introduce separate classes for SpeciesProfile and CultivarProfile, with CultivarProfile inheriting from SpeciesProfile (or sharing a base class). Update the data model to link each CultivarProfile to its parent SpeciesProfile and migrate existing PlantProfile data."
+    "title": "Stress-test Hierarchical Profile Inheritance",
+    "description": "Exercise the lineage builder against deep cultivar chains, shared templates, and partially missing ancestors. Add regression fixtures containing stored lineage payloads to guarantee backward compatibility across migrations.",
+    "files": [
+      "custom_components/horticulture_assistant/profile/utils.py",
+      "tests/test_profile_registry.py",
+      "tests/test_sources.py"
+    ]
   },
   {
-    "task": "Update schema definitions for events and stats",
-    "details": "Define schemas/models for Run events and Harvest events, capturing planting start/end dates and yield outputs. Add support for computed statistics at the profile or run level and generate database migrations."
+    "title": "Apply JSON Schema Validation at Runtime",
+    "description": "Wire the new schemas into profile loading/saving so malformed run or harvest entries raise issues immediately. Emit Home Assistant repairs for invalid payloads and block persistence when the schema contract is broken.",
+    "files": [
+      "custom_components/horticulture_assistant/profile_store.py",
+      "custom_components/horticulture_assistant/validators.py",
+      "custom_components/horticulture_assistant/diagnostics.py"
+    ]
   },
   {
-    "task": "Rename and refactor deprecated 'Plant Profile' terminology",
-    "details": "Replace all references of 'PlantProfile' with 'BioProfile' terminology in code, tests, and documentation."
+    "title": "Surface Inheritance Provenance in the UI",
+    "description": "Expose the inheritance metadata on Lovelace cards and diagnostics, including the parent profile name, depth, and source annotation for every resolved target.",
+    "files": [
+      "custom_components/horticulture_assistant/sensor.py",
+      "custom_components/horticulture_assistant/diagnostics.py",
+      "custom_components/horticulture_assistant/dashboard/"
+    ]
   },
   {
-    "task": "Develop local resolver for profile inheritance with provenance",
-    "details": "Implement a resolver that merges species and cultivar data, applies overrides, and annotates each field with provenance metadata. Integrate the resolver into data access layers."
+    "title": "Harden the HTTP Profile API",
+    "description": "Add token/role gating, pagination, and field filtering for the new `/api/horticulture_assistant/profiles` endpoints so large installations and future cloud consumers can query safely.",
+    "files": [
+      "custom_components/horticulture_assistant/http.py",
+      "custom_components/horticulture_assistant/config_flow.py",
+      "custom_components/horticulture_assistant/const.py"
+    ]
   },
   {
-    "task": "Add yield densitization and species-level aggregation",
-    "details": "Extend the Harvest event schema to record yield quantity and growing area, calculate normalized yields (kg/m²), and aggregate statistics at the species level."
+    "title": "Enhance Cloud Sync Telemetry and Conflict Reporting",
+    "description": "Publish metrics for upload latency, conflict resolutions, and queue depth through both sensors and diagnostics to help operators monitor hybrid deployments.",
+    "files": [
+      "custom_components/horticulture_assistant/cloudsync/edge_worker.py",
+      "custom_components/horticulture_assistant/cloudsync/edge_store.py",
+      "custom_components/horticulture_assistant/sensor.py"
+    ]
   },
   {
-    "task": "Implement cloud/edge data synchronization mechanism",
-    "details": "Create a synchronization service or background jobs that replicate data between the local edge deployment and a central cloud API, including conflict resolution strategies."
-  },
-  {
-    "task": "Integrate with Home Assistant for sensor data",
-    "details": "Expose resolved profile values and statistics to Home Assistant via REST endpoints or generated configuration files and document how to enable the integration."
-  },
-  {
-    "task": "Prepare architecture for multi-tenant cloud and RBAC",
-    "details": "Refactor the application for multi-tenant operation, adopt PostgreSQL/TimescaleDB for telemetry, and implement role-based access controls with clearly defined user roles."
+    "title": "Design RBAC-backed Cloud Onboarding",
+    "description": "Connect the edge sync client and HTTP API with a future hosted backend by defining user roles, device enrollment flows, and secure token rotation policies.",
+    "files": [
+      "cloud/api/",
+      "custom_components/horticulture_assistant/config_flow.py",
+      "docs/cloud_edge_architecture.md"
+    ]
   }
 ]
 ```
 
 ## Next Steps
-Addressing the tasks above will bring the project in line with BioProfile v3.3 expectations, enabling hierarchical profile management, advanced analytics, cloud synchronization, and integration with Home Assistant within a monetizable, multi-tenant architecture.
+Executing the tickets above will close the identified BioProfile v3.3 gaps, modernize profile management, enable rigorous data validation, and lay the groundwork for analytics, cloud connectivity, and eventual SaaS monetization.

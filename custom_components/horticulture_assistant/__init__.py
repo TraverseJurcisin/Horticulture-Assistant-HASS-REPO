@@ -63,6 +63,7 @@ from .coordinator import HorticultureCoordinator
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .entity_utils import ensure_entities_exist
+from .http import async_register_http_views
 from .profile_registry import ProfileRegistry
 from .profile_store import ProfileStore
 from .storage import LocalStore
@@ -156,6 +157,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "cloud_sync_status": cloud_sync_manager.status(),
         }
     )
+
+    async_register_http_views(hass)
 
     await cloud_sync_manager.async_start()
     entry_data["cloud_sync_status"] = cloud_sync_manager.status()

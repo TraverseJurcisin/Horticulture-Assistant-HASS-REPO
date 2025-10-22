@@ -230,7 +230,12 @@ async def test_record_harvest_event_updates_statistics(hass):
 
     await reg.async_record_run_event(
         "cultivar.1",
-        {"run_id": "run-1", "started_at": "2024-01-01T00:00:00Z"},
+        {
+            "run_id": "run-1",
+            "started_at": "2024-01-01T00:00:00Z",
+            "ended_at": "2024-01-06T00:00:00Z",
+            "environment": {"temperature_c": 23.5, "humidity_percent": 55},
+        },
     )
     event = await reg.async_record_harvest_event(
         "cultivar.1",
@@ -278,6 +283,21 @@ async def test_record_harvest_event_updates_statistics(hass):
     )
     assert stored_snapshot is not None
 
+    cultivar_env = next(
+        (snap for snap in cultivar_prof.computed_stats if snap.stats_version == "environment/v1"),
+        None,
+    )
+    assert cultivar_env is not None
+    assert cultivar_env.payload["metrics"]["avg_temperature_c"] == pytest.approx(23.5)
+    assert cultivar_env.payload["runs_recorded"] == 1
+
+    species_env = next(
+        (snap for snap in species_prof.computed_stats if snap.stats_version == "environment/v1"),
+        None,
+    )
+    assert species_env is not None
+    assert species_env.payload["runs_recorded"] >= 1
+
 
 async def test_relink_profiles_populates_species_relationships(hass):
     species = SpeciesProfile(profile_id="species.alpha", display_name="Alpha")
@@ -303,6 +323,10 @@ async def test_relink_profiles_populates_species_relationships(hass):
     assert cultivar_prof.species_profile_id == "species.alpha"
     assert species_prof.cultivar_ids == ["cultivar.beta"]
     assert cultivar_prof.parents[0] == "species.alpha"
+    assert cultivar_prof.lineage and cultivar_prof.lineage[0].profile_id == "cultivar.beta"
+    assert any(entry.profile_id == "species.alpha" for entry in cultivar_prof.lineage)
+    species_entry = next((entry for entry in cultivar_prof.lineage if entry.profile_id == "species.alpha"), None)
+    assert species_entry is not None and species_entry.role in {"species", "parent"}
 
 
 async def test_export_uses_hass_config_path(hass, tmp_path, monkeypatch):
