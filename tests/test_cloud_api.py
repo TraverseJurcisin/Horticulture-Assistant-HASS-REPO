@@ -1,15 +1,12 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 import pytest
-
-pytest.importorskip("httpx")
-
 from fastapi.testclient import TestClient
 
 from cloud.api.main import create_app
 from custom_components.horticulture_assistant.cloudsync import SyncEvent, VectorClock
 
-UTC = datetime.UTC
+pytest.importorskip("httpx")
 
 AUTH_HEADERS = {"X-Tenant-ID": "tenant-1", "X-Roles": "admin,device,analytics"}
 
