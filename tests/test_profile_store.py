@@ -112,6 +112,20 @@ async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypat
 
 
 @pytest.mark.asyncio
+async def test_async_get_handles_corrupt_profile(hass, tmp_path, monkeypatch) -> None:
+    """Corrupted on-disk profiles should be treated as missing."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    broken_path = store._path_for("Broken Plant")
+    broken_path.write_text("{not-json", encoding="utf-8")
+
+    assert await store.async_get("Broken Plant") is None
+
+
+@pytest.mark.asyncio
 async def test_async_save_profile_from_options_preserves_local_sections(hass, tmp_path, monkeypatch) -> None:
     """Saving from options should materialise library/local sections."""
 
