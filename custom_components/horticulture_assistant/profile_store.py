@@ -50,7 +50,14 @@ class ProfileStore:
         path = self._path_for(name)
         if not path.exists():
             return None
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        try:
+            raw_text = path.read_text(encoding="utf-8")
+        except OSError:
+            return None
+        try:
+            raw = json.loads(raw_text)
+        except json.JSONDecodeError:
+            return None
         return self._normalise_payload(raw, fallback_name=path.stem)
 
     async def async_save(
