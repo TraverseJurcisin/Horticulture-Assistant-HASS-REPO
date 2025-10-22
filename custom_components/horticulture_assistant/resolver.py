@@ -9,7 +9,7 @@ from homeassistant.core import HomeAssistant
 from .cloudsync import EdgeResolverService
 from .const import DOMAIN, OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.options import options_profile_to_dataclass
-from .profile.schema import FieldAnnotation, BioProfile, ResolvedTarget
+from .profile.schema import BioProfile, FieldAnnotation, ResolvedTarget
 from .profile.utils import (
     citations_map_to_list,
     determine_species_slug,

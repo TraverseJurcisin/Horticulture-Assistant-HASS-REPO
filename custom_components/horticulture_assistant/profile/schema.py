@@ -191,6 +191,7 @@ class YieldStatistic:
             metadata=_as_dict(data.get("metadata")),
         )
 
+
 @dataclass
 class FieldAnnotation:
     """Metadata describing how a resolved target value was obtained."""
@@ -1061,9 +1062,7 @@ class BioProfile:
             updated_at = data.get("updated_at")
             local_metadata = _as_dict(data.get("local_metadata"))
             run_history = [
-                RunEvent.from_json(item)
-                for item in data.get("run_history", []) or []
-                if isinstance(item, Mapping)
+                RunEvent.from_json(item) for item in data.get("run_history", []) or [] if isinstance(item, Mapping)
             ]
             harvest_history = [
                 HarvestEvent.from_json(item)
@@ -1071,9 +1070,7 @@ class BioProfile:
                 if isinstance(item, Mapping)
             ]
             statistics = [
-                YieldStatistic.from_json(item)
-                for item in data.get("statistics", []) or []
-                if isinstance(item, Mapping)
+                YieldStatistic.from_json(item) for item in data.get("statistics", []) or [] if isinstance(item, Mapping)
             ]
 
         if resolved_section is not None:

@@ -5,8 +5,8 @@ from typing import Any
 
 from ..const import CONF_PROFILE_SCOPE
 from .schema import (
-    Citation,
     BioProfile,
+    Citation,
     ProfileLibrarySection,
     ProfileLocalSection,
     SpeciesProfile,
@@ -229,7 +229,7 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
             if isinstance(profile, SpeciesProfile):
                 profile.cultivar_ids = []
             else:  # pragma: no cover - safety for partially migrated data
-                setattr(profile, "cultivar_ids", [])
+                profile.cultivar_ids = []
 
     for profile in profiles:
         if profile.profile_type == "species":
@@ -264,13 +264,13 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
         cultivar_ids = list(getattr(species, "cultivar_ids", []))
         if profile.profile_id not in cultivar_ids:
             cultivar_ids.append(profile.profile_id)
-        setattr(species, "cultivar_ids", cultivar_ids)
+        species.cultivar_ids = cultivar_ids
 
     for species in species_map.values():
         cultivar_ids = getattr(species, "cultivar_ids", [])
         if cultivar_ids:
             deduped = list(dict.fromkeys(cultivar_ids))
-            setattr(species, "cultivar_ids", deduped)
+            species.cultivar_ids = deduped
 
 
 __all__ = [

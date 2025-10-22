@@ -250,14 +250,33 @@ async def test_record_harvest_event_updates_statistics(hass):
     metrics = cultivar_prof.statistics[0].metrics
     assert metrics["total_yield_grams"] == 125.5
     assert metrics["average_yield_density_g_m2"] == round(125.5 / 2.5, 3)
+    cultivar_snapshot = next(
+        (snap for snap in cultivar_prof.computed_stats if snap.stats_version == "yield/v1"),
+        None,
+    )
+    assert cultivar_snapshot is not None
+    assert cultivar_snapshot.payload["yields"]["total_grams"] == pytest.approx(125.5)
+    assert cultivar_snapshot.payload["runs_tracked"] == 1
 
     species_prof = reg.get("species.1")
     assert species_prof is not None
     species_metrics = species_prof.statistics[0].metrics
     assert species_metrics["total_yield_grams"] == 125.5
+    species_snapshot = next(
+        (snap for snap in species_prof.computed_stats if snap.stats_version == "yield/v1"),
+        None,
+    )
+    assert species_snapshot is not None
+    contributors = {item["profile_id"]: item for item in species_snapshot.payload["contributors"]}
+    assert contributors["cultivar.1"]["total_yield_grams"] == pytest.approx(125.5)
 
     stored_cultivar = await profile_store.async_load_profile(hass, "cultivar.1")
     assert stored_cultivar is not None and len(stored_cultivar.harvest_history) == 1
+    stored_snapshot = next(
+        (snap for snap in stored_cultivar.computed_stats if snap.stats_version == "yield/v1"),
+        None,
+    )
+    assert stored_snapshot is not None
 
 
 async def test_relink_profiles_populates_species_relationships(hass):

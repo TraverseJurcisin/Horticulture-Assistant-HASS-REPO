@@ -65,13 +65,7 @@ class ProfileRegistry:
         # Older versions stored profiles as a list; convert to the new mapping
         # structure keyed by the legacy ``plant_id`` identifier.
         if isinstance(data, list):  # pragma: no cover - legacy format
-            data = {
-                "profiles": {
-                    p["plant_id"]: p
-                    for p in data
-                    if isinstance(p, Mapping) and p.get("plant_id")
-                }
-            }
+            data = {"profiles": {p["plant_id"]: p for p in data if isinstance(p, Mapping) and p.get("plant_id")}}
 
         stored_profiles = data.get("profiles", {})
         profiles: dict[str, BioProfile] = {}
@@ -363,9 +357,7 @@ class ProfileRegistry:
         if prof is None:
             raise ValueError(f"unknown profile {profile_id}")
 
-        event = (
-            payload if isinstance(payload, HarvestEvent) else HarvestEvent.from_json(payload)
-        )
+        event = payload if isinstance(payload, HarvestEvent) else HarvestEvent.from_json(payload)
         prof.add_harvest_event(event)
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()

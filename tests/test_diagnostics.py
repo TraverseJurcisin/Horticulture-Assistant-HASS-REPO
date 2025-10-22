@@ -44,7 +44,14 @@ class DummyRegistry:
                     "tags": [],
                     "last_resolved": None,
                 },
-                "run_history": [{"run_id": "run-1", "profile_id": "p1", "species_id": None, "started_at": "2024-01-01"}],
+                "run_history": [
+                    {
+                        "run_id": "run-1",
+                        "profile_id": "p1",
+                        "species_id": None,
+                        "started_at": "2024-01-01",
+                    }
+                ],
                 "harvest_history": [],
                 "statistics": [],
                 "lineage": [],

@@ -18,12 +18,12 @@ from custom_components.horticulture_assistant.cloudsync import (
 )
 
 from .auth import (
-    Principal,
     ROLE_ADMIN,
     ROLE_ANALYTICS,
     ROLE_DEVICE,
     ROLE_EDITOR,
     ROLE_VIEWER,
+    Principal,
     principal_dependency,
 )
 
@@ -268,7 +268,7 @@ def create_app() -> FastAPI:
     @app.post("/sync/up")
     async def handle_sync_up(
         request: Request,
-        principal: Principal = Depends(principal_dependency),
+        principal: Principal = Depends(principal_dependency),  # noqa: B008
     ) -> dict[str, Any]:
         principal.require(ROLE_ADMIN, ROLE_DEVICE)
         payload = (await request.body()).decode()
@@ -282,7 +282,7 @@ def create_app() -> FastAPI:
 
     @app.get("/sync/down")
     async def handle_sync_down(
-        principal: Principal = Depends(principal_dependency),
+        principal: Principal = Depends(principal_dependency),  # noqa: B008
         cursor: int | None = Query(None),
     ) -> Response:
         principal.require(ROLE_ADMIN, ROLE_DEVICE, ROLE_VIEWER)
@@ -296,7 +296,7 @@ def create_app() -> FastAPI:
 
     @app.get("/resolve")
     async def handle_resolve(
-        principal: Principal = Depends(principal_dependency),
+        principal: Principal = Depends(principal_dependency),  # noqa: B008
         profile: str = Query(...),
         field: str = Query(...),
     ) -> Mapping[str, Any]:
@@ -305,7 +305,7 @@ def create_app() -> FastAPI:
 
     @app.get("/profiles")
     async def handle_profiles(
-        principal: Principal = Depends(principal_dependency),
+        principal: Principal = Depends(principal_dependency),  # noqa: B008
         profile_type: str | None = Query(None, alias="type"),
     ) -> dict[str, Any]:
         principal.require(ROLE_VIEWER, ROLE_EDITOR, ROLE_ADMIN, ROLE_ANALYTICS)
@@ -315,7 +315,7 @@ def create_app() -> FastAPI:
     @app.get("/profiles/{profile_id}")
     async def handle_profile_detail(
         profile_id: str,
-        principal: Principal = Depends(principal_dependency),
+        principal: Principal = Depends(principal_dependency),  # noqa: B008
         fields: Annotated[list[str] | None, Query(alias="field")] = None,
     ) -> dict[str, Any]:
         principal.require(ROLE_VIEWER, ROLE_EDITOR, ROLE_ADMIN, ROLE_ANALYTICS)
@@ -325,7 +325,7 @@ def create_app() -> FastAPI:
     @app.post("/profiles")
     async def handle_profiles_post(
         data: dict[str, Any],
-        principal: Principal = Depends(principal_dependency),
+        principal: Principal = Depends(principal_dependency),  # noqa: B008
     ) -> dict[str, Any]:
         principal.require(ROLE_EDITOR, ROLE_ADMIN)
         profile_id = data.get("profile_id")
@@ -349,7 +349,7 @@ def create_app() -> FastAPI:
     @app.post("/stats")
     async def handle_stats_post(
         data: dict[str, Any],
-        principal: Principal = Depends(principal_dependency),
+        principal: Principal = Depends(principal_dependency),  # noqa: B008
     ) -> dict[str, Any]:
         principal.require(ROLE_ANALYTICS, ROLE_ADMIN)
         profile_id = data.get("profile_id")

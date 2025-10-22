@@ -2,11 +2,11 @@
 
 from .options import options_profile_to_dataclass
 from .schema import (
+    BioProfile,
     Citation,
     ComputedStatSnapshot,
-    FieldAnnotation,
-    BioProfile,
     CultivarProfile,
+    FieldAnnotation,
     HarvestEvent,
     ProfileContribution,
     ProfileLibrarySection,

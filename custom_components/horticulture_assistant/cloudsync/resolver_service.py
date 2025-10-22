@@ -6,11 +6,11 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from ..profile.schema import (
+    BioProfile,
     Citation,
     ComputedStatSnapshot,
     CultivarProfile,
     FieldAnnotation,
-    BioProfile,
     ProfileComputedSection,
     ProfileLibrarySection,
     ProfileLineageEntry,
@@ -82,11 +82,7 @@ class EdgeResolverService:
         self.tenant_id = tenant or None
         public = public_tenants or ("public", "shared", "global")
         self.public_tenants = tuple(
-            dict.fromkeys(
-                str(item).strip()
-                for item in public
-                if isinstance(item, str) and str(item).strip()
-            )
+            dict.fromkeys(str(item).strip() for item in public if isinstance(item, str) and str(item).strip())
         )
 
     # ------------------------------------------------------------------
@@ -105,18 +101,14 @@ class EdgeResolverService:
             if not candidate or candidate in tried:
                 continue
             tried.add(candidate)
-            entry = self.store.fetch_cloud_cache_entry(
-                entity_type, entity_id, tenant_id=candidate
-            )
+            entry = self.store.fetch_cloud_cache_entry(entity_type, entity_id, tenant_id=candidate)
             if entry:
                 return entry
         for tenant in self.public_tenants:
             if tenant in tried:
                 continue
             tried.add(tenant)
-            entry = self.store.fetch_cloud_cache_entry(
-                entity_type, entity_id, tenant_id=tenant
-            )
+            entry = self.store.fetch_cloud_cache_entry(entity_type, entity_id, tenant_id=tenant)
             if entry:
                 return entry
         return self.store.fetch_cloud_cache_entry(entity_type, entity_id)

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Set
 
 from fastapi import Header, HTTPException, status
 
@@ -11,7 +10,7 @@ ROLE_VIEWER = "viewer"
 ROLE_DEVICE = "device"
 ROLE_ANALYTICS = "analytics"
 
-VALID_ROLES: Set[str] = {
+VALID_ROLES: set[str] = {
     ROLE_ADMIN,
     ROLE_EDITOR,
     ROLE_VIEWER,
@@ -20,10 +19,10 @@ VALID_ROLES: Set[str] = {
 }
 
 
-def _normalise_roles(roles_header: str | None) -> Set[str]:
+def _normalise_roles(roles_header: str | None) -> set[str]:
     if not roles_header:
         return set()
-    roles: Set[str] = set()
+    roles: set[str] = set()
     for chunk in roles_header.split(","):
         role = chunk.strip().lower()
         if role:
@@ -34,7 +33,7 @@ def _normalise_roles(roles_header: str | None) -> Set[str]:
 @dataclass(slots=True)
 class Principal:
     tenant_id: str
-    roles: Set[str]
+    roles: set[str]
     subject_id: str | None = None
 
     def has_any(self, *required: str) -> bool:

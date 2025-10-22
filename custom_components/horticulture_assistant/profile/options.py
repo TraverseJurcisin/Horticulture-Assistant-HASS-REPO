@@ -7,11 +7,11 @@ from typing import Any
 
 from ..const import CONF_PROFILE_SCOPE
 from .schema import (
+    BioProfile,
     Citation,
     ComputedStatSnapshot,
-    FieldAnnotation,
-    BioProfile,
     CultivarProfile,
+    FieldAnnotation,
     ProfileComputedSection,
     ProfileLibrarySection,
     ProfileLineageEntry,
@@ -289,7 +289,7 @@ def options_profile_to_dataclass(
         if isinstance(cultivar_ids_raw, Mapping):
             cultivar_ids_raw = cultivar_ids_raw.get("items")
         cultivar_ids: list[str] = []
-        if isinstance(cultivar_ids_raw, (list, tuple, set)):
+        if isinstance(cultivar_ids_raw, (list | tuple | set)):
             cultivar_ids = [str(item) for item in cultivar_ids_raw]
         profile = SpeciesProfile(cultivar_ids=cultivar_ids, **profile_kwargs)
     elif profile_type in {"cultivar", "line"}:
