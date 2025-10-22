@@ -154,3 +154,96 @@ def test_environment_statistics_from_run_history():
     assert "cultivar" in contributors and "species" in contributors
     contrib = next(c for c in species_env.contributions if c.child_id == "cultivar")
     assert contrib.stats_version == "environment/v1"
+
+
+def test_success_statistics_from_run_history():
+    species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species",
+    )
+
+    cultivar.add_run_event(
+        RunEvent(
+            run_id="run-1",
+            profile_id="cultivar",
+            species_id="species",
+            started_at="2024-03-01T00:00:00Z",
+            ended_at="2024-03-07T00:00:00Z",
+            targets_met=18,
+            targets_total=20,
+            stress_events=1,
+        )
+    )
+    cultivar.add_run_event(
+        RunEvent(
+            run_id="run-2",
+            profile_id="cultivar",
+            species_id="species",
+            started_at="2024-03-10T00:00:00Z",
+            ended_at="2024-03-18T00:00:00Z",
+            success_rate=92.5,
+            metadata={"stress_events": 2},
+        )
+    )
+    species.add_run_event(
+        RunEvent(
+            run_id="species-run",
+            profile_id="species",
+            species_id="species",
+            started_at="2024-04-01T00:00:00Z",
+            ended_at="2024-04-15T00:00:00Z",
+            metadata={"targets_met": 40, "targets_total": 50, "stress_events": 4},
+        )
+    )
+
+    recompute_statistics([species, cultivar])
+
+    cultivar_success = next(
+        (snap for snap in cultivar.computed_stats if snap.stats_version == "success/v1"),
+        None,
+    )
+    assert cultivar_success is not None
+    payload = cultivar_success.payload
+    assert payload["samples_recorded"] == 2
+    assert payload["runs_tracked"] == 2
+    assert payload["average_success_percent"] == pytest.approx(91.25)
+    assert payload["weighted_success_percent"] == pytest.approx(90.0)
+    assert payload["stress_events"] == 3
+    assert payload["targets_met"] == pytest.approx(18.0)
+    assert payload["targets_total"] == pytest.approx(20.0)
+    assert payload["best_success_percent"] == pytest.approx(92.5)
+    assert payload["worst_success_percent"] == pytest.approx(90.0)
+
+    species_success = next(
+        (snap for snap in species.computed_stats if snap.stats_version == "success/v1"),
+        None,
+    )
+    assert species_success is not None
+    species_payload = species_success.payload
+    assert species_payload["samples_recorded"] == 3
+    assert species_payload["runs_tracked"] == 3
+    assert species_payload["average_success_percent"] == pytest.approx(87.5)
+    assert species_payload["weighted_success_percent"] == pytest.approx(82.857, rel=1e-3)
+    assert species_payload["stress_events"] == 7
+    assert species_payload["targets_met"] == pytest.approx(58.0)
+    assert species_payload["targets_total"] == pytest.approx(70.0)
+    assert species_payload["best_success_percent"] == pytest.approx(92.5)
+    assert species_payload["worst_success_percent"] == pytest.approx(80.0)
+
+    contributors = {item["profile_id"]: item for item in species_payload["contributors"]}
+    assert contributors["cultivar"]["samples_recorded"] == 2
+    assert contributors["cultivar"]["average_success_percent"] == pytest.approx(91.25)
+    assert contributors["cultivar"]["weighted_success_percent"] == pytest.approx(90.0)
+    assert contributors["cultivar"]["targets_met"] == pytest.approx(18.0)
+    assert contributors["cultivar"]["targets_total"] == pytest.approx(20.0)
+    assert contributors["species"]["average_success_percent"] == pytest.approx(80.0)
+    assert contributors["species"]["targets_met"] == pytest.approx(40.0)
+    assert contributors["species"]["targets_total"] == pytest.approx(50.0)
+
+    contribution_index = {contrib.child_id: contrib for contrib in species_success.contributions}
+    assert contribution_index["cultivar"].stats_version == "success/v1"
+    assert contribution_index["cultivar"].weight == pytest.approx(20 / 70, rel=1e-3)
+    assert contribution_index["cultivar"].n_runs == 2

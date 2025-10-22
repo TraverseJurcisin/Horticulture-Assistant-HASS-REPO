@@ -50,6 +50,7 @@ else:
 
 from .const import CONF_PROFILES, DOMAIN
 from .irrigation_bridge import async_apply_irrigation
+from .profile.statistics import SUCCESS_STATS_VERSION
 from .profile_registry import ProfileRegistry
 from .storage import LocalStore
 
@@ -258,13 +259,38 @@ async def async_register_all(
             event_payload["environment"] = dict(environment)
         if metadata := call.data.get("metadata"):
             event_payload["metadata"] = dict(metadata)
+        for key in ("targets_met", "targets_total", "success_rate", "stress_events"):
+            if key in call.data and call.data[key] is not None:
+                event_payload[key] = call.data[key]
 
         try:
             stored = await registry.async_record_run_event(profile_id, event_payload)
         except ValueError as err:
             raise HomeAssistantError(str(err)) from err
 
-        return {"run_event": stored.to_json()}
+        def _serialise_success(profile):
+            if profile is None:
+                return None
+            for snapshot in getattr(profile, "computed_stats", []) or []:
+                if snapshot.stats_version == SUCCESS_STATS_VERSION:
+                    return snapshot.to_json()
+            return None
+
+        profile_obj = registry.get_profile(profile_id)
+        profile_snapshot = _serialise_success(profile_obj)
+        species_snapshot = None
+        if profile_obj and getattr(profile_obj, "species", None):
+            species_snapshot = _serialise_success(registry.get_profile(profile_obj.species))
+
+        response: dict[str, Any] = {"run_event": stored.to_json()}
+        success_payload: dict[str, Any] = {}
+        if profile_snapshot is not None:
+            success_payload["profile"] = profile_snapshot
+        if species_snapshot is not None:
+            success_payload["species"] = species_snapshot
+        if success_payload:
+            response["success_statistics"] = success_payload
+        return response
 
     async def _srv_record_harvest_event(call) -> ServiceResponse:
         profile_id: str = call.data["profile_id"]

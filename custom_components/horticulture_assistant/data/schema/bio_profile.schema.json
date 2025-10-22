@@ -343,6 +343,30 @@
         },
         "metadata": {
           "type": "object"
+        },
+        "targets_met": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "targets_total": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "success_rate": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "stress_events": {
+          "type": [
+            "number",
+            "null"
+          ]
         }
       },
       "additionalProperties": true

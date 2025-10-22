@@ -28,6 +28,7 @@ from .derived import (
 )
 from .entity import HorticultureEntity
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
+from .profile.statistics import SUCCESS_STATS_VERSION
 from .utils.entry_helpers import get_entry_data, store_entry_data
 
 HORTI_STATUS_DESCRIPTION = SensorEntityDescription(
@@ -198,6 +199,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         sensors.append(PlantIrrigationRecommendationSensor(hass, entry, plant_name, plant_id))
 
     profiles = entry.options.get(CONF_PROFILES, {})
+    registry = stored.get("profile_registry")
     if profile_coord and profiles:
         for pid, profile in profiles.items():
             name = profile.get("name", pid)
@@ -210,6 +212,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             if prof_sensors.get("moisture"):
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["moisture"]))
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["status"]))
+            if registry is not None:
+                sensors.append(ProfileSuccessSensor(profile_coord, registry, pid, name))
 
     cloud_manager = stored.get("cloud_sync_manager")
     if cloud_manager:
@@ -415,3 +419,84 @@ class ProfileMetricSensor(HorticultureEntity, SensorEntity):
             .get("metrics", {})
             .get(self.entity_description.key)
         )
+
+
+class ProfileSuccessSensor(HorticultureEntity, SensorEntity):
+    """Expose the latest success-rate snapshot for a profile."""
+
+    _attr_icon = "mdi:chart-bell-curve-cumulative"
+    _attr_native_unit_of_measurement = PERCENTAGE
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(
+        self,
+        coordinator: HorticultureCoordinator,
+        registry,
+        profile_id: str,
+        profile_name: str,
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._registry = registry
+        self._attr_unique_id = f"{profile_id}:success_rate"
+        self._attr_name = "Success Rate"
+
+    def _get_profile(self):
+        getter = getattr(self._registry, "get_profile", None)
+        if getter is None:
+            getter = getattr(self._registry, "get", None)
+        if getter is None:
+            return None
+        return getter(self._profile_id)
+
+    def _latest_snapshot(self):
+        profile = self._get_profile()
+        if profile is None:
+            return None
+        for snapshot in getattr(profile, "computed_stats", []) or []:
+            if snapshot.stats_version == SUCCESS_STATS_VERSION:
+                return snapshot
+        return None
+
+    @property
+    def native_value(self):
+        snapshot = self._latest_snapshot()
+        if snapshot is None:
+            return None
+        payload = snapshot.payload if isinstance(snapshot.payload, dict) else {}
+        value = payload.get("weighted_success_percent")
+        if value is None:
+            value = payload.get("average_success_percent")
+        if value is None:
+            return None
+        try:
+            return round(float(value), 3)
+        except (TypeError, ValueError):
+            return None
+
+    @property
+    def extra_state_attributes(self):
+        snapshot = self._latest_snapshot()
+        if snapshot is None:
+            return None
+        payload = snapshot.payload if isinstance(snapshot.payload, dict) else {}
+        attrs: dict[str, Any] = {}
+        for key in (
+            "samples_recorded",
+            "runs_tracked",
+            "targets_met",
+            "targets_total",
+            "stress_events",
+            "best_success_percent",
+            "worst_success_percent",
+        ):
+            value = payload.get(key)
+            if value is not None:
+                attrs[key] = value
+        if snapshot.computed_at:
+            attrs["computed_at"] = snapshot.computed_at
+        contributors = payload.get("contributors")
+        if isinstance(contributors, list) and contributors:
+            attrs["contributors"] = contributors
+        if snapshot.contributions:
+            attrs["contribution_weights"] = [contrib.to_json() for contrib in snapshot.contributions]
+        return attrs or None

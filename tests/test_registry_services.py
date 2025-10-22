@@ -174,11 +174,21 @@ async def test_record_run_event_service_updates_history(hass, tmp_path):
             "profile_id": "p1",
             "run_id": "run-1",
             "started_at": "2024-01-01T00:00:00Z",
+            "targets_met": 8,
+            "targets_total": 10,
+            "stress_events": 1,
         },
         blocking=True,
         return_response=True,
     )
     assert response["run_event"]["run_id"] == "run-1"
+    success = response.get("success_statistics", {}).get("profile")
+    assert success is not None
+    assert success["stats_version"] == "success/v1"
+    payload = success["payload"]
+    assert payload["targets_total"] == pytest.approx(10.0)
+    assert payload["targets_met"] == pytest.approx(8.0)
+    assert payload["weighted_success_percent"] == pytest.approx(80.0)
     registry = hass.data[DOMAIN]["registry"]
     profile = registry.get("p1")
     assert profile is not None and len(profile.run_history) == 1

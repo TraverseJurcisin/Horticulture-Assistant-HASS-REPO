@@ -20,12 +20,17 @@ const = importlib.import_module("custom_components.horticulture_assistant.const"
 coordinator_mod = importlib.import_module("custom_components.horticulture_assistant.coordinator")
 entity_mod = importlib.import_module("custom_components.horticulture_assistant.entity")
 sensor_mod = importlib.import_module("custom_components.horticulture_assistant.sensor")
+schema_mod = importlib.import_module("custom_components.horticulture_assistant.profile.schema")
 
 CONF_PROFILES = const.CONF_PROFILES
 HorticultureCoordinator = coordinator_mod.HorticultureCoordinator
 HorticultureEntity = entity_mod.HorticultureEntity
 ProfileMetricSensor = sensor_mod.ProfileMetricSensor
 PROFILE_SENSOR_DESCRIPTIONS = sensor_mod.PROFILE_SENSOR_DESCRIPTIONS
+ProfileSuccessSensor = sensor_mod.ProfileSuccessSensor
+BioProfile = schema_mod.BioProfile
+ComputedStatSnapshot = schema_mod.ComputedStatSnapshot
+ProfileContribution = schema_mod.ProfileContribution
 
 
 @pytest.mark.asyncio
@@ -205,3 +210,64 @@ async def test_status_and_recommendation_device_info(hass):
     assert info["identifiers"] == {("horticulture_assistant", "plant:pid")}
     assert info["name"] == "Plant"
     assert rec.device_info == info
+
+
+@pytest.mark.asyncio
+async def test_profile_success_sensor_uses_latest_snapshot(hass):
+    options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    await coordinator.async_config_entry_first_refresh()
+
+    profile = BioProfile(profile_id="avocado", display_name="Avocado")
+    snapshot = ComputedStatSnapshot(
+        stats_version="success/v1",
+        computed_at="2025-05-01T12:00:00Z",
+        payload={
+            "weighted_success_percent": 92.5,
+            "average_success_percent": 91.0,
+            "samples_recorded": 3,
+            "runs_tracked": 2,
+            "targets_met": 80.0,
+            "targets_total": 100.0,
+            "stress_events": 2,
+            "best_success_percent": 95.0,
+            "worst_success_percent": 90.0,
+            "contributors": [
+                {
+                    "profile_id": "avocado",
+                    "samples_recorded": 3,
+                    "weighted_success_percent": 92.5,
+                }
+            ],
+        },
+        contributions=[
+            ProfileContribution(
+                profile_id="avocado",
+                child_id="avocado",
+                stats_version="success/v1",
+                weight=1.0,
+                n_runs=2,
+            )
+        ],
+    )
+    profile.computed_stats.append(snapshot)
+
+    class DummyRegistry:
+        def __init__(self, prof):
+            self._profile = prof
+
+        def get_profile(self, profile_id):
+            if profile_id == self._profile.profile_id:
+                return self._profile
+            return None
+
+    sensor = ProfileSuccessSensor(coordinator, DummyRegistry(profile), "avocado", "Avocado")
+    assert sensor.native_value == pytest.approx(92.5)
+    attrs = sensor.extra_state_attributes
+    assert attrs["samples_recorded"] == 3
+    assert attrs["targets_met"] == pytest.approx(80.0)
+    assert attrs["targets_total"] == pytest.approx(100.0)
+    assert attrs["stress_events"] == 2
+    assert attrs["best_success_percent"] == pytest.approx(95.0)
+    assert attrs["worst_success_percent"] == pytest.approx(90.0)
+    assert attrs["contributors"][0]["profile_id"] == "avocado"

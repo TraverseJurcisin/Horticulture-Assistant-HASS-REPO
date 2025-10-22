@@ -36,6 +36,10 @@ class RunEvent:
     ended_at: str | None = None
     environment: dict[str, Any] = field(default_factory=dict)
     metadata: dict[str, Any] = field(default_factory=dict)
+    targets_met: float | None = None
+    targets_total: float | None = None
+    success_rate: float | None = None
+    stress_events: int | None = None
 
     def to_json(self) -> dict[str, Any]:
         payload: dict[str, Any] = {
@@ -50,10 +54,30 @@ class RunEvent:
             payload["environment"] = dict(self.environment)
         if self.metadata:
             payload["metadata"] = dict(self.metadata)
+        if self.targets_met is not None:
+            payload["targets_met"] = self.targets_met
+        if self.targets_total is not None:
+            payload["targets_total"] = self.targets_total
+        if self.success_rate is not None:
+            payload["success_rate"] = self.success_rate
+        if self.stress_events is not None:
+            payload["stress_events"] = self.stress_events
         return payload
 
     @staticmethod
     def from_json(data: Mapping[str, Any]) -> RunEvent:
+        def _float_or_none(value: Any) -> float | None:
+            try:
+                return float(value)
+            except (TypeError, ValueError):
+                return None
+
+        def _int_or_none(value: Any) -> int | None:
+            try:
+                return int(float(value))
+            except (TypeError, ValueError):
+                return None
+
         return RunEvent(
             run_id=str(data.get("run_id") or data.get("id") or "run"),
             profile_id=str(data.get("profile_id") or data.get("cultivar_id") or ""),
@@ -62,6 +86,10 @@ class RunEvent:
             ended_at=(str(data.get("ended_at")) if data.get("ended_at") else None),
             environment=_as_dict(data.get("environment")),
             metadata=_as_dict(data.get("metadata")),
+            targets_met=_float_or_none(data.get("targets_met")),
+            targets_total=_float_or_none(data.get("targets_total")),
+            success_rate=_float_or_none(data.get("success_rate")),
+            stress_events=_int_or_none(data.get("stress_events")),
         )
 
 
@@ -898,7 +926,37 @@ class BioProfile:
 
         sensors = self.general.get("sensors")
         sensor_summary = dict(sensors) if isinstance(sensors, dict) else {}
-        return {
+        success_snapshot = next(
+            (snap for snap in self.computed_stats if snap.stats_version == "success/v1"),
+            None,
+        )
+        success_section: dict[str, Any] | None = None
+        if success_snapshot is not None:
+            payload = success_snapshot.payload if isinstance(success_snapshot.payload, dict) else {}
+            success_section = {
+                "weighted_percent": payload.get("weighted_success_percent"),
+                "average_percent": payload.get("average_success_percent"),
+                "best_percent": payload.get("best_success_percent"),
+                "worst_percent": payload.get("worst_success_percent"),
+                "runs_tracked": payload.get("runs_tracked"),
+                "samples_recorded": payload.get("samples_recorded"),
+                "targets_met": payload.get("targets_met"),
+                "targets_total": payload.get("targets_total"),
+                "stress_events": payload.get("stress_events"),
+                "computed_at": success_snapshot.computed_at,
+            }
+            contributors = payload.get("contributors")
+            if isinstance(contributors, list) and contributors:
+                success_section["contributors"] = contributors
+            success_section = {
+                key: value
+                for key, value in success_section.items()
+                if value is not None
+            }
+            if not success_section:
+                success_section = None
+
+        summary: dict[str, Any] = {
             "profile_id": self.profile_id,
             "plant_id": self.profile_id,
             "name": self.display_name,
@@ -911,6 +969,9 @@ class BioProfile:
             "tags": list(self.tags),
             "last_resolved": self.last_resolved,
         }
+        if success_section is not None:
+            summary["success"] = success_section
+        return summary
 
     @staticmethod
     def from_json(data: dict[str, Any]) -> BioProfile:

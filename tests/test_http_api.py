@@ -30,6 +30,9 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
             "started_at": "2025-01-01T00:00:00Z",
             "ended_at": "2025-01-04T00:00:00Z",
             "environment": {"temperature_c": 21.5},
+            "targets_met": 18,
+            "targets_total": 20,
+            "stress_events": 2,
         },
     )
     await registry.async_record_harvest_event(
@@ -59,6 +62,10 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert summaries[profile_id]["name"] == "Heritage Tomato"
     assert summaries[profile_id]["targets"]["vpd_max"] == pytest.approx(1.2)
     assert summaries[profile_id]["computed_stats"]
+    success_summary = summaries[profile_id].get("success")
+    assert success_summary is not None
+    assert success_summary["weighted_percent"] == pytest.approx(90.0)
+    assert success_summary["samples_recorded"] == 1
 
     detail_resp = await client.get(f"/api/horticulture_assistant/profiles/{profile_id}")
     assert detail_resp.status == 200
@@ -67,6 +74,7 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert "resolved_targets" in detail and "vpd_max" in detail["resolved_targets"]
     assert detail["resolved_targets"]["vpd_max"]["value"] == pytest.approx(1.2)
     assert any(snap["stats_version"] == "environment/v1" for snap in detail["computed_stats"])
+    assert any(snap["stats_version"] == "success/v1" for snap in detail["computed_stats"])
 
     target_resp = await client.get(f"/api/horticulture_assistant/profiles/{profile_id}/targets/vpd_max")
     assert target_resp.status == 200
