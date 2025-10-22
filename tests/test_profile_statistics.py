@@ -1,6 +1,6 @@
 import pytest
 
-from custom_components.horticulture_assistant.profile.schema import BioProfile, HarvestEvent
+from custom_components.horticulture_assistant.profile.schema import BioProfile, HarvestEvent, RunEvent
 from custom_components.horticulture_assistant.profile.statistics import recompute_statistics
 
 
@@ -92,4 +92,65 @@ def test_recompute_statistics_handles_profiles_without_harvests():
     profile = BioProfile(profile_id="empty", display_name="Empty")
     recompute_statistics([profile])
     assert profile.statistics == []
-    assert profile.computed_stats == []
+    assert all(snapshot.stats_version != "yield/v1" for snapshot in profile.computed_stats)
+
+
+def test_environment_statistics_from_run_history():
+    species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species",
+    )
+
+    cultivar.add_run_event(
+        RunEvent(
+            run_id="run-1",
+            profile_id="cultivar",
+            species_id="species",
+            started_at="2024-01-01T00:00:00+00:00",
+            ended_at="2024-01-11T00:00:00+00:00",
+            environment={
+                "temperature_c": 24.5,
+                "humidity_percent": 60,
+                "vpd_kpa": 0.8,
+            },
+        )
+    )
+    species.add_run_event(
+        RunEvent(
+            run_id="run-2",
+            profile_id="species",
+            species_id="species",
+            started_at="2024-02-01T00:00:00+00:00",
+            ended_at="2024-02-06T12:00:00+00:00",
+            environment={"temperature_c": 22.0},
+        )
+    )
+
+    recompute_statistics([species, cultivar])
+
+    cultivar_env = next(
+        (snap for snap in cultivar.computed_stats if snap.stats_version == "environment/v1"),
+        None,
+    )
+    assert cultivar_env is not None
+    assert cultivar_env.payload["metrics"]["avg_temperature_c"] == pytest.approx(24.5)
+    assert cultivar_env.payload["metrics"]["avg_humidity_percent"] == pytest.approx(60.0)
+    assert cultivar_env.payload["metrics"]["avg_vpd_kpa"] == pytest.approx(0.8)
+    assert cultivar_env.payload["runs_recorded"] == 1
+    assert cultivar_env.payload["durations"]["total_days"] == pytest.approx(10.0)
+
+    species_env = next(
+        (snap for snap in species.computed_stats if snap.stats_version == "environment/v1"),
+        None,
+    )
+    assert species_env is not None
+    assert species_env.payload["metrics"]["avg_temperature_c"] == pytest.approx((24.5 + 22.0) / 2, rel=1e-3)
+    assert species_env.payload["runs_recorded"] == 2
+    assert species_env.payload["samples"]["avg_temperature_c"] == 2
+    contributors = {item["profile_id"]: item for item in species_env.payload["contributors"]}
+    assert "cultivar" in contributors and "species" in contributors
+    contrib = next(c for c in species_env.contributions if c.child_id == "cultivar")
+    assert contrib.stats_version == "environment/v1"

@@ -1,0 +1,823 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://horticulture-assistant.local/schema/bio_profile.json",
+  "title": "Horticulture Assistant BioProfile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "profile_id",
+    "plant_id",
+    "display_name",
+    "profile_type",
+    "thresholds",
+    "resolved_targets",
+    "general",
+    "run_history",
+    "harvest_history",
+    "statistics",
+    "sections"
+  ],
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "plant_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "display_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profile_type": {
+      "type": "string",
+      "enum": [
+        "species",
+        "cultivar",
+        "line"
+      ]
+    },
+    "species": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tenant_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "parents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "identity": {
+      "type": "object"
+    },
+    "taxonomy": {
+      "type": "object"
+    },
+    "policies": {
+      "type": "object"
+    },
+    "stable_knowledge": {
+      "type": "object"
+    },
+    "lifecycle": {
+      "type": "object"
+    },
+    "traits": {
+      "type": "object"
+    },
+    "curated_targets": {
+      "type": "object"
+    },
+    "diffs_vs_parent": {
+      "type": "object"
+    },
+    "library_metadata": {
+      "type": "object"
+    },
+    "library_created_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "library_updated_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "local_overrides": {
+      "type": "object"
+    },
+    "resolver_state": {
+      "type": "object"
+    },
+    "resolved_targets": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/resolved_target"
+      }
+    },
+    "computed_stats": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/computed_snapshot"
+      }
+    },
+    "general": {
+      "type": "object"
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/citation"
+      }
+    },
+    "local_metadata": {
+      "type": "object"
+    },
+    "run_history": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/run_event"
+      }
+    },
+    "harvest_history": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/harvest_event"
+      }
+    },
+    "statistics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/yield_statistic"
+      }
+    },
+    "last_resolved": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "thresholds": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "variables": {
+      "type": "object"
+    },
+    "library": {
+      "$ref": "#/$defs/library_section"
+    },
+    "local": {
+      "$ref": "#/$defs/local_section"
+    },
+    "sections": {
+      "$ref": "#/$defs/profile_sections"
+    },
+    "lineage": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/lineage_entry"
+      }
+    }
+  },
+  "$defs": {
+    "citation": {
+      "type": "object",
+      "required": [
+        "source",
+        "title"
+      ],
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "details": {
+          "type": "object"
+        },
+        "accessed": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "field_annotation": {
+      "type": "object",
+      "required": [
+        "source_type"
+      ],
+      "properties": {
+        "source_type": {
+          "type": "string"
+        },
+        "source_ref": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "confidence": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "staleness_days": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "is_stale": {
+          "type": "boolean"
+        },
+        "overlay": true,
+        "overlay_provenance": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "overlay_source_type": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "overlay_source_ref": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "overlay_method": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "extras": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "resolved_target": {
+      "type": "object",
+      "required": [
+        "value",
+        "annotation"
+      ],
+      "properties": {
+        "value": true,
+        "annotation": {
+          "$ref": "#/$defs/field_annotation"
+        },
+        "citations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/citation"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "run_event": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "profile_id",
+        "started_at"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string"
+        },
+        "profile_id": {
+          "type": "string"
+        },
+        "species_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "started_at": {
+          "type": "string"
+        },
+        "ended_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "environment": {
+          "type": "object"
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "harvest_event": {
+      "type": "object",
+      "required": [
+        "harvest_id",
+        "profile_id",
+        "harvested_at",
+        "yield_grams"
+      ],
+      "properties": {
+        "harvest_id": {
+          "type": "string"
+        },
+        "profile_id": {
+          "type": "string"
+        },
+        "species_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "run_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "harvested_at": {
+          "type": "string"
+        },
+        "yield_grams": {
+          "type": "number"
+        },
+        "area_m2": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "wet_weight_grams": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "dry_weight_grams": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "fruit_count": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "yield_statistic": {
+      "type": "object",
+      "required": [
+        "stat_id",
+        "scope",
+        "profile_id",
+        "computed_at",
+        "metrics"
+      ],
+      "properties": {
+        "stat_id": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "profile_id": {
+          "type": "string"
+        },
+        "computed_at": {
+          "type": "string"
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          }
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "profile_contribution": {
+      "type": "object",
+      "required": [
+        "profile_id",
+        "child_id"
+      ],
+      "properties": {
+        "profile_id": {
+          "type": "string"
+        },
+        "child_id": {
+          "type": "string"
+        },
+        "stats_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "computed_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "n_runs": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "weight": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "computed_snapshot": {
+      "type": "object",
+      "required": [
+        "payload"
+      ],
+      "properties": {
+        "stats_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "computed_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "snapshot_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "payload": {
+          "type": "object"
+        },
+        "contributions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/profile_contribution"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "library_section": {
+      "type": "object",
+      "required": [
+        "profile_id",
+        "profile_type"
+      ],
+      "properties": {
+        "profile_id": {
+          "type": "string"
+        },
+        "profile_type": {
+          "type": "string"
+        },
+        "tenant_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "identity": {
+          "type": "object"
+        },
+        "taxonomy": {
+          "type": "object"
+        },
+        "parents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "policies": {
+          "type": "object"
+        },
+        "stable_knowledge": {
+          "type": "object"
+        },
+        "lifecycle": {
+          "type": "object"
+        },
+        "traits": {
+          "type": "object"
+        },
+        "curated_targets": {
+          "type": "object"
+        },
+        "diffs_vs_parent": {
+          "type": "object"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "metadata": {
+          "type": "object"
+        },
+        "created_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "updated_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "local_section": {
+      "type": "object",
+      "properties": {
+        "species": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "general": {
+          "type": "object"
+        },
+        "local_overrides": {
+          "type": "object"
+        },
+        "resolver_state": {
+          "type": "object"
+        },
+        "citations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/citation"
+          }
+        },
+        "run_history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/run_event"
+          }
+        },
+        "harvest_history": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/harvest_event"
+          }
+        },
+        "statistics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/yield_statistic"
+          }
+        },
+        "last_resolved": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "created_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "updated_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "resolved_section": {
+      "type": "object",
+      "properties": {
+        "thresholds": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "resolved_targets": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/resolved_target"
+          }
+        },
+        "variables": {
+          "type": "object"
+        },
+        "citation_map": {
+          "type": "object"
+        },
+        "metadata": {
+          "type": "object"
+        },
+        "last_resolved": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    },
+    "computed_section": {
+      "type": "object",
+      "properties": {
+        "snapshots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/computed_snapshot"
+          }
+        },
+        "latest": {
+          "$ref": "#/$defs/computed_snapshot"
+        },
+        "contributions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/profile_contribution"
+          }
+        },
+        "metadata": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "profile_sections": {
+      "type": "object",
+      "required": [
+        "library",
+        "local",
+        "resolved",
+        "computed"
+      ],
+      "properties": {
+        "library": {
+          "$ref": "#/$defs/library_section"
+        },
+        "local": {
+          "$ref": "#/$defs/local_section"
+        },
+        "resolved": {
+          "$ref": "#/$defs/resolved_section"
+        },
+        "computed": {
+          "$ref": "#/$defs/computed_section"
+        }
+      },
+      "additionalProperties": true
+    },
+    "lineage_entry": {
+      "type": "object",
+      "required": [
+        "profile_id",
+        "profile_type",
+        "depth",
+        "role"
+      ],
+      "properties": {
+        "profile_id": {
+          "type": "string"
+        },
+        "profile_type": {
+          "type": "string"
+        },
+        "depth": {
+          "type": "integer"
+        },
+        "role": {
+          "type": "string"
+        },
+        "tenant_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "identity": {
+          "type": "object"
+        },
+        "taxonomy": {
+          "type": "object"
+        },
+        "policies": {
+          "type": "object"
+        },
+        "stable_knowledge": {
+          "type": "object"
+        },
+        "lifecycle": {
+          "type": "object"
+        },
+        "traits": {
+          "type": "object"
+        },
+        "curated_targets": {
+          "type": "object"
+        },
+        "diffs_vs_parent": {
+          "type": "object"
+        },
+        "metadata": {
+          "type": "object"
+        },
+        "created_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "updated_at": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

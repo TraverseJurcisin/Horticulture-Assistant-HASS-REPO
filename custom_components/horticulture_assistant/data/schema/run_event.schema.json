@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://horticulture-assistant.local/schema/run_event.json",
+  "title": "Horticulture Assistant Run Event",
+  "$ref": "bio_profile.schema.json#/$defs/run_event"
+}

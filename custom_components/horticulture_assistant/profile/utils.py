@@ -8,6 +8,7 @@ from .schema import (
     BioProfile,
     Citation,
     ProfileLibrarySection,
+    ProfileLineageEntry,
     ProfileLocalSection,
     SpeciesProfile,
 )
@@ -219,11 +220,105 @@ def sync_general_section(
     )
 
 
+def _iter_parent_ids(profile: BioProfile) -> Iterable[str]:
+    """Yield the parent identifiers for ``profile`` in priority order."""
+
+    seen: set[str] = set()
+    species_id = profile.species_profile_id
+    if species_id:
+        species_str = str(species_id)
+        if species_str and species_str not in seen:
+            seen.add(species_str)
+            yield species_str
+    for parent in profile.parents:
+        parent_id = str(parent)
+        if parent_id and parent_id not in seen:
+            seen.add(parent_id)
+            yield parent_id
+
+
+def _build_lineage(profile: BioProfile, profile_map: Mapping[str, BioProfile]) -> list[ProfileLineageEntry]:
+    """Construct a lineage chain for ``profile`` using ``profile_map``."""
+
+    lineage: list[ProfileLineageEntry] = []
+    visited: set[str] = set()
+
+    def add_entry(current: BioProfile, depth: int, role: str) -> None:
+        profile_id = str(current.profile_id)
+        if not profile_id or profile_id in visited:
+            return
+        visited.add(profile_id)
+        lineage.append(
+            ProfileLineageEntry(
+                profile_id=profile_id,
+                profile_type=current.profile_type,
+                depth=depth,
+                role=role,
+                tenant_id=current.tenant_id,
+                parents=list(current.parents),
+                tags=list(current.tags),
+                identity=dict(current.identity),
+                taxonomy=dict(current.taxonomy),
+                policies=dict(current.policies),
+                stable_knowledge=dict(current.stable_knowledge),
+                lifecycle=dict(current.lifecycle),
+                traits=dict(current.traits),
+                curated_targets=dict(current.curated_targets),
+                diffs_vs_parent=dict(current.diffs_vs_parent),
+                metadata=dict(current.library_metadata),
+                created_at=current.library_created_at,
+                updated_at=current.library_updated_at,
+            )
+        )
+
+        for parent_id in _iter_parent_ids(current):
+            parent = profile_map.get(parent_id)
+            if parent is None:
+                if parent_id not in visited:
+                    visited.add(parent_id)
+                    lineage.append(
+                        ProfileLineageEntry(
+                            profile_id=parent_id,
+                            profile_type="unknown",
+                            depth=depth + 1,
+                            role="missing_parent",
+                            tenant_id=None,
+                            parents=[],
+                            tags=[],
+                            identity={},
+                            taxonomy={},
+                            policies={},
+                            stable_knowledge={},
+                            lifecycle={},
+                            traits={},
+                            curated_targets={},
+                            diffs_vs_parent={},
+                            metadata={},
+                            created_at=None,
+                            updated_at=None,
+                        )
+                    )
+                continue
+
+            next_role = "ancestor"
+            if depth == 0:
+                next_role = "parent"
+                if parent.profile_type == "species":
+                    next_role = "species"
+            add_entry(parent, depth + 1, next_role)
+
+    add_entry(profile, 0, "self")
+    return lineage
+
+
 def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
     """Backfill species↔cultivar relationships for a collection of profiles."""
 
+    profile_list = list(profiles)
     species_map: dict[str, BioProfile] = {}
-    for profile in profiles:
+    profile_map: dict[str, BioProfile] = {profile.profile_id: profile for profile in profile_list}
+
+    for profile in profile_list:
         if profile.profile_type == "species":
             species_map[profile.profile_id] = profile
             if isinstance(profile, SpeciesProfile):
@@ -231,7 +326,7 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
             else:  # pragma: no cover - safety for partially migrated data
                 profile.cultivar_ids = []
 
-    for profile in profiles:
+    for profile in profile_list:
         if profile.profile_type == "species":
             continue
 
@@ -271,6 +366,9 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
         if cultivar_ids:
             deduped = list(dict.fromkeys(cultivar_ids))
             species.cultivar_ids = deduped
+
+    for profile in profile_list:
+        profile.lineage = _build_lineage(profile, profile_map)
 
 
 __all__ = [

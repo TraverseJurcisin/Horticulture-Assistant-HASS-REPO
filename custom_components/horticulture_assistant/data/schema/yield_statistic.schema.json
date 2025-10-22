@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://horticulture-assistant.local/schema/yield_statistic.json",
+  "title": "Horticulture Assistant Yield Statistic",
+  "$ref": "bio_profile.schema.json#/$defs/yield_statistic"
+}

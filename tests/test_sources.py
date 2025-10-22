@@ -42,6 +42,14 @@ ha_pkg.cloudsync = cloudsync_module
 EdgeSyncStore = cloudsync_module.EdgeSyncStore
 from custom_components.horticulture_assistant.config_flow import OptionsFlow  # noqa: E402
 from custom_components.horticulture_assistant.const import DOMAIN, OPB_FIELD_MAP  # noqa: E402
+from custom_components.horticulture_assistant.profile.schema import (  # noqa: E402
+    BioProfile,
+    FieldAnnotation,
+    ResolvedTarget,
+)
+from custom_components.horticulture_assistant.profile.utils import (  # noqa: E402
+    link_species_and_cultivars,
+)
 from custom_components.horticulture_assistant.resolver import (  # noqa: E402
     PreferenceResolver,
     generate_profile,
@@ -52,6 +60,23 @@ class DummyEntry:
     def __init__(self, options, entry_id="test_entry"):
         self.options = options
         self.entry_id = entry_id
+
+
+class DummyRegistry:
+    def __init__(self, profiles: list[BioProfile]):
+        self._profiles = {profile.profile_id: profile for profile in profiles}
+        link_species_and_cultivars(self._profiles.values())
+        for profile in self._profiles.values():
+            profile.refresh_sections()
+
+    def get_profile(self, profile_id: str) -> BioProfile | None:
+        return self._profiles.get(profile_id)
+
+    def list_profiles(self) -> list[BioProfile]:
+        return list(self._profiles.values())
+
+    def iter_profiles(self) -> list[BioProfile]:
+        return self.list_profiles()
 
 
 def make_hass():
@@ -121,6 +146,59 @@ async def test_clone_source_copies_from_other_profile():
     local = entry.options["profiles"]["b"]["local"]
     assert "temp_c_min" in local["metadata"]["citation_map"]
     assert local["citations"][0]["source"] == "clone"
+
+
+@pytest.mark.asyncio
+async def test_inheritance_fallback_uses_species_profile():
+    hass = make_hass()
+    species = BioProfile(
+        profile_id="species.parent",
+        display_name="Parent Species",
+        profile_type="species",
+    )
+    species.resolved_targets["temp_c_min"] = ResolvedTarget(
+        value=11.5,
+        annotation=FieldAnnotation(
+            source_type="manual",
+            source_ref=["species.parent"],
+            method="manual",
+        ),
+        citations=[],
+    )
+    species.refresh_sections()
+
+    cultivar = BioProfile(
+        profile_id="cultivar.child",
+        display_name="Child Cultivar",
+        profile_type="cultivar",
+        species="species.parent",
+    )
+    cultivar.parents = ["species.parent"]
+
+    registry = DummyRegistry([species, cultivar])
+    entry = DummyEntry({"profiles": {"cultivar.child": {"name": "Child"}}})
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {"profile_registry": registry}
+
+    await PreferenceResolver(hass).resolve_profile(entry, "cultivar.child")
+
+    profile_options = entry.options["profiles"]["cultivar.child"]
+    assert profile_options["thresholds"]["temp_c_min"] == 11.5
+    target = profile_options["resolved_targets"]["temp_c_min"]
+    assert target["value"] == 11.5
+    assert target["annotation"]["source_type"] == "inheritance"
+    extras = target["annotation"]["extras"]
+    assert extras["source_profile_id"] == "species.parent"
+    assert extras["inheritance_depth"] == 1
+    assert extras["inheritance_chain"] == ["cultivar.child", "species.parent"]
+    assert target["annotation"]["overlay_source_type"] == "manual"
+
+    local = profile_options["local"]
+    assert local["metadata"]["citation_map"]["temp_c_min"]["mode"] == "inheritance"
+    assert any(cit["source"] == "inheritance" for cit in local["citations"])
+
+    lineage = profile_options.get("lineage", [])
+    assert lineage and lineage[0]["profile_id"] == "cultivar.child"
+    assert any(item["profile_id"] == "species.parent" for item in lineage)
 
 
 @pytest.mark.asyncio

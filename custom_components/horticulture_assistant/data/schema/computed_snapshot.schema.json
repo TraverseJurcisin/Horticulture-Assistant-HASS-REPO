@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://horticulture-assistant.local/schema/computed_snapshot.json",
+  "title": "Horticulture Assistant Computed Snapshot",
+  "$ref": "bio_profile.schema.json#/$defs/computed_snapshot"
+}

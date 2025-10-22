@@ -9,6 +9,11 @@ from homeassistant.core import HomeAssistant
 from .cloudsync import EdgeResolverService
 from .const import DOMAIN, OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.options import options_profile_to_dataclass
+from .profile.resolution import (
+    annotate_inherited_target,
+    build_profiles_index,
+    resolve_inheritance_target,
+)
 from .profile.schema import BioProfile, FieldAnnotation, ResolvedTarget
 from .profile.utils import (
     citations_map_to_list,
@@ -48,6 +53,23 @@ class PreferenceResolver:
             if isinstance(tenant_value, str) and tenant_value.strip():
                 tenant_id = tenant_value.strip()
         return store, tenant_id
+
+    def _profile_registry(self, entry) -> Any | None:
+        """Return the profile registry stored for ``entry``."""
+
+        domain_data = self.hass.data.get(DOMAIN)
+        if not isinstance(domain_data, Mapping):
+            return None
+        entry_id = getattr(entry, "entry_id", None)
+        if entry_id is None:
+            return None
+        entry_data = domain_data.get(entry_id)
+        if not isinstance(entry_data, Mapping):
+            return None
+        registry = entry_data.get("profile_registry") or entry_data.get("profiles")
+        if registry is None:
+            registry = entry_data.get("registry")
+        return registry
 
     def _load_local_payload(self, entry, profile_id: str) -> dict[str, Any]:
         """Return a local payload mapping for ``profile_id``."""
@@ -122,6 +144,14 @@ class PreferenceResolver:
             prof,
             display_name=prof.get("name") or profile_id,
         )
+        registry_profile = None
+        registry = self._profile_registry(entry)
+        if registry is not None:
+            getter = getattr(registry, "get_profile", None)
+            if getter is not None:
+                registry_profile = getter(profile_id)
+        if registry_profile and getattr(registry_profile, "lineage", None):
+            profile.lineage = list(registry_profile.lineage)
         sources = dict(prof.get("sources", {}))
         thresholds = dict(prof.get("thresholds", {}))
         citations = dict(prof.get("citations", {}))
@@ -262,9 +292,16 @@ class PreferenceResolver:
         options: dict,
     ) -> ResolvedTarget | None:
         if not src:
-            return None
+            return self._resolve_via_inheritance(entry, profile_id, key)
 
-        mode = src.get("mode")
+        mode = src.get("mode") if isinstance(src, Mapping) else None
+
+        if mode in (None, "inheritance", "inherit"):
+            fallback = self._resolve_via_inheritance(entry, profile_id, key)
+            if fallback is not None:
+                return fallback
+            if mode in ("inheritance", "inherit"):
+                return None
 
         try:
             if mode == "manual":
@@ -366,6 +403,35 @@ class PreferenceResolver:
             return None
 
         return None
+
+    def _resolve_via_inheritance(self, entry, profile_id: str, key: str) -> ResolvedTarget | None:
+        registry = self._profile_registry(entry)
+        if registry is None:
+            return None
+
+        getter = getattr(registry, "get_profile", None)
+        if getter is None:
+            return None
+
+        profile = getter(profile_id)
+        if profile is None:
+            return None
+
+        if hasattr(registry, "iter_profiles"):
+            all_profiles = list(registry.iter_profiles())  # type: ignore[call-arg]
+        elif hasattr(registry, "list_profiles"):
+            all_profiles = list(registry.list_profiles())  # type: ignore[call-arg]
+        else:
+            all_profiles = [profile]
+
+        profiles_by_id = build_profiles_index(all_profiles)
+        profiles_by_id.setdefault(profile.profile_id, profile)
+
+        resolution = resolve_inheritance_target(profile, key, profiles_by_id)
+        if resolution is None:
+            return None
+
+        return annotate_inherited_target(resolution)
 
     def _update_ai_cache(self, entry, pid, key, val, conf, notes, links):
         opts = dict(entry.options)
