@@ -147,7 +147,11 @@ def test_edge_resolver_prefers_local_override(tmp_path: Path) -> None:
             return {"curated_targets": {"targets": {"vpd": {"vegetative": 1.1}}}}
         return {}
 
-    resolver = EdgeResolverService(store, local_profile_loader=local_loader)
+    resolver = EdgeResolverService(
+        store,
+        local_profile_loader=local_loader,
+        tenant_id="tenant-1",
+    )
     result = resolver.resolve_field("cultivar-1", "targets.vpd.vegetative", now=datetime(2025, 10, 20, tzinfo=UTC))
     assert result.value == 1.1
     assert result.overlay == 0.8
@@ -184,7 +188,11 @@ def test_edge_resolver_marks_stale_stats(tmp_path: Path) -> None:
         "payload": {"targets": {"vpd": {"vegetative": 0.7}}},
     }
     store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload)
-    resolver = EdgeResolverService(store, stats_ttl=timedelta(days=30))
+    resolver = EdgeResolverService(
+        store,
+        stats_ttl=timedelta(days=30),
+        tenant_id="tenant-1",
+    )
     result = resolver.resolve_field("species-1", "targets.vpd.vegetative", now=datetime(2024, 3, 15, tzinfo=UTC))
     assert result.value == 0.75
     assert result.overlay == 0.7
@@ -227,7 +235,11 @@ def test_edge_resolver_resolve_profile(tmp_path: Path) -> None:
             return dict(local_payload)
         return {}
 
-    resolver = EdgeResolverService(store, local_profile_loader=local_loader)
+    resolver = EdgeResolverService(
+        store,
+        local_profile_loader=local_loader,
+        tenant_id="tenant-1",
+    )
     profile = resolver.resolve_profile(
         "cultivar-1",
         now=datetime(2025, 10, 20, tzinfo=UTC),
@@ -240,6 +252,51 @@ def test_edge_resolver_resolve_profile(tmp_path: Path) -> None:
     assert profile.library_section().curated_targets["targets"]["vpd"]["vegetative"] == 0.9
     assert profile.computed_stats[0].payload["targets"]["vpd"]["vegetative"] == 0.8
     assert profile.general["name"] == "Tophat"
+
+
+def test_edge_resolver_respects_tenant(tmp_path: Path) -> None:
+    store = EdgeSyncStore(tmp_path / "sync.db")
+    store.update_cloud_cache(
+        "profile",
+        "species-1",
+        "tenant-1",
+        {"profile_type": "species", "curated_targets": {"targets": {"vpd": {"vegetative": 0.75}}}},
+    )
+    store.update_cloud_cache(
+        "profile",
+        "cultivar-1",
+        "tenant-1",
+        {
+            "profile_type": "line",
+            "parents": ["species-1"],
+            "curated_targets": {"targets": {"vpd": {"vegetative": 0.8}}},
+        },
+    )
+    store.update_cloud_cache(
+        "profile",
+        "species-1",
+        "tenant-2",
+        {"profile_type": "species", "curated_targets": {"targets": {"vpd": {"vegetative": 0.55}}}},
+    )
+    store.update_cloud_cache(
+        "profile",
+        "cultivar-1",
+        "tenant-2",
+        {
+            "profile_type": "line",
+            "parents": ["species-1"],
+            "curated_targets": {"targets": {"vpd": {"vegetative": 0.6}}},
+        },
+    )
+
+    resolver_tenant_one = EdgeResolverService(store, tenant_id="tenant-1")
+    resolver_tenant_two = EdgeResolverService(store, tenant_id="tenant-2")
+
+    result_one = resolver_tenant_one.resolve_field("cultivar-1", "targets.vpd.vegetative")
+    result_two = resolver_tenant_two.resolve_field("cultivar-1", "targets.vpd.vegetative")
+
+    assert result_one.value == 0.8
+    assert result_two.value == 0.6
 
 
 @pytest.mark.parametrize(

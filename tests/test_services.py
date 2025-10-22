@@ -543,7 +543,7 @@ async def test_export_profiles_service(hass, tmp_path):
     )
     entry.add_to_hass(hass)
     import custom_components.horticulture_assistant as hca
-    from custom_components.horticulture_assistant.profile.schema import PlantProfile
+    from custom_components.horticulture_assistant.profile.schema import BioProfile
 
     hca.PLATFORMS = []
     with (
@@ -556,7 +556,7 @@ async def test_export_profiles_service(hass, tmp_path):
     await hass.async_block_till_done()
 
     registry = hass.data[DOMAIN]["registry"]
-    registry._profiles["p2"] = PlantProfile("p2", "Plant 2")  # type: ignore[attr-defined]
+    registry._profiles["p2"] = BioProfile(profile_id="p2", display_name="Plant 2")
 
     out = tmp_path / "profiles.json"
     await hass.services.async_call(DOMAIN, "export_profiles", {"path": str(out)}, blocking=True)

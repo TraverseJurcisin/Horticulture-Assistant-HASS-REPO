@@ -9,7 +9,7 @@ from homeassistant.core import HomeAssistant
 from .cloudsync import EdgeResolverService
 from .const import DOMAIN, OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.options import options_profile_to_dataclass
-from .profile.schema import FieldAnnotation, PlantProfile, ResolvedTarget
+from .profile.schema import BioProfile, FieldAnnotation, ResolvedTarget
 from .profile.utils import (
     citations_map_to_list,
     determine_species_slug,
@@ -25,22 +25,29 @@ class PreferenceResolver:
     def __init__(self, hass: HomeAssistant):
         self.hass = hass
 
-    def _cloud_store(self, entry) -> Any:
-        """Return the cloud sync store when a manager is configured."""
+    def _cloud_store(self, entry) -> tuple[Any | None, str | None]:
+        """Return the cloud sync store and tenant when a manager is configured."""
 
         domain_data = self.hass.data.get(DOMAIN)
         if not isinstance(domain_data, Mapping):
-            return None
+            return None, None
         entry_id = getattr(entry, "entry_id", None)
         if entry_id is None:
-            return None
+            return None, None
         entry_data = domain_data.get(entry_id)
         if not isinstance(entry_data, Mapping):
-            return None
+            return None, None
         manager = entry_data.get("cloud_sync_manager")
         if manager is None:
-            return None
-        return getattr(manager, "store", None)
+            return None, None
+        store = getattr(manager, "store", None)
+        tenant_id = None
+        config = getattr(manager, "config", None)
+        if config is not None:
+            tenant_value = getattr(config, "tenant_id", None)
+            if isinstance(tenant_value, str) and tenant_value.strip():
+                tenant_id = tenant_value.strip()
+        return store, tenant_id
 
     def _load_local_payload(self, entry, profile_id: str) -> dict[str, Any]:
         """Return a local payload mapping for ``profile_id``."""
@@ -60,12 +67,12 @@ class PreferenceResolver:
         self,
         entry,
         profile_id: str,
-        profile: PlantProfile,
+        profile: BioProfile,
         profile_payload: Mapping[str, Any],
-    ) -> PlantProfile | None:
+    ) -> BioProfile | None:
         """Combine cloud snapshots with local profile state if available."""
 
-        store = self._cloud_store(entry)
+        store, tenant_id = self._cloud_store(entry)
         if store is None:
             return None
 
@@ -77,7 +84,11 @@ class PreferenceResolver:
                 return dict(local_map)
             return self._load_local_payload(entry, pid)
 
-        resolver = EdgeResolverService(store, local_profile_loader=local_loader)
+        resolver = EdgeResolverService(
+            store,
+            local_profile_loader=local_loader,
+            tenant_id=tenant_id,
+        )
         try:
             resolved = resolver.resolve_profile(profile_id, local_payload=local_map)
         except Exception:  # pragma: no cover - defensive fallback
@@ -226,6 +237,9 @@ class PreferenceResolver:
                     "traits": dict(profile.traits),
                     "curated_targets": dict(profile.curated_targets),
                     "diffs_vs_parent": dict(profile.diffs_vs_parent),
+                    "run_history": [event.to_json() for event in profile.run_history],
+                    "harvest_history": [event.to_json() for event in profile.harvest_history],
+                    "statistics": [stat.to_json() for stat in profile.statistics],
                 }
             )
             prof["computed_stats"] = profile_payload.get("computed_stats", [])

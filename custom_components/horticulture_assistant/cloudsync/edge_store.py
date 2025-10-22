@@ -4,6 +4,7 @@ import json
 import sqlite3
 from collections.abc import Iterable, Iterator
 from contextlib import contextmanager
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -14,6 +15,17 @@ try:
     UTC = datetime.UTC
 except AttributeError:  # pragma: no cover - Py<3.11 fallback
     UTC = timezone.utc  # noqa: UP017
+
+
+@dataclass(slots=True)
+class CloudCacheRecord:
+    """Represents a cached cloud entity scoped to a tenant."""
+
+    entity_type: str
+    entity_id: str
+    tenant_id: str
+    payload: dict[str, Any]
+    updated_at: datetime
 
 
 class EdgeSyncStore:
@@ -66,7 +78,7 @@ class EdgeSyncStore:
                     tenant_id TEXT NOT NULL,
                     payload TEXT NOT NULL,
                     updated_at TEXT NOT NULL,
-                    PRIMARY KEY (entity_type, entity_id)
+                    PRIMARY KEY (entity_type, tenant_id, entity_id)
                 );
 
                 CREATE TABLE IF NOT EXISTS sync_cursors (
@@ -165,28 +177,69 @@ class EdgeSyncStore:
             )
             conn.commit()
 
-    def fetch_cloud_cache(self, entity_type: str, entity_id: str) -> dict[str, Any] | None:
+    def fetch_cloud_cache_entry(
+        self,
+        entity_type: str,
+        entity_id: str,
+        *,
+        tenant_id: str | None = None,
+    ) -> CloudCacheRecord | None:
+        query = (
+            "SELECT entity_type, entity_id, tenant_id, payload, updated_at "
+            "FROM cloud_cache WHERE entity_type = ? AND entity_id = ?"
+        )
+        params: list[Any] = [entity_type, entity_id]
+        if tenant_id:
+            query += " AND tenant_id = ?"
+            params.append(tenant_id)
+        query += " ORDER BY updated_at DESC"
         with self._connection() as conn:
-            row = conn.execute(
-                """
-                SELECT payload FROM cloud_cache WHERE entity_type = ? AND entity_id = ?
-                """,
-                (entity_type, entity_id),
-            ).fetchone()
+            row = conn.execute(query, tuple(params)).fetchone()
         if not row:
             return None
-        return json.loads(row["payload"])
+        payload_raw = json.loads(row["payload"])
+        payload = payload_raw if isinstance(payload_raw, dict) else {}
+        updated_at = self._parse_timestamp(str(row["updated_at"])) or datetime.now(tz=UTC)
+        return CloudCacheRecord(
+            entity_type=row["entity_type"],
+            entity_id=row["entity_id"],
+            tenant_id=row["tenant_id"],
+            payload=payload,
+            updated_at=updated_at,
+        )
 
-    def list_cloud_cache(self, entity_type: str | None = None) -> list[dict[str, Any]]:
+    def fetch_cloud_cache(
+        self,
+        entity_type: str,
+        entity_id: str,
+        *,
+        tenant_id: str | None = None,
+    ) -> dict[str, Any] | None:
+        record = self.fetch_cloud_cache_entry(entity_type, entity_id, tenant_id=tenant_id)
+        return None if record is None else record.payload
+
+    def list_cloud_cache(
+        self,
+        entity_type: str | None = None,
+        *,
+        tenant_id: str | None = None,
+    ) -> list[dict[str, Any]]:
         """Return cached cloud entities with metadata."""
 
         query = "SELECT entity_type, entity_id, tenant_id, payload, updated_at FROM cloud_cache"
-        params: tuple[Any, ...] = ()
+        clauses: list[str] = []
+        params: list[Any] = []
         if entity_type:
-            query += " WHERE entity_type = ?"
-            params = (entity_type,)
+            clauses.append("entity_type = ?")
+            params.append(entity_type)
+        if tenant_id:
+            clauses.append("tenant_id = ?")
+            params.append(tenant_id)
+        if clauses:
+            query += " WHERE " + " AND ".join(clauses)
+        query += " ORDER BY updated_at DESC"
         with self._connection() as conn:
-            rows = conn.execute(query, params).fetchall()
+            rows = conn.execute(query, tuple(params)).fetchall()
         results: list[dict[str, Any]] = []
         for row in rows:
             results.append(
@@ -200,10 +253,15 @@ class EdgeSyncStore:
             )
         return results
 
-    def all_cloud_cache(self, entity_type: str | None = None) -> list[dict[str, Any]]:
+    def all_cloud_cache(
+        self,
+        entity_type: str | None = None,
+        *,
+        tenant_id: str | None = None,
+    ) -> list[dict[str, Any]]:
         """Return cached payloads without metadata (legacy helper)."""
 
-        return [item["payload"] for item in self.list_cloud_cache(entity_type)]
+        return [item["payload"] for item in self.list_cloud_cache(entity_type, tenant_id=tenant_id)]
 
     # ------------------------------------------------------------------
     def get_cursor(self, stream: str) -> str | None:

@@ -1,8 +1,8 @@
 from custom_components.horticulture_assistant.profile.schema import (
+    BioProfile,
     Citation,
     ComputedStatSnapshot,
     FieldAnnotation,
-    PlantProfile,
     ProfileComputedSection,
     ProfileSections,
     ResolvedTarget,
@@ -10,8 +10,8 @@ from custom_components.horticulture_assistant.profile.schema import (
 
 
 def _make_profile():
-    return PlantProfile(
-        plant_id="p1",
+    return BioProfile(
+        profile_id="p1",
         display_name="Plant",
         species="Avocado",
         library_metadata={"curation": "expert"},
@@ -57,13 +57,13 @@ def test_summary_immutable(hass):  # noqa: ARG001 - hass unused but provided
 
 
 def test_summary_without_variables():
-    prof = PlantProfile(plant_id="p2", display_name="Empty")
+    prof = BioProfile(profile_id="p2", display_name="Empty")
     summary = prof.summary()
     assert summary["targets"] == {}
 
 
 def test_summary_handles_none_species():
-    prof = PlantProfile(plant_id="p3", display_name="NoSpec", species=None)
+    prof = BioProfile(profile_id="p3", display_name="NoSpec", species=None)
     summary = prof.summary()
     assert "species" in summary and summary["species"] is None
 
@@ -102,7 +102,7 @@ def test_from_json_thresholds_fallback():
         "display_name": "Legacy",
         "thresholds": {"temp": 12.5},
     }
-    prof = PlantProfile.from_json(data)
+    prof = BioProfile.from_json(data)
     assert prof.resolved_targets["temp"].value == 12.5
     assert prof.resolved_targets["temp"].annotation.source_type == "unknown"
 
@@ -110,7 +110,7 @@ def test_from_json_thresholds_fallback():
 def test_roundtrip_structured_sections():
     prof = _make_profile()
     payload = prof.to_json()
-    reconstructed = PlantProfile.from_json(payload)
+    reconstructed = BioProfile.from_json(payload)
     assert reconstructed.library_metadata == {"curation": "expert"}
     assert reconstructed.library_created_at == "2024-01-01T00:00:00Z"
     assert reconstructed.library_updated_at == "2024-01-02T00:00:00Z"
@@ -127,8 +127,8 @@ def test_refresh_sections_preserves_computed_metadata():
         snapshot_id="sha256:abc",
         payload={"targets": {"temp": 19.5}},
     )
-    profile = PlantProfile(
-        plant_id="p-computed",
+    profile = BioProfile(
+        profile_id="p-computed",
         display_name="Computed",
         resolved_targets={
             "targets.temp.day": ResolvedTarget(

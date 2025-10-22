@@ -5,7 +5,7 @@ from typing import Any
 
 from homeassistant.core import HomeAssistant
 
-from .schema import PlantProfile
+from .schema import BioProfile
 from .store import async_save_profile
 from .utils import normalise_profile_payload
 
@@ -42,7 +42,7 @@ async def async_import_profiles(hass: HomeAssistant, path: str | Path) -> int:
         fallback_id = str(candidate_id)
         display_name = raw.get("display_name") or raw.get("name") or fallback_id
         normalised = normalise_profile_payload(raw, fallback_id=fallback_id, display_name=display_name)
-        profile_obj = PlantProfile.from_json(normalised)
+        profile_obj = BioProfile.from_json(normalised)
 
         await async_save_profile(hass, profile_obj)
         count += 1

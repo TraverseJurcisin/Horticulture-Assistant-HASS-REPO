@@ -6,8 +6,8 @@ from dataclasses import asdict, dataclass
 from fnmatch import fnmatch
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.load_plant_profile import (
-    load_plant_profile,
+from custom_components.horticulture_assistant.utils.load_bio_profile import (
+    load_bio_profile,
 )
 from custom_components.horticulture_assistant.utils.validate_profile_structure import (
     validate_profile_structure,
@@ -62,7 +62,7 @@ def load_all_profiles(
             continue  # skip any files in the base directory
         plant_id = plant_dir.name
 
-        profile_obj = load_plant_profile(plant_id, base_path=base_dir)
+        profile_obj = load_bio_profile(plant_id, base_path=base_dir)
         if not profile_obj:
             continue
 

@@ -6,8 +6,8 @@ from plant_engine.utils import load_json, save_json
 from water_deficit_tracker import update_water_balance
 
 from custom_components.horticulture_assistant.profile.compat import sync_thresholds
-from custom_components.horticulture_assistant.utils.load_plant_profile import (
-    load_plant_profile,
+from custom_components.horticulture_assistant.utils.load_bio_profile import (
+    load_bio_profile,
 )
 
 # === CONFIGURATION ===
@@ -94,7 +94,7 @@ def run_daily_threshold_updates():
         profile_path = meta["profile_path"]
 
         if os.path.isdir(profile_path):
-            profile_obj = load_plant_profile(plant_id, base_path=PLANT_PROFILE_DIR)
+            profile_obj = load_bio_profile(plant_id, base_path=PLANT_PROFILE_DIR)
             if not profile_obj:
                 print(f"❌ Profile not found: {profile_path}")
                 continue

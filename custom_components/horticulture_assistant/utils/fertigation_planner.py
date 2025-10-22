@@ -18,7 +18,7 @@ from plant_engine.fertigation import (
 )
 
 from .path_utils import plants_path
-from .plant_profile_loader import load_profile_by_id
+from .bio_profile_loader import load_profile_by_id
 
 _LOGGER = logging.getLogger(__name__)
 

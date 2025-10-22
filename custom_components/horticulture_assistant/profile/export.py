@@ -6,7 +6,7 @@ from typing import Any
 
 from homeassistant.core import HomeAssistant
 
-from .schema import PlantProfile
+from .schema import BioProfile
 from .store import async_get_profile, async_load_all
 from .utils import normalise_profile_payload
 
@@ -17,7 +17,7 @@ def _normalise_payload(payload: Mapping[str, Any], fallback_id: str) -> dict[str
     raw = dict(payload)
     display_name = raw.get("display_name") or raw.get("name") or fallback_id
     normalised = normalise_profile_payload(raw, fallback_id=fallback_id, display_name=display_name)
-    profile = PlantProfile.from_json(normalised)
+    profile = BioProfile.from_json(normalised)
     return profile.to_json()
 
 

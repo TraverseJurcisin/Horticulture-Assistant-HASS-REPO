@@ -10,7 +10,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.util import slugify
 
 from .const import CONF_PROFILE_SCOPE
-from .profile.schema import PlantProfile
+from .profile.schema import BioProfile
 from .profile.utils import normalise_profile_payload
 
 LOCAL_RELATIVE_PATH = "custom_components/horticulture_assistant/data/local"
@@ -18,7 +18,7 @@ PROFILES_DIRNAME = "profiles"
 
 
 class ProfileStore:
-    """Offline-first JSON store for ``PlantProfile`` documents."""
+    """Offline-first JSON store for ``BioProfile`` documents."""
 
     def __init__(self, hass: HomeAssistant) -> None:
         self._hass = hass
@@ -55,14 +55,14 @@ class ProfileStore:
 
     async def async_save(
         self,
-        profile: PlantProfile | dict[str, Any],
+        profile: BioProfile | dict[str, Any],
         *,
         name: str | None = None,
     ) -> None:
-        if isinstance(profile, PlantProfile):
+        if isinstance(profile, BioProfile):
             profile_obj = deepcopy(profile)
             payload = self._profile_to_payload(profile_obj)
-            target_name = name or profile_obj.display_name or profile_obj.plant_id
+            target_name = name or profile_obj.display_name or profile_obj.profile_id
         else:
             fallback = (
                 name or profile.get("display_name") or profile.get("name") or profile.get("plant_id") or "profile"
@@ -78,7 +78,7 @@ class ProfileStore:
         clone_from: dict[str, Any] | None = None,
         scope: str | None = None,
     ) -> None:
-        clone_profile: PlantProfile | None = None
+        clone_profile: BioProfile | None = None
         if isinstance(clone_from, str) and clone_from:
             payload = await self.async_get(clone_from)
             if payload:
@@ -101,8 +101,8 @@ class ProfileStore:
         slug = slugify(name) or "profile"
 
         if clone_profile is not None:
-            new_profile = PlantProfile(
-                plant_id=slug,
+            new_profile = BioProfile(
+                profile_id=slug,
                 display_name=name,
                 profile_type=clone_profile.profile_type,
                 species=clone_profile.species,
@@ -127,13 +127,16 @@ class ProfileStore:
                 general=deepcopy(clone_profile.general),
                 citations=[deepcopy(cit) for cit in clone_profile.citations],
                 local_metadata=dict(clone_profile.local_metadata),
+                run_history=[deepcopy(event) for event in clone_profile.run_history],
+                harvest_history=[deepcopy(event) for event in clone_profile.harvest_history],
+                statistics=[deepcopy(stat) for stat in clone_profile.statistics],
                 last_resolved=clone_profile.last_resolved,
                 created_at=clone_profile.created_at,
                 updated_at=clone_profile.updated_at,
             )
         else:
-            new_profile = PlantProfile(
-                plant_id=slug,
+            new_profile = BioProfile(
+                profile_id=slug,
                 display_name=name,
             )
 
@@ -160,18 +163,24 @@ class ProfileStore:
     def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: str) -> dict[str, Any]:
         slug = slugify(fallback_name) or fallback_name or "profile"
         normalised = normalise_profile_payload(payload, fallback_id=str(slug), display_name=fallback_name)
-        profile = PlantProfile.from_json(normalised)
+        profile = BioProfile.from_json(normalised)
         return self._profile_to_payload(profile)
 
-    def _as_profile(self, payload: dict[str, Any], *, fallback_name: str) -> PlantProfile:
+    def _as_profile(self, payload: dict[str, Any], *, fallback_name: str) -> BioProfile:
         data = deepcopy(payload)
         display_name = data.get("display_name") or data.get("name") or fallback_name
-        slug = data.get("plant_id") or slugify(display_name) or slugify(fallback_name) or "profile"
+        slug = (
+            data.get("profile_id")
+            or data.get("plant_id")
+            or slugify(display_name)
+            or slugify(fallback_name)
+            or "profile"
+        )
         normalised = normalise_profile_payload(data, fallback_id=str(slug), display_name=display_name)
         normalised.setdefault("name", normalised.get("display_name"))
-        return PlantProfile.from_json(normalised)
+        return BioProfile.from_json(normalised)
 
-    def _profile_to_payload(self, profile: PlantProfile) -> dict[str, Any]:
+    def _profile_to_payload(self, profile: BioProfile) -> dict[str, Any]:
         data = profile.to_json()
         data["name"] = profile.display_name
         general = data.get("general") if isinstance(data.get("general"), dict) else {}

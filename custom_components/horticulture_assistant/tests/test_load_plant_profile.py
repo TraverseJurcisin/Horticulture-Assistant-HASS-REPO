@@ -1,8 +1,8 @@
 import json
 
-from custom_components.horticulture_assistant.utils.load_plant_profile import (
+from custom_components.horticulture_assistant.utils.load_bio_profile import (
     clear_profile_cache,
-    load_plant_profile,
+    load_bio_profile,
 )
 
 
@@ -12,7 +12,7 @@ def test_load_profile_basic(tmp_path):
     (plant_dir / "general.json").write_text(json.dumps({"name": "demo"}))
     (plant_dir / "thresholds.json").write_text("{}")
     (plant_dir / "profile_index.json").write_text("{}")
-    profile = load_plant_profile("demo", base_path=tmp_path / "plants")
+    profile = load_bio_profile("demo", base_path=tmp_path / "plants")
     assert profile.plant_id == "demo"
     assert "general" in profile.profile_data
     assert "profile_index" not in profile.profile_data
@@ -24,10 +24,10 @@ def test_load_profile_with_validation_files(tmp_path):
     (plant_dir / "general.json").write_text("{}")
     (plant_dir / "validate_extra.json").write_text("{}")
 
-    result = load_plant_profile("demo", base_path=tmp_path / "plants")
+    result = load_bio_profile("demo", base_path=tmp_path / "plants")
     assert "validate_extra" not in result.profile_data
 
-    result = load_plant_profile(
+    result = load_bio_profile(
         "demo",
         base_path=tmp_path / "plants",
         include_validation_files=True,
@@ -36,7 +36,7 @@ def test_load_profile_with_validation_files(tmp_path):
 
 
 def test_load_profile_missing_dir(tmp_path):
-    result = load_plant_profile("missing", base_path=tmp_path / "plants")
+    result = load_bio_profile("missing", base_path=tmp_path / "plants")
     assert result == {}
 
 
@@ -46,12 +46,12 @@ def test_profile_caching(tmp_path):
     data_file = plant_dir / "general.json"
     data_file.write_text(json.dumps({"name": "first"}))
 
-    first = load_plant_profile("demo", base_path=tmp_path / "plants")
+    first = load_bio_profile("demo", base_path=tmp_path / "plants")
     data_file.write_text(json.dumps({"name": "second"}))
-    second = load_plant_profile("demo", base_path=tmp_path / "plants")
+    second = load_bio_profile("demo", base_path=tmp_path / "plants")
     assert first.profile_data["general"]["name"] == "first"
     assert second.profile_data["general"]["name"] == "first"
 
     clear_profile_cache()
-    third = load_plant_profile("demo", base_path=tmp_path / "plants")
+    third = load_bio_profile("demo", base_path=tmp_path / "plants")
     assert third.profile_data["general"]["name"] == "second"

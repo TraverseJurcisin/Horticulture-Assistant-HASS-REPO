@@ -6,8 +6,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 from .options import options_profile_to_dataclass
-from .schema import PlantProfile
-from .utils import normalise_profile_payload
+from .schema import BioProfile
+from .utils import link_species_and_cultivars, normalise_profile_payload
 
 STORE_VERSION = 1
 STORE_KEY = "horticulture_assistant_profiles"
@@ -21,10 +21,10 @@ async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
     return await _store(hass).async_load() or {}
 
 
-async def async_save_profile(hass: HomeAssistant, profile: PlantProfile | dict[str, Any]) -> None:
+async def async_save_profile(hass: HomeAssistant, profile: BioProfile | dict[str, Any]) -> None:
     """Persist a profile dictionary or dataclass to storage."""
 
-    if isinstance(profile, PlantProfile):
+    if isinstance(profile, BioProfile):
         profile_obj = profile
     else:
         raw: dict[str, Any] = dict(profile)
@@ -32,7 +32,7 @@ async def async_save_profile(hass: HomeAssistant, profile: PlantProfile | dict[s
         fallback_id = str(candidate_id)
         display_name = raw.get("display_name") or raw.get("name") or fallback_id
         normalised = normalise_profile_payload(raw, fallback_id=fallback_id, display_name=display_name)
-        profile_obj = PlantProfile.from_json(normalised)
+        profile_obj = BioProfile.from_json(normalised)
 
     payload = profile_obj.to_json()
 
@@ -57,18 +57,20 @@ async def async_get_profile(hass: HomeAssistant, plant_id: str) -> dict[str, Any
     return (await async_load_all(hass)).get(plant_id)
 
 
-async def async_load_profile(hass: HomeAssistant, plant_id: str) -> PlantProfile | None:
-    """Load a PlantProfile dataclass for a given plant ID."""
+async def async_load_profile(hass: HomeAssistant, plant_id: str) -> BioProfile | None:
+    """Load a BioProfile dataclass for a given plant ID."""
 
     data = await async_get_profile(hass, plant_id)
-    return PlantProfile.from_json(data) if data else None
+    return BioProfile.from_json(data) if data else None
 
 
-async def async_load_profiles(hass: HomeAssistant) -> dict[str, PlantProfile]:
+async def async_load_profiles(hass: HomeAssistant) -> dict[str, BioProfile]:
     """Load all stored profiles as dataclasses."""
 
     data = await async_load_all(hass)
-    return {pid: PlantProfile.from_json(p) for pid, p in data.items()}
+    profiles = {pid: BioProfile.from_json(p) for pid, p in data.items()}
+    link_species_and_cultivars(profiles.values())
+    return profiles
 
 
 async def async_delete_profile(hass: HomeAssistant, plant_id: str) -> None:

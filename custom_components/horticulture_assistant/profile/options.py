@@ -7,10 +7,11 @@ from typing import Any
 
 from ..const import CONF_PROFILE_SCOPE
 from .schema import (
+    BioProfile,
     Citation,
     ComputedStatSnapshot,
+    CultivarProfile,
     FieldAnnotation,
-    PlantProfile,
     ProfileComputedSection,
     ProfileLibrarySection,
     ProfileLineageEntry,
@@ -18,6 +19,7 @@ from .schema import (
     ProfileResolvedSection,
     ProfileSections,
     ResolvedTarget,
+    SpeciesProfile,
 )
 from .utils import ensure_sections
 
@@ -60,8 +62,8 @@ def options_profile_to_dataclass(
     payload: Mapping[str, Any],
     *,
     display_name: str | None = None,
-) -> PlantProfile:
-    """Build a :class:`PlantProfile` from config entry options payload."""
+) -> BioProfile:
+    """Build a :class:`BioProfile` from config entry options payload."""
 
     options = dict(payload)
     name = display_name or options.get("name") or profile_id
@@ -245,42 +247,62 @@ def options_profile_to_dataclass(
         metadata=_as_dict(options.get("computed_metadata")),
     )
 
-    profile = PlantProfile(
-        plant_id=profile_id,
-        display_name=name,
-        profile_type=profile_type,
-        species=species,
-        tenant_id=tenant_id,
-        parents=parents,
-        identity=identity,
-        taxonomy=taxonomy,
-        policies=policies,
-        stable_knowledge=stable_knowledge,
-        lifecycle=lifecycle,
-        traits=traits,
-        tags=tags,
-        curated_targets=curated_targets,
-        diffs_vs_parent=diffs_vs_parent,
-        library_metadata=library_metadata,
-        library_created_at=library_created_at,
-        library_updated_at=library_updated_at,
-        local_overrides=local_overrides,
-        resolver_state=resolver_state,
-        resolved_targets=resolved_targets,
-        computed_stats=computed_stats,
-        general=general,
-        citations=profile_citations,
-        local_metadata=local_metadata,
-        last_resolved=last_resolved,
-        created_at=created_at,
-        updated_at=updated_at,
-        sections=ProfileSections(
+    profile_kwargs: dict[str, Any] = {
+        "profile_id": profile_id,
+        "display_name": name,
+        "profile_type": profile_type,
+        "species": species,
+        "tenant_id": tenant_id,
+        "parents": parents,
+        "identity": identity,
+        "taxonomy": taxonomy,
+        "policies": policies,
+        "stable_knowledge": stable_knowledge,
+        "lifecycle": lifecycle,
+        "traits": traits,
+        "tags": tags,
+        "curated_targets": curated_targets,
+        "diffs_vs_parent": diffs_vs_parent,
+        "library_metadata": library_metadata,
+        "library_created_at": library_created_at,
+        "library_updated_at": library_updated_at,
+        "local_overrides": local_overrides,
+        "resolver_state": resolver_state,
+        "resolved_targets": resolved_targets,
+        "computed_stats": computed_stats,
+        "general": general,
+        "citations": profile_citations,
+        "local_metadata": local_metadata,
+        "last_resolved": last_resolved,
+        "created_at": created_at,
+        "updated_at": updated_at,
+        "sections": ProfileSections(
             library=library_section,
             local=local_section,
             resolved=resolved_section,
             computed=computed_section,
         ),
-    )
+    }
+
+    if profile_type == "species":
+        cultivar_ids_raw = options.get("cultivar_ids")
+        if isinstance(cultivar_ids_raw, Mapping):
+            cultivar_ids_raw = cultivar_ids_raw.get("items")
+        cultivar_ids: list[str] = []
+        if isinstance(cultivar_ids_raw, (list | tuple | set)):
+            cultivar_ids = [str(item) for item in cultivar_ids_raw]
+        profile = SpeciesProfile(cultivar_ids=cultivar_ids, **profile_kwargs)
+    elif profile_type in {"cultivar", "line"}:
+        area = options.get("area_m2")
+        if area is None:
+            area = local_metadata.get("area_m2") if isinstance(local_metadata, Mapping) else None
+        try:
+            area_value = float(area) if area is not None else None
+        except (TypeError, ValueError):
+            area_value = None
+        profile = CultivarProfile(area_m2=area_value, **profile_kwargs)
+    else:
+        profile = BioProfile(**profile_kwargs)
 
     profile.lineage = [
         ProfileLineageEntry(

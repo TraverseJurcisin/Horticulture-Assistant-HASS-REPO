@@ -165,6 +165,58 @@ async def test_refresh_species_persists_storage(hass, tmp_path):
     assert data["plant_id"] == "p1"
 
 
+async def test_record_run_event_service_updates_history(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+    response = await hass.services.async_call(
+        DOMAIN,
+        "record_run_event",
+        {
+            "profile_id": "p1",
+            "run_id": "run-1",
+            "started_at": "2024-01-01T00:00:00Z",
+        },
+        blocking=True,
+        return_response=True,
+    )
+    assert response["run_event"]["run_id"] == "run-1"
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get("p1")
+    assert profile is not None and len(profile.run_history) == 1
+
+
+async def test_record_harvest_event_service_updates_statistics(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+    await hass.services.async_call(
+        DOMAIN,
+        "record_run_event",
+        {
+            "profile_id": "p1",
+            "run_id": "run-1",
+            "started_at": "2024-01-01T00:00:00Z",
+        },
+        blocking=True,
+    )
+    response = await hass.services.async_call(
+        DOMAIN,
+        "record_harvest_event",
+        {
+            "profile_id": "p1",
+            "harvest_id": "harvest-1",
+            "harvested_at": "2024-02-01T00:00:00Z",
+            "yield_grams": 42.5,
+            "area_m2": 1.5,
+        },
+        blocking=True,
+        return_response=True,
+    )
+    assert response["harvest_event"]["yield_grams"] == 42.5
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get("p1")
+    assert profile and profile.statistics
+    metrics = profile.statistics[0].metrics
+    assert metrics["total_yield_grams"] == 42.5
+
+
 async def test_export_profiles_overwrites_existing(hass, tmp_path):
     await _setup_entry_with_profile(hass, tmp_path)
     out = tmp_path / "profiles.json"
