@@ -25,8 +25,9 @@ def _normalise_roles(roles_header: str | None) -> set[str]:
     roles: set[str] = set()
     for chunk in roles_header.split(","):
         role = chunk.strip().lower()
-        if role:
-            roles.add(role)
+        if not role:
+            continue
+        roles.add(role)
     return roles
 
 
@@ -60,6 +61,12 @@ async def principal_dependency(
     roles_header: str | None = Header(None, alias="X-Roles"),
     subject: str | None = Header(None, alias="X-Subject-ID"),
 ) -> Principal:
+    tenant_id = str(tenant).strip()
+    if not tenant_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={"error": "invalid_tenant", "tenant": tenant},
+        )
     roles = _normalise_roles(roles_header)
     if not roles:
         roles = {ROLE_VIEWER}
@@ -69,7 +76,8 @@ async def principal_dependency(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={"error": "invalid_role", "roles": invalid},
         )
-    return Principal(tenant_id=str(tenant), roles=roles, subject_id=subject)
+    subject_id = subject.strip() if isinstance(subject, str) else subject
+    return Principal(tenant_id=tenant_id, roles=roles, subject_id=subject_id)
 
 
 __all__ = [
