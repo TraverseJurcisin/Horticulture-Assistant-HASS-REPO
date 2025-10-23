@@ -1,20 +1,24 @@
 import json
 from datetime import UTC, datetime
 from pathlib import Path
-from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
 import pytest
 import voluptuous as vol
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
+from custom_components.horticulture_assistant.cloudsync.auth import CloudAuthTokens, CloudOrganization
 from custom_components.horticulture_assistant.const import (
     CONF_API_KEY,
     CONF_CLOUD_ACCESS_TOKEN,
     CONF_CLOUD_ACCOUNT_EMAIL,
     CONF_CLOUD_ACCOUNT_ROLES,
+    CONF_CLOUD_AVAILABLE_ORGANIZATIONS,
     CONF_CLOUD_BASE_URL,
     CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_ORGANIZATION_ID,
+    CONF_CLOUD_ORGANIZATION_NAME,
+    CONF_CLOUD_ORGANIZATION_ROLE,
     CONF_CLOUD_REFRESH_TOKEN,
     CONF_CLOUD_SYNC_ENABLED,
     CONF_CLOUD_TENANT_ID,
@@ -408,14 +412,21 @@ async def test_refresh_species_multiple_profiles(hass, tmp_path):
 async def test_cloud_login_service_updates_tokens(hass, tmp_path):
     entry = await _setup_entry_with_profile(hass, tmp_path)
     manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
-    tokens = SimpleNamespace(
-        tenant_id="tenant-1",
-        device_token="device-1",
+    tokens = CloudAuthTokens(
         access_token="access-token",
         refresh_token="refresh-token",
         expires_at=datetime(2025, 1, 1, tzinfo=UTC),
+        tenant_id="tenant-1",
+        device_token="device-1",
         account_email="user@example.com",
         roles=("grower",),
+        organization_id="org-1",
+        organization_name="Org One",
+        organization_role="admin",
+        organizations=(
+            CloudOrganization(org_id="org-1", name="Org One", roles=("admin",), default=True),
+            CloudOrganization(org_id="org-2", name="Org Two", roles=("viewer",)),
+        ),
     )
     with (
         patch(
@@ -442,7 +453,13 @@ async def test_cloud_login_service_updates_tokens(hass, tmp_path):
     assert entry.options[CONF_CLOUD_DEVICE_TOKEN] == "device-1"
     assert entry.options[CONF_CLOUD_ACCOUNT_EMAIL] == "user@example.com"
     assert entry.options[CONF_CLOUD_ACCOUNT_ROLES] == ["grower"]
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ID] == "org-1"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_NAME] == "Org One"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ROLE] == "admin"
+    orgs = entry.options[CONF_CLOUD_AVAILABLE_ORGANIZATIONS]
+    assert isinstance(orgs, list) and orgs[0]["id"] == "org-1"
     assert response["tenant_id"] == "tenant-1"
+    assert response["organization_id"] == "org-1"
     refresh.assert_awaited()
 
 
@@ -458,6 +475,10 @@ async def test_cloud_logout_clears_tokens(hass, tmp_path):
             CONF_CLOUD_ACCOUNT_EMAIL: "user@example.com",
             CONF_CLOUD_ACCOUNT_ROLES: ["grower"],
             CONF_CLOUD_TOKEN_EXPIRES_AT: "2025-01-01T00:00:00Z",
+            CONF_CLOUD_AVAILABLE_ORGANIZATIONS: [{"id": "org-1", "name": "Org One"}],
+            CONF_CLOUD_ORGANIZATION_ID: "org-1",
+            CONF_CLOUD_ORGANIZATION_NAME: "Org One",
+            CONF_CLOUD_ORGANIZATION_ROLE: "admin",
         }
     )
     with patch.object(manager, "async_refresh", AsyncMock()) as refresh:
@@ -470,6 +491,8 @@ async def test_cloud_logout_clears_tokens(hass, tmp_path):
     assert entry.options.get(CONF_CLOUD_SYNC_ENABLED) is False
     assert CONF_CLOUD_ACCESS_TOKEN not in entry.options
     assert CONF_CLOUD_REFRESH_TOKEN not in entry.options
+    assert CONF_CLOUD_AVAILABLE_ORGANIZATIONS not in entry.options
+    assert CONF_CLOUD_ORGANIZATION_ID not in entry.options
     refresh.assert_awaited()
 
 
@@ -482,14 +505,18 @@ async def test_cloud_refresh_updates_expiry(hass, tmp_path):
             CONF_CLOUD_BASE_URL: "https://cloud.example",
         }
     )
-    tokens = SimpleNamespace(
-        tenant_id="tenant-1",
-        device_token="device-2",
+    tokens = CloudAuthTokens(
         access_token="new-access",
         refresh_token="new-refresh",
         expires_at=datetime(2026, 1, 1, tzinfo=UTC),
+        tenant_id="tenant-1",
+        device_token="device-2",
         account_email="user@example.com",
         roles=("grower", "admin"),
+        organization_id="org-1",
+        organization_name="Org One",
+        organization_role="admin",
+        organizations=(CloudOrganization(org_id="org-1", name="Org One", roles=("admin",), default=True),),
     )
     with (
         patch(
@@ -509,5 +536,38 @@ async def test_cloud_refresh_updates_expiry(hass, tmp_path):
     assert entry.options[CONF_CLOUD_REFRESH_TOKEN] == "new-refresh"
     assert entry.options[CONF_CLOUD_DEVICE_TOKEN] == "device-2"
     assert entry.options[CONF_CLOUD_ACCOUNT_ROLES] == ["grower", "admin"]
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ID] == "org-1"
     assert response["tenant_id"] == "tenant-1"
+    assert response["organization_id"] == "org-1"
+    refresh.assert_awaited()
+
+
+async def test_cloud_select_org_updates_entry(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    entry.options.update(
+        {
+            CONF_CLOUD_AVAILABLE_ORGANIZATIONS: [
+                {"id": "org-1", "name": "Org One", "default": True, "roles": ["admin"]},
+                {"id": "org-2", "name": "Org Two", "roles": ["viewer"]},
+            ],
+            CONF_CLOUD_ORGANIZATION_ID: "org-1",
+            CONF_CLOUD_ORGANIZATION_NAME: "Org One",
+            CONF_CLOUD_ORGANIZATION_ROLE: "admin",
+        }
+    )
+    with patch.object(manager, "async_refresh", AsyncMock()) as refresh:
+        response = await hass.services.async_call(
+            DOMAIN,
+            "cloud_select_org",
+            {"organization_id": "org-2"},
+            blocking=True,
+            return_response=True,
+        )
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ID] == "org-2"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_NAME] == "Org Two"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ROLE] == "viewer"
+    orgs = entry.options[CONF_CLOUD_AVAILABLE_ORGANIZATIONS]
+    assert orgs[1]["default"] is True
+    assert response["organization_id"] == "org-2"
     refresh.assert_awaited()

@@ -26,6 +26,7 @@ class CloudCacheRecord:
     tenant_id: str
     payload: dict[str, Any]
     updated_at: datetime
+    org_id: str | None = None
 
 
 class EdgeSyncStore:
@@ -76,9 +77,10 @@ class EdgeSyncStore:
                     entity_type TEXT NOT NULL,
                     entity_id TEXT NOT NULL,
                     tenant_id TEXT NOT NULL,
+                    org_id TEXT NOT NULL DEFAULT '',
                     payload TEXT NOT NULL,
                     updated_at TEXT NOT NULL,
-                    PRIMARY KEY (entity_type, tenant_id, entity_id)
+                    PRIMARY KEY (entity_type, tenant_id, org_id, entity_id)
                 );
 
                 CREATE TABLE IF NOT EXISTS sync_cursors (
@@ -88,6 +90,7 @@ class EdgeSyncStore:
                 );
                 """
             )
+            self._ensure_cloud_cache_schema(conn)
             conn.commit()
 
     # ------------------------------------------------------------------
@@ -103,7 +106,32 @@ class EdgeSyncStore:
                 """,
                 (event.event_id, payload, ts, event.event_id, event.event_id),
             )
+            self._ensure_cloud_cache_schema(conn)
             conn.commit()
+
+    def _ensure_cloud_cache_schema(self, conn: sqlite3.Connection) -> None:
+        columns = {row["name"]: row for row in conn.execute("PRAGMA table_info(cloud_cache)").fetchall()}
+        if not columns:
+            return
+        if "org_id" in columns:
+            return
+        conn.executescript(
+            """
+            ALTER TABLE cloud_cache RENAME TO cloud_cache_legacy;
+            CREATE TABLE cloud_cache (
+                entity_type TEXT NOT NULL,
+                entity_id TEXT NOT NULL,
+                tenant_id TEXT NOT NULL,
+                org_id TEXT NOT NULL DEFAULT '',
+                payload TEXT NOT NULL,
+                updated_at TEXT NOT NULL,
+                PRIMARY KEY (entity_type, tenant_id, org_id, entity_id)
+            );
+            INSERT INTO cloud_cache (entity_type, entity_id, tenant_id, org_id, payload, updated_at)
+                SELECT entity_type, entity_id, tenant_id, '', payload, updated_at FROM cloud_cache_legacy;
+            DROP TABLE cloud_cache_legacy;
+            """
+        )
 
     def get_outbox_batch(self, limit: int = 100) -> list[SyncEvent]:
         with self._connection() as conn:
@@ -160,17 +188,21 @@ class EdgeSyncStore:
         entity_id: str,
         tenant_id: str,
         payload: dict[str, Any],
+        *,
+        org_id: str | None = None,
     ) -> None:
+        org_norm = str(org_id).strip() if org_id is not None else ""
         with self._connection() as conn:
             conn.execute(
                 """
-                INSERT OR REPLACE INTO cloud_cache(entity_type, entity_id, tenant_id, payload, updated_at)
-                VALUES(?, ?, ?, ?, ?)
+                INSERT OR REPLACE INTO cloud_cache(entity_type, entity_id, tenant_id, org_id, payload, updated_at)
+                VALUES(?, ?, ?, ?, ?, ?)
                 """,
                 (
                     entity_type,
                     entity_id,
                     tenant_id,
+                    org_norm,
                     json.dumps(payload, separators=(",", ":")),
                     datetime.now(tz=UTC).isoformat(),
                 ),
@@ -183,29 +215,37 @@ class EdgeSyncStore:
         entity_id: str,
         *,
         tenant_id: str | None = None,
+        org_id: str | None = None,
     ) -> CloudCacheRecord | None:
         query = (
-            "SELECT entity_type, entity_id, tenant_id, payload, updated_at "
+            "SELECT entity_type, entity_id, tenant_id, org_id, payload, updated_at "
             "FROM cloud_cache WHERE entity_type = ? AND entity_id = ?"
         )
         params: list[Any] = [entity_type, entity_id]
         if tenant_id:
             query += " AND tenant_id = ?"
             params.append(tenant_id)
-        query += " ORDER BY updated_at DESC"
+        if org_id is not None:
+            org_norm = str(org_id).strip()
+            query += " ORDER BY (org_id = ?) DESC, updated_at DESC"
+            params.append(org_norm)
+        else:
+            query += " ORDER BY updated_at DESC"
         with self._connection() as conn:
             row = conn.execute(query, tuple(params)).fetchone()
         if not row:
             return None
-        payload_raw = json.loads(row["payload"])
+        row_map = dict(row)
+        payload_raw = json.loads(row_map["payload"])
         payload = payload_raw if isinstance(payload_raw, dict) else {}
-        updated_at = self._parse_timestamp(str(row["updated_at"])) or datetime.now(tz=UTC)
+        updated_at = self._parse_timestamp(str(row_map["updated_at"])) or datetime.now(tz=UTC)
         return CloudCacheRecord(
-            entity_type=row["entity_type"],
-            entity_id=row["entity_id"],
-            tenant_id=row["tenant_id"],
+            entity_type=row_map["entity_type"],
+            entity_id=row_map["entity_id"],
+            tenant_id=row_map["tenant_id"],
             payload=payload,
             updated_at=updated_at,
+            org_id=row_map.get("org_id") or None,
         )
 
     def fetch_cloud_cache(
@@ -214,8 +254,14 @@ class EdgeSyncStore:
         entity_id: str,
         *,
         tenant_id: str | None = None,
+        org_id: str | None = None,
     ) -> dict[str, Any] | None:
-        record = self.fetch_cloud_cache_entry(entity_type, entity_id, tenant_id=tenant_id)
+        record = self.fetch_cloud_cache_entry(
+            entity_type,
+            entity_id,
+            tenant_id=tenant_id,
+            org_id=org_id,
+        )
         return None if record is None else record.payload
 
     def list_cloud_cache(
@@ -223,10 +269,11 @@ class EdgeSyncStore:
         entity_type: str | None = None,
         *,
         tenant_id: str | None = None,
+        org_id: str | None = None,
     ) -> list[dict[str, Any]]:
         """Return cached cloud entities with metadata."""
 
-        query = "SELECT entity_type, entity_id, tenant_id, payload, updated_at FROM cloud_cache"
+        query = "SELECT entity_type, entity_id, tenant_id, org_id, payload, updated_at FROM cloud_cache"
         clauses: list[str] = []
         params: list[Any] = []
         if entity_type:
@@ -235,6 +282,9 @@ class EdgeSyncStore:
         if tenant_id:
             clauses.append("tenant_id = ?")
             params.append(tenant_id)
+        if org_id is not None:
+            clauses.append("org_id = ?")
+            params.append(str(org_id).strip())
         if clauses:
             query += " WHERE " + " AND ".join(clauses)
         query += " ORDER BY updated_at DESC"
@@ -247,6 +297,7 @@ class EdgeSyncStore:
                     "entity_type": row["entity_type"],
                     "entity_id": row["entity_id"],
                     "tenant_id": row["tenant_id"],
+                    "org_id": row["org_id"] or None,
                     "payload": json.loads(row["payload"]),
                     "updated_at": row["updated_at"],
                 }
@@ -258,10 +309,18 @@ class EdgeSyncStore:
         entity_type: str | None = None,
         *,
         tenant_id: str | None = None,
+        org_id: str | None = None,
     ) -> list[dict[str, Any]]:
         """Return cached payloads without metadata (legacy helper)."""
 
-        return [item["payload"] for item in self.list_cloud_cache(entity_type, tenant_id=tenant_id)]
+        return [
+            item["payload"]
+            for item in self.list_cloud_cache(
+                entity_type,
+                tenant_id=tenant_id,
+                org_id=org_id,
+            )
+        ]
 
     # ------------------------------------------------------------------
     def get_cursor(self, stream: str) -> str | None:

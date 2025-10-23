@@ -31,6 +31,7 @@ class EdgeSyncWorker:
         device_token: str,
         tenant_id: str,
         *,
+        organization_id: str | None = None,
         conflict_resolver: ConflictResolver | None = None,
         logger: logging.Logger | None = None,
     ) -> None:
@@ -39,6 +40,7 @@ class EdgeSyncWorker:
         self.base_url = base_url.rstrip("/")
         self.device_token = device_token
         self.tenant_id = tenant_id
+        self.organization_id = organization_id.strip() if isinstance(organization_id, str) else None
         self.conflicts = conflict_resolver or ConflictResolver(
             field_policies={
                 "batch_tags": ConflictPolicy.OR_SET,
@@ -61,6 +63,8 @@ class EdgeSyncWorker:
             "Content-Type": "application/x-ndjson",
             "X-Tenant-ID": self.tenant_id,
         }
+        if self.organization_id:
+            headers["X-Org-ID"] = self.organization_id
         try:
             async with self.session.post(
                 f"{self.base_url}/sync/up",
@@ -90,6 +94,8 @@ class EdgeSyncWorker:
             "Accept": "application/x-ndjson, application/json",
             "X-Tenant-ID": self.tenant_id,
         }
+        if self.organization_id:
+            headers["X-Org-ID"] = self.organization_id
         params = {}
         if cursor:
             params["cursor"] = cursor
@@ -142,6 +148,7 @@ class EdgeSyncWorker:
             "last_push_error": self.last_push_error,
             "last_pull_error": self.last_pull_error,
             "cursor": self.store.get_cursor("cloud"),
+            "organization_id": self.organization_id,
         }
 
     def _parse_ack_response(self, text: str) -> list[str]:
@@ -170,8 +177,15 @@ class EdgeSyncWorker:
             event.entity_type,
             event.entity_id,
             tenant_id=event.tenant_id,
+            org_id=event.org_id or self.organization_id,
         )
         current = record.payload if record else {}
         merged = self.conflicts.apply(current, event)
         merged.pop("__meta__", None)
-        self.store.update_cloud_cache(event.entity_type, event.entity_id, event.tenant_id, merged)
+        self.store.update_cloud_cache(
+            event.entity_type,
+            event.entity_id,
+            event.tenant_id,
+            merged,
+            org_id=event.org_id or self.organization_id,
+        )

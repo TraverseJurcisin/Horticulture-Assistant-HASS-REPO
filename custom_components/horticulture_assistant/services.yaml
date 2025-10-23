@@ -204,3 +204,20 @@ cloud_refresh_token:
       required: false
       description: "Override the cloud base URL used for the refresh request."
       selector: { text: {} }
+
+cloud_select_org:
+  name: "Select cloud organization"
+  description: "Set the active cloud organization for subsequent sync operations."
+  fields:
+    organization_id:
+      required: false
+      description: "Organization identifier to activate."
+      selector: { text: {} }
+    organization_name:
+      required: false
+      description: "Organization name to match when the identifier is unknown."
+      selector: { text: {} }
+    role:
+      required: false
+      description: "Optional role override for the active organization context."
+      selector: { text: {} }

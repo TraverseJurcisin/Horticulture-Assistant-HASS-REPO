@@ -17,8 +17,12 @@ from ..const import (
     CONF_CLOUD_ACCESS_TOKEN,
     CONF_CLOUD_ACCOUNT_EMAIL,
     CONF_CLOUD_ACCOUNT_ROLES,
+    CONF_CLOUD_AVAILABLE_ORGANIZATIONS,
     CONF_CLOUD_BASE_URL,
     CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_ORGANIZATION_ID,
+    CONF_CLOUD_ORGANIZATION_NAME,
+    CONF_CLOUD_ORGANIZATION_ROLE,
     CONF_CLOUD_REFRESH_TOKEN,
     CONF_CLOUD_SYNC_ENABLED,
     CONF_CLOUD_SYNC_INTERVAL,
@@ -49,6 +53,10 @@ class CloudSyncConfig:
     account_email: str | None = None
     roles: tuple[str, ...] = ()
     interval: int = DEFAULT_CLOUD_SYNC_INTERVAL
+    organization_id: str | None = None
+    organization_name: str | None = None
+    organization_role: str | None = None
+    available_organizations: tuple[dict[str, Any], ...] = ()
 
     @classmethod
     def from_options(cls, options: Mapping[str, Any]) -> CloudSyncConfig:
@@ -68,6 +76,30 @@ class CloudSyncConfig:
             roles = (roles_raw,)
         else:
             roles = ()
+        org_id = str(options.get(CONF_CLOUD_ORGANIZATION_ID, "") or "").strip() or None
+        org_name = str(options.get(CONF_CLOUD_ORGANIZATION_NAME, "") or "").strip() or None
+        org_role = str(options.get(CONF_CLOUD_ORGANIZATION_ROLE, "") or "").strip() or None
+        orgs_raw = options.get(CONF_CLOUD_AVAILABLE_ORGANIZATIONS)
+        if isinstance(orgs_raw, list):
+            processed: list[dict[str, Any]] = []
+            for item in orgs_raw:
+                if not isinstance(item, Mapping):
+                    continue
+                org_candidate = str(item.get("id") or item.get("org_id") or "").strip()
+                if not org_candidate:
+                    continue
+                name_candidate = str(item.get("name") or item.get("label") or "").strip() or None
+                processed.append(
+                    {
+                        "id": org_candidate,
+                        "name": name_candidate,
+                        "roles": item.get("roles"),
+                        "default": item.get("default"),
+                    }
+                )
+            available_orgs = tuple(processed)
+        else:
+            available_orgs = ()
         interval_raw = options.get(CONF_CLOUD_SYNC_INTERVAL, DEFAULT_CLOUD_SYNC_INTERVAL)
         try:
             interval = max(15, int(interval_raw))
@@ -84,6 +116,10 @@ class CloudSyncConfig:
             account_email=account_email,
             roles=roles,
             interval=interval,
+            organization_id=org_id,
+            organization_name=org_name,
+            organization_role=org_role,
+            available_organizations=available_orgs,
         )
 
     @property
@@ -150,6 +186,7 @@ class CloudSyncManager:
             self.config.base_url,
             self.config.device_token or self.config.access_token,
             self.config.tenant_id,
+            organization_id=self.config.organization_id,
         )
         self._task = self.hass.async_create_task(self._worker.run_forever(interval_seconds=self.config.interval))
 
@@ -187,6 +224,10 @@ class CloudSyncManager:
             "cloud_snapshot_oldest_age_days": self.store.cloud_cache_oldest_age(now=now),
             "account_email": self.config.account_email,
             "tenant_id": self.config.tenant_id,
+            "organization_id": self.config.organization_id,
+            "organization_name": self.config.organization_name,
+            "organization_role": self.config.organization_role,
+            "organizations": [dict(org) for org in self.config.available_organizations],
             "roles": list(self.config.roles),
             "token_expires_at": self.config.token_expires_at,
             "refresh_token": bool(self.config.refresh_token),

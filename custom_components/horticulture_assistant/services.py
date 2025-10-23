@@ -26,13 +26,17 @@ from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .cloudsync.auth import CloudAuthClient, CloudAuthError
+from .cloudsync.auth import CloudAuthClient, CloudAuthError, CloudAuthTokens
 from .const import (
     CONF_CLOUD_ACCESS_TOKEN,
     CONF_CLOUD_ACCOUNT_EMAIL,
     CONF_CLOUD_ACCOUNT_ROLES,
+    CONF_CLOUD_AVAILABLE_ORGANIZATIONS,
     CONF_CLOUD_BASE_URL,
     CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_ORGANIZATION_ID,
+    CONF_CLOUD_ORGANIZATION_NAME,
+    CONF_CLOUD_ORGANIZATION_ROLE,
     CONF_CLOUD_REFRESH_TOKEN,
     CONF_CLOUD_SYNC_ENABLED,
     CONF_CLOUD_TENANT_ID,
@@ -110,6 +114,7 @@ SERVICE_PROFILE_RUNS = "profile_runs"
 SERVICE_CLOUD_LOGIN = "cloud_login"
 SERVICE_CLOUD_LOGOUT = "cloud_logout"
 SERVICE_CLOUD_REFRESH = "cloud_refresh_token"
+SERVICE_CLOUD_SELECT_ORG = "cloud_select_org"
 
 SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_REPLACE_SENSOR,
@@ -141,6 +146,7 @@ SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_CLOUD_LOGIN,
     SERVICE_CLOUD_LOGOUT,
     SERVICE_CLOUD_REFRESH,
+    SERVICE_CLOUD_SELECT_ORG,
 )
 
 
@@ -166,6 +172,83 @@ async def async_register_all(
     async def _refresh_profile() -> None:
         if profile_coord:
             await profile_coord.async_request_refresh()
+
+    async def _apply_cloud_tokens(tokens: CloudAuthTokens, *, base_url: str) -> dict[str, Any]:
+        """Merge new cloud token metadata into the config entry options."""
+
+        opts = dict(entry.options)
+        opts[CONF_CLOUD_BASE_URL] = base_url
+        opts[CONF_CLOUD_SYNC_ENABLED] = True
+        opts[CONF_CLOUD_TENANT_ID] = tokens.tenant_id or opts.get(CONF_CLOUD_TENANT_ID, "")
+        if tokens.device_token:
+            opts[CONF_CLOUD_DEVICE_TOKEN] = tokens.device_token
+        else:
+            opts.pop(CONF_CLOUD_DEVICE_TOKEN, None)
+        opts[CONF_CLOUD_ACCESS_TOKEN] = tokens.access_token
+        if tokens.refresh_token:
+            opts[CONF_CLOUD_REFRESH_TOKEN] = tokens.refresh_token
+        else:
+            opts.pop(CONF_CLOUD_REFRESH_TOKEN, None)
+        if tokens.expires_at:
+            opts[CONF_CLOUD_TOKEN_EXPIRES_AT] = tokens.expires_at.isoformat()
+        else:
+            opts.pop(CONF_CLOUD_TOKEN_EXPIRES_AT, None)
+        if tokens.account_email:
+            opts[CONF_CLOUD_ACCOUNT_EMAIL] = tokens.account_email
+        else:
+            opts.pop(CONF_CLOUD_ACCOUNT_EMAIL, None)
+        if tokens.roles:
+            opts[CONF_CLOUD_ACCOUNT_ROLES] = list(tokens.roles)
+        else:
+            opts.pop(CONF_CLOUD_ACCOUNT_ROLES, None)
+
+        available_orgs = [
+            {
+                "id": org.org_id,
+                "name": org.name,
+                "roles": list(org.roles),
+                "default": org.default,
+            }
+            for org in tokens.available_organizations()
+            if org.org_id
+        ]
+        if available_orgs:
+            opts[CONF_CLOUD_AVAILABLE_ORGANIZATIONS] = available_orgs
+        else:
+            opts.pop(CONF_CLOUD_AVAILABLE_ORGANIZATIONS, None)
+
+        selected_org = None
+        if tokens.organization_id:
+            selected_org = next(
+                (org for org in tokens.available_organizations() if org.org_id == tokens.organization_id),
+                None,
+            )
+        if selected_org is None:
+            selected_org = tokens.default_organization()
+
+        org_id = tokens.organization_id or (selected_org.org_id if selected_org else None)
+        org_name = tokens.organization_name or (selected_org.name if selected_org else None)
+        org_roles = list(selected_org.roles) if selected_org else []
+        org_role = tokens.organization_role or (org_roles[0] if org_roles else None)
+
+        if org_id:
+            opts[CONF_CLOUD_ORGANIZATION_ID] = org_id
+        else:
+            opts.pop(CONF_CLOUD_ORGANIZATION_ID, None)
+        if org_name:
+            opts[CONF_CLOUD_ORGANIZATION_NAME] = org_name
+        else:
+            opts.pop(CONF_CLOUD_ORGANIZATION_NAME, None)
+        if org_role:
+            opts[CONF_CLOUD_ORGANIZATION_ROLE] = org_role
+        else:
+            opts.pop(CONF_CLOUD_ORGANIZATION_ROLE, None)
+
+        hass.config_entries.async_update_entry(entry, options=opts)
+        entry.options = opts
+        if cloud_manager is not None:
+            await cloud_manager.async_refresh()
+        return opts
 
     async def _srv_replace_sensor(call) -> None:
         profile_id: str = call.data["profile_id"]
@@ -442,40 +525,13 @@ async def async_register_all(
         except CloudAuthError as err:
             raise HomeAssistantError(str(err)) from err
 
-        opts = dict(entry.options)
-        opts[CONF_CLOUD_BASE_URL] = base_url
-        opts[CONF_CLOUD_SYNC_ENABLED] = True
-        opts[CONF_CLOUD_TENANT_ID] = tokens.tenant_id
-        if tokens.device_token:
-            opts[CONF_CLOUD_DEVICE_TOKEN] = tokens.device_token
-        else:
-            opts.pop(CONF_CLOUD_DEVICE_TOKEN, None)
-        opts[CONF_CLOUD_ACCESS_TOKEN] = tokens.access_token
-        if tokens.refresh_token:
-            opts[CONF_CLOUD_REFRESH_TOKEN] = tokens.refresh_token
-        else:
-            opts.pop(CONF_CLOUD_REFRESH_TOKEN, None)
-        if tokens.expires_at:
-            opts[CONF_CLOUD_TOKEN_EXPIRES_AT] = tokens.expires_at.isoformat()
-        else:
-            opts.pop(CONF_CLOUD_TOKEN_EXPIRES_AT, None)
-        if tokens.account_email:
-            opts[CONF_CLOUD_ACCOUNT_EMAIL] = tokens.account_email
-        else:
-            opts.pop(CONF_CLOUD_ACCOUNT_EMAIL, None)
-        if tokens.roles:
-            opts[CONF_CLOUD_ACCOUNT_ROLES] = list(tokens.roles)
-        else:
-            opts.pop(CONF_CLOUD_ACCOUNT_ROLES, None)
-
-        hass.config_entries.async_update_entry(entry, options=opts)
-        entry.options = opts
-        if cloud_manager is not None:
-            await cloud_manager.async_refresh()
+        opts = await _apply_cloud_tokens(tokens, base_url=base_url)
         return {
             "tenant_id": tokens.tenant_id,
             "account_email": tokens.account_email,
             "token_expires_at": tokens.expires_at.isoformat() if tokens.expires_at else None,
+            "organization_id": opts.get(CONF_CLOUD_ORGANIZATION_ID),
+            "organization_name": opts.get(CONF_CLOUD_ORGANIZATION_NAME),
         }
 
     async def _srv_cloud_logout(call) -> ServiceResponse:
@@ -488,6 +544,10 @@ async def async_register_all(
             CONF_CLOUD_ACCOUNT_EMAIL,
             CONF_CLOUD_ACCOUNT_ROLES,
             CONF_CLOUD_DEVICE_TOKEN,
+            CONF_CLOUD_AVAILABLE_ORGANIZATIONS,
+            CONF_CLOUD_ORGANIZATION_ID,
+            CONF_CLOUD_ORGANIZATION_NAME,
+            CONF_CLOUD_ORGANIZATION_ROLE,
         ):
             opts.pop(key, None)
         hass.config_entries.async_update_entry(entry, options=opts)
@@ -511,29 +571,78 @@ async def async_register_all(
         except CloudAuthError as err:
             raise HomeAssistantError(str(err)) from err
 
+        opts = await _apply_cloud_tokens(tokens, base_url=base_url)
+        return {
+            "token_expires_at": tokens.expires_at.isoformat() if tokens.expires_at else None,
+            "tenant_id": opts.get(CONF_CLOUD_TENANT_ID),
+            "organization_id": opts.get(CONF_CLOUD_ORGANIZATION_ID),
+            "organization_name": opts.get(CONF_CLOUD_ORGANIZATION_NAME),
+        }
+
+    async def _srv_cloud_select_org(call) -> ServiceResponse:
+        available = entry.options.get(CONF_CLOUD_AVAILABLE_ORGANIZATIONS) or []
+        if not isinstance(available, list) or not available:
+            raise HomeAssistantError("no cloud organizations available to select")
+
+        requested_id = str(call.data.get("organization_id") or "").strip()
+        requested_name = str(call.data.get("organization_name") or "").strip()
+        requested_role = str(call.data.get("role") or "").strip()
+        if not requested_id and not requested_name:
+            raise HomeAssistantError("organization_id or organization_name must be provided")
+
+        match: Mapping[str, Any] | None = None
+        for org in available:
+            if not isinstance(org, Mapping):
+                continue
+            candidate_id = str(org.get("id") or org.get("org_id") or "").strip()
+            candidate_name = str(org.get("name") or org.get("label") or "").strip()
+            if requested_id and candidate_id and candidate_id.lower() == requested_id.lower():
+                match = org
+                break
+            if requested_name and candidate_name and candidate_name.lower() == requested_name.lower():
+                match = org
+                break
+        if match is None:
+            raise HomeAssistantError("requested organization not found")
+
+        selected_id = str(match.get("id") or match.get("org_id") or "").strip()
+        selected_name = str(match.get("name") or match.get("label") or selected_id).strip()
+        roles_raw = match.get("roles")
+        if isinstance(roles_raw, str) and roles_raw:
+            derived_role = roles_raw
+        elif isinstance(roles_raw, list | tuple) and roles_raw:
+            derived_role = str(roles_raw[0])
+        else:
+            derived_role = ""
+        if requested_role:
+            derived_role = requested_role
+
         opts = dict(entry.options)
-        opts[CONF_CLOUD_BASE_URL] = base_url
-        opts[CONF_CLOUD_SYNC_ENABLED] = True
-        opts[CONF_CLOUD_TENANT_ID] = tokens.tenant_id or opts.get(CONF_CLOUD_TENANT_ID, "")
-        if tokens.device_token:
-            opts[CONF_CLOUD_DEVICE_TOKEN] = tokens.device_token
-        opts[CONF_CLOUD_ACCESS_TOKEN] = tokens.access_token
-        if tokens.refresh_token:
-            opts[CONF_CLOUD_REFRESH_TOKEN] = tokens.refresh_token
-        if tokens.expires_at:
-            opts[CONF_CLOUD_TOKEN_EXPIRES_AT] = tokens.expires_at.isoformat()
-        if tokens.account_email:
-            opts[CONF_CLOUD_ACCOUNT_EMAIL] = tokens.account_email
-        if tokens.roles:
-            opts[CONF_CLOUD_ACCOUNT_ROLES] = list(tokens.roles)
+        opts[CONF_CLOUD_ORGANIZATION_ID] = selected_id
+        opts[CONF_CLOUD_ORGANIZATION_NAME] = selected_name or selected_id
+        if derived_role:
+            opts[CONF_CLOUD_ORGANIZATION_ROLE] = derived_role
+        else:
+            opts.pop(CONF_CLOUD_ORGANIZATION_ROLE, None)
+
+        updated_orgs: list[dict[str, Any]] = []
+        for org in available:
+            if not isinstance(org, Mapping):
+                continue
+            org_copy = dict(org)
+            org_copy_id = str(org_copy.get("id") or org_copy.get("org_id") or "").strip()
+            org_copy["default"] = bool(org_copy_id and org_copy_id == selected_id)
+            updated_orgs.append(org_copy)
+        opts[CONF_CLOUD_AVAILABLE_ORGANIZATIONS] = updated_orgs
 
         hass.config_entries.async_update_entry(entry, options=opts)
         entry.options = opts
         if cloud_manager is not None:
             await cloud_manager.async_refresh()
         return {
-            "token_expires_at": tokens.expires_at.isoformat() if tokens.expires_at else None,
-            "tenant_id": opts.get(CONF_CLOUD_TENANT_ID),
+            "organization_id": selected_id,
+            "organization_name": selected_name,
+            "organization_role": opts.get(CONF_CLOUD_ORGANIZATION_ROLE),
         }
 
     async def _srv_import_profiles(call) -> None:
@@ -867,6 +976,19 @@ async def async_register_all(
         SERVICE_CLOUD_LOGOUT,
         _srv_cloud_logout,
         schema=vol.Schema({}),
+        supports_response=True,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_CLOUD_SELECT_ORG,
+        _srv_cloud_select_org,
+        schema=vol.Schema(
+            {
+                vol.Optional("organization_id"): str,
+                vol.Optional("organization_name"): str,
+                vol.Optional("role"): str,
+            }
+        ),
         supports_response=True,
     )
     hass.services.async_register(

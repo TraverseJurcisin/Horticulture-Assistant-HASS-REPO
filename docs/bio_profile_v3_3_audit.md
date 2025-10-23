@@ -30,6 +30,7 @@ This re-audit summarizes the current alignment between the Horticulture Assistan
 - Early-stage cloud/edge infrastructure exists under the `cloud/` module, including tenant-aware payload handling and preliminary sync logic.
 - Backend scaffolding recognizes user/tenant IDs and includes initial RBAC hooks, preparing for role-based feature gating.
 - Home Assistant now exposes a cloud login/logout/refresh workflow that persists access tokens, updates sync configuration, and drives a cloud connection diagnostic sensor.
+- Cloud authentication flows persist available organizations, track selected org/role metadata, and expose a new `cloud_select_org` service plus HTTP diagnostics so operators can pivot between tenants without reauthenticating.
 
 ### Home Assistant Integration Depth
 - Each BioProfile is surfaced as a Home Assistant device with sensor and binary sensor entities for resolved thresholds and derived analytics such as dew point and VPD.
@@ -41,6 +42,7 @@ This re-audit summarizes the current alignment between the Horticulture Assistan
 - Cloud-bound operations are scoped by tenant identifiers, providing the foundation for multi-tenant isolation.
 - RBAC support is wired into backend scaffolding, though UI-driven organization management and advanced sharing controls are not yet available.
 - Cloud schema hooks exist for shaping edge payloads, but hosted APIs, login flows, and conflict resolution still need to be completed before launch.
+- Organization-aware headers are now propagated through the edge store, worker, sensors, and HTTP APIs, ensuring per-org caches and diagnostics stay isolated ahead of full multi-tenant administration tooling.
 
 ### What’s Implemented vs. Missing
 - Hierarchical inheritance, schema validation, per-profile analytics (including success-rate aggregation and run summaries), and comprehensive Home Assistant entity coverage are implemented and functioning.

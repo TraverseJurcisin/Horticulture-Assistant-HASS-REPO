@@ -34,7 +34,7 @@ from custom_components.horticulture_assistant.const import (
 UTC = datetime.UTC
 
 
-def make_event(event_id: str, entity_type: str, patch: dict) -> SyncEvent:
+def make_event(event_id: str, entity_type: str, patch: dict, *, org_id: str | None = "org-1") -> SyncEvent:
     return SyncEvent(
         event_id=event_id,
         tenant_id="tenant-1",
@@ -46,6 +46,7 @@ def make_event(event_id: str, entity_type: str, patch: dict) -> SyncEvent:
         patch=patch,
         vector=VectorClock(device="edge-1", counter=1),
         actor="tester",
+        org_id=org_id,
     )
 
 
@@ -72,12 +73,13 @@ def test_edge_store_outbox(tmp_path: Path) -> None:
 def test_edge_store_list_cloud_cache(tmp_path: Path) -> None:
     store = EdgeSyncStore(tmp_path / "sync.db")
     payload = {"curated_targets": {"targets": {"vpd": {"vegetative": 0.9}}}}
-    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", payload)
-    items = store.list_cloud_cache("profile")
+    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", payload, org_id="org-1")
+    items = store.list_cloud_cache("profile", org_id="org-1")
     assert len(items) == 1
     entry = items[0]
     assert entry["entity_id"] == "cultivar-1"
     assert entry["tenant_id"] == "tenant-1"
+    assert entry["org_id"] == "org-1"
     assert entry["payload"]["curated_targets"]["targets"]["vpd"]["vegetative"] == 0.9
 
 
@@ -97,10 +99,10 @@ def test_edge_store_cloud_cache_age(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setattr(edge_store_module, "datetime", DummyDateTime)
 
     DummyDateTime.current = base - timedelta(days=3)
-    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", {"value": 1})
+    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", {"value": 1}, org_id="org-1")
 
     DummyDateTime.current = base - timedelta(days=1)
-    store.update_cloud_cache("computed", "species-1", "tenant-1", {"payload": {"value": 2}})
+    store.update_cloud_cache("computed", "species-1", "tenant-1", {"payload": {"value": 2}}, org_id="org-2")
 
     age_latest = store.cloud_cache_age(now=base)
     age_oldest = store.cloud_cache_oldest_age(now=base)
@@ -129,18 +131,18 @@ def test_edge_resolver_prefers_local_override(tmp_path: Path) -> None:
             "parents": ["species-1"],
         },
     )
-    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", profile_event.patch)
+    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", profile_event.patch, org_id="org-1")
     species_event = make_event(
         "01JC",
         "profile",
         {"curated_targets": {"targets": {"vpd": {"vegetative": 0.7}}}, "parents": []},
     )
-    store.update_cloud_cache("profile", "species-1", "tenant-1", species_event.patch)
+    store.update_cloud_cache("profile", "species-1", "tenant-1", species_event.patch, org_id="org-1")
     stats_payload = {
         "computed_at": "2025-10-19T00:00:00Z",
         "payload": {"targets": {"vpd": {"vegetative": 0.8}}},
     }
-    store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload)
+    store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload, org_id="org-1")
 
     def local_loader(pid: str) -> dict:
         if pid == "cultivar-1":
@@ -151,6 +153,7 @@ def test_edge_resolver_prefers_local_override(tmp_path: Path) -> None:
         store,
         local_profile_loader=local_loader,
         tenant_id="tenant-1",
+        organization_id="org-1",
     )
     result = resolver.resolve_field("cultivar-1", "targets.vpd.vegetative", now=datetime(2025, 10, 20, tzinfo=UTC))
     assert result.value == 1.1
@@ -182,16 +185,17 @@ def test_edge_resolver_prefers_local_override(tmp_path: Path) -> None:
 def test_edge_resolver_marks_stale_stats(tmp_path: Path) -> None:
     store = EdgeSyncStore(tmp_path / "sync.db")
     species_payload = {"curated_targets": {"targets": {"vpd": {"vegetative": 0.75}}}, "parents": []}
-    store.update_cloud_cache("profile", "species-1", "tenant-1", species_payload)
+    store.update_cloud_cache("profile", "species-1", "tenant-1", species_payload, org_id="org-1")
     stats_payload = {
         "computed_at": "2024-01-01T00:00:00Z",
         "payload": {"targets": {"vpd": {"vegetative": 0.7}}},
     }
-    store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload)
+    store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload, org_id="org-1")
     resolver = EdgeResolverService(
         store,
         stats_ttl=timedelta(days=30),
         tenant_id="tenant-1",
+        organization_id="org-1",
     )
     result = resolver.resolve_field("species-1", "targets.vpd.vegetative", now=datetime(2024, 3, 15, tzinfo=UTC))
     assert result.value == 0.75
@@ -209,19 +213,19 @@ def test_edge_resolver_resolve_profile(tmp_path: Path) -> None:
         "identity": {"name": "Tophat"},
         "curated_targets": {"targets": {"vpd": {"vegetative": 0.9}}},
     }
-    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", cultivar_payload)
+    store.update_cloud_cache("profile", "cultivar-1", "tenant-1", cultivar_payload, org_id="org-1")
     species_payload = {
         "profile_id": "species-1",
         "profile_type": "species",
         "curated_targets": {"targets": {"vpd": {"vegetative": 0.7}}},
         "parents": [],
     }
-    store.update_cloud_cache("profile", "species-1", "tenant-1", species_payload)
+    store.update_cloud_cache("profile", "species-1", "tenant-1", species_payload, org_id="org-1")
     stats_payload = {
         "computed_at": "2025-10-19T00:00:00Z",
         "payload": {"targets": {"vpd": {"vegetative": 0.8}}},
     }
-    store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload)
+    store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload, org_id="org-1")
 
     local_payload = {
         "general": {"name": "Tophat"},
@@ -239,6 +243,7 @@ def test_edge_resolver_resolve_profile(tmp_path: Path) -> None:
         store,
         local_profile_loader=local_loader,
         tenant_id="tenant-1",
+        organization_id="org-1",
     )
     profile = resolver.resolve_profile(
         "cultivar-1",
@@ -261,6 +266,7 @@ def test_edge_resolver_respects_tenant(tmp_path: Path) -> None:
         "species-1",
         "tenant-1",
         {"profile_type": "species", "curated_targets": {"targets": {"vpd": {"vegetative": 0.75}}}},
+        org_id="org-tenant-1",
     )
     store.update_cloud_cache(
         "profile",
@@ -271,12 +277,14 @@ def test_edge_resolver_respects_tenant(tmp_path: Path) -> None:
             "parents": ["species-1"],
             "curated_targets": {"targets": {"vpd": {"vegetative": 0.8}}},
         },
+        org_id="org-tenant-1",
     )
     store.update_cloud_cache(
         "profile",
         "species-1",
         "tenant-2",
         {"profile_type": "species", "curated_targets": {"targets": {"vpd": {"vegetative": 0.55}}}},
+        org_id="org-tenant-2",
     )
     store.update_cloud_cache(
         "profile",
@@ -287,10 +295,19 @@ def test_edge_resolver_respects_tenant(tmp_path: Path) -> None:
             "parents": ["species-1"],
             "curated_targets": {"targets": {"vpd": {"vegetative": 0.6}}},
         },
+        org_id="org-tenant-2",
     )
 
-    resolver_tenant_one = EdgeResolverService(store, tenant_id="tenant-1")
-    resolver_tenant_two = EdgeResolverService(store, tenant_id="tenant-2")
+    resolver_tenant_one = EdgeResolverService(
+        store,
+        tenant_id="tenant-1",
+        organization_id="org-tenant-1",
+    )
+    resolver_tenant_two = EdgeResolverService(
+        store,
+        tenant_id="tenant-2",
+        organization_id="org-tenant-2",
+    )
 
     result_one = resolver_tenant_one.resolve_field("cultivar-1", "targets.vpd.vegetative")
     result_two = resolver_tenant_two.resolve_field("cultivar-1", "targets.vpd.vegetative")
@@ -308,7 +325,14 @@ def test_edge_resolver_respects_tenant(tmp_path: Path) -> None:
 )
 def test_edge_worker_response_parsing(body: bytes, content_type: str, expected_cursor: str | None) -> None:
     store = EdgeSyncStore(":memory:")
-    worker = EdgeSyncWorker(store, cast(ClientSession, object()), "https://api.example", "token", "tenant")
+    worker = EdgeSyncWorker(
+        store,
+        cast(ClientSession, object()),
+        "https://api.example",
+        "token",
+        "tenant",
+        organization_id="org-1",
+    )
     ndjson, cursor = worker._parse_down_response(body, content_type, {"X-Sync-Cursor": "next"})
     if content_type.startswith("application/json"):
         assert ndjson == "{}"

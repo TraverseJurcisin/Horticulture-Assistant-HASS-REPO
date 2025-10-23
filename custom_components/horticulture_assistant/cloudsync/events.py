@@ -58,6 +58,7 @@ class SyncEvent:
     actor: str | None = None
     signature: str | None = None
     hash_prev: str | None = None
+    org_id: str | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -80,6 +81,8 @@ class SyncEvent:
             payload["signature"] = self.signature
         if self.hash_prev is not None:
             payload["hash_prev"] = self.hash_prev
+        if self.org_id is not None:
+            payload["org_id"] = self.org_id
         if self.metadata:
             payload["metadata"] = self.metadata
         return payload
@@ -107,6 +110,7 @@ class SyncEvent:
             actor=payload.get("actor"),
             signature=payload.get("signature"),
             hash_prev=payload.get("hash_prev"),
+            org_id=(str(payload.get("org_id")) if payload.get("org_id") else None),
             metadata=payload.get("metadata", {}),
         )
 

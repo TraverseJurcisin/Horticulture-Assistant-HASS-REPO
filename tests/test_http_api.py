@@ -85,6 +85,7 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert any(snap["stats_version"] == "environment/v1" for snap in detail["computed_stats"])
     assert any(snap["stats_version"] == "success/v1" for snap in detail["computed_stats"])
     assert detail["run_summaries"] and detail["run_summaries"][0]["run_id"] == "run-1"
+    assert "cloud_context" in detail and isinstance(detail["cloud_context"]["available"], list)
 
     target_resp = await client.get(f"/api/horticulture_assistant/profiles/{profile_id}/targets/vpd_max")
     assert target_resp.status == 200
@@ -99,3 +100,8 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
 
     unknown_resp = await client.get("/api/horticulture_assistant/profiles/does-not-exist")
     assert unknown_resp.status == 404
+
+    status_resp = await client.get("/api/horticulture_assistant/cloud_status")
+    assert status_resp.status == 200
+    status_payload = await status_resp.json()
+    assert isinstance(status_payload.get("cloud"), list)
