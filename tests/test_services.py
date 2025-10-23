@@ -42,7 +42,10 @@ else:  # pragma: no cover - exercised only when plugin installed
 services = importlib.import_module("custom_components.horticulture_assistant.services")
 const = importlib.import_module("custom_components.horticulture_assistant.const")
 CONF_API_KEY = const.CONF_API_KEY
+CONF_CLOUD_FEATURE_FLAGS = const.CONF_CLOUD_FEATURE_FLAGS
 DOMAIN = const.DOMAIN
+FEATURE_AI_ASSIST = const.FEATURE_AI_ASSIST
+FEATURE_IRRIGATION_AUTOMATION = const.FEATURE_IRRIGATION_AUTOMATION
 
 pytestmark = [
     pytest.mark.asyncio,
@@ -193,7 +196,13 @@ async def test_refresh_service(hass):
 
 
 async def test_recalculate_and_run_recommendation_services(hass):
-    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={
+            CONF_CLOUD_FEATURE_FLAGS: [FEATURE_AI_ASSIST, FEATURE_IRRIGATION_AUTOMATION],
+        },
+    )
     entry.add_to_hass(hass)
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
@@ -222,7 +231,11 @@ async def test_recalculate_and_run_recommendation_services(hass):
 
 
 async def test_run_recommendation_handles_missing_data(hass):
-    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={CONF_CLOUD_FEATURE_FLAGS: [FEATURE_AI_ASSIST]},
+    )
     entry.add_to_hass(hass)
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
@@ -247,7 +260,11 @@ async def test_run_recommendation_handles_missing_data(hass):
 
 
 async def test_run_recommendation_missing_data_preserves_existing(hass):
-    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={CONF_CLOUD_FEATURE_FLAGS: [FEATURE_AI_ASSIST]},
+    )
     entry.add_to_hass(hass)
     await hass.config_entries.async_setup(entry.entry_id)
     await hass.async_block_till_done()
@@ -269,6 +286,24 @@ async def test_run_recommendation_missing_data_preserves_existing(hass):
 
     assert ai.async_request_refresh.called
     assert store.data["plants"]["p1"]["recommendation"] == "keep"
+
+
+async def test_run_recommendation_requires_entitlement(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+    await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    store = hass.data[DOMAIN][entry.entry_id]["store"]
+    store.data.setdefault("plants", {})["p1"] = {}
+
+    with pytest.raises(exceptions.HomeAssistantError):
+        await hass.services.async_call(
+            DOMAIN,
+            "run_recommendation",
+            {"plant_id": "p1", "approve": True},
+            blocking=True,
+        )
 
 
 @pytest.mark.parametrize("expected_lingering_timers", [True])
@@ -787,12 +822,13 @@ async def test_recommend_watering_service(hass):
         domain=DOMAIN,
         data={CONF_API_KEY: "key"},
         options={
+            CONF_CLOUD_FEATURE_FLAGS: [FEATURE_IRRIGATION_AUTOMATION],
             "profiles": {
                 "p1": {
                     "name": "Plant 1",
                     "sensors": {"moisture": "sensor.moist", "illuminance": "sensor.light"},
                 }
-            }
+            },
         },
     )
     entry.add_to_hass(hass)

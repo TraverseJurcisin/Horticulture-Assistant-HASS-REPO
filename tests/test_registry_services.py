@@ -26,6 +26,10 @@ from custom_components.horticulture_assistant.const import (
     DOMAIN,
 )
 from custom_components.horticulture_assistant.profile.schema import FieldAnnotation, ResolvedTarget
+from custom_components.horticulture_assistant.profile.statistics import (
+    EVENT_STATS_VERSION,
+    NUTRIENT_STATS_VERSION,
+)
 from custom_components.horticulture_assistant.services import er
 
 pytestmark = [
@@ -244,6 +248,66 @@ async def test_record_harvest_event_service_updates_statistics(hass, tmp_path):
     assert profile and profile.statistics
     metrics = profile.statistics[0].metrics
     assert metrics["total_yield_grams"] == 42.5
+
+
+async def test_record_nutrient_event_service_updates_statistics(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+    response = await hass.services.async_call(
+        DOMAIN,
+        "record_nutrient_event",
+        {
+            "profile_id": "p1",
+            "event_id": "feed-1",
+            "applied_at": "2024-03-01T08:00:00Z",
+            "product_name": "Grow A",
+            "solution_volume_liters": 9.5,
+            "concentration_ppm": 700,
+        },
+        blocking=True,
+        return_response=True,
+    )
+
+    event = response["nutrient_event"]
+    assert event["product_name"] == "Grow A"
+    stats = response.get("nutrient_statistics", {}).get("profile")
+    assert stats is not None
+    assert stats["stats_version"] == NUTRIENT_STATS_VERSION
+    metrics = stats["payload"]["metrics"]
+    assert metrics["total_events"] == pytest.approx(1.0)
+    assert metrics["total_volume_liters"] == pytest.approx(9.5)
+
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get("p1")
+    assert profile is not None and len(profile.nutrient_history) == 1
+
+
+async def test_record_cultivation_event_service_returns_statistics(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+    response = await hass.services.async_call(
+        DOMAIN,
+        "record_cultivation_event",
+        {
+            "profile_id": "p1",
+            "event_id": "evt-1",
+            "occurred_at": "2024-04-02T10:15:00Z",
+            "event_type": "inspection",
+            "notes": "No pests observed",
+        },
+        blocking=True,
+        return_response=True,
+    )
+
+    event = response["cultivation_event"]
+    assert event["event_type"] == "inspection"
+    stats = response.get("event_statistics", {}).get("profile")
+    assert stats is not None
+    assert stats["stats_version"] == EVENT_STATS_VERSION
+    metrics = stats["payload"]["metrics"]
+    assert metrics["total_events"] == pytest.approx(1.0)
+
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get("p1")
+    assert profile is not None and len(profile.event_history) == 1
 
 
 async def test_profile_runs_service_returns_runs(hass, tmp_path):
@@ -520,7 +584,7 @@ async def test_cloud_refresh_updates_expiry(hass, tmp_path):
     )
     with (
         patch(
-            "custom_components.horticulture_assistant.services.CloudAuthClient.async_refresh",
+            "custom_components.horticulture_assistant.cloudsync.manager.CloudAuthClient.async_refresh",
             AsyncMock(return_value=tokens),
         ),
         patch.object(manager, "async_refresh", AsyncMock()) as refresh,
@@ -539,6 +603,7 @@ async def test_cloud_refresh_updates_expiry(hass, tmp_path):
     assert entry.options[CONF_CLOUD_ORGANIZATION_ID] == "org-1"
     assert response["tenant_id"] == "tenant-1"
     assert response["organization_id"] == "org-1"
+    assert response["token_expires_at"] == entry.options[CONF_CLOUD_TOKEN_EXPIRES_AT]
     refresh.assert_awaited()
 
 

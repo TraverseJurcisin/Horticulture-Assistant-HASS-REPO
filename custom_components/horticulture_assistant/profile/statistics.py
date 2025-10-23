@@ -1,16 +1,18 @@
 from __future__ import annotations
 
-from collections import defaultdict
+from collections import Counter, defaultdict
 from collections.abc import Iterable
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from statistics import mean
+from datetime import datetime, timedelta, timezone
+from statistics import mean, median
 from typing import Any
 
 from .schema import (
     BioProfile,
     ComputedStatSnapshot,
+    CultivationEvent,
     HarvestEvent,
+    NutrientApplication,
     ProfileContribution,
     RunEvent,
     YieldStatistic,
@@ -20,6 +22,8 @@ UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # no
 YIELD_STATS_VERSION = "yield/v1"
 ENVIRONMENT_STATS_VERSION = "environment/v1"
 SUCCESS_STATS_VERSION = "success/v1"
+NUTRIENT_STATS_VERSION = "nutrients/v1"
+EVENT_STATS_VERSION = "events/v1"
 ENVIRONMENT_FIELDS: dict[str, str] = {
     "temperature_c": "avg_temperature_c",
     "humidity_percent": "avg_humidity_percent",
@@ -51,6 +55,248 @@ def _to_float(value: Any) -> float | None:
         return float(value)
     except (TypeError, ValueError):
         return None
+
+
+def _normalise_nutrient_events(
+    events: Iterable[NutrientApplication],
+) -> list[tuple[NutrientApplication, datetime | None]]:
+    normalised: list[tuple[NutrientApplication, datetime | None]] = []
+    for event in events:
+        if not isinstance(event, NutrientApplication):
+            continue
+        timestamp = _parse_datetime(getattr(event, "applied_at", None))
+        normalised.append((event, timestamp))
+    normalised.sort(key=lambda item: item[1] or datetime.min.replace(tzinfo=UTC))
+    return normalised
+
+
+def _compute_nutrient_payload(
+    events: Iterable[NutrientApplication],
+    *,
+    now: datetime | None = None,
+) -> dict[str, Any] | None:
+    normalised = _normalise_nutrient_events(events)
+    if not normalised:
+        return None
+
+    now = now or datetime.now(tz=UTC)
+    product_counter: Counter[str] = Counter()
+    run_ids: set[str] = set()
+    total_volume = 0.0
+    timestamps: list[datetime] = []
+    intervals: list[float] = []
+
+    previous: datetime | None = None
+    for event, ts in normalised:
+        key = event.product_id or event.product_name or "unspecified"
+        product_counter[str(key)] += 1
+        if event.run_id:
+            run_ids.add(str(event.run_id))
+        volume = _to_float(event.solution_volume_liters)
+        if volume is not None:
+            total_volume += volume
+        if ts is not None:
+            timestamps.append(ts)
+            if previous is not None:
+                delta = max((ts - previous).total_seconds() / 86400, 0.0)
+                intervals.append(delta)
+            previous = ts
+
+    total_events = len(normalised)
+    metrics: dict[str, float] = {"total_events": float(total_events)}
+    if total_volume:
+        metrics["total_volume_liters"] = round(total_volume, 3)
+    if run_ids:
+        metrics["unique_runs"] = float(len(run_ids))
+    if product_counter:
+        metrics["unique_products"] = float(len(product_counter))
+    if intervals:
+        metrics["interval_samples"] = float(len(intervals))
+        metrics["average_interval_days"] = round(mean(intervals), 3)
+        metrics["median_interval_days"] = round(median(intervals), 3)
+
+    window_counts: dict[str, int] = {}
+    if timestamps:
+        seven_days = now - timedelta(days=7)
+        thirty_days = now - timedelta(days=30)
+        window_counts["7d"] = sum(1 for ts in timestamps if ts >= seven_days)
+        window_counts["30d"] = sum(1 for ts in timestamps if ts >= thirty_days)
+        last_ts = timestamps[-1]
+        days_since = max((now - last_ts).total_seconds() / 86400, 0.0)
+        metrics["days_since_last_event"] = round(days_since, 3)
+    else:
+        last_ts = None
+
+    last_event = normalised[-1][0]
+    last_payload = last_event.summary()
+    if last_ts is not None:
+        last_payload["days_since"] = metrics.get("days_since_last_event")
+
+    product_usage = [
+        {"product": product, "count": count} for product, count in product_counter.most_common() if product and count
+    ]
+
+    payload: dict[str, Any] = {
+        "metrics": metrics,
+        "last_event": last_payload,
+        "source": "local_nutrient_aggregation",
+    }
+    if product_usage:
+        payload["product_usage"] = product_usage
+    if intervals:
+        payload["intervals"] = {
+            "average_days": round(mean(intervals), 3),
+            "median_days": round(median(intervals), 3),
+            "samples": len(intervals),
+        }
+    if window_counts:
+        payload["window_counts"] = window_counts
+    if run_ids:
+        payload["runs_touched"] = sorted(run_ids)
+
+    return payload
+
+
+def _build_nutrient_snapshot(
+    profile_id: str,
+    scope: str,
+    events: Iterable[NutrientApplication],
+    *,
+    contributions: list[ProfileContribution] | None = None,
+    contributor_payload: list[dict[str, Any]] | None = None,
+    computed_at: str | None = None,
+) -> ComputedStatSnapshot | None:
+    payload = _compute_nutrient_payload(events)
+    if payload is None:
+        return None
+    payload["scope"] = scope
+    if contributor_payload:
+        payload["contributors"] = contributor_payload
+    timestamp = computed_at or _now_iso()
+    return ComputedStatSnapshot(
+        stats_version=NUTRIENT_STATS_VERSION,
+        computed_at=timestamp,
+        snapshot_id=f"{profile_id}:{NUTRIENT_STATS_VERSION}",
+        payload=payload,
+        contributions=contributions or [],
+    )
+
+
+def _normalise_cultivation_events(
+    events: Iterable[CultivationEvent],
+) -> list[tuple[CultivationEvent, datetime | None]]:
+    ordered: list[tuple[CultivationEvent, datetime | None]] = []
+    for event in events:
+        if not isinstance(event, CultivationEvent):
+            continue
+        ts = _parse_datetime(getattr(event, "occurred_at", None))
+        ordered.append((event, ts))
+    ordered.sort(key=lambda item: item[1] or datetime.min.replace(tzinfo=UTC))
+    return ordered
+
+
+def _compute_event_payload(
+    events: Iterable[CultivationEvent],
+    *,
+    now: datetime | None = None,
+) -> dict[str, Any] | None:
+    normalised = _normalise_cultivation_events(events)
+    if not normalised:
+        return None
+
+    now = now or datetime.now(tz=UTC)
+    type_counter: Counter[str] = Counter()
+    tag_counter: Counter[str] = Counter()
+    run_ids: set[str] = set()
+    timestamps: list[datetime] = []
+
+    for event, ts in normalised:
+        event_type = (event.event_type or "note").strip() or "note"
+        type_counter[event_type] += 1
+        for tag in event.tags or []:
+            tag_counter[str(tag)] += 1
+        if event.run_id:
+            run_ids.add(str(event.run_id))
+        if ts is not None:
+            timestamps.append(ts)
+
+    metrics: dict[str, float] = {"total_events": float(len(normalised))}
+    if type_counter:
+        metrics["unique_event_types"] = float(len(type_counter))
+    if run_ids:
+        metrics["unique_runs"] = float(len(run_ids))
+
+    window_counts: dict[str, int] = {}
+    last_ts: datetime | None = None
+    if timestamps:
+        last_ts = timestamps[-1]
+        delta_days = max((now - last_ts).total_seconds() / 86400, 0.0)
+        metrics["days_since_last_event"] = round(delta_days, 3)
+        seven_days = now - timedelta(days=7)
+        thirty_days = now - timedelta(days=30)
+        window_counts["7d"] = sum(1 for ts in timestamps if ts >= seven_days)
+        window_counts["30d"] = sum(1 for ts in timestamps if ts >= thirty_days)
+
+    event_types: list[dict[str, Any]] = []
+    for event_type, count in type_counter.most_common():
+        payload: dict[str, Any] = {"event_type": event_type, "count": count}
+        last_type_ts: datetime | None = None
+        for event, ts in reversed(normalised):
+            candidate_type = (event.event_type or "note").strip() or "note"
+            if candidate_type == event_type:
+                last_type_ts = ts
+                break
+        if last_type_ts is not None:
+            payload["last_occurred_at"] = last_type_ts.isoformat()
+            payload["days_since_last"] = round(max((now - last_type_ts).total_seconds() / 86400, 0.0), 3)
+        event_types.append(payload)
+
+    last_event = normalised[-1][0]
+    last_payload = last_event.summary()
+    last_payload["event_type"] = last_event.event_type
+    if last_ts is not None:
+        last_payload["days_since"] = metrics.get("days_since_last_event")
+
+    payload: dict[str, Any] = {
+        "metrics": metrics,
+        "last_event": last_payload,
+        "event_types": event_types,
+        "source": "local_event_aggregation",
+    }
+
+    if tag_counter:
+        payload["top_tags"] = [{"tag": tag, "count": count} for tag, count in tag_counter.most_common(10) if tag]
+    if run_ids:
+        payload["runs_touched"] = sorted(run_ids)
+    if window_counts:
+        payload["window_counts"] = window_counts
+
+    return payload
+
+
+def _build_event_snapshot(
+    profile_id: str,
+    scope: str,
+    events: Iterable[CultivationEvent],
+    *,
+    contributions: list[ProfileContribution] | None = None,
+    contributor_payload: list[dict[str, Any]] | None = None,
+    computed_at: str | None = None,
+) -> ComputedStatSnapshot | None:
+    payload = _compute_event_payload(events)
+    if payload is None:
+        return None
+    payload["scope"] = scope
+    if contributor_payload:
+        payload["contributors"] = contributor_payload
+    timestamp = computed_at or _now_iso()
+    return ComputedStatSnapshot(
+        stats_version=EVENT_STATS_VERSION,
+        computed_at=timestamp,
+        snapshot_id=f"{profile_id}:{EVENT_STATS_VERSION}",
+        payload=payload,
+        contributions=contributions or [],
+    )
 
 
 def _aggregate_harvests(harvests: Iterable[HarvestEvent]) -> tuple[float, float, int, list[float]]:
@@ -566,6 +812,10 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
     species_breakdown: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
     species_environment: dict[str, _EnvironmentAggregate] = {}
     species_success: dict[str, _SuccessAggregate] = {}
+    species_nutrient_events: defaultdict[str, list[NutrientApplication]] = defaultdict(list)
+    species_nutrient_breakdown: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
+    species_event_history: defaultdict[str, list[CultivationEvent]] = defaultdict(list)
+    species_event_breakdown: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
 
     for profile in profiles:
         harvests = list(profile.harvest_history)
@@ -573,6 +823,24 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
         if not run_ids:
             run_ids = {event.run_id for event in profile.run_history if event.run_id}
         run_count = len(run_ids)
+
+        nutrient_events = list(profile.nutrient_history)
+        nutrient_scope = "species" if profile.profile_type == "species" else "cultivar"
+        nutrient_snapshot = _build_nutrient_snapshot(
+            profile.profile_id,
+            nutrient_scope,
+            nutrient_events,
+        )
+        _replace_snapshot(profile, NUTRIENT_STATS_VERSION, nutrient_snapshot)
+
+        cultivation_events = list(profile.event_history)
+        event_scope = "species" if profile.profile_type == "species" else "cultivar"
+        event_snapshot = _build_event_snapshot(
+            profile.profile_id,
+            event_scope,
+            cultivation_events,
+        )
+        _replace_snapshot(profile, EVENT_STATS_VERSION, event_snapshot)
 
         aggregate: dict[str, Any] | None = None
         if harvests:
@@ -629,6 +897,33 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
             species_to_harvests[species_id].extend(harvests)
             if aggregate is not None:
                 species_breakdown[species_id].append(aggregate)
+            if nutrient_events:
+                species_nutrient_events[species_id].extend(nutrient_events)
+                total_volume = sum(_to_float(event.solution_volume_liters) or 0.0 for event in nutrient_events)
+                normalised_events = _normalise_nutrient_events(nutrient_events)
+                last_ts = normalised_events[-1][1] if normalised_events else None
+                contributor_payload = {
+                    "profile_id": profile.profile_id,
+                    "profile_type": profile.profile_type,
+                    "event_count": len(nutrient_events),
+                }
+                if total_volume:
+                    contributor_payload["total_volume_liters"] = round(total_volume, 3)
+                if last_ts is not None:
+                    contributor_payload["last_applied_at"] = last_ts.isoformat()
+                species_nutrient_breakdown[species_id].append(contributor_payload)
+            if cultivation_events:
+                species_event_history[species_id].extend(cultivation_events)
+                breakdown_payload: dict[str, Any] = {
+                    "profile_id": profile.profile_id,
+                    "profile_type": profile.profile_type,
+                    "event_count": len(cultivation_events),
+                }
+                if event_snapshot and isinstance(event_snapshot.payload, dict):
+                    last_event_payload = event_snapshot.payload.get("last_event")
+                    if isinstance(last_event_payload, dict) and last_event_payload:
+                        breakdown_payload["last_event"] = last_event_payload
+                species_event_breakdown[species_id].append(breakdown_payload)
 
         success_snapshot = _compute_success_snapshot(profile)
         if success_snapshot is not None:
@@ -731,6 +1026,86 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
         )
         _replace_snapshot(target, YIELD_STATS_VERSION, snapshot)
 
+    for species_id, events in species_event_history.items():
+        target = profiles_by_id.get(species_id)
+        if target is None:
+            continue
+        timestamp = _now_iso()
+        breakdown = species_event_breakdown.get(species_id, [])
+        total_events = sum(item.get("event_count", 0) for item in breakdown)
+        contributions: list[ProfileContribution] = []
+        contributor_payload: list[dict[str, Any]] = []
+        for item in breakdown:
+            child_id = item.get("profile_id")
+            payload = {k: v for k, v in item.items() if v not in (None, [], {}, 0, 0.0, "")}
+            contributor_payload.append(payload)
+            weight = (item.get("event_count") / total_events) if total_events else None
+            if child_id:
+                contributions.append(
+                    ProfileContribution(
+                        profile_id=species_id,
+                        child_id=str(child_id),
+                        stats_version=EVENT_STATS_VERSION,
+                        computed_at=timestamp,
+                        n_runs=item.get("event_count") or None,
+                        weight=round(weight, 6) if weight is not None else None,
+                    )
+                )
+
+        snapshot = _build_event_snapshot(
+            species_id,
+            "species",
+            events,
+            contributions=[contrib for contrib in contributions if contrib.child_id],
+            contributor_payload=[payload for payload in contributor_payload if payload],
+            computed_at=timestamp,
+        )
+        _replace_snapshot(target, EVENT_STATS_VERSION, snapshot)
+
+    for species_id, events in species_nutrient_events.items():
+        target = profiles_by_id.get(species_id)
+        if target is None:
+            continue
+        timestamp = _now_iso()
+        breakdown = species_nutrient_breakdown.get(species_id, [])
+        total_events = sum(item.get("event_count", 0) for item in breakdown)
+        contributions: list[ProfileContribution] = []
+        contributor_payload: list[dict[str, Any]] = []
+        for item in breakdown:
+            child_id = item.get("profile_id")
+            payload = {
+                "profile_id": child_id,
+                "profile_type": item.get("profile_type"),
+                "event_count": item.get("event_count"),
+            }
+            if item.get("total_volume_liters"):
+                payload["total_volume_liters"] = item.get("total_volume_liters")
+            if item.get("last_applied_at"):
+                payload["last_applied_at"] = item.get("last_applied_at")
+            contributor_payload.append({k: v for k, v in payload.items() if v not in (None, 0, 0.0, "")})
+            weight = (item.get("event_count") / total_events) if total_events else None
+            if child_id:
+                contributions.append(
+                    ProfileContribution(
+                        profile_id=species_id,
+                        child_id=str(child_id),
+                        stats_version=NUTRIENT_STATS_VERSION,
+                        computed_at=timestamp,
+                        n_runs=item.get("event_count"),
+                        weight=round(weight, 6) if weight is not None else None,
+                    )
+                )
+
+        snapshot = _build_nutrient_snapshot(
+            species_id,
+            "species",
+            events,
+            contributions=[contrib for contrib in contributions if contrib.child_id],
+            contributor_payload=[payload for payload in contributor_payload if payload],
+            computed_at=timestamp,
+        )
+        _replace_snapshot(target, NUTRIENT_STATS_VERSION, snapshot)
+
     for profile in profiles:
         profile.refresh_sections()
 
@@ -757,4 +1132,8 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
         target.refresh_sections()
 
 
-__all__ = ["recompute_statistics", "SUCCESS_STATS_VERSION"]
+__all__ = [
+    "recompute_statistics",
+    "SUCCESS_STATS_VERSION",
+    "NUTRIENT_STATS_VERSION",
+]

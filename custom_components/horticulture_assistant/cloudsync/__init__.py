@@ -6,6 +6,7 @@ from .edge_store import EdgeSyncStore
 from .edge_worker import EdgeSyncWorker
 from .events import SyncEvent, VectorClock, decode_ndjson, encode_ndjson
 from .manager import CloudSyncConfig, CloudSyncManager
+from .publisher import CloudSyncPublisher
 from .resolver_service import (
     EdgeResolverService,
     ResolveAnnotations,
@@ -34,4 +35,5 @@ __all__ = [
     "decode_ndjson",
     "CloudSyncManager",
     "CloudSyncConfig",
+    "CloudSyncPublisher",
 ]

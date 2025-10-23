@@ -29,6 +29,9 @@ ProfileMetricSensor = sensor_mod.ProfileMetricSensor
 PROFILE_SENSOR_DESCRIPTIONS = sensor_mod.PROFILE_SENSOR_DESCRIPTIONS
 ProfileSuccessSensor = sensor_mod.ProfileSuccessSensor
 ProfileProvenanceSensor = sensor_mod.ProfileProvenanceSensor
+ProfileFeedingSensor = sensor_mod.ProfileFeedingSensor
+ProfileYieldSensor = sensor_mod.ProfileYieldSensor
+ProfileEventSensor = sensor_mod.ProfileEventSensor
 BioProfile = schema_mod.BioProfile
 ComputedStatSnapshot = schema_mod.ComputedStatSnapshot
 ProfileContribution = schema_mod.ProfileContribution
@@ -317,3 +320,128 @@ async def test_profile_provenance_sensor_summarises_sources(hass):
     assert attrs["total_targets"] == 2
     assert "temperature_optimal" in attrs["inherited_fields"]
     assert attrs["provenance_map"]["humidity_optimal"]["source_type"] == "manual"
+
+
+@pytest.mark.asyncio
+async def test_profile_yield_sensor_reports_totals(hass):
+    options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    await coordinator.async_config_entry_first_refresh()
+
+    profile = BioProfile(profile_id="avocado", display_name="Avocado")
+    snapshot = ComputedStatSnapshot(
+        stats_version="yield/v1",
+        computed_at="2024-05-01T00:00:00Z",
+        snapshot_id="avocado:yield/v1",
+        payload={
+            "scope": "cultivar",
+            "metrics": {
+                "total_yield_grams": 120.5,
+                "harvest_count": 3,
+                "average_yield_grams": 40.166,
+                "average_yield_density_g_m2": 30.125,
+            },
+            "yields": {"total_grams": 120.5, "total_area_m2": 4.0},
+            "densities": {"average_g_m2": 30.125},
+            "runs_tracked": 2,
+        },
+        contributions=[],
+    )
+    profile.computed_stats.append(snapshot)
+
+    class DummyRegistry:
+        def __init__(self, prof):
+            self._profile = prof
+
+        def get_profile(self, profile_id):
+            if profile_id == self._profile.profile_id:
+                return self._profile
+            return None
+
+    sensor = ProfileYieldSensor(coordinator, DummyRegistry(profile), "avocado", "Avocado")
+    assert sensor.native_value == pytest.approx(120.5, rel=1e-3)
+    attrs = sensor.extra_state_attributes
+    assert attrs["harvest_count"] == 3
+    assert attrs["total_grams"] == 120.5
+    assert attrs["density_average_g_m2"] == 30.125
+
+
+@pytest.mark.asyncio
+async def test_profile_event_sensor_summarises_activity(hass):
+    options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    await coordinator.async_config_entry_first_refresh()
+
+    profile = BioProfile(profile_id="avocado", display_name="Avocado")
+    snapshot = ComputedStatSnapshot(
+        stats_version="events/v1",
+        computed_at="2024-05-02T12:00:00Z",
+        snapshot_id="avocado:events/v1",
+        payload={
+            "scope": "cultivar",
+            "metrics": {
+                "total_events": 2.0,
+                "unique_event_types": 2.0,
+                "days_since_last_event": 1.5,
+            },
+            "last_event": {"event_type": "inspection", "notes": "All good"},
+            "event_types": [{"event_type": "inspection", "count": 1}],
+            "top_tags": [{"tag": "health", "count": 1}],
+        },
+        contributions=[],
+    )
+    profile.computed_stats.append(snapshot)
+
+    class DummyRegistry:
+        def __init__(self, prof):
+            self._profile = prof
+
+        def get_profile(self, profile_id):
+            if profile_id == self._profile.profile_id:
+                return self._profile
+            return None
+
+    sensor = ProfileEventSensor(coordinator, DummyRegistry(profile), "avocado", "Avocado")
+    assert sensor.native_value == 2
+    attrs = sensor.extra_state_attributes
+    assert attrs["unique_event_types"] == 2.0
+    assert attrs["last_event"]["event_type"] == "inspection"
+    assert attrs["top_tags"][0]["tag"] == "health"
+
+
+@pytest.mark.asyncio
+async def test_profile_feeding_sensor_summarises_events(hass):
+    options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    await coordinator.async_config_entry_first_refresh()
+
+    profile = BioProfile(profile_id="avocado", display_name="Avocado")
+    snapshot = ComputedStatSnapshot(
+        stats_version=sensor_mod.NUTRIENT_STATS_VERSION,
+        computed_at="2024-03-05T10:00:00Z",
+        snapshot_id="avocado:nutrients/v1",
+        payload={
+            "scope": "cultivar",
+            "metrics": {"total_events": 2.0, "days_since_last_event": 4.5},
+            "last_event": {"product_name": "Grow A", "solution_volume_liters": 9.5},
+            "product_usage": [{"product": "Grow A", "count": 2}],
+            "window_counts": {"7d": 1, "30d": 2},
+        },
+    )
+    profile.computed_stats.append(snapshot)
+
+    class DummyRegistry:
+        def __init__(self, prof):
+            self._profile = prof
+
+        def get_profile(self, profile_id):
+            if profile_id == self._profile.profile_id:
+                return self._profile
+            return None
+
+    sensor = ProfileFeedingSensor(coordinator, DummyRegistry(profile), "avocado", "Avocado")
+    assert sensor.native_value == pytest.approx(4.5)
+    attrs = sensor.extra_state_attributes
+    assert attrs["metrics"]["total_events"] == 2.0
+    assert attrs["last_event"]["product_name"] == "Grow A"
+    assert attrs["window_counts"]["7d"] == 1

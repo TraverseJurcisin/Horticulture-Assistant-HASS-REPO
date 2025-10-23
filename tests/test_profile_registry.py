@@ -1,9 +1,13 @@
 import json
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
+from custom_components.horticulture_assistant.cloudsync.edge_store import EdgeSyncStore
+from custom_components.horticulture_assistant.cloudsync.manager import CloudSyncConfig
+from custom_components.horticulture_assistant.cloudsync.publisher import CloudSyncPublisher
 from custom_components.horticulture_assistant.const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
@@ -12,6 +16,10 @@ from custom_components.horticulture_assistant.const import (
 )
 from custom_components.horticulture_assistant.profile import store as profile_store
 from custom_components.horticulture_assistant.profile.schema import BioProfile, SpeciesProfile
+from custom_components.horticulture_assistant.profile.statistics import (
+    EVENT_STATS_VERSION,
+    NUTRIENT_STATS_VERSION,
+)
 from custom_components.horticulture_assistant.profile_registry import ProfileRegistry
 
 pytestmark = pytest.mark.asyncio
@@ -299,6 +307,116 @@ async def test_record_harvest_event_updates_statistics(hass):
     assert species_env.payload["runs_recorded"] >= 1
 
 
+async def test_record_nutrient_event_updates_snapshots(hass):
+    species = BioProfile(profile_id="species.1", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar.1",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species.1",
+    )
+    await profile_store.async_save_profile(hass, species)
+    await profile_store.async_save_profile(hass, cultivar)
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    event = await reg.async_record_nutrient_event(
+        "cultivar.1",
+        {
+            "event_id": "feed-1",
+            "applied_at": "2024-03-01T08:00:00Z",
+            "product_id": "fert-001",
+            "product_name": "Grow A",
+            "solution_volume_liters": 12.5,
+            "concentration_ppm": 850,
+        },
+    )
+
+    cultivar_prof = reg.get("cultivar.1")
+    assert cultivar_prof is not None
+    assert len(cultivar_prof.nutrient_history) == 1
+    assert event.product_name == "Grow A"
+    snapshot = next(
+        (snap for snap in cultivar_prof.computed_stats if snap.stats_version == NUTRIENT_STATS_VERSION),
+        None,
+    )
+    assert snapshot is not None
+    metrics = snapshot.payload["metrics"]
+    assert metrics["total_events"] == pytest.approx(1.0)
+    assert metrics["total_volume_liters"] == pytest.approx(12.5)
+    assert snapshot.payload["last_event"]["product_name"] == "Grow A"
+
+    species_prof = reg.get("species.1")
+    assert species_prof is not None
+    species_snapshot = next(
+        (snap for snap in species_prof.computed_stats if snap.stats_version == NUTRIENT_STATS_VERSION),
+        None,
+    )
+    assert species_snapshot is not None
+    assert species_snapshot.payload["metrics"]["total_events"] == pytest.approx(1.0)
+    contributors = species_snapshot.payload.get("contributors") or []
+    assert any(item.get("profile_id") == "cultivar.1" for item in contributors)
+
+    stored = await profile_store.async_load_profile(hass, "cultivar.1")
+    assert stored is not None and len(stored.nutrient_history) == 1
+
+
+async def test_record_cultivation_event_updates_statistics(hass):
+    species = BioProfile(profile_id="species.2", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar.2",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species.2",
+    )
+    await profile_store.async_save_profile(hass, species)
+    await profile_store.async_save_profile(hass, cultivar)
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    event = await reg.async_record_cultivation_event(
+        "cultivar.2",
+        {
+            "event_id": "evt-1",
+            "occurred_at": "2024-04-01T09:30:00Z",
+            "event_type": "pruning",
+            "title": "Canopy prune",
+            "notes": "Removed lower leaves",
+            "metric_value": 3.2,
+            "metric_unit": "cm",
+        },
+    )
+
+    cultivar_prof = reg.get("cultivar.2")
+    assert cultivar_prof is not None
+    assert len(cultivar_prof.event_history) == 1
+    assert event.event_type == "pruning"
+    snapshot = next(
+        (snap for snap in cultivar_prof.computed_stats if snap.stats_version == EVENT_STATS_VERSION),
+        None,
+    )
+    assert snapshot is not None
+    metrics = snapshot.payload["metrics"]
+    assert metrics["total_events"] == pytest.approx(1.0)
+    assert snapshot.payload["last_event"]["title"] == "Canopy prune"
+
+    species_prof = reg.get("species.2")
+    assert species_prof is not None
+    species_snapshot = next(
+        (snap for snap in species_prof.computed_stats if snap.stats_version == EVENT_STATS_VERSION),
+        None,
+    )
+    assert species_snapshot is not None
+    species_metrics = species_snapshot.payload["metrics"]
+    assert species_metrics["total_events"] == pytest.approx(1.0)
+    contributors = species_snapshot.payload.get("contributors") or []
+    assert any(item.get("profile_id") == "cultivar.2" for item in contributors)
+
+
 async def test_relink_profiles_populates_species_relationships(hass):
     species = SpeciesProfile(profile_id="species.alpha", display_name="Alpha")
     cultivar = BioProfile(
@@ -507,3 +625,70 @@ async def test_import_template_creates_profile(hass):
     prof = reg.get(pid)
     assert prof and prof.display_name == "Basil"
     assert prof.species == "Ocimum basilicum"
+
+
+async def test_cloud_publisher_records_profile_and_events(hass, tmp_path):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    store = EdgeSyncStore(tmp_path / "sync.db")
+    config = CloudSyncConfig(
+        enabled=True,
+        base_url="https://cloud.example",
+        tenant_id="tenant-1",
+        device_token="device-token",
+        organization_id="org-1",
+    )
+    manager = SimpleNamespace(store=store, config=config)
+    publisher = CloudSyncPublisher(manager, device_id="edge-1")
+    reg.attach_cloud_publisher(publisher)
+
+    profile_id = await reg.async_add_profile("Cloud Basil")
+    harvest = await reg.async_record_harvest_event(
+        profile_id,
+        {
+            "harvest_id": "harvest-1",
+            "profile_id": profile_id,
+            "harvested_at": "2025-01-10T00:00:00Z",
+            "yield_grams": 120.5,
+        },
+    )
+
+    events = store.get_outbox_batch(20)
+    profile_events = [event for event in events if event.entity_type == "profile" and event.entity_id == profile_id]
+    assert profile_events, "profile upsert should be queued"
+    assert profile_events[-1].vector.counter == len(profile_events)
+
+    harvest_events = [event for event in events if event.entity_type == "harvest_event"]
+    assert any(event.entity_id == harvest.harvest_id for event in harvest_events)
+
+    computed_events = [event for event in events if event.entity_type == "computed" and event.entity_id == profile_id]
+    assert computed_events, "computed stats should be enqueued"
+    latest = computed_events[-1]
+    assert latest.metadata.get("stats_version")
+    assert latest.patch and "versions" in latest.patch
+
+
+async def test_cloud_publisher_defers_until_ready(hass, tmp_path):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    store = EdgeSyncStore(tmp_path / "sync-disabled.db")
+    config = CloudSyncConfig(enabled=False)
+    manager = SimpleNamespace(store=store, config=config)
+    publisher = CloudSyncPublisher(manager, device_id="edge-2")
+    reg.attach_cloud_publisher(publisher)
+
+    profile_id = await reg.async_add_profile("Offline Seedling")
+    assert store.outbox_size() == 0
+
+    manager.config.enabled = True
+    manager.config.base_url = "https://cloud.example"
+    manager.config.tenant_id = "tenant-2"
+    manager.config.device_token = "device-token"
+    reg.publish_full_snapshot()
+
+    events = store.get_outbox_batch(10)
+    assert any(event.entity_type == "profile" and event.entity_id == profile_id for event in events)

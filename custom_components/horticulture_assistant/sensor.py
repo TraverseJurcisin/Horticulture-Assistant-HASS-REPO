@@ -28,7 +28,12 @@ from .derived import (
 )
 from .entity import HorticultureEntity
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
-from .profile.statistics import SUCCESS_STATS_VERSION
+from .profile.statistics import (
+    EVENT_STATS_VERSION,
+    NUTRIENT_STATS_VERSION,
+    SUCCESS_STATS_VERSION,
+    YIELD_STATS_VERSION,
+)
 from .utils.entry_helpers import get_entry_data, store_entry_data
 
 HORTI_STATUS_DESCRIPTION = SensorEntityDescription(
@@ -258,8 +263,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["status"]))
             if registry is not None:
                 sensors.append(ProfileSuccessSensor(profile_coord, registry, pid, name))
+                sensors.append(ProfileYieldSensor(profile_coord, registry, pid, name))
+                sensors.append(ProfileEventSensor(profile_coord, registry, pid, name))
                 sensors.append(ProfileProvenanceSensor(profile_coord, registry, pid, name))
                 sensors.append(ProfileRunStatusSensor(profile_coord, registry, pid, name))
+                sensors.append(ProfileFeedingSensor(profile_coord, registry, pid, name))
 
     cloud_manager = stored.get("cloud_sync_manager")
     if cloud_manager:
@@ -549,6 +557,95 @@ class ProfileSuccessSensor(HorticultureEntity, SensorEntity):
         return attrs or None
 
 
+class ProfileYieldSensor(HorticultureEntity, SensorEntity):
+    """Expose cumulative yield totals for a profile."""
+
+    _attr_icon = "mdi:scale"
+    _attr_native_unit_of_measurement = "g"
+    _attr_state_class = SensorStateClass.TOTAL
+
+    def __init__(
+        self,
+        coordinator: HorticultureCoordinator,
+        registry,
+        profile_id: str,
+        profile_name: str,
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._registry = registry
+        self._attr_unique_id = f"{profile_id}:yield_total"
+        self._attr_name = "Yield Total"
+
+    def _get_profile(self):
+        getter = getattr(self._registry, "get_profile", None)
+        if getter is None:
+            getter = getattr(self._registry, "get", None)
+        if getter is None:
+            return None
+        return getter(self._profile_id)
+
+    def _yield_snapshot(self):
+        profile = self._get_profile()
+        if profile is None:
+            return None
+        for snapshot in getattr(profile, "computed_stats", []) or []:
+            if snapshot.stats_version == YIELD_STATS_VERSION:
+                return snapshot
+        return None
+
+    @property
+    def native_value(self):
+        snapshot = self._yield_snapshot()
+        if snapshot is None:
+            return None
+        payload = snapshot.payload if isinstance(snapshot.payload, dict) else {}
+        metrics = payload.get("metrics") or {}
+        total = metrics.get("total_yield_grams")
+        if total is None:
+            yields_payload = payload.get("yields") or {}
+            total = yields_payload.get("total_grams")
+        if total is None:
+            return None
+        try:
+            return round(float(total), 3)
+        except (TypeError, ValueError):
+            return None
+
+    @property
+    def extra_state_attributes(self):
+        snapshot = self._yield_snapshot()
+        if snapshot is None:
+            return None
+        payload = snapshot.payload if isinstance(snapshot.payload, dict) else {}
+        metrics = payload.get("metrics") or {}
+        attrs: dict[str, Any] = {}
+        for key in (
+            "harvest_count",
+            "average_yield_grams",
+            "average_yield_density_g_m2",
+            "mean_density_g_m2",
+            "total_area_m2",
+        ):
+            value = metrics.get(key)
+            if value is not None:
+                attrs[key] = value
+        yields_payload = payload.get("yields") or {}
+        for key in ("total_grams", "total_area_m2"):
+            if yields_payload.get(key) is not None:
+                attrs.setdefault(key, yields_payload.get(key))
+        densities_payload = payload.get("densities") or {}
+        for key, value in densities_payload.items():
+            if value is not None:
+                attrs[f"density_{key}"] = value
+        if payload.get("runs_tracked") is not None:
+            attrs["runs_tracked"] = payload.get("runs_tracked")
+        if payload.get("contributors"):
+            attrs["contributors"] = payload.get("contributors")
+        if snapshot.computed_at:
+            attrs["computed_at"] = snapshot.computed_at
+        return {k: v for k, v in attrs.items() if v is not None}
+
+
 class ProfileProvenanceSensor(HorticultureEntity, SensorEntity):
     """Diagnostic sensor summarising resolved target provenance."""
 
@@ -705,3 +802,159 @@ class ProfileRunStatusSensor(HorticultureEntity, SensorEntity):
         if summary.get("metadata"):
             attrs["metadata"] = summary["metadata"]
         return {k: v for k, v in attrs.items() if v is not None}
+
+
+class ProfileFeedingSensor(HorticultureEntity, SensorEntity):
+    """Expose nutrient application cadence for a profile."""
+
+    _attr_icon = "mdi:cup-water"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_native_unit_of_measurement = UnitOfTime.DAYS
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(
+        self,
+        coordinator: HorticultureCoordinator,
+        registry,
+        profile_id: str,
+        profile_name: str,
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._registry = registry
+        self._attr_unique_id = f"{profile_id}:feeding_status"
+        self._attr_name = "Feeding Status"
+
+    def _get_profile(self):
+        getter = getattr(self._registry, "get_profile", None)
+        if getter is None:
+            getter = getattr(self._registry, "get", None)
+        if getter is None:
+            return None
+        return getter(self._profile_id)
+
+    def _snapshot(self) -> tuple[dict[str, Any] | None, str | None]:
+        profile = self._get_profile()
+        if profile is None:
+            return None, None
+        for snapshot in getattr(profile, "computed_stats", []) or []:
+            if snapshot.stats_version == NUTRIENT_STATS_VERSION:
+                payload = snapshot.payload if isinstance(snapshot.payload, dict) else {}
+                return payload, snapshot.computed_at
+        return None, None
+
+    @property
+    def native_value(self):
+        payload, _computed = self._snapshot()
+        if not payload:
+            return None
+        metrics = payload.get("metrics") or {}
+        value = metrics.get("days_since_last_event")
+        if value is None:
+            return None
+        try:
+            return round(float(value), 3)
+        except (TypeError, ValueError):
+            return None
+
+    @property
+    def extra_state_attributes(self):
+        payload, computed = self._snapshot()
+        if not payload:
+            return None
+        attrs: dict[str, Any] = {}
+        if payload.get("scope"):
+            attrs["scope"] = payload["scope"]
+        metrics = payload.get("metrics")
+        if metrics:
+            attrs["metrics"] = metrics
+        last_event = payload.get("last_event")
+        if last_event:
+            attrs["last_event"] = last_event
+        if payload.get("product_usage"):
+            attrs["product_usage"] = payload["product_usage"]
+        if payload.get("window_counts"):
+            attrs["window_counts"] = payload["window_counts"]
+        if payload.get("intervals"):
+            attrs["intervals"] = payload["intervals"]
+        if payload.get("runs_touched"):
+            attrs["runs_touched"] = payload["runs_touched"]
+        if computed:
+            attrs["computed_at"] = computed
+        return attrs
+
+
+class ProfileEventSensor(HorticultureEntity, SensorEntity):
+    """Summarise cultivation events for a profile."""
+
+    _attr_icon = "mdi:calendar-clock"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_native_unit_of_measurement = "events"
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(
+        self,
+        coordinator: HorticultureCoordinator,
+        registry,
+        profile_id: str,
+        profile_name: str,
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._registry = registry
+        self._attr_unique_id = f"{profile_id}:event_activity"
+        self._attr_name = "Event Activity"
+
+    def _get_profile(self):
+        getter = getattr(self._registry, "get_profile", None)
+        if getter is None:
+            getter = getattr(self._registry, "get", None)
+        if getter is None:
+            return None
+        return getter(self._profile_id)
+
+    def _snapshot(self) -> tuple[dict[str, Any] | None, str | None]:
+        profile = self._get_profile()
+        if profile is None:
+            return None, None
+        for snapshot in getattr(profile, "computed_stats", []) or []:
+            if snapshot.stats_version == EVENT_STATS_VERSION:
+                payload = snapshot.payload if isinstance(snapshot.payload, dict) else {}
+                return payload, snapshot.computed_at
+        return None, None
+
+    @property
+    def native_value(self):
+        payload, _computed = self._snapshot()
+        if not payload:
+            return None
+        metrics = payload.get("metrics") or {}
+        total = metrics.get("total_events")
+        if total is None:
+            return None
+        try:
+            return int(total)
+        except (TypeError, ValueError):
+            return None
+
+    @property
+    def extra_state_attributes(self):
+        payload, computed = self._snapshot()
+        if not payload:
+            return None
+        attrs: dict[str, Any] = {}
+        metrics = payload.get("metrics") or {}
+        for key in ("unique_event_types", "unique_runs", "days_since_last_event"):
+            if metrics.get(key) is not None:
+                attrs[key] = metrics.get(key)
+        if payload.get("last_event"):
+            attrs["last_event"] = payload["last_event"]
+        if payload.get("event_types"):
+            attrs["event_types"] = payload["event_types"]
+        if payload.get("top_tags"):
+            attrs["top_tags"] = payload["top_tags"]
+        if payload.get("runs_touched"):
+            attrs["runs_touched"] = payload["runs_touched"]
+        if payload.get("window_counts"):
+            attrs["window_counts"] = payload["window_counts"]
+        if computed:
+            attrs["computed_at"] = computed
+        return attrs or None

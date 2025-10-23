@@ -142,6 +142,110 @@ record_harvest_event:
       description: "Additional harvest metadata such as cultivar phenotype notes."
       selector: { object: {} }
 
+record_nutrient_event:
+  name: "Record nutrient application"
+  description: "Log a nutrient or fertilizer feeding event for the profile and update nutrient metrics."
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    event_id:
+      required: true
+      selector: { text: {} }
+    applied_at:
+      required: true
+      selector: { datetime: {} }
+    product_id:
+      required: false
+      selector: { text: {} }
+    product_name:
+      required: false
+      selector: { text: {} }
+    product_category:
+      required: false
+      selector: { text: {} }
+    species_id:
+      required: false
+      selector: { text: {} }
+    run_id:
+      required: false
+      selector: { text: {} }
+    solution_volume_liters:
+      required: false
+      selector: { number: { min: 0 } }
+    concentration_ppm:
+      required: false
+      selector: { number: { min: 0 } }
+    ec_ms:
+      required: false
+      selector: { number: { min: 0 } }
+    ph:
+      required: false
+      selector: { number: { min: 0, max: 14 } }
+    source:
+      required: false
+      selector: { text: {} }
+    additives:
+      required: false
+      description: "Optional list of additive notes (e.g. supplements mixed into the solution)."
+      selector: { object: {} }
+    metadata:
+      required: false
+      description: "Additional metadata for the feeding (notes, operator, etc.)."
+      selector: { object: {} }
+
+record_cultivation_event:
+  name: "Record cultivation event"
+  description: "Log a cultivation milestone (e.g. pruning, transplant, inspection) and update event statistics."
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    event_id:
+      required: true
+      selector: { text: {} }
+    occurred_at:
+      required: true
+      selector: { datetime: {} }
+    event_type:
+      required: true
+      description: "Event category such as pruning, inspection, transplant, etc."
+      selector: { text: {} }
+    species_id:
+      required: false
+      selector: { text: {} }
+    run_id:
+      required: false
+      selector: { text: {} }
+    title:
+      required: false
+      selector: { text: {} }
+    notes:
+      required: false
+      selector: { text: {} }
+    metric_value:
+      required: false
+      description: "Optional numeric measurement captured during the event (e.g. canopy height)."
+      selector: { number: {} }
+    metric_unit:
+      required: false
+      selector: { text: {} }
+    actor:
+      required: false
+      description: "Who performed the event (e.g. technician name)."
+      selector: { text: {} }
+    location:
+      required: false
+      selector: { text: {} }
+    tags:
+      required: false
+      description: "List of tags to aid filtering (e.g. maintenance, pest)."
+      selector: { object: {} }
+    metadata:
+      required: false
+      description: "Additional structured metadata for the event."
+      selector: { object: {} }
+
 profile_provenance:
   name: "Inspect target provenance"
   description: "Return provenance details for all resolved targets in a profile."

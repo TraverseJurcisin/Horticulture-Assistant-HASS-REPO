@@ -11,7 +11,7 @@ from homeassistant.core import HomeAssistant
 
 from . import services as ha_services
 from .api import ChatApi
-from .cloudsync.manager import CloudSyncManager
+from .cloudsync import CloudSyncManager, CloudSyncPublisher
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
@@ -75,14 +75,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     api = ChatApi(hass, api_key, base_url, model)
 
-    profile_registry = ProfileRegistry(hass, entry)
-    await profile_registry.async_initialize()
-
     local_store = LocalStore(hass)
     await local_store.load()
 
     profile_store = ProfileStore(hass)
     await profile_store.async_init()
+
+    cloud_sync_manager = CloudSyncManager(hass, entry)
+
+    profile_registry = ProfileRegistry(hass, entry)
+    await profile_registry.async_initialize()
+    cloud_publisher = CloudSyncPublisher(cloud_sync_manager, entry.entry_id)
+    profile_registry.attach_cloud_publisher(cloud_publisher)
 
     coordinator = HorticultureCoordinator(
         hass,
@@ -106,8 +110,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         update_minutes,
     )
 
-    cloud_sync_manager = CloudSyncManager(hass, entry)
-
     entry_data = store_entry_data(hass, entry)
     entry_data.update(
         {
@@ -123,6 +125,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "keep_stale": keep_stale,
             "cloud_sync_manager": cloud_sync_manager,
             "cloud_sync_status": cloud_sync_manager.status(),
+            "cloud_publisher": cloud_publisher,
         }
     )
 
