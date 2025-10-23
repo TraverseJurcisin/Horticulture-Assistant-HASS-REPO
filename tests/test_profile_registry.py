@@ -663,6 +663,12 @@ async def test_cloud_publisher_records_profile_and_events(hass, tmp_path):
     harvest_events = [event for event in events if event.entity_type == "harvest_event"]
     assert any(event.entity_id == harvest.harvest_id for event in harvest_events)
 
+    computed_events = [event for event in events if event.entity_type == "computed" and event.entity_id == profile_id]
+    assert computed_events, "computed stats should be enqueued"
+    latest = computed_events[-1]
+    assert latest.metadata.get("stats_version")
+    assert latest.patch and "versions" in latest.patch
+
 
 async def test_cloud_publisher_defers_until_ready(hass, tmp_path):
     entry = await _make_entry(hass)

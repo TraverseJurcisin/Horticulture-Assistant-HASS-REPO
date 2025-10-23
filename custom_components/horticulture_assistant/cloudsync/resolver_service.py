@@ -36,6 +36,63 @@ def _coerce_dict(value: Any) -> dict[str, Any]:
     return {}
 
 
+def _parse_iso_datetime(raw: Any) -> datetime | None:
+    if not raw:
+        return None
+    try:
+        parsed = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=UTC)
+    return parsed.astimezone(UTC)
+
+
+def _extract_computed_snapshot(payload: Any) -> ComputedStatSnapshot | None:
+    if not isinstance(payload, Mapping):
+        return None
+    try:
+        return ComputedStatSnapshot.from_json(dict(payload))
+    except Exception:  # pragma: no cover - tolerate incompatible payloads
+        candidates: list[ComputedStatSnapshot] = []
+
+        versions = payload.get("versions")
+        if isinstance(versions, Mapping):
+            for value in versions.values():
+                if not isinstance(value, Mapping):
+                    continue
+                try:
+                    candidates.append(ComputedStatSnapshot.from_json(dict(value)))
+                except Exception:  # pragma: no cover - continue on parse issues
+                    continue
+
+        if not candidates:
+            snapshots = payload.get("snapshots")
+            if isinstance(snapshots, Mapping):
+                for value in snapshots.values():
+                    if not isinstance(value, Mapping):
+                        continue
+                    try:
+                        candidates.append(ComputedStatSnapshot.from_json(dict(value)))
+                    except Exception:  # pragma: no cover - continue on parse issues
+                        continue
+
+        if not candidates and isinstance(payload.get("latest"), Mapping):
+            try:
+                candidates.append(ComputedStatSnapshot.from_json(dict(payload["latest"])))
+            except Exception:  # pragma: no cover - continue on parse issues
+                candidates = []
+
+        best: ComputedStatSnapshot | None = None
+        best_ts: datetime | None = None
+        for snapshot in candidates:
+            ts = _parse_iso_datetime(getattr(snapshot, "computed_at", None))
+            if best is None or (ts is not None and (best_ts is None or ts > best_ts)):
+                best = snapshot
+                best_ts = ts
+        return best
+
+
 @dataclass(slots=True)
 class ResolveAnnotations:
     """Describes how a value was produced and whether supporting data is fresh."""
@@ -280,11 +337,7 @@ class EdgeResolverService:
         species_entry = lineage[-1]
         species_id = species_entry.profile_id
         stats_record = self._fetch_cloud_entry("computed", species_id, species_entry.tenant_id)
-        computed_snapshot = (
-            ComputedStatSnapshot.from_json(stats_record.payload)
-            if stats_record and isinstance(stats_record.payload, Mapping)
-            else None
-        )
+        computed_snapshot = _extract_computed_snapshot(stats_record.payload) if stats_record else None
 
         target_fields: set[str] = set(fields or [])
         candidate_maps: list[Mapping[str, Any] | None] = [
@@ -336,12 +389,19 @@ class EdgeResolverService:
 
         computed_metadata: dict[str, Any] = {}
         if computed_snapshot and computed_snapshot.computed_at:
-            computed_at_dt = datetime.fromisoformat(str(computed_snapshot.computed_at).replace("Z", "+00:00"))
-            staleness = now - computed_at_dt
-            computed_metadata["computed_at"] = computed_snapshot.computed_at
-            computed_metadata["staleness_days"] = staleness.total_seconds() / 86400
-            if self.stats_ttl and staleness > self.stats_ttl:
-                computed_metadata["is_stale"] = True
+            computed_at_dt = _parse_iso_datetime(computed_snapshot.computed_at)
+            if computed_at_dt is not None:
+                staleness = now - computed_at_dt
+                computed_metadata["computed_at"] = computed_snapshot.computed_at
+                computed_metadata["staleness_days"] = staleness.total_seconds() / 86400
+                if self.stats_ttl and staleness > self.stats_ttl:
+                    computed_metadata["is_stale"] = True
+            else:  # pragma: no cover - defensive branch
+                computed_metadata["computed_at"] = computed_snapshot.computed_at
+        if computed_metadata.get("staleness_days") is None:
+            computed_metadata.pop("staleness_days", None)
+        if computed_metadata.get("computed_at") is None:
+            computed_metadata.pop("computed_at", None)
 
         computed_section = ProfileComputedSection(
             snapshots=[computed_snapshot] if computed_snapshot else [],
@@ -490,17 +550,18 @@ class EdgeResolverService:
         stats_record = self._fetch_cloud_entry("computed", species_id, species_entry.tenant_id)
         if not stats_record:
             return None, {"provenance": []}
-        stats_payload = stats_record.payload
-        computed_at_raw = stats_payload.get("computed_at")
+        snapshot = _extract_computed_snapshot(stats_record.payload)
+        if snapshot is None:
+            return None, {"provenance": []}
+        computed_at_dt = _parse_iso_datetime(snapshot.computed_at)
         staleness_days: float | None = None
         is_stale = False
-        if computed_at_raw:
-            computed_at = datetime.fromisoformat(str(computed_at_raw).replace("Z", "+00:00"))
-            staleness = now - computed_at
+        if computed_at_dt is not None:
+            staleness = now - computed_at_dt
             staleness_days = staleness.total_seconds() / 86400
             if self.stats_ttl and staleness > self.stats_ttl:
                 is_stale = True
-        overlay = self._extract(stats_payload.get("payload", {}), field_path)
+        overlay = self._extract(snapshot.payload, field_path)
         provenance = [f"computed:{species_id}"] if overlay is not None else []
         meta = {
             "provenance": provenance,

@@ -115,6 +115,7 @@ The current entitlements are exposed in diagnostics (cloud connection sensors an
 - **Harvest history made visible:** `record_harvest_event` continues to append harvests while now feeding the **Yield Total** sensor. The sensor exposes cumulative grams harvested, average yield per harvest, density metrics, and contributor weights for species rollups.
 - **Nutrient cadence at a glance:** The **Feeding Status** sensor reflects nutrient applications recorded via `record_nutrient_event`, including the days since the last feeding and product usage summaries, making it easy to keep irrigation schedules on track.
 - **Species rollups:** All cultivation, nutrient, and harvest events aggregate to the species profile so you can compare cultivars and monitor organisation-wide cadence without leaving Home Assistant.
+- **Cloud-ready statistics:** Enabling cloud sync now streams the latest computed yield, nutrient, and event snapshots (with per-entity vector clocks) so remote dashboards and APIs stay in lockstep with the on-prem analytics.
 
 ## Developing & Contributing
 

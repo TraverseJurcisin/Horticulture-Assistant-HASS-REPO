@@ -138,9 +138,21 @@ def test_edge_resolver_prefers_local_override(tmp_path: Path) -> None:
         {"curated_targets": {"targets": {"vpd": {"vegetative": 0.7}}}, "parents": []},
     )
     store.update_cloud_cache("profile", "species-1", "tenant-1", species_event.patch, org_id="org-1")
-    stats_payload = {
+    snapshot = {
+        "stats_version": "environment/v1",
         "computed_at": "2025-10-19T00:00:00Z",
-        "payload": {"targets": {"vpd": {"vegetative": 0.8}}},
+        "snapshot_id": "species-1:environment/v1",
+        "payload": {"targets": {"vpd": {"vegetative": 0.8}}, "scope": "species"},
+        "contributions": [],
+    }
+    stats_payload = {
+        "profile_id": "species-1",
+        "profile_type": "species",
+        "species_id": "species-1",
+        "computed_at": snapshot["computed_at"],
+        "versions": {snapshot["stats_version"]: snapshot},
+        "snapshots": {snapshot["snapshot_id"]: snapshot},
+        "latest_versions": {snapshot["stats_version"]: snapshot["snapshot_id"]},
     }
     store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload, org_id="org-1")
 
@@ -186,11 +198,23 @@ def test_edge_resolver_marks_stale_stats(tmp_path: Path) -> None:
     store = EdgeSyncStore(tmp_path / "sync.db")
     species_payload = {"curated_targets": {"targets": {"vpd": {"vegetative": 0.75}}}, "parents": []}
     store.update_cloud_cache("profile", "species-1", "tenant-1", species_payload, org_id="org-1")
-    stats_payload = {
+    stale_snapshot = {
+        "stats_version": "environment/v1",
         "computed_at": "2024-01-01T00:00:00Z",
-        "payload": {"targets": {"vpd": {"vegetative": 0.7}}},
+        "snapshot_id": "species-1:environment/v1",
+        "payload": {"targets": {"vpd": {"vegetative": 0.7}}, "scope": "species"},
+        "contributions": [],
     }
-    store.update_cloud_cache("computed", "species-1", "tenant-1", stats_payload, org_id="org-1")
+    stale_payload = {
+        "profile_id": "species-1",
+        "profile_type": "species",
+        "species_id": "species-1",
+        "computed_at": stale_snapshot["computed_at"],
+        "versions": {stale_snapshot["stats_version"]: stale_snapshot},
+        "snapshots": {stale_snapshot["snapshot_id"]: stale_snapshot},
+        "latest_versions": {stale_snapshot["stats_version"]: stale_snapshot["snapshot_id"]},
+    }
+    store.update_cloud_cache("computed", "species-1", "tenant-1", stale_payload, org_id="org-1")
     resolver = EdgeResolverService(
         store,
         stats_ttl=timedelta(days=30),

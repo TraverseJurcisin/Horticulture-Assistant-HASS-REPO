@@ -32,6 +32,7 @@ from .const import (
 from .profile.options import options_profile_to_dataclass
 from .profile.schema import (
     BioProfile,
+    ComputedStatSnapshot,
     CultivationEvent,
     HarvestEvent,
     NutrientApplication,
@@ -120,6 +121,7 @@ class ProfileRegistry:
     def _publish_snapshot(self, publisher: CloudSyncPublisher) -> None:
         for profile in self._profiles.values():
             self._safe_publish(lambda prof=profile: publisher.publish_profile(prof, initial=True))
+            self._publish_stats_with(publisher, profile, initial=True)
             for event in profile.run_history:
                 self._safe_publish(lambda ev=event: publisher.publish_run(ev, initial=True))
             for event in profile.harvest_history:
@@ -146,6 +148,7 @@ class ProfileRegistry:
             self._cloud_pending_snapshot = True
             return
         self._safe_publish(lambda: publisher.publish_profile(profile))
+        self._publish_stats_with(publisher, profile)
 
     def _cloud_publish_deleted(self, profile_id: str) -> None:
         publisher = self._cloud_publisher
@@ -206,6 +209,18 @@ class ProfileRegistry:
             self._cloud_pending_snapshot = True
             return
         self._safe_publish(lambda: publisher.publish_cultivation(event))
+
+    def _publish_stats_with(
+        self,
+        publisher: CloudSyncPublisher,
+        profile: BioProfile,
+        *,
+        initial: bool = False,
+    ) -> None:
+        for snapshot in profile.computed_stats:
+            if not isinstance(snapshot, ComputedStatSnapshot):
+                continue
+            self._safe_publish(lambda snap=snapshot: publisher.publish_stat_snapshot(profile, snap, initial=initial))
 
     # ---------------------------------------------------------------------
     # Initialization and access helpers

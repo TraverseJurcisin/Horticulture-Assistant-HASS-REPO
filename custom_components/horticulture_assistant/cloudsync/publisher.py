@@ -16,7 +16,14 @@ except AttributeError:  # pragma: no cover - Py<3.11 fallback
     UTC = timezone.utc  # noqa: UP017
 
 if TYPE_CHECKING:  # pragma: no cover - type checking only
-    from ..profile.schema import BioProfile, CultivationEvent, HarvestEvent, NutrientApplication, RunEvent
+    from ..profile.schema import (
+        BioProfile,
+        ComputedStatSnapshot,
+        CultivationEvent,
+        HarvestEvent,
+        NutrientApplication,
+        RunEvent,
+    )
     from .manager import CloudSyncManager
 
 
@@ -139,6 +146,41 @@ class CloudSyncPublisher:
             event_type=event.event_type,
         )
         return self.publish("cultivation_event", event.event_id, patch=patch, metadata=metadata)
+
+    def publish_stat_snapshot(
+        self,
+        profile: BioProfile,
+        snapshot: ComputedStatSnapshot,
+        *,
+        initial: bool = False,
+    ) -> SyncEvent | None:
+        version = snapshot.stats_version or "unknown"
+        stat_id = snapshot.snapshot_id or f"{profile.profile_id}:{version}"
+        snapshot_json = snapshot.to_json()
+        scope = None
+        if isinstance(snapshot.payload, Mapping):
+            scope = snapshot.payload.get("scope")
+
+        patch: dict[str, Any] = {
+            "profile_id": profile.profile_id,
+            "profile_type": profile.profile_type,
+            "species_id": profile.species or profile.profile_id,
+            "snapshots": {stat_id: snapshot_json},
+            "versions": {version: snapshot_json},
+            "latest_versions": {version: stat_id},
+        }
+        if snapshot.computed_at:
+            patch["computed_at"] = snapshot.computed_at
+            patch.setdefault("updated_at", snapshot.computed_at)
+
+        metadata = _metadata(
+            profile_id=profile.profile_id,
+            species_id=profile.species or profile.profile_id,
+            stats_version=snapshot.stats_version,
+            scope=scope,
+            initial_sync=initial,
+        )
+        return self.publish("computed", profile.profile_id, patch=patch, metadata=metadata)
 
 
 __all__ = ["CloudSyncPublisher"]
