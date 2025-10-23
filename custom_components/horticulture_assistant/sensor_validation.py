@@ -4,10 +4,10 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from dataclasses import dataclass
+from typing import Any
 
 from homeassistant import const as ha_const
 from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.const import LIGHT_LUX, PERCENTAGE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 
 
@@ -47,11 +47,32 @@ if isinstance(_CO2_CONSTANT, str):
     _CO2_UNITS.add(_CO2_CONSTANT)
 
 
-EXPECTED_UNITS: dict[str, set[str]] = {
-    "temperature": {UnitOfTemperature.CELSIUS, UnitOfTemperature.FAHRENHEIT},
-    "humidity": {PERCENTAGE},
-    "moisture": {PERCENTAGE},
-    "illuminance": {LIGHT_LUX, "lx", "lux", "klx", "kilolux"},
+_LIGHT_LUX = getattr(ha_const, "LIGHT_LUX", "lx")
+_PERCENTAGE = getattr(ha_const, "PERCENTAGE", "%")
+_UnitOfTemperature = getattr(ha_const, "UnitOfTemperature", None)
+
+if _UnitOfTemperature is not None:
+    _TEMPERATURE_UNITS: set[Any] = {
+        _UnitOfTemperature.CELSIUS,
+        _UnitOfTemperature.FAHRENHEIT,
+    }
+else:
+    _TEMPERATURE_UNITS = {
+        "°c",
+        "c",
+        "celsius",
+        "degc",
+        "°f",
+        "f",
+        "fahrenheit",
+        "degf",
+    }
+
+EXPECTED_UNITS: dict[str, set[Any]] = {
+    "temperature": _TEMPERATURE_UNITS,
+    "humidity": {_PERCENTAGE, "%", "percent"},
+    "moisture": {_PERCENTAGE, "%", "percent"},
+    "illuminance": {_LIGHT_LUX, "lx", "lux", "klx", "kilolux"},
     "co2": _CO2_UNITS,
     "ec": {"µS/cm", "uS/cm", "us/cm", "mS/cm", "ds/m", "s/m"},
 }
