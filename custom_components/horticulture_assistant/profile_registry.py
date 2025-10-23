@@ -10,7 +10,8 @@ needing to parse config entry options or storage files individually.
 from __future__ import annotations
 
 import json
-from collections.abc import Iterable, Mapping
+import logging
+from collections.abc import Callable, Iterable, Mapping
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
@@ -21,6 +22,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 from homeassistant.util import slugify
 
+from .cloudsync.publisher import CloudSyncPublisher
 from .const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
@@ -28,9 +30,34 @@ from .const import (
     PROFILE_SCOPE_DEFAULT,
 )
 from .profile.options import options_profile_to_dataclass
-from .profile.schema import BioProfile, HarvestEvent, RunEvent
+from .profile.schema import (
+    BioProfile,
+    CultivationEvent,
+    HarvestEvent,
+    NutrientApplication,
+    RunEvent,
+)
 from .profile.statistics import recompute_statistics
 from .profile.utils import ensure_sections, link_species_and_cultivars, sync_general_section
+from .validators import validate_profile_dict
+
+_LOGGER = logging.getLogger(__name__)
+
+_SCHEMA_PATH = Path(__file__).parent / "data" / "schema" / "bio_profile.schema.json"
+_PROFILE_SCHEMA: dict[str, Any] | None = None
+
+
+def _load_profile_schema() -> dict[str, Any] | None:
+    global _PROFILE_SCHEMA
+    if _PROFILE_SCHEMA is None:
+        try:
+            text = _SCHEMA_PATH.read_text(encoding="utf-8")
+            _PROFILE_SCHEMA = json.loads(text)
+        except Exception as err:  # pragma: no cover - schema optional at runtime
+            _LOGGER.debug("Unable to load profile schema: %s", err)
+            _PROFILE_SCHEMA = None
+    return _PROFILE_SCHEMA
+
 
 STORAGE_VERSION = 2
 STORAGE_KEY = "horticulture_assistant_profiles"
@@ -46,6 +73,8 @@ class ProfileRegistry:
         self.entry = entry
         self._store: Store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
         self._profiles: dict[str, BioProfile] = {}
+        self._cloud_publisher: CloudSyncPublisher | None = None
+        self._cloud_pending_snapshot = False
 
     def _relink_profiles(self) -> None:
         if not self._profiles:
@@ -53,6 +82,130 @@ class ProfileRegistry:
         link_species_and_cultivars(self._profiles.values())
         for profile in self._profiles.values():
             profile.refresh_sections()
+
+    def _validate_profile(self, profile: BioProfile) -> None:
+        schema = _load_profile_schema()
+        if not schema:
+            return
+        try:
+            payload = profile.to_json()
+        except Exception as err:  # pragma: no cover - defensive logging
+            _LOGGER.warning("Unable to serialise profile %s for validation: %s", profile.profile_id, err)
+            return
+        issues = validate_profile_dict(payload, schema)
+        for issue in issues:
+            _LOGGER.warning("Profile %s schema validation issue: %s", profile.profile_id, issue)
+
+    # ------------------------------------------------------------------
+    # Cloud sync helpers
+    # ------------------------------------------------------------------
+    def attach_cloud_publisher(self, publisher: CloudSyncPublisher | None) -> None:
+        """Attach a cloud publisher so mutations are queued for sync."""
+
+        self._cloud_publisher = publisher
+        self.publish_full_snapshot()
+
+    def publish_full_snapshot(self) -> None:
+        """Publish all known profiles and histories to the cloud outbox."""
+
+        publisher = self._cloud_publisher
+        if publisher is None:
+            return
+        if not publisher.ready:
+            self._cloud_pending_snapshot = True
+            return
+        self._cloud_pending_snapshot = False
+        self._publish_snapshot(publisher)
+
+    def _publish_snapshot(self, publisher: CloudSyncPublisher) -> None:
+        for profile in self._profiles.values():
+            self._safe_publish(lambda prof=profile: publisher.publish_profile(prof, initial=True))
+            for event in profile.run_history:
+                self._safe_publish(lambda ev=event: publisher.publish_run(ev, initial=True))
+            for event in profile.harvest_history:
+                self._safe_publish(lambda ev=event: publisher.publish_harvest(ev, initial=True))
+            for event in profile.nutrient_history:
+                self._safe_publish(lambda ev=event: publisher.publish_nutrient(ev, initial=True))
+            for event in profile.event_history:
+                self._safe_publish(lambda ev=event: publisher.publish_cultivation(ev, initial=True))
+
+    def _safe_publish(self, callback: Callable[[], Any]) -> None:
+        try:
+            callback()
+        except Exception as err:  # pragma: no cover - defensive logging
+            _LOGGER.debug("Cloud publish skipped due to error: %s", err, exc_info=True)
+
+    def _cloud_publish_profile(self, profile: BioProfile) -> None:
+        publisher = self._cloud_publisher
+        if publisher is None:
+            return
+        if self._cloud_pending_snapshot:
+            self.publish_full_snapshot()
+            publisher = self._cloud_publisher
+        if publisher is None or not publisher.ready:
+            self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_profile(profile))
+
+    def _cloud_publish_deleted(self, profile_id: str) -> None:
+        publisher = self._cloud_publisher
+        if publisher is None:
+            return
+        if self._cloud_pending_snapshot:
+            self.publish_full_snapshot()
+            publisher = self._cloud_publisher
+        if publisher is None or not publisher.ready:
+            self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_profile_deleted(profile_id))
+
+    def _cloud_publish_run(self, event: RunEvent) -> None:
+        publisher = self._cloud_publisher
+        if publisher is None:
+            return
+        if self._cloud_pending_snapshot:
+            self.publish_full_snapshot()
+            publisher = self._cloud_publisher
+        if publisher is None or not publisher.ready:
+            self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_run(event))
+
+    def _cloud_publish_harvest(self, event: HarvestEvent) -> None:
+        publisher = self._cloud_publisher
+        if publisher is None:
+            return
+        if self._cloud_pending_snapshot:
+            self.publish_full_snapshot()
+            publisher = self._cloud_publisher
+        if publisher is None or not publisher.ready:
+            self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_harvest(event))
+
+    def _cloud_publish_nutrient(self, event: NutrientApplication) -> None:
+        publisher = self._cloud_publisher
+        if publisher is None:
+            return
+        if self._cloud_pending_snapshot:
+            self.publish_full_snapshot()
+            publisher = self._cloud_publisher
+        if publisher is None or not publisher.ready:
+            self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_nutrient(event))
+
+    def _cloud_publish_cultivation(self, event: CultivationEvent) -> None:
+        publisher = self._cloud_publisher
+        if publisher is None:
+            return
+        if self._cloud_pending_snapshot:
+            self.publish_full_snapshot()
+            publisher = self._cloud_publisher
+        if publisher is None or not publisher.ready:
+            self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_cultivation(event))
 
     # ---------------------------------------------------------------------
     # Initialization and access helpers
@@ -83,12 +236,14 @@ class ProfileRegistry:
                 copy = dict(payload)
                 ensure_sections(copy, plant_id=pid, display_name=display_name)
                 profile = BioProfile.from_json(copy)
+            self._validate_profile(profile)
             profiles[pid] = profile
 
         for pid, payload in stored_profiles.items():
             if pid in profiles:
                 continue
             profiles[pid] = BioProfile.from_json(payload)
+            self._validate_profile(profiles[pid])
 
         for profile in profiles.values():
             profile.general.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
@@ -164,6 +319,8 @@ class ProfileRegistry:
             prof_obj.general = general_map
             prof_obj.refresh_sections()
         await self.async_save()
+        if prof_obj := self._profiles.get(profile_id):
+            self._cloud_publish_profile(prof_obj)
 
     async def async_refresh_species(self, profile_id: str) -> None:
         """Placeholder for species refresh logic.
@@ -179,6 +336,7 @@ class ProfileRegistry:
         prof.last_resolved = "1970-01-01T00:00:00Z"
         prof.refresh_sections()
         await self.async_save()
+        self._cloud_publish_profile(prof)
 
     async def async_export(self, path: str | Path) -> Path:
         """Export all profiles to a JSON file and return the path."""
@@ -245,9 +403,11 @@ class ProfileRegistry:
             display_name=name,
         )
         prof_obj.refresh_sections()
+        self._validate_profile(prof_obj)
         self._profiles[candidate] = prof_obj
         self._relink_profiles()
         await self.async_save()
+        self._cloud_publish_profile(prof_obj)
         return candidate
 
     async def async_duplicate_profile(self, source_id: str, new_name: str) -> str:
@@ -269,6 +429,7 @@ class ProfileRegistry:
         self._profiles.pop(profile_id, None)
         self._relink_profiles()
         await self.async_save()
+        self._cloud_publish_deleted(profile_id)
 
     async def async_link_sensors(self, profile_id: str, sensors: dict[str, str]) -> None:
         """Link multiple sensor entities to ``profile_id``."""
@@ -301,6 +462,8 @@ class ProfileRegistry:
             prof_obj.general = general_map
             prof_obj.refresh_sections()
         await self.async_save()
+        if prof_obj := self._profiles.get(profile_id):
+            self._cloud_publish_profile(prof_obj)
 
     async def async_record_run_event(
         self,
@@ -331,7 +494,10 @@ class ProfileRegistry:
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
         await self.async_save()
-        return prof.run_history[-1]
+        stored = prof.run_history[-1]
+        self._cloud_publish_profile(prof)
+        self._cloud_publish_run(stored)
+        return stored
 
     async def async_record_harvest_event(
         self,
@@ -362,7 +528,52 @@ class ProfileRegistry:
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
         await self.async_save()
-        return prof.harvest_history[-1]
+        stored = prof.harvest_history[-1]
+        self._cloud_publish_profile(prof)
+        self._cloud_publish_harvest(stored)
+        return stored
+
+    async def async_record_nutrient_event(
+        self,
+        profile_id: str,
+        payload: Mapping[str, Any] | NutrientApplication,
+    ) -> NutrientApplication:
+        """Append a nutrient application event for ``profile_id``."""
+
+        prof = self._profiles.get(profile_id)
+        if prof is None:
+            raise ValueError(f"unknown profile {profile_id}")
+
+        event = payload if isinstance(payload, NutrientApplication) else NutrientApplication.from_json(payload)
+        prof.add_nutrient_event(event)
+        prof.updated_at = datetime.now(tz=UTC).isoformat()
+        prof.refresh_sections()
+        await self.async_save()
+        stored = prof.nutrient_history[-1]
+        self._cloud_publish_profile(prof)
+        self._cloud_publish_nutrient(stored)
+        return stored
+
+    async def async_record_cultivation_event(
+        self,
+        profile_id: str,
+        payload: Mapping[str, Any] | CultivationEvent,
+    ) -> CultivationEvent:
+        """Append a cultivation milestone event for ``profile_id``."""
+
+        prof = self._profiles.get(profile_id)
+        if prof is None:
+            raise ValueError(f"unknown profile {profile_id}")
+
+        event = payload if isinstance(payload, CultivationEvent) else CultivationEvent.from_json(payload)
+        prof.add_cultivation_event(event)
+        prof.updated_at = datetime.now(tz=UTC).isoformat()
+        prof.refresh_sections()
+        await self.async_save()
+        stored = prof.event_history[-1]
+        self._cloud_publish_profile(prof)
+        self._cloud_publish_cultivation(stored)
+        return stored
 
     async def async_import_template(self, template: str, name: str | None = None) -> str:
         """Create a profile from a bundled template.
@@ -404,8 +615,10 @@ class ProfileRegistry:
         new_prof.citations = [deepcopy(cit) for cit in prof.citations]
         new_prof.last_resolved = prof.last_resolved
         new_prof.refresh_sections()
+        self._validate_profile(new_prof)
         self._relink_profiles()
         await self.async_save()
+        self._cloud_publish_profile(new_prof)
         return pid
 
     async def async_export_profile(self, profile_id: str, path: str | Path) -> Path:
@@ -422,6 +635,7 @@ class ProfileRegistry:
 
         count = await async_import_profiles(self.hass, path)
         await self.async_load()
+        self.publish_full_snapshot()
         return count
 
     # ------------------------------------------------------------------

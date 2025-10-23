@@ -27,6 +27,7 @@ CONF_CLOUD_ORGANIZATION_ID = "cloud_org_id"
 CONF_CLOUD_ORGANIZATION_NAME = "cloud_org_name"
 CONF_CLOUD_ORGANIZATION_ROLE = "cloud_org_role"
 CONF_CLOUD_AVAILABLE_ORGANIZATIONS = "cloud_available_orgs"
+CONF_CLOUD_FEATURE_FLAGS = "cloud_feature_flags"
 CONF_UPDATE_INTERVAL = "update_interval"
 CONF_MOISTURE_SENSOR = "moisture_sensor"
 CONF_TEMPERATURE_SENSOR = "temperature_sensor"
@@ -89,6 +90,24 @@ DEFAULT_MODEL = "gpt-4o"  # change to "gpt-5" if your account has it
 DEFAULT_UPDATE_MINUTES = 5
 DEFAULT_KEEP_STALE = True
 DEFAULT_CLOUD_SYNC_INTERVAL = 300
+
+# ---------------------------------------------------------------------------
+# Feature & entitlement constants
+# ---------------------------------------------------------------------------
+
+FEATURE_LOCAL_PROFILES = "local_profiles"
+FEATURE_CLOUD_SYNC = "cloud_sync"
+FEATURE_AI_ASSIST = "ai_assist"
+FEATURE_IRRIGATION_AUTOMATION = "irrigation_automation"
+FEATURE_ADVANCED_ANALYTICS = "advanced_analytics"
+FEATURE_ORGANIZATION_ADMIN = "organization_admin"
+
+PREMIUM_FEATURES: tuple[str, ...] = (
+    FEATURE_AI_ASSIST,
+    FEATURE_IRRIGATION_AUTOMATION,
+    FEATURE_ADVANCED_ANALYTICS,
+    FEATURE_ORGANIZATION_ADMIN,
+)
 
 # Entity categories
 CATEGORY_DIAGNOSTIC = EntityCategory.DIAGNOSTIC

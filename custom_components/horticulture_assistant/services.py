@@ -43,9 +43,12 @@ from .const import (
     CONF_CLOUD_TOKEN_EXPIRES_AT,
     CONF_PROFILES,
     DOMAIN,
+    FEATURE_AI_ASSIST,
+    FEATURE_IRRIGATION_AUTOMATION,
 )
+from .entitlements import FeatureUnavailableError, derive_entitlements
 from .irrigation_bridge import async_apply_irrigation
-from .profile.statistics import SUCCESS_STATS_VERSION
+from .profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION, SUCCESS_STATS_VERSION
 from .profile_registry import ProfileRegistry
 from .storage import LocalStore
 
@@ -109,6 +112,8 @@ SERVICE_GENERATE_PROFILE = "generate_profile"
 SERVICE_CLEAR_CACHES = "clear_caches"
 SERVICE_RECORD_RUN_EVENT = "record_run_event"
 SERVICE_RECORD_HARVEST_EVENT = "record_harvest_event"
+SERVICE_RECORD_NUTRIENT_EVENT = "record_nutrient_event"
+SERVICE_RECORD_CULTIVATION_EVENT = "record_cultivation_event"
 SERVICE_PROFILE_PROVENANCE = "profile_provenance"
 SERVICE_PROFILE_RUNS = "profile_runs"
 SERVICE_CLOUD_LOGIN = "cloud_login"
@@ -141,6 +146,8 @@ SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_CLEAR_CACHES,
     SERVICE_RECORD_RUN_EVENT,
     SERVICE_RECORD_HARVEST_EVENT,
+    SERVICE_RECORD_NUTRIENT_EVENT,
+    SERVICE_RECORD_CULTIVATION_EVENT,
     SERVICE_PROFILE_PROVENANCE,
     SERVICE_PROFILE_RUNS,
     SERVICE_CLOUD_LOGIN,
@@ -168,6 +175,18 @@ async def async_register_all(
         return
     _REGISTERED = True
     hass._horti_services_registered = True
+
+    entitlements = derive_entitlements(entry.options)
+
+    def _update_entitlements(opts: Mapping[str, Any]) -> None:
+        nonlocal entitlements
+        entitlements = derive_entitlements(opts)
+
+    def _require(feature: str) -> None:
+        try:
+            entitlements.ensure(feature)
+        except FeatureUnavailableError as err:
+            raise HomeAssistantError(str(err)) from err
 
     async def _refresh_profile() -> None:
         if profile_coord:
@@ -246,8 +265,10 @@ async def async_register_all(
 
         hass.config_entries.async_update_entry(entry, options=opts)
         entry.options = opts
+        _update_entitlements(opts)
         if cloud_manager is not None:
             await cloud_manager.async_refresh()
+        registry.publish_full_snapshot()
         return opts
 
     async def _srv_replace_sensor(call) -> None:
@@ -435,6 +456,100 @@ async def async_register_all(
             "statistics": statistics,
         }
 
+    async def _srv_record_nutrient_event(call) -> ServiceResponse:
+        profile_id: str = call.data["profile_id"]
+        event_payload = {
+            "event_id": call.data["event_id"],
+            "applied_at": call.data["applied_at"],
+        }
+        for key in ("species_id", "run_id", "product_id", "product_name", "product_category", "source"):
+            if value := call.data.get(key):
+                event_payload[key] = value
+        for key in ("solution_volume_liters", "concentration_ppm", "ec_ms", "ph"):
+            if key in call.data and call.data[key] is not None:
+                event_payload[key] = call.data[key]
+        if additives := call.data.get("additives"):
+            event_payload["additives"] = list(additives)
+        if metadata := call.data.get("metadata"):
+            event_payload["metadata"] = dict(metadata)
+
+        try:
+            stored = await registry.async_record_nutrient_event(profile_id, event_payload)
+        except ValueError as err:
+            raise HomeAssistantError(str(err)) from err
+
+        def _snapshot(profile):
+            if profile is None:
+                return None
+            for snapshot in getattr(profile, "computed_stats", []) or []:
+                if snapshot.stats_version == NUTRIENT_STATS_VERSION:
+                    return snapshot.to_json()
+            return None
+
+        profile_obj = registry.get_profile(profile_id)
+        profile_snapshot = _snapshot(profile_obj)
+        species_snapshot = None
+        if profile_obj and getattr(profile_obj, "species", None):
+            species_snapshot = _snapshot(registry.get_profile(profile_obj.species))
+
+        response: dict[str, Any] = {"nutrient_event": stored.to_json()}
+        if profile_snapshot or species_snapshot:
+            payload: dict[str, Any] = {}
+            if profile_snapshot:
+                payload["profile"] = profile_snapshot
+            if species_snapshot:
+                payload["species"] = species_snapshot
+            response["nutrient_statistics"] = payload
+
+        return response
+
+    async def _srv_record_cultivation_event(call) -> ServiceResponse:
+        profile_id: str = call.data["profile_id"]
+        event_payload: dict[str, Any] = {
+            "event_id": call.data["event_id"],
+            "occurred_at": call.data["occurred_at"],
+            "event_type": call.data["event_type"],
+        }
+        for key in ("species_id", "run_id", "title", "notes", "metric_unit", "actor", "location"):
+            if value := call.data.get(key):
+                event_payload[key] = value
+        if "metric_value" in call.data and call.data["metric_value"] is not None:
+            event_payload["metric_value"] = call.data["metric_value"]
+        if tags := call.data.get("tags"):
+            event_payload["tags"] = list(tags)
+        if metadata := call.data.get("metadata"):
+            event_payload["metadata"] = dict(metadata)
+
+        try:
+            stored = await registry.async_record_cultivation_event(profile_id, event_payload)
+        except ValueError as err:
+            raise HomeAssistantError(str(err)) from err
+
+        def _snapshot(profile):
+            if profile is None:
+                return None
+            for snapshot in getattr(profile, "computed_stats", []) or []:
+                if snapshot.stats_version == EVENT_STATS_VERSION:
+                    return snapshot.to_json()
+            return None
+
+        profile_obj = registry.get_profile(profile_id)
+        profile_snapshot = _snapshot(profile_obj)
+        species_snapshot = None
+        if profile_obj and getattr(profile_obj, "species", None):
+            species_snapshot = _snapshot(registry.get_profile(profile_obj.species))
+
+        response: dict[str, Any] = {"cultivation_event": stored.to_json()}
+        if profile_snapshot or species_snapshot:
+            payload: dict[str, Any] = {}
+            if profile_snapshot:
+                payload["profile"] = profile_snapshot
+            if species_snapshot:
+                payload["species"] = species_snapshot
+            response["event_statistics"] = payload
+
+        return response
+
     async def _srv_profile_provenance(call) -> ServiceResponse:
         profile_id: str = call.data["profile_id"]
         include_overlay: bool = bool(call.data.get("include_overlay", False))
@@ -552,8 +667,10 @@ async def async_register_all(
             opts.pop(key, None)
         hass.config_entries.async_update_entry(entry, options=opts)
         entry.options = opts
+        _update_entitlements(opts)
         if cloud_manager is not None:
             await cloud_manager.async_refresh()
+        registry.publish_full_snapshot()
         return {"status": "logged_out"}
 
     async def _srv_cloud_refresh(call) -> ServiceResponse:
@@ -637,8 +754,10 @@ async def async_register_all(
 
         hass.config_entries.async_update_entry(entry, options=opts)
         entry.options = opts
+        _update_entitlements(opts)
         if cloud_manager is not None:
             await cloud_manager.async_refresh()
+        registry.publish_full_snapshot()
         return {
             "organization_id": selected_id,
             "organization_name": selected_name,
@@ -685,6 +804,7 @@ async def async_register_all(
         """Suggest a watering duration based on profile metrics."""
 
         pid: str = call.data["profile_id"]
+        _require(FEATURE_IRRIGATION_AUTOMATION)
         if profile_coord is None:
             raise HomeAssistantError("profile coordinator unavailable")
         metrics = profile_coord.data.get("profiles", {}).get(pid, {}).get("metrics") if profile_coord.data else None
@@ -713,6 +833,7 @@ async def async_register_all(
 
     async def _srv_run_recommendation(call) -> None:
         plant_id = call.data["plant_id"]
+        _require(FEATURE_AI_ASSIST)
         assert store.data is not None
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
@@ -742,6 +863,7 @@ async def async_register_all(
 
     async def _srv_apply_irrigation(call) -> None:
         profile_id = call.data["profile_id"]
+        _require(FEATURE_IRRIGATION_AUTOMATION)
         provider = call.data.get("provider", "auto")
         zone = call.data.get("zone")
         reg = er.async_get(hass)
@@ -786,7 +908,10 @@ async def async_register_all(
 
     async def _srv_generate_profile(call) -> None:
         pid = call.data["profile_id"]
-        mode = call.data["mode"]
+        raw_mode = str(call.data["mode"]).strip()
+        mode = raw_mode.lower()
+        if mode not in {"clone", "opb"}:
+            _require(FEATURE_AI_ASSIST)
         source_profile_id = call.data.get("source_profile_id")
         from .resolver import generate_profile
 
@@ -915,6 +1040,55 @@ async def async_register_all(
                 vol.Optional("wet_weight_grams"): vol.Coerce(float),
                 vol.Optional("dry_weight_grams"): vol.Coerce(float),
                 vol.Optional("fruit_count"): vol.Coerce(int),
+                vol.Optional("metadata"): dict,
+            }
+        ),
+        supports_response=True,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_RECORD_NUTRIENT_EVENT,
+        _srv_record_nutrient_event,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Required("event_id"): str,
+                vol.Required("applied_at"): str,
+                vol.Optional("species_id"): str,
+                vol.Optional("run_id"): str,
+                vol.Optional("product_id"): str,
+                vol.Optional("product_name"): str,
+                vol.Optional("product_category"): str,
+                vol.Optional("source"): str,
+                vol.Optional("solution_volume_liters"): vol.Coerce(float),
+                vol.Optional("concentration_ppm"): vol.Coerce(float),
+                vol.Optional("ec_ms"): vol.Coerce(float),
+                vol.Optional("ph"): vol.Coerce(float),
+                vol.Optional("additives"): list,
+                vol.Optional("metadata"): dict,
+            }
+        ),
+        supports_response=True,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_RECORD_CULTIVATION_EVENT,
+        _srv_record_cultivation_event,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Required("event_id"): str,
+                vol.Required("occurred_at"): str,
+                vol.Required("event_type"): str,
+                vol.Optional("species_id"): str,
+                vol.Optional("run_id"): str,
+                vol.Optional("title"): str,
+                vol.Optional("notes"): str,
+                vol.Optional("metric_value"): vol.Coerce(float),
+                vol.Optional("metric_unit"): str,
+                vol.Optional("actor"): str,
+                vol.Optional("location"): str,
+                vol.Optional("tags"): list,
                 vol.Optional("metadata"): dict,
             }
         ),

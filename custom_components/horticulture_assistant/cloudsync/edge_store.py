@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .events import SyncEvent, decode_ndjson, encode_ndjson
+from .events import SyncEvent, VectorClock, decode_ndjson, encode_ndjson
 
 try:
     UTC = datetime.UTC
@@ -87,6 +87,14 @@ class EdgeSyncStore:
                     stream TEXT PRIMARY KEY,
                     cursor TEXT NOT NULL,
                     updated_at TEXT NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS entity_vectors (
+                    entity_type TEXT NOT NULL,
+                    entity_id TEXT NOT NULL,
+                    device_id TEXT NOT NULL,
+                    counter INTEGER NOT NULL,
+                    PRIMARY KEY (entity_type, entity_id, device_id)
                 );
                 """
             )
@@ -343,6 +351,30 @@ class EdgeSyncStore:
                 (stream, cursor, datetime.now(tz=UTC).isoformat()),
             )
             conn.commit()
+
+    # ------------------------------------------------------------------
+    def next_vector(self, entity_type: str, entity_id: str, device_id: str) -> VectorClock:
+        """Increment and return the vector clock for ``entity_id``."""
+
+        with self._connection() as conn:
+            row = conn.execute(
+                """
+                SELECT counter
+                  FROM entity_vectors
+                 WHERE entity_type = ? AND entity_id = ? AND device_id = ?
+                """,
+                (entity_type, entity_id, device_id),
+            ).fetchone()
+            counter = int(row["counter"]) + 1 if row else 1
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO entity_vectors(entity_type, entity_id, device_id, counter)
+                VALUES(?, ?, ?, ?)
+                """,
+                (entity_type, entity_id, device_id, counter),
+            )
+            conn.commit()
+        return VectorClock(device=device_id, counter=counter)
 
     # ------------------------------------------------------------------
     def export_outbox_ndjson(self) -> str:
