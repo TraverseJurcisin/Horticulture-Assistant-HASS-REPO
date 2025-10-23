@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import asyncio
-from collections.abc import Mapping
+import logging
+from collections.abc import Awaitable, Callable, Mapping
 from contextlib import suppress
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -30,13 +31,18 @@ from ..const import (
     CONF_CLOUD_TOKEN_EXPIRES_AT,
     DEFAULT_CLOUD_SYNC_INTERVAL,
 )
+from .auth import CloudAuthClient, CloudAuthError, CloudAuthTokens
 from .edge_store import EdgeSyncStore
 from .edge_worker import EdgeSyncWorker
+from .options import merge_cloud_tokens
 
 try:
     UTC = datetime.UTC
 except AttributeError:  # pragma: no cover - Py<3.11 fallback
     UTC = timezone.utc  # noqa: UP017
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 @dataclass(slots=True)
@@ -167,6 +173,11 @@ class CloudSyncManager:
         self._owns_session = session is None
         self._worker: EdgeSyncWorker | None = None
         self._task: asyncio.Task | None = None
+        self._refresh_task: asyncio.Task | None = None
+        self._next_refresh_at: datetime | None = None
+        self._token_listeners: list[Callable[[Mapping[str, Any]], Awaitable[None] | None]] = []
+        self._last_token_refresh_at: datetime | None = None
+        self._last_token_refresh_error: str | None = None
 
     async def async_start(self) -> None:
         """Start the sync worker when configuration is complete."""
@@ -189,6 +200,7 @@ class CloudSyncManager:
             organization_id=self.config.organization_id,
         )
         self._task = self.hass.async_create_task(self._worker.run_forever(interval_seconds=self.config.interval))
+        self._schedule_token_refresh()
 
     async def async_stop(self) -> None:
         """Stop the sync worker and release resources."""
@@ -199,6 +211,12 @@ class CloudSyncManager:
                 await self._task
         self._task = None
         self._worker = None
+        if self._refresh_task:
+            self._refresh_task.cancel()
+            with suppress(asyncio.CancelledError):
+                await self._refresh_task
+        self._refresh_task = None
+        self._next_refresh_at = None
         if self._owns_session and self._session is not None:
             await self._session.close()
             self._session = None
@@ -238,10 +256,132 @@ class CloudSyncManager:
         if expiry is not None:
             status["token_expires_in_seconds"] = max((expiry - now).total_seconds(), 0.0)
         status["token_expired"] = self.config.token_expired(now=now, threshold_seconds=30)
+        status["last_token_refresh_at"] = (
+            self._last_token_refresh_at.isoformat() if self._last_token_refresh_at else None
+        )
+        status["last_token_refresh_error"] = self._last_token_refresh_error
+        if self._next_refresh_at is not None:
+            status["next_token_refresh_at"] = self._next_refresh_at.isoformat()
+            status["next_token_refresh_in_seconds"] = max(
+                (self._next_refresh_at - now).total_seconds(),
+                0.0,
+            )
+        else:
+            status["next_token_refresh_at"] = None
+            status["next_token_refresh_in_seconds"] = None
         status["connection"] = self._connection_summary(status, now)
         return status
 
     # ------------------------------------------------------------------
+    def register_token_listener(self, listener: Callable[[Mapping[str, Any]], Awaitable[None] | None]) -> None:
+        """Register a callback invoked when cloud token options change."""
+
+        if listener in self._token_listeners:
+            return
+        self._token_listeners.append(listener)
+
+    async def async_update_tokens(self, tokens: CloudAuthTokens, *, base_url: str) -> dict[str, Any]:
+        """Persist refreshed tokens to the config entry and restart sync."""
+
+        opts = merge_cloud_tokens(self.entry.options, tokens, base_url=base_url)
+        self.hass.config_entries.async_update_entry(self.entry, options=opts)
+        self.entry.options = opts
+        self.config = CloudSyncConfig.from_options(opts)
+        await self.async_refresh()
+        await self._notify_token_listeners(opts)
+        return opts
+
+    async def async_trigger_token_refresh(
+        self,
+        *,
+        force: bool = False,
+        base_url: str | None = None,
+    ) -> dict[str, Any] | None:
+        """Refresh the cloud access token when expired or when forced."""
+
+        refresh_token = self.config.refresh_token
+        if not refresh_token:
+            return None
+        if not force and not self.config.token_expired(threshold_seconds=300):
+            return None
+        base_url = base_url or self.config.base_url
+        if not base_url:
+            raise CloudAuthError("cloud base URL missing for token refresh")
+
+        client = CloudAuthClient(base_url)
+        try:
+            tokens = await client.async_refresh(refresh_token)
+        except CloudAuthError as err:
+            self._last_token_refresh_at = datetime.now(tz=UTC)
+            self._last_token_refresh_error = str(err)
+            raise
+        finally:
+            await client.async_close()
+
+        opts = await self.async_update_tokens(tokens, base_url=base_url)
+        self._last_token_refresh_at = datetime.now(tz=UTC)
+        self._last_token_refresh_error = None
+        return opts
+
+    async def _notify_token_listeners(self, options: Mapping[str, Any]) -> None:
+        for listener in list(self._token_listeners):
+            try:
+                result = listener(options)
+                if asyncio.iscoroutine(result):
+                    await result
+            except Exception as err:  # pragma: no cover - defensive log
+                _LOGGER.debug("Token listener raised error: %s", err, exc_info=True)
+
+    def _schedule_token_refresh(self, *, fallback_seconds: int | None = None) -> None:
+        refresh_token = self.config.refresh_token
+        base_url = self.config.base_url
+        if not refresh_token or not base_url:
+            if self._refresh_task and not self._refresh_task.done():
+                self._refresh_task.cancel()
+            self._refresh_task = None
+            self._next_refresh_at = None
+            return
+
+        current = asyncio.current_task()
+        if self._refresh_task and not self._refresh_task.done() and self._refresh_task is not current:
+            self._refresh_task.cancel()
+        if self._refresh_task and self._refresh_task is current:
+            self._refresh_task = None
+
+        expiry = self.config.parsed_expiry()
+        if expiry is None:
+            if fallback_seconds is None:
+                self._next_refresh_at = None
+                return
+            delay = max(float(fallback_seconds), 0.0)
+        else:
+            now = datetime.now(tz=UTC)
+            delay = (expiry - now).total_seconds() - 300
+            if delay < 0:
+                delay = 0.0
+            if delay == 0.0 and fallback_seconds:
+                delay = max(float(fallback_seconds), 0.0)
+        self._next_refresh_at = datetime.now(tz=UTC) + timedelta(seconds=delay)
+        self._refresh_task = self.hass.async_create_task(self._auto_refresh_loop(delay))
+
+    async def _auto_refresh_loop(self, delay: float) -> None:
+        current = asyncio.current_task()
+        try:
+            if delay > 0:
+                await asyncio.sleep(delay)
+            try:
+                await self.async_trigger_token_refresh()
+            except CloudAuthError as err:
+                self._last_token_refresh_error = str(err)
+                _LOGGER.warning("Automatic token refresh failed: %s", err)
+                self._schedule_token_refresh(fallback_seconds=300)
+        except asyncio.CancelledError:
+            raise
+        finally:
+            if self._refresh_task is current:
+                self._refresh_task = None
+                self._next_refresh_at = None
+
     def _connection_summary(self, status: Mapping[str, Any], now: datetime) -> dict[str, Any]:
         configured = bool(status.get("configured"))
         summary: dict[str, Any] = {

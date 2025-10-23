@@ -584,7 +584,7 @@ async def test_cloud_refresh_updates_expiry(hass, tmp_path):
     )
     with (
         patch(
-            "custom_components.horticulture_assistant.services.CloudAuthClient.async_refresh",
+            "custom_components.horticulture_assistant.cloudsync.manager.CloudAuthClient.async_refresh",
             AsyncMock(return_value=tokens),
         ),
         patch.object(manager, "async_refresh", AsyncMock()) as refresh,
@@ -603,6 +603,7 @@ async def test_cloud_refresh_updates_expiry(hass, tmp_path):
     assert entry.options[CONF_CLOUD_ORGANIZATION_ID] == "org-1"
     assert response["tenant_id"] == "tenant-1"
     assert response["organization_id"] == "org-1"
+    assert response["token_expires_at"] == entry.options[CONF_CLOUD_TOKEN_EXPIRES_AT]
     refresh.assert_awaited()
 
 

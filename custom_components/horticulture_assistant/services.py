@@ -193,83 +193,26 @@ async def async_register_all(
             await profile_coord.async_request_refresh()
 
     async def _apply_cloud_tokens(tokens: CloudAuthTokens, *, base_url: str) -> dict[str, Any]:
-        """Merge new cloud token metadata into the config entry options."""
+        """Persist refreshed cloud tokens via the cloud manager when available."""
 
-        opts = dict(entry.options)
-        opts[CONF_CLOUD_BASE_URL] = base_url
-        opts[CONF_CLOUD_SYNC_ENABLED] = True
-        opts[CONF_CLOUD_TENANT_ID] = tokens.tenant_id or opts.get(CONF_CLOUD_TENANT_ID, "")
-        if tokens.device_token:
-            opts[CONF_CLOUD_DEVICE_TOKEN] = tokens.device_token
-        else:
-            opts.pop(CONF_CLOUD_DEVICE_TOKEN, None)
-        opts[CONF_CLOUD_ACCESS_TOKEN] = tokens.access_token
-        if tokens.refresh_token:
-            opts[CONF_CLOUD_REFRESH_TOKEN] = tokens.refresh_token
-        else:
-            opts.pop(CONF_CLOUD_REFRESH_TOKEN, None)
-        if tokens.expires_at:
-            opts[CONF_CLOUD_TOKEN_EXPIRES_AT] = tokens.expires_at.isoformat()
-        else:
-            opts.pop(CONF_CLOUD_TOKEN_EXPIRES_AT, None)
-        if tokens.account_email:
-            opts[CONF_CLOUD_ACCOUNT_EMAIL] = tokens.account_email
-        else:
-            opts.pop(CONF_CLOUD_ACCOUNT_EMAIL, None)
-        if tokens.roles:
-            opts[CONF_CLOUD_ACCOUNT_ROLES] = list(tokens.roles)
-        else:
-            opts.pop(CONF_CLOUD_ACCOUNT_ROLES, None)
-
-        available_orgs = [
-            {
-                "id": org.org_id,
-                "name": org.name,
-                "roles": list(org.roles),
-                "default": org.default,
-            }
-            for org in tokens.available_organizations()
-            if org.org_id
-        ]
-        if available_orgs:
-            opts[CONF_CLOUD_AVAILABLE_ORGANIZATIONS] = available_orgs
-        else:
-            opts.pop(CONF_CLOUD_AVAILABLE_ORGANIZATIONS, None)
-
-        selected_org = None
-        if tokens.organization_id:
-            selected_org = next(
-                (org for org in tokens.available_organizations() if org.org_id == tokens.organization_id),
-                None,
-            )
-        if selected_org is None:
-            selected_org = tokens.default_organization()
-
-        org_id = tokens.organization_id or (selected_org.org_id if selected_org else None)
-        org_name = tokens.organization_name or (selected_org.name if selected_org else None)
-        org_roles = list(selected_org.roles) if selected_org else []
-        org_role = tokens.organization_role or (org_roles[0] if org_roles else None)
-
-        if org_id:
-            opts[CONF_CLOUD_ORGANIZATION_ID] = org_id
-        else:
-            opts.pop(CONF_CLOUD_ORGANIZATION_ID, None)
-        if org_name:
-            opts[CONF_CLOUD_ORGANIZATION_NAME] = org_name
-        else:
-            opts.pop(CONF_CLOUD_ORGANIZATION_NAME, None)
-        if org_role:
-            opts[CONF_CLOUD_ORGANIZATION_ROLE] = org_role
-        else:
-            opts.pop(CONF_CLOUD_ORGANIZATION_ROLE, None)
-
-        hass.config_entries.async_update_entry(entry, options=opts)
-        entry.options = opts
-        _update_entitlements(opts)
         if cloud_manager is not None:
-            await cloud_manager.async_refresh()
-        registry.publish_full_snapshot()
+            opts = await cloud_manager.async_update_tokens(tokens, base_url=base_url)
+        else:
+            from .cloudsync.options import merge_cloud_tokens  # local import to avoid cycle
+
+            opts = merge_cloud_tokens(entry.options, tokens, base_url=base_url)
+            hass.config_entries.async_update_entry(entry, options=opts)
+            entry.options = opts
+            _update_entitlements(opts)
+            registry.publish_full_snapshot()
         return opts
+
+    async def _on_tokens_updated(opts: Mapping[str, Any]) -> None:
+        _update_entitlements(opts)
+        registry.publish_full_snapshot()
+
+    if cloud_manager is not None:
+        cloud_manager.register_token_listener(_on_tokens_updated)
 
     async def _srv_replace_sensor(call) -> None:
         profile_id: str = call.data["profile_id"]
@@ -674,12 +617,28 @@ async def async_register_all(
         return {"status": "logged_out"}
 
     async def _srv_cloud_refresh(call) -> ServiceResponse:
-        refresh_token = entry.options.get(CONF_CLOUD_REFRESH_TOKEN)
-        if not refresh_token:
-            raise HomeAssistantError("no refresh token available")
         base_url = str(call.data.get("base_url") or entry.options.get(CONF_CLOUD_BASE_URL, "")).strip()
         if not base_url:
             raise HomeAssistantError("base_url is required for token refresh")
+
+        if cloud_manager is not None:
+            try:
+                opts = await cloud_manager.async_trigger_token_refresh(force=True, base_url=base_url)
+            except CloudAuthError as err:
+                raise HomeAssistantError(str(err)) from err
+            if not opts:
+                raise HomeAssistantError("token refresh did not update credentials")
+            expiry = opts.get(CONF_CLOUD_TOKEN_EXPIRES_AT) or entry.options.get(CONF_CLOUD_TOKEN_EXPIRES_AT)
+            return {
+                "token_expires_at": expiry,
+                "tenant_id": opts.get(CONF_CLOUD_TENANT_ID),
+                "organization_id": opts.get(CONF_CLOUD_ORGANIZATION_ID),
+                "organization_name": opts.get(CONF_CLOUD_ORGANIZATION_NAME),
+            }
+
+        refresh_token = entry.options.get(CONF_CLOUD_REFRESH_TOKEN)
+        if not refresh_token:
+            raise HomeAssistantError("no refresh token available")
 
         session = async_get_clientsession(hass)
         client = CloudAuthClient(base_url, session=session)

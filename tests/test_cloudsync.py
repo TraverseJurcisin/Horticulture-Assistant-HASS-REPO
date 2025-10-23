@@ -4,7 +4,7 @@ import asyncio
 import json
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import cast
+from typing import Any, cast
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -12,6 +12,9 @@ from aiohttp import ClientSession
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.cloudsync import (
+    CloudAuthError,
+    CloudAuthTokens,
+    CloudSyncConfig,
     CloudSyncManager,
     ConflictPolicy,
     ConflictResolver,
@@ -23,11 +26,19 @@ from custom_components.horticulture_assistant.cloudsync import (
     resolve_result_to_resolved_target,
 )
 from custom_components.horticulture_assistant.const import (
+    CONF_CLOUD_ACCESS_TOKEN,
+    CONF_CLOUD_ACCOUNT_EMAIL,
+    CONF_CLOUD_ACCOUNT_ROLES,
     CONF_CLOUD_BASE_URL,
     CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_ORGANIZATION_ID,
+    CONF_CLOUD_ORGANIZATION_NAME,
+    CONF_CLOUD_ORGANIZATION_ROLE,
+    CONF_CLOUD_REFRESH_TOKEN,
     CONF_CLOUD_SYNC_ENABLED,
     CONF_CLOUD_SYNC_INTERVAL,
     CONF_CLOUD_TENANT_ID,
+    CONF_CLOUD_TOKEN_EXPIRES_AT,
     DOMAIN,
 )
 
@@ -424,3 +435,115 @@ async def test_cloud_sync_manager_starts_worker(hass, tmp_path):
         worker.run_forever.assert_awaited()
         await manager.async_stop()
         session.close.assert_awaited()
+
+
+@pytest.mark.asyncio
+async def test_cloud_manager_update_tokens_notifies_listeners(hass, tmp_path):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+            CONF_CLOUD_TENANT_ID: "tenant-1",
+            CONF_CLOUD_DEVICE_TOKEN: "device-1",
+        },
+    )
+    entry.add_to_hass(hass)
+    manager = CloudSyncManager(hass, entry, store_path=tmp_path / "sync.db")
+
+    listener_calls: list[dict[str, Any]] = []
+
+    async def _listener(opts):
+        listener_calls.append(dict(opts))
+
+    manager.register_token_listener(_listener)
+
+    tokens = CloudAuthTokens(
+        access_token="token-new",
+        refresh_token="refresh-new",
+        expires_at=datetime(2026, 1, 1, tzinfo=UTC),
+        tenant_id="tenant-1",
+        device_token="device-2",
+        account_email="user@example.com",
+        roles=("premium",),
+        organization_id="org-1",
+        organization_name="Org One",
+        organization_role="admin",
+    )
+
+    with patch.object(manager, "async_refresh", AsyncMock()) as refresh:
+        opts = await manager.async_update_tokens(tokens, base_url="https://cloud.example")
+
+    assert entry.options[CONF_CLOUD_ACCESS_TOKEN] == "token-new"
+    assert entry.options[CONF_CLOUD_REFRESH_TOKEN] == "refresh-new"
+    assert entry.options[CONF_CLOUD_DEVICE_TOKEN] == "device-2"
+    assert entry.options[CONF_CLOUD_ACCOUNT_EMAIL] == "user@example.com"
+    assert entry.options[CONF_CLOUD_ACCOUNT_ROLES] == ["premium"]
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ID] == "org-1"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_NAME] == "Org One"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ROLE] == "admin"
+    assert entry.options[CONF_CLOUD_TOKEN_EXPIRES_AT].startswith("2026-01-01")
+    refresh.assert_awaited()
+    assert listener_calls
+    assert listener_calls[0][CONF_CLOUD_ACCESS_TOKEN] == "token-new"
+    assert opts[CONF_CLOUD_ORGANIZATION_NAME] == "Org One"
+
+
+@pytest.mark.asyncio
+async def test_cloud_manager_trigger_refresh_records_errors(hass, tmp_path):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+            CONF_CLOUD_TENANT_ID: "tenant-1",
+            CONF_CLOUD_REFRESH_TOKEN: "refresh-old",
+            CONF_CLOUD_ACCESS_TOKEN: "access-old",
+        },
+    )
+    entry.add_to_hass(hass)
+    manager = CloudSyncManager(hass, entry, store_path=tmp_path / "sync.db")
+    manager.config = CloudSyncConfig.from_options(entry.options)
+
+    with (
+        patch(
+            "custom_components.horticulture_assistant.cloudsync.manager.CloudAuthClient.async_refresh",
+            AsyncMock(side_effect=CloudAuthError("boom")),
+        ),
+        pytest.raises(CloudAuthError),
+    ):
+        await manager.async_trigger_token_refresh(force=True)
+
+    status = manager.status()
+    assert status["last_token_refresh_error"] == "boom"
+    assert status["last_token_refresh_at"] is not None
+
+
+@pytest.mark.asyncio
+async def test_cloud_manager_auto_refresh_schedules_task(hass, tmp_path):
+    future = datetime.now(tz=UTC) + timedelta(hours=2)
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+            CONF_CLOUD_TENANT_ID: "tenant-1",
+            CONF_CLOUD_DEVICE_TOKEN: "device-1",
+            CONF_CLOUD_ACCESS_TOKEN: "access",
+            CONF_CLOUD_REFRESH_TOKEN: "refresh",
+            CONF_CLOUD_TOKEN_EXPIRES_AT: future.isoformat(),
+        },
+    )
+    entry.add_to_hass(hass)
+    with patch("custom_components.horticulture_assistant.cloudsync.manager.EdgeSyncWorker") as worker_cls:
+        worker = MagicMock()
+        worker.run_forever = AsyncMock()
+        worker_cls.return_value = worker
+        manager = CloudSyncManager(hass, entry, store_path=tmp_path / "sync.db")
+        await manager.async_start()
+        status = manager.status()
+        assert status["next_token_refresh_at"] is not None
+        await manager.async_stop()
