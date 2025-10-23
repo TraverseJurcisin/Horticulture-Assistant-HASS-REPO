@@ -141,3 +141,26 @@ record_harvest_event:
       required: false
       description: "Additional harvest metadata such as cultivar phenotype notes."
       selector: { object: {} }
+
+profile_provenance:
+  name: "Inspect target provenance"
+  description: "Return provenance details for all resolved targets in a profile."
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    include_overlay:
+      required: false
+      default: false
+      description: "Include overlay/parent metadata for inherited targets."
+      selector: { boolean: {} }
+    include_extras:
+      required: false
+      default: false
+      description: "Include raw extras payload captured during resolution."
+      selector: { boolean: {} }
+    include_citations:
+      required: false
+      default: false
+      description: "Include citation lists for each resolved target."
+      selector: { boolean: {} }

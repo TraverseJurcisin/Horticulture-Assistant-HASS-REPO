@@ -93,6 +93,7 @@ SERVICE_GENERATE_PROFILE = "generate_profile"
 SERVICE_CLEAR_CACHES = "clear_caches"
 SERVICE_RECORD_RUN_EVENT = "record_run_event"
 SERVICE_RECORD_HARVEST_EVENT = "record_harvest_event"
+SERVICE_PROFILE_PROVENANCE = "profile_provenance"
 
 SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_REPLACE_SENSOR,
@@ -119,6 +120,7 @@ SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_CLEAR_CACHES,
     SERVICE_RECORD_RUN_EVENT,
     SERVICE_RECORD_HARVEST_EVENT,
+    SERVICE_PROFILE_PROVENANCE,
 )
 
 
@@ -321,6 +323,63 @@ async def async_register_all(
             "harvest_event": stored.to_json(),
             "statistics": statistics,
         }
+
+    async def _srv_profile_provenance(call) -> ServiceResponse:
+        profile_id: str = call.data["profile_id"]
+        include_overlay: bool = bool(call.data.get("include_overlay", False))
+        include_extras: bool = bool(call.data.get("include_extras", False))
+        include_citations: bool = bool(call.data.get("include_citations", False))
+
+        profile = registry.get_profile(profile_id)
+        if profile is None:
+            raise HomeAssistantError(f"unknown profile {profile_id}")
+
+        profile.refresh_sections()
+        summary = profile.provenance_summary()
+        detailed = profile.resolved_provenance(
+            include_overlay=include_overlay,
+            include_extras=include_extras,
+            include_citations=include_citations,
+        )
+
+        inherited: list[str] = []
+        overrides: list[str] = []
+        external: list[str] = []
+        computed: list[str] = []
+
+        for key, meta in summary.items():
+            source = str(meta.get("source_type"))
+            if meta.get("is_inherited"):
+                inherited.append(key)
+            elif source in {"manual", "local_override"}:
+                overrides.append(key)
+            elif source == "computed":
+                computed.append(key)
+            else:
+                external.append(key)
+
+        response: dict[str, Any] = {
+            "profile_id": profile_id,
+            "profile_name": profile.display_name,
+            "summary": summary,
+            "resolved_provenance": detailed,
+            "groups": {
+                "inherited": sorted(inherited),
+                "overrides": sorted(overrides),
+                "external": sorted(external),
+                "computed": sorted(computed),
+            },
+            "counts": {
+                "total": len(summary),
+                "inherited": len(inherited),
+                "overrides": len(overrides),
+                "external": len(external),
+                "computed": len(computed),
+            },
+        }
+        if profile.last_resolved:
+            response["last_resolved"] = profile.last_resolved
+        return response
 
     async def _srv_import_profiles(call) -> None:
         path = call.data["path"]
@@ -593,6 +652,20 @@ async def async_register_all(
                 vol.Optional("dry_weight_grams"): vol.Coerce(float),
                 vol.Optional("fruit_count"): vol.Coerce(int),
                 vol.Optional("metadata"): dict,
+            }
+        ),
+        supports_response=True,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_PROFILE_PROVENANCE,
+        _srv_profile_provenance,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Optional("include_overlay", default=False): bool,
+                vol.Optional("include_extras", default=False): bool,
+                vol.Optional("include_citations", default=False): bool,
             }
         ),
         supports_response=True,

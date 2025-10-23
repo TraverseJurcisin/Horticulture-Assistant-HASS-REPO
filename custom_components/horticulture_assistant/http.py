@@ -41,6 +41,7 @@ def _serialise_target(target: ResolvedTarget) -> dict:
         "value": target.value,
         "annotation": target.annotation.to_json(),
         "citations": [asdict(cit) for cit in target.citations],
+        "provenance": target.annotation.provenance_payload(),
     }
 
 
@@ -81,6 +82,7 @@ class ProfileDetailView(HomeAssistantView):
         payload = profile.to_json()
         payload["summary"] = profile.summary()
         payload["resolved_values"] = profile.resolved_values()
+        payload["provenance_summary"] = profile.provenance_summary()
         payload["computed_stats"] = [snapshot.to_json() for snapshot in profile.computed_stats]
         return self.json(payload)
 

@@ -7,6 +7,7 @@ import voluptuous as vol
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.const import CONF_API_KEY, DOMAIN
+from custom_components.horticulture_assistant.profile.schema import FieldAnnotation, ResolvedTarget
 from custom_components.horticulture_assistant.services import er
 
 pytestmark = [
@@ -225,6 +226,58 @@ async def test_record_harvest_event_service_updates_statistics(hass, tmp_path):
     assert profile and profile.statistics
     metrics = profile.statistics[0].metrics
     assert metrics["total_yield_grams"] == 42.5
+
+
+async def test_profile_provenance_service_returns_counts(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get("p1")
+    assert profile is not None
+
+    manual_annotation = FieldAnnotation(source_type="manual", method="manual")
+    profile.resolved_targets["humidity_optimal"] = ResolvedTarget(
+        value=60,
+        annotation=manual_annotation,
+        citations=[],
+    )
+    inherited_annotation = FieldAnnotation(
+        source_type="inheritance",
+        source_ref=["p1", "species"],
+        method="inheritance",
+        extras={
+            "inheritance_depth": 1,
+            "source_profile_id": "species",
+            "source_profile_type": "species",
+            "source_profile_name": "Species",
+        },
+    )
+    profile.resolved_targets["temperature_optimal"] = ResolvedTarget(
+        value=21.5,
+        annotation=inherited_annotation,
+        citations=[],
+    )
+    profile.last_resolved = "2024-01-01T00:00:00Z"
+    profile.refresh_sections()
+
+    response = await hass.services.async_call(
+        DOMAIN,
+        "profile_provenance",
+        {"profile_id": "p1", "include_extras": True},
+        blocking=True,
+        return_response=True,
+    )
+
+    assert response["profile_id"] == "p1"
+    counts = response["counts"]
+    assert counts["total"] == 2
+    assert counts["overrides"] == 1
+    assert counts["inherited"] == 1
+    summary = response["summary"]
+    assert summary["temperature_optimal"]["is_inherited"] is True
+    assert summary["humidity_optimal"]["source_type"] == "manual"
+    groups = response["groups"]
+    assert "temperature_optimal" in groups["inherited"]
+    assert "humidity_optimal" in groups["overrides"]
 
 
 async def test_export_profiles_overwrites_existing(hass, tmp_path):

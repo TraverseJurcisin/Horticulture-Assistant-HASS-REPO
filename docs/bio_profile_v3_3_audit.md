@@ -7,7 +7,7 @@ This re-audit summarizes the current alignment between the Horticulture Assistan
 ### Hierarchical Profile Inheritance and Provenance
 - BioProfiles now support hierarchical inheritance spanning species, cultivar, and individual line levels.
 - Each profile dynamically resolves missing values from its declared parent, ensuring changes at the species level cascade to cultivars and lines without manual duplication.
-- Threshold provenance is captured internally for every resolved value, distinguishing between inherited defaults and user overrides. This metadata is not yet exposed in the Home Assistant UI.
+- Threshold provenance is captured for every resolved value and is now exposed through HTTP APIs, diagnostics sensors, and a dedicated `profile_provenance` service so users can see inherited versus overridden targets directly inside Home Assistant.
 
 ### Schema Definitions and Data Validation
 - BioProfile JSON payloads are organized into structured sections (environment, nutrients, etc.) that match the v3.3 schema definitions.
@@ -32,9 +32,9 @@ This re-audit summarizes the current alignment between the Horticulture Assistan
 
 ### Home Assistant Integration Depth
 - Each BioProfile is surfaced as a Home Assistant device with sensor and binary sensor entities for resolved thresholds and derived analytics such as dew point and VPD.
-- Dedicated success-rate sensors now expose the most recent cultivation outcomes, making it easier to build dashboards that highlight compliance trends and stress events.
+- Dedicated success-rate sensors expose the most recent cultivation outcomes, and the new provenance diagnostic sensor summarises inherited versus overridden targets alongside contributor metadata.
 - Config and options flows allow users to create profiles, clone defaults, attach sensors, and adjust thresholds directly within Home Assistant.
-- Additional polishing opportunities include displaying provenance metadata, enhancing device info, and expanding history/analytics cards.
+- Additional polishing opportunities include enhancing device info and expanding history/analytics cards as the new provenance data is incorporated into dashboards.
 
 ### Multi-Tenant Backend Readiness
 - Cloud-bound operations are scoped by tenant identifiers, providing the foundation for multi-tenant isolation.
@@ -59,8 +59,6 @@ The following task backlogs capture the remaining work areas identified by the a
 - Integrate the fertilizer and nutrient datasets into profile management for logging nutrient applications with schema validation.
 - Implement optional AI or automation hooks (e.g., irrigation scheduling, setpoint optimization) with appropriate monetization controls.
 
-### Home Assistant
-- Expose provenance information in the UI to highlight inherited versus overridden values in editors and entity attributes.
 - Add Home Assistant UI support for cloud connectivity, including login/signup flows and sync status indicators.
 - Display aggregated statistics and history within Home Assistant, such as cards for yield trends, average VPD over time, and the new success-rate rollups.
 - Refine device information to highlight species and cultivar context within the device panel.

@@ -28,9 +28,12 @@ HorticultureEntity = entity_mod.HorticultureEntity
 ProfileMetricSensor = sensor_mod.ProfileMetricSensor
 PROFILE_SENSOR_DESCRIPTIONS = sensor_mod.PROFILE_SENSOR_DESCRIPTIONS
 ProfileSuccessSensor = sensor_mod.ProfileSuccessSensor
+ProfileProvenanceSensor = sensor_mod.ProfileProvenanceSensor
 BioProfile = schema_mod.BioProfile
 ComputedStatSnapshot = schema_mod.ComputedStatSnapshot
 ProfileContribution = schema_mod.ProfileContribution
+FieldAnnotation = schema_mod.FieldAnnotation
+ResolvedTarget = schema_mod.ResolvedTarget
 
 
 @pytest.mark.asyncio
@@ -271,3 +274,46 @@ async def test_profile_success_sensor_uses_latest_snapshot(hass):
     assert attrs["best_success_percent"] == pytest.approx(95.0)
     assert attrs["worst_success_percent"] == pytest.approx(90.0)
     assert attrs["contributors"][0]["profile_id"] == "avocado"
+
+
+@pytest.mark.asyncio
+async def test_profile_provenance_sensor_summarises_sources(hass):
+    options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    await coordinator.async_config_entry_first_refresh()
+
+    profile = BioProfile(profile_id="avocado", display_name="Avocado")
+    profile.resolved_targets["humidity_optimal"] = ResolvedTarget(
+        value=60,
+        annotation=FieldAnnotation(source_type="manual", method="manual"),
+        citations=[],
+    )
+    profile.resolved_targets["temperature_optimal"] = ResolvedTarget(
+        value=21.5,
+        annotation=FieldAnnotation(
+            source_type="inheritance",
+            source_ref=["avocado", "species"],
+            method="inheritance",
+            extras={"inheritance_depth": 1, "source_profile_id": "species"},
+        ),
+        citations=[],
+    )
+    profile.refresh_sections()
+
+    class DummyRegistry:
+        def __init__(self, prof):
+            self._profile = prof
+
+        def get_profile(self, profile_id):
+            if profile_id == self._profile.profile_id:
+                return self._profile
+            return None
+
+    sensor = ProfileProvenanceSensor(coordinator, DummyRegistry(profile), "avocado", "Avocado")
+    assert sensor.native_value == 1
+    attrs = sensor.extra_state_attributes
+    assert attrs["inherited_count"] == 1
+    assert attrs["override_count"] == 1
+    assert attrs["total_targets"] == 2
+    assert "temperature_optimal" in attrs["inherited_fields"]
+    assert attrs["provenance_map"]["humidity_optimal"]["source_type"] == "manual"

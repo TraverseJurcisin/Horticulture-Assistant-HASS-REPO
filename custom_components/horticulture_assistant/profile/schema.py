@@ -287,6 +287,60 @@ class FieldAnnotation:
             extras=dict(extras) if isinstance(extras, dict) else {},
         )
 
+    def provenance_payload(
+        self,
+        *,
+        include_overlay: bool = True,
+        include_extras: bool = True,
+    ) -> dict[str, Any]:
+        """Return a serialisable provenance summary for UI/diagnostics."""
+
+        extras = dict(self.extras or {})
+        inheritance_depth = extras.get("inheritance_depth")
+        inheritance_chain = extras.get("inheritance_chain") or list(self.source_ref)
+        provenance_chain = extras.get("provenance") or inheritance_chain
+        origin_profile_id = extras.get("source_profile_id")
+        if origin_profile_id is None and provenance_chain:
+            origin_profile_id = provenance_chain[-1]
+
+        payload: dict[str, Any] = {
+            "source_type": self.source_type,
+            "source_ref": list(self.source_ref),
+            "method": self.method,
+            "confidence": self.confidence,
+            "staleness_days": self.staleness_days,
+            "is_stale": self.is_stale,
+            "inheritance_depth": inheritance_depth,
+            "inheritance_chain": list(inheritance_chain) if inheritance_chain else None,
+            "inheritance_reason": extras.get("inheritance_reason"),
+            "provenance_chain": list(provenance_chain) if provenance_chain else None,
+            "origin_profile_id": origin_profile_id,
+            "origin_profile_type": extras.get("source_profile_type"),
+            "origin_profile_name": extras.get("source_profile_name"),
+        }
+
+        payload["is_inherited"] = bool(
+            self.source_type == "inheritance" or (inheritance_depth is not None)
+        )
+
+        if include_overlay:
+            if self.overlay is not None:
+                payload["overlay"] = self.overlay
+            if self.overlay_provenance:
+                payload["overlay_provenance"] = list(self.overlay_provenance)
+            if self.overlay_source_type is not None:
+                payload["overlay_source_type"] = self.overlay_source_type
+            if self.overlay_source_ref:
+                payload["overlay_source_ref"] = list(self.overlay_source_ref)
+            if self.overlay_method is not None:
+                payload["overlay_method"] = self.overlay_method
+
+        if include_extras and extras:
+            payload["extras"] = extras
+
+        # Remove keys with ``None`` values for a cleaner payload when requested.
+        return {key: value for key, value in payload.items() if value is not None}
+
 
 @dataclass
 class ProfileLibrarySection:
@@ -555,6 +609,7 @@ class ProfileResolvedSection:
     variables: dict[str, Any] = field(default_factory=dict)
     citation_map: dict[str, Any] = field(default_factory=dict)
     metadata: dict[str, Any] = field(default_factory=dict)
+    provenance_map: dict[str, Any] = field(default_factory=dict)
     last_resolved: str | None = None
 
     def to_json(self) -> dict[str, Any]:
@@ -568,6 +623,8 @@ class ProfileResolvedSection:
             payload["citation_map"] = dict(self.citation_map)
         if self.metadata:
             payload["metadata"] = dict(self.metadata)
+        if self.provenance_map:
+            payload["provenance_map"] = dict(self.provenance_map)
         if self.last_resolved is not None:
             payload["last_resolved"] = self.last_resolved
         return payload
@@ -586,6 +643,7 @@ class ProfileResolvedSection:
             variables.setdefault(str(key), target.to_legacy())
         citation_map = _as_dict(data.get("citation_map"))
         metadata = _as_dict(data.get("metadata"))
+        provenance_map = _as_dict(data.get("provenance_map"))
         last_resolved = data.get("last_resolved")
         return ProfileResolvedSection(
             thresholds=thresholds,
@@ -593,6 +651,7 @@ class ProfileResolvedSection:
             variables=variables,
             citation_map=citation_map,
             metadata=metadata,
+            provenance_map=provenance_map,
             last_resolved=last_resolved,
         )
 
@@ -840,6 +899,40 @@ class BioProfile:
 
         return {key: target.value for key, target in self.resolved_targets.items()}
 
+    def resolved_provenance(
+        self,
+        *,
+        include_overlay: bool = True,
+        include_extras: bool = True,
+        include_citations: bool = True,
+    ) -> dict[str, Any]:
+        """Return provenance metadata for each resolved target."""
+
+        provenance: dict[str, Any] = {}
+        for key, target in self.resolved_targets.items():
+            payload = target.annotation.provenance_payload(
+                include_overlay=include_overlay,
+                include_extras=include_extras,
+            )
+            payload["value"] = target.value
+            if include_citations and target.citations:
+                payload["citations"] = [asdict(cit) for cit in target.citations]
+            provenance[str(key)] = payload
+        return provenance
+
+    def provenance_summary(self) -> dict[str, Any]:
+        """Return a compact provenance summary for UI summaries."""
+
+        summary: dict[str, Any] = {}
+        for key, target in self.resolved_targets.items():
+            payload = target.annotation.provenance_payload(
+                include_overlay=False,
+                include_extras=False,
+            )
+            payload["value"] = target.value
+            summary[str(key)] = payload
+        return summary
+
     def add_run_event(self, event: RunEvent) -> None:
         """Append a normalised run event to the local history."""
 
@@ -866,6 +959,7 @@ class BioProfile:
         resolved_payload = {key: value.to_json() for key, value in self.resolved_targets.items()}
         variables_payload = {key: value.to_legacy() for key, value in self.resolved_targets.items()}
         thresholds_payload = self.resolved_values()
+        provenance_payload = self.resolved_provenance()
 
         sections = self._ensure_sections()
         library_section = sections.library
@@ -893,6 +987,7 @@ class BioProfile:
             "resolved_targets": resolved_payload,
             "variables": variables_payload,
             "thresholds": thresholds_payload,
+            "resolved_provenance": provenance_payload,
             "computed_stats": [snapshot.to_json() for snapshot in self.computed_stats],
             "general": self.general,
             "citations": [asdict(cit) for cit in self.citations],
@@ -966,6 +1061,7 @@ class BioProfile:
             "parents": list(self.parents),
             "sensors": sensor_summary,
             "targets": self.resolved_values(),
+            "provenance": self.provenance_summary(),
             "tags": list(self.tags),
             "last_resolved": self.last_resolved,
         }
@@ -1142,6 +1238,9 @@ class BioProfile:
             citation_map = resolved_section.citation_map
             if citation_map:
                 local_metadata.setdefault("citation_map", dict(citation_map))
+            provenance_map = resolved_section.provenance_map
+            if provenance_map:
+                local_metadata.setdefault("provenance_map", dict(provenance_map))
 
         extra_kwargs: dict[str, Any] = {}
         if profile_type == "species":
@@ -1260,6 +1359,7 @@ class BioProfile:
             variables=variables,
             citation_map=citation_map,
             metadata=metadata,
+            provenance_map=self.provenance_summary(),
             last_resolved=self.last_resolved,
         )
 
@@ -1303,6 +1403,11 @@ class BioProfile:
         if resolved.citation_map:
             merged_citation_map.update(resolved.citation_map)
         resolved.citation_map = merged_citation_map
+
+        merged_provenance_map = dict(existing.resolved.provenance_map)
+        if resolved.provenance_map:
+            merged_provenance_map.update(resolved.provenance_map)
+        resolved.provenance_map = merged_provenance_map
 
         merged_computed_metadata = dict(existing.computed.metadata)
         merged_computed_metadata.update(computed.metadata)

@@ -214,6 +214,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["status"]))
             if registry is not None:
                 sensors.append(ProfileSuccessSensor(profile_coord, registry, pid, name))
+                sensors.append(ProfileProvenanceSensor(profile_coord, registry, pid, name))
 
     cloud_manager = stored.get("cloud_sync_manager")
     if cloud_manager:
@@ -500,3 +501,93 @@ class ProfileSuccessSensor(HorticultureEntity, SensorEntity):
         if snapshot.contributions:
             attrs["contribution_weights"] = [contrib.to_json() for contrib in snapshot.contributions]
         return attrs or None
+
+
+class ProfileProvenanceSensor(HorticultureEntity, SensorEntity):
+    """Diagnostic sensor summarising resolved target provenance."""
+
+    _attr_icon = "mdi:source-branch"
+    _attr_native_unit_of_measurement = "targets"
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(
+        self,
+        coordinator: HorticultureCoordinator,
+        registry,
+        profile_id: str,
+        profile_name: str,
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._registry = registry
+        self._attr_unique_id = f"{profile_id}:provenance"
+        self._attr_name = "Target Provenance"
+
+    def _get_profile(self):
+        getter = getattr(self._registry, "get_profile", None)
+        if getter is None:
+            getter = getattr(self._registry, "get", None)
+        if getter is None:
+            return None
+        profile = getter(self._profile_id)
+        if profile is not None:
+            profile.refresh_sections()
+        return profile
+
+    def _provenance_summary(self) -> dict[str, Any] | None:
+        profile = self._get_profile()
+        if profile is None:
+            return None
+        return profile.provenance_summary()
+
+    def native_value(self):
+        summary = self._provenance_summary()
+        if not summary:
+            return None
+        inherited = [key for key, meta in summary.items() if meta.get("is_inherited")]
+        return len(inherited)
+
+    def extra_state_attributes(self):
+        profile = self._get_profile()
+        if profile is None:
+            return None
+        summary = profile.provenance_summary()
+        detailed = profile.resolved_provenance(
+            include_overlay=False,
+            include_extras=True,
+            include_citations=False,
+        )
+
+        inherited: list[str] = []
+        overrides: list[str] = []
+        external: list[str] = []
+        computed: list[str] = []
+
+        for key, meta in summary.items():
+            source = str(meta.get("source_type"))
+            if meta.get("is_inherited"):
+                inherited.append(key)
+            elif source in {"manual", "local_override"}:
+                overrides.append(key)
+            elif source == "computed":
+                computed.append(key)
+            else:
+                external.append(key)
+
+        attrs: dict[str, Any] = {
+            "total_targets": len(summary),
+            "inherited_count": len(inherited),
+            "override_count": len(overrides),
+            "external_count": len(external),
+            "computed_count": len(computed),
+            "inherited_fields": sorted(inherited),
+            "override_fields": sorted(overrides),
+            "external_fields": sorted(external),
+            "computed_fields": sorted(computed),
+            "provenance_map": summary,
+            "detailed_provenance": detailed,
+            "profile_name": profile.display_name,
+        }
+        if profile.last_resolved:
+            attrs["last_resolved"] = profile.last_resolved
+        return attrs

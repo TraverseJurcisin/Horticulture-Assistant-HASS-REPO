@@ -61,6 +61,9 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert profile_id in summaries
     assert summaries[profile_id]["name"] == "Heritage Tomato"
     assert summaries[profile_id]["targets"]["vpd_max"] == pytest.approx(1.2)
+    provenance = summaries[profile_id]["provenance"]["vpd_max"]
+    assert provenance["source_type"] == "manual"
+    assert not provenance.get("is_inherited")
     assert summaries[profile_id]["computed_stats"]
     success_summary = summaries[profile_id].get("success")
     assert success_summary is not None
@@ -73,6 +76,8 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert detail["profile_id"] == profile_id
     assert "resolved_targets" in detail and "vpd_max" in detail["resolved_targets"]
     assert detail["resolved_targets"]["vpd_max"]["value"] == pytest.approx(1.2)
+    assert detail["resolved_provenance"]["vpd_max"]["source_type"] == "manual"
+    assert detail["provenance_summary"]["vpd_max"]["value"] == pytest.approx(1.2)
     assert any(snap["stats_version"] == "environment/v1" for snap in detail["computed_stats"])
     assert any(snap["stats_version"] == "success/v1" for snap in detail["computed_stats"])
 
@@ -82,6 +87,7 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert target_payload["profile_id"] == profile_id
     assert target_payload["target"]["value"] == pytest.approx(1.2)
     assert target_payload["target"]["annotation"]["source_type"] == "manual"
+    assert target_payload["target"]["provenance"]["source_type"] == "manual"
 
     missing_resp = await client.get(f"/api/horticulture_assistant/profiles/{profile_id}/targets/missing")
     assert missing_resp.status == 404
