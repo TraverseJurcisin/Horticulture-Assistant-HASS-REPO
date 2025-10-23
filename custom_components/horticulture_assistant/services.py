@@ -9,53 +9,65 @@ becoming monolithic.
 from __future__ import annotations
 
 import contextlib
+import importlib
+import importlib.util
 import logging
 import types
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, Final
+from typing import Any, Final
 
+import homeassistant.core as ha_core
 import voluptuous as vol
 from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-if TYPE_CHECKING:  # pragma: no cover - imported for type checkers only
-    from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
-    from homeassistant.helpers import config_validation as cv
-    from homeassistant.helpers import entity_registry as er
-    from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-else:
-    try:  # pragma: no cover - exercised during runtime
-        from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse
-    except Exception:  # pragma: no cover - fallback when Home Assistant not installed
-        HomeAssistant = Any  # type: ignore[assignment]
-        ServiceCall = Any  # type: ignore[assignment]
-        ServiceResponse = Any  # type: ignore[assignment]
-
-    try:  # pragma: no cover - exercised during runtime
-        from homeassistant.helpers import config_validation as cv  # type: ignore[assignment]
-    except Exception:  # pragma: no cover - fallback for standalone tests
-        cv = types.SimpleNamespace(entity_id=lambda value: value)  # type: ignore[assignment]
-
-    try:  # pragma: no cover - exercised during runtime
-        from homeassistant.helpers import entity_registry as er  # type: ignore[assignment]
-    except Exception:  # pragma: no cover - fallback for standalone tests
-        er = types.SimpleNamespace()
-
-    try:  # pragma: no cover - exercised during runtime
-        from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-    except Exception:  # pragma: no cover - fallback for standalone tests
-        DataUpdateCoordinator = Any  # type: ignore[assignment]
-        UpdateFailed = Any  # type: ignore[assignment]
-
-from .const import CONF_PROFILES, DOMAIN
+from .cloudsync.auth import CloudAuthClient, CloudAuthError
+from .const import (
+    CONF_CLOUD_ACCESS_TOKEN,
+    CONF_CLOUD_ACCOUNT_EMAIL,
+    CONF_CLOUD_ACCOUNT_ROLES,
+    CONF_CLOUD_BASE_URL,
+    CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_REFRESH_TOKEN,
+    CONF_CLOUD_SYNC_ENABLED,
+    CONF_CLOUD_TENANT_ID,
+    CONF_CLOUD_TOKEN_EXPIRES_AT,
+    CONF_PROFILES,
+    DOMAIN,
+)
 from .irrigation_bridge import async_apply_irrigation
 from .profile.statistics import SUCCESS_STATS_VERSION
 from .profile_registry import ProfileRegistry
 from .storage import LocalStore
 
+_ER_SPEC = importlib.util.find_spec("homeassistant.helpers.entity_registry")
+if _ER_SPEC is not None:  # pragma: no branch - structure for clarity
+    er = importlib.import_module("homeassistant.helpers.entity_registry")
+else:  # pragma: no cover - fallback used in unit tests without Home Assistant
+
+    class _EntityRegistryStub:
+        def async_get_or_create(self, *args, **kwargs):
+            return types.SimpleNamespace()
+
+        def async_get_entity_id(self, *args, **kwargs):
+            return None
+
+        def async_get(self, entity_id):
+            return None
+
+    er = types.SimpleNamespace(async_get=lambda _hass: _EntityRegistryStub())
+
+ServiceCall = getattr(ha_core, "ServiceCall", Any)
+ServiceResponse = getattr(ha_core, "ServiceResponse", Any)
+
 _LOGGER = logging.getLogger(__name__)
 _MISSING: Final = object()
+_REGISTERED = False
 
 # Mapping of measurement names to expected device classes.  These roughly
 # correspond to the roles supported by :mod:`update_sensors`.
@@ -94,6 +106,10 @@ SERVICE_CLEAR_CACHES = "clear_caches"
 SERVICE_RECORD_RUN_EVENT = "record_run_event"
 SERVICE_RECORD_HARVEST_EVENT = "record_harvest_event"
 SERVICE_PROFILE_PROVENANCE = "profile_provenance"
+SERVICE_PROFILE_RUNS = "profile_runs"
+SERVICE_CLOUD_LOGIN = "cloud_login"
+SERVICE_CLOUD_LOGOUT = "cloud_logout"
+SERVICE_CLOUD_REFRESH = "cloud_refresh_token"
 
 SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_REPLACE_SENSOR,
@@ -121,6 +137,10 @@ SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_RECORD_RUN_EVENT,
     SERVICE_RECORD_HARVEST_EVENT,
     SERVICE_PROFILE_PROVENANCE,
+    SERVICE_PROFILE_RUNS,
+    SERVICE_CLOUD_LOGIN,
+    SERVICE_CLOUD_LOGOUT,
+    SERVICE_CLOUD_REFRESH,
 )
 
 
@@ -132,8 +152,16 @@ async def async_register_all(
     profile_coord: DataUpdateCoordinator | None,
     registry: ProfileRegistry,
     store: LocalStore,
+    *,
+    cloud_manager=None,
 ) -> None:
     """Register high level profile services."""
+
+    global _REGISTERED
+    if getattr(hass, "_horti_services_registered", False):
+        return
+    _REGISTERED = True
+    hass._horti_services_registered = True
 
     async def _refresh_profile() -> None:
         if profile_coord:
@@ -380,6 +408,133 @@ async def async_register_all(
         if profile.last_resolved:
             response["last_resolved"] = profile.last_resolved
         return response
+
+    async def _srv_profile_runs(call) -> ServiceResponse:
+        profile_id: str = call.data["profile_id"]
+        profile = registry.get_profile(profile_id)
+        if profile is None:
+            raise HomeAssistantError(f"unknown profile {profile_id}")
+        limit = call.data.get("limit")
+        limit_value: int | None
+        if limit is None:
+            limit_value = None
+        else:
+            try:
+                limit_value = max(1, int(limit))
+            except (TypeError, ValueError):
+                raise HomeAssistantError("limit must be an integer") from None
+        runs = profile.run_summaries(limit=limit_value)
+        return {"profile_id": profile_id, "runs": runs}
+
+    async def _srv_cloud_login(call) -> ServiceResponse:
+        base_url = str(call.data.get("base_url") or entry.options.get(CONF_CLOUD_BASE_URL, "")).strip()
+        if not base_url:
+            raise HomeAssistantError("base_url is required for cloud login")
+        email = str(call.data.get("email") or "").strip()
+        password = str(call.data.get("password") or "")
+        if not email or not password:
+            raise HomeAssistantError("email and password are required")
+
+        session = async_get_clientsession(hass)
+        client = CloudAuthClient(base_url, session=session)
+        try:
+            tokens = await client.async_login(email, password)
+        except CloudAuthError as err:
+            raise HomeAssistantError(str(err)) from err
+
+        opts = dict(entry.options)
+        opts[CONF_CLOUD_BASE_URL] = base_url
+        opts[CONF_CLOUD_SYNC_ENABLED] = True
+        opts[CONF_CLOUD_TENANT_ID] = tokens.tenant_id
+        if tokens.device_token:
+            opts[CONF_CLOUD_DEVICE_TOKEN] = tokens.device_token
+        else:
+            opts.pop(CONF_CLOUD_DEVICE_TOKEN, None)
+        opts[CONF_CLOUD_ACCESS_TOKEN] = tokens.access_token
+        if tokens.refresh_token:
+            opts[CONF_CLOUD_REFRESH_TOKEN] = tokens.refresh_token
+        else:
+            opts.pop(CONF_CLOUD_REFRESH_TOKEN, None)
+        if tokens.expires_at:
+            opts[CONF_CLOUD_TOKEN_EXPIRES_AT] = tokens.expires_at.isoformat()
+        else:
+            opts.pop(CONF_CLOUD_TOKEN_EXPIRES_AT, None)
+        if tokens.account_email:
+            opts[CONF_CLOUD_ACCOUNT_EMAIL] = tokens.account_email
+        else:
+            opts.pop(CONF_CLOUD_ACCOUNT_EMAIL, None)
+        if tokens.roles:
+            opts[CONF_CLOUD_ACCOUNT_ROLES] = list(tokens.roles)
+        else:
+            opts.pop(CONF_CLOUD_ACCOUNT_ROLES, None)
+
+        hass.config_entries.async_update_entry(entry, options=opts)
+        entry.options = opts
+        if cloud_manager is not None:
+            await cloud_manager.async_refresh()
+        return {
+            "tenant_id": tokens.tenant_id,
+            "account_email": tokens.account_email,
+            "token_expires_at": tokens.expires_at.isoformat() if tokens.expires_at else None,
+        }
+
+    async def _srv_cloud_logout(call) -> ServiceResponse:
+        opts = dict(entry.options)
+        opts[CONF_CLOUD_SYNC_ENABLED] = False
+        for key in (
+            CONF_CLOUD_ACCESS_TOKEN,
+            CONF_CLOUD_REFRESH_TOKEN,
+            CONF_CLOUD_TOKEN_EXPIRES_AT,
+            CONF_CLOUD_ACCOUNT_EMAIL,
+            CONF_CLOUD_ACCOUNT_ROLES,
+            CONF_CLOUD_DEVICE_TOKEN,
+        ):
+            opts.pop(key, None)
+        hass.config_entries.async_update_entry(entry, options=opts)
+        entry.options = opts
+        if cloud_manager is not None:
+            await cloud_manager.async_refresh()
+        return {"status": "logged_out"}
+
+    async def _srv_cloud_refresh(call) -> ServiceResponse:
+        refresh_token = entry.options.get(CONF_CLOUD_REFRESH_TOKEN)
+        if not refresh_token:
+            raise HomeAssistantError("no refresh token available")
+        base_url = str(call.data.get("base_url") or entry.options.get(CONF_CLOUD_BASE_URL, "")).strip()
+        if not base_url:
+            raise HomeAssistantError("base_url is required for token refresh")
+
+        session = async_get_clientsession(hass)
+        client = CloudAuthClient(base_url, session=session)
+        try:
+            tokens = await client.async_refresh(refresh_token)
+        except CloudAuthError as err:
+            raise HomeAssistantError(str(err)) from err
+
+        opts = dict(entry.options)
+        opts[CONF_CLOUD_BASE_URL] = base_url
+        opts[CONF_CLOUD_SYNC_ENABLED] = True
+        opts[CONF_CLOUD_TENANT_ID] = tokens.tenant_id or opts.get(CONF_CLOUD_TENANT_ID, "")
+        if tokens.device_token:
+            opts[CONF_CLOUD_DEVICE_TOKEN] = tokens.device_token
+        opts[CONF_CLOUD_ACCESS_TOKEN] = tokens.access_token
+        if tokens.refresh_token:
+            opts[CONF_CLOUD_REFRESH_TOKEN] = tokens.refresh_token
+        if tokens.expires_at:
+            opts[CONF_CLOUD_TOKEN_EXPIRES_AT] = tokens.expires_at.isoformat()
+        if tokens.account_email:
+            opts[CONF_CLOUD_ACCOUNT_EMAIL] = tokens.account_email
+        if tokens.roles:
+            opts[CONF_CLOUD_ACCOUNT_ROLES] = list(tokens.roles)
+
+        hass.config_entries.async_update_entry(entry, options=opts)
+        entry.options = opts
+        if cloud_manager is not None:
+            await cloud_manager.async_refresh()
+        return {
+            "token_expires_at": tokens.expires_at.isoformat() if tokens.expires_at else None,
+            "tenant_id": opts.get(CONF_CLOUD_TENANT_ID),
+        }
 
     async def _srv_import_profiles(call) -> None:
         path = call.data["path"]
@@ -672,6 +827,18 @@ async def async_register_all(
     )
     hass.services.async_register(
         DOMAIN,
+        SERVICE_PROFILE_RUNS,
+        _srv_profile_runs,
+        schema=vol.Schema(
+            {
+                vol.Required("profile_id"): str,
+                vol.Optional("limit"): vol.All(vol.Coerce(int), vol.Range(min=1)),
+            }
+        ),
+        supports_response=True,
+    )
+    hass.services.async_register(
+        DOMAIN,
         SERVICE_IMPORT_PROFILES,
         _srv_import_profiles,
         schema=vol.Schema({vol.Required("path"): str}),
@@ -681,6 +848,33 @@ async def async_register_all(
         SERVICE_IMPORT_TEMPLATE,
         _srv_import_template,
         schema=vol.Schema({vol.Required("template"): str, vol.Optional("name"): str}),
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_CLOUD_LOGIN,
+        _srv_cloud_login,
+        schema=vol.Schema(
+            {
+                vol.Optional("base_url"): str,
+                vol.Required("email"): str,
+                vol.Required("password"): str,
+            }
+        ),
+        supports_response=True,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_CLOUD_LOGOUT,
+        _srv_cloud_logout,
+        schema=vol.Schema({}),
+        supports_response=True,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_CLOUD_REFRESH,
+        _srv_cloud_refresh,
+        schema=vol.Schema({vol.Optional("base_url"): str}),
+        supports_response=True,
     )
     hass.services.async_register(
         DOMAIN,
@@ -781,3 +975,8 @@ async def async_unload_services(hass: HomeAssistant) -> None:
     for name in SERVICE_NAMES:
         if hass.services.has_service(DOMAIN, name):
             hass.services.async_remove(DOMAIN, name)
+
+
+def async_setup_services(_hass: HomeAssistant) -> None:  # pragma: no cover - legacy shim
+    """Maintain compatibility with older entry setup code."""
+    return None

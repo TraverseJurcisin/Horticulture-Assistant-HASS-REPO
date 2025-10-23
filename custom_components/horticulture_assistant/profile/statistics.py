@@ -11,8 +11,8 @@ from .schema import (
     BioProfile,
     ComputedStatSnapshot,
     HarvestEvent,
-    RunEvent,
     ProfileContribution,
+    RunEvent,
     YieldStatistic,
 )
 
@@ -337,9 +337,13 @@ class _SuccessAggregate:
         self.stress_events += summary.stress_events
         self.run_ids.update(summary.run_ids)
         if summary.best_ratio is not None:
-            self.best_ratio = summary.best_ratio if self.best_ratio is None else max(self.best_ratio, summary.best_ratio)
+            self.best_ratio = (
+                summary.best_ratio if self.best_ratio is None else max(self.best_ratio, summary.best_ratio)
+            )
         if summary.worst_ratio is not None:
-            self.worst_ratio = summary.worst_ratio if self.worst_ratio is None else min(self.worst_ratio, summary.worst_ratio)
+            self.worst_ratio = (
+                summary.worst_ratio if self.worst_ratio is None else min(self.worst_ratio, summary.worst_ratio)
+            )
 
     def average_ratio(self) -> float | None:
         if not self.ratio_count:

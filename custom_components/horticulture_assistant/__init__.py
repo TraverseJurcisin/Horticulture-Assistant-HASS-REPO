@@ -1,48 +1,16 @@
 from __future__ import annotations
 
 import contextlib
+import importlib
+import importlib.util
 import logging
 
-import voluptuous as vol
-
-try:
-    import homeassistant.helpers.config_validation as cv
-except ModuleNotFoundError:  # pragma: no cover - test fallback
-    cv = None
-
-try:
-    from aiohttp import ClientError, ClientResponseError
-except ModuleNotFoundError:  # pragma: no cover - test fallback
-
-    class ClientError(Exception):
-        """Fallback ClientError used when aiohttp is unavailable."""
-
-    class ClientResponseError(ClientError):
-        """Fallback ClientResponseError used when aiohttp is unavailable."""
-
-
-try:
-    from homeassistant.config_entries import ConfigEntry
-except ModuleNotFoundError:  # pragma: no cover - test fallback
-    ConfigEntry = object
-
-try:
-    from homeassistant.core import HomeAssistant
-except ModuleNotFoundError:  # pragma: no cover - test fallback
-    HomeAssistant = object
-
-try:
-    from homeassistant.helpers.update_coordinator import UpdateFailed
-except ModuleNotFoundError:  # pragma: no cover - test fallback
-    UpdateFailed = Exception
+import homeassistant.helpers.config_validation as cv
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
 
 from . import services as ha_services
 from .api import ChatApi
-
-try:
-    from .calibration import services as calibration_services
-except ModuleNotFoundError:  # pragma: no cover - optional dependency missing
-    calibration_services = None
 from .cloudsync.manager import CloudSyncManager
 from .const import (
     CONF_API_KEY,
@@ -70,6 +38,11 @@ from .storage import LocalStore
 from .utils.entry_helpers import remove_entry_data, store_entry_data
 from .utils.paths import ensure_local_data_paths
 
+_CALIBRATION_SPEC = importlib.util.find_spec("custom_components.horticulture_assistant.calibration.services")
+calibration_services = None
+if _CALIBRATION_SPEC is not None:
+    calibration_services = importlib.import_module("custom_components.horticulture_assistant.calibration.services")
+
 __all__ = [
     "async_setup",
     "async_setup_entry",
@@ -77,12 +50,7 @@ __all__ = [
 ]
 
 _LOGGER = logging.getLogger(__name__)
-
-
-if cv is not None:
-    CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
-else:
-    CONFIG_SCHEMA = vol.Schema({DOMAIN: vol.Schema({})}, extra=vol.ALLOW_EXTRA)
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 
 async def async_setup(_hass: HomeAssistant, _config: dict) -> bool:
@@ -197,6 +165,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                     },
                 )
 
+    await ha_services.async_register_all(
+        hass,
+        entry,
+        ai_coordinator,
+        local_coordinator,
+        coordinator,
+        profile_registry,
+        local_store,
+        cloud_manager=cloud_sync_manager,
+    )
     ha_services.async_setup_services(hass)
     if calibration_services is not None:
         calibration_services.async_setup_services(hass)

@@ -169,6 +169,46 @@ class CloudOutboxSensor(CloudSyncSensor):
         }
 
 
+class CloudConnectionSensor(CloudSyncSensor):
+    """Summarise the current cloud connection state."""
+
+    _attr_icon = "mdi:cloud-check"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        super().__init__(manager, entry_id, plant_name)
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_cloud_connection"
+        self._attr_name = "Cloud Connection"
+
+    async def async_update(self) -> None:
+        status = self._cloud_status()
+        connection = status.get("connection") or {}
+        if not status.get("enabled"):
+            value = "disabled"
+        elif not status.get("configured"):
+            value = "not_configured"
+        elif connection.get("connected"):
+            value = "connected"
+        elif connection.get("local_only"):
+            value = str(connection.get("reason") or "local_only")
+        else:
+            value = "unknown"
+        self._attr_native_value = value
+        attrs = {
+            "reason": connection.get("reason"),
+            "local_only": connection.get("local_only"),
+            "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
+            "account_email": status.get("account_email"),
+            "tenant_id": status.get("tenant_id"),
+            "roles": status.get("roles"),
+            "token_expires_at": status.get("token_expires_at"),
+            "token_expires_in_seconds": status.get("token_expires_in_seconds"),
+            "token_expired": status.get("token_expired"),
+            "refresh_token_available": status.get("refresh_token"),
+        }
+        self._attr_extra_state_attributes = {k: v for k, v in attrs.items() if v is not None}
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
     stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
@@ -215,11 +255,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             if registry is not None:
                 sensors.append(ProfileSuccessSensor(profile_coord, registry, pid, name))
                 sensors.append(ProfileProvenanceSensor(profile_coord, registry, pid, name))
+                sensors.append(ProfileRunStatusSensor(profile_coord, registry, pid, name))
 
     cloud_manager = stored.get("cloud_sync_manager")
     if cloud_manager:
         sensors.append(CloudSnapshotAgeSensor(cloud_manager, entry.entry_id, plant_name))
         sensors.append(CloudOutboxSensor(cloud_manager, entry.entry_id, plant_name))
+        sensors.append(CloudConnectionSensor(cloud_manager, entry.entry_id, plant_name))
 
     async_add_entities(sensors, True)
 
@@ -591,3 +633,71 @@ class ProfileProvenanceSensor(HorticultureEntity, SensorEntity):
         if profile.last_resolved:
             attrs["last_resolved"] = profile.last_resolved
         return attrs
+
+
+class ProfileRunStatusSensor(HorticultureEntity, SensorEntity):
+    """Expose lifecycle run information for a profile."""
+
+    _attr_icon = "mdi:timeline-clock-outline"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(
+        self,
+        coordinator: HorticultureCoordinator,
+        registry,
+        profile_id: str,
+        profile_name: str,
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._registry = registry
+        self._attr_unique_id = f"{profile_id}:run_status"
+        self._attr_name = "Run Status"
+
+    def _get_profile(self):
+        getter = getattr(self._registry, "get_profile", None)
+        if getter is None:
+            getter = getattr(self._registry, "get", None)
+        if getter is None:
+            return None
+        return getter(self._profile_id)
+
+    def _latest_run(self):
+        profile = self._get_profile()
+        if profile is None:
+            return None
+        runs = profile.run_summaries()
+        if not runs:
+            return None
+        return runs[0]
+
+    @property
+    def native_value(self):
+        summary = self._latest_run()
+        if summary is None:
+            return "idle"
+        return summary.get("status") or "unknown"
+
+    @property
+    def extra_state_attributes(self):
+        summary = self._latest_run()
+        if summary is None:
+            return None
+        attrs: dict[str, Any] = {
+            "run_id": summary.get("run_id"),
+            "started_at": summary.get("started_at"),
+            "ended_at": summary.get("ended_at"),
+            "duration_days": summary.get("duration_days"),
+            "harvest_count": summary.get("harvest_count"),
+            "yield_grams": summary.get("yield_grams"),
+            "yield_density_g_m2": summary.get("yield_density_g_m2"),
+            "mean_yield_density_g_m2": summary.get("mean_yield_density_g_m2"),
+            "success_rate": summary.get("success_rate"),
+            "targets_met": summary.get("targets_met"),
+            "targets_total": summary.get("targets_total"),
+            "stress_events": summary.get("stress_events"),
+        }
+        if summary.get("environment"):
+            attrs["environment"] = summary["environment"]
+        if summary.get("metadata"):
+            attrs["metadata"] = summary["metadata"]
+        return {k: v for k, v in attrs.items() if v is not None}

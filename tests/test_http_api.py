@@ -69,6 +69,10 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert success_summary is not None
     assert success_summary["weighted_percent"] == pytest.approx(90.0)
     assert success_summary["samples_recorded"] == 1
+    runs_section = summaries[profile_id].get("runs")
+    assert runs_section is not None
+    assert runs_section["total"] >= 1
+    assert runs_section["latest"]["run_id"] == "run-1"
 
     detail_resp = await client.get(f"/api/horticulture_assistant/profiles/{profile_id}")
     assert detail_resp.status == 200
@@ -80,6 +84,7 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert detail["provenance_summary"]["vpd_max"]["value"] == pytest.approx(1.2)
     assert any(snap["stats_version"] == "environment/v1" for snap in detail["computed_stats"])
     assert any(snap["stats_version"] == "success/v1" for snap in detail["computed_stats"])
+    assert detail["run_summaries"] and detail["run_summaries"][0]["run_id"] == "run-1"
 
     target_resp = await client.get(f"/api/horticulture_assistant/profiles/{profile_id}/targets/vpd_max")
     assert target_resp.status == 200

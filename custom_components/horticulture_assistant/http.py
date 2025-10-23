@@ -84,6 +84,7 @@ class ProfileDetailView(HomeAssistantView):
         payload["resolved_values"] = profile.resolved_values()
         payload["provenance_summary"] = profile.provenance_summary()
         payload["computed_stats"] = [snapshot.to_json() for snapshot in profile.computed_stats]
+        payload["run_summaries"] = profile.run_summaries()
         return self.json(payload)
 
 

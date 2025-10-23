@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
 from typing import Any, Literal
+
+try:
+    UTC = datetime.UTC  # type: ignore[attr-defined]
+except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    UTC = timezone.utc  # noqa: UP017
 
 
 def _as_dict(value: Any) -> dict[str, Any]:
@@ -11,6 +17,18 @@ def _as_dict(value: Any) -> dict[str, Any]:
     if isinstance(value, Mapping):
         return {str(key): item for key, item in value.items()}
     return {}
+
+
+def _parse_timestamp(raw: str | None) -> datetime | None:
+    if not raw:
+        return None
+    try:
+        ts = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if ts.tzinfo is None:
+        ts = ts.replace(tzinfo=UTC)
+    return ts.astimezone(UTC)
 
 
 SourceType = str  # manual|clone|openplantbook|ai|curated|computed
@@ -319,9 +337,7 @@ class FieldAnnotation:
             "origin_profile_name": extras.get("source_profile_name"),
         }
 
-        payload["is_inherited"] = bool(
-            self.source_type == "inheritance" or (inheritance_depth is not None)
-        )
+        payload["is_inherited"] = bool(self.source_type == "inheritance" or (inheritance_depth is not None))
 
         if include_overlay:
             if self.overlay is not None:
@@ -933,6 +949,180 @@ class BioProfile:
             summary[str(key)] = payload
         return summary
 
+    def run_summaries(
+        self,
+        *,
+        now: datetime | None = None,
+        limit: int | None = None,
+    ) -> list[dict[str, Any]]:
+        """Aggregate lifecycle and harvest data into per-run summaries."""
+
+        def _ensure(run_id: str) -> dict[str, Any]:
+            summary = summaries.get(run_id)
+            if summary is None:
+                summary = {
+                    "run_id": run_id,
+                    "status": "unknown",
+                    "started_at": None,
+                    "ended_at": None,
+                    "targets_met": None,
+                    "targets_total": None,
+                    "success_rate": None,
+                    "stress_events": None,
+                    "harvest_count": 0,
+                    "yield_grams": 0.0,
+                    "environment": {},
+                    "metadata": {},
+                    "_start_ts": None,
+                    "_end_ts": None,
+                    "_area_sum": 0.0,
+                    "_density_samples": [],
+                }
+                summaries[run_id] = summary
+            return summary
+
+        summaries: dict[str, dict[str, Any]] = {}
+        now = now or datetime.now(tz=UTC)
+
+        for event in self.run_history:
+            run_id = event.run_id or "run"
+            summary = _ensure(run_id)
+
+            start_ts = _parse_timestamp(event.started_at)
+            if start_ts is not None:
+                prev = summary.get("_start_ts")
+                if prev is None or start_ts < prev:
+                    summary["_start_ts"] = start_ts
+                    summary["started_at"] = start_ts.isoformat()
+
+            end_ts = _parse_timestamp(event.ended_at)
+            if end_ts is not None:
+                prev_end = summary.get("_end_ts")
+                if prev_end is None or end_ts > prev_end:
+                    summary["_end_ts"] = end_ts
+                    summary["ended_at"] = end_ts.isoformat()
+
+            if event.targets_met is not None:
+                try:
+                    summary["targets_met"] = float(event.targets_met)
+                except (TypeError, ValueError):
+                    summary["targets_met"] = None
+            if event.targets_total is not None:
+                try:
+                    summary["targets_total"] = float(event.targets_total)
+                except (TypeError, ValueError):
+                    summary["targets_total"] = None
+            if event.success_rate is not None:
+                try:
+                    rate = float(event.success_rate)
+                except (TypeError, ValueError):
+                    rate = None
+                if rate is not None:
+                    if rate <= 1.0:
+                        rate *= 100.0
+                    summary["success_rate"] = round(rate, 3)
+            if event.stress_events is not None:
+                try:
+                    summary["stress_events"] = int(event.stress_events)
+                except (TypeError, ValueError):
+                    summary["stress_events"] = None
+            if event.environment:
+                env = summary.setdefault("environment", {})
+                env.update(event.environment)
+            if event.metadata:
+                meta = summary.setdefault("metadata", {})
+                meta.update(event.metadata)
+
+        for harvest in self.harvest_history:
+            run_id = harvest.run_id or (self.run_history[-1].run_id if self.run_history else None)
+            if not run_id:
+                continue
+            summary = _ensure(run_id)
+            summary["harvest_count"] = int(summary.get("harvest_count", 0)) + 1
+            summary["yield_grams"] = float(summary.get("yield_grams", 0.0)) + float(harvest.yield_grams or 0.0)
+
+            harvested_ts = _parse_timestamp(harvest.harvested_at)
+            if harvested_ts is not None and summary.get("_start_ts") is None:
+                summary["_start_ts"] = harvested_ts
+                summary["started_at"] = harvested_ts.isoformat()
+            if harvested_ts is not None:
+                existing_end = summary.get("_end_ts")
+                if existing_end is None or harvested_ts > existing_end:
+                    summary["_end_ts"] = harvested_ts
+                    summary["ended_at"] = harvested_ts.isoformat()
+
+            if harvest.area_m2:
+                try:
+                    area = float(harvest.area_m2)
+                except (TypeError, ValueError):
+                    area = None
+                if area is not None and area > 0:
+                    summary["_area_sum"] = float(summary.get("_area_sum", 0.0)) + area
+            density = harvest.yield_density()
+            if density is not None:
+                summary.setdefault("_density_samples", []).append(float(density))
+
+        ordered = sorted(
+            summaries.values(),
+            key=lambda item: item.get("_start_ts") or datetime.min.replace(tzinfo=UTC),
+            reverse=True,
+        )
+
+        results: list[dict[str, Any]] = []
+        for summary in ordered:
+            start_ts: datetime | None = summary.pop("_start_ts", None)
+            end_ts: datetime | None = summary.pop("_end_ts", None)
+            area_sum = float(summary.pop("_area_sum", 0.0))
+            densities: list[float] = summary.pop("_density_samples", [])
+
+            if start_ts is not None:
+                summary["started_at"] = start_ts.isoformat()
+            if end_ts is not None:
+                summary["ended_at"] = end_ts.isoformat()
+
+            if start_ts is not None:
+                effective_end = end_ts or now
+                delta = max((effective_end - start_ts).total_seconds(), 0.0)
+                summary["duration_days"] = round(delta / 86400, 3)
+            else:
+                summary["duration_days"] = None
+
+            if end_ts is None and start_ts is not None:
+                summary["status"] = "active"
+            elif end_ts is not None and start_ts is not None:
+                summary["status"] = "completed" if end_ts <= now else "pending"
+            else:
+                summary["status"] = summary.get("status") or "unknown"
+
+            total_yield = float(summary.get("yield_grams", 0.0))
+            summary["yield_grams"] = round(total_yield, 3) if total_yield else 0.0
+
+            if area_sum > 0:
+                summary["area_m2"] = round(area_sum, 3)
+                if total_yield:
+                    summary["yield_density_g_m2"] = round(total_yield / area_sum, 3)
+            if densities:
+                summary["mean_yield_density_g_m2"] = round(sum(densities) / len(densities), 3)
+
+            targets_total = summary.get("targets_total")
+            targets_met = summary.get("targets_met")
+            if summary.get("success_rate") is None and targets_total and targets_met is not None:
+                try:
+                    summary["success_rate"] = round((float(targets_met) / float(targets_total)) * 100.0, 3)
+                except (TypeError, ValueError):
+                    summary["success_rate"] = None
+
+            if not summary.get("environment"):
+                summary.pop("environment", None)
+            if not summary.get("metadata"):
+                summary.pop("metadata", None)
+
+            results.append(summary)
+
+        if limit is not None:
+            return results[:limit]
+        return results
+
     def add_run_event(self, event: RunEvent) -> None:
         """Append a normalised run event to the local history."""
 
@@ -1043,11 +1233,7 @@ class BioProfile:
             contributors = payload.get("contributors")
             if isinstance(contributors, list) and contributors:
                 success_section["contributors"] = contributors
-            success_section = {
-                key: value
-                for key, value in success_section.items()
-                if value is not None
-            }
+            success_section = {key: value for key, value in success_section.items() if value is not None}
             if not success_section:
                 success_section = None
 
@@ -1067,6 +1253,14 @@ class BioProfile:
         }
         if success_section is not None:
             summary["success"] = success_section
+        run_snapshots = self.run_summaries()
+        if run_snapshots:
+            summary["runs"] = {
+                "total": len(run_snapshots),
+                "active": [item["run_id"] for item in run_snapshots if item.get("status") == "active"],
+                "recent": run_snapshots[:3],
+                "latest": run_snapshots[0],
+            }
         return summary
 
     @staticmethod

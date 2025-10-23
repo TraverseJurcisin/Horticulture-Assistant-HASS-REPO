@@ -164,3 +164,43 @@ profile_provenance:
       default: false
       description: "Include citation lists for each resolved target."
       selector: { boolean: {} }
+
+profile_runs:
+  name: "Summarise grow runs"
+  description: "Return lifecycle and harvest summaries for a profile's runs."
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    limit:
+      required: false
+      description: "Maximum number of runs to include (most recent first)."
+      selector: { number: { min: 1, max: 25 } }
+
+cloud_login:
+  name: "Cloud login"
+  description: "Authenticate with the Horticulture Assistant cloud and store tokens."
+  fields:
+    base_url:
+      required: false
+      description: "Override the cloud base URL (defaults to the configured value)."
+      selector: { text: {} }
+    email:
+      required: true
+      selector: { text: {} }
+    password:
+      required: true
+      selector: { text: { type: password } }
+
+cloud_logout:
+  name: "Cloud logout"
+  description: "Disable cloud sync and clear stored tokens."
+
+cloud_refresh_token:
+  name: "Refresh cloud token"
+  description: "Refresh the stored access token using the configured refresh token."
+  fields:
+    base_url:
+      required: false
+      description: "Override the cloud base URL used for the refresh request."
+      selector: { text: {} }

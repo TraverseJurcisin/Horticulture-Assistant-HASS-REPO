@@ -1,12 +1,26 @@
 import json
+from datetime import UTC, datetime
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
 import pytest
 import voluptuous as vol
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.horticulture_assistant.const import CONF_API_KEY, DOMAIN
+from custom_components.horticulture_assistant.const import (
+    CONF_API_KEY,
+    CONF_CLOUD_ACCESS_TOKEN,
+    CONF_CLOUD_ACCOUNT_EMAIL,
+    CONF_CLOUD_ACCOUNT_ROLES,
+    CONF_CLOUD_BASE_URL,
+    CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_REFRESH_TOKEN,
+    CONF_CLOUD_SYNC_ENABLED,
+    CONF_CLOUD_TENANT_ID,
+    CONF_CLOUD_TOKEN_EXPIRES_AT,
+    DOMAIN,
+)
 from custom_components.horticulture_assistant.profile.schema import FieldAnnotation, ResolvedTarget
 from custom_components.horticulture_assistant.services import er
 
@@ -228,6 +242,30 @@ async def test_record_harvest_event_service_updates_statistics(hass, tmp_path):
     assert metrics["total_yield_grams"] == 42.5
 
 
+async def test_profile_runs_service_returns_runs(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+    await hass.services.async_call(
+        DOMAIN,
+        "record_run_event",
+        {
+            "profile_id": "p1",
+            "run_id": "run-service",
+            "started_at": "2024-01-02T00:00:00Z",
+        },
+        blocking=True,
+    )
+    response = await hass.services.async_call(
+        DOMAIN,
+        "profile_runs",
+        {"profile_id": "p1"},
+        blocking=True,
+        return_response=True,
+    )
+    runs = response["runs"]
+    assert response["profile_id"] == "p1"
+    assert runs and runs[0]["run_id"] == "run-service"
+
+
 async def test_profile_provenance_service_returns_counts(hass, tmp_path):
     await _setup_entry_with_profile(hass, tmp_path)
     registry = hass.data[DOMAIN]["registry"]
@@ -365,3 +403,111 @@ async def test_refresh_species_multiple_profiles(hass, tmp_path):
 
     prof = await async_get_profile(hass, "p2")
     assert prof["plant_id"] == "p2"
+
+
+async def test_cloud_login_service_updates_tokens(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    tokens = SimpleNamespace(
+        tenant_id="tenant-1",
+        device_token="device-1",
+        access_token="access-token",
+        refresh_token="refresh-token",
+        expires_at=datetime(2025, 1, 1, tzinfo=UTC),
+        account_email="user@example.com",
+        roles=("grower",),
+    )
+    with (
+        patch(
+            "custom_components.horticulture_assistant.services.CloudAuthClient.async_login",
+            AsyncMock(return_value=tokens),
+        ),
+        patch.object(manager, "async_refresh", AsyncMock()) as refresh,
+    ):
+        response = await hass.services.async_call(
+            DOMAIN,
+            "cloud_login",
+            {
+                "base_url": "https://cloud.example",
+                "email": "user@example.com",
+                "password": "secret",
+            },
+            blocking=True,
+            return_response=True,
+        )
+    assert entry.options[CONF_CLOUD_SYNC_ENABLED] is True
+    assert entry.options[CONF_CLOUD_ACCESS_TOKEN] == "access-token"
+    assert entry.options[CONF_CLOUD_REFRESH_TOKEN] == "refresh-token"
+    assert entry.options[CONF_CLOUD_TENANT_ID] == "tenant-1"
+    assert entry.options[CONF_CLOUD_DEVICE_TOKEN] == "device-1"
+    assert entry.options[CONF_CLOUD_ACCOUNT_EMAIL] == "user@example.com"
+    assert entry.options[CONF_CLOUD_ACCOUNT_ROLES] == ["grower"]
+    assert response["tenant_id"] == "tenant-1"
+    refresh.assert_awaited()
+
+
+async def test_cloud_logout_clears_tokens(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    entry.options.update(
+        {
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_ACCESS_TOKEN: "token",
+            CONF_CLOUD_REFRESH_TOKEN: "refresh",
+            CONF_CLOUD_DEVICE_TOKEN: "device",
+            CONF_CLOUD_ACCOUNT_EMAIL: "user@example.com",
+            CONF_CLOUD_ACCOUNT_ROLES: ["grower"],
+            CONF_CLOUD_TOKEN_EXPIRES_AT: "2025-01-01T00:00:00Z",
+        }
+    )
+    with patch.object(manager, "async_refresh", AsyncMock()) as refresh:
+        await hass.services.async_call(
+            DOMAIN,
+            "cloud_logout",
+            {},
+            blocking=True,
+        )
+    assert entry.options.get(CONF_CLOUD_SYNC_ENABLED) is False
+    assert CONF_CLOUD_ACCESS_TOKEN not in entry.options
+    assert CONF_CLOUD_REFRESH_TOKEN not in entry.options
+    refresh.assert_awaited()
+
+
+async def test_cloud_refresh_updates_expiry(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    entry.options.update(
+        {
+            CONF_CLOUD_REFRESH_TOKEN: "refresh-token",
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+        }
+    )
+    tokens = SimpleNamespace(
+        tenant_id="tenant-1",
+        device_token="device-2",
+        access_token="new-access",
+        refresh_token="new-refresh",
+        expires_at=datetime(2026, 1, 1, tzinfo=UTC),
+        account_email="user@example.com",
+        roles=("grower", "admin"),
+    )
+    with (
+        patch(
+            "custom_components.horticulture_assistant.services.CloudAuthClient.async_refresh",
+            AsyncMock(return_value=tokens),
+        ),
+        patch.object(manager, "async_refresh", AsyncMock()) as refresh,
+    ):
+        response = await hass.services.async_call(
+            DOMAIN,
+            "cloud_refresh_token",
+            {},
+            blocking=True,
+            return_response=True,
+        )
+    assert entry.options[CONF_CLOUD_ACCESS_TOKEN] == "new-access"
+    assert entry.options[CONF_CLOUD_REFRESH_TOKEN] == "new-refresh"
+    assert entry.options[CONF_CLOUD_DEVICE_TOKEN] == "device-2"
+    assert entry.options[CONF_CLOUD_ACCOUNT_ROLES] == ["grower", "admin"]
+    assert response["tenant_id"] == "tenant-1"
+    refresh.assert_awaited()
