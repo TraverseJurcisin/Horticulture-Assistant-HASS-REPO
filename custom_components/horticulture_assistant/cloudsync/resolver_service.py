@@ -73,6 +73,7 @@ class EdgeResolverService:
         stats_ttl: timedelta | None = None,
         tenant_id: str | None = None,
         public_tenants: Iterable[str] | None = None,
+        organization_id: str | None = None,
     ) -> None:
         self.store = store
         self.local_profile_loader = local_profile_loader or (lambda _pid: {})
@@ -80,6 +81,7 @@ class EdgeResolverService:
         self.stats_ttl = stats_ttl or timedelta(days=30)
         tenant = tenant_id.strip() if isinstance(tenant_id, str) else None
         self.tenant_id = tenant or None
+        self.organization_id = organization_id.strip() if isinstance(organization_id, str) else None
         public = public_tenants or ("public", "shared", "global")
         self.public_tenants = tuple(
             dict.fromkeys(str(item).strip() for item in public if isinstance(item, str) and str(item).strip())
@@ -97,21 +99,51 @@ class EdgeResolverService:
             candidates.append(str(tenant_hint).strip())
         if self.tenant_id:
             candidates.append(self.tenant_id)
+        org_id = self.organization_id
         for candidate in candidates:
             if not candidate or candidate in tried:
                 continue
             tried.add(candidate)
-            entry = self.store.fetch_cloud_cache_entry(entity_type, entity_id, tenant_id=candidate)
+            entry = self.store.fetch_cloud_cache_entry(
+                entity_type,
+                entity_id,
+                tenant_id=candidate,
+                org_id=org_id,
+            )
+            if not entry and org_id is not None:
+                entry = self.store.fetch_cloud_cache_entry(
+                    entity_type,
+                    entity_id,
+                    tenant_id=candidate,
+                    org_id=None,
+                )
             if entry:
                 return entry
         for tenant in self.public_tenants:
             if tenant in tried:
                 continue
             tried.add(tenant)
-            entry = self.store.fetch_cloud_cache_entry(entity_type, entity_id, tenant_id=tenant)
+            entry = self.store.fetch_cloud_cache_entry(
+                entity_type,
+                entity_id,
+                tenant_id=tenant,
+                org_id=org_id,
+            )
+            if not entry and org_id is not None:
+                entry = self.store.fetch_cloud_cache_entry(
+                    entity_type,
+                    entity_id,
+                    tenant_id=tenant,
+                    org_id=None,
+                )
             if entry:
                 return entry
-        return self.store.fetch_cloud_cache_entry(entity_type, entity_id)
+        return self.store.fetch_cloud_cache_entry(
+            entity_type,
+            entity_id,
+            tenant_id=None,
+            org_id=org_id,
+        )
 
     # ------------------------------------------------------------------
     def resolve_field(self, profile_id: str, field_path: str, *, now: datetime | None = None) -> ResolveResult:

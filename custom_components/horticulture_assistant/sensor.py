@@ -28,6 +28,7 @@ from .derived import (
 )
 from .entity import HorticultureEntity
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
+from .profile.statistics import SUCCESS_STATS_VERSION
 from .utils.entry_helpers import get_entry_data, store_entry_data
 
 HORTI_STATUS_DESCRIPTION = SensorEntityDescription(
@@ -168,6 +169,50 @@ class CloudOutboxSensor(CloudSyncSensor):
         }
 
 
+class CloudConnectionSensor(CloudSyncSensor):
+    """Summarise the current cloud connection state."""
+
+    _attr_icon = "mdi:cloud-check"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        super().__init__(manager, entry_id, plant_name)
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_cloud_connection"
+        self._attr_name = "Cloud Connection"
+
+    async def async_update(self) -> None:
+        status = self._cloud_status()
+        connection = status.get("connection") or {}
+        if not status.get("enabled"):
+            value = "disabled"
+        elif not status.get("configured"):
+            value = "not_configured"
+        elif connection.get("connected"):
+            value = "connected"
+        elif connection.get("local_only"):
+            value = str(connection.get("reason") or "local_only")
+        else:
+            value = "unknown"
+        self._attr_native_value = value
+        attrs = {
+            "reason": connection.get("reason"),
+            "local_only": connection.get("local_only"),
+            "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
+            "account_email": status.get("account_email"),
+            "tenant_id": status.get("tenant_id"),
+            "roles": status.get("roles"),
+            "organization_id": status.get("organization_id"),
+            "organization_name": status.get("organization_name"),
+            "organization_role": status.get("organization_role"),
+            "available_organizations": status.get("organizations"),
+            "token_expires_at": status.get("token_expires_at"),
+            "token_expires_in_seconds": status.get("token_expires_in_seconds"),
+            "token_expired": status.get("token_expired"),
+            "refresh_token_available": status.get("refresh_token"),
+        }
+        self._attr_extra_state_attributes = {k: v for k, v in attrs.items() if v is not None}
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
     stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
@@ -198,6 +243,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         sensors.append(PlantIrrigationRecommendationSensor(hass, entry, plant_name, plant_id))
 
     profiles = entry.options.get(CONF_PROFILES, {})
+    registry = stored.get("profile_registry")
     if profile_coord and profiles:
         for pid, profile in profiles.items():
             name = profile.get("name", pid)
@@ -210,11 +256,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             if prof_sensors.get("moisture"):
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["moisture"]))
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["status"]))
+            if registry is not None:
+                sensors.append(ProfileSuccessSensor(profile_coord, registry, pid, name))
+                sensors.append(ProfileProvenanceSensor(profile_coord, registry, pid, name))
+                sensors.append(ProfileRunStatusSensor(profile_coord, registry, pid, name))
 
     cloud_manager = stored.get("cloud_sync_manager")
     if cloud_manager:
         sensors.append(CloudSnapshotAgeSensor(cloud_manager, entry.entry_id, plant_name))
         sensors.append(CloudOutboxSensor(cloud_manager, entry.entry_id, plant_name))
+        sensors.append(CloudConnectionSensor(cloud_manager, entry.entry_id, plant_name))
 
     async_add_entities(sensors, True)
 
@@ -415,3 +466,242 @@ class ProfileMetricSensor(HorticultureEntity, SensorEntity):
             .get("metrics", {})
             .get(self.entity_description.key)
         )
+
+
+class ProfileSuccessSensor(HorticultureEntity, SensorEntity):
+    """Expose the latest success-rate snapshot for a profile."""
+
+    _attr_icon = "mdi:chart-bell-curve-cumulative"
+    _attr_native_unit_of_measurement = PERCENTAGE
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(
+        self,
+        coordinator: HorticultureCoordinator,
+        registry,
+        profile_id: str,
+        profile_name: str,
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._registry = registry
+        self._attr_unique_id = f"{profile_id}:success_rate"
+        self._attr_name = "Success Rate"
+
+    def _get_profile(self):
+        getter = getattr(self._registry, "get_profile", None)
+        if getter is None:
+            getter = getattr(self._registry, "get", None)
+        if getter is None:
+            return None
+        return getter(self._profile_id)
+
+    def _latest_snapshot(self):
+        profile = self._get_profile()
+        if profile is None:
+            return None
+        for snapshot in getattr(profile, "computed_stats", []) or []:
+            if snapshot.stats_version == SUCCESS_STATS_VERSION:
+                return snapshot
+        return None
+
+    @property
+    def native_value(self):
+        snapshot = self._latest_snapshot()
+        if snapshot is None:
+            return None
+        payload = snapshot.payload if isinstance(snapshot.payload, dict) else {}
+        value = payload.get("weighted_success_percent")
+        if value is None:
+            value = payload.get("average_success_percent")
+        if value is None:
+            return None
+        try:
+            return round(float(value), 3)
+        except (TypeError, ValueError):
+            return None
+
+    @property
+    def extra_state_attributes(self):
+        snapshot = self._latest_snapshot()
+        if snapshot is None:
+            return None
+        payload = snapshot.payload if isinstance(snapshot.payload, dict) else {}
+        attrs: dict[str, Any] = {}
+        for key in (
+            "samples_recorded",
+            "runs_tracked",
+            "targets_met",
+            "targets_total",
+            "stress_events",
+            "best_success_percent",
+            "worst_success_percent",
+        ):
+            value = payload.get(key)
+            if value is not None:
+                attrs[key] = value
+        if snapshot.computed_at:
+            attrs["computed_at"] = snapshot.computed_at
+        contributors = payload.get("contributors")
+        if isinstance(contributors, list) and contributors:
+            attrs["contributors"] = contributors
+        if snapshot.contributions:
+            attrs["contribution_weights"] = [contrib.to_json() for contrib in snapshot.contributions]
+        return attrs or None
+
+
+class ProfileProvenanceSensor(HorticultureEntity, SensorEntity):
+    """Diagnostic sensor summarising resolved target provenance."""
+
+    _attr_icon = "mdi:source-branch"
+    _attr_native_unit_of_measurement = "targets"
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(
+        self,
+        coordinator: HorticultureCoordinator,
+        registry,
+        profile_id: str,
+        profile_name: str,
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._registry = registry
+        self._attr_unique_id = f"{profile_id}:provenance"
+        self._attr_name = "Target Provenance"
+
+    def _get_profile(self):
+        getter = getattr(self._registry, "get_profile", None)
+        if getter is None:
+            getter = getattr(self._registry, "get", None)
+        if getter is None:
+            return None
+        profile = getter(self._profile_id)
+        if profile is not None:
+            profile.refresh_sections()
+        return profile
+
+    def _provenance_summary(self) -> dict[str, Any] | None:
+        profile = self._get_profile()
+        if profile is None:
+            return None
+        return profile.provenance_summary()
+
+    def native_value(self):
+        summary = self._provenance_summary()
+        if not summary:
+            return None
+        inherited = [key for key, meta in summary.items() if meta.get("is_inherited")]
+        return len(inherited)
+
+    def extra_state_attributes(self):
+        profile = self._get_profile()
+        if profile is None:
+            return None
+        summary = profile.provenance_summary()
+        detailed = profile.resolved_provenance(
+            include_overlay=False,
+            include_extras=True,
+            include_citations=False,
+        )
+
+        inherited: list[str] = []
+        overrides: list[str] = []
+        external: list[str] = []
+        computed: list[str] = []
+
+        for key, meta in summary.items():
+            source = str(meta.get("source_type"))
+            if meta.get("is_inherited"):
+                inherited.append(key)
+            elif source in {"manual", "local_override"}:
+                overrides.append(key)
+            elif source == "computed":
+                computed.append(key)
+            else:
+                external.append(key)
+
+        attrs: dict[str, Any] = {
+            "total_targets": len(summary),
+            "inherited_count": len(inherited),
+            "override_count": len(overrides),
+            "external_count": len(external),
+            "computed_count": len(computed),
+            "inherited_fields": sorted(inherited),
+            "override_fields": sorted(overrides),
+            "external_fields": sorted(external),
+            "computed_fields": sorted(computed),
+            "provenance_map": summary,
+            "detailed_provenance": detailed,
+            "profile_name": profile.display_name,
+        }
+        if profile.last_resolved:
+            attrs["last_resolved"] = profile.last_resolved
+        return attrs
+
+
+class ProfileRunStatusSensor(HorticultureEntity, SensorEntity):
+    """Expose lifecycle run information for a profile."""
+
+    _attr_icon = "mdi:timeline-clock-outline"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(
+        self,
+        coordinator: HorticultureCoordinator,
+        registry,
+        profile_id: str,
+        profile_name: str,
+    ) -> None:
+        super().__init__(coordinator, profile_id, profile_name)
+        self._registry = registry
+        self._attr_unique_id = f"{profile_id}:run_status"
+        self._attr_name = "Run Status"
+
+    def _get_profile(self):
+        getter = getattr(self._registry, "get_profile", None)
+        if getter is None:
+            getter = getattr(self._registry, "get", None)
+        if getter is None:
+            return None
+        return getter(self._profile_id)
+
+    def _latest_run(self):
+        profile = self._get_profile()
+        if profile is None:
+            return None
+        runs = profile.run_summaries()
+        if not runs:
+            return None
+        return runs[0]
+
+    @property
+    def native_value(self):
+        summary = self._latest_run()
+        if summary is None:
+            return "idle"
+        return summary.get("status") or "unknown"
+
+    @property
+    def extra_state_attributes(self):
+        summary = self._latest_run()
+        if summary is None:
+            return None
+        attrs: dict[str, Any] = {
+            "run_id": summary.get("run_id"),
+            "started_at": summary.get("started_at"),
+            "ended_at": summary.get("ended_at"),
+            "duration_days": summary.get("duration_days"),
+            "harvest_count": summary.get("harvest_count"),
+            "yield_grams": summary.get("yield_grams"),
+            "yield_density_g_m2": summary.get("yield_density_g_m2"),
+            "mean_yield_density_g_m2": summary.get("mean_yield_density_g_m2"),
+            "success_rate": summary.get("success_rate"),
+            "targets_met": summary.get("targets_met"),
+            "targets_total": summary.get("targets_total"),
+            "stress_events": summary.get("stress_events"),
+        }
+        if summary.get("environment"):
+            attrs["environment"] = summary["environment"]
+        if summary.get("metadata"):
+            attrs["metadata"] = summary["metadata"]
+        return {k: v for k, v in attrs.items() if v is not None}

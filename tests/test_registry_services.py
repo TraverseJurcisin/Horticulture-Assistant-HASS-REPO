@@ -1,4 +1,5 @@
 import json
+from datetime import UTC, datetime
 from pathlib import Path
 from unittest.mock import AsyncMock, patch
 
@@ -6,7 +7,25 @@ import pytest
 import voluptuous as vol
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.horticulture_assistant.const import CONF_API_KEY, DOMAIN
+from custom_components.horticulture_assistant.cloudsync.auth import CloudAuthTokens, CloudOrganization
+from custom_components.horticulture_assistant.const import (
+    CONF_API_KEY,
+    CONF_CLOUD_ACCESS_TOKEN,
+    CONF_CLOUD_ACCOUNT_EMAIL,
+    CONF_CLOUD_ACCOUNT_ROLES,
+    CONF_CLOUD_AVAILABLE_ORGANIZATIONS,
+    CONF_CLOUD_BASE_URL,
+    CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_ORGANIZATION_ID,
+    CONF_CLOUD_ORGANIZATION_NAME,
+    CONF_CLOUD_ORGANIZATION_ROLE,
+    CONF_CLOUD_REFRESH_TOKEN,
+    CONF_CLOUD_SYNC_ENABLED,
+    CONF_CLOUD_TENANT_ID,
+    CONF_CLOUD_TOKEN_EXPIRES_AT,
+    DOMAIN,
+)
+from custom_components.horticulture_assistant.profile.schema import FieldAnnotation, ResolvedTarget
 from custom_components.horticulture_assistant.services import er
 
 pytestmark = [
@@ -174,11 +193,21 @@ async def test_record_run_event_service_updates_history(hass, tmp_path):
             "profile_id": "p1",
             "run_id": "run-1",
             "started_at": "2024-01-01T00:00:00Z",
+            "targets_met": 8,
+            "targets_total": 10,
+            "stress_events": 1,
         },
         blocking=True,
         return_response=True,
     )
     assert response["run_event"]["run_id"] == "run-1"
+    success = response.get("success_statistics", {}).get("profile")
+    assert success is not None
+    assert success["stats_version"] == "success/v1"
+    payload = success["payload"]
+    assert payload["targets_total"] == pytest.approx(10.0)
+    assert payload["targets_met"] == pytest.approx(8.0)
+    assert payload["weighted_success_percent"] == pytest.approx(80.0)
     registry = hass.data[DOMAIN]["registry"]
     profile = registry.get("p1")
     assert profile is not None and len(profile.run_history) == 1
@@ -215,6 +244,82 @@ async def test_record_harvest_event_service_updates_statistics(hass, tmp_path):
     assert profile and profile.statistics
     metrics = profile.statistics[0].metrics
     assert metrics["total_yield_grams"] == 42.5
+
+
+async def test_profile_runs_service_returns_runs(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+    await hass.services.async_call(
+        DOMAIN,
+        "record_run_event",
+        {
+            "profile_id": "p1",
+            "run_id": "run-service",
+            "started_at": "2024-01-02T00:00:00Z",
+        },
+        blocking=True,
+    )
+    response = await hass.services.async_call(
+        DOMAIN,
+        "profile_runs",
+        {"profile_id": "p1"},
+        blocking=True,
+        return_response=True,
+    )
+    runs = response["runs"]
+    assert response["profile_id"] == "p1"
+    assert runs and runs[0]["run_id"] == "run-service"
+
+
+async def test_profile_provenance_service_returns_counts(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get("p1")
+    assert profile is not None
+
+    manual_annotation = FieldAnnotation(source_type="manual", method="manual")
+    profile.resolved_targets["humidity_optimal"] = ResolvedTarget(
+        value=60,
+        annotation=manual_annotation,
+        citations=[],
+    )
+    inherited_annotation = FieldAnnotation(
+        source_type="inheritance",
+        source_ref=["p1", "species"],
+        method="inheritance",
+        extras={
+            "inheritance_depth": 1,
+            "source_profile_id": "species",
+            "source_profile_type": "species",
+            "source_profile_name": "Species",
+        },
+    )
+    profile.resolved_targets["temperature_optimal"] = ResolvedTarget(
+        value=21.5,
+        annotation=inherited_annotation,
+        citations=[],
+    )
+    profile.last_resolved = "2024-01-01T00:00:00Z"
+    profile.refresh_sections()
+
+    response = await hass.services.async_call(
+        DOMAIN,
+        "profile_provenance",
+        {"profile_id": "p1", "include_extras": True},
+        blocking=True,
+        return_response=True,
+    )
+
+    assert response["profile_id"] == "p1"
+    counts = response["counts"]
+    assert counts["total"] == 2
+    assert counts["overrides"] == 1
+    assert counts["inherited"] == 1
+    summary = response["summary"]
+    assert summary["temperature_optimal"]["is_inherited"] is True
+    assert summary["humidity_optimal"]["source_type"] == "manual"
+    groups = response["groups"]
+    assert "temperature_optimal" in groups["inherited"]
+    assert "humidity_optimal" in groups["overrides"]
 
 
 async def test_export_profiles_overwrites_existing(hass, tmp_path):
@@ -302,3 +407,167 @@ async def test_refresh_species_multiple_profiles(hass, tmp_path):
 
     prof = await async_get_profile(hass, "p2")
     assert prof["plant_id"] == "p2"
+
+
+async def test_cloud_login_service_updates_tokens(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    tokens = CloudAuthTokens(
+        access_token="access-token",
+        refresh_token="refresh-token",
+        expires_at=datetime(2025, 1, 1, tzinfo=UTC),
+        tenant_id="tenant-1",
+        device_token="device-1",
+        account_email="user@example.com",
+        roles=("grower",),
+        organization_id="org-1",
+        organization_name="Org One",
+        organization_role="admin",
+        organizations=(
+            CloudOrganization(org_id="org-1", name="Org One", roles=("admin",), default=True),
+            CloudOrganization(org_id="org-2", name="Org Two", roles=("viewer",)),
+        ),
+    )
+    with (
+        patch(
+            "custom_components.horticulture_assistant.services.CloudAuthClient.async_login",
+            AsyncMock(return_value=tokens),
+        ),
+        patch.object(manager, "async_refresh", AsyncMock()) as refresh,
+    ):
+        response = await hass.services.async_call(
+            DOMAIN,
+            "cloud_login",
+            {
+                "base_url": "https://cloud.example",
+                "email": "user@example.com",
+                "password": "secret",
+            },
+            blocking=True,
+            return_response=True,
+        )
+    assert entry.options[CONF_CLOUD_SYNC_ENABLED] is True
+    assert entry.options[CONF_CLOUD_ACCESS_TOKEN] == "access-token"
+    assert entry.options[CONF_CLOUD_REFRESH_TOKEN] == "refresh-token"
+    assert entry.options[CONF_CLOUD_TENANT_ID] == "tenant-1"
+    assert entry.options[CONF_CLOUD_DEVICE_TOKEN] == "device-1"
+    assert entry.options[CONF_CLOUD_ACCOUNT_EMAIL] == "user@example.com"
+    assert entry.options[CONF_CLOUD_ACCOUNT_ROLES] == ["grower"]
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ID] == "org-1"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_NAME] == "Org One"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ROLE] == "admin"
+    orgs = entry.options[CONF_CLOUD_AVAILABLE_ORGANIZATIONS]
+    assert isinstance(orgs, list) and orgs[0]["id"] == "org-1"
+    assert response["tenant_id"] == "tenant-1"
+    assert response["organization_id"] == "org-1"
+    refresh.assert_awaited()
+
+
+async def test_cloud_logout_clears_tokens(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    entry.options.update(
+        {
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_ACCESS_TOKEN: "token",
+            CONF_CLOUD_REFRESH_TOKEN: "refresh",
+            CONF_CLOUD_DEVICE_TOKEN: "device",
+            CONF_CLOUD_ACCOUNT_EMAIL: "user@example.com",
+            CONF_CLOUD_ACCOUNT_ROLES: ["grower"],
+            CONF_CLOUD_TOKEN_EXPIRES_AT: "2025-01-01T00:00:00Z",
+            CONF_CLOUD_AVAILABLE_ORGANIZATIONS: [{"id": "org-1", "name": "Org One"}],
+            CONF_CLOUD_ORGANIZATION_ID: "org-1",
+            CONF_CLOUD_ORGANIZATION_NAME: "Org One",
+            CONF_CLOUD_ORGANIZATION_ROLE: "admin",
+        }
+    )
+    with patch.object(manager, "async_refresh", AsyncMock()) as refresh:
+        await hass.services.async_call(
+            DOMAIN,
+            "cloud_logout",
+            {},
+            blocking=True,
+        )
+    assert entry.options.get(CONF_CLOUD_SYNC_ENABLED) is False
+    assert CONF_CLOUD_ACCESS_TOKEN not in entry.options
+    assert CONF_CLOUD_REFRESH_TOKEN not in entry.options
+    assert CONF_CLOUD_AVAILABLE_ORGANIZATIONS not in entry.options
+    assert CONF_CLOUD_ORGANIZATION_ID not in entry.options
+    refresh.assert_awaited()
+
+
+async def test_cloud_refresh_updates_expiry(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    entry.options.update(
+        {
+            CONF_CLOUD_REFRESH_TOKEN: "refresh-token",
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+        }
+    )
+    tokens = CloudAuthTokens(
+        access_token="new-access",
+        refresh_token="new-refresh",
+        expires_at=datetime(2026, 1, 1, tzinfo=UTC),
+        tenant_id="tenant-1",
+        device_token="device-2",
+        account_email="user@example.com",
+        roles=("grower", "admin"),
+        organization_id="org-1",
+        organization_name="Org One",
+        organization_role="admin",
+        organizations=(CloudOrganization(org_id="org-1", name="Org One", roles=("admin",), default=True),),
+    )
+    with (
+        patch(
+            "custom_components.horticulture_assistant.services.CloudAuthClient.async_refresh",
+            AsyncMock(return_value=tokens),
+        ),
+        patch.object(manager, "async_refresh", AsyncMock()) as refresh,
+    ):
+        response = await hass.services.async_call(
+            DOMAIN,
+            "cloud_refresh_token",
+            {},
+            blocking=True,
+            return_response=True,
+        )
+    assert entry.options[CONF_CLOUD_ACCESS_TOKEN] == "new-access"
+    assert entry.options[CONF_CLOUD_REFRESH_TOKEN] == "new-refresh"
+    assert entry.options[CONF_CLOUD_DEVICE_TOKEN] == "device-2"
+    assert entry.options[CONF_CLOUD_ACCOUNT_ROLES] == ["grower", "admin"]
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ID] == "org-1"
+    assert response["tenant_id"] == "tenant-1"
+    assert response["organization_id"] == "org-1"
+    refresh.assert_awaited()
+
+
+async def test_cloud_select_org_updates_entry(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    entry.options.update(
+        {
+            CONF_CLOUD_AVAILABLE_ORGANIZATIONS: [
+                {"id": "org-1", "name": "Org One", "default": True, "roles": ["admin"]},
+                {"id": "org-2", "name": "Org Two", "roles": ["viewer"]},
+            ],
+            CONF_CLOUD_ORGANIZATION_ID: "org-1",
+            CONF_CLOUD_ORGANIZATION_NAME: "Org One",
+            CONF_CLOUD_ORGANIZATION_ROLE: "admin",
+        }
+    )
+    with patch.object(manager, "async_refresh", AsyncMock()) as refresh:
+        response = await hass.services.async_call(
+            DOMAIN,
+            "cloud_select_org",
+            {"organization_id": "org-2"},
+            blocking=True,
+            return_response=True,
+        )
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ID] == "org-2"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_NAME] == "Org Two"
+    assert entry.options[CONF_CLOUD_ORGANIZATION_ROLE] == "viewer"
+    orgs = entry.options[CONF_CLOUD_AVAILABLE_ORGANIZATIONS]
+    assert orgs[1]["default"] is True
+    assert response["organization_id"] == "org-2"
+    refresh.assert_awaited()

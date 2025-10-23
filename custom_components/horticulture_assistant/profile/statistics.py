@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from collections.abc import Iterable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from statistics import mean
 from typing import Any
@@ -12,12 +12,14 @@ from .schema import (
     ComputedStatSnapshot,
     HarvestEvent,
     ProfileContribution,
+    RunEvent,
     YieldStatistic,
 )
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 YIELD_STATS_VERSION = "yield/v1"
 ENVIRONMENT_STATS_VERSION = "environment/v1"
+SUCCESS_STATS_VERSION = "success/v1"
 ENVIRONMENT_FIELDS: dict[str, str] = {
     "temperature_c": "avg_temperature_c",
     "humidity_percent": "avg_humidity_percent",
@@ -218,6 +220,271 @@ class _EnvironmentAggregate:
         )
 
 
+@dataclass
+class _SuccessSummary:
+    profile_id: str
+    profile_type: str
+    ratio_sum: float = 0.0
+    ratio_count: int = 0
+    weighted_met: float = 0.0
+    weighted_total: float = 0.0
+    sample_count: int = 0
+    stress_events: int = 0
+    best_ratio: float | None = None
+    worst_ratio: float | None = None
+    run_ids: set[str] = field(default_factory=set)
+
+    def add_sample(
+        self,
+        ratio: float,
+        *,
+        weight: float | None = None,
+        stress: int | None = None,
+    ) -> None:
+        ratio = max(0.0, min(1.0, ratio))
+        self.sample_count += 1
+        self.ratio_sum += ratio
+        self.ratio_count += 1
+        if weight is not None and weight > 0:
+            self.weighted_met += ratio * weight
+            self.weighted_total += weight
+        if stress is not None:
+            stress_value = max(0, stress)
+            if stress_value:
+                self.stress_events += stress_value
+        self.best_ratio = ratio if self.best_ratio is None else max(self.best_ratio, ratio)
+        self.worst_ratio = ratio if self.worst_ratio is None else min(self.worst_ratio, ratio)
+
+    def average_ratio(self) -> float | None:
+        if not self.ratio_count:
+            return None
+        return self.ratio_sum / self.ratio_count
+
+    def weighted_ratio(self) -> float | None:
+        if self.weighted_total > 0:
+            return self.weighted_met / self.weighted_total
+        return self.average_ratio()
+
+    def to_payload(self, scope: str) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "scope": scope,
+            "samples_recorded": self.sample_count,
+            "runs_tracked": len(self.run_ids),
+            "source": "local_success_aggregation",
+        }
+        avg = self.average_ratio()
+        if avg is not None:
+            payload["average_success_percent"] = round(avg * 100, 3)
+        weighted = self.weighted_ratio()
+        if weighted is not None:
+            payload["weighted_success_percent"] = round(weighted * 100, 3)
+        if self.best_ratio is not None:
+            payload["best_success_percent"] = round(self.best_ratio * 100, 3)
+        if self.worst_ratio is not None:
+            payload["worst_success_percent"] = round(self.worst_ratio * 100, 3)
+        if self.weighted_total:
+            payload["targets_total"] = round(self.weighted_total, 3)
+            payload["targets_met"] = round(self.weighted_met, 3)
+        if self.stress_events:
+            payload["stress_events"] = self.stress_events
+        return payload
+
+    def contribution_payload(self) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "profile_id": self.profile_id,
+            "samples_recorded": self.sample_count,
+            "runs_tracked": len(self.run_ids),
+        }
+        avg = self.average_ratio()
+        if avg is not None:
+            payload["average_success_percent"] = round(avg * 100, 3)
+        weighted = self.weighted_ratio()
+        if weighted is not None:
+            payload["weighted_success_percent"] = round(weighted * 100, 3)
+        if self.weighted_total:
+            payload["targets_total"] = round(self.weighted_total, 3)
+            payload["targets_met"] = round(self.weighted_met, 3)
+        if self.stress_events:
+            payload["stress_events"] = self.stress_events
+        if self.best_ratio is not None:
+            payload["best_success_percent"] = round(self.best_ratio * 100, 3)
+        if self.worst_ratio is not None:
+            payload["worst_success_percent"] = round(self.worst_ratio * 100, 3)
+        return payload
+
+
+@dataclass
+class _SuccessAggregate:
+    species_id: str
+    summaries: list[_SuccessSummary] = field(default_factory=list)
+    ratio_sum: float = 0.0
+    ratio_count: int = 0
+    weighted_met: float = 0.0
+    weighted_total: float = 0.0
+    sample_count: int = 0
+    stress_events: int = 0
+    run_ids: set[str] = field(default_factory=set)
+    best_ratio: float | None = None
+    worst_ratio: float | None = None
+
+    def merge(self, summary: _SuccessSummary) -> None:
+        self.summaries.append(summary)
+        self.ratio_sum += summary.ratio_sum
+        self.ratio_count += summary.ratio_count
+        self.weighted_met += summary.weighted_met
+        self.weighted_total += summary.weighted_total
+        self.sample_count += summary.sample_count
+        self.stress_events += summary.stress_events
+        self.run_ids.update(summary.run_ids)
+        if summary.best_ratio is not None:
+            self.best_ratio = (
+                summary.best_ratio if self.best_ratio is None else max(self.best_ratio, summary.best_ratio)
+            )
+        if summary.worst_ratio is not None:
+            self.worst_ratio = (
+                summary.worst_ratio if self.worst_ratio is None else min(self.worst_ratio, summary.worst_ratio)
+            )
+
+    def average_ratio(self) -> float | None:
+        if not self.ratio_count:
+            return None
+        return self.ratio_sum / self.ratio_count
+
+    def weighted_ratio(self) -> float | None:
+        if self.weighted_total > 0:
+            return self.weighted_met / self.weighted_total
+        return self.average_ratio()
+
+    def build_snapshot(self, computed_at: str | None = None) -> ComputedStatSnapshot | None:
+        if not self.sample_count:
+            return None
+
+        timestamp = computed_at or _now_iso()
+        payload: dict[str, Any] = {
+            "scope": "species",
+            "samples_recorded": self.sample_count,
+            "runs_tracked": len(self.run_ids),
+            "source": "local_success_aggregation",
+        }
+        avg = self.average_ratio()
+        if avg is not None:
+            payload["average_success_percent"] = round(avg * 100, 3)
+        weighted = self.weighted_ratio()
+        if weighted is not None:
+            payload["weighted_success_percent"] = round(weighted * 100, 3)
+        if self.best_ratio is not None:
+            payload["best_success_percent"] = round(self.best_ratio * 100, 3)
+        if self.worst_ratio is not None:
+            payload["worst_success_percent"] = round(self.worst_ratio * 100, 3)
+        if self.weighted_total:
+            payload["targets_total"] = round(self.weighted_total, 3)
+            payload["targets_met"] = round(self.weighted_met, 3)
+        if self.stress_events:
+            payload["stress_events"] = self.stress_events
+
+        contributors_payload = [summary.contribution_payload() for summary in self.summaries]
+        if contributors_payload:
+            payload["contributors"] = contributors_payload
+
+        contributions: list[ProfileContribution] = []
+        denom = self.weighted_total if self.weighted_total > 0 else float(self.sample_count or 0)
+        for summary in self.summaries:
+            numerator = summary.weighted_total if self.weighted_total > 0 else float(summary.sample_count)
+            weight = None
+            if denom and numerator:
+                weight = round(numerator / denom, 6)
+            contributions.append(
+                ProfileContribution(
+                    profile_id=self.species_id,
+                    child_id=summary.profile_id,
+                    stats_version=SUCCESS_STATS_VERSION,
+                    computed_at=timestamp,
+                    n_runs=len(summary.run_ids) or (summary.sample_count or None),
+                    weight=weight,
+                )
+            )
+
+        snapshot = ComputedStatSnapshot(
+            stats_version=SUCCESS_STATS_VERSION,
+            computed_at=timestamp,
+            snapshot_id=f"{self.species_id}:{SUCCESS_STATS_VERSION}",
+            payload=payload,
+            contributions=contributions,
+        )
+        return snapshot
+
+
+def _extract_success_metrics(event: RunEvent) -> tuple[float, float | None, int | None] | None:
+    metadata = event.metadata if isinstance(event.metadata, dict) else {}
+
+    def _lookup(primary: Any | None, *keys: str) -> Any | None:
+        if primary is not None:
+            return primary
+        for key in keys:
+            if key in metadata and metadata[key] is not None:
+                return metadata[key]
+        return None
+
+    stress_raw = _lookup(event.stress_events, "stress_events", "stress_count", "alert_count")
+    stress_float = _to_float(stress_raw)
+    stress_value = int(stress_float) if stress_float is not None else None
+
+    targets_met_raw = _lookup(event.targets_met, "targets_met", "targets_hit", "on_target_samples")
+    targets_total_raw = _lookup(event.targets_total, "targets_total", "targets_expected", "total_samples")
+    met = _to_float(targets_met_raw)
+    total = _to_float(targets_total_raw)
+    if met is not None and total is not None and total > 0:
+        ratio = met / total
+        ratio = max(0.0, min(1.0, ratio))
+        return ratio, total, stress_value
+
+    success_raw = _lookup(
+        event.success_rate,
+        "success_rate",
+        "success_percent",
+        "compliance_ratio",
+        "compliance",
+    )
+    success = _to_float(success_raw)
+    if success is None:
+        return None
+    ratio = success
+    if ratio > 1.0:
+        ratio = ratio / 100.0
+    ratio = max(0.0, min(1.0, ratio))
+    return ratio, None, stress_value
+
+
+def _compute_success_snapshot(profile: BioProfile) -> tuple[ComputedStatSnapshot, _SuccessSummary] | None:
+    if not profile.run_history:
+        return None
+
+    summary = _SuccessSummary(profile_id=profile.profile_id, profile_type=profile.profile_type)
+    for event in profile.run_history:
+        metrics = _extract_success_metrics(event)
+        if metrics is None:
+            continue
+        ratio, weight, stress = metrics
+        if event.run_id:
+            summary.run_ids.add(event.run_id)
+        summary.add_sample(ratio, weight=weight, stress=stress)
+
+    if not summary.sample_count:
+        return None
+
+    scope = "species" if profile.profile_type == "species" else "cultivar"
+    computed_at = _now_iso()
+    payload = summary.to_payload(scope)
+    snapshot = ComputedStatSnapshot(
+        stats_version=SUCCESS_STATS_VERSION,
+        computed_at=computed_at,
+        snapshot_id=f"{profile.profile_id}:{SUCCESS_STATS_VERSION}",
+        payload=payload,
+        contributions=[],
+    )
+    return snapshot, summary
+
+
 def _compute_environment_snapshot(profile: BioProfile) -> tuple[ComputedStatSnapshot, _EnvironmentSummary] | None:
     runs = list(profile.run_history)
     if not runs:
@@ -298,6 +565,7 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
     species_to_harvests: defaultdict[str, list[HarvestEvent]] = defaultdict(list)
     species_breakdown: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
     species_environment: dict[str, _EnvironmentAggregate] = {}
+    species_success: dict[str, _SuccessAggregate] = {}
 
     for profile in profiles:
         harvests = list(profile.harvest_history)
@@ -361,6 +629,19 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
             species_to_harvests[species_id].extend(harvests)
             if aggregate is not None:
                 species_breakdown[species_id].append(aggregate)
+
+        success_snapshot = _compute_success_snapshot(profile)
+        if success_snapshot is not None:
+            snapshot, success_summary = success_snapshot
+            _replace_snapshot(profile, SUCCESS_STATS_VERSION, snapshot)
+            if species_id:
+                aggregate_success = species_success.get(species_id)
+                if aggregate_success is None:
+                    aggregate_success = _SuccessAggregate(species_id=species_id)
+                    species_success[species_id] = aggregate_success
+                aggregate_success.merge(success_summary)
+        else:
+            _replace_snapshot(profile, SUCCESS_STATS_VERSION, None)
 
         env_snapshot = _compute_environment_snapshot(profile)
         if env_snapshot is not None:
@@ -464,5 +745,16 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
         _replace_snapshot(target, ENVIRONMENT_STATS_VERSION, snapshot)
         target.refresh_sections()
 
+    for species_id, aggregate in species_success.items():
+        target = profiles_by_id.get(species_id)
+        if target is None:
+            continue
+        snapshot = aggregate.build_snapshot()
+        if snapshot is None:
+            _replace_snapshot(target, SUCCESS_STATS_VERSION, None)
+            continue
+        _replace_snapshot(target, SUCCESS_STATS_VERSION, snapshot)
+        target.refresh_sections()
 
-__all__ = ["recompute_statistics"]
+
+__all__ = ["recompute_statistics", "SUCCESS_STATS_VERSION"]

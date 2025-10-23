@@ -2,7 +2,13 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
 from typing import Any, Literal
+
+try:
+    UTC = datetime.UTC  # type: ignore[attr-defined]
+except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    UTC = timezone.utc  # noqa: UP017
 
 
 def _as_dict(value: Any) -> dict[str, Any]:
@@ -11,6 +17,18 @@ def _as_dict(value: Any) -> dict[str, Any]:
     if isinstance(value, Mapping):
         return {str(key): item for key, item in value.items()}
     return {}
+
+
+def _parse_timestamp(raw: str | None) -> datetime | None:
+    if not raw:
+        return None
+    try:
+        ts = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if ts.tzinfo is None:
+        ts = ts.replace(tzinfo=UTC)
+    return ts.astimezone(UTC)
 
 
 SourceType = str  # manual|clone|openplantbook|ai|curated|computed
@@ -36,6 +54,10 @@ class RunEvent:
     ended_at: str | None = None
     environment: dict[str, Any] = field(default_factory=dict)
     metadata: dict[str, Any] = field(default_factory=dict)
+    targets_met: float | None = None
+    targets_total: float | None = None
+    success_rate: float | None = None
+    stress_events: int | None = None
 
     def to_json(self) -> dict[str, Any]:
         payload: dict[str, Any] = {
@@ -50,10 +72,30 @@ class RunEvent:
             payload["environment"] = dict(self.environment)
         if self.metadata:
             payload["metadata"] = dict(self.metadata)
+        if self.targets_met is not None:
+            payload["targets_met"] = self.targets_met
+        if self.targets_total is not None:
+            payload["targets_total"] = self.targets_total
+        if self.success_rate is not None:
+            payload["success_rate"] = self.success_rate
+        if self.stress_events is not None:
+            payload["stress_events"] = self.stress_events
         return payload
 
     @staticmethod
     def from_json(data: Mapping[str, Any]) -> RunEvent:
+        def _float_or_none(value: Any) -> float | None:
+            try:
+                return float(value)
+            except (TypeError, ValueError):
+                return None
+
+        def _int_or_none(value: Any) -> int | None:
+            try:
+                return int(float(value))
+            except (TypeError, ValueError):
+                return None
+
         return RunEvent(
             run_id=str(data.get("run_id") or data.get("id") or "run"),
             profile_id=str(data.get("profile_id") or data.get("cultivar_id") or ""),
@@ -62,6 +104,10 @@ class RunEvent:
             ended_at=(str(data.get("ended_at")) if data.get("ended_at") else None),
             environment=_as_dict(data.get("environment")),
             metadata=_as_dict(data.get("metadata")),
+            targets_met=_float_or_none(data.get("targets_met")),
+            targets_total=_float_or_none(data.get("targets_total")),
+            success_rate=_float_or_none(data.get("success_rate")),
+            stress_events=_int_or_none(data.get("stress_events")),
         )
 
 
@@ -258,6 +304,58 @@ class FieldAnnotation:
             overlay_method=data.get("overlay_method"),
             extras=dict(extras) if isinstance(extras, dict) else {},
         )
+
+    def provenance_payload(
+        self,
+        *,
+        include_overlay: bool = True,
+        include_extras: bool = True,
+    ) -> dict[str, Any]:
+        """Return a serialisable provenance summary for UI/diagnostics."""
+
+        extras = dict(self.extras or {})
+        inheritance_depth = extras.get("inheritance_depth")
+        inheritance_chain = extras.get("inheritance_chain") or list(self.source_ref)
+        provenance_chain = extras.get("provenance") or inheritance_chain
+        origin_profile_id = extras.get("source_profile_id")
+        if origin_profile_id is None and provenance_chain:
+            origin_profile_id = provenance_chain[-1]
+
+        payload: dict[str, Any] = {
+            "source_type": self.source_type,
+            "source_ref": list(self.source_ref),
+            "method": self.method,
+            "confidence": self.confidence,
+            "staleness_days": self.staleness_days,
+            "is_stale": self.is_stale,
+            "inheritance_depth": inheritance_depth,
+            "inheritance_chain": list(inheritance_chain) if inheritance_chain else None,
+            "inheritance_reason": extras.get("inheritance_reason"),
+            "provenance_chain": list(provenance_chain) if provenance_chain else None,
+            "origin_profile_id": origin_profile_id,
+            "origin_profile_type": extras.get("source_profile_type"),
+            "origin_profile_name": extras.get("source_profile_name"),
+        }
+
+        payload["is_inherited"] = bool(self.source_type == "inheritance" or (inheritance_depth is not None))
+
+        if include_overlay:
+            if self.overlay is not None:
+                payload["overlay"] = self.overlay
+            if self.overlay_provenance:
+                payload["overlay_provenance"] = list(self.overlay_provenance)
+            if self.overlay_source_type is not None:
+                payload["overlay_source_type"] = self.overlay_source_type
+            if self.overlay_source_ref:
+                payload["overlay_source_ref"] = list(self.overlay_source_ref)
+            if self.overlay_method is not None:
+                payload["overlay_method"] = self.overlay_method
+
+        if include_extras and extras:
+            payload["extras"] = extras
+
+        # Remove keys with ``None`` values for a cleaner payload when requested.
+        return {key: value for key, value in payload.items() if value is not None}
 
 
 @dataclass
@@ -527,6 +625,7 @@ class ProfileResolvedSection:
     variables: dict[str, Any] = field(default_factory=dict)
     citation_map: dict[str, Any] = field(default_factory=dict)
     metadata: dict[str, Any] = field(default_factory=dict)
+    provenance_map: dict[str, Any] = field(default_factory=dict)
     last_resolved: str | None = None
 
     def to_json(self) -> dict[str, Any]:
@@ -540,6 +639,8 @@ class ProfileResolvedSection:
             payload["citation_map"] = dict(self.citation_map)
         if self.metadata:
             payload["metadata"] = dict(self.metadata)
+        if self.provenance_map:
+            payload["provenance_map"] = dict(self.provenance_map)
         if self.last_resolved is not None:
             payload["last_resolved"] = self.last_resolved
         return payload
@@ -558,6 +659,7 @@ class ProfileResolvedSection:
             variables.setdefault(str(key), target.to_legacy())
         citation_map = _as_dict(data.get("citation_map"))
         metadata = _as_dict(data.get("metadata"))
+        provenance_map = _as_dict(data.get("provenance_map"))
         last_resolved = data.get("last_resolved")
         return ProfileResolvedSection(
             thresholds=thresholds,
@@ -565,6 +667,7 @@ class ProfileResolvedSection:
             variables=variables,
             citation_map=citation_map,
             metadata=metadata,
+            provenance_map=provenance_map,
             last_resolved=last_resolved,
         )
 
@@ -812,6 +915,214 @@ class BioProfile:
 
         return {key: target.value for key, target in self.resolved_targets.items()}
 
+    def resolved_provenance(
+        self,
+        *,
+        include_overlay: bool = True,
+        include_extras: bool = True,
+        include_citations: bool = True,
+    ) -> dict[str, Any]:
+        """Return provenance metadata for each resolved target."""
+
+        provenance: dict[str, Any] = {}
+        for key, target in self.resolved_targets.items():
+            payload = target.annotation.provenance_payload(
+                include_overlay=include_overlay,
+                include_extras=include_extras,
+            )
+            payload["value"] = target.value
+            if include_citations and target.citations:
+                payload["citations"] = [asdict(cit) for cit in target.citations]
+            provenance[str(key)] = payload
+        return provenance
+
+    def provenance_summary(self) -> dict[str, Any]:
+        """Return a compact provenance summary for UI summaries."""
+
+        summary: dict[str, Any] = {}
+        for key, target in self.resolved_targets.items():
+            payload = target.annotation.provenance_payload(
+                include_overlay=False,
+                include_extras=False,
+            )
+            payload["value"] = target.value
+            summary[str(key)] = payload
+        return summary
+
+    def run_summaries(
+        self,
+        *,
+        now: datetime | None = None,
+        limit: int | None = None,
+    ) -> list[dict[str, Any]]:
+        """Aggregate lifecycle and harvest data into per-run summaries."""
+
+        def _ensure(run_id: str) -> dict[str, Any]:
+            summary = summaries.get(run_id)
+            if summary is None:
+                summary = {
+                    "run_id": run_id,
+                    "status": "unknown",
+                    "started_at": None,
+                    "ended_at": None,
+                    "targets_met": None,
+                    "targets_total": None,
+                    "success_rate": None,
+                    "stress_events": None,
+                    "harvest_count": 0,
+                    "yield_grams": 0.0,
+                    "environment": {},
+                    "metadata": {},
+                    "_start_ts": None,
+                    "_end_ts": None,
+                    "_area_sum": 0.0,
+                    "_density_samples": [],
+                }
+                summaries[run_id] = summary
+            return summary
+
+        summaries: dict[str, dict[str, Any]] = {}
+        now = now or datetime.now(tz=UTC)
+
+        for event in self.run_history:
+            run_id = event.run_id or "run"
+            summary = _ensure(run_id)
+
+            start_ts = _parse_timestamp(event.started_at)
+            if start_ts is not None:
+                prev = summary.get("_start_ts")
+                if prev is None or start_ts < prev:
+                    summary["_start_ts"] = start_ts
+                    summary["started_at"] = start_ts.isoformat()
+
+            end_ts = _parse_timestamp(event.ended_at)
+            if end_ts is not None:
+                prev_end = summary.get("_end_ts")
+                if prev_end is None or end_ts > prev_end:
+                    summary["_end_ts"] = end_ts
+                    summary["ended_at"] = end_ts.isoformat()
+
+            if event.targets_met is not None:
+                try:
+                    summary["targets_met"] = float(event.targets_met)
+                except (TypeError, ValueError):
+                    summary["targets_met"] = None
+            if event.targets_total is not None:
+                try:
+                    summary["targets_total"] = float(event.targets_total)
+                except (TypeError, ValueError):
+                    summary["targets_total"] = None
+            if event.success_rate is not None:
+                try:
+                    rate = float(event.success_rate)
+                except (TypeError, ValueError):
+                    rate = None
+                if rate is not None:
+                    if rate <= 1.0:
+                        rate *= 100.0
+                    summary["success_rate"] = round(rate, 3)
+            if event.stress_events is not None:
+                try:
+                    summary["stress_events"] = int(event.stress_events)
+                except (TypeError, ValueError):
+                    summary["stress_events"] = None
+            if event.environment:
+                env = summary.setdefault("environment", {})
+                env.update(event.environment)
+            if event.metadata:
+                meta = summary.setdefault("metadata", {})
+                meta.update(event.metadata)
+
+        for harvest in self.harvest_history:
+            run_id = harvest.run_id or (self.run_history[-1].run_id if self.run_history else None)
+            if not run_id:
+                continue
+            summary = _ensure(run_id)
+            summary["harvest_count"] = int(summary.get("harvest_count", 0)) + 1
+            summary["yield_grams"] = float(summary.get("yield_grams", 0.0)) + float(harvest.yield_grams or 0.0)
+
+            harvested_ts = _parse_timestamp(harvest.harvested_at)
+            if harvested_ts is not None and summary.get("_start_ts") is None:
+                summary["_start_ts"] = harvested_ts
+                summary["started_at"] = harvested_ts.isoformat()
+            if harvested_ts is not None:
+                existing_end = summary.get("_end_ts")
+                if existing_end is None or harvested_ts > existing_end:
+                    summary["_end_ts"] = harvested_ts
+                    summary["ended_at"] = harvested_ts.isoformat()
+
+            if harvest.area_m2:
+                try:
+                    area = float(harvest.area_m2)
+                except (TypeError, ValueError):
+                    area = None
+                if area is not None and area > 0:
+                    summary["_area_sum"] = float(summary.get("_area_sum", 0.0)) + area
+            density = harvest.yield_density()
+            if density is not None:
+                summary.setdefault("_density_samples", []).append(float(density))
+
+        ordered = sorted(
+            summaries.values(),
+            key=lambda item: item.get("_start_ts") or datetime.min.replace(tzinfo=UTC),
+            reverse=True,
+        )
+
+        results: list[dict[str, Any]] = []
+        for summary in ordered:
+            start_ts: datetime | None = summary.pop("_start_ts", None)
+            end_ts: datetime | None = summary.pop("_end_ts", None)
+            area_sum = float(summary.pop("_area_sum", 0.0))
+            densities: list[float] = summary.pop("_density_samples", [])
+
+            if start_ts is not None:
+                summary["started_at"] = start_ts.isoformat()
+            if end_ts is not None:
+                summary["ended_at"] = end_ts.isoformat()
+
+            if start_ts is not None:
+                effective_end = end_ts or now
+                delta = max((effective_end - start_ts).total_seconds(), 0.0)
+                summary["duration_days"] = round(delta / 86400, 3)
+            else:
+                summary["duration_days"] = None
+
+            if end_ts is None and start_ts is not None:
+                summary["status"] = "active"
+            elif end_ts is not None and start_ts is not None:
+                summary["status"] = "completed" if end_ts <= now else "pending"
+            else:
+                summary["status"] = summary.get("status") or "unknown"
+
+            total_yield = float(summary.get("yield_grams", 0.0))
+            summary["yield_grams"] = round(total_yield, 3) if total_yield else 0.0
+
+            if area_sum > 0:
+                summary["area_m2"] = round(area_sum, 3)
+                if total_yield:
+                    summary["yield_density_g_m2"] = round(total_yield / area_sum, 3)
+            if densities:
+                summary["mean_yield_density_g_m2"] = round(sum(densities) / len(densities), 3)
+
+            targets_total = summary.get("targets_total")
+            targets_met = summary.get("targets_met")
+            if summary.get("success_rate") is None and targets_total and targets_met is not None:
+                try:
+                    summary["success_rate"] = round((float(targets_met) / float(targets_total)) * 100.0, 3)
+                except (TypeError, ValueError):
+                    summary["success_rate"] = None
+
+            if not summary.get("environment"):
+                summary.pop("environment", None)
+            if not summary.get("metadata"):
+                summary.pop("metadata", None)
+
+            results.append(summary)
+
+        if limit is not None:
+            return results[:limit]
+        return results
+
     def add_run_event(self, event: RunEvent) -> None:
         """Append a normalised run event to the local history."""
 
@@ -838,6 +1149,7 @@ class BioProfile:
         resolved_payload = {key: value.to_json() for key, value in self.resolved_targets.items()}
         variables_payload = {key: value.to_legacy() for key, value in self.resolved_targets.items()}
         thresholds_payload = self.resolved_values()
+        provenance_payload = self.resolved_provenance()
 
         sections = self._ensure_sections()
         library_section = sections.library
@@ -865,6 +1177,7 @@ class BioProfile:
             "resolved_targets": resolved_payload,
             "variables": variables_payload,
             "thresholds": thresholds_payload,
+            "resolved_provenance": provenance_payload,
             "computed_stats": [snapshot.to_json() for snapshot in self.computed_stats],
             "general": self.general,
             "citations": [asdict(cit) for cit in self.citations],
@@ -898,7 +1211,33 @@ class BioProfile:
 
         sensors = self.general.get("sensors")
         sensor_summary = dict(sensors) if isinstance(sensors, dict) else {}
-        return {
+        success_snapshot = next(
+            (snap for snap in self.computed_stats if snap.stats_version == "success/v1"),
+            None,
+        )
+        success_section: dict[str, Any] | None = None
+        if success_snapshot is not None:
+            payload = success_snapshot.payload if isinstance(success_snapshot.payload, dict) else {}
+            success_section = {
+                "weighted_percent": payload.get("weighted_success_percent"),
+                "average_percent": payload.get("average_success_percent"),
+                "best_percent": payload.get("best_success_percent"),
+                "worst_percent": payload.get("worst_success_percent"),
+                "runs_tracked": payload.get("runs_tracked"),
+                "samples_recorded": payload.get("samples_recorded"),
+                "targets_met": payload.get("targets_met"),
+                "targets_total": payload.get("targets_total"),
+                "stress_events": payload.get("stress_events"),
+                "computed_at": success_snapshot.computed_at,
+            }
+            contributors = payload.get("contributors")
+            if isinstance(contributors, list) and contributors:
+                success_section["contributors"] = contributors
+            success_section = {key: value for key, value in success_section.items() if value is not None}
+            if not success_section:
+                success_section = None
+
+        summary: dict[str, Any] = {
             "profile_id": self.profile_id,
             "plant_id": self.profile_id,
             "name": self.display_name,
@@ -908,9 +1247,21 @@ class BioProfile:
             "parents": list(self.parents),
             "sensors": sensor_summary,
             "targets": self.resolved_values(),
+            "provenance": self.provenance_summary(),
             "tags": list(self.tags),
             "last_resolved": self.last_resolved,
         }
+        if success_section is not None:
+            summary["success"] = success_section
+        run_snapshots = self.run_summaries()
+        if run_snapshots:
+            summary["runs"] = {
+                "total": len(run_snapshots),
+                "active": [item["run_id"] for item in run_snapshots if item.get("status") == "active"],
+                "recent": run_snapshots[:3],
+                "latest": run_snapshots[0],
+            }
+        return summary
 
     @staticmethod
     def from_json(data: dict[str, Any]) -> BioProfile:
@@ -1081,6 +1432,9 @@ class BioProfile:
             citation_map = resolved_section.citation_map
             if citation_map:
                 local_metadata.setdefault("citation_map", dict(citation_map))
+            provenance_map = resolved_section.provenance_map
+            if provenance_map:
+                local_metadata.setdefault("provenance_map", dict(provenance_map))
 
         extra_kwargs: dict[str, Any] = {}
         if profile_type == "species":
@@ -1199,6 +1553,7 @@ class BioProfile:
             variables=variables,
             citation_map=citation_map,
             metadata=metadata,
+            provenance_map=self.provenance_summary(),
             last_resolved=self.last_resolved,
         )
 
@@ -1242,6 +1597,11 @@ class BioProfile:
         if resolved.citation_map:
             merged_citation_map.update(resolved.citation_map)
         resolved.citation_map = merged_citation_map
+
+        merged_provenance_map = dict(existing.resolved.provenance_map)
+        if resolved.provenance_map:
+            merged_provenance_map.update(resolved.provenance_map)
+        resolved.provenance_map = merged_provenance_map
 
         merged_computed_metadata = dict(existing.computed.metadata)
         merged_computed_metadata.update(computed.metadata)

@@ -30,6 +30,9 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
             "started_at": "2025-01-01T00:00:00Z",
             "ended_at": "2025-01-04T00:00:00Z",
             "environment": {"temperature_c": 21.5},
+            "targets_met": 18,
+            "targets_total": 20,
+            "stress_events": 2,
         },
     )
     await registry.async_record_harvest_event(
@@ -58,7 +61,18 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert profile_id in summaries
     assert summaries[profile_id]["name"] == "Heritage Tomato"
     assert summaries[profile_id]["targets"]["vpd_max"] == pytest.approx(1.2)
+    provenance = summaries[profile_id]["provenance"]["vpd_max"]
+    assert provenance["source_type"] == "manual"
+    assert not provenance.get("is_inherited")
     assert summaries[profile_id]["computed_stats"]
+    success_summary = summaries[profile_id].get("success")
+    assert success_summary is not None
+    assert success_summary["weighted_percent"] == pytest.approx(90.0)
+    assert success_summary["samples_recorded"] == 1
+    runs_section = summaries[profile_id].get("runs")
+    assert runs_section is not None
+    assert runs_section["total"] >= 1
+    assert runs_section["latest"]["run_id"] == "run-1"
 
     detail_resp = await client.get(f"/api/horticulture_assistant/profiles/{profile_id}")
     assert detail_resp.status == 200
@@ -66,7 +80,12 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert detail["profile_id"] == profile_id
     assert "resolved_targets" in detail and "vpd_max" in detail["resolved_targets"]
     assert detail["resolved_targets"]["vpd_max"]["value"] == pytest.approx(1.2)
+    assert detail["resolved_provenance"]["vpd_max"]["source_type"] == "manual"
+    assert detail["provenance_summary"]["vpd_max"]["value"] == pytest.approx(1.2)
     assert any(snap["stats_version"] == "environment/v1" for snap in detail["computed_stats"])
+    assert any(snap["stats_version"] == "success/v1" for snap in detail["computed_stats"])
+    assert detail["run_summaries"] and detail["run_summaries"][0]["run_id"] == "run-1"
+    assert "cloud_context" in detail and isinstance(detail["cloud_context"]["available"], list)
 
     target_resp = await client.get(f"/api/horticulture_assistant/profiles/{profile_id}/targets/vpd_max")
     assert target_resp.status == 200
@@ -74,9 +93,15 @@ async def test_profile_http_views(hass, hass_client, enable_custom_integrations,
     assert target_payload["profile_id"] == profile_id
     assert target_payload["target"]["value"] == pytest.approx(1.2)
     assert target_payload["target"]["annotation"]["source_type"] == "manual"
+    assert target_payload["target"]["provenance"]["source_type"] == "manual"
 
     missing_resp = await client.get(f"/api/horticulture_assistant/profiles/{profile_id}/targets/missing")
     assert missing_resp.status == 404
 
     unknown_resp = await client.get("/api/horticulture_assistant/profiles/does-not-exist")
     assert unknown_resp.status == 404
+
+    status_resp = await client.get("/api/horticulture_assistant/cloud_status")
+    assert status_resp.status == 200
+    status_payload = await status_resp.json()
+    assert isinstance(status_payload.get("cloud"), list)

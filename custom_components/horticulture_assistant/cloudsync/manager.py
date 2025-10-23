@@ -14,11 +14,20 @@ from aiohttp import ClientSession
 from homeassistant.core import HomeAssistant
 
 from ..const import (
+    CONF_CLOUD_ACCESS_TOKEN,
+    CONF_CLOUD_ACCOUNT_EMAIL,
+    CONF_CLOUD_ACCOUNT_ROLES,
+    CONF_CLOUD_AVAILABLE_ORGANIZATIONS,
     CONF_CLOUD_BASE_URL,
     CONF_CLOUD_DEVICE_TOKEN,
+    CONF_CLOUD_ORGANIZATION_ID,
+    CONF_CLOUD_ORGANIZATION_NAME,
+    CONF_CLOUD_ORGANIZATION_ROLE,
+    CONF_CLOUD_REFRESH_TOKEN,
     CONF_CLOUD_SYNC_ENABLED,
     CONF_CLOUD_SYNC_INTERVAL,
     CONF_CLOUD_TENANT_ID,
+    CONF_CLOUD_TOKEN_EXPIRES_AT,
     DEFAULT_CLOUD_SYNC_INTERVAL,
 )
 from .edge_store import EdgeSyncStore
@@ -38,7 +47,16 @@ class CloudSyncConfig:
     base_url: str = ""
     tenant_id: str = ""
     device_token: str = ""
+    access_token: str = ""
+    refresh_token: str = ""
+    token_expires_at: str | None = None
+    account_email: str | None = None
+    roles: tuple[str, ...] = ()
     interval: int = DEFAULT_CLOUD_SYNC_INTERVAL
+    organization_id: str | None = None
+    organization_name: str | None = None
+    organization_role: str | None = None
+    available_organizations: tuple[dict[str, Any], ...] = ()
 
     @classmethod
     def from_options(cls, options: Mapping[str, Any]) -> CloudSyncConfig:
@@ -46,6 +64,42 @@ class CloudSyncConfig:
         base_url = str(options.get(CONF_CLOUD_BASE_URL, "") or "").strip()
         tenant_id = str(options.get(CONF_CLOUD_TENANT_ID, "") or "").strip()
         device_token = str(options.get(CONF_CLOUD_DEVICE_TOKEN, "") or "").strip()
+        access_token = str(options.get(CONF_CLOUD_ACCESS_TOKEN, "") or "").strip()
+        refresh_token = str(options.get(CONF_CLOUD_REFRESH_TOKEN, "") or "").strip()
+        expires_raw = options.get(CONF_CLOUD_TOKEN_EXPIRES_AT)
+        expires_at = str(expires_raw).strip() if expires_raw else None
+        account_email = str(options.get(CONF_CLOUD_ACCOUNT_EMAIL, "") or "").strip() or None
+        roles_raw = options.get(CONF_CLOUD_ACCOUNT_ROLES)
+        if isinstance(roles_raw, list | tuple | set):
+            roles = tuple(str(role) for role in roles_raw if role)
+        elif isinstance(roles_raw, str) and roles_raw:
+            roles = (roles_raw,)
+        else:
+            roles = ()
+        org_id = str(options.get(CONF_CLOUD_ORGANIZATION_ID, "") or "").strip() or None
+        org_name = str(options.get(CONF_CLOUD_ORGANIZATION_NAME, "") or "").strip() or None
+        org_role = str(options.get(CONF_CLOUD_ORGANIZATION_ROLE, "") or "").strip() or None
+        orgs_raw = options.get(CONF_CLOUD_AVAILABLE_ORGANIZATIONS)
+        if isinstance(orgs_raw, list):
+            processed: list[dict[str, Any]] = []
+            for item in orgs_raw:
+                if not isinstance(item, Mapping):
+                    continue
+                org_candidate = str(item.get("id") or item.get("org_id") or "").strip()
+                if not org_candidate:
+                    continue
+                name_candidate = str(item.get("name") or item.get("label") or "").strip() or None
+                processed.append(
+                    {
+                        "id": org_candidate,
+                        "name": name_candidate,
+                        "roles": item.get("roles"),
+                        "default": item.get("default"),
+                    }
+                )
+            available_orgs = tuple(processed)
+        else:
+            available_orgs = ()
         interval_raw = options.get(CONF_CLOUD_SYNC_INTERVAL, DEFAULT_CLOUD_SYNC_INTERVAL)
         try:
             interval = max(15, int(interval_raw))
@@ -56,12 +110,40 @@ class CloudSyncConfig:
             base_url=base_url,
             tenant_id=tenant_id,
             device_token=device_token,
+            access_token=access_token,
+            refresh_token=refresh_token,
+            token_expires_at=expires_at,
+            account_email=account_email,
+            roles=roles,
             interval=interval,
+            organization_id=org_id,
+            organization_name=org_name,
+            organization_role=org_role,
+            available_organizations=available_orgs,
         )
 
     @property
     def ready(self) -> bool:
-        return bool(self.enabled and self.base_url and self.tenant_id and self.device_token)
+        has_token = bool(self.device_token or self.access_token)
+        return bool(self.enabled and self.base_url and self.tenant_id and has_token)
+
+    def parsed_expiry(self) -> datetime | None:
+        if not self.token_expires_at:
+            return None
+        try:
+            parsed = datetime.fromisoformat(str(self.token_expires_at).replace("Z", "+00:00"))
+        except ValueError:
+            return None
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=UTC)
+        return parsed.astimezone(UTC)
+
+    def token_expired(self, *, now: datetime | None = None, threshold_seconds: int = 0) -> bool:
+        expiry = self.parsed_expiry()
+        if expiry is None:
+            return False
+        now = now or datetime.now(tz=UTC)
+        return (expiry - now).total_seconds() <= threshold_seconds
 
 
 class CloudSyncManager:
@@ -102,8 +184,9 @@ class CloudSyncManager:
             self.store,
             self._session,
             self.config.base_url,
-            self.config.device_token,
+            self.config.device_token or self.config.access_token,
             self.config.tenant_id,
+            organization_id=self.config.organization_id,
         )
         self._task = self.hass.async_create_task(self._worker.run_forever(interval_seconds=self.config.interval))
 
@@ -139,9 +222,22 @@ class CloudSyncManager:
             "cloud_cache_entries": self.store.count_cloud_cache(),
             "cloud_snapshot_age_days": self.store.cloud_cache_age(now=now),
             "cloud_snapshot_oldest_age_days": self.store.cloud_cache_oldest_age(now=now),
+            "account_email": self.config.account_email,
+            "tenant_id": self.config.tenant_id,
+            "organization_id": self.config.organization_id,
+            "organization_name": self.config.organization_name,
+            "organization_role": self.config.organization_role,
+            "organizations": [dict(org) for org in self.config.available_organizations],
+            "roles": list(self.config.roles),
+            "token_expires_at": self.config.token_expires_at,
+            "refresh_token": bool(self.config.refresh_token),
         }
         if self._worker:
             status.update(self._worker.status())
+        expiry = self.config.parsed_expiry()
+        if expiry is not None:
+            status["token_expires_in_seconds"] = max((expiry - now).total_seconds(), 0.0)
+        status["token_expired"] = self.config.token_expired(now=now, threshold_seconds=30)
         status["connection"] = self._connection_summary(status, now)
         return status
 
@@ -158,6 +254,11 @@ class CloudSyncManager:
             "last_success_age_days": None,
         }
         if not configured:
+            return summary
+
+        if status.get("token_expired"):
+            summary["reason"] = "token_expired"
+            summary["local_only"] = True
             return summary
 
         last_success_raw = status.get("last_success_at")

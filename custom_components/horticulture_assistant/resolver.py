@@ -30,29 +30,33 @@ class PreferenceResolver:
     def __init__(self, hass: HomeAssistant):
         self.hass = hass
 
-    def _cloud_store(self, entry) -> tuple[Any | None, str | None]:
-        """Return the cloud sync store and tenant when a manager is configured."""
+    def _cloud_store(self, entry) -> tuple[Any | None, str | None, str | None]:
+        """Return the cloud sync store, tenant, and organization context if available."""
 
         domain_data = self.hass.data.get(DOMAIN)
         if not isinstance(domain_data, Mapping):
-            return None, None
+            return None, None, None
         entry_id = getattr(entry, "entry_id", None)
         if entry_id is None:
-            return None, None
+            return None, None, None
         entry_data = domain_data.get(entry_id)
         if not isinstance(entry_data, Mapping):
-            return None, None
+            return None, None, None
         manager = entry_data.get("cloud_sync_manager")
         if manager is None:
-            return None, None
+            return None, None, None
         store = getattr(manager, "store", None)
         tenant_id = None
+        organization_id = None
         config = getattr(manager, "config", None)
         if config is not None:
             tenant_value = getattr(config, "tenant_id", None)
             if isinstance(tenant_value, str) and tenant_value.strip():
                 tenant_id = tenant_value.strip()
-        return store, tenant_id
+            org_value = getattr(config, "organization_id", None)
+            if isinstance(org_value, str) and org_value.strip():
+                organization_id = org_value.strip()
+        return store, tenant_id, organization_id
 
     def _profile_registry(self, entry) -> Any | None:
         """Return the profile registry stored for ``entry``."""
@@ -94,7 +98,7 @@ class PreferenceResolver:
     ) -> BioProfile | None:
         """Combine cloud snapshots with local profile state if available."""
 
-        store, tenant_id = self._cloud_store(entry)
+        store, tenant_id, organization_id = self._cloud_store(entry)
         if store is None:
             return None
 
@@ -110,6 +114,7 @@ class PreferenceResolver:
             store,
             local_profile_loader=local_loader,
             tenant_id=tenant_id,
+            organization_id=organization_id,
         )
         try:
             resolved = resolver.resolve_profile(profile_id, local_payload=local_map)

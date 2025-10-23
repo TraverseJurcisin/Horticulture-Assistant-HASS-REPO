@@ -1,5 +1,6 @@
 """Offline-first sync helpers shared by the edge add-on and cloud services."""
 
+from .auth import CloudAuthClient, CloudAuthError, CloudAuthTokens, CloudOrganization
 from .conflict import ConflictPolicy, ConflictResolver
 from .edge_store import EdgeSyncStore
 from .edge_worker import EdgeSyncWorker
@@ -14,6 +15,10 @@ from .resolver_service import (
 )
 
 __all__ = [
+    "CloudAuthClient",
+    "CloudAuthError",
+    "CloudAuthTokens",
+    "CloudOrganization",
     "SyncEvent",
     "VectorClock",
     "EdgeSyncStore",

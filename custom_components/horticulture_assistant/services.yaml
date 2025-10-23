@@ -98,6 +98,22 @@ record_run_event:
       required: false
       description: "Arbitrary metadata describing the run."
       selector: { object: {} }
+    targets_met:
+      required: false
+      description: "Number of target checks that were within range during the run."
+      selector: { number: { min: 0 } }
+    targets_total:
+      required: false
+      description: "Total target checks evaluated for the run to derive success rate weighting."
+      selector: { number: { min: 0 } }
+    success_rate:
+      required: false
+      description: "Overall success rate for the run (percentage or decimal between 0 and 1)."
+      selector: { number: { min: 0, max: 100 } }
+    stress_events:
+      required: false
+      description: "Count of stress or alert events observed during the run."
+      selector: { number: { min: 0 } }
 
 record_harvest_event:
   name: "Record harvest event"
@@ -125,3 +141,83 @@ record_harvest_event:
       required: false
       description: "Additional harvest metadata such as cultivar phenotype notes."
       selector: { object: {} }
+
+profile_provenance:
+  name: "Inspect target provenance"
+  description: "Return provenance details for all resolved targets in a profile."
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    include_overlay:
+      required: false
+      default: false
+      description: "Include overlay/parent metadata for inherited targets."
+      selector: { boolean: {} }
+    include_extras:
+      required: false
+      default: false
+      description: "Include raw extras payload captured during resolution."
+      selector: { boolean: {} }
+    include_citations:
+      required: false
+      default: false
+      description: "Include citation lists for each resolved target."
+      selector: { boolean: {} }
+
+profile_runs:
+  name: "Summarise grow runs"
+  description: "Return lifecycle and harvest summaries for a profile's runs."
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    limit:
+      required: false
+      description: "Maximum number of runs to include (most recent first)."
+      selector: { number: { min: 1, max: 25 } }
+
+cloud_login:
+  name: "Cloud login"
+  description: "Authenticate with the Horticulture Assistant cloud and store tokens."
+  fields:
+    base_url:
+      required: false
+      description: "Override the cloud base URL (defaults to the configured value)."
+      selector: { text: {} }
+    email:
+      required: true
+      selector: { text: {} }
+    password:
+      required: true
+      selector: { text: { type: password } }
+
+cloud_logout:
+  name: "Cloud logout"
+  description: "Disable cloud sync and clear stored tokens."
+
+cloud_refresh_token:
+  name: "Refresh cloud token"
+  description: "Refresh the stored access token using the configured refresh token."
+  fields:
+    base_url:
+      required: false
+      description: "Override the cloud base URL used for the refresh request."
+      selector: { text: {} }
+
+cloud_select_org:
+  name: "Select cloud organization"
+  description: "Set the active cloud organization for subsequent sync operations."
+  fields:
+    organization_id:
+      required: false
+      description: "Organization identifier to activate."
+      selector: { text: {} }
+    organization_name:
+      required: false
+      description: "Organization name to match when the identifier is unknown."
+      selector: { text: {} }
+    role:
+      required: false
+      description: "Optional role override for the active organization context."
+      selector: { text: {} }

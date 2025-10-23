@@ -25,6 +25,16 @@ def _iter_registries(hass: HomeAssistant) -> Iterable:
             yield registry
 
 
+def _iter_cloud_managers(hass: HomeAssistant) -> Iterable:
+    domain_data = hass.data.get(DOMAIN, {})
+    for key, value in domain_data.items():
+        if key in {BY_PLANT_ID, _HTTP_REGISTERED}:
+            continue
+        manager = value.get("cloud_sync_manager")
+        if manager is not None:
+            yield manager
+
+
 def _find_profile(hass: HomeAssistant, profile_id: str) -> BioProfile | None:
     for registry in _iter_registries(hass):
         getter = getattr(registry, "get_profile", None)
@@ -41,6 +51,7 @@ def _serialise_target(target: ResolvedTarget) -> dict:
         "value": target.value,
         "annotation": target.annotation.to_json(),
         "citations": [asdict(cit) for cit in target.citations],
+        "provenance": target.annotation.provenance_payload(),
     }
 
 
@@ -81,7 +92,13 @@ class ProfileDetailView(HomeAssistantView):
         payload = profile.to_json()
         payload["summary"] = profile.summary()
         payload["resolved_values"] = profile.resolved_values()
+        payload["provenance_summary"] = profile.provenance_summary()
         payload["computed_stats"] = [snapshot.to_json() for snapshot in profile.computed_stats]
+        payload["run_summaries"] = profile.run_summaries()
+        payload["cloud_context"] = {
+            "tenant_id": profile.tenant_id,
+            "available": [manager.status() for manager in _iter_cloud_managers(hass)],
+        }
         return self.json(payload)
 
 
@@ -113,6 +130,19 @@ class ProfileTargetView(HomeAssistantView):
         )
 
 
+class CloudStatusView(HomeAssistantView):
+    """Expose the current cloud sync status for diagnostics."""
+
+    url = "/api/horticulture_assistant/cloud_status"
+    name = "api:horticulture_assistant:cloud_status"
+    requires_auth = True
+
+    async def get(self, request):  # type: ignore[override]
+        hass: HomeAssistant = request.app["hass"]
+        statuses = [manager.status() for manager in _iter_cloud_managers(hass)]
+        return self.json({"cloud": statuses})
+
+
 def async_register_http_views(hass: HomeAssistant) -> None:
     """Register HTTP API endpoints exactly once per Home Assistant instance."""
 
@@ -122,4 +152,5 @@ def async_register_http_views(hass: HomeAssistant) -> None:
     hass.http.register_view(ProfilesCollectionView())
     hass.http.register_view(ProfileDetailView())
     hass.http.register_view(ProfileTargetView())
+    hass.http.register_view(CloudStatusView())
     domain_data[_HTTP_REGISTERED] = True
