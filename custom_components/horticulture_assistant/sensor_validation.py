@@ -5,13 +5,9 @@ from __future__ import annotations
 from collections.abc import Iterable
 from dataclasses import dataclass
 
+from homeassistant import const as ha_const
 from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.const import (
-    CONCENTRATION_PARTS_PER_MILLION,
-    LIGHT_LUX,
-    PERCENTAGE,
-    UnitOfTemperature,
-)
+from homeassistant.const import LIGHT_LUX, PERCENTAGE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 
 
@@ -45,12 +41,18 @@ EXPECTED_DEVICE_CLASSES: dict[str, SensorDeviceClass] = {
 }
 
 
+_CO2_UNITS: set[str] = {"ppm"}
+_CO2_CONSTANT = getattr(ha_const, "CONCENTRATION_PARTS_PER_MILLION", None)
+if isinstance(_CO2_CONSTANT, str):
+    _CO2_UNITS.add(_CO2_CONSTANT)
+
+
 EXPECTED_UNITS: dict[str, set[str]] = {
     "temperature": {UnitOfTemperature.CELSIUS, UnitOfTemperature.FAHRENHEIT},
     "humidity": {PERCENTAGE},
     "moisture": {PERCENTAGE},
     "illuminance": {LIGHT_LUX, "lx", "lux", "klx", "kilolux"},
-    "co2": {CONCENTRATION_PARTS_PER_MILLION, "ppm"},
+    "co2": _CO2_UNITS,
     "ec": {"µS/cm", "uS/cm", "us/cm", "mS/cm", "ds/m", "s/m"},
 }
 
