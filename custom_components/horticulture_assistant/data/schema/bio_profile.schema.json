@@ -530,99 +530,99 @@
         },
         "metadata": {
           "type": "object"
-      }
-    },
-    "nutrient_event": {
-      "type": "object",
-      "required": [
-        "event_id",
-        "profile_id",
-        "applied_at"
-      ],
-      "properties": {
-        "event_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "profile_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "species_id": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "run_id": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "applied_at": {
-          "type": "string"
-        },
-        "product_id": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "product_name": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "product_category": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "source": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "solution_volume_liters": {
-          "type": [
-            "number",
-            "null"
-          ]
-        },
-        "concentration_ppm": {
-          "type": [
-            "number",
-            "null"
-          ]
-        },
-        "ec_ms": {
-          "type": [
-            "number",
-            "null"
-          ]
-        },
-        "ph": {
-          "type": [
-            "number",
-            "null"
-          ]
-        },
-        "additives": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "metadata": {
-          "type": "object"
         }
       },
-      "additionalProperties": true
-    },
+      "nutrient_event": {
+        "type": "object",
+        "required": [
+          "event_id",
+          "profile_id",
+          "applied_at"
+        ],
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "profile_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "species_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "run_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "applied_at": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "product_name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "product_category": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "solution_volume_liters": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "concentration_ppm": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "ec_ms": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "ph": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "additives": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": true
+      },
       "additionalProperties": true
     },
     "yield_statistic": {
