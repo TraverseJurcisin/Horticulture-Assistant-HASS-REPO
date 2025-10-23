@@ -93,6 +93,7 @@ class ProfileDetailView(HomeAssistantView):
         payload["summary"] = profile.summary()
         payload["resolved_values"] = profile.resolved_values()
         payload["provenance_summary"] = profile.provenance_summary()
+        payload["provenance_badges"] = profile.provenance_badges()
         payload["computed_stats"] = [snapshot.to_json() for snapshot in profile.computed_stats]
         payload["run_summaries"] = profile.run_summaries()
         payload["cloud_context"] = {
@@ -100,6 +101,28 @@ class ProfileDetailView(HomeAssistantView):
             "available": [manager.status() for manager in _iter_cloud_managers(hass)],
         }
         return self.json(payload)
+
+
+class ProfileBadgesView(HomeAssistantView):
+    """Return the provenance badges for a specific profile."""
+
+    url = "/api/horticulture_assistant/profiles/{profile_id}/badges"
+    name = "api:horticulture_assistant:profile_badges"
+    requires_auth = True
+
+    async def get(self, request, profile_id):  # type: ignore[override]
+        hass: HomeAssistant = request.app["hass"]
+        profile = _find_profile(hass, profile_id)
+        if profile is None:
+            return self.json({"error": "not_found", "message": f"Profile {profile_id} not found"}, status_code=404)
+        profile.refresh_sections()
+        return self.json(
+            {
+                "profile_id": profile_id,
+                "badges": profile.provenance_badges(),
+                "provenance": profile.provenance_summary(),
+            }
+        )
 
 
 class ProfileTargetView(HomeAssistantView):
@@ -152,5 +175,6 @@ def async_register_http_views(hass: HomeAssistant) -> None:
     hass.http.register_view(ProfilesCollectionView())
     hass.http.register_view(ProfileDetailView())
     hass.http.register_view(ProfileTargetView())
+    hass.http.register_view(ProfileBadgesView())
     hass.http.register_view(CloudStatusView())
     domain_data[_HTTP_REGISTERED] = True

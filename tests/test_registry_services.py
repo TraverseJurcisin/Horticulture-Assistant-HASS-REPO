@@ -378,6 +378,8 @@ async def test_profile_provenance_service_returns_counts(hass, tmp_path):
     assert counts["total"] == 2
     assert counts["overrides"] == 1
     assert counts["inherited"] == 1
+    assert response["badges"]["temperature_optimal"]["badge"] == "inherited"
+    assert response["badge_counts"]["override"] == 1
     summary = response["summary"]
     assert summary["temperature_optimal"]["is_inherited"] is True
     assert summary["humidity_optimal"]["source_type"] == "manual"

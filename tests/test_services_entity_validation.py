@@ -16,6 +16,11 @@ class DummyStates:
         return self._states.get(entity_id)
 
 
+class DummyState:
+    def __init__(self, **attrs: object) -> None:
+        self.attributes = attrs
+
+
 class DummyServices:
     def __init__(self) -> None:
         self._registered: dict[tuple[str, str], object] = {}
@@ -35,7 +40,11 @@ class DummyConfigEntries:
 @pytest.mark.asyncio
 async def test_replace_sensor_allows_entities_missing_registry(monkeypatch):
     hass = types.SimpleNamespace(
-        states=DummyStates({"sensor.temp": object()}),
+        states=DummyStates(
+            {
+                "sensor.temp": DummyState(device_class="temperature", unit_of_measurement="°C"),
+            }
+        ),
         services=DummyServices(),
         config_entries=DummyConfigEntries(),
     )
@@ -72,7 +81,11 @@ async def test_replace_sensor_allows_entities_missing_registry(monkeypatch):
 @pytest.mark.asyncio
 async def test_link_sensor_allows_entities_missing_registry(monkeypatch):
     hass = types.SimpleNamespace(
-        states=DummyStates({"sensor.light": object()}),
+        states=DummyStates(
+            {
+                "sensor.light": DummyState(device_class="illuminance", unit_of_measurement="lx"),
+            }
+        ),
         services=DummyServices(),
         config_entries=DummyConfigEntries(),
     )

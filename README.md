@@ -61,6 +61,7 @@ When a value is missing at the line level, the resolver automatically falls back
 
 | Area | Purpose | Where to learn more |
 |------|---------|---------------------|
+| Architecture & audits | Latest BioProfile alignment summary and engineering priorities | [BioProfile v3.3 audit](docs/bio_profile_v3_3_audit.md) |
 | Integration code | Coordinator, config/option flows, entities, services | [Component internals](custom_components/horticulture_assistant/README.md) |
 | Data catalogue | Fertilizer/product schemas, crop targets, irrigation tables | [Data README](custom_components/horticulture_assistant/data/README.md) |
 | Fertilizer dataset | Detail/index shards, schema history, validation workflow | [Fertilizer dataset](custom_components/horticulture_assistant/data/fertilizers/README.md) |

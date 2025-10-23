@@ -40,6 +40,7 @@ from .profile.schema import (
 )
 from .profile.statistics import recompute_statistics
 from .profile.utils import ensure_sections, link_species_and_cultivars, sync_general_section
+from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .validators import validate_profile_dict
 
 _LOGGER = logging.getLogger(__name__)
@@ -144,11 +145,16 @@ class ProfileRegistry:
         if self._cloud_pending_snapshot:
             self.publish_full_snapshot()
             publisher = self._cloud_publisher
-        if publisher is None or not publisher.ready:
+        if publisher is None:
             self._cloud_pending_snapshot = True
             return
+        ready = publisher.ready
         self._safe_publish(lambda: publisher.publish_profile(profile))
         self._publish_stats_with(publisher, profile)
+        if ready:
+            self._cloud_pending_snapshot = False
+        else:
+            self._cloud_pending_snapshot = True
 
     def _cloud_publish_deleted(self, profile_id: str) -> None:
         publisher = self._cloud_publisher
@@ -157,10 +163,15 @@ class ProfileRegistry:
         if self._cloud_pending_snapshot:
             self.publish_full_snapshot()
             publisher = self._cloud_publisher
-        if publisher is None or not publisher.ready:
+        if publisher is None:
             self._cloud_pending_snapshot = True
             return
+        ready = publisher.ready
         self._safe_publish(lambda: publisher.publish_profile_deleted(profile_id))
+        if ready:
+            self._cloud_pending_snapshot = False
+        else:
+            self._cloud_pending_snapshot = True
 
     def _cloud_publish_run(self, event: RunEvent) -> None:
         publisher = self._cloud_publisher
@@ -169,10 +180,15 @@ class ProfileRegistry:
         if self._cloud_pending_snapshot:
             self.publish_full_snapshot()
             publisher = self._cloud_publisher
-        if publisher is None or not publisher.ready:
+        if publisher is None:
             self._cloud_pending_snapshot = True
             return
+        ready = publisher.ready
         self._safe_publish(lambda: publisher.publish_run(event))
+        if ready:
+            self._cloud_pending_snapshot = False
+        else:
+            self._cloud_pending_snapshot = True
 
     def _cloud_publish_harvest(self, event: HarvestEvent) -> None:
         publisher = self._cloud_publisher
@@ -181,10 +197,15 @@ class ProfileRegistry:
         if self._cloud_pending_snapshot:
             self.publish_full_snapshot()
             publisher = self._cloud_publisher
-        if publisher is None or not publisher.ready:
+        if publisher is None:
             self._cloud_pending_snapshot = True
             return
+        ready = publisher.ready
         self._safe_publish(lambda: publisher.publish_harvest(event))
+        if ready:
+            self._cloud_pending_snapshot = False
+        else:
+            self._cloud_pending_snapshot = True
 
     def _cloud_publish_nutrient(self, event: NutrientApplication) -> None:
         publisher = self._cloud_publisher
@@ -193,10 +214,15 @@ class ProfileRegistry:
         if self._cloud_pending_snapshot:
             self.publish_full_snapshot()
             publisher = self._cloud_publisher
-        if publisher is None or not publisher.ready:
+        if publisher is None:
             self._cloud_pending_snapshot = True
             return
+        ready = publisher.ready
         self._safe_publish(lambda: publisher.publish_nutrient(event))
+        if ready:
+            self._cloud_pending_snapshot = False
+        else:
+            self._cloud_pending_snapshot = True
 
     def _cloud_publish_cultivation(self, event: CultivationEvent) -> None:
         publisher = self._cloud_publisher
@@ -205,10 +231,15 @@ class ProfileRegistry:
         if self._cloud_pending_snapshot:
             self.publish_full_snapshot()
             publisher = self._cloud_publisher
-        if publisher is None or not publisher.ready:
+        if publisher is None:
             self._cloud_pending_snapshot = True
             return
+        ready = publisher.ready
         self._safe_publish(lambda: publisher.publish_cultivation(event))
+        if ready:
+            self._cloud_pending_snapshot = False
+        else:
+            self._cloud_pending_snapshot = True
 
     def _publish_stats_with(
         self,
@@ -453,6 +484,16 @@ class ProfileRegistry:
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
+        validation = validate_sensor_links(self.hass, sensors)
+        if validation.errors:
+            message = collate_issue_messages(validation.errors)
+            raise ValueError(f"sensor validation failed: {message}")
+        if validation.warnings:
+            _LOGGER.warning(
+                "Profile %s sensor validation warnings:\n%s",
+                profile_id,
+                collate_issue_messages(validation.warnings),
+            )
         prof_payload = dict(profile)
         ensure_sections(
             prof_payload,

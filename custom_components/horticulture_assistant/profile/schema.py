@@ -34,6 +34,28 @@ def _parse_timestamp(raw: str | None) -> datetime | None:
 SourceType = str  # manual|clone|openplantbook|ai|curated|computed
 
 
+BADGE_LABELS: dict[str, str] = {
+    "inherited": "Inherited from parent",
+    "override": "Locally overridden",
+    "external": "External source",
+    "computed": "Computed",
+}
+
+BADGE_ICONS: dict[str, str] = {
+    "inherited": "mdi:family-tree",
+    "override": "mdi:source-branch",
+    "external": "mdi:cloud-download",
+    "computed": "mdi:calculator-variant",
+}
+
+BADGE_COLORS: dict[str, str] = {
+    "inherited": "blue",
+    "override": "orange",
+    "external": "purple",
+    "computed": "teal",
+}
+
+
 @dataclass
 class Citation:
     source: SourceType
@@ -547,6 +569,24 @@ class FieldAnnotation:
         }
 
         payload["is_inherited"] = bool(self.source_type == "inheritance" or (inheritance_depth is not None))
+
+        source_type = str(self.source_type or "unknown")
+        if payload["is_inherited"]:
+            badge_key = "inherited"
+        elif source_type in {"manual", "local_override"}:
+            badge_key = "override"
+        elif source_type == "computed":
+            badge_key = "computed"
+        else:
+            badge_key = "external"
+
+        payload["badge"] = badge_key
+        if label := BADGE_LABELS.get(badge_key):
+            payload["badge_label"] = label
+        if icon := BADGE_ICONS.get(badge_key):
+            payload["badge_icon"] = icon
+        if colour := BADGE_COLORS.get(badge_key):
+            payload["badge_color"] = colour
 
         if include_overlay:
             if self.overlay is not None:
@@ -1174,6 +1214,26 @@ class BioProfile:
             summary[str(key)] = payload
         return summary
 
+    def provenance_badges(self) -> dict[str, Any]:
+        """Return provenance badge metadata for quick UI presentation."""
+
+        badges: dict[str, Any] = {}
+        for key, payload in self.provenance_summary().items():
+            badge_key = payload.get("badge")
+            if not badge_key:
+                continue
+            badges[key] = {
+                "badge": badge_key,
+                "label": payload.get("badge_label", BADGE_LABELS.get(badge_key, badge_key.title())),
+                "icon": payload.get("badge_icon", BADGE_ICONS.get(badge_key)),
+                "color": payload.get("badge_color", BADGE_COLORS.get(badge_key)),
+                "is_inherited": payload.get("is_inherited", False),
+                "source_type": payload.get("source_type"),
+                "origin_profile_name": payload.get("origin_profile_name"),
+                "origin_profile_id": payload.get("origin_profile_id"),
+            }
+        return badges
+
     def run_summaries(
         self,
         *,
@@ -1535,6 +1595,9 @@ class BioProfile:
             "tags": list(self.tags),
             "last_resolved": self.last_resolved,
         }
+        badge_map = self.provenance_badges()
+        if badge_map:
+            summary["provenance_badges"] = badge_map
         if success_section is not None:
             summary["success"] = success_section
         nutrient_snapshot = next(
