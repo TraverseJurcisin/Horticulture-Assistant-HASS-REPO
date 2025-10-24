@@ -336,24 +336,24 @@
         "started_at"
       ],
       "properties": {
-    "run_id": {
-      "type": "string",
-      "minLength": 1
-    },
-    "profile_id": {
-      "type": "string",
-      "minLength": 1
-    },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile_id": {
+          "type": "string",
+          "minLength": 1
+        },
         "species_id": {
           "type": [
             "string",
             "null"
           ]
         },
-    "started_at": {
-      "type": "string",
-      "minLength": 1
-    },
+        "started_at": {
+          "type": "string",
+          "minLength": 1
+        },
         "ended_at": {
           "type": [
             "string",
@@ -366,35 +366,35 @@
         "metadata": {
           "type": "object"
         },
-    "targets_met": {
-      "type": [
-        "number",
-        "null"
-      ],
-      "minimum": 0
-    },
-    "targets_total": {
-      "type": [
-        "number",
-        "null"
-      ],
-      "minimum": 0
-    },
-    "success_rate": {
-      "type": [
-        "number",
-        "null"
-      ],
-      "minimum": 0,
-      "maximum": 1
-    },
-    "stress_events": {
-      "type": [
-        "integer",
-        "null"
-      ],
-      "minimum": 0
-    }
+        "targets_met": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "targets_total": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "success_rate": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "stress_events": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
       },
       "additionalProperties": true
     },
@@ -407,14 +407,14 @@
         "event_type"
       ],
       "properties": {
-    "event_id": {
-      "type": "string",
-      "minLength": 1
-    },
-    "profile_id": {
-      "type": "string",
-      "minLength": 1
-    },
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile_id": {
+          "type": "string",
+          "minLength": 1
+        },
         "species_id": {
           "type": [
             "string",
@@ -427,14 +427,14 @@
             "null"
           ]
         },
-    "occurred_at": {
-      "type": "string",
-      "minLength": 1
-    },
-    "event_type": {
-      "type": "string",
-      "minLength": 1
-    },
+        "occurred_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "type": "string",
+          "minLength": 1
+        },
         "title": {
           "type": [
             "string",
@@ -492,14 +492,14 @@
         "yield_grams"
       ],
       "properties": {
-    "harvest_id": {
-      "type": "string",
-      "minLength": 1
-    },
-    "profile_id": {
-      "type": "string",
-      "minLength": 1
-    },
+        "harvest_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile_id": {
+          "type": "string",
+          "minLength": 1
+        },
         "species_id": {
           "type": [
             "string",
@@ -512,42 +512,42 @@
             "null"
           ]
         },
-    "harvested_at": {
-      "type": "string",
-      "minLength": 1
-    },
-    "yield_grams": {
-      "type": "number",
-      "minimum": 0
-    },
-    "area_m2": {
-      "type": [
-        "number",
-        "null"
-      ],
-      "minimum": 0
-    },
-    "wet_weight_grams": {
-      "type": [
-        "number",
-        "null"
-      ],
-      "minimum": 0
-    },
-    "dry_weight_grams": {
-      "type": [
-        "number",
-        "null"
-      ],
-      "minimum": 0
-    },
-    "fruit_count": {
-      "type": [
-        "integer",
-        "null"
-      ],
-      "minimum": 0
-    },
+        "harvested_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "yield_grams": {
+          "type": "number",
+          "minimum": 0
+        },
+        "area_m2": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "wet_weight_grams": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "dry_weight_grams": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "fruit_count": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
         "metadata": {
           "type": "object"
         }
