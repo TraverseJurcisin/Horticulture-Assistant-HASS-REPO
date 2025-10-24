@@ -70,10 +70,18 @@ from .profile_registry import ProfileRegistry
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .storage import LocalStore
 
-_ER_SPEC = importlib.util.find_spec("homeassistant.helpers.entity_registry")
+try:
+    _ER_SPEC = importlib.util.find_spec("homeassistant.helpers.entity_registry")
+except (ModuleNotFoundError, ValueError):  # pragma: no cover - fallback for stub installs
+    _ER_SPEC = None
+
 if _ER_SPEC is not None:  # pragma: no branch - structure for clarity
-    er = importlib.import_module("homeassistant.helpers.entity_registry")
-else:  # pragma: no cover - fallback used in unit tests without Home Assistant
+    try:
+        er = importlib.import_module("homeassistant.helpers.entity_registry")
+    except (ModuleNotFoundError, ValueError):
+        _ER_SPEC = None
+
+if _ER_SPEC is None:  # pragma: no cover - fallback used in unit tests without Home Assistant
 
     class _EntityRegistryStub:
         def async_get_or_create(self, *args, **kwargs):
