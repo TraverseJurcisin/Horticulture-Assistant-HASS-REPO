@@ -101,6 +101,7 @@ MEASUREMENT_CLASSES: Final = {
     "humidity": SensorDeviceClass.HUMIDITY,
     "illuminance": SensorDeviceClass.ILLUMINANCE,
     "moisture": SensorDeviceClass.MOISTURE,
+    "ec": SensorDeviceClass.CONDUCTIVITY,
     "co2": SensorDeviceClass.CO2,
     "ph": SensorDeviceClass.PH,
 }

@@ -178,7 +178,15 @@ if "homeassistant.components.sensor" not in sys.modules:
         PH = _SensorClass("ph")
         CONDUCTIVITY = _SensorClass("conductivity")
 
+    class SensorEntity:  # pragma: no cover - minimal stub entity
+        pass
+
+    class SensorStateClass:  # pragma: no cover - minimal stub enum
+        MEASUREMENT = "measurement"
+
     sensor_module.SensorDeviceClass = SensorDeviceClass
+    sensor_module.SensorEntity = SensorEntity
+    sensor_module.SensorStateClass = SensorStateClass
     sys.modules["homeassistant.components.sensor"] = sensor_module
     components_pkg.sensor = sensor_module
 
