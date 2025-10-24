@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from dataclasses import dataclass
+from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 try:  # pragma: no cover - fallback for tests without Home Assistant
@@ -111,10 +112,15 @@ def _normalise_device_class(value: str | None) -> str | None:
     return str(value).lower()
 
 
-def _normalise_unit(value: str | None) -> str | None:
+def _normalise_unit(value: str | Enum | None) -> str | None:
     if value is None:
         return None
-    return str(value).replace("º", "°").strip().lower()
+    raw = value
+    if isinstance(value, Enum):
+        raw = value.value
+    elif hasattr(value, "value") and isinstance(getattr(value, "value"), str):
+        raw = getattr(value, "value")
+    return str(raw).replace("º", "°").strip().lower()
 
 
 def validate_sensor_links(hass: HomeAssistant, sensors: dict[str, str]) -> SensorValidationResult:
