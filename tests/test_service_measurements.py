@@ -33,6 +33,7 @@ if "homeassistant.components.sensor" not in sys.modules:
         MOISTURE = _SensorClass("moisture")
         CO2 = _SensorClass("co2")
         PH = _SensorClass("ph")
+        CONDUCTIVITY = _SensorClass("conductivity")
 
     sensor_module.SensorDeviceClass = SensorDeviceClass
     sys.modules["homeassistant.components.sensor"] = sensor_module

@@ -5,8 +5,23 @@ from __future__ import annotations
 from collections.abc import Iterable
 from dataclasses import asdict
 
-from homeassistant.components.http import HomeAssistantView
-from homeassistant.core import HomeAssistant
+try:  # pragma: no cover - fallback for tests without Home Assistant
+    from homeassistant.components.http import HomeAssistantView
+except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
+
+    class HomeAssistantView:  # type: ignore[too-few-public-methods]
+        """Minimal JSON view stub for unit tests."""
+
+        def json(self, data, *, status_code=200):
+            return {"status": status_code, "data": data}
+
+
+try:  # pragma: no cover - fallback for tests
+    from homeassistant.core import HomeAssistant
+except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
+    from typing import Any
+
+    HomeAssistant = Any  # type: ignore[assignment]
 
 from .const import DOMAIN
 from .profile.schema import BioProfile, ResolvedTarget

@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import sys
 import types
 from pathlib import Path
@@ -90,6 +91,7 @@ def string(value):  # pragma: no cover - minimal validator
 
 
 config_validation.string = string
+config_validation.config_entry_only_config_schema = lambda schema: schema
 sys.modules["homeassistant.helpers.config_validation"] = config_validation
 
 selector = types.ModuleType("homeassistant.helpers.selector")
@@ -140,8 +142,45 @@ def slugify(value: str) -> str:  # pragma: no cover - simple stub
 
 
 util.slugify = slugify
+util.dt = types.SimpleNamespace(
+    utcnow=lambda: datetime.datetime.now(datetime.UTC),
+    as_local=lambda value: value,
+)
+unit_conversion = types.ModuleType("homeassistant.util.unit_conversion")
+
+
+class TemperatureConverter:  # pragma: no cover - stub returning original value
+    @staticmethod
+    def convert(value, *_args, **_kwargs):
+        return value
+
+
+unit_conversion.TemperatureConverter = TemperatureConverter
+sys.modules["homeassistant.util.unit_conversion"] = unit_conversion
+util.unit_conversion = unit_conversion
 sys.modules["homeassistant.util"] = util
 ha_pkg.util = util
+
+components_pkg = sys.modules.setdefault("homeassistant.components", types.ModuleType("homeassistant.components"))
+if "homeassistant.components.sensor" not in sys.modules:
+    sensor_module = types.ModuleType("homeassistant.components.sensor")
+
+    class _SensorClass:
+        def __init__(self, value: str) -> None:
+            self.value = value
+
+    class SensorDeviceClass:
+        TEMPERATURE = _SensorClass("temperature")
+        HUMIDITY = _SensorClass("humidity")
+        ILLUMINANCE = _SensorClass("illuminance")
+        MOISTURE = _SensorClass("moisture")
+        CO2 = _SensorClass("co2")
+        PH = _SensorClass("ph")
+        CONDUCTIVITY = _SensorClass("conductivity")
+
+    sensor_module.SensorDeviceClass = SensorDeviceClass
+    sys.modules["homeassistant.components.sensor"] = sensor_module
+    components_pkg.sensor = sensor_module
 
 # Provide logging helpers used by the pytest HA plugin.
 util_logging = types.ModuleType("homeassistant.util.logging")
@@ -222,6 +261,10 @@ update_coordinator = types.ModuleType("homeassistant.helpers.update_coordinator"
 
 
 class DataUpdateCoordinator:
+    @classmethod
+    def __class_getitem__(cls, _item):  # pragma: no cover - enable typing subscripts
+        return cls
+
     def __init__(self, hass, *_args, **_kwargs):
         self.hass = hass
         self.update_interval = None

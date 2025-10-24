@@ -5,8 +5,12 @@ from __future__ import annotations
 from collections.abc import Mapping
 from functools import cache
 
-from plant_engine.constants import get_stage_multiplier
-from plant_engine.utils import load_dataset, normalize_key
+try:  # pragma: no cover - prefer system plant_engine when available
+    from plant_engine.constants import get_stage_multiplier
+    from plant_engine.utils import load_dataset, normalize_key
+except ModuleNotFoundError:  # pragma: no cover - fallback to bundled copy
+    from ..engine.plant_engine.constants import get_stage_multiplier
+    from ..engine.plant_engine.utils import load_dataset, normalize_key
 
 from .nutrient_requirements import get_requirements
 
@@ -43,9 +47,7 @@ def get_stage_requirements(plant_type: str, stage: str) -> dict[str, float]:
     return {n: round(v * mult, 2) for n, v in totals.items()}
 
 
-def calculate_stage_deficit(
-    current_totals: Mapping[str, float], plant_type: str, stage: str
-) -> dict[str, float]:
+def calculate_stage_deficit(current_totals: Mapping[str, float], plant_type: str, stage: str) -> dict[str, float]:
     """Return remaining nutrient amounts needed for ``stage``."""
 
     required = get_stage_requirements(plant_type, stage)

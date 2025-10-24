@@ -4,11 +4,38 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from homeassistant import const as ha_const
-from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.core import HomeAssistant
+try:  # pragma: no cover - fallback for tests without Home Assistant
+    from homeassistant import const as ha_const
+except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
+    import types
+
+    ha_const = types.SimpleNamespace(  # type: ignore[assignment]
+        CONCENTRATION_PARTS_PER_MILLION="ppm",
+        LIGHT_LUX="lx",
+        PERCENTAGE="%",
+        UnitOfTemperature=types.SimpleNamespace(CELSIUS="°C", FAHRENHEIT="°F"),
+    )
+
+try:  # pragma: no cover - fallback for tests
+    from homeassistant.components.sensor import SensorDeviceClass
+except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
+    from enum import Enum
+
+    class SensorDeviceClass(str, Enum):
+        TEMPERATURE = "temperature"
+        HUMIDITY = "humidity"
+        ILLUMINANCE = "illuminance"
+        MOISTURE = "moisture"
+        CO2 = "co2"
+        CONDUCTIVITY = "conductivity"
+
+
+if TYPE_CHECKING:  # pragma: no cover - typing only
+    from homeassistant.core import HomeAssistant
+else:
+    HomeAssistant = Any  # type: ignore[assignment]
 
 
 @dataclass(slots=True)
