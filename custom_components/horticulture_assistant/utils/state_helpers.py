@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import math
 import re
 from collections.abc import Iterable
 from statistics import mean, median
@@ -25,6 +26,26 @@ _NUM_RE = re.compile(r"[-+]?[0-9]*\.?[0-9]+")
 _SEP_RE = re.compile(r"[;,]")
 
 
+def _coerce_finite(value: str, entity_id: str) -> float | None:
+    """Return ``value`` as a finite float or ``None``.
+
+    This helper ensures values such as ``nan`` or ``inf`` do not propagate into
+    downstream calculations.  Passing ``entity_id`` allows callers to emit a
+    consistent log message.
+    """
+
+    try:
+        number = float(value)
+    except (ValueError, TypeError):
+        return None
+
+    if not math.isfinite(number):
+        _LOGGER.warning("State of %s is not finite: %s", entity_id, value)
+        return None
+
+    return number
+
+
 def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
     """Return the numeric state of ``entity_id`` or ``None`` if unavailable.
 
@@ -40,17 +61,18 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
         return None
 
     value = str(state.state).replace(",", "").strip()
-    try:
-        return float(value)
-    except (ValueError, TypeError):
-        match = _NUM_RE.search(value)
-        if match:
-            try:
-                return float(match.group(0))
-            except (ValueError, TypeError):
-                pass
-        _LOGGER.warning("State of %s is not numeric: %s", entity_id, value)
-        return None
+    number = _coerce_finite(value, entity_id)
+    if number is not None:
+        return number
+
+    match = _NUM_RE.search(value)
+    if match:
+        number = _coerce_finite(match.group(0), entity_id)
+        if number is not None:
+            return number
+
+    _LOGGER.warning("State of %s is not numeric: %s", entity_id, value)
+    return None
 
 
 def parse_entities(val: str | Iterable[str] | None) -> list[str]:
