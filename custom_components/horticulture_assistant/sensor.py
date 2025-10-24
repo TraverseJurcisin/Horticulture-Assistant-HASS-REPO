@@ -16,7 +16,13 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo, EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import CONF_PROFILES, DOMAIN
+from .const import (
+    CONF_PROFILES,
+    DOMAIN,
+    FEATURE_AI_ASSIST,
+    FEATURE_CLOUD_SYNC,
+    FEATURE_IRRIGATION_AUTOMATION,
+)
 from .coordinator import HorticultureCoordinator
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
@@ -27,6 +33,7 @@ from .derived import (
     PlantPPFDSensor,
     PlantVPDSensor,
 )
+from .entitlements import derive_entitlements
 from .entity import HorticultureEntity
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
 from .profile.statistics import (
@@ -154,6 +161,7 @@ class CloudSnapshotAgeSensor(CloudSyncSensor):
             "cloud_cache_entries": status.get("cloud_cache_entries"),
             "last_success_at": status.get("last_success_at"),
             "connection_reason": (status.get("connection") or {}).get("reason"),
+            "manual_sync_last_run": (status.get("manual_sync") or {}).get("last_run_at"),
         }
 
 
@@ -174,11 +182,15 @@ class CloudOutboxSensor(CloudSyncSensor):
         outbox = status.get("outbox_size")
         self._attr_native_value = int(outbox) if isinstance(outbox, int | float) else outbox
         connection = status.get("connection") or {}
+        offline_queue = status.get("offline_queue") or {}
         self._attr_extra_state_attributes = {
             "last_push_error": status.get("last_push_error"),
             "last_pull_error": status.get("last_pull_error"),
             "connected": connection.get("connected"),
             "local_only": connection.get("local_only"),
+            "offline_queue_reason": offline_queue.get("reason"),
+            "offline_queue_last_enqueued_at": offline_queue.get("last_enqueued_at"),
+            "offline_queue_last_error": offline_queue.get("last_error"),
         }
 
 
@@ -218,6 +230,8 @@ class CloudConnectionSensor(CloudSyncSensor):
             "organization_name": status.get("organization_name"),
             "organization_role": status.get("organization_role"),
             "available_organizations": status.get("organizations"),
+            "manual_sync_last_run": (status.get("manual_sync") or {}).get("last_run_at"),
+            "manual_sync_error": (status.get("manual_sync") or {}).get("error"),
             "token_expires_at": status.get("token_expires_at"),
             "token_expires_in_seconds": status.get("token_expires_in_seconds"),
             "token_expired": status.get("token_expired"),
@@ -264,6 +278,46 @@ class GardenSummarySensor(CoordinatorEntity[HorticultureCoordinator], SensorEnti
         return attrs
 
 
+class EntitlementSummarySensor(SensorEntity):
+    """Expose the current feature entitlements derived from the config entry."""
+
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_has_entity_name = True
+    _attr_icon = "mdi:lock-check"
+    _attr_should_poll = True
+    SCAN_INTERVAL = timedelta(minutes=5)
+
+    def __init__(self, entry: ConfigEntry) -> None:
+        self._entry = entry
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_feature_entitlements"
+        self._attr_name = "Feature entitlements"
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"account:{entry.entry_id}")},
+            name="PhenoLogic Account",
+            manufacturer="Horticulture Assistant",
+            model="Cloud Account",
+        )
+
+    async def async_update(self) -> None:
+        entitlements = derive_entitlements(self._entry.options)
+        features = sorted(entitlements.features)
+        if FEATURE_AI_ASSIST in features or FEATURE_IRRIGATION_AUTOMATION in features:
+            state = "premium"
+        elif FEATURE_CLOUD_SYNC in features:
+            state = "cloud"
+        else:
+            state = "local"
+        self._attr_native_value = state
+        self._attr_extra_state_attributes = {
+            "features": features,
+            "roles": list(entitlements.roles),
+            "organization_role": entitlements.organization_role,
+            "organization_id": entitlements.organization_id,
+            "account_email": entitlements.account_email,
+            "source": entitlements.source,
+        }
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
     stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
@@ -279,6 +333,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         PlantPPFDSensor(hass, entry, plant_name, plant_id),
         PlantDLISensor(hass, entry, plant_name, plant_id),
     ]
+
+    sensors.append(EntitlementSummarySensor(entry))
 
     sensors_cfg = entry.options.get("sensors", {})
     if sensors_cfg.get("temperature") and sensors_cfg.get("humidity"):
@@ -681,6 +737,8 @@ class ProfileYieldSensor(HorticultureEntity, SensorEntity):
             "average_yield_density_g_m2",
             "mean_density_g_m2",
             "total_area_m2",
+            "days_since_last_harvest",
+            "total_fruit_count",
         ):
             value = metrics.get(key)
             if value is not None:
@@ -713,6 +771,8 @@ class ProfileYieldSensor(HorticultureEntity, SensorEntity):
                     float(yields_payload["total_grams"]) / 1000,
                     3,
                 )
+        if yields_payload.get("total_fruit_count") is not None:
+            attrs.setdefault("total_fruit_count", yields_payload.get("total_fruit_count"))
         densities_payload = payload.get("densities") or {}
         for key, value in densities_payload.items():
             if value is not None:
@@ -723,6 +783,12 @@ class ProfileYieldSensor(HorticultureEntity, SensorEntity):
             attrs["runs_tracked"] = payload.get("runs_tracked")
         if payload.get("contributors"):
             attrs["contributors"] = payload.get("contributors")
+        if payload.get("window_totals"):
+            attrs["window_totals"] = payload["window_totals"]
+        if payload.get("last_harvest_at"):
+            attrs["last_harvest_at"] = payload["last_harvest_at"]
+        if payload.get("days_since_last_harvest") is not None:
+            attrs.setdefault("days_since_last_harvest", payload.get("days_since_last_harvest"))
         if snapshot.computed_at:
             attrs["computed_at"] = snapshot.computed_at
         return {k: v for k, v in attrs.items() if v is not None}

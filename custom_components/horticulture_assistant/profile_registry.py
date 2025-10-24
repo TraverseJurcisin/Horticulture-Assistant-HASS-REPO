@@ -26,9 +26,12 @@ from .cloudsync.publisher import CloudSyncPublisher
 from .const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
+    DOMAIN,
+    NOTIFICATION_PROFILE_VALIDATION,
     PROFILE_SCOPE_CHOICES,
     PROFILE_SCOPE_DEFAULT,
 )
+from .history import HistoryExporter
 from .profile.options import options_profile_to_dataclass
 from .profile.schema import (
     BioProfile,
@@ -39,9 +42,35 @@ from .profile.schema import (
     RunEvent,
 )
 from .profile.statistics import recompute_statistics
-from .profile.utils import ensure_sections, link_species_and_cultivars, sync_general_section
+from .profile.utils import (
+    LineageLinkReport,
+    ensure_sections,
+    link_species_and_cultivars,
+    sync_general_section,
+)
 from .sensor_validation import collate_issue_messages, validate_sensor_links
-from .validators import validate_profile_dict
+from .validators import (
+    validate_cultivation_event_dict,
+    validate_harvest_event_dict,
+    validate_nutrient_event_dict,
+    validate_profile_dict,
+    validate_run_event_dict,
+)
+
+try:  # pragma: no cover - Home Assistant not available in tests
+    from homeassistant.helpers import issue_registry as ir
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in CI tests
+    import types
+    from enum import Enum
+
+    class IssueSeverity(str, Enum):
+        WARNING = "warning"
+
+    ir = types.SimpleNamespace(  # type: ignore[assignment]
+        IssueSeverity=IssueSeverity,
+        async_create_issue=lambda *_args, **_kwargs: None,
+        async_delete_issue=lambda *_args, **_kwargs: None,
+    )
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -77,26 +106,278 @@ class ProfileRegistry:
         self._profiles: dict[str, BioProfile] = {}
         self._cloud_publisher: CloudSyncPublisher | None = None
         self._cloud_pending_snapshot = False
+        self._missing_species_logged: set[tuple[str, str]] = set()
+        self._missing_parents_logged: set[tuple[str, str]] = set()
+        self._missing_species_issues: set[tuple[str, str]] = set()
+        self._missing_parent_issues: set[tuple[str, str]] = set()
+        self._validation_issues: dict[str, list[str]] = {}
+        self._validation_dirty = False
+        self._validation_digest: tuple[tuple[str, str], ...] | None = None
+        self._history_exporter: HistoryExporter | None
+        try:
+            self._history_exporter = HistoryExporter(hass)
+        except Exception as err:  # pragma: no cover - defensive guard
+            _LOGGER.debug("History exporter disabled: %s", err)
+            self._history_exporter = None
 
     def _relink_profiles(self) -> None:
         if not self._profiles:
             return
-        link_species_and_cultivars(self._profiles.values())
+        report = link_species_and_cultivars(self._profiles.values())
+        self._log_lineage_warnings(report)
         for profile in self._profiles.values():
             profile.refresh_sections()
 
-    def _validate_profile(self, profile: BioProfile) -> None:
+    def _create_species_issue(
+        self,
+        profile_id: str,
+        display_name: str,
+        species_id: str,
+    ) -> None:
+        issue_key = (profile_id, species_id)
+        if issue_key in self._missing_species_issues:
+            return
+        ir.async_create_issue(
+            self.hass,
+            DOMAIN,
+            f"missing_species_{profile_id}",
+            is_fixable=False,
+            severity=ir.IssueSeverity.WARNING,
+            translation_key="missing_lineage_species",
+            translation_placeholders={
+                "profile_id": profile_id,
+                "profile_name": display_name,
+                "species_id": species_id,
+            },
+        )
+        self._missing_species_issues.add(issue_key)
+
+    def _clear_species_issue(self, profile_id: str, species_id: str) -> None:
+        issue_key = (profile_id, species_id)
+        if issue_key not in self._missing_species_issues:
+            return
+        ir.async_delete_issue(
+            self.hass,
+            DOMAIN,
+            f"missing_species_{profile_id}",
+        )
+        self._missing_species_issues.discard(issue_key)
+
+    def _create_parent_issue(
+        self,
+        profile_id: str,
+        display_name: str,
+        parent_id: str,
+    ) -> None:
+        issue_key = (profile_id, parent_id)
+        if issue_key in self._missing_parent_issues:
+            return
+        ir.async_create_issue(
+            self.hass,
+            DOMAIN,
+            f"missing_parent_{profile_id}_{slugify(parent_id)}",
+            is_fixable=False,
+            severity=ir.IssueSeverity.WARNING,
+            translation_key="missing_lineage_parent",
+            translation_placeholders={
+                "profile_id": profile_id,
+                "profile_name": display_name,
+                "parent_id": parent_id,
+            },
+        )
+        self._missing_parent_issues.add(issue_key)
+
+    def _clear_parent_issue(self, profile_id: str, parent_id: str) -> None:
+        issue_key = (profile_id, parent_id)
+        if issue_key not in self._missing_parent_issues:
+            return
+        ir.async_delete_issue(
+            self.hass,
+            DOMAIN,
+            f"missing_parent_{profile_id}_{slugify(parent_id)}",
+        )
+        self._missing_parent_issues.discard(issue_key)
+
+    def _log_lineage_warnings(self, report: LineageLinkReport | None) -> None:
+        if report is None:
+            return
+
+        current_species: set[tuple[str, str]] = set()
+        for profile_id, species_id in sorted(report.missing_species.items()):
+            key = (profile_id, species_id)
+            current_species.add(key)
+            if key in self._missing_species_logged:
+                continue
+            profile = self._profiles.get(profile_id)
+            display_name = profile.display_name if profile else profile_id
+            _LOGGER.warning(
+                "Profile %s (%s) references unknown species profile '%s'; inheritance fallbacks will be skipped.",
+                display_name,
+                profile_id,
+                species_id,
+            )
+            self._missing_species_logged.add(key)
+            self._create_species_issue(profile_id, display_name, species_id)
+
+        resolved_species = self._missing_species_issues - current_species
+        for profile_id, species_id in sorted(resolved_species):
+            self._clear_species_issue(profile_id, species_id)
+            self._missing_species_logged.discard((profile_id, species_id))
+
+        current_parents: set[tuple[str, str]] = set()
+        for profile_id, parents in sorted(report.missing_parents.items()):
+            for parent_id in sorted(parents):
+                key = (profile_id, parent_id)
+                current_parents.add(key)
+                if key in self._missing_parents_logged:
+                    continue
+                profile = self._profiles.get(profile_id)
+                display_name = profile.display_name if profile else profile_id
+                _LOGGER.warning(
+                    (
+                        "Profile %s (%s) references unknown parent profile '%s'; "
+                        "remove or correct the parent link to restore inheritance."
+                    ),
+                    display_name,
+                    profile_id,
+                    parent_id,
+                )
+                self._missing_parents_logged.add(key)
+                self._create_parent_issue(profile_id, display_name, parent_id)
+
+        resolved_parents = self._missing_parent_issues - current_parents
+        for profile_id, parent_id in sorted(resolved_parents):
+            self._clear_parent_issue(profile_id, parent_id)
+            self._missing_parents_logged.discard((profile_id, parent_id))
+
+    def _validate_profile(self, profile: BioProfile) -> list[str]:
         schema = _load_profile_schema()
         if not schema:
-            return
+            self._validation_issues.pop(profile.profile_id, None)
+            return []
         try:
             payload = profile.to_json()
         except Exception as err:  # pragma: no cover - defensive logging
             _LOGGER.warning("Unable to serialise profile %s for validation: %s", profile.profile_id, err)
+            issues = [f"Unable to validate profile payload: {err}"]
+        else:
+            issues = validate_profile_dict(payload, schema)
+            for issue in issues:
+                _LOGGER.warning("Profile %s schema validation issue: %s", profile.profile_id, issue)
+
+        if issues:
+            self._validation_issues[profile.profile_id] = [str(issue) for issue in issues]
+        else:
+            self._validation_issues.pop(profile.profile_id, None)
+        self._validation_dirty = True
+        return [str(issue) for issue in issues]
+
+    def _ensure_valid_event(
+        self,
+        *,
+        context: str,
+        payload: Mapping[str, Any],
+        validator: Callable[[Mapping[str, Any]], list[str]],
+    ) -> None:
+        """Raise ``ValueError`` if ``payload`` fails schema validation."""
+
+        issues = validator(payload)
+        if not issues:
             return
-        issues = validate_profile_dict(payload, schema)
-        for issue in issues:
-            _LOGGER.warning("Profile %s schema validation issue: %s", profile.profile_id, issue)
+        summary = "; ".join(issues[:3])
+        if len(issues) > 3:
+            summary += f" (+{len(issues) - 3} more)"
+        raise ValueError(f"{context} validation failed: {summary}")
+
+    async def _async_persist_history(
+        self,
+        profile_id: str,
+        event_type: str,
+        payload: Mapping[str, Any],
+    ) -> None:
+        exporter = getattr(self, "_history_exporter", None)
+        if exporter is None:
+            return
+        try:
+            await exporter.async_append(profile_id, event_type, payload)
+        except Exception as err:  # pragma: no cover - best effort persistence
+            _LOGGER.debug(
+                "Unable to persist %s history for %s: %s",
+                event_type,
+                profile_id,
+                err,
+            )
+
+    async def async_history_index(self) -> dict[str, dict[str, Any]]:
+        exporter = getattr(self, "_history_exporter", None)
+        if exporter is None:
+            return {}
+        records = await exporter.async_index()
+        return {key: value.to_json() for key, value in records.items()}
+
+    async def _async_maybe_refresh_validation_notification(self) -> None:
+        if not self._validation_dirty:
+            return
+        self._validation_dirty = False
+        await self._async_refresh_validation_notification()
+
+    async def _async_refresh_validation_notification(self) -> None:
+        if not self._validation_issues:
+            await self._async_dismiss_notification(NOTIFICATION_PROFILE_VALIDATION)
+            self._validation_digest = None
+            return
+
+        digest: tuple[tuple[str, str], ...] = tuple(
+            sorted((pid, issue) for pid, issues in self._validation_issues.items() for issue in issues)
+        )
+        if self._validation_digest == digest:
+            return
+
+        self._validation_digest = digest
+        lines = ["The following profiles failed schema validation:", ""]
+        for pid, issues in sorted(self._validation_issues.items()):
+            title = self._profiles.get(pid).display_name if pid in self._profiles else pid
+            lines.append(f"- {title} ({pid})")
+            for idx, issue in enumerate(issues):
+                if idx >= 3:
+                    remaining = len(issues) - idx
+                    lines.append(f"  • (+{remaining} additional issues)")
+                    break
+                lines.append(f"  • {issue}")
+            lines.append("")
+        lines.append("Fix the profile JSON or remove invalid overrides, then reload the integration.")
+        message = "\n".join(lines)
+        await self._async_create_notification(
+            message,
+            notification_id=NOTIFICATION_PROFILE_VALIDATION,
+            title="Horticulture Assistant profile validation error",
+        )
+
+    async def _async_create_notification(self, message: str, *, notification_id: str, title: str) -> None:
+        try:
+            await self.hass.services.async_call(
+                "persistent_notification",
+                "create",
+                {
+                    "title": title,
+                    "message": message,
+                    "notification_id": notification_id,
+                },
+                blocking=True,
+            )
+        except KeyError:  # pragma: no cover - persistent notification unavailable in tests
+            return
+
+    async def _async_dismiss_notification(self, notification_id: str) -> None:
+        try:
+            await self.hass.services.async_call(
+                "persistent_notification",
+                "dismiss",
+                {"notification_id": notification_id},
+                blocking=True,
+            )
+        except KeyError:  # pragma: no cover - persistent notification unavailable in tests
+            return
 
     # ------------------------------------------------------------------
     # Cloud sync helpers
@@ -297,6 +578,7 @@ class ProfileRegistry:
         self._profiles = profiles
         self._relink_profiles()
         recompute_statistics(self._profiles.values())
+        await self._async_maybe_refresh_validation_notification()
 
     async def async_save(self) -> None:
         self._relink_profiles()
@@ -364,9 +646,11 @@ class ProfileRegistry:
             general_map["sensors"] = merged
             prof_obj.general = general_map
             prof_obj.refresh_sections()
+            self._validate_profile(prof_obj)
         await self.async_save()
         if prof_obj := self._profiles.get(profile_id):
             self._cloud_publish_profile(prof_obj)
+        await self._async_maybe_refresh_validation_notification()
 
     async def async_refresh_species(self, profile_id: str) -> None:
         """Placeholder for species refresh logic.
@@ -454,6 +738,7 @@ class ProfileRegistry:
         self._relink_profiles()
         await self.async_save()
         self._cloud_publish_profile(prof_obj)
+        await self._async_maybe_refresh_validation_notification()
         return candidate
 
     async def async_duplicate_profile(self, source_id: str, new_name: str) -> str:
@@ -474,8 +759,11 @@ class ProfileRegistry:
         self.entry.options = new_opts
         self._profiles.pop(profile_id, None)
         self._relink_profiles()
+        if self._validation_issues.pop(profile_id, None) is not None:
+            self._validation_dirty = True
         await self.async_save()
         self._cloud_publish_deleted(profile_id)
+        await self._async_maybe_refresh_validation_notification()
 
     async def async_link_sensors(self, profile_id: str, sensors: dict[str, str]) -> None:
         """Link multiple sensor entities to ``profile_id``."""
@@ -517,9 +805,11 @@ class ProfileRegistry:
             general_map["sensors"] = dict(merged)
             prof_obj.general = general_map
             prof_obj.refresh_sections()
+            self._validate_profile(prof_obj)
         await self.async_save()
         if prof_obj := self._profiles.get(profile_id):
             self._cloud_publish_profile(prof_obj)
+        await self._async_maybe_refresh_validation_notification()
 
     async def async_record_run_event(
         self,
@@ -546,6 +836,11 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, RunEvent) else RunEvent.from_json(payload)
+        self._ensure_valid_event(
+            context="run event",
+            payload=event.to_json(),
+            validator=validate_run_event_dict,
+        )
         prof.add_run_event(event)
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
@@ -553,6 +848,7 @@ class ProfileRegistry:
         stored = prof.run_history[-1]
         self._cloud_publish_profile(prof)
         self._cloud_publish_run(stored)
+        await self._async_persist_history(profile_id, "run", stored.to_json())
         return stored
 
     async def async_record_harvest_event(
@@ -580,6 +876,11 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, HarvestEvent) else HarvestEvent.from_json(payload)
+        self._ensure_valid_event(
+            context="harvest event",
+            payload=event.to_json(),
+            validator=validate_harvest_event_dict,
+        )
         prof.add_harvest_event(event)
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
@@ -587,6 +888,7 @@ class ProfileRegistry:
         stored = prof.harvest_history[-1]
         self._cloud_publish_profile(prof)
         self._cloud_publish_harvest(stored)
+        await self._async_persist_history(profile_id, "harvest", stored.to_json())
         return stored
 
     async def async_record_nutrient_event(
@@ -601,6 +903,11 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, NutrientApplication) else NutrientApplication.from_json(payload)
+        self._ensure_valid_event(
+            context="nutrient event",
+            payload=event.to_json(),
+            validator=validate_nutrient_event_dict,
+        )
         prof.add_nutrient_event(event)
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
@@ -608,6 +915,7 @@ class ProfileRegistry:
         stored = prof.nutrient_history[-1]
         self._cloud_publish_profile(prof)
         self._cloud_publish_nutrient(stored)
+        await self._async_persist_history(profile_id, "nutrient", stored.to_json())
         return stored
 
     async def async_record_cultivation_event(
@@ -622,6 +930,11 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, CultivationEvent) else CultivationEvent.from_json(payload)
+        self._ensure_valid_event(
+            context="cultivation event",
+            payload=event.to_json(),
+            validator=validate_cultivation_event_dict,
+        )
         prof.add_cultivation_event(event)
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
@@ -629,6 +942,7 @@ class ProfileRegistry:
         stored = prof.event_history[-1]
         self._cloud_publish_profile(prof)
         self._cloud_publish_cultivation(stored)
+        await self._async_persist_history(profile_id, "cultivation", stored.to_json())
         return stored
 
     async def async_import_template(self, template: str, name: str | None = None) -> str:

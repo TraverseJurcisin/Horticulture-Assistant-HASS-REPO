@@ -1,6 +1,7 @@
 import asyncio
 import importlib
 import importlib.util
+import logging
 import os
 import sys
 import tempfile
@@ -327,6 +328,20 @@ async def test_resolver_uses_cloud_overlay_when_available():
     assert sections["computed"]["snapshots"][0]["payload"]["targets"]["vpd"]["vegetative"] == 0.8
     lineage = profile_options.get("lineage", [])
     assert lineage and lineage[0]["profile_id"] == "p1"
+
+
+@pytest.mark.asyncio
+async def test_inheritance_failure_logs_warning(hass, caplog):
+    hass = make_hass()
+    lonely = BioProfile(profile_id="p1", display_name="Lonely")
+    registry = DummyRegistry([lonely])
+    entry = DummyEntry({"profiles": {"p1": {"name": "Lonely"}}})
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {"profile_registry": registry}
+
+    with caplog.at_level(logging.WARNING):
+        await PreferenceResolver(hass).resolve_profile(entry, "p1")
+
+    assert any("Inheritance lookup" in record.message and "p1" in record.message for record in caplog.records)
 
 
 @pytest.mark.asyncio

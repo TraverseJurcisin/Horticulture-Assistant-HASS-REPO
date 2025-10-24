@@ -8,6 +8,16 @@
                 "data": {
                     "create_initial_profile": "Create an initial plant profile during setup"
                 }
+            },
+            "sensors": {
+                "title": "Link sensors",
+                "description": "Pick sensors from the suggestions below or enter any entity ID.\n{sensor_hints}",
+                "data": {
+                    "moisture_sensor": "Moisture sensor",
+                    "temperature_sensor": "Temperature sensor",
+                    "ec_sensor": "EC sensor",
+                    "co2_sensor": "CO₂ sensor"
+                }
             }
         },
         "error": {
@@ -25,6 +35,25 @@
                     "configure_ai": "Configure AI",
                     "profile_targets": "Profile targets",
                     "nutrient_schedule": "Nutrient schedule"
+                }
+            },
+            "basic": {
+                "title": "General settings",
+                "description": "Sensor dropdowns are pre-populated with likely matches, but you can still choose any entity ID.",
+                "data": {
+                    "model": "Model",
+                    "base_url": "Base URL",
+                    "update_interval": "Update interval (minutes)",
+                    "keep_stale": "Keep derived values when sensors are stale",
+                    "moisture_sensor": "Moisture sensor",
+                    "temperature_sensor": "Temperature sensor",
+                    "ec_sensor": "EC sensor",
+                    "co2_sensor": "CO₂ sensor",
+                    "species_display": "Display species name",
+                    "opb_auto_download_images": "Auto-download OpenPlantbook images",
+                    "opb_download_dir": "Image download directory",
+                    "opb_location_share": "Share location accuracy with OpenPlantbook",
+                    "opb_enable_upload": "Allow contributing data back to OpenPlantbook"
                 }
             },
             "add_profile": {
@@ -97,7 +126,25 @@
             },
             "garden_summary": {
                 "name": "Garden health summary"
+            },
+            "feature_entitlements": {
+                "name": "Feature entitlements",
+                "state": {
+                    "local": "Local only",
+                    "cloud": "Cloud sync",
+                    "premium": "Premium"
+                }
             }
+        }
+    },
+    "issues": {
+        "missing_lineage_species": {
+            "title": "Profile missing species reference",
+            "description": "{profile_name} ({profile_id}) points to species {species_id}, but that species profile was not found. Update the profile to use a valid species or create the missing species profile."
+        },
+        "missing_lineage_parent": {
+            "title": "Profile missing parent reference",
+            "description": "{profile_name} ({profile_id}) lists {parent_id} as a parent profile, but it could not be loaded. Remove the invalid parent reference or create the missing profile to restore inheritance."
         }
     }
 }

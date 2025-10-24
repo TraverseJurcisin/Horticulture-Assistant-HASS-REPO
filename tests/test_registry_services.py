@@ -5,9 +5,11 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 import voluptuous as vol
+from homeassistant.exceptions import HomeAssistantError
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.cloudsync.auth import CloudAuthTokens, CloudOrganization
+from custom_components.horticulture_assistant.cloudsync.manager import CloudSyncError
 from custom_components.horticulture_assistant.const import (
     CONF_API_KEY,
     CONF_CLOUD_ACCESS_TOKEN,
@@ -250,6 +252,25 @@ async def test_record_harvest_event_service_updates_statistics(hass, tmp_path):
     assert metrics["total_yield_grams"] == 42.5
 
 
+async def test_record_harvest_event_service_rejects_invalid_payload(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+
+    with pytest.raises(HomeAssistantError) as excinfo:
+        await hass.services.async_call(
+            DOMAIN,
+            "record_harvest_event",
+            {
+                "profile_id": "p1",
+                "harvest_id": "bad",
+                "harvested_at": "2024-02-01T00:00:00Z",
+                "yield_grams": -2,
+            },
+            blocking=True,
+        )
+
+    assert "yield_grams" in str(excinfo.value)
+
+
 async def test_record_nutrient_event_service_updates_statistics(hass, tmp_path):
     await _setup_entry_with_profile(hass, tmp_path)
     response = await hass.services.async_call(
@@ -281,6 +302,25 @@ async def test_record_nutrient_event_service_updates_statistics(hass, tmp_path):
     assert profile is not None and len(profile.nutrient_history) == 1
 
 
+async def test_record_nutrient_event_service_rejects_invalid_payload(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+
+    with pytest.raises(HomeAssistantError) as excinfo:
+        await hass.services.async_call(
+            DOMAIN,
+            "record_nutrient_event",
+            {
+                "profile_id": "p1",
+                "event_id": "feed-invalid",
+                "applied_at": "2024-03-01T08:00:00Z",
+                "ph": 15.5,
+            },
+            blocking=True,
+        )
+
+    assert "ph" in str(excinfo.value)
+
+
 async def test_record_cultivation_event_service_returns_statistics(hass, tmp_path):
     await _setup_entry_with_profile(hass, tmp_path)
     response = await hass.services.async_call(
@@ -308,6 +348,25 @@ async def test_record_cultivation_event_service_returns_statistics(hass, tmp_pat
     registry = hass.data[DOMAIN]["registry"]
     profile = registry.get("p1")
     assert profile is not None and len(profile.event_history) == 1
+
+
+async def test_record_cultivation_event_service_requires_event_type(hass, tmp_path):
+    await _setup_entry_with_profile(hass, tmp_path)
+
+    with pytest.raises(HomeAssistantError) as excinfo:
+        await hass.services.async_call(
+            DOMAIN,
+            "record_cultivation_event",
+            {
+                "profile_id": "p1",
+                "event_id": "evt-invalid",
+                "occurred_at": "2024-04-02T10:15:00Z",
+                "event_type": "",
+            },
+            blocking=True,
+        )
+
+    assert "event_type" in str(excinfo.value)
 
 
 async def test_profile_runs_service_returns_runs(hass, tmp_path):
@@ -638,3 +697,34 @@ async def test_cloud_select_org_updates_entry(hass, tmp_path):
     assert orgs[1]["default"] is True
     assert response["organization_id"] == "org-2"
     refresh.assert_awaited()
+
+
+async def test_cloud_sync_now_service_calls_manager(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    payload = {"pushed": 3, "pulled": 1, "status": {"manual_sync": {"result": {}}}}
+    with patch.object(manager, "async_sync_now", AsyncMock(return_value=payload)) as sync:
+        response = await hass.services.async_call(
+            DOMAIN,
+            "cloud_sync_now",
+            {"push": False},
+            blocking=True,
+            return_response=True,
+        )
+    sync.assert_awaited_with(push=False, pull=True)
+    assert response == payload
+
+
+async def test_cloud_sync_now_service_raises_error(hass, tmp_path):
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    manager = hass.data[DOMAIN][entry.entry_id]["cloud_sync_manager"]
+    with (
+        patch.object(manager, "async_sync_now", AsyncMock(side_effect=CloudSyncError("boom"))),
+        pytest.raises(HomeAssistantError),
+    ):
+        await hass.services.async_call(
+            DOMAIN,
+            "cloud_sync_now",
+            {},
+            blocking=True,
+        )

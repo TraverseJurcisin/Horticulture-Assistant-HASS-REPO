@@ -5,7 +5,7 @@ from .conflict import ConflictPolicy, ConflictResolver
 from .edge_store import EdgeSyncStore
 from .edge_worker import EdgeSyncWorker
 from .events import SyncEvent, VectorClock, decode_ndjson, encode_ndjson
-from .manager import CloudSyncConfig, CloudSyncManager
+from .manager import CloudSyncConfig, CloudSyncError, CloudSyncManager
 from .publisher import CloudSyncPublisher
 from .resolver_service import (
     EdgeResolverService,
@@ -36,4 +36,5 @@ __all__ = [
     "CloudSyncManager",
     "CloudSyncConfig",
     "CloudSyncPublisher",
+    "CloudSyncError",
 ]

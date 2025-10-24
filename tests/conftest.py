@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import sys
 import types
+from collections.abc import Callable
 from pathlib import Path
 
 import pytest
@@ -77,6 +78,7 @@ class _Bus:  # pragma: no cover - minimal event bus
 
 
 core.HomeAssistant = HomeAssistant
+core.CALLBACK_TYPE = Callable[[], None]
 sys.modules["homeassistant.core"] = core
 
 helpers = types.ModuleType("homeassistant.helpers")
@@ -123,6 +125,19 @@ selector.SelectSelector = SelectSelector
 selector.EntitySelectorConfig = EntitySelectorConfig
 selector.EntitySelector = EntitySelector
 sys.modules["homeassistant.helpers.selector"] = selector
+
+event = types.ModuleType("homeassistant.helpers.event")
+
+
+def async_track_time_interval(_hass, _action, _interval):  # pragma: no cover - stub scheduler
+    def _cancel():
+        return None
+
+    return _cancel
+
+
+event.async_track_time_interval = async_track_time_interval
+sys.modules["homeassistant.helpers.event"] = event
 
 aiohttp_client = types.ModuleType("homeassistant.helpers.aiohttp_client")
 
@@ -224,6 +239,7 @@ util.logging = util_logging
 const = types.ModuleType("homeassistant.const")
 const.Platform = types.SimpleNamespace(SENSOR="sensor", BINARY_SENSOR="binary_sensor", SWITCH="switch", NUMBER="number")
 const.UnitOfTemperature = types.SimpleNamespace(CELSIUS="°C", FAHRENHEIT="°F")
+const.EVENT_HOMEASSISTANT_STARTED = "homeassistant_started"
 sys.modules["homeassistant.const"] = const
 
 exceptions = types.ModuleType("homeassistant.exceptions")

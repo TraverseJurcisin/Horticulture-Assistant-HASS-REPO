@@ -31,6 +31,7 @@ from .coordinator import HorticultureCoordinator
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
 from .entity_utils import ensure_entities_exist
+from .health_monitor import async_release_dataset_health, async_setup_dataset_health
 from .http import async_register_http_views
 from .profile_registry import ProfileRegistry
 from .profile_store import ProfileStore
@@ -64,6 +65,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Horticulture Assistant from a ConfigEntry."""
 
     await ensure_local_data_paths(hass)
+    await async_setup_dataset_health(hass)
     base_url = entry.options.get(CONF_BASE_URL, entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL))
     api_key = entry.options.get(CONF_API_KEY, entry.data.get(CONF_API_KEY, ""))
     model = entry.options.get(CONF_MODEL, entry.data.get(CONF_MODEL, DEFAULT_MODEL))
@@ -111,6 +113,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     )
 
     entry_data = store_entry_data(hass, entry)
+    entry_data["dataset_monitor_attached"] = True
     entry_data.update(
         {
             "api": api,
@@ -195,6 +198,8 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         data = hass.data.get(DOMAIN, {})
         info = data.pop(entry.entry_id, None)
         if info:
+            if info.get("dataset_monitor_attached"):
+                await async_release_dataset_health(hass)
             manager = info.get("cloud_sync_manager")
             if manager and hasattr(manager, "async_stop"):
                 with contextlib.suppress(Exception):

@@ -337,10 +337,12 @@
       ],
       "properties": {
         "run_id": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "profile_id": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "species_id": {
           "type": [
@@ -349,7 +351,8 @@
           ]
         },
         "started_at": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "ended_at": {
           "type": [
@@ -367,25 +370,30 @@
           "type": [
             "number",
             "null"
-          ]
+          ],
+          "minimum": 0
         },
         "targets_total": {
           "type": [
             "number",
             "null"
-          ]
+          ],
+          "minimum": 0
         },
         "success_rate": {
           "type": [
             "number",
             "null"
-          ]
+          ],
+          "minimum": 0,
+          "maximum": 1
         },
         "stress_events": {
           "type": [
-            "number",
+            "integer",
             "null"
-          ]
+          ],
+          "minimum": 0
         }
       },
       "additionalProperties": true
@@ -400,10 +408,12 @@
       ],
       "properties": {
         "event_id": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "profile_id": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "species_id": {
           "type": [
@@ -418,10 +428,12 @@
           ]
         },
         "occurred_at": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "event_type": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "title": {
           "type": [
@@ -481,10 +493,12 @@
       ],
       "properties": {
         "harvest_id": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "profile_id": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "species_id": {
           "type": [
@@ -499,34 +513,40 @@
           ]
         },
         "harvested_at": {
-          "type": "string"
+          "type": "string",
+          "minLength": 1
         },
         "yield_grams": {
-          "type": "number"
+          "type": "number",
+          "minimum": 0
         },
         "area_m2": {
           "type": [
             "number",
             "null"
-          ]
+          ],
+          "minimum": 0
         },
         "wet_weight_grams": {
           "type": [
             "number",
             "null"
-          ]
+          ],
+          "minimum": 0
         },
         "dry_weight_grams": {
           "type": [
             "number",
             "null"
-          ]
+          ],
+          "minimum": 0
         },
         "fruit_count": {
           "type": [
             "integer",
             "null"
-          ]
+          ],
+          "minimum": 0
         },
         "metadata": {
           "type": "object"
@@ -561,7 +581,8 @@
             ]
           },
           "applied_at": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "product_id": {
             "type": [
@@ -591,25 +612,30 @@
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "minimum": 0
           },
           "concentration_ppm": {
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "minimum": 0
           },
           "ec_ms": {
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "minimum": 0
           },
           "ph": {
             "type": [
               "number",
               "null"
-            ]
+            ],
+            "minimum": 0,
+            "maximum": 14
           },
           "additives": {
             "type": "array",

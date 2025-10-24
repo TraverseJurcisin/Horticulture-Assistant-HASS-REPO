@@ -96,12 +96,13 @@ The Home Assistant add-on ships an async worker that:
 
 Reference implementation: [`custom_components/horticulture_assistant/cloudsync/edge_worker.py`](../custom_components/horticulture_assistant/cloudsync/edge_worker.py).
 
-Home Assistant exposes the sync status through dedicated diagnostics entities:
+Home Assistant surfaces the sync status through dedicated diagnostics sensors on each profile device:
 
-- `binary_sensor.cloud_connected` — connectivity to the cloud service.
-- `binary_sensor.local_only_mode` — true when running in offline fallback.
-- `sensor.cloud_snapshot_age_days` — days since the newest cached snapshot.
-- `sensor.cloud_outbox_size` — pending events queued for upload.
+- `sensor.<profile>_cloud_connection` — enumerates the current state (`connected`, `disabled`, `stale`, `token_expired`, etc.) and exposes account, organisation, and last manual sync metadata.
+- `sensor.<profile>_cloud_outbox_size` — counts queued events and now reports the offline queue reason, last enqueue timestamp, and most recent push/pull error.
+- `sensor.<profile>_cloud_snapshot_age` — tracks the age of the newest cached cloud snapshot alongside the oldest cache entry and the last manual sync run.
+
+When you need to flush the outbox or confirm connectivity after maintenance, call the `cloud_sync_now` service. It triggers a one-off push/pull cycle (configurable per direction) and updates the diagnostics sensors immediately with the outcome so you can verify the sync health without waiting for the background interval.
 
 ## Cloud API Surfaces
 
