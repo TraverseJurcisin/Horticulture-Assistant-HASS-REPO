@@ -31,7 +31,8 @@ def list_tags() -> list[str]:
 
 def get_plants_with_tag(tag: str) -> list[str]:
     """Return plant IDs associated with ``tag``."""
-    return _load_tags().get(str(tag), [])
+    plants = _load_tags().get(str(tag))
+    return list(plants) if plants else []
 
 
 def search_tags(term: str) -> dict[str, list[str]]:
@@ -42,5 +43,5 @@ def search_tags(term: str) -> dict[str, list[str]]:
     matches: dict[str, list[str]] = {}
     for tag, plants in _load_tags().items():
         if term in tag.lower():
-            matches[tag] = plants
+            matches[tag] = list(plants)
     return matches
