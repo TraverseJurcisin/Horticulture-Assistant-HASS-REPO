@@ -178,7 +178,34 @@ if "homeassistant.components.sensor" not in sys.modules:
         PH = _SensorClass("ph")
         CONDUCTIVITY = _SensorClass("conductivity")
 
+    class SensorEntity:  # pragma: no cover - simple HA stand-in
+        """Minimal SensorEntity implementation for local tests."""
+
+        hass = None
+
+        def __init__(self, *_args, **_kwargs) -> None:
+            self._attr_should_poll = False
+
+        @property
+        def should_poll(self) -> bool:  # pragma: no cover - simple property
+            return getattr(self, "_attr_should_poll", False)
+
+        async def async_added_to_hass(self):  # pragma: no cover - stub
+            return None
+
+        def async_on_remove(self, func):  # pragma: no cover - stub helper
+            return func
+
+        def async_write_ha_state(self):  # pragma: no cover - stub helper
+            return None
+
+    class SensorStateClass:  # pragma: no cover - simple enum substitute
+        MEASUREMENT = "measurement"
+        TOTAL = "total"
+
     sensor_module.SensorDeviceClass = SensorDeviceClass
+    sensor_module.SensorEntity = SensorEntity
+    sensor_module.SensorStateClass = SensorStateClass
     sys.modules["homeassistant.components.sensor"] = sensor_module
     components_pkg.sensor = sensor_module
 
