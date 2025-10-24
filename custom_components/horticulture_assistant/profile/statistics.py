@@ -299,10 +299,13 @@ def _build_event_snapshot(
     )
 
 
-def _aggregate_harvests(harvests: Iterable[HarvestEvent]) -> tuple[float, float, int, list[float]]:
+def _aggregate_harvests(
+    harvests: Iterable[HarvestEvent],
+) -> tuple[float, float, int, list[float], int]:
     total_yield = 0.0
     total_area = 0.0
     count = 0
+    fruit_total = 0
     densities: list[float] = []
     for event in harvests:
         total_yield += float(event.yield_grams or 0.0)
@@ -311,8 +314,93 @@ def _aggregate_harvests(harvests: Iterable[HarvestEvent]) -> tuple[float, float,
             density = event.yield_density()
             if density is not None:
                 densities.append(density)
+        if event.fruit_count:
+            try:
+                fruit_total += int(event.fruit_count)
+            except (TypeError, ValueError):
+                continue
         count += 1
-    return total_yield, total_area, count, densities
+    return total_yield, total_area, count, densities, fruit_total
+
+
+def _compute_harvest_windows(
+    harvests: Iterable[HarvestEvent],
+    *,
+    now: datetime | None = None,
+    windows: tuple[int, ...] = (7, 30, 90),
+) -> tuple[dict[str, dict[str, Any]], datetime | None]:
+    """Return rolling harvest metrics for the configured ``windows``.
+
+    The payload mirrors the structure used by the nutrient and event trend
+    calculations so the UI can display weekly and monthly production totals
+    without reprocessing the full history on every render.
+    """
+
+    normalised: list[tuple[HarvestEvent, datetime | None]] = []
+    for event in harvests:
+        if not isinstance(event, HarvestEvent):
+            continue
+        timestamp = _parse_datetime(getattr(event, "harvested_at", None))
+        normalised.append((event, timestamp))
+
+    if not normalised:
+        return {}, None
+
+    normalised.sort(key=lambda item: item[1] or datetime.min.replace(tzinfo=UTC))
+    now = now or datetime.now(tz=UTC)
+    last_timestamp = next((ts for _event, ts in reversed(normalised) if ts is not None), None)
+
+    window_payload: dict[str, dict[str, Any]] = {}
+    for days in windows:
+        threshold = now - timedelta(days=days)
+        key = f"{days}d"
+        window_events = [(event, ts) for event, ts in normalised if ts is not None and ts >= threshold]
+        if not window_events:
+            continue
+
+        total_yield = 0.0
+        total_area = 0.0
+        fruit_total = 0
+        densities: list[float] = []
+        for event, _ts in window_events:
+            total_yield += float(event.yield_grams or 0.0)
+            if event.area_m2:
+                total_area += float(event.area_m2)
+                density = event.yield_density()
+                if density is not None:
+                    densities.append(density)
+            if event.fruit_count:
+                try:
+                    fruit_total += int(event.fruit_count)
+                except (TypeError, ValueError):
+                    continue
+
+        payload: dict[str, Any] = {
+            "harvest_count": float(len(window_events)),
+            "total_yield_grams": round(total_yield, 3),
+        }
+        if window_events:
+            payload["average_yield_grams"] = round(
+                total_yield / len(window_events),
+                3,
+            )
+        if total_area:
+            payload["total_area_m2"] = round(total_area, 3)
+            payload["average_yield_density_g_m2"] = round(total_yield / total_area, 3)
+        if densities:
+            payload["mean_density_g_m2"] = round(mean(densities), 3)
+        if fruit_total:
+            payload["fruit_count"] = float(fruit_total)
+
+        last_ts = window_events[-1][1]
+        if last_ts is not None:
+            payload["last_harvest_at"] = last_ts.isoformat()
+            delta = max((now - last_ts).total_seconds() / 86400, 0.0)
+            payload["days_since_last"] = round(delta, 3)
+
+        window_payload[key] = payload
+
+    return window_payload, last_timestamp
 
 
 def _build_stat(
@@ -844,9 +932,11 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
 
         aggregate: dict[str, Any] | None = None
         if harvests:
-            total_yield, total_area, count, densities = _aggregate_harvests(harvests)
+            total_yield, total_area, count, densities, fruit_total = _aggregate_harvests(harvests)
             scope = "species" if profile.profile_type == "species" else "cultivar"
-            computed_at = _now_iso()
+            now = datetime.now(tz=UTC)
+            window_totals, last_harvest_ts = _compute_harvest_windows(harvests, now=now)
+            computed_at = now.isoformat()
             stat = _build_stat(
                 scope,
                 profile.profile_id,
@@ -856,6 +946,12 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 densities=densities,
                 computed_at=computed_at,
             )
+            if last_harvest_ts is not None:
+                delta = max((now - last_harvest_ts).total_seconds() / 86400, 0.0)
+                stat.metrics["days_since_last_harvest"] = round(delta, 3)
+                stat.metadata.setdefault("last_harvest_at", last_harvest_ts.isoformat())
+            if fruit_total:
+                stat.metrics["total_fruit_count"] = float(fruit_total)
             profile.statistics = [stat]
             metrics = dict(stat.metrics)
             snapshot_payload = {
@@ -872,6 +968,15 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 },
                 "runs_tracked": run_count,
             }
+            if stat.metadata.get("last_harvest_at"):
+                snapshot_payload["last_harvest_at"] = stat.metadata["last_harvest_at"]
+            if stat.metrics.get("days_since_last_harvest") is not None:
+                snapshot_payload["days_since_last_harvest"] = stat.metrics["days_since_last_harvest"]
+            if fruit_total:
+                yields_payload = snapshot_payload.setdefault("yields", {})
+                yields_payload["total_fruit_count"] = fruit_total
+            if window_totals:
+                snapshot_payload["window_totals"] = window_totals
             snapshot = ComputedStatSnapshot(
                 stats_version=YIELD_STATS_VERSION,
                 computed_at=computed_at,
@@ -888,6 +993,14 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 "mean_density": metrics.get("mean_density_g_m2"),
                 "run_count": run_count,
             }
+            if stat.metrics.get("days_since_last_harvest") is not None:
+                aggregate["days_since_last_harvest"] = stat.metrics["days_since_last_harvest"]
+            if fruit_total:
+                aggregate["fruit_count"] = fruit_total
+            if window_totals:
+                aggregate["window_totals"] = window_totals
+            if stat.metadata.get("last_harvest_at"):
+                aggregate["last_harvest_at"] = stat.metadata["last_harvest_at"]
         else:
             profile.statistics = []
             _replace_snapshot(profile, YIELD_STATS_VERSION, None)
@@ -958,8 +1071,10 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
     for species_id, harvests in species_to_harvests.items():
         if not harvests:
             continue
-        total_yield, total_area, count, densities = _aggregate_harvests(harvests)
-        computed_at = _now_iso()
+        total_yield, total_area, count, densities, fruit_total = _aggregate_harvests(harvests)
+        now = datetime.now(tz=UTC)
+        window_totals, last_harvest_ts = _compute_harvest_windows(harvests, now=now)
+        computed_at = now.isoformat()
         stat = _build_stat(
             "species",
             species_id,
@@ -969,6 +1084,13 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
             densities=densities,
             computed_at=computed_at,
         )
+        if last_harvest_ts is not None:
+            delta = max((now - last_harvest_ts).total_seconds() / 86400, 0.0)
+            stat.metrics["days_since_last_harvest"] = round(delta, 3)
+            stat.metadata.setdefault("last_harvest_at", last_harvest_ts.isoformat())
+        if fruit_total:
+            stat.metrics["total_fruit_count"] = float(fruit_total)
+
         target = profiles_by_id.get(species_id)
         if target is None:
             continue
@@ -979,30 +1101,36 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
         contributor_payload: list[dict[str, Any]] = []
         for item in species_breakdown.get(species_id, []):
             weight = (item["total_yield"] / total_yield) if total_yield else None
-            contributors.append(
-                ProfileContribution(
-                    profile_id=species_id,
-                    child_id=item["child_id"],
-                    stats_version=YIELD_STATS_VERSION,
-                    computed_at=computed_at,
-                    n_runs=item["run_count"] or None,
-                    weight=round(weight, 6) if weight is not None else None,
-                )
+            contributor = ProfileContribution(
+                profile_id=species_id,
+                child_id=item["child_id"],
+                stats_version=YIELD_STATS_VERSION,
+                computed_at=computed_at,
+                n_runs=item["run_count"] or None,
+                weight=round(weight, 6) if weight is not None else None,
             )
-            contributor_payload.append(
-                {
-                    "profile_id": item["child_id"],
-                    "harvest_count": item["harvest_count"],
-                    "total_yield_grams": round(item["total_yield"], 3),
-                    "total_area_m2": round(item["total_area"], 3),
-                    "mean_density_g_m2": item["mean_density"],
-                    "runs_tracked": item["run_count"],
-                }
-            )
+            contributors.append(contributor)
+            payload: dict[str, Any] = {
+                "profile_id": item["child_id"],
+                "harvest_count": item["harvest_count"],
+                "total_yield_grams": round(item["total_yield"], 3),
+                "total_area_m2": round(item["total_area"], 3),
+                "mean_density_g_m2": item["mean_density"],
+                "runs_tracked": item["run_count"],
+            }
+            if item.get("fruit_count"):
+                payload["total_fruit_count"] = item["fruit_count"]
+            if item.get("days_since_last_harvest") is not None:
+                payload["days_since_last_harvest"] = item["days_since_last_harvest"]
+            if item.get("last_harvest_at"):
+                payload["last_harvest_at"] = item["last_harvest_at"]
+            if item.get("window_totals"):
+                payload["window_totals"] = item["window_totals"]
+            contributor_payload.append(payload)
 
         species_run_ids = {event.run_id for event in harvests if event.run_id}
         metrics = dict(stat.metrics)
-        snapshot_payload = {
+        snapshot_payload: dict[str, Any] = {
             "scope": "species",
             "metrics": metrics,
             "harvest_count": count,
@@ -1017,6 +1145,15 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
             "contributors": contributor_payload,
             "runs_tracked": len(species_run_ids),
         }
+        if stat.metadata.get("last_harvest_at"):
+            snapshot_payload["last_harvest_at"] = stat.metadata["last_harvest_at"]
+        if metrics.get("days_since_last_harvest") is not None:
+            snapshot_payload["days_since_last_harvest"] = metrics["days_since_last_harvest"]
+        if fruit_total:
+            snapshot_payload.setdefault("yields", {})["total_fruit_count"] = fruit_total
+        if window_totals:
+            snapshot_payload["window_totals"] = window_totals
+
         snapshot = ComputedStatSnapshot(
             stats_version=YIELD_STATS_VERSION,
             computed_at=computed_at,

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable, Mapping, MutableMapping
+from dataclasses import dataclass, field
 from typing import Any
 
 from ..const import CONF_PROFILE_SCOPE
@@ -105,18 +106,18 @@ def citations_map_to_list(citations_map: Mapping[str, Any]) -> list[Citation]:
     """Convert an options ``citations`` mapping into dataclass instances."""
 
     items: list[Citation] = []
-    for field, meta in citations_map.items():
+    for field_name, meta in citations_map.items():
         if not isinstance(meta, Mapping):
             continue
         details: dict[str, Any] | None = None
         detail_value = meta.get("source_detail")
         if detail_value is not None:
-            details = {"field": field, "source_detail": detail_value}
+            details = {"field": field_name, "source_detail": detail_value}
         accessed = meta.get("ts")
         if accessed is not None:
             accessed = str(accessed)
         source = str(meta.get("mode") or meta.get("source") or "manual")
-        title = str(detail_value or field)
+        title = str(detail_value or field_name)
         items.append(
             Citation(
                 source=source,
@@ -311,12 +312,25 @@ def _build_lineage(profile: BioProfile, profile_map: Mapping[str, BioProfile]) -
     return lineage
 
 
-def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
+@dataclass(slots=True)
+class LineageLinkReport:
+    """Summary of issues discovered while linking species and cultivars."""
+
+    missing_species: dict[str, str] = field(default_factory=dict)
+    missing_parents: dict[str, set[str]] = field(default_factory=dict)
+
+    def add_missing_parent(self, profile_id: str, parent_id: str) -> None:
+        parents = self.missing_parents.setdefault(profile_id, set())
+        parents.add(parent_id)
+
+
+def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> LineageLinkReport:
     """Backfill species↔cultivar relationships for a collection of profiles."""
 
     profile_list = list(profiles)
     species_map: dict[str, BioProfile] = {}
     profile_map: dict[str, BioProfile] = {profile.profile_id: profile for profile in profile_list}
+    report = LineageLinkReport()
 
     for profile in profile_list:
         if profile.profile_type == "species":
@@ -338,7 +352,11 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
                     species_id = parent_id
                     break
 
-        if not species_id or species_id not in species_map:
+        if species_id and species_id not in species_map:
+            report.missing_species.setdefault(profile.profile_id, str(species_id))
+            continue
+
+        if not species_id:
             continue
 
         profile.species_profile_id = species_id
@@ -351,6 +369,9 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
             if not parent_id or parent_id in seen_parent:
                 continue
             seen_parent.add(parent_id)
+            if parent_id not in profile_map:
+                report.add_missing_parent(profile.profile_id, parent_id)
+                continue
             deduped_parents.append(parent_id)
         if species.profile_id not in seen_parent:
             deduped_parents.insert(0, species.profile_id)
@@ -370,12 +391,15 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> None:
     for profile in profile_list:
         profile.lineage = _build_lineage(profile, profile_map)
 
+    return report
+
 
 __all__ = [
     "citations_map_to_list",
     "ensure_sections",
     "normalise_profile_payload",
     "determine_species_slug",
+    "LineageLinkReport",
     "link_species_and_cultivars",
     "sync_general_section",
 ]

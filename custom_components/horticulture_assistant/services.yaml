@@ -309,6 +309,21 @@ cloud_refresh_token:
       description: "Override the cloud base URL used for the refresh request."
       selector: { text: {} }
 
+cloud_sync_now:
+  name: "Sync cloud now"
+  description: "Immediately push local changes and pull remote updates for the active cloud tenant."
+  fields:
+    push:
+      required: false
+      default: true
+      description: "Upload any pending outbox events to the cloud service."
+      selector: { boolean: {} }
+    pull:
+      required: false
+      default: true
+      description: "Fetch remote changes from the cloud and apply them locally."
+      selector: { boolean: {} }
+
 cloud_select_org:
   name: "Select cloud organization"
   description: "Set the active cloud organization for subsequent sync operations."

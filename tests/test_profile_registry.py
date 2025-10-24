@@ -1,4 +1,6 @@
 import json
+import logging
+from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 from unittest.mock import patch
 
@@ -12,6 +14,7 @@ from custom_components.horticulture_assistant.const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
     DOMAIN,
+    NOTIFICATION_PROFILE_VALIDATION,
     PROFILE_SCOPE_DEFAULT,
 )
 from custom_components.horticulture_assistant.profile import store as profile_store
@@ -20,15 +23,144 @@ from custom_components.horticulture_assistant.profile.statistics import (
     EVENT_STATS_VERSION,
     NUTRIENT_STATS_VERSION,
 )
+from custom_components.horticulture_assistant.profile.utils import LineageLinkReport
 from custom_components.horticulture_assistant.profile_registry import ProfileRegistry
 
 pytestmark = pytest.mark.asyncio
+
+UTC = getattr(datetime, "UTC", timezone.utc)  # noqa: UP017
 
 
 async def _make_entry(hass, options=None):
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=options or {})
     entry.add_to_hass(hass)
     return entry
+
+
+async def test_missing_species_warning_logged(hass, caplog):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "species": "species.unknown"}}},
+    )
+    reg = ProfileRegistry(hass, entry)
+
+    with caplog.at_level(logging.WARNING):
+        await reg.async_load()
+
+    assert any("species.unknown" in record.message for record in caplog.records)
+
+
+async def test_missing_parent_warning_logged(hass, caplog):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "parents": ["cultivar.missing"]}}},
+    )
+    reg = ProfileRegistry(hass, entry)
+
+    with caplog.at_level(logging.WARNING):
+        await reg.async_load()
+
+    assert any("cultivar.missing" in record.message for record in caplog.records)
+
+
+async def test_missing_species_creates_issue_and_clears_when_resolved(hass, monkeypatch):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "species": "species.unknown"}}},
+    )
+    created: list[tuple[str, dict]] = []
+    deleted: list[str] = []
+
+    class _Severity:
+        WARNING = "warning"
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.ir",
+        SimpleNamespace(
+            IssueSeverity=_Severity,
+            async_create_issue=lambda *_args, **kwargs: created.append((_args[2], kwargs)),
+            async_delete_issue=lambda *_args: deleted.append(_args[2]),
+        ),
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    assert any(issue_id == "missing_species_p1" for issue_id, _ in created)
+
+    reg._log_lineage_warnings(LineageLinkReport())
+
+    assert "missing_species_p1" in deleted
+
+
+async def test_missing_parent_creates_issue_and_clears_when_resolved(hass, monkeypatch):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "parents": ["cultivar.missing"]}}},
+    )
+    created: list[tuple[str, dict]] = []
+    deleted: list[str] = []
+
+    class _Severity:
+        WARNING = "warning"
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.ir",
+        SimpleNamespace(
+            IssueSeverity=_Severity,
+            async_create_issue=lambda *_args, **kwargs: created.append((_args[2], kwargs)),
+            async_delete_issue=lambda *_args: deleted.append(_args[2]),
+        ),
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    assert any(issue_id.startswith("missing_parent_p1") for issue_id, _ in created)
+
+    reg._log_lineage_warnings(LineageLinkReport())
+
+    assert any(issue_id.startswith("missing_parent_p1") for issue_id in deleted)
+
+
+@pytest.mark.asyncio
+async def test_profile_validation_creates_and_clears_notification(hass, monkeypatch):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
+    notifications: list[dict] = []
+    dismissals: list[dict] = []
+
+    hass.services.async_register(
+        "persistent_notification",
+        "create",
+        lambda call: notifications.append(call.data),
+    )
+    hass.services.async_register(
+        "persistent_notification",
+        "dismiss",
+        lambda call: dismissals.append(call.data),
+    )
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: ["general.name: required property missing"],
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    assert notifications
+    latest = notifications[-1]
+    assert latest["notification_id"] == NOTIFICATION_PROFILE_VALIDATION
+    assert "required property" in latest["message"]
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: [],
+    )
+
+    await reg.async_load()
+
+    assert any(item["notification_id"] == NOTIFICATION_PROFILE_VALIDATION for item in dismissals)
 
 
 async def test_initialize_merges_storage_and_options(hass):
@@ -221,6 +353,27 @@ async def test_record_run_event_appends_and_persists(hass):
     assert stored is not None and len(stored.run_history) == 1
 
 
+async def test_record_run_event_rejects_invalid_success_rate(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Run Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_run_event(
+            profile_id,
+            {
+                "run_id": "run-oob",
+                "profile_id": profile_id,
+                "started_at": "2024-05-01T00:00:00Z",
+                "success_rate": 1.5,
+            },
+        )
+
+    assert "success_rate" in str(excinfo.value)
+
+
 async def test_record_harvest_event_updates_statistics(hass):
     species = BioProfile(profile_id="species.1", display_name="Species", profile_type="species")
     cultivar = BioProfile(
@@ -236,12 +389,17 @@ async def test_record_harvest_event_updates_statistics(hass):
     reg = ProfileRegistry(hass, entry)
     await reg.async_load()
 
+    now = datetime.now(UTC)
+    run_started = (now - timedelta(days=10)).isoformat()
+    run_finished = (now - timedelta(days=5)).isoformat()
+    recent_harvest = (now - timedelta(days=3)).isoformat()
+
     await reg.async_record_run_event(
         "cultivar.1",
         {
             "run_id": "run-1",
-            "started_at": "2024-01-01T00:00:00Z",
-            "ended_at": "2024-01-06T00:00:00Z",
+            "started_at": run_started,
+            "ended_at": run_finished,
             "environment": {"temperature_c": 23.5, "humidity_percent": 55},
         },
     )
@@ -249,7 +407,7 @@ async def test_record_harvest_event_updates_statistics(hass):
         "cultivar.1",
         {
             "harvest_id": "harvest-1",
-            "harvested_at": "2024-02-01T00:00:00Z",
+            "harvested_at": recent_harvest,
             "yield_grams": 125.5,
             "area_m2": 2.5,
         },
@@ -269,6 +427,9 @@ async def test_record_harvest_event_updates_statistics(hass):
     )
     assert cultivar_snapshot is not None
     assert cultivar_snapshot.payload["yields"]["total_grams"] == pytest.approx(125.5)
+    assert cultivar_snapshot.payload["window_totals"]["7d"]["harvest_count"] == 1.0
+    assert cultivar_snapshot.payload["window_totals"]["7d"]["total_yield_grams"] == pytest.approx(125.5)
+    assert cultivar_snapshot.payload["days_since_last_harvest"] == pytest.approx(3.0, abs=0.05)
     assert cultivar_snapshot.payload["runs_tracked"] == 1
 
     species_prof = reg.get("species.1")
@@ -282,6 +443,7 @@ async def test_record_harvest_event_updates_statistics(hass):
     assert species_snapshot is not None
     contributors = {item["profile_id"]: item for item in species_snapshot.payload["contributors"]}
     assert contributors["cultivar.1"]["total_yield_grams"] == pytest.approx(125.5)
+    assert species_snapshot.payload["window_totals"]["7d"]["harvest_count"] == 1.0
 
     stored_cultivar = await profile_store.async_load_profile(hass, "cultivar.1")
     assert stored_cultivar is not None and len(stored_cultivar.harvest_history) == 1
@@ -305,6 +467,80 @@ async def test_record_harvest_event_updates_statistics(hass):
     )
     assert species_env is not None
     assert species_env.payload["runs_recorded"] >= 1
+
+
+async def test_harvest_window_totals_track_recent_windows(hass):
+    species = BioProfile(profile_id="species.window", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar.window",
+        display_name="Window Cultivar",
+        profile_type="cultivar",
+        species="species.window",
+    )
+    await profile_store.async_save_profile(hass, species)
+    await profile_store.async_save_profile(hass, cultivar)
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    now = datetime.now(UTC)
+    events = [
+        (now - timedelta(days=40), 90.0, 1.5, 30),
+        (now - timedelta(days=20), 80.0, 1.2, 20),
+        (now - timedelta(days=3), 120.0, 2.5, 40),
+    ]
+
+    for idx, (timestamp, yield_grams, area, fruit) in enumerate(events, start=1):
+        await reg.async_record_harvest_event(
+            "cultivar.window",
+            {
+                "harvest_id": f"harvest-{idx}",
+                "harvested_at": timestamp.isoformat(),
+                "yield_grams": yield_grams,
+                "area_m2": area,
+                "fruit_count": fruit,
+            },
+        )
+
+    profile = reg.get("cultivar.window")
+    assert profile is not None
+    snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "yield/v1"),
+        None,
+    )
+    assert snapshot is not None
+    windows = snapshot.payload["window_totals"]
+    assert windows["7d"]["harvest_count"] == 1.0
+    assert windows["7d"]["total_yield_grams"] == pytest.approx(120.0)
+    assert windows["30d"]["harvest_count"] == 2.0
+    assert windows["30d"]["total_yield_grams"] == pytest.approx(200.0)
+    assert windows["90d"]["harvest_count"] == 3.0
+    assert windows["90d"]["fruit_count"] == pytest.approx(90.0)
+    metrics = snapshot.payload["metrics"]
+    assert metrics["total_fruit_count"] == pytest.approx(90.0)
+    assert metrics["days_since_last_harvest"] == pytest.approx(3.0, abs=0.05)
+
+
+async def test_record_harvest_event_rejects_negative_yield(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Validation Test")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_harvest_event(
+            profile_id,
+            {
+                "harvest_id": "bad",
+                "profile_id": profile_id,
+                "harvested_at": "2024-07-01T00:00:00Z",
+                "yield_grams": -5,
+            },
+        )
+
+    assert "yield_grams" in str(excinfo.value)
 
 
 async def test_record_nutrient_event_updates_snapshots(hass):
@@ -363,6 +599,27 @@ async def test_record_nutrient_event_updates_snapshots(hass):
     assert stored is not None and len(stored.nutrient_history) == 1
 
 
+async def test_record_nutrient_event_rejects_invalid_ph(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Nutrient Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_nutrient_event(
+            profile_id,
+            {
+                "event_id": "invalid-ph",
+                "profile_id": profile_id,
+                "applied_at": "2024-08-10T18:04:00Z",
+                "ph": 15.2,
+            },
+        )
+
+    assert "ph" in str(excinfo.value)
+
+
 async def test_record_cultivation_event_updates_statistics(hass):
     species = BioProfile(profile_id="species.2", display_name="Species", profile_type="species")
     cultivar = BioProfile(
@@ -415,6 +672,27 @@ async def test_record_cultivation_event_updates_statistics(hass):
     assert species_metrics["total_events"] == pytest.approx(1.0)
     contributors = species_snapshot.payload.get("contributors") or []
     assert any(item.get("profile_id") == "cultivar.2" for item in contributors)
+
+
+async def test_record_cultivation_event_requires_event_type(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Cultivation Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_cultivation_event(
+            profile_id,
+            {
+                "event_id": "missing-type",
+                "profile_id": profile_id,
+                "occurred_at": "2024-09-01T12:00:00Z",
+                "event_type": "",
+            },
+        )
+
+    assert "event_type" in str(excinfo.value)
 
 
 async def test_relink_profiles_populates_species_relationships(hass):
@@ -668,6 +946,35 @@ async def test_cloud_publisher_records_profile_and_events(hass, tmp_path):
     latest = computed_events[-1]
     assert latest.metadata.get("stats_version")
     assert latest.patch and "versions" in latest.patch
+
+
+async def test_history_exporter_persists_events(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "History Plant"}}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    await reg.async_record_harvest_event(
+        "p1",
+        {
+            "harvest_id": "harvest-1",
+            "profile_id": "p1",
+            "harvested_at": "2025-02-10T00:00:00+00:00",
+            "yield_grams": 42.0,
+        },
+    )
+
+    history_dir = tmp_path / "custom_components" / "horticulture_assistant" / "data" / "local" / "history" / "p1"
+    log_path = history_dir / "harvest_events.jsonl"
+    assert log_path.is_file()
+    lines = [line for line in log_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    assert len(lines) == 1
+    payload = json.loads(lines[0])
+    assert payload["harvest_id"] == "harvest-1"
+
+    index_path = history_dir.parent / "index.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    assert index["p1"]["counts"]["harvest"] == 1
 
 
 async def test_cloud_publisher_defers_until_ready(hass, tmp_path):

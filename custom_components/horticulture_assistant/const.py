@@ -91,6 +91,10 @@ DEFAULT_UPDATE_MINUTES = 5
 DEFAULT_KEEP_STALE = True
 DEFAULT_CLOUD_SYNC_INTERVAL = 300
 
+# Persistent notification identifiers
+NOTIFICATION_PROFILE_VALIDATION = "horticulture_profile_validation"
+NOTIFICATION_DATASET_HEALTH = "horticulture_dataset_health"
+
 # ---------------------------------------------------------------------------
 # Feature & entitlement constants
 # ---------------------------------------------------------------------------

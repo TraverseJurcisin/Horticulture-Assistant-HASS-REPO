@@ -15,6 +15,7 @@ from custom_components.horticulture_assistant.cloudsync import (
     CloudAuthError,
     CloudAuthTokens,
     CloudSyncConfig,
+    CloudSyncError,
     CloudSyncManager,
     ConflictPolicy,
     ConflictResolver,
@@ -547,3 +548,68 @@ async def test_cloud_manager_auto_refresh_schedules_task(hass, tmp_path):
         status = manager.status()
         assert status["next_token_refresh_at"] is not None
         await manager.async_stop()
+
+
+@pytest.mark.asyncio
+async def test_cloud_manager_sync_now_runs_single_cycle(hass, tmp_path):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+            CONF_CLOUD_TENANT_ID: "tenant-1",
+            CONF_CLOUD_DEVICE_TOKEN: "device-1",
+        },
+    )
+    entry.add_to_hass(hass)
+    manager = CloudSyncManager(hass, entry, store_path=tmp_path / "sync_manual.db")
+
+    session = MagicMock()
+    session.close = AsyncMock()
+    worker = MagicMock()
+    worker.push_once = AsyncMock(return_value=2)
+    worker.pull_once = AsyncMock(return_value=4)
+    worker.status.return_value = {}
+
+    with (
+        patch("custom_components.horticulture_assistant.cloudsync.manager.ClientSession", return_value=session),
+        patch("custom_components.horticulture_assistant.cloudsync.manager.EdgeSyncWorker", return_value=worker),
+    ):
+        result = await manager.async_sync_now()
+
+    worker.push_once.assert_awaited()
+    worker.pull_once.assert_awaited()
+    session.close.assert_awaited()
+    assert result["pushed"] == 2
+    assert result["pulled"] == 4
+    manual = result["status"].get("manual_sync")
+    assert manual and manual["result"] == {"pushed": 2, "pulled": 4}
+    assert manual["last_run_at"] is not None
+
+
+@pytest.mark.asyncio
+async def test_cloud_manager_sync_now_requires_ready(hass, tmp_path):
+    entry = MockConfigEntry(domain=DOMAIN, data={}, options={})
+    entry.add_to_hass(hass)
+    manager = CloudSyncManager(hass, entry, store_path=tmp_path / "sync_manual.db")
+    with pytest.raises(CloudSyncError):
+        await manager.async_sync_now()
+
+
+@pytest.mark.asyncio
+async def test_cloud_manager_sync_now_validates_directions(hass, tmp_path):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_BASE_URL: "https://cloud.example",
+            CONF_CLOUD_TENANT_ID: "tenant-1",
+            CONF_CLOUD_DEVICE_TOKEN: "device-1",
+        },
+    )
+    entry.add_to_hass(hass)
+    manager = CloudSyncManager(hass, entry, store_path=tmp_path / "sync_manual.db")
+    with pytest.raises(CloudSyncError):
+        await manager.async_sync_now(push=False, pull=False)

@@ -9,6 +9,7 @@ from unittest.mock import patch
 import pytest
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.util import dt as dt_util
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 # Bypass the package __init__ which pulls in Home Assistant by creating a minimal
 # module placeholder with an explicit path for submodule resolution.
@@ -24,11 +25,19 @@ schema_mod = importlib.import_module("custom_components.horticulture_assistant.p
 metrics_mod = importlib.import_module("custom_components.horticulture_assistant.engine.metrics")
 
 CONF_PROFILES = const.CONF_PROFILES
+CONF_CLOUD_SYNC_ENABLED = const.CONF_CLOUD_SYNC_ENABLED
+CONF_CLOUD_ACCOUNT_EMAIL = const.CONF_CLOUD_ACCOUNT_EMAIL
+CONF_CLOUD_ACCOUNT_ROLES = const.CONF_CLOUD_ACCOUNT_ROLES
+DOMAIN = const.DOMAIN
+FEATURE_CLOUD_SYNC = const.FEATURE_CLOUD_SYNC
+FEATURE_AI_ASSIST = const.FEATURE_AI_ASSIST
+FEATURE_IRRIGATION_AUTOMATION = const.FEATURE_IRRIGATION_AUTOMATION
 HorticultureCoordinator = coordinator_mod.HorticultureCoordinator
 HorticultureEntity = entity_mod.HorticultureEntity
 ProfileMetricSensor = sensor_mod.ProfileMetricSensor
 PROFILE_SENSOR_DESCRIPTIONS = sensor_mod.PROFILE_SENSOR_DESCRIPTIONS
 GardenSummarySensor = sensor_mod.GardenSummarySensor
+EntitlementSummarySensor = sensor_mod.EntitlementSummarySensor
 ProfileSuccessSensor = sensor_mod.ProfileSuccessSensor
 ProfileProvenanceSensor = sensor_mod.ProfileProvenanceSensor
 ProfileFeedingSensor = sensor_mod.ProfileFeedingSensor
@@ -296,6 +305,28 @@ async def test_garden_summary_sensor_reports_problem_count(hass):
 
 
 @pytest.mark.asyncio
+async def test_entitlement_sensor_exposes_features(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            CONF_CLOUD_SYNC_ENABLED: True,
+            CONF_CLOUD_ACCOUNT_EMAIL: "grower@example.com",
+            CONF_CLOUD_ACCOUNT_ROLES: ["premium"],
+        },
+    )
+    sensor = EntitlementSummarySensor(entry)
+    sensor.hass = hass
+    await sensor.async_update()
+    assert sensor.native_value == "premium"
+    attrs = sensor.extra_state_attributes
+    assert FEATURE_CLOUD_SYNC in attrs["features"]
+    assert FEATURE_AI_ASSIST in attrs["features"]
+    assert FEATURE_IRRIGATION_AUTOMATION in attrs["features"]
+    assert attrs["account_email"] == "grower@example.com"
+
+
+@pytest.mark.asyncio
 async def test_status_and_recommendation_device_info(hass):
     async def _async_update():
         return {}
@@ -434,10 +465,22 @@ async def test_profile_yield_sensor_reports_totals(hass):
                 "harvest_count": 3,
                 "average_yield_grams": 40.166,
                 "average_yield_density_g_m2": 30.125,
+                "days_since_last_harvest": 4.5,
+                "total_fruit_count": 15.0,
             },
-            "yields": {"total_grams": 120.5, "total_area_m2": 4.0},
+            "yields": {"total_grams": 120.5, "total_area_m2": 4.0, "total_fruit_count": 15},
             "densities": {"average_g_m2": 30.125},
             "runs_tracked": 2,
+            "window_totals": {
+                "7d": {"harvest_count": 1.0, "total_yield_grams": 40.0},
+                "30d": {
+                    "harvest_count": 3.0,
+                    "total_yield_grams": 120.5,
+                    "fruit_count": 15.0,
+                },
+            },
+            "last_harvest_at": "2024-04-27T09:00:00+00:00",
+            "days_since_last_harvest": 4.5,
         },
         contributions=[],
     )
@@ -462,6 +505,9 @@ async def test_profile_yield_sensor_reports_totals(hass):
     assert attrs["average_yield_kilograms"] == pytest.approx(0.040, rel=1e-2)
     assert attrs["average_yield_density_kg_m2"] == pytest.approx(0.030, rel=1e-2)
     assert attrs["density_average_kg_m2"] == pytest.approx(0.030, rel=1e-2)
+    assert attrs["total_fruit_count"] == 15
+    assert attrs["days_since_last_harvest"] == 4.5
+    assert attrs["window_totals"]["30d"]["harvest_count"] == 3.0
 
 
 @pytest.mark.asyncio
@@ -485,6 +531,7 @@ async def test_profile_event_sensor_summarises_activity(hass):
             "last_event": {"event_type": "inspection", "notes": "All good"},
             "event_types": [{"event_type": "inspection", "count": 1}],
             "top_tags": [{"tag": "health", "count": 1}],
+            "window_counts": {"7d": 1, "30d": 2},
         },
         contributions=[],
     )
@@ -505,6 +552,7 @@ async def test_profile_event_sensor_summarises_activity(hass):
     assert attrs["unique_event_types"] == 2.0
     assert attrs["last_event"]["event_type"] == "inspection"
     assert attrs["top_tags"][0]["tag"] == "health"
+    assert attrs["window_counts"]["7d"] == 1
 
 
 @pytest.mark.asyncio

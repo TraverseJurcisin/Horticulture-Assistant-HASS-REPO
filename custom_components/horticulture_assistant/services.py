@@ -44,6 +44,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .cloudsync.auth import CloudAuthClient, CloudAuthError, CloudAuthTokens
+from .cloudsync.manager import CloudSyncError
 from .const import (
     CONF_CLOUD_ACCESS_TOKEN,
     CONF_CLOUD_ACCOUNT_EMAIL,
@@ -146,6 +147,7 @@ SERVICE_CLOUD_LOGIN = "cloud_login"
 SERVICE_CLOUD_LOGOUT = "cloud_logout"
 SERVICE_CLOUD_REFRESH = "cloud_refresh_token"
 SERVICE_CLOUD_SELECT_ORG = "cloud_select_org"
+SERVICE_CLOUD_SYNC_NOW = "cloud_sync_now"
 
 SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_REPLACE_SENSOR,
@@ -180,6 +182,7 @@ SERVICE_NAMES: Final[tuple[str, ...]] = (
     SERVICE_CLOUD_LOGOUT,
     SERVICE_CLOUD_REFRESH,
     SERVICE_CLOUD_SELECT_ORG,
+    SERVICE_CLOUD_SYNC_NOW,
 )
 
 
@@ -790,6 +793,19 @@ async def async_register_all(
             "organization_role": opts.get(CONF_CLOUD_ORGANIZATION_ROLE),
         }
 
+    async def _srv_cloud_sync_now(call) -> ServiceResponse:
+        if cloud_manager is None:
+            raise HomeAssistantError("cloud sync is not configured for this entry")
+        push_raw = call.data.get("push")
+        pull_raw = call.data.get("pull")
+        push = True if push_raw is None else bool(push_raw)
+        pull = True if pull_raw is None else bool(pull_raw)
+        try:
+            result = await cloud_manager.async_sync_now(push=push, pull=pull)
+        except CloudSyncError as err:
+            raise HomeAssistantError(str(err)) from err
+        return result
+
     async def _srv_import_profiles(call) -> None:
         path = call.data["path"]
         await registry.async_import_profiles(path)
@@ -1196,6 +1212,18 @@ async def async_register_all(
         SERVICE_CLOUD_REFRESH,
         _srv_cloud_refresh,
         schema=vol.Schema({vol.Optional("base_url"): str}),
+        supports_response=True,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_CLOUD_SYNC_NOW,
+        _srv_cloud_sync_now,
+        schema=vol.Schema(
+            {
+                vol.Optional("push", default=True): vol.Boolean(),
+                vol.Optional("pull", default=True): vol.Boolean(),
+            }
+        ),
         supports_response=True,
     )
     hass.services.async_register(

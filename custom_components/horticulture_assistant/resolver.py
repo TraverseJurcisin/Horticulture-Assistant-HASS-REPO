@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from collections.abc import Mapping
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -23,12 +24,15 @@ from .profile.utils import (
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
+_LOGGER = logging.getLogger(__name__)
+
 
 class PreferenceResolver:
     """Resolves per-variable values from manual/clone/opb/ai with TTL + citations."""
 
     def __init__(self, hass: HomeAssistant):
         self.hass = hass
+        self._missing_inheritance: set[tuple[str, str]] = set()
 
     def _cloud_store(self, entry) -> tuple[Any | None, str | None, str | None]:
         """Return the cloud sync store, tenant, and organization context if available."""
@@ -434,6 +438,16 @@ class PreferenceResolver:
 
         resolution = resolve_inheritance_target(profile, key, profiles_by_id)
         if resolution is None:
+            if profile.profile_type != "species":
+                cache_key = (profile.profile_id, key)
+                if cache_key not in self._missing_inheritance:
+                    self._missing_inheritance.add(cache_key)
+                    _LOGGER.warning(
+                        "Inheritance lookup for '%s' on profile %s (%s) failed; check cultivar/species defaults.",
+                        key,
+                        profile.display_name,
+                        profile.profile_id,
+                    )
             return None
 
         return annotate_inherited_target(resolution)

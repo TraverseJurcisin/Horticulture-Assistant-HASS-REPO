@@ -3,6 +3,7 @@ from __future__ import annotations
 """Utility helpers for editing plant profiles from the command line."""
 
 import argparse
+import csv
 import json
 from pathlib import Path
 
@@ -17,6 +18,7 @@ from custom_components.horticulture_assistant.utils.json_io import load_json
 
 DEFAULT_PLANTS_DIR = ROOT / "plants"
 DEFAULT_GLOBAL_DIR = ROOT / "data" / "global_profiles"
+DEFAULT_HISTORY_DIR = ROOT / "data" / "local" / "history"
 
 
 def attach_sensor(
@@ -73,10 +75,33 @@ def load_default_profile(
     return loader.save_profile_by_id(plant_id, data, base_dir)
 
 
-def show_history(
-    plant_id: str, log_name: str, base_dir: Path = DEFAULT_PLANTS_DIR, lines: int = 5
+def _load_history_entries(
+    plant_id: str,
+    log_name: str,
+    base_dir: Path = DEFAULT_PLANTS_DIR,
+    history_dir: Path | None = None,
 ) -> list[object]:
-    """Return the last ``lines`` entries from a log file."""
+    """Return all persisted history entries for ``plant_id`` and ``log_name``."""
+
+    history_base = history_dir or DEFAULT_HISTORY_DIR
+    jsonl_path = Path(history_base) / plant_id / f"{log_name}.jsonl"
+    if jsonl_path.is_file():
+        try:
+            raw_lines = jsonl_path.read_text(encoding="utf-8").splitlines()
+        except OSError:
+            raw_lines = []
+        entries: list[object] = []
+        for raw in raw_lines:
+            raw = raw.strip()
+            if not raw:
+                continue
+            try:
+                entries.append(json.loads(raw))
+            except json.JSONDecodeError:
+                continue
+        if entries:
+            return entries
+
     log_path = Path(base_dir) / plant_id / f"{log_name}.json"
     if not log_path.is_file():
         return []
@@ -84,7 +109,22 @@ def show_history(
         entries = load_json(str(log_path))
     except Exception:
         return []
-    if not isinstance(entries, list):
+    return entries if isinstance(entries, list) else []
+
+
+def show_history(
+    plant_id: str,
+    log_name: str,
+    base_dir: Path = DEFAULT_PLANTS_DIR,
+    lines: int = 5,
+    history_dir: Path | None = None,
+) -> list[object]:
+    """Return the last ``lines`` entries from a log file."""
+
+    entries = _load_history_entries(plant_id, log_name, base_dir, history_dir)
+    if not entries:
+        return []
+    if lines <= 0:
         return []
     return entries[-lines:]
 
@@ -107,12 +147,68 @@ def list_global_profiles(global_dir: Path = DEFAULT_GLOBAL_DIR) -> list[str]:
     return sorted(p.stem for p in path.iterdir() if p.is_file() and p.suffix == ".json")
 
 
-def list_log_files(plant_id: str, base_dir: Path = DEFAULT_PLANTS_DIR) -> list[str]:
+def list_log_files(
+    plant_id: str,
+    base_dir: Path = DEFAULT_PLANTS_DIR,
+    history_dir: Path | None = None,
+) -> list[str]:
     """Return the available log names for ``plant_id``."""
+    names: set[str] = set()
     log_dir = Path(base_dir) / plant_id
-    if not log_dir.is_dir():
-        return []
-    return sorted(p.stem for p in log_dir.glob("*.json"))
+    if log_dir.is_dir():
+        names.update(p.stem for p in log_dir.glob("*.json"))
+    history_home = (history_dir or DEFAULT_HISTORY_DIR) / plant_id
+    if history_home.is_dir():
+        names.update(p.stem for p in history_home.glob("*.jsonl"))
+    return sorted(names)
+
+
+def export_history(
+    plant_id: str,
+    log_name: str,
+    output: Path,
+    *,
+    fmt: str = "jsonl",
+    limit: int | None = None,
+    base_dir: Path = DEFAULT_PLANTS_DIR,
+    history_dir: Path | None = None,
+) -> Path | None:
+    """Export lifecycle history for ``plant_id`` and return the written path."""
+
+    entries = _load_history_entries(plant_id, log_name, base_dir, history_dir)
+    if limit is not None and limit > 0:
+        entries = entries[-limit:]
+    if not entries:
+        return None
+
+    output = Path(output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+
+    fmt = fmt.lower()
+    if fmt == "csv":
+        keys: list[str] = sorted({key for entry in entries if isinstance(entry, dict) for key in entry.keys()})
+        with output.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=keys)
+            writer.writeheader()
+            for entry in entries:
+                row = {}
+                if isinstance(entry, dict):
+                    for key in keys:
+                        value = entry.get(key)
+                        if isinstance(value, (dict, list)):
+                            row[key] = json.dumps(value, ensure_ascii=False)
+                        else:
+                            row[key] = value
+                writer.writerow(row)
+    elif fmt == "json":
+        output.write_text(json.dumps(entries, indent=2, ensure_ascii=False), encoding="utf-8")
+    elif fmt == "jsonl":
+        lines = [json.dumps(entry, ensure_ascii=False, sort_keys=True) for entry in entries]
+        output.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    else:
+        raise ValueError(f"Unsupported export format: {fmt}")
+
+    return output
 
 
 def show_preferences(plant_id: str, base_dir: Path = DEFAULT_PLANTS_DIR) -> dict:
@@ -148,6 +244,12 @@ def main(argv: list[str] | None = None) -> None:
         default=DEFAULT_GLOBAL_DIR,
         help="directory containing global profile templates",
     )
+    root_parser.add_argument(
+        "--history-dir",
+        type=Path,
+        default=DEFAULT_HISTORY_DIR,
+        help="directory containing exported lifecycle logs",
+    )
 
     parser = argparse.ArgumentParser(
         description="Manage plant profiles",
@@ -179,6 +281,13 @@ def main(argv: list[str] | None = None) -> None:
     hist.add_argument("log_name")
     hist.add_argument("--lines", type=int, default=5)
 
+    export_cmd = sub.add_parser("export-history", help="export lifecycle history to disk")
+    export_cmd.add_argument("plant_id")
+    export_cmd.add_argument("log_name")
+    export_cmd.add_argument("--output", "-o", type=Path, required=True)
+    export_cmd.add_argument("--format", choices=["jsonl", "json", "csv"], default="jsonl")
+    export_cmd.add_argument("--limit", type=int, default=None)
+
     list_sensors_cmd = sub.add_parser("list-sensors", help="list sensors for a plant")
     list_sensors_cmd.add_argument("plant_id")
 
@@ -197,6 +306,7 @@ def main(argv: list[str] | None = None) -> None:
 
     plants_dir = root_args.plants_dir
     globals_dir = root_args.global_dir
+    history_dir = root_args.history_dir
 
     args = parser.parse_args(remaining)
     if args.cmd == "attach-sensor":
@@ -233,13 +343,28 @@ def main(argv: list[str] | None = None) -> None:
             args.log_name,
             base_dir=plants_dir,
             lines=args.lines,
+            history_dir=history_dir,
         )
         print(json.dumps(entries, indent=2))
+    elif args.cmd == "export-history":
+        path = export_history(
+            args.plant_id,
+            args.log_name,
+            args.output,
+            fmt=args.format,
+            limit=args.limit,
+            base_dir=plants_dir,
+            history_dir=history_dir,
+        )
+        if path is None:
+            print("no entries")
+        else:
+            print(path)
     elif args.cmd == "show-prefs":
         prefs = show_preferences(args.plant_id, base_dir=plants_dir)
         print(json.dumps(prefs, indent=2))
     elif args.cmd == "list-logs":
-        logs = list_log_files(args.plant_id, base_dir=plants_dir)
+        logs = list_log_files(args.plant_id, base_dir=plants_dir, history_dir=history_dir)
         print("\n".join(logs))
     elif args.cmd == "list-sensors":
         sensors = list_profile_sensors(args.plant_id, base_dir=plants_dir)

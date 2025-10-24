@@ -45,6 +45,14 @@ except AttributeError:  # pragma: no cover - Py<3.11 fallback
 _LOGGER = logging.getLogger(__name__)
 
 
+class CloudSyncError(RuntimeError):
+    """Raised when a manual sync operation cannot be completed."""
+
+    def __init__(self, message: str, *, reason: str | None = None) -> None:
+        super().__init__(message)
+        self.reason = reason
+
+
 @dataclass(slots=True)
 class CloudSyncConfig:
     """Configuration required to run the edge sync worker."""
@@ -180,6 +188,10 @@ class CloudSyncManager:
         self._last_token_refresh_error: str | None = None
         self._last_offline_enqueue_at: datetime | None = None
         self._offline_queue_reason: str | None = None
+        self._sync_lock = asyncio.Lock()
+        self._last_manual_sync_at: datetime | None = None
+        self._last_manual_sync_result: dict[str, Any] | None = None
+        self._last_manual_sync_error: str | None = None
 
     async def async_start(self) -> None:
         """Start the sync worker when configuration is complete."""
@@ -194,16 +206,21 @@ class CloudSyncManager:
         if self._session is None:
             self._session = ClientSession()
             self._owns_session = True
-        self._worker = EdgeSyncWorker(
+        self._worker = self._create_worker(self._session)
+        self._task = self.hass.async_create_task(self._worker.run_forever(interval_seconds=self.config.interval))
+        self._schedule_token_refresh()
+
+    def _create_worker(self, session: ClientSession) -> EdgeSyncWorker:
+        if not self.config.ready:
+            raise CloudSyncError("cloud sync is not fully configured", reason="not_configured")
+        return EdgeSyncWorker(
             self.store,
-            self._session,
+            session,
             self.config.base_url,
             self.config.device_token or self.config.access_token,
             self.config.tenant_id,
             organization_id=self.config.organization_id,
         )
-        self._task = self.hass.async_create_task(self._worker.run_forever(interval_seconds=self.config.interval))
-        self._schedule_token_refresh()
 
     async def async_stop(self) -> None:
         """Stop the sync worker and release resources."""
@@ -278,8 +295,77 @@ class CloudSyncManager:
             "last_enqueued_at": self._last_offline_enqueue_at.isoformat() if self._last_offline_enqueue_at else None,
             "reason": self._offline_queue_reason,
             "queueing": bool(self._offline_queue_reason),
+            "last_error": status.get("last_push_error") or status.get("last_pull_error"),
+        }
+        if not status["offline_queue"]["pending"]:
+            status["offline_queue"]["queueing"] = False
+            status["offline_queue"]["reason"] = None
+            self._offline_queue_reason = None
+        elif not status["offline_queue"]["reason"]:
+            if status.get("last_push_error"):
+                status["offline_queue"]["reason"] = "push_error"
+            elif status.get("last_pull_error"):
+                status["offline_queue"]["reason"] = "pull_error"
+        status["manual_sync"] = {
+            "last_run_at": self._last_manual_sync_at.isoformat() if self._last_manual_sync_at else None,
+            "result": dict(self._last_manual_sync_result) if self._last_manual_sync_result else None,
+            "error": self._last_manual_sync_error,
         }
         return status
+
+    async def async_sync_now(self, *, push: bool = True, pull: bool = True) -> dict[str, Any]:
+        """Perform a one-off sync cycle for the configured tenant."""
+
+        if not push and not pull:
+            raise CloudSyncError("at least one of push/pull must be enabled", reason="invalid_request")
+        self.config = CloudSyncConfig.from_options(self.entry.options)
+        if not self.config.ready:
+            raise CloudSyncError("cloud sync is not fully configured", reason="not_configured")
+
+        async with self._sync_lock:
+            was_running = self._task is not None and not self._task.done()
+            session = self._session
+            owns_session = False
+            if was_running:
+                await self.async_stop()
+                session = None
+
+            if session is None:
+                session = ClientSession()
+                owns_session = True
+
+            worker = self._create_worker(session)
+            pushed = pulled = 0
+            error: Exception | None = None
+            try:
+                if push:
+                    pushed = await worker.push_once()
+                if pull:
+                    pulled = await worker.pull_once()
+            except Exception as err:  # pragma: no cover - propagated to caller
+                error = err
+                self._last_manual_sync_error = str(err)
+                self._last_manual_sync_result = None
+                self._last_manual_sync_at = datetime.now(tz=UTC)
+                raise CloudSyncError(str(err), reason="sync_failed") from err
+            finally:
+                if owns_session:
+                    await session.close()
+                if was_running:
+                    await self.async_start()
+                if error is None and self.store.outbox_size() == 0:
+                    self._offline_queue_reason = None
+
+            now = datetime.now(tz=UTC)
+            self._last_manual_sync_at = now
+            self._last_manual_sync_result = {"pushed": pushed, "pulled": pulled}
+            self._last_manual_sync_error = None
+            status = self.status(now=now)
+            return {
+                "pushed": pushed,
+                "pulled": pulled,
+                "status": status,
+            }
 
     # ------------------------------------------------------------------
     def register_token_listener(self, listener: Callable[[Mapping[str, Any]], Awaitable[None] | None]) -> None:

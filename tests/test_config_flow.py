@@ -129,10 +129,15 @@ async def test_config_flow_user(hass):
         result4 = await flow.async_step_threshold_source({"method": "manual"})
         assert result4["type"] == "form"
         assert result4["step_id"] == "thresholds"
+        hass.states.async_set(
+            "sensor.good",
+            0,
+            {"device_class": "moisture", "unit_of_measurement": "%"},
+        )
         result4 = await flow.async_step_thresholds({})
         assert result4["type"] == "form"
         assert result4["step_id"] == "sensors"
-        hass.states.async_set("sensor.good", 0)
+        assert "sensor.good" in result4["description_placeholders"]["sensor_hints"]
         result5 = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
     assert result5["type"] == "create_entry"
     assert result5["data"][CONF_PLANT_NAME] == "Mint"
@@ -287,9 +292,15 @@ async def test_options_flow(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     flow = OptionsFlow(entry)
     flow.hass = hass
+    hass.states.async_set(
+        "sensor.greenhouse_temp",
+        22,
+        {"device_class": "temperature", "unit_of_measurement": "°C"},
+    )
     await flow.async_step_init()
     result = await flow.async_step_basic()
     assert result["type"] == "form"
+    assert "sensor.greenhouse_temp" in result["description_placeholders"]["sensor_hints"]
     result2 = await flow.async_step_basic({})
     assert result2["type"] == "create_entry"
 

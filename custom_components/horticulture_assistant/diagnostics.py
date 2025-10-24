@@ -43,6 +43,12 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
             profiles = reg.summaries()
             payload["profiles"] = profiles
             payload["profile_count"] = len(profiles)
+        history_index = await reg.async_history_index()
+        if history_index:
+            payload["history_exports"] = {
+                "enabled": True,
+                "profiles": history_index,
+            }
 
     for key, coord in data.items():
         if not key.startswith("coordinator"):

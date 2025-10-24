@@ -57,6 +57,44 @@ When a value is missing at the line level, the resolver automatically falls back
 3. Use the **Clone thresholds** action in the options flow if you want to materialise inherited values for editing.
 4. Remove a key from the JSON to fall back to cultivar/species defaults; save and reload the integration to apply changes.
 
+### Inspecting provenance at runtime
+
+The integration ships a `profile_provenance` service that reports where each active value originated. Trigger it from the **Dev
+Tools → Services** panel:
+
+```yaml
+service: horticulture_assistant.profile_provenance
+data:
+  profile_id: alicante_tomato_north_bed
+```
+
+The response maps each resolved field to the tier that supplied it, making overrides—and the absence of overrides—obvious:
+
+```jsonc
+{
+  "profile_id": "alicante_tomato_north_bed",
+  "provenance": {
+    "environment.temperature.min_c": {
+      "source": "line",
+      "value": 19.5
+    },
+    "environment.temperature.max_c": {
+      "source": "species",
+      "value": 27.0
+    },
+    "environment.humidity.min_percent": {
+      "source": "line",
+      "value": 55
+    }
+  }
+}
+```
+
+If the line file omits a property entirely, the provenance report will show the cultivar or species default instead. This makes
+it easy to verify that deleting a key from your overrides really did revert to the upstream default. When hand-editing JSON, dou
+ble-check the `species` and `cultivar` references as well—if a reference file is missing or misspelled, the integration will log
+an error during reload so you can correct it promptly.
+
 ## How the Repository is Organized
 
 | Area | Purpose | Where to learn more |
@@ -66,6 +104,7 @@ When a value is missing at the line level, the resolver automatically falls back
 | Data catalogue | Fertilizer/product schemas, crop targets, irrigation tables | [Data README](custom_components/horticulture_assistant/data/README.md) |
 | Fertilizer dataset | Detail/index shards, schema history, validation workflow | [Fertilizer dataset](custom_components/horticulture_assistant/data/fertilizers/README.md) |
 | Local working data | User profiles, overrides, cached assets | [Local data](custom_components/horticulture_assistant/data/local/README.md) |
+| Validation | Runtime schema enforcement and troubleshooting | [Data validation reference](docs/data_validation.md) |
 | Scripts | Validation and migration helpers | [Scripts overview](scripts/README.md) *(create your own notes here)* |
 
 ## Reference Data Highlights
@@ -88,7 +127,7 @@ When a value is missing at the line level, the resolver automatically falls back
 1. Copy the repository into your Home Assistant configuration under `custom_components/horticulture_assistant/`.
 2. Restart Home Assistant and add “Horticulture Assistant” via **Settings → Devices & Services → Add Integration**.
 3. From the integration card, open **Configure → Options → Add profile** to create your first plant or zone.
-4. Link sensors, explore the generated device, and customise thresholds by either editing the JSON under `custom_components/horticulture_assistant/data/local/profiles/` or adjusting the exposed number entities in the Home Assistant UI.
+4. Link sensors, explore the generated device, and customise thresholds by either editing the JSON under `custom_components/horticulture_assistant/data/local/profiles/` or adjusting the exposed number entities in the Home Assistant UI. The sensor dropdowns show curated suggestions based on device classes and units so you rarely need to remember entity IDs.
 5. (Optional) Version control the `data/local/` directory so you can track profile tweaks alongside your automation code.
 
 For detailed guidance on data structures, file formats, or extending the integration, follow the Readmes linked above.
@@ -108,15 +147,32 @@ Some automation helpers rely on premium capabilities. The integration derives *e
 - **Irrigation automation:** Watering recommendations and the `apply_irrigation_plan` bridge need the **irrigation_automation** entitlement. Cloud roles like `irrigation` or `premium` grant this, while free users see a descriptive Home Assistant error when calling the service.
 - **Organisation administration:** Cloud-managed teams expose multi-tenant tooling only when the active organisation role is elevated (e.g., admin/manager). Attempting those flows without the entitlement returns a guidance error rather than altering configuration.
 
-The current entitlements are exposed in diagnostics (cloud connection sensors and the `profile_provenance` service response). This makes it easy to audit which premium tiers are active and ensures free installs continue operating gracefully.
+The current entitlements are exposed in diagnostics (cloud connection sensors and the `profile_provenance` service response). This makes it easy to audit which premium tiers are active and ensures free installs continue operating gracefully. A dedicated **Feature entitlements** diagnostic sensor is also created so dashboards and automations can react to the active plan without diving into diagnostics files.
 
 ## Lifecycle & Yield Tracking
 
 - **Capture cultivation milestones:** Call the `record_cultivation_event` service to log inspections, pruning, transplanting, or custom milestones. Logged events immediately update the diagnostic **Event Activity** sensor with totals, last-event metadata, and tag breakdowns.
-- **Harvest history made visible:** `record_harvest_event` continues to append harvests while now feeding the **Yield Total** sensor. The sensor exposes cumulative grams harvested, average yield per harvest, density metrics, and contributor weights for species rollups.
+- **Harvest history made visible:** `record_harvest_event` continues to append harvests while now feeding the **Yield Total** sensor. The sensor exposes cumulative grams harvested, average yield per harvest, density metrics, contributor weights for species rollups, and rolling 7/30/90-day windows (including fruit counts and days-since-last harvest) so dashboards can chart weekly momentum without extra templates.
 - **Nutrient cadence at a glance:** The **Feeding Status** sensor reflects nutrient applications recorded via `record_nutrient_event`, including the days since the last feeding and product usage summaries, making it easy to keep irrigation schedules on track.
 - **Species rollups:** All cultivation, nutrient, and harvest events aggregate to the species profile so you can compare cultivars and monitor organisation-wide cadence without leaving Home Assistant.
+- **Lineage safeguards:** If a profile references a species or parent that no longer exists, Home Assistant raises a Repairs issue with direct guidance on which profile needs fixing. Resolving the linkage automatically clears the warning so inheritance falls back to normal.
 - **Cloud-ready statistics:** Enabling cloud sync now streams the latest computed yield, nutrient, and event snapshots (with per-entity vector clocks) so remote dashboards and APIs stay in lockstep with the on-prem analytics.
+- **Manual sync controls & telemetry:** The new `cloud_sync_now` service lets you trigger an immediate push/pull cycle, while dedicated cloud diagnostics sensors expose offline queue reasons, last manual runs, and connection health so you can see when pending events are waiting for connectivity.
+
+### Long-term history export
+
+- **Append-only JSONL logs:** Every event recorded through the Home Assistant services is mirrored to JSON Lines files under `config/custom_components/horticulture_assistant/data/local/history/<profile_id>/`. Four files are maintained per profile (`run_events.jsonl`, `harvest_events.jsonl`, `nutrient_events.jsonl`, `cultivation_events.jsonl`) so external dashboards or notebooks can consume lifecycle data without scraping the recorder database.
+- **Auto-generated manifest:** A `history/index.json` file keeps event counters and the last updated timestamp for each profile, enabling quick audits of which plants have fresh activity. The exporter writes atomically so dashboards can safely tail the files while Home Assistant appends new entries.
+- **Documented file format:** Refer to [`docs/history_logging.md`](docs/history_logging.md) for examples, field descriptions, and guidance on integrating the logs with Pandas or other analytics stacks.
+- **CLI export helpers:** Use `python scripts/profile_manager.py export-history <profile_id> <log_name> -o out.csv --format csv` to convert the append-only feeds into CSV or prettified JSON for spreadsheets and notebooks.
+
+### Event payload validation
+
+- **Strict schema enforcement:** Every history service validates requests against the bundled JSON schemas before updating the registry. You will see a descriptive error in Home Assistant if a payload is missing required IDs, provides negative weights, or reports a pH outside the 0–14 range.
+- **Actionable profile warnings:** Profiles that fail schema validation now raise a persistent Home Assistant notification that lists the affected plants and the root causes. Fix the JSON or remove the override and the notification clears automatically.
+- **Troubleshooting aids:** The `home-assistant.log` file includes the full validation message, and the new [Data validation reference](docs/data_validation.md) summarises the key constraints with example failure responses.
+- **Reference dataset watchdog:** A background monitor checks the bundled catalogues and any local overrides every few hours. If a dataset fails to load, the integration raises a persistent notification identifying which file needs attention so corrupt overrides no longer go unnoticed.
+- **Schema-driven contributions:** When contributing new datasets or automation helpers, run `python -m jsonschema` against the schema fragments in `custom_components/horticulture_assistant/data/schema/` to verify custom payloads before opening a PR.
 
 ## Developing & Contributing
 

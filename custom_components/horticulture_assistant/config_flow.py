@@ -46,6 +46,7 @@ from .const import (
 from .opb_client import OpenPlantbookClient
 from .profile.compat import sync_thresholds
 from .profile.utils import determine_species_slug, ensure_sections
+from .sensor_catalog import collect_sensor_suggestions, format_sensor_hints
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
 from .utils.json_io import load_json, save_json
@@ -82,6 +83,52 @@ SENSOR_OPTION_ROLES = {
     CONF_EC_SENSOR: "ec",
     CONF_CO2_SENSOR: "co2",
 }
+
+SENSOR_OPTION_FALLBACKS = {
+    CONF_MOISTURE_SENSOR: sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])),
+    CONF_TEMPERATURE_SENSOR: sel.EntitySelector(
+        sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])
+    ),
+    CONF_EC_SENSOR: sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"])),
+    CONF_CO2_SENSOR: sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
+}
+
+
+def _build_sensor_schema(hass, defaults: Mapping[str, Any] | None = None):
+    """Return a voluptuous schema and hint placeholders for sensor selection."""
+
+    defaults = defaults or {}
+    suggestions = collect_sensor_suggestions(
+        hass,
+        SENSOR_OPTION_ROLES.values(),
+        limit=6,
+    )
+    role_map = {role: suggestions.get(role, []) for role in sorted(set(SENSOR_OPTION_ROLES.values()))}
+    placeholders = {"sensor_hints": format_sensor_hints(role_map)}
+
+    schema_fields: dict[Any, Any] = {}
+    for option_key, role in SENSOR_OPTION_ROLES.items():
+        default_value = defaults.get(option_key)
+        if default_value is None:
+            optional = vol.Optional(option_key)
+        else:
+            optional = vol.Optional(option_key, default=default_value)
+        options = suggestions.get(role, [])
+        if options:
+            selector = sel.SelectSelector(
+                sel.SelectSelectorConfig(
+                    options=[
+                        {"value": suggestion.entity_id, "label": f"{suggestion.name} ({suggestion.entity_id})"}
+                        for suggestion in options
+                    ],
+                    custom_value=True,
+                )
+            )
+        else:
+            selector = SENSOR_OPTION_FALLBACKS[option_key]
+        schema_fields[optional] = vol.Any(selector, str)
+
+    return vol.Schema(schema_fields), placeholders
 
 
 CONF_CREATE_INITIAL_PROFILE = "create_initial_profile"
@@ -315,26 +362,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 self._config = {}
             return await self.async_step_profile()
 
-        schema = vol.Schema(
-            {
-                vol.Optional(CONF_MOISTURE_SENSOR): vol.Any(
-                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])),
-                    str,
-                ),
-                vol.Optional(CONF_TEMPERATURE_SENSOR): vol.Any(
-                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])),
-                    str,
-                ),
-                vol.Optional(CONF_EC_SENSOR): vol.Any(
-                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"])),
-                    str,
-                ),
-                vol.Optional(CONF_CO2_SENSOR): vol.Any(
-                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
-                    str,
-                ),
-            }
-        )
+        schema, placeholders = _build_sensor_schema(self.hass)
 
         errors = {}
         if user_input is not None:
@@ -348,10 +376,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 if entity_id and self.hass.states.get(entity_id) is None:
                     errors[key] = "not_found"
             if errors:
-                return self.async_show_form(step_id="sensors", data_schema=schema, errors=errors)
+                return self.async_show_form(
+                    step_id="sensors", data_schema=schema, errors=errors, description_placeholders=placeholders
+                )
             return await self._complete_profile(user_input)
 
-        return self.async_show_form(step_id="sensors", data_schema=schema)
+        return self.async_show_form(step_id="sensors", data_schema=schema, description_placeholders=placeholders)
 
     async def _complete_profile(self, user_input: dict[str, Any]) -> FlowResult:
         if self._profile is None:
@@ -489,6 +519,10 @@ class OptionsFlow(config_entries.OptionsFlow):
                 "species_display",
                 self._entry.data.get(CONF_PLANT_TYPE, ""),
             ),
+            CONF_MOISTURE_SENSOR: self._entry.options.get(CONF_MOISTURE_SENSOR, ""),
+            CONF_TEMPERATURE_SENSOR: self._entry.options.get(CONF_TEMPERATURE_SENSOR, ""),
+            CONF_EC_SENSOR: self._entry.options.get(CONF_EC_SENSOR, ""),
+            CONF_CO2_SENSOR: self._entry.options.get(CONF_CO2_SENSOR, ""),
             "opb_auto_download_images": self._entry.options.get("opb_auto_download_images", True),
             "opb_download_dir": self._entry.options.get(
                 "opb_download_dir",
@@ -498,50 +532,42 @@ class OptionsFlow(config_entries.OptionsFlow):
             "opb_enable_upload": self._entry.options.get("opb_enable_upload", False),
         }
 
-        schema = vol.Schema(
-            {
-                vol.Optional(CONF_MODEL, default=defaults[CONF_MODEL]): str,
-                vol.Optional(CONF_BASE_URL, default=defaults[CONF_BASE_URL]): str,
-                vol.Optional(CONF_UPDATE_INTERVAL, default=defaults[CONF_UPDATE_INTERVAL]): int,
-                vol.Optional(CONF_MOISTURE_SENSOR): vol.Any(
-                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])),
-                    str,
-                ),
-                vol.Optional(CONF_TEMPERATURE_SENSOR): vol.Any(
-                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])),
-                    str,
-                ),
-                vol.Optional(CONF_EC_SENSOR): vol.Any(
-                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"])),
-                    str,
-                ),
-                vol.Optional(CONF_CO2_SENSOR): vol.Any(
-                    sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
-                    str,
-                ),
-                vol.Optional(CONF_KEEP_STALE, default=defaults[CONF_KEEP_STALE]): bool,
-                vol.Optional("species_display", default=defaults["species_display"]): str,
-                vol.Optional(
-                    "opb_auto_download_images",
-                    default=defaults["opb_auto_download_images"],
-                ): bool,
-                vol.Optional("opb_download_dir", default=defaults["opb_download_dir"]): str,
-                vol.Optional(
-                    "opb_location_share",
-                    default=defaults["opb_location_share"],
-                ): sel.SelectSelector(
-                    sel.SelectSelectorConfig(
-                        options=[
-                            {"value": "off", "label": "off"},
-                            {"value": "country", "label": "country"},
-                            {"value": "coordinates", "label": "coordinates"},
-                        ]
-                    )
-                ),
-                vol.Optional("opb_enable_upload", default=defaults["opb_enable_upload"]): bool,
-                vol.Optional("force_refresh", default=False): bool,
-            }
-        )
+        sensor_defaults = {
+            CONF_MOISTURE_SENSOR: defaults[CONF_MOISTURE_SENSOR],
+            CONF_TEMPERATURE_SENSOR: defaults[CONF_TEMPERATURE_SENSOR],
+            CONF_EC_SENSOR: defaults[CONF_EC_SENSOR],
+            CONF_CO2_SENSOR: defaults[CONF_CO2_SENSOR],
+        }
+        sensor_schema, placeholders = _build_sensor_schema(self.hass, sensor_defaults)
+
+        schema_fields: dict[Any, Any] = {
+            vol.Optional(CONF_MODEL, default=defaults[CONF_MODEL]): str,
+            vol.Optional(CONF_BASE_URL, default=defaults[CONF_BASE_URL]): str,
+            vol.Optional(CONF_UPDATE_INTERVAL, default=defaults[CONF_UPDATE_INTERVAL]): int,
+            vol.Optional(CONF_KEEP_STALE, default=defaults[CONF_KEEP_STALE]): bool,
+            vol.Optional("species_display", default=defaults["species_display"]): str,
+            vol.Optional(
+                "opb_auto_download_images",
+                default=defaults["opb_auto_download_images"],
+            ): bool,
+            vol.Optional("opb_download_dir", default=defaults["opb_download_dir"]): str,
+            vol.Optional(
+                "opb_location_share",
+                default=defaults["opb_location_share"],
+            ): sel.SelectSelector(
+                sel.SelectSelectorConfig(
+                    options=[
+                        {"value": "off", "label": "off"},
+                        {"value": "country", "label": "country"},
+                        {"value": "coordinates", "label": "coordinates"},
+                    ]
+                )
+            ),
+            vol.Optional("opb_enable_upload", default=defaults["opb_enable_upload"]): bool,
+            vol.Optional("force_refresh", default=False): bool,
+        }
+        schema_fields.update(sensor_schema.schema)
+        schema = vol.Schema(schema_fields)
 
         errors = {}
         if user_input is not None:
@@ -566,7 +592,12 @@ class OptionsFlow(config_entries.OptionsFlow):
                 if validation.warnings:
                     self._notify_sensor_warnings(validation.warnings)
             if errors:
-                return self.async_show_form(step_id="basic", data_schema=schema, errors=errors)
+                return self.async_show_form(
+                    step_id="basic",
+                    data_schema=schema,
+                    errors=errors,
+                    description_placeholders=placeholders,
+                )
             sensor_map: dict[str, list[str]] = {}
             if moisture := user_input.get(CONF_MOISTURE_SENSOR):
                 sensor_map["moisture_sensors"] = [moisture]
@@ -660,7 +691,11 @@ class OptionsFlow(config_entries.OptionsFlow):
                     )
             return self.async_create_entry(title="", data=opts)
 
-        return self.async_show_form(step_id="basic", data_schema=schema)
+        return self.async_show_form(
+            step_id="basic",
+            data_schema=schema,
+            description_placeholders=placeholders,
+        )
 
     async def async_step_profile_targets(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         self._pid = None
