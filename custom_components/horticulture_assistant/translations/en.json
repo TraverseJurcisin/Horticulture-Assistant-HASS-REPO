@@ -90,17 +90,12 @@
             "invalid_row": "One or more schedule entries are missing required fields."
         }
     },
-    "config_entry": {
-        "state": {
-            "message": "Profiles live inside this configuration entry. Use the buttons above to add or manage plants."
-        }
-    },
     "entity": {
         "sensor": {
-            "horticulture_assistant__vpd_7d_avg": {
+            "vpd_7d_avg": {
                 "name": "VPD 7-day average"
             },
-            "horticulture_assistant__garden_summary": {
+            "garden_summary": {
                 "name": "Garden health summary"
             }
         }
