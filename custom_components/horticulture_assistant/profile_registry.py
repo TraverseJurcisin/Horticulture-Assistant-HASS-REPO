@@ -241,6 +241,18 @@ class ProfileRegistry:
         else:
             self._cloud_pending_snapshot = True
 
+    def _touch_species_profile(self, profile: BioProfile, updated_at: str) -> BioProfile | None:
+        """Update and return the parent species profile if one exists."""
+
+        species_id = profile.species_profile_id
+        if not species_id:
+            return None
+        species = self._profiles.get(species_id)
+        if species is None or species is profile:
+            return None
+        species.updated_at = updated_at
+        return species
+
     def _publish_stats_with(
         self,
         publisher: CloudSyncPublisher,
@@ -266,7 +278,19 @@ class ProfileRegistry:
         if isinstance(data, list):  # pragma: no cover - legacy format
             data = {"profiles": {p["plant_id"]: p for p in data if isinstance(p, Mapping) and p.get("plant_id")}}
 
-        stored_profiles = data.get("profiles", {})
+        stored_profiles = data.get("profiles")
+        if stored_profiles is None:
+            # Some callers persist profiles as a flat mapping keyed by
+            # ``plant_id`` when bypassing the registry helper utilities.
+            flat_profiles = {
+                pid: payload
+                for pid, payload in data.items()
+                if isinstance(pid, str) and isinstance(payload, Mapping)
+            }
+            if flat_profiles:
+                stored_profiles = flat_profiles
+            else:
+                stored_profiles = {}
         profiles: dict[str, BioProfile] = {}
 
         options_profiles = self.entry.options.get(CONF_PROFILES, {}) or {}
@@ -547,11 +571,15 @@ class ProfileRegistry:
 
         event = payload if isinstance(payload, RunEvent) else RunEvent.from_json(payload)
         prof.add_run_event(event)
-        prof.updated_at = datetime.now(tz=UTC).isoformat()
+        updated_at = datetime.now(tz=UTC).isoformat()
+        prof.updated_at = updated_at
+        species_prof = self._touch_species_profile(prof, updated_at)
         prof.refresh_sections()
         await self.async_save()
         stored = prof.run_history[-1]
         self._cloud_publish_profile(prof)
+        if species_prof is not None:
+            self._cloud_publish_profile(species_prof)
         self._cloud_publish_run(stored)
         return stored
 
@@ -581,11 +609,15 @@ class ProfileRegistry:
 
         event = payload if isinstance(payload, HarvestEvent) else HarvestEvent.from_json(payload)
         prof.add_harvest_event(event)
-        prof.updated_at = datetime.now(tz=UTC).isoformat()
+        updated_at = datetime.now(tz=UTC).isoformat()
+        prof.updated_at = updated_at
+        species_prof = self._touch_species_profile(prof, updated_at)
         prof.refresh_sections()
         await self.async_save()
         stored = prof.harvest_history[-1]
         self._cloud_publish_profile(prof)
+        if species_prof is not None:
+            self._cloud_publish_profile(species_prof)
         self._cloud_publish_harvest(stored)
         return stored
 
@@ -602,11 +634,15 @@ class ProfileRegistry:
 
         event = payload if isinstance(payload, NutrientApplication) else NutrientApplication.from_json(payload)
         prof.add_nutrient_event(event)
-        prof.updated_at = datetime.now(tz=UTC).isoformat()
+        updated_at = datetime.now(tz=UTC).isoformat()
+        prof.updated_at = updated_at
+        species_prof = self._touch_species_profile(prof, updated_at)
         prof.refresh_sections()
         await self.async_save()
         stored = prof.nutrient_history[-1]
         self._cloud_publish_profile(prof)
+        if species_prof is not None:
+            self._cloud_publish_profile(species_prof)
         self._cloud_publish_nutrient(stored)
         return stored
 
@@ -623,11 +659,15 @@ class ProfileRegistry:
 
         event = payload if isinstance(payload, CultivationEvent) else CultivationEvent.from_json(payload)
         prof.add_cultivation_event(event)
-        prof.updated_at = datetime.now(tz=UTC).isoformat()
+        updated_at = datetime.now(tz=UTC).isoformat()
+        prof.updated_at = updated_at
+        species_prof = self._touch_species_profile(prof, updated_at)
         prof.refresh_sections()
         await self.async_save()
         stored = prof.event_history[-1]
         self._cloud_publish_profile(prof)
+        if species_prof is not None:
+            self._cloud_publish_profile(species_prof)
         self._cloud_publish_cultivation(stored)
         return stored
 

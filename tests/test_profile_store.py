@@ -4,6 +4,8 @@ from typing import Any
 
 import pytest
 
+from pytest_homeassistant_custom_component.common import MockConfigEntry
+
 from custom_components.horticulture_assistant.profile.schema import (
     BioProfile,
     Citation,
@@ -16,6 +18,9 @@ from custom_components.horticulture_assistant.profile.store import (
     async_save_profile_from_options,
 )
 from custom_components.horticulture_assistant.profile_store import ProfileStore
+from custom_components.horticulture_assistant.profile_registry import ProfileRegistry
+from custom_components.horticulture_assistant.const import DOMAIN
+from custom_components.horticulture_assistant.profile import store as profile_store
 
 
 @pytest.mark.asyncio
@@ -202,3 +207,40 @@ async def test_async_save_profile_from_options_preserves_local_sections(hass, tm
     local = BioProfile.from_json(profile).local_section()
     assert local.metadata["citation_map"]["temp_c_min"]["mode"] == "manual"
     assert local.citations and local.citations[0].source == "manual"
+
+
+@pytest.mark.asyncio
+async def test_record_harvest_event_publishes_species_profile(hass) -> None:
+    species = BioProfile(profile_id="species.1", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar.1",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species.1",
+    )
+    await profile_store.async_save_profile(hass, species)
+    await profile_store.async_save_profile(hass, cultivar)
+
+    entry = MockConfigEntry(domain=DOMAIN, data={}, options={})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+
+    published: list[str] = []
+
+    def _capture(self, profile):
+        published.append(profile.profile_id)
+
+    registry._cloud_publish_profile = types.MethodType(_capture, registry)
+
+    await registry.async_record_harvest_event(
+        "cultivar.1",
+        {
+            "harvest_id": "harvest-1",
+            "harvested_at": "2024-05-01T00:00:00Z",
+            "yield_grams": 50.0,
+        },
+    )
+
+    assert any(pid == "cultivar.1" for pid in published)
+    assert "species.1" in published

@@ -1,5 +1,6 @@
 import asyncio
 import datetime
+import itertools
 import sys
 import types
 from pathlib import Path
@@ -82,6 +83,60 @@ sys.modules["homeassistant.core"] = core
 helpers = types.ModuleType("homeassistant.helpers")
 helpers.__path__ = []
 sys.modules["homeassistant.helpers"] = helpers
+
+# Provide a minimal stand-in for pytest-homeassistant-custom-component so the
+# tests can construct mock config entries without the third-party dependency.
+if "pytest_homeassistant_custom_component.common" not in sys.modules:
+    phcc_pkg = types.ModuleType("pytest_homeassistant_custom_component")
+    phcc_common = types.ModuleType("pytest_homeassistant_custom_component.common")
+
+    _ENTRY_COUNTER = itertools.count(1)
+
+    class MockConfigEntry:  # pragma: no cover - trivial helper
+        def __init__(
+            self,
+            *,
+            domain: str,
+            data: dict | None = None,
+            options: dict | None = None,
+            title: str | None = None,
+            entry_id: str | None = None,
+            unique_id: str | None = None,
+            version: int = 1,
+        ) -> None:
+            self.domain = domain
+            self.data = dict(data or {})
+            self.options = dict(options or {})
+            self.title = title
+            self.entry_id = entry_id or f"mock-entry-{next(_ENTRY_COUNTER)}"
+            self.unique_id = unique_id
+            self.version = version
+            self.pref_disable_new_entities = False
+            self.pref_disable_polling = False
+            self._listeners: list[types.FunctionType | types.MethodType] = []
+
+        def add_to_hass(self, hass: HomeAssistant) -> None:
+            hass.config_entries._entries[self.entry_id] = self
+
+        def add_update_listener(self, listener):  # pragma: no cover - simple callback
+            self._listeners.append(listener)
+            return lambda: self._listeners.remove(listener)
+
+        def as_dict(self) -> dict:
+            return {
+                "entry_id": self.entry_id,
+                "domain": self.domain,
+                "data": self.data,
+                "options": self.options,
+                "title": self.title,
+                "unique_id": self.unique_id,
+                "version": self.version,
+            }
+
+    phcc_common.MockConfigEntry = MockConfigEntry
+    phcc_pkg.common = phcc_common
+    sys.modules["pytest_homeassistant_custom_component"] = phcc_pkg
+    sys.modules["pytest_homeassistant_custom_component.common"] = phcc_common
 
 config_validation = types.ModuleType("homeassistant.helpers.config_validation")
 
@@ -169,6 +224,12 @@ if "homeassistant.components.sensor" not in sys.modules:
         def __init__(self, value: str) -> None:
             self.value = value
 
+    class SensorEntity:  # pragma: no cover - simple base class
+        pass
+
+    class SensorStateClass:  # pragma: no cover - simple enum stand-in
+        MEASUREMENT = "measurement"
+
     class SensorDeviceClass:
         TEMPERATURE = _SensorClass("temperature")
         HUMIDITY = _SensorClass("humidity")
@@ -179,6 +240,8 @@ if "homeassistant.components.sensor" not in sys.modules:
         CONDUCTIVITY = _SensorClass("conductivity")
 
     sensor_module.SensorDeviceClass = SensorDeviceClass
+    sensor_module.SensorEntity = SensorEntity
+    sensor_module.SensorStateClass = SensorStateClass
     sys.modules["homeassistant.components.sensor"] = sensor_module
     components_pkg.sensor = sensor_module
 
@@ -284,16 +347,18 @@ sys.modules["homeassistant.helpers.update_coordinator"] = update_coordinator
 
 storage = types.ModuleType("homeassistant.helpers.storage")
 
+_STORAGE_STATE: dict[str, object] = {}
+
 
 class Store:  # pragma: no cover - minimal in-memory store
-    def __init__(self, _hass, _version, _key) -> None:
-        self.data: dict[str, object] = {}
+    def __init__(self, _hass, _version, key) -> None:
+        self._key = key
 
     async def async_load(self):
-        return self.data
+        return _STORAGE_STATE.get(self._key)
 
     async def async_save(self, data) -> None:
-        self.data = data
+        _STORAGE_STATE[self._key] = data
 
 
 storage.Store = Store
