@@ -11,6 +11,10 @@ and are consumed at runtime when profiles or history events are recorded.
 automatically validated. Any violations trigger a persistent notification in Home Assistant
 listing the affected profile IDs alongside the schema error so configuration mistakes can be
 corrected quickly. The notification clears on the next reload once the JSON issues are fixed.
+Home Assistant's issue registry also receives an entry for every invalid profile. The issue ID
+matches `invalid_profile_<profile_id>` so supervisors can subscribe to updates or surface the
+problem in dashboards. Once the JSON is corrected and the integration reloaded, the issue is
+automatically dismissed.
 
 ## Event Payloads
 

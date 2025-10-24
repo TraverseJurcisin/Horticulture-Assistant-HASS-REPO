@@ -145,6 +145,10 @@
         "missing_lineage_parent": {
             "title": "Profile missing parent reference",
             "description": "{profile_name} ({profile_id}) lists {parent_id} as a parent profile, but it could not be loaded. Remove the invalid parent reference or create the missing profile to restore inheritance."
+        },
+        "invalid_profile_schema": {
+            "title": "Profile failed schema validation",
+            "description": "{profile_name} ({profile_id}) contains invalid overrides: {issue_summary}. Update the profile JSON or remove the bad values and reload Horticulture Assistant."
         }
     }
 }

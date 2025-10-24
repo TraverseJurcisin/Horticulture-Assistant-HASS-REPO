@@ -14,6 +14,7 @@ from custom_components.horticulture_assistant.const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
     DOMAIN,
+    NOTIFICATION_PROFILE_LINEAGE,
     NOTIFICATION_PROFILE_VALIDATION,
     PROFILE_SCOPE_DEFAULT,
 )
@@ -61,6 +62,41 @@ async def test_missing_parent_warning_logged(hass, caplog):
         await reg.async_load()
 
     assert any("cultivar.missing" in record.message for record in caplog.records)
+
+
+async def test_lineage_notification_created_and_clears(hass):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "species": "species.unknown"}}},
+    )
+
+    notifications: list[dict] = []
+    dismissals: list[dict] = []
+
+    hass.services.async_register(
+        "persistent_notification",
+        "create",
+        lambda call: notifications.append(call.data),
+    )
+    hass.services.async_register(
+        "persistent_notification",
+        "dismiss",
+        lambda call: dismissals.append(call.data),
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+    await hass.async_block_till_done()
+
+    assert notifications
+    latest = notifications[-1]
+    assert latest["notification_id"] == NOTIFICATION_PROFILE_LINEAGE
+    assert "species.unknown" in latest["message"]
+
+    reg._log_lineage_warnings(LineageLinkReport())
+    await hass.async_block_till_done()
+
+    assert any(item.get("notification_id") == NOTIFICATION_PROFILE_LINEAGE for item in dismissals)
 
 
 async def test_missing_species_creates_issue_and_clears_when_resolved(hass, monkeypatch):
@@ -161,6 +197,46 @@ async def test_profile_validation_creates_and_clears_notification(hass, monkeypa
     await reg.async_load()
 
     assert any(item["notification_id"] == NOTIFICATION_PROFILE_VALIDATION for item in dismissals)
+
+
+async def test_profile_validation_issues_created_and_cleared(hass, monkeypatch):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
+    created: list[tuple[str, dict]] = []
+    deleted: list[str] = []
+
+    class _Severity:
+        WARNING = "warning"
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.ir",
+        SimpleNamespace(
+            IssueSeverity=_Severity,
+            async_create_issue=lambda *_args, **kwargs: created.append((_args[2], kwargs)),
+            async_delete_issue=lambda *_args: deleted.append(_args[2]),
+        ),
+    )
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: ["general.name: required property missing", "general.stage: required"],
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    assert any(issue_id == "invalid_profile_p1" for issue_id, _ in created)
+    issue_payload = next(payload for issue_id, payload in created if issue_id == "invalid_profile_p1")
+    assert issue_payload["translation_placeholders"]["issue_summary"].startswith("general.name")
+    assert "(+1 more)" in issue_payload["translation_placeholders"]["issue_summary"]
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: [],
+    )
+
+    await reg.async_load()
+
+    assert "invalid_profile_p1" in deleted
 
 
 async def test_initialize_merges_storage_and_options(hass):
