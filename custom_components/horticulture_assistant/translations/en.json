@@ -149,6 +149,10 @@
         "invalid_profile_schema": {
             "title": "Profile failed schema validation",
             "description": "{profile_name} ({profile_id}) contains invalid overrides: {issue_summary}. Update the profile JSON or remove the bad values and reload Horticulture Assistant."
+        },
+        "dataset_health_failure": {
+            "title": "Reference dataset failed to load",
+            "description": "{dataset_label} ({dataset_path}) could not be loaded: {error}. Fix or remove the dataset override, then reload Horticulture Assistant."
         }
     }
 }

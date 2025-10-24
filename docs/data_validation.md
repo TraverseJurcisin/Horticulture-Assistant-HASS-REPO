@@ -45,8 +45,9 @@ development to lint bespoke payloads before submitting changes.
 Critical catalogues such as fertilizer inventories, crop targets, irrigation schedules,
 and deficiency lookups are checked in the background every few hours. If a bundled dataset
 or local override fails to load (for example due to invalid JSON), Home Assistant raises a
-persistent notification identifying the file that needs attention. Fix the file or remove the
-override and the integration automatically dismisses the alert on the next health check.
+persistent notification and opens a Repairs issue identifying the file that needs attention.
+Fix the file or remove the override and the integration automatically dismisses the alert and
+closes the Repairs issue on the next health check.
 
 ## Sensor linking hints
 

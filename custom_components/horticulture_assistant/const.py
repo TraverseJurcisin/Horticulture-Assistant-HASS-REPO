@@ -98,6 +98,7 @@ NOTIFICATION_DATASET_HEALTH = "horticulture_dataset_health"
 
 # Issue registry identifiers
 ISSUE_PROFILE_VALIDATION_PREFIX = "invalid_profile_"
+ISSUE_DATASET_HEALTH_PREFIX = "dataset_health_"
 
 # ---------------------------------------------------------------------------
 # Feature & entitlement constants

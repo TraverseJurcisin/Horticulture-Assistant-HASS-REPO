@@ -218,7 +218,7 @@ The current entitlements are exposed in diagnostics (cloud connection sensors an
 - **Actionable profile warnings:** Profiles that fail schema validation now raise a persistent Home Assistant notification that lists the affected plants and the root causes. Fix the JSON or remove the override and the notification clears automatically.
 - **Issue registry integration:** Each invalid profile also registers an `invalid_profile_<plant_id>` issue with Home Assistant so supervisors can surface broken configurations in dashboards or subscribe to updates until the errors are resolved.
 - **Troubleshooting aids:** The `home-assistant.log` file includes the full validation message, and the new [Data validation reference](docs/data_validation.md) summarises the key constraints with example failure responses.
-- **Reference dataset watchdog:** A background monitor checks the bundled catalogues and any local overrides every few hours. If a dataset fails to load, the integration raises a persistent notification identifying which file needs attention so corrupt overrides no longer go unnoticed.
+- **Reference dataset watchdog:** A background monitor checks the bundled catalogues and any local overrides every few hours. If a dataset fails to load, the integration raises a persistent notification and a Home Assistant Repairs issue identifying which file needs attention so corrupt overrides no longer go unnoticed.
 - **Schema-driven contributions:** When contributing new datasets or automation helpers, run `python -m jsonschema` against the schema fragments in `custom_components/horticulture_assistant/data/schema/` to verify custom payloads before opening a PR.
 
 ## Developing & Contributing

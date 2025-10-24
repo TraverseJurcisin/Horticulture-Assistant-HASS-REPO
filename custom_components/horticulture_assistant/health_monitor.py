@@ -9,8 +9,13 @@ from typing import Any
 from homeassistant.const import EVENT_HOMEASSISTANT_STARTED
 from homeassistant.core import CALLBACK_TYPE, HomeAssistant
 from homeassistant.helpers.event import async_track_time_interval
+from homeassistant.util import slugify
 
-from .const import DOMAIN, NOTIFICATION_DATASET_HEALTH
+from .const import (
+    DOMAIN,
+    ISSUE_DATASET_HEALTH_PREFIX,
+    NOTIFICATION_DATASET_HEALTH,
+)
 from .engine.plant_engine.utils import load_dataset
 
 DATASET_CHECK_INTERVAL = timedelta(hours=6)
@@ -22,6 +27,23 @@ CRITICAL_DATASETS: tuple[tuple[str, str], ...] = (
     ("Irrigation schedules", "irrigation/intervals.json"),
     ("Deficiency symptoms", "diagnostics/deficiency_symptoms.json"),
 )
+
+
+try:  # pragma: no cover - Home Assistant available at runtime, not during tests
+    from homeassistant.helpers import issue_registry as ir
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - exercised in tests
+    import types
+    from enum import Enum
+
+    class IssueSeverity(str, Enum):
+        WARNING = "warning"
+        ERROR = "error"
+
+    ir = types.SimpleNamespace(  # type: ignore[assignment]
+        IssueSeverity=IssueSeverity,
+        async_create_issue=lambda *_args, **_kwargs: None,
+        async_delete_issue=lambda *_args, **_kwargs: None,
+    )
 
 
 async def async_setup_dataset_health(hass: HomeAssistant) -> CALLBACK_TYPE | None:
@@ -58,19 +80,24 @@ def _collect_dataset_failures() -> list[tuple[str, str, str]]:
     return failures
 
 
-async def _async_publish_dataset_state(hass: HomeAssistant, failures: Iterable[tuple[str, str, str]]) -> None:
+async def _async_publish_dataset_state(
+    hass: HomeAssistant, failures: Iterable[tuple[str, str, str]]
+) -> None:
     issues = list(failures)
+    domain_data = hass.data.setdefault(DOMAIN, {})
     if not issues:
         await _async_dismiss_notification(hass, NOTIFICATION_DATASET_HEALTH)
-        hass.data.setdefault(DOMAIN, {})["dataset_monitor_digest"] = None
+        domain_data["dataset_monitor_digest"] = None
+        _clear_dataset_issues(hass)
         return
 
     digest = tuple(sorted(issues))
-    domain_data = hass.data.setdefault(DOMAIN, {})
     if domain_data.get("dataset_monitor_digest") == digest:
         return
 
     domain_data["dataset_monitor_digest"] = digest
+    _sync_dataset_issues(hass, issues)
+
     lines = [
         "The integration could not load the following reference datasets:",
         "",
@@ -117,6 +144,8 @@ async def async_release_dataset_health(hass: HomeAssistant) -> None:
     refs = domain_data.get("dataset_monitor_refs", 0)
     if refs <= 1:
         domain_data["dataset_monitor_refs"] = 0
+        await _async_dismiss_notification(hass, NOTIFICATION_DATASET_HEALTH)
+        _clear_dataset_issues(hass)
         unsub = domain_data.pop("dataset_monitor_unsub", None)
         domain_data.pop("dataset_monitor_check", None)
         domain_data.pop("dataset_monitor_digest", None)
@@ -139,3 +168,57 @@ async def _async_dismiss_notification(hass: HomeAssistant, notification_id: str)
         )
     except KeyError:  # pragma: no cover - service missing in unit tests
         return
+
+
+def _sync_dataset_issues(
+    hass: HomeAssistant, failures: Iterable[tuple[str, str, str]]
+) -> None:
+    """Create or update Repairs issues for dataset failures."""
+
+    domain_data = hass.data.setdefault(DOMAIN, {})
+    active_ids: set[str] = set(domain_data.get("dataset_monitor_issue_ids", set()))
+    summaries: dict[str, str] = dict(domain_data.get("dataset_monitor_issue_summaries", {}))
+    current_ids: set[str] = set()
+
+    for label, filename, error in failures:
+        slug = slugify(filename) or slugify(label) or "dataset"
+        issue_id = f"{ISSUE_DATASET_HEALTH_PREFIX}{slug}"
+        current_ids.add(issue_id)
+        summary = f"{label}: {error}"
+        if summaries.get(issue_id) == summary:
+            continue
+        ir.async_create_issue(
+            hass,
+            DOMAIN,
+            issue_id,
+            is_fixable=False,
+            severity=ir.IssueSeverity.ERROR,
+            translation_key="dataset_health_failure",
+            translation_placeholders={
+                "dataset_label": label,
+                "dataset_path": filename,
+                "error": error,
+            },
+        )
+        summaries[issue_id] = summary
+        active_ids.add(issue_id)
+
+    stale_ids = active_ids - current_ids
+    for issue_id in stale_ids:
+        ir.async_delete_issue(hass, DOMAIN, issue_id)
+        active_ids.discard(issue_id)
+        summaries.pop(issue_id, None)
+
+    domain_data["dataset_monitor_issue_ids"] = active_ids
+    domain_data["dataset_monitor_issue_summaries"] = summaries
+
+
+def _clear_dataset_issues(hass: HomeAssistant) -> None:
+    """Remove all Repairs issues raised by the dataset monitor."""
+
+    domain_data = hass.data.setdefault(DOMAIN, {})
+    active_ids: set[str] = set(domain_data.get("dataset_monitor_issue_ids", set()))
+    for issue_id in sorted(active_ids):
+        ir.async_delete_issue(hass, DOMAIN, issue_id)
+    domain_data["dataset_monitor_issue_ids"] = set()
+    domain_data.pop("dataset_monitor_issue_summaries", None)
