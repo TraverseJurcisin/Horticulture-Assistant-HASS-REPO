@@ -438,7 +438,10 @@ class ProfileRegistry:
         self._lineage_notification_digest = digest
 
         lines = [
-            "Some profiles reference missing species or parent profiles, so inheritance fallbacks are currently disabled.",
+            (
+                "Some profiles reference missing species or parent profiles, so "
+                "inheritance fallbacks are currently disabled."
+            ),
             "",
         ]
 
