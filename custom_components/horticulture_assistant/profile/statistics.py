@@ -83,6 +83,7 @@ def _compute_nutrient_payload(
     product_counter: Counter[str] = Counter()
     run_ids: set[str] = set()
     total_volume = 0.0
+    volume_recorded = False
     timestamps: list[datetime] = []
     intervals: list[float] = []
 
@@ -95,6 +96,7 @@ def _compute_nutrient_payload(
         volume = _to_float(event.solution_volume_liters)
         if volume is not None:
             total_volume += volume
+            volume_recorded = True
         if ts is not None:
             timestamps.append(ts)
             if previous is not None:
@@ -104,7 +106,7 @@ def _compute_nutrient_payload(
 
     total_events = len(normalised)
     metrics: dict[str, float] = {"total_events": float(total_events)}
-    if total_volume:
+    if volume_recorded:
         metrics["total_volume_liters"] = round(total_volume, 3)
     if run_ids:
         metrics["unique_runs"] = float(len(run_ids))
@@ -899,7 +901,13 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 species_breakdown[species_id].append(aggregate)
             if nutrient_events:
                 species_nutrient_events[species_id].extend(nutrient_events)
-                total_volume = sum(_to_float(event.solution_volume_liters) or 0.0 for event in nutrient_events)
+                volume_values = [
+                    event.solution_volume_liters
+                    for event in nutrient_events
+                    if event.solution_volume_liters is not None
+                ]
+                total_volume = sum(_to_float(value) or 0.0 for value in volume_values)
+                volume_recorded = bool(volume_values)
                 normalised_events = _normalise_nutrient_events(nutrient_events)
                 last_ts = normalised_events[-1][1] if normalised_events else None
                 contributor_payload = {
@@ -907,7 +915,7 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                     "profile_type": profile.profile_type,
                     "event_count": len(nutrient_events),
                 }
-                if total_volume:
+                if volume_recorded:
                     contributor_payload["total_volume_liters"] = round(total_volume, 3)
                 if last_ts is not None:
                     contributor_payload["last_applied_at"] = last_ts.isoformat()
@@ -1078,11 +1086,17 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 "profile_type": item.get("profile_type"),
                 "event_count": item.get("event_count"),
             }
-            if item.get("total_volume_liters"):
+            if "total_volume_liters" in item:
                 payload["total_volume_liters"] = item.get("total_volume_liters")
             if item.get("last_applied_at"):
                 payload["last_applied_at"] = item.get("last_applied_at")
-            contributor_payload.append({k: v for k, v in payload.items() if v not in (None, 0, 0.0, "")})
+            contributor_payload.append(
+                {
+                    key: value
+                    for key, value in payload.items()
+                    if value is not None and (not isinstance(value, str) or value != "")
+                }
+            )
             weight = (item.get("event_count") / total_events) if total_events else None
             if child_id:
                 contributions.append(

@@ -387,6 +387,14 @@ class NutrientApplication:
                 return []
             return [str(value)]
 
+        def _coalesce(*keys: str) -> Any:
+            for key in keys:
+                if key in data:
+                    value = data.get(key)
+                    if value is not None:
+                        return value
+            return None
+
         return NutrientApplication(
             event_id=str(data.get("event_id") or data.get("id") or "nutrient"),
             profile_id=str(data.get("profile_id") or ""),
@@ -397,9 +405,9 @@ class NutrientApplication:
             product_name=(str(data.get("product_name")) if data.get("product_name") else None),
             product_category=(str(data.get("product_category")) if data.get("product_category") else None),
             source=(str(data.get("source")) if data.get("source") else None),
-            solution_volume_liters=_float(data.get("solution_volume_liters") or data.get("volume_liters")),
-            concentration_ppm=_float(data.get("concentration_ppm") or data.get("ppm")),
-            ec_ms=_float(data.get("ec_ms") or data.get("ec")),
+            solution_volume_liters=_float(_coalesce("solution_volume_liters", "volume_liters")),
+            concentration_ppm=_float(_coalesce("concentration_ppm", "ppm")),
+            ec_ms=_float(_coalesce("ec_ms", "ec")),
             ph=_float(data.get("ph")),
             additives=_list(data.get("additives")),
             metadata=_as_dict(data.get("metadata")),

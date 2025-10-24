@@ -1,6 +1,11 @@
 import pytest
 
-from custom_components.horticulture_assistant.profile.schema import BioProfile, HarvestEvent, RunEvent
+from custom_components.horticulture_assistant.profile.schema import (
+    BioProfile,
+    HarvestEvent,
+    NutrientApplication,
+    RunEvent,
+)
 from custom_components.horticulture_assistant.profile.statistics import recompute_statistics
 
 
@@ -247,3 +252,44 @@ def test_success_statistics_from_run_history():
     assert contribution_index["cultivar"].stats_version == "success/v1"
     assert contribution_index["cultivar"].weight == pytest.approx(20 / 70, rel=1e-3)
     assert contribution_index["cultivar"].n_runs == 2
+
+
+def test_nutrient_statistics_preserve_zero_volume():
+    species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species",
+    )
+
+    cultivar.add_nutrient_event(
+        NutrientApplication(
+            event_id="n1",
+            profile_id="cultivar",
+            species_id="species",
+            run_id="run-1",
+            applied_at="2024-05-01T00:00:00Z",
+            product_id="fert-1",
+            solution_volume_liters=0.0,
+        )
+    )
+
+    recompute_statistics([species, cultivar])
+
+    cultivar_snapshot = next(
+        (snap for snap in cultivar.computed_stats if snap.stats_version == "nutrients/v1"),
+        None,
+    )
+    assert cultivar_snapshot is not None
+    assert cultivar_snapshot.payload["metrics"]["total_volume_liters"] == 0.0
+
+    species_snapshot = next(
+        (snap for snap in species.computed_stats if snap.stats_version == "nutrients/v1"),
+        None,
+    )
+    assert species_snapshot is not None
+    assert species_snapshot.payload["metrics"]["total_volume_liters"] == 0.0
+
+    contributors = {item["profile_id"]: item for item in species_snapshot.payload["contributors"]}
+    assert contributors["cultivar"]["total_volume_liters"] == 0.0

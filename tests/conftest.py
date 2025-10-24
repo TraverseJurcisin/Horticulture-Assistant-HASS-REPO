@@ -179,6 +179,8 @@ if "homeassistant.components.sensor" not in sys.modules:
         CONDUCTIVITY = _SensorClass("conductivity")
 
     sensor_module.SensorDeviceClass = SensorDeviceClass
+    sensor_module.SensorEntity = type("SensorEntity", (), {})
+    sensor_module.SensorStateClass = type("SensorStateClass", (), {"MEASUREMENT": "measurement"})
     sys.modules["homeassistant.components.sensor"] = sensor_module
     components_pkg.sensor = sensor_module
 
