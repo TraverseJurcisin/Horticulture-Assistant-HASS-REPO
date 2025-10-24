@@ -706,3 +706,101 @@ async def test_options_flow_add_profile_attach_sensors(hass):
     assert prof is not None
     assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert prof.general["sensors"]["temperature"] == "sensor.temp"
+
+
+async def test_options_flow_manual_nutrient_schedule(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            "profiles": {
+                "plant": {
+                    "name": "Demo plant",
+                    "general": {"plant_type": "citrus"},
+                    "local": {"general": {"plant_type": "citrus"}},
+                }
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    def _update_entry(target, *, options):
+        target.options = options
+
+    await flow.async_step_nutrient_schedule({"profile_id": "plant"})
+    schedule_json = json.dumps([{"stage": "veg", "duration_days": 14, "totals": {"N": 280}}])
+    with patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry) as update_mock:
+        result = await flow.async_step_nutrient_schedule_edit({"schedule": schedule_json})
+    assert result["type"] == "create_entry"
+    update_mock.assert_called()
+    stored = entry.options["profiles"]["plant"]["local"]["general"]["nutrient_schedule"]
+    assert len(stored) == 1
+    assert stored[0]["stage"] == "veg"
+    assert stored[0]["duration_days"] == 14
+    assert stored[0]["totals_mg"]["N"] == pytest.approx(280.0)
+    assert stored[0]["daily_mg"]["N"] == pytest.approx(20.0)
+
+
+async def test_options_flow_auto_generate_nutrient_schedule(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            "profiles": {
+                "plant": {
+                    "name": "Demo plant",
+                    "general": {"plant_type": "citrus"},
+                    "local": {"general": {"plant_type": "citrus"}},
+                }
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    def _update_entry(target, *, options):
+        target.options = options
+
+    await flow.async_step_nutrient_schedule({"profile_id": "plant"})
+    fake_stage = types.SimpleNamespace(stage="flower", duration_days=10, totals={"N": 100, "K": 150})
+    with (
+        patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry) as update_mock,
+        patch.object(cfg, "generate_nutrient_schedule", return_value=[fake_stage]),
+    ):
+        result = await flow.async_step_nutrient_schedule_edit({"auto_generate": True})
+    assert result["type"] == "create_entry"
+    update_mock.assert_called()
+    stored = entry.options["profiles"]["plant"]["general"]["nutrient_schedule"]
+    assert stored[0]["source"] == "auto_generate"
+    assert stored[0]["stage"] == "flower"
+    assert stored[0]["daily_mg"]["N"] == pytest.approx(10.0)
+    assert stored[0]["start_day"] == 1
+    assert stored[0]["end_day"] == 10
+
+
+async def test_options_flow_invalid_schedule_input(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            "profiles": {
+                "plant": {
+                    "name": "Demo plant",
+                    "general": {"plant_type": "citrus"},
+                    "local": {"general": {"plant_type": "citrus"}},
+                }
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    result = await flow.async_step_nutrient_schedule({"profile_id": "plant"})
+    assert result["type"] == "form"
+    invalid = await flow.async_step_nutrient_schedule_edit({"schedule": "{"})
+    assert invalid["type"] == "form"
+    assert invalid["errors"]["schedule"] == "invalid_json"

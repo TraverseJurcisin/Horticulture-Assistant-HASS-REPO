@@ -1,66 +1,103 @@
 {
-  "title": "Horticulture Assistant",
-  "config": {
-    "step": {
-      "user": {
-        "title": "Set up Horticulture Assistant",
-        "description": "Create the integration entry. Use Options to add plant profiles.",
-        "data": {
-          "create_initial_profile": "Create an initial plant profile during setup"
+    "title": "Horticulture Assistant",
+    "config": {
+        "step": {
+            "user": {
+                "title": "Set up Horticulture Assistant",
+                "description": "Create the integration entry. Use Options to add plant profiles.",
+                "data": {
+                    "create_initial_profile": "Create an initial plant profile during setup"
+                }
+            }
+        },
+        "error": {
+            "invalid_float": "Enter a number"
         }
-      }
     },
-    "error": {
-      "invalid_float": "Enter a number"
+    "options": {
+        "step": {
+            "init": {
+                "title": "Horticulture Assistant options",
+                "menu_options": {
+                    "basic": "General settings",
+                    "cloud_sync": "Cloud sync",
+                    "add_profile": "Add profile",
+                    "configure_ai": "Configure AI",
+                    "profile_targets": "Profile targets",
+                    "nutrient_schedule": "Nutrient schedule"
+                }
+            },
+            "add_profile": {
+                "title": "Add profile",
+                "description": "Pick what the profile represents so dashboards and automations stay organised.",
+                "data": {
+                    "name": "Profile name",
+                    "profile_scope": "What does this profile represent?",
+                    "copy_from": "Clone thresholds from (optional)"
+                }
+            },
+            "attach_sensors": {
+                "title": "Attach sensors",
+                "description": "Optionally link sensors for the new profile.",
+                "data": {
+                    "temperature": "Temperature sensor",
+                    "humidity": "Humidity sensor",
+                    "illuminance": "Light sensor",
+                    "moisture": "Moisture sensor"
+                }
+            },
+            "configure_ai": {
+                "title": "Configure AI",
+                "description": "Set API and model parameters for the assistant.",
+                "data": {
+                    "api_key": "API key",
+                    "model": "Model",
+                    "base_url": "Base URL",
+                    "update_interval": "Update interval (minutes)"
+                }
+            },
+            "cloud_sync": {
+                "title": "Cloud sync",
+                "description": "Configure PhenoLogic Cloud synchronisation.",
+                "data": {
+                    "cloud_sync_enabled": "Enable cloud sync",
+                    "cloud_base_url": "Cloud base URL",
+                    "cloud_tenant_id": "Tenant ID",
+                    "cloud_device_token": "Device token",
+                    "cloud_sync_interval": "Sync interval (minutes)"
+                }
+            },
+            "nutrient_schedule": {
+                "title": "Select profile",
+                "description": "Choose which profile's nutrient schedule to edit.",
+                "data": {
+                    "profile_id": "Profile"
+                }
+            },
+            "nutrient_schedule_edit": {
+                "title": "Edit nutrient schedule",
+                "description": "Update the nutrient schedule for {profile}. Current stages: {current_count}. Auto-generate using plant type {plant_type}. Example:\n{example}",
+                "data": {
+                    "auto_generate": "Auto-generate from plant data",
+                    "schedule": "Schedule JSON"
+                }
+            }
+        },
+        "error": {
+            "generation_failed": "Automatic schedule generation failed. Check the logs for details.",
+            "invalid_json": "Enter valid JSON for the nutrient schedule.",
+            "invalid_format": "Provide a JSON list of schedule entries.",
+            "invalid_row": "One or more schedule entries are missing required fields."
+        }
+    },
+    "entity": {
+        "sensor": {
+            "vpd_7d_avg": {
+                "name": "VPD 7-day average"
+            },
+            "garden_summary": {
+                "name": "Garden health summary"
+            }
+        }
     }
-  },
-  "options": {
-    "step": {
-      "init": {
-        "title": "Horticulture Assistant options",
-        "menu_options": {
-          "basic": "General settings",
-          "add_profile": "Add profile",
-          "configure_ai": "Configure AI",
-          "manage_profiles": "Manage profiles",
-          "export_profiles": "Export profiles",
-          "import_profiles": "Import profiles"
-        }
-      },
-      "add_profile": {
-        "title": "Add profile",
-        "description": "Pick what the profile represents so dashboards and automations stay organised.",
-        "data": {
-          "name": "Profile name",
-          "profile_scope": "What does this profile represent?",
-          "copy_from": "Clone thresholds from (optional)"
-        }
-      },
-      "attach_sensors": {
-        "title": "Attach sensors",
-        "description": "Optionally link sensors for the new profile.",
-        "data": {
-          "temperature": "Temperature sensor",
-          "humidity": "Humidity sensor",
-          "illuminance": "Light sensor",
-          "moisture": "Moisture sensor"
-        }
-      },
-      "configure_ai": {
-        "title": "Configure AI",
-        "description": "Set API and model parameters for the assistant.",
-        "data": {
-          "api_key": "API key",
-          "model": "Model",
-          "base_url": "Base URL",
-          "update_interval": "Update interval (minutes)"
-        }
-      }
-    }
-  },
-  "config_entry": {
-    "state": {
-      "message": "Profiles live inside this configuration entry. Use the buttons above to add or manage plants."
-    }
-  }
 }

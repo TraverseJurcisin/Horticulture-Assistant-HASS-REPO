@@ -14,11 +14,28 @@ import importlib.util
 import logging
 import types
 from collections.abc import Mapping
+from enum import Enum
 from typing import Any, Final
 
 import homeassistant.core as ha_core
 import voluptuous as vol
-from homeassistant.components.sensor import SensorDeviceClass
+
+try:
+    from homeassistant.components.sensor import SensorDeviceClass
+except ModuleNotFoundError:  # pragma: no cover - fallback for unit tests without HA
+
+    class SensorDeviceClass(str, Enum):
+        """Minimal stand-in for Home Assistant's ``SensorDeviceClass``."""
+
+        TEMPERATURE = "temperature"
+        HUMIDITY = "humidity"
+        ILLUMINANCE = "illuminance"
+        MOISTURE = "moisture"
+        CO2 = "carbon_dioxide"
+        PH = "ph"
+        CONDUCTIVITY = "conductivity"
+
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
@@ -50,6 +67,7 @@ from .entitlements import FeatureUnavailableError, derive_entitlements
 from .irrigation_bridge import async_apply_irrigation
 from .profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION, SUCCESS_STATS_VERSION
 from .profile_registry import ProfileRegistry
+from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .storage import LocalStore
 
 _ER_SPEC = importlib.util.find_spec("homeassistant.helpers.entity_registry")
@@ -188,6 +206,23 @@ async def async_register_all(
         except FeatureUnavailableError as err:
             raise HomeAssistantError(str(err)) from err
 
+    def _notify_sensor_warnings(issues) -> None:
+        if not issues:
+            return
+        message = collate_issue_messages(issues)
+        hass.async_create_task(
+            hass.services.async_call(
+                "persistent_notification",
+                "create",
+                {
+                    "title": "Horticulture Assistant sensor warning",
+                    "message": message,
+                    "notification_id": f"horticulture_sensor_{entry.entry_id}",
+                },
+                blocking=False,
+            )
+        )
+
     async def _refresh_profile() -> None:
         if profile_coord:
             await profile_coord.async_request_refresh()
@@ -227,6 +262,11 @@ async def async_register_all(
         reg = er.async_get(hass)
         reg_entry = reg.async_get(entity_id)
         expected = MEASUREMENT_CLASSES[measurement]
+        validation = validate_sensor_links(hass, {measurement: entity_id})
+        if validation.errors:
+            raise HomeAssistantError(collate_issue_messages(validation.errors))
+        if validation.warnings:
+            _notify_sensor_warnings(validation.warnings)
         if reg_entry:
             actual = reg_entry.device_class or reg_entry.original_device_class
             if expected and actual != expected.value:
@@ -251,6 +291,11 @@ async def async_register_all(
         reg = er.async_get(hass)
         reg_entry = reg.async_get(entity_id)
         expected = MEASUREMENT_CLASSES[measurement]
+        validation = validate_sensor_links(hass, {measurement: entity_id})
+        if validation.errors:
+            raise HomeAssistantError(collate_issue_messages(validation.errors))
+        if validation.warnings:
+            _notify_sensor_warnings(validation.warnings)
         if reg_entry:
             actual = reg_entry.device_class or reg_entry.original_device_class
             if expected and actual != expected.value:
@@ -304,9 +349,13 @@ async def async_register_all(
         sensors: dict[str, str] = {}
         for role in ("temperature", "humidity", "illuminance", "moisture"):
             if ent := call.data.get(role):
-                if hass.states.get(ent) is None:
-                    raise HomeAssistantError(f"missing entity {ent}")
                 sensors[role] = ent
+        if sensors:
+            validation = validate_sensor_links(hass, sensors)
+            if validation.errors:
+                raise HomeAssistantError(collate_issue_messages(validation.errors))
+            if validation.warnings:
+                _notify_sensor_warnings(validation.warnings)
         try:
             await registry.async_link_sensors(pid, sensors)
         except ValueError as err:
@@ -527,6 +576,8 @@ async def async_register_all(
             else:
                 external.append(key)
 
+        badges = profile.provenance_badges()
+
         response: dict[str, Any] = {
             "profile_id": profile_id,
             "profile_name": profile.display_name,
@@ -546,6 +597,14 @@ async def async_register_all(
                 "computed": len(computed),
             },
         }
+        if badges:
+            response["badges"] = badges
+            response["badge_counts"] = {
+                "inherited": sum(1 for meta in badges.values() if meta.get("badge") == "inherited"),
+                "override": sum(1 for meta in badges.values() if meta.get("badge") == "override"),
+                "external": sum(1 for meta in badges.values() if meta.get("badge") == "external"),
+                "computed": sum(1 for meta in badges.values() if meta.get("badge") == "computed"),
+            }
         if profile.last_resolved:
             response["last_resolved"] = profile.last_resolved
         return response

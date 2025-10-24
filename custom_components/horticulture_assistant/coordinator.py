@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import logging
-from datetime import timedelta
+from collections import Counter, deque
+from contextlib import suppress
+from datetime import datetime, timedelta
+from statistics import fmean
 from typing import Any
 
 from homeassistant.const import UnitOfTemperature
@@ -30,6 +33,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._entry_id = entry_id
         self._options = options
         self._dli_totals: dict[str, float] = {}
+        self._vpd_history: dict[str, deque[tuple[datetime, float]]] = {}
         self._last_reset: dt_util.date | None = None
 
         interval = int(options.get("update_interval", 5))
@@ -58,16 +62,23 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 self._last_reset = today
                 self._dli_totals = {}
             for pid, profile in profiles.items():
-                metrics = await self._compute_metrics(pid, profile)
+                metrics = await self._compute_metrics(pid, profile, now=dt_util.utcnow())
                 data["profiles"][pid] = {
                     "name": profile.get("name"),
                     "metrics": metrics,
                 }
+            data["summary"] = self._summarise_profiles(data["profiles"])
             return data
         except Exception as err:  # pragma: no cover - simple stub
             raise UpdateFailed(str(err)) from err
 
-    async def _compute_metrics(self, profile_id: str, profile: dict[str, Any]) -> dict[str, Any]:
+    async def _compute_metrics(
+        self,
+        profile_id: str,
+        profile: dict[str, Any],
+        *,
+        now: datetime | None = None,
+    ) -> dict[str, Any]:
         """Compute metrics for a profile.
 
         Currently only derives a rudimentary Daily Light Integral (DLI) based on the
@@ -75,6 +86,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         scientifically accurate but provides deterministic behaviour for testing.
         """
 
+        now = now or dt_util.utcnow()
         sensors: dict[str, Any] = profile.get("sensors", {})
         illuminance = sensors.get("illuminance")
         temperature = sensors.get("temperature")
@@ -143,12 +155,98 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
         status = profile_status(mold, moisture_pct)
 
+        vpd_average = self._update_vpd_history(profile_id, vpd, now=now)
+
         return {
             "ppfd": ppfd,
             "dli": dli,
             "vpd": vpd,
+            "vpd_7d_avg": vpd_average,
             "dew_point": dew_point,
             "moisture": moisture_pct,
             "mold_risk": mold,
             "status": status,
+        }
+
+    def _update_vpd_history(
+        self,
+        profile_id: str,
+        vpd: float | None,
+        *,
+        now: datetime,
+    ) -> float | None:
+        """Track recent VPD samples to provide a rolling 7-day average."""
+
+        history = self._vpd_history.setdefault(profile_id, deque())
+        cutoff = now - timedelta(days=7)
+        while history and history[0][0] < cutoff:
+            history.popleft()
+        if vpd is not None:
+            with suppress(TypeError, ValueError):
+                history.append((now, float(vpd)))
+        if not history:
+            return None
+        return round(fmean(value for _ts, value in history), 3)
+
+    def _summarise_profiles(self, profiles: dict[str, Any]) -> dict[str, Any]:
+        """Build an aggregate summary across all monitored profiles."""
+
+        if not profiles:
+            return {
+                "total_profiles": 0,
+                "profiles_with_metrics": 0,
+                "problem_profiles": 0,
+                "ok_profiles": 0,
+                "status_counts": {},
+                "average_vpd": None,
+                "average_vpd_7d": None,
+                "average_moisture": None,
+                "average_mold_risk": None,
+                "average_dli": None,
+                "last_updated": dt_util.utcnow().isoformat(),
+            }
+
+        statuses: list[str] = []
+        vpd_values: list[float] = []
+        vpd_trend_values: list[float] = []
+        moisture_values: list[float] = []
+        mold_values: list[float] = []
+        dli_values: list[float] = []
+        for payload in profiles.values():
+            metrics = payload.get("metrics") or {}
+            status = str(metrics.get("status") or "unknown")
+            statuses.append(status)
+            vpd_value = metrics.get("vpd")
+            if isinstance(vpd_value, int | float):
+                vpd_values.append(float(vpd_value))
+            vpd_trend = metrics.get("vpd_7d_avg")
+            if isinstance(vpd_trend, int | float):
+                vpd_trend_values.append(float(vpd_trend))
+            moisture_value = metrics.get("moisture")
+            if isinstance(moisture_value, int | float):
+                moisture_values.append(float(moisture_value))
+            mold_value = metrics.get("mold_risk")
+            if isinstance(mold_value, int | float):
+                mold_values.append(float(mold_value))
+            dli_value = metrics.get("dli")
+            if isinstance(dli_value, int | float):
+                dli_values.append(float(dli_value))
+
+        counts = Counter(statuses)
+
+        def _avg(values: list[float]) -> float | None:
+            return round(fmean(values), 3) if values else None
+
+        return {
+            "total_profiles": len(profiles),
+            "profiles_with_metrics": sum(1 for payload in profiles.values() if payload.get("metrics")),
+            "status_counts": dict(counts),
+            "problem_profiles": counts.get("warn", 0) + counts.get("critical", 0),
+            "ok_profiles": counts.get("ok", 0),
+            "average_vpd": _avg(vpd_values),
+            "average_vpd_7d": _avg(vpd_trend_values),
+            "average_moisture": _avg(moisture_values),
+            "average_mold_risk": _avg(mold_values),
+            "average_dli": _avg(dli_values),
+            "last_updated": dt_util.utcnow().isoformat(),
         }

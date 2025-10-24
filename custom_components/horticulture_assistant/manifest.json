@@ -16,6 +16,5 @@
     "custom_components.horticulture_assistant"
   ],
   "requirements": [],
-  "version": "0.8.5",
-  "diagnostics": true
+  "version": "0.8.5"
 }

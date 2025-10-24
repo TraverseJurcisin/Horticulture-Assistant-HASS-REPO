@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import logging
+from collections.abc import Mapping
 from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -44,8 +46,10 @@ from .const import (
 from .opb_client import OpenPlantbookClient
 from .profile.compat import sync_thresholds
 from .profile.utils import determine_species_slug, ensure_sections
+from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
 from .utils.json_io import load_json, save_json
+from .utils.nutrient_schedule import generate_nutrient_schedule
 from .utils.plant_registry import register_plant
 
 _LOGGER = logging.getLogger(__name__)
@@ -70,6 +74,14 @@ MANUAL_THRESHOLD_FIELDS = (
     "conductivity_min",
     "conductivity_max",
 )
+
+
+SENSOR_OPTION_ROLES = {
+    CONF_MOISTURE_SENSOR: "moisture",
+    CONF_TEMPERATURE_SENSOR: "temperature",
+    CONF_EC_SENSOR: "ec",
+    CONF_CO2_SENSOR: "co2",
+}
 
 
 CONF_CREATE_INITIAL_PROFILE = "create_initial_profile"
@@ -428,7 +440,31 @@ class OptionsFlow(config_entries.OptionsFlow):
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         return self.async_show_menu(
             step_id="init",
-            menu_options=["basic", "cloud_sync", "add_profile", "configure_ai"],
+            menu_options=[
+                "basic",
+                "cloud_sync",
+                "add_profile",
+                "configure_ai",
+                "profile_targets",
+                "nutrient_schedule",
+            ],
+        )
+
+    def _notify_sensor_warnings(self, issues) -> None:
+        if not issues:
+            return
+        message = collate_issue_messages(issues)
+        self.hass.async_create_task(
+            self.hass.services.async_call(
+                "persistent_notification",
+                "create",
+                {
+                    "title": "Horticulture Assistant sensor warning",
+                    "message": message,
+                    "notification_id": f"horticulture_sensor_{self._entry.entry_id}",
+                },
+                blocking=False,
+            )
         )
 
     async def async_step_basic(self, user_input: dict[str, Any] | None = None) -> FlowResult:
@@ -518,6 +554,17 @@ class OptionsFlow(config_entries.OptionsFlow):
                 entity_id = user_input.get(key)
                 if entity_id and self.hass.states.get(entity_id) is None:
                     errors[key] = "not_found"
+            sensor_map = {
+                SENSOR_OPTION_ROLES[key]: user_input[key] for key in SENSOR_OPTION_ROLES if user_input.get(key)
+            }
+            if sensor_map:
+                validation = validate_sensor_links(self.hass, sensor_map)
+                for issue in validation.errors:
+                    option_key = next((opt for opt, role in SENSOR_OPTION_ROLES.items() if role == issue.role), None)
+                    if option_key:
+                        errors[option_key] = issue.issue
+                if validation.warnings:
+                    self._notify_sensor_warnings(validation.warnings)
             if errors:
                 return self.async_show_form(step_id="basic", data_schema=schema, errors=errors)
             sensor_map: dict[str, list[str]] = {}
@@ -614,6 +661,110 @@ class OptionsFlow(config_entries.OptionsFlow):
             return self.async_create_entry(title="", data=opts)
 
         return self.async_show_form(step_id="basic", data_schema=schema)
+
+    async def async_step_profile_targets(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        self._pid = None
+        self._var = None
+        return await self.async_step_profile(user_input)
+
+    async def async_step_nutrient_schedule(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        profiles = self._profiles()
+        if not profiles:
+            return self.async_abort(reason="no_profiles")
+        if user_input is None or "profile_id" not in user_input:
+            return self.async_show_form(
+                step_id="nutrient_schedule",
+                data_schema=vol.Schema(
+                    {
+                        vol.Required("profile_id"): vol.In({pid: data["name"] for pid, data in profiles.items()}),
+                    }
+                ),
+            )
+        self._pid = user_input["profile_id"]
+        return await self.async_step_nutrient_schedule_edit()
+
+    async def async_step_nutrient_schedule_edit(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        if not self._pid:
+            return await self.async_step_nutrient_schedule()
+        profiles = self._profiles()
+        profile = profiles.get(self._pid)
+        if profile is None:
+            return self.async_abort(reason="unknown_profile")
+
+        existing = self._extract_nutrient_schedule(profile)
+        schedule_text = json.dumps(existing, indent=2, ensure_ascii=False) if existing else ""
+
+        schema = vol.Schema(
+            {
+                vol.Optional("auto_generate", default=False): bool,
+                vol.Optional(
+                    "schedule",
+                    default=schedule_text,
+                ): sel.TextSelector(sel.TextSelectorConfig(type="text", multiline=True)),
+            }
+        )
+
+        errors: dict[str, str] = {}
+        description_placeholders = {
+            "profile": profile.get("name") or profile.get("display_name") or self._pid,
+            "current_count": str(len(existing)),
+            "example": json.dumps(
+                [
+                    {
+                        "stage": "vegetative",
+                        "duration_days": 14,
+                        "totals_mg": {"N": 850.0, "K": 630.0},
+                    },
+                    {
+                        "stage": "flowering",
+                        "duration_days": 21,
+                        "totals_mg": {"N": 600.0, "P": 420.0, "K": 900.0},
+                    },
+                ],
+                indent=2,
+                ensure_ascii=False,
+            ),
+        }
+        try:
+            plant_type = self._infer_nutrient_schedule_plant_type(profile)
+        except Exception:  # pragma: no cover - defensive guard
+            plant_type = None
+        description_placeholders["plant_type"] = plant_type or "unknown"
+
+        if user_input is not None:
+            schedule_payload: list[dict[str, Any]] | None = None
+            if user_input.get("auto_generate"):
+                try:
+                    schedule_payload = self._generate_schedule_for_profile(profile)
+                except Exception:  # pragma: no cover - generation failures are logged via UI
+                    errors["auto_generate"] = "generation_failed"
+            else:
+                raw_text = user_input.get("schedule", "").strip()
+                if raw_text:
+                    try:
+                        loaded = json.loads(raw_text)
+                    except json.JSONDecodeError:
+                        errors["schedule"] = "invalid_json"
+                    else:
+                        if isinstance(loaded, list):
+                            try:
+                                schedule_payload = [self._coerce_schedule_row(item) for item in loaded]
+                            except ValueError:
+                                errors["schedule"] = "invalid_row"
+                        else:
+                            errors["schedule"] = "invalid_format"
+                else:
+                    schedule_payload = []
+            if not errors and schedule_payload is not None:
+                self._apply_nutrient_schedule(self._pid, schedule_payload)
+                return self.async_create_entry(title="", data={})
+
+        return self.async_show_form(
+            step_id="nutrient_schedule_edit",
+            data_schema=schema,
+            errors=errors,
+            description_placeholders=description_placeholders,
+        )
 
     async def async_step_cloud_sync(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         defaults = {
@@ -764,14 +915,21 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
         pid = self._new_profile_id
+        errors: dict[str, str] = {}
         if user_input is not None and pid:
             sensors: dict[str, str] = {}
             for role in ("temperature", "humidity", "illuminance", "moisture"):
                 if ent := user_input.get(role):
                     sensors[role] = ent
             if sensors:
-                await registry.async_link_sensors(pid, sensors)
-            return self.async_create_entry(title="", data={})
+                validation = validate_sensor_links(self.hass, sensors)
+                for issue in validation.errors:
+                    errors[issue.role] = issue.issue
+                if validation.warnings:
+                    self._notify_sensor_warnings(validation.warnings)
+                if not errors:
+                    await registry.async_link_sensors(pid, sensors)
+                    return self.async_create_entry(title="", data={})
         schema = vol.Schema(
             {
                 vol.Optional("temperature"): sel.EntitySelector(
@@ -788,7 +946,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 ),
             }
         )
-        return self.async_show_form(step_id="attach_sensors", data_schema=schema)
+        return self.async_show_form(step_id="attach_sensors", data_schema=schema, errors=errors)
 
     async def async_step_calibration(self, user_input=None):
         schema = vol.Schema(
@@ -1063,6 +1221,278 @@ class OptionsFlow(config_entries.OptionsFlow):
         allp = dict(opts.get("profiles", {}))
         allp[self._pid] = prof
         opts["profiles"] = allp
+        self.hass.config_entries.async_update_entry(self._entry, options=opts)
+
+    def _infer_nutrient_schedule_plant_type(self, profile: Mapping[str, Any]) -> str | None:
+        """Return the best available species or plant-type identifier for a profile."""
+
+        def _as_str(value: Any) -> str | None:
+            if isinstance(value, str):
+                candidate = value.strip()
+                if candidate:
+                    return candidate
+            return None
+
+        containers: list[Mapping[str, Any]] = []
+        local_section = profile.get("local")
+        if isinstance(local_section, Mapping):
+            containers.append(local_section)
+            general = local_section.get("general")
+            if isinstance(general, Mapping):
+                containers.append(general)
+        general_section = profile.get("general")
+        if isinstance(general_section, Mapping):
+            containers.append(general_section)
+
+        sections = profile.get("sections")
+        if isinstance(sections, Mapping):
+            local = sections.get("local")
+            if isinstance(local, Mapping):
+                general = local.get("general")
+                if isinstance(general, Mapping):
+                    containers.append(general)
+
+        for container in containers:
+            for field in ("plant_type", "species", "slug"):
+                candidate = _as_str(container.get(field))
+                if candidate:
+                    return candidate
+
+        for field in ("species", "plant_type", "species_display"):
+            candidate = _as_str(profile.get(field))
+            if candidate:
+                return candidate
+
+        library = profile.get("library")
+        if isinstance(library, Mapping):
+            for key in ("identity", "taxonomy"):
+                payload = library.get(key)
+                if not isinstance(payload, Mapping):
+                    continue
+                for field in ("plant_type", "species", "binomial", "slug", "name"):
+                    candidate = _as_str(payload.get(field))
+                    if candidate:
+                        return candidate
+
+        if isinstance(sections, Mapping):
+            library_section = sections.get("library")
+            if isinstance(library_section, Mapping):
+                for key in ("identity", "taxonomy"):
+                    payload = library_section.get(key)
+                    if not isinstance(payload, Mapping):
+                        continue
+                    for field in ("plant_type", "species", "binomial", "slug", "name"):
+                        candidate = _as_str(payload.get(field))
+                        if candidate:
+                            return candidate
+
+        return None
+
+    def _extract_nutrient_schedule(self, profile: Mapping[str, Any]) -> list[dict[str, Any]]:
+        """Extract the stored nutrient schedule for ``profile`` if one exists."""
+
+        def _schedule_from(container: Mapping[str, Any] | None) -> list[dict[str, Any]] | None:
+            if not isinstance(container, Mapping):
+                return None
+            schedule = container.get("nutrient_schedule")
+            if isinstance(schedule, list):
+                return [dict(item) for item in schedule if isinstance(item, Mapping)]
+            nutrients = container.get("nutrients")
+            if isinstance(nutrients, Mapping):
+                schedule = nutrients.get("schedule")
+                if isinstance(schedule, list):
+                    return [dict(item) for item in schedule if isinstance(item, Mapping)]
+            metadata = container.get("metadata")
+            if isinstance(metadata, Mapping):
+                schedule = metadata.get("nutrient_schedule")
+                if isinstance(schedule, list):
+                    return [dict(item) for item in schedule if isinstance(item, Mapping)]
+            return None
+
+        containers: list[Mapping[str, Any] | None] = [
+            profile.get("local"),
+            profile.get("general"),
+        ]
+        local_section = profile.get("local")
+        if isinstance(local_section, Mapping):
+            containers.append(local_section.get("general"))
+        sections = profile.get("sections")
+        if isinstance(sections, Mapping):
+            local = sections.get("local")
+            if isinstance(local, Mapping):
+                containers.append(local.get("general"))
+        containers.append(profile)
+
+        for container in containers:
+            schedule = _schedule_from(container)
+            if schedule:
+                return schedule
+        return []
+
+    def _generate_schedule_for_profile(self, profile: Mapping[str, Any]) -> list[dict[str, Any]]:
+        """Generate a nutrient schedule payload for ``profile`` using heuristics."""
+
+        plant_type = self._infer_nutrient_schedule_plant_type(profile)
+        if not plant_type:
+            raise ValueError("missing_plant_type")
+
+        stages = generate_nutrient_schedule(plant_type)
+        if not stages:
+            raise ValueError("no_schedule")
+
+        schedule: list[dict[str, Any]] = []
+        current_day = 1
+        for index, stage in enumerate(stages, start=1):
+            stage_name = getattr(stage, "stage", None) or getattr(stage, "name", None) or f"stage_{index}"
+            try:
+                duration = int(getattr(stage, "duration_days", 0) or 0)
+            except (TypeError, ValueError):  # pragma: no cover - defensive
+                duration = 0
+            totals_raw = getattr(stage, "totals", {})
+            if not isinstance(totals_raw, Mapping):
+                totals_raw = {}
+            totals: dict[str, float] = {}
+            for nutrient, amount in totals_raw.items():
+                if nutrient is None:
+                    continue
+                try:
+                    totals[str(nutrient)] = float(amount)
+                except (TypeError, ValueError):
+                    continue
+
+            entry: dict[str, Any] = {
+                "stage": str(stage_name),
+                "duration_days": max(duration, 0),
+                "totals_mg": totals,
+                "source": "auto_generate",
+            }
+            if entry["duration_days"] > 0:
+                entry["start_day"] = current_day
+                entry["end_day"] = current_day + entry["duration_days"] - 1
+                entry["daily_mg"] = {
+                    nutrient: round(amount / entry["duration_days"], 4) for nutrient, amount in totals.items()
+                }
+                current_day = entry["end_day"] + 1
+            else:
+                entry["start_day"] = current_day
+                entry["end_day"] = current_day
+                if totals:
+                    entry["daily_mg"] = dict(totals)
+            schedule.append(entry)
+
+        return schedule
+
+    def _coerce_schedule_row(self, item: Any) -> dict[str, Any]:
+        """Normalise a raw nutrient schedule entry."""
+
+        if not isinstance(item, Mapping):
+            raise ValueError("schedule_row_not_mapping")
+
+        def _as_str(value: Any) -> str | None:
+            if isinstance(value, str):
+                candidate = value.strip()
+                if candidate:
+                    return candidate
+            return None
+
+        stage = _as_str(item.get("stage") or item.get("name") or item.get("phase"))
+        if not stage:
+            raise ValueError("missing_stage")
+
+        duration_raw = item.get("duration_days") or item.get("duration") or item.get("days") or item.get("length_days")
+        try:
+            duration = int(float(duration_raw)) if duration_raw is not None else None
+        except (TypeError, ValueError) as err:  # pragma: no cover - defensive
+            raise ValueError("invalid_duration") from err
+        if duration is None or duration < 0:
+            raise ValueError("invalid_duration")
+
+        totals: dict[str, float] = {}
+        totals_raw = item.get("totals_mg") or item.get("totals") or item.get("nutrients") or item.get("targets")
+        if isinstance(totals_raw, Mapping):
+            for nutrient, amount in totals_raw.items():
+                name = _as_str(nutrient) or str(nutrient)
+                try:
+                    totals[name] = float(amount)
+                except (TypeError, ValueError):
+                    continue
+        elif isinstance(totals_raw, list):
+            for entry in totals_raw:
+                if not isinstance(entry, Mapping):
+                    continue
+                nutrient = _as_str(entry.get("nutrient") or entry.get("id") or entry.get("name"))
+                if not nutrient:
+                    continue
+                try:
+                    totals[nutrient] = float(entry.get("value") or entry.get("amount"))
+                except (TypeError, ValueError):
+                    continue
+
+        def _as_int(value: Any) -> int | None:
+            try:
+                return int(float(value))
+            except (TypeError, ValueError):
+                return None
+
+        start_day = _as_int(item.get("start_day") or item.get("day_start") or item.get("start"))
+        end_day = _as_int(item.get("end_day") or item.get("day_end") or item.get("end"))
+
+        result: dict[str, Any] = {
+            "stage": stage,
+            "duration_days": duration,
+            "totals_mg": totals,
+        }
+        if start_day is not None:
+            result["start_day"] = start_day
+        if end_day is None and start_day is not None and duration > 0:
+            end_day = start_day + duration - 1
+        if end_day is not None:
+            result["end_day"] = end_day
+        if totals:
+            if duration > 0:
+                result["daily_mg"] = {nutrient: round(amount / duration, 4) for nutrient, amount in totals.items()}
+            else:
+                result["daily_mg"] = dict(totals)
+
+        notes = _as_str(item.get("notes") or item.get("description"))
+        if notes:
+            result["notes"] = notes
+        source = _as_str(item.get("source") or item.get("mode"))
+        if source:
+            result["source"] = source
+
+        return result
+
+    def _apply_nutrient_schedule(self, profile_id: str | None, schedule: list[dict[str, Any]]) -> None:
+        """Persist ``schedule`` to the config entry options for ``profile_id``."""
+
+        if not profile_id:
+            return
+
+        safe_schedule = json.loads(json.dumps(schedule, ensure_ascii=False))
+        opts = dict(self._entry.options)
+        profiles = dict(opts.get("profiles", {}))
+        profile = dict(profiles.get(profile_id, {}))
+
+        ensure_sections(profile, plant_id=profile_id, display_name=profile.get("name") or profile_id)
+
+        local = profile.get("local")
+        local_dict = dict(local) if isinstance(local, Mapping) else {}
+        general_local = local_dict.get("general")
+        general_local_dict = dict(general_local) if isinstance(general_local, Mapping) else {}
+        general_local_dict["nutrient_schedule"] = safe_schedule
+        local_dict["general"] = general_local_dict
+        profile["local"] = local_dict
+
+        general = profile.get("general")
+        general_dict = dict(general) if isinstance(general, Mapping) else {}
+        general_dict["nutrient_schedule"] = safe_schedule
+        profile["general"] = general_dict
+
+        ensure_sections(profile, plant_id=profile_id, display_name=profile.get("name") or profile_id)
+
+        profiles[profile_id] = profile
+        opts["profiles"] = profiles
         self.hass.config_entries.async_update_entry(self._entry, options=opts)
 
     async def async_step_apply(self, user_input=None):

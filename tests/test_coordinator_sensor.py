@@ -21,12 +21,14 @@ coordinator_mod = importlib.import_module("custom_components.horticulture_assist
 entity_mod = importlib.import_module("custom_components.horticulture_assistant.entity")
 sensor_mod = importlib.import_module("custom_components.horticulture_assistant.sensor")
 schema_mod = importlib.import_module("custom_components.horticulture_assistant.profile.schema")
+metrics_mod = importlib.import_module("custom_components.horticulture_assistant.engine.metrics")
 
 CONF_PROFILES = const.CONF_PROFILES
 HorticultureCoordinator = coordinator_mod.HorticultureCoordinator
 HorticultureEntity = entity_mod.HorticultureEntity
 ProfileMetricSensor = sensor_mod.ProfileMetricSensor
 PROFILE_SENSOR_DESCRIPTIONS = sensor_mod.PROFILE_SENSOR_DESCRIPTIONS
+GardenSummarySensor = sensor_mod.GardenSummarySensor
 ProfileSuccessSensor = sensor_mod.ProfileSuccessSensor
 ProfileProvenanceSensor = sensor_mod.ProfileProvenanceSensor
 ProfileFeedingSensor = sensor_mod.ProfileFeedingSensor
@@ -37,6 +39,7 @@ ComputedStatSnapshot = schema_mod.ComputedStatSnapshot
 ProfileContribution = schema_mod.ProfileContribution
 FieldAnnotation = schema_mod.FieldAnnotation
 ResolvedTarget = schema_mod.ResolvedTarget
+vpd_kpa = metrics_mod.vpd_kpa
 
 
 @pytest.mark.asyncio
@@ -157,9 +160,63 @@ async def test_profile_vpd_and_dew_point_sensors(hass):
 
     vpd_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["vpd"])
     dew_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["dew_point"])
+    vpd_avg_sensor = ProfileMetricSensor(
+        coordinator,
+        "avocado",
+        "Avocado",
+        PROFILE_SENSOR_DESCRIPTIONS["vpd_7d_avg"],
+    )
     assert vpd_sensor.native_value == pytest.approx(1.27, rel=1e-2)
     assert dew_sensor.native_value == pytest.approx(16.7, rel=1e-2)
+    assert vpd_avg_sensor.native_value == pytest.approx(1.27, rel=1e-2)
     assert coordinator.data["profiles"]["avocado"]["metrics"]["mold_risk"] == 0.0
+
+
+@pytest.mark.asyncio
+async def test_vpd_seven_day_average_rollover(hass):
+    hass.states.async_set("sensor.t", 25)
+    hass.states.async_set("sensor.h", 60)
+    options = {
+        CONF_PROFILES: {
+            "avocado": {
+                "name": "Avocado",
+                "sensors": {"temperature": "sensor.t", "humidity": "sensor.h"},
+            }
+        }
+    }
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    start = datetime(2024, 4, 1, tzinfo=dt_util.UTC)
+    with patch(
+        "custom_components.horticulture_assistant.coordinator.dt_util.utcnow",
+        return_value=start,
+    ):
+        await coordinator.async_config_entry_first_refresh()
+    avg_sensor = ProfileMetricSensor(
+        coordinator,
+        "avocado",
+        "Avocado",
+        PROFILE_SENSOR_DESCRIPTIONS["vpd_7d_avg"],
+    )
+    first_vpd = vpd_kpa(25, 60)
+    assert avg_sensor.native_value == pytest.approx(first_vpd, rel=1e-2)
+
+    hass.states.async_set("sensor.h", 40)
+    with patch(
+        "custom_components.horticulture_assistant.coordinator.dt_util.utcnow",
+        return_value=start + timedelta(days=3),
+    ):
+        await coordinator.async_request_refresh()
+    second_vpd = vpd_kpa(25, 40)
+    assert avg_sensor.native_value == pytest.approx((first_vpd + second_vpd) / 2, rel=1e-2)
+
+    hass.states.async_set("sensor.h", 50)
+    with patch(
+        "custom_components.horticulture_assistant.coordinator.dt_util.utcnow",
+        return_value=start + timedelta(days=8),
+    ):
+        await coordinator.async_request_refresh()
+    third_vpd = vpd_kpa(25, 50)
+    assert avg_sensor.native_value == pytest.approx(third_vpd, rel=1e-2)
 
 
 @pytest.mark.asyncio
@@ -201,6 +258,41 @@ async def test_profile_status_sensor(hass):
     await coordinator.async_config_entry_first_refresh()
     status_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["status"])
     assert status_sensor.native_value == "critical"
+
+
+@pytest.mark.asyncio
+async def test_garden_summary_sensor_reports_problem_count(hass):
+    hass.states.async_set("sensor.m1", 5)
+    hass.states.async_set("sensor.t1", 25)
+    hass.states.async_set("sensor.h1", 95)
+    hass.states.async_set("sensor.m2", 55)
+    options = {
+        CONF_PROFILES: {
+            "avocado": {
+                "name": "Avocado",
+                "sensors": {
+                    "moisture": "sensor.m1",
+                    "temperature": "sensor.t1",
+                    "humidity": "sensor.h1",
+                },
+            },
+            "basil": {
+                "name": "Basil",
+                "sensors": {
+                    "moisture": "sensor.m2",
+                },
+            },
+        }
+    }
+    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    await coordinator.async_config_entry_first_refresh()
+    summary_sensor = GardenSummarySensor(coordinator, "entry1", "Garden")
+    assert summary_sensor.native_value == 1
+    attrs = summary_sensor.extra_state_attributes
+    assert attrs["total_profiles"] == 2
+    assert attrs["problem_profiles"] == 1
+    assert attrs["status_critical"] == 1
+    assert attrs.get("status_ok", 0) >= 1
 
 
 @pytest.mark.asyncio
@@ -320,6 +412,8 @@ async def test_profile_provenance_sensor_summarises_sources(hass):
     assert attrs["total_targets"] == 2
     assert "temperature_optimal" in attrs["inherited_fields"]
     assert attrs["provenance_map"]["humidity_optimal"]["source_type"] == "manual"
+    assert attrs["badges"]["temperature_optimal"]["badge"] == "inherited"
+    assert attrs["badge_counts"]["override"] == 1
 
 
 @pytest.mark.asyncio
@@ -364,6 +458,10 @@ async def test_profile_yield_sensor_reports_totals(hass):
     assert attrs["harvest_count"] == 3
     assert attrs["total_grams"] == 120.5
     assert attrs["density_average_g_m2"] == 30.125
+    assert attrs["total_kilograms"] == pytest.approx(0.1205, rel=1e-3)
+    assert attrs["average_yield_kilograms"] == pytest.approx(0.040, rel=1e-2)
+    assert attrs["average_yield_density_kg_m2"] == pytest.approx(0.030, rel=1e-2)
+    assert attrs["density_average_kg_m2"] == pytest.approx(0.030, rel=1e-2)
 
 
 @pytest.mark.asyncio

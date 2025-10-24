@@ -2,10 +2,39 @@
 
 from __future__ import annotations
 
-from homeassistant.components.sensor import SensorEntity, SensorStateClass
+try:  # pragma: no cover - fallback for unit tests without Home Assistant
+    from homeassistant.components.sensor import SensorEntity, SensorStateClass
+except ModuleNotFoundError:  # pragma: no cover - executed in local test stubs
+    from enum import Enum
+
+    class SensorEntity:  # type: ignore[too-few-public-methods]
+        """Minimal stand-in used in unit tests."""
+
+    class SensorStateClass(str, Enum):
+        MEASUREMENT = "measurement"
+
+
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.event import async_track_state_change_event
+
+try:  # pragma: no cover - fallback for unit tests
+    from homeassistant.core import HomeAssistant, callback
+except ImportError:  # pragma: no cover - executed in stubbed test env
+    from collections.abc import Callable
+    from typing import Any
+
+    HomeAssistant = Any  # type: ignore[assignment]
+
+    def callback(func: Callable[..., Any], /) -> Callable[..., Any]:
+        return func
+
+
+try:  # pragma: no cover - fallback for tests without HA
+    from homeassistant.helpers.event import async_track_state_change_event
+except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
+
+    async def async_track_state_change_event(*_args, **_kwargs):
+        return None
+
 
 from .const import DOMAIN
 from .entity_base import HorticultureBaseEntity

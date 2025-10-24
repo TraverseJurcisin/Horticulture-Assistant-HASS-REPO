@@ -178,6 +178,8 @@ class CloudSyncManager:
         self._token_listeners: list[Callable[[Mapping[str, Any]], Awaitable[None] | None]] = []
         self._last_token_refresh_at: datetime | None = None
         self._last_token_refresh_error: str | None = None
+        self._last_offline_enqueue_at: datetime | None = None
+        self._offline_queue_reason: str | None = None
 
     async def async_start(self) -> None:
         """Start the sync worker when configuration is complete."""
@@ -188,6 +190,7 @@ class CloudSyncManager:
             return
         if self._task and not self._task.done():
             return
+        self._offline_queue_reason = None
         if self._session is None:
             self._session = ClientSession()
             self._owns_session = True
@@ -270,6 +273,12 @@ class CloudSyncManager:
             status["next_token_refresh_at"] = None
             status["next_token_refresh_in_seconds"] = None
         status["connection"] = self._connection_summary(status, now)
+        status["offline_queue"] = {
+            "pending": status["outbox_size"],
+            "last_enqueued_at": self._last_offline_enqueue_at.isoformat() if self._last_offline_enqueue_at else None,
+            "reason": self._offline_queue_reason,
+            "queueing": bool(self._offline_queue_reason),
+        }
         return status
 
     # ------------------------------------------------------------------
@@ -393,12 +402,15 @@ class CloudSyncManager:
             "last_success_age_seconds": None,
             "last_success_age_days": None,
         }
+        summary["queueing"] = bool(status.get("outbox_size"))
         if not configured:
             return summary
 
         if status.get("token_expired"):
             summary["reason"] = "token_expired"
             summary["local_only"] = True
+            if summary["queueing"] and summary.get("reason") is None:
+                summary["reason"] = "pending_sync"
             return summary
 
         last_success_raw = status.get("last_success_at")
@@ -431,7 +443,15 @@ class CloudSyncManager:
         summary["connected"] = True
         summary["local_only"] = False
         summary["reason"] = None
+        if summary["queueing"] and summary.get("reason") is None and summary.get("local_only"):
+            summary["reason"] = "pending_sync"
         return summary
+
+    def record_offline_enqueue(self, *, reason: str) -> None:
+        """Track when events are queued while the cloud connection is unavailable."""
+
+        self._last_offline_enqueue_at = datetime.now(tz=UTC)
+        self._offline_queue_reason = reason
 
     def _parse_timestamp(self, raw: str) -> datetime | None:
         try:

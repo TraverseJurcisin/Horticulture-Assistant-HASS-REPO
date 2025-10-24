@@ -2,7 +2,15 @@
 
 from __future__ import annotations
 
-from homeassistant.helpers.entity import Entity
+try:  # pragma: no cover - fallback for unit tests
+    from homeassistant.helpers.entity import Entity
+except (ModuleNotFoundError, ImportError, AttributeError):  # pragma: no cover - executed in stubbed env
+
+    class Entity:  # type: ignore[too-few-public-methods]
+        """Minimal Home Assistant entity stub used for local tests."""
+
+        hass = None
+
 
 from .const import DOMAIN
 from .utils.entry_helpers import get_entry_data_by_plant_id

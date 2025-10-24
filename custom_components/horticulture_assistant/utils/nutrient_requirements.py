@@ -9,8 +9,12 @@ time span.
 from collections.abc import Mapping
 from functools import cache
 
-from plant_engine.root_temperature import get_uptake_factor
-from plant_engine.utils import load_dataset, normalize_key
+try:  # pragma: no cover - prefer system plant_engine
+    from plant_engine.root_temperature import get_uptake_factor
+    from plant_engine.utils import load_dataset, normalize_key
+except ModuleNotFoundError:  # pragma: no cover - fallback to bundled copy
+    from ..engine.plant_engine.root_temperature import get_uptake_factor
+    from ..engine.plant_engine.utils import load_dataset, normalize_key
 
 DATA_FILE = "nutrients/total_nutrient_requirements.json"
 
@@ -28,11 +32,7 @@ def get_requirements(plant_type: str) -> dict[str, float]:
     if not isinstance(raw, Mapping):
         return {}
 
-    return {
-        nutrient: float(value)
-        for nutrient, value in raw.items()
-        if isinstance(value, int | float | str)
-    }
+    return {nutrient: float(value) for nutrient, value in raw.items() if isinstance(value, int | float | str)}
 
 
 def calculate_deficit(current_totals: Mapping[str, float], plant_type: str) -> dict[str, float]:

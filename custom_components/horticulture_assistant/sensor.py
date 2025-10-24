@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from contextlib import suppress
 from datetime import datetime, timedelta
 from typing import Any
 
@@ -72,6 +73,13 @@ PROFILE_SENSOR_DESCRIPTIONS = {
         native_unit_of_measurement="kPa",
         state_class=SensorStateClass.MEASUREMENT,
         icon="mdi:water-percent",
+    ),
+    "vpd_7d_avg": SensorEntityDescription(
+        key="vpd_7d_avg",
+        translation_key="vpd_7d_avg",
+        native_unit_of_measurement="kPa",
+        state_class=SensorStateClass.MEASUREMENT,
+        icon="mdi:chart-line-variant",
     ),
     "dew_point": SensorEntityDescription(
         key="dew_point",
@@ -218,6 +226,44 @@ class CloudConnectionSensor(CloudSyncSensor):
         self._attr_extra_state_attributes = {k: v for k, v in attrs.items() if v is not None}
 
 
+class GardenSummarySensor(CoordinatorEntity[HorticultureCoordinator], SensorEntity):
+    """Aggregate health insights across all configured profiles."""
+
+    _attr_has_entity_name = True
+    _attr_icon = "mdi:sprout"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_native_unit_of_measurement = "profiles"
+    _attr_translation_key = "garden_summary"
+
+    def __init__(self, coordinator: HorticultureCoordinator, entry_id: str, label: str) -> None:
+        super().__init__(coordinator)
+        friendly = label or "Garden"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_garden_summary"
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, f"garden:{entry_id}")},
+            name=f"{friendly} Garden Overview",
+            manufacturer="Horticulture Assistant",
+            model="Garden Summary",
+        )
+
+    @property
+    def native_value(self):
+        summary = (self.coordinator.data or {}).get("summary") or {}
+        problems = summary.get("problem_profiles")
+        return problems if isinstance(problems, int | float) else 0
+
+    @property
+    def extra_state_attributes(self):
+        summary = (self.coordinator.data or {}).get("summary")
+        if not summary:
+            return None
+        attrs = {k: v for k, v in summary.items() if k != "status_counts"}
+        counts = summary.get("status_counts") or {}
+        for key, value in counts.items():
+            attrs[f"status_{key}"] = value
+        return attrs
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
     stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
@@ -249,6 +295,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     profiles = entry.options.get(CONF_PROFILES, {})
     registry = stored.get("profile_registry")
+    if profile_coord:
+        sensors.append(GardenSummarySensor(profile_coord, entry.entry_id, plant_name))
     if profile_coord and profiles:
         for pid, profile in profiles.items():
             name = profile.get("name", pid)
@@ -258,6 +306,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             if prof_sensors.get("temperature") and prof_sensors.get("humidity"):
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["vpd"]))
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dew_point"]))
+                sensors.append(
+                    ProfileMetricSensor(
+                        profile_coord,
+                        pid,
+                        name,
+                        PROFILE_SENSOR_DESCRIPTIONS["vpd_7d_avg"],
+                    )
+                )
             if prof_sensors.get("moisture"):
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["moisture"]))
                 sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["status"]))
@@ -629,14 +685,40 @@ class ProfileYieldSensor(HorticultureEntity, SensorEntity):
             value = metrics.get(key)
             if value is not None:
                 attrs[key] = value
+        if metrics.get("average_yield_grams") is not None:
+            with suppress(TypeError, ValueError):
+                attrs["average_yield_kilograms"] = round(
+                    float(metrics["average_yield_grams"]) / 1000,
+                    3,
+                )
+        if metrics.get("average_yield_density_g_m2") is not None:
+            with suppress(TypeError, ValueError):
+                attrs["average_yield_density_kg_m2"] = round(
+                    float(metrics["average_yield_density_g_m2"]) / 1000,
+                    3,
+                )
+        if metrics.get("mean_density_g_m2") is not None:
+            with suppress(TypeError, ValueError):
+                attrs["mean_density_kg_m2"] = round(
+                    float(metrics["mean_density_g_m2"]) / 1000,
+                    3,
+                )
         yields_payload = payload.get("yields") or {}
         for key in ("total_grams", "total_area_m2"):
             if yields_payload.get(key) is not None:
                 attrs.setdefault(key, yields_payload.get(key))
+        if yields_payload.get("total_grams") is not None:
+            with suppress(TypeError, ValueError):
+                attrs["total_kilograms"] = round(
+                    float(yields_payload["total_grams"]) / 1000,
+                    3,
+                )
         densities_payload = payload.get("densities") or {}
         for key, value in densities_payload.items():
             if value is not None:
                 attrs[f"density_{key}"] = value
+                with suppress(TypeError, ValueError):
+                    attrs[f"density_{key}_kg_m2"] = round(float(value) / 1000, 3)
         if payload.get("runs_tracked") is not None:
             attrs["runs_tracked"] = payload.get("runs_tracked")
         if payload.get("contributors"):
@@ -700,6 +782,7 @@ class ProfileProvenanceSensor(HorticultureEntity, SensorEntity):
             include_extras=True,
             include_citations=False,
         )
+        badges = profile.provenance_badges()
 
         inherited: list[str] = []
         overrides: list[str] = []
@@ -731,6 +814,14 @@ class ProfileProvenanceSensor(HorticultureEntity, SensorEntity):
             "detailed_provenance": detailed,
             "profile_name": profile.display_name,
         }
+        if badges:
+            attrs["badges"] = badges
+            attrs["badge_counts"] = {
+                "inherited": sum(1 for meta in badges.values() if meta.get("badge") == "inherited"),
+                "override": sum(1 for meta in badges.values() if meta.get("badge") == "override"),
+                "external": sum(1 for meta in badges.values() if meta.get("badge") == "external"),
+                "computed": sum(1 for meta in badges.values() if meta.get("badge") == "computed"),
+            }
         if profile.last_resolved:
             attrs["last_resolved"] = profile.last_resolved
         return attrs

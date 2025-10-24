@@ -65,9 +65,6 @@ class CloudSyncPublisher:
         patch: Mapping[str, Any] | None = None,
         metadata: Mapping[str, Any] | None = None,
     ) -> SyncEvent | None:
-        if not self.ready:
-            return None
-
         tenant_id = self.manager.config.tenant_id or "local"
         org_id = self.manager.config.organization_id
         vector = self.manager.store.next_vector(entity_type, entity_id, self.device_id)
@@ -85,6 +82,10 @@ class CloudSyncPublisher:
             metadata=_normalise_mapping(metadata) if metadata else {},
         )
         self.manager.store.append_outbox(event)
+        if not self.ready:
+            self.manager.record_offline_enqueue(reason="not_ready")
+            if event.metadata is not None:
+                event.metadata.setdefault("queued_offline", True)
         return event
 
     # ------------------------------------------------------------------
