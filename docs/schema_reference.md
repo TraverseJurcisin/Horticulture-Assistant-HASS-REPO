@@ -67,6 +67,8 @@ embedded in the BioProfile document. The canonical files live under
 
 * `harvest_id`, `profile_id`, and `harvested_at` are required.
 * Weight and area are constrained to non-negative numbers.
+* `harvested_at` must be an ISO-8601 timestamp (timezone is required for cross-site rollups).
+* `metadata` must be a JSON object when present.
 
 ### Nutrient applications — `$defs.nutrient_event` in [`bio_profile.schema.json`](../custom_components/horticulture_assistant/data/schema/bio_profile.schema.json)
 
@@ -85,6 +87,8 @@ embedded in the BioProfile document. The canonical files live under
 
 * `product_id` must point at a known fertilizer entry; concentrations and pH obey non-negative and
   `[0, 14]` bounds respectively.
+* `additives` must be provided as a list of strings. Supplying a set results in a validation warning
+  that explains how to convert to a deterministic list.
 
 ### Cultivation events — `$defs.cultivation_event` in [`bio_profile.schema.json`](../custom_components/horticulture_assistant/data/schema/bio_profile.schema.json)
 
@@ -101,6 +105,8 @@ embedded in the BioProfile document. The canonical files live under
 ```
 
 * `event_type` drives analytics rollups and should match one of the documented stage activities.
+* `tags` must be a list (or other ordered sequence) of strings and `metadata` must be an object.
+* `occurred_at` enforces ISO-8601 timestamps to keep audit logs consistent across timezones.
 
 ### Run lifecycle snapshots — [`run_event.schema.json`](../custom_components/horticulture_assistant/data/schema/run_event.schema.json)
 
@@ -117,6 +123,8 @@ embedded in the BioProfile document. The canonical files live under
 ```
 
 * Success metrics are clamped to the `[0, 1]` range.
+* `environment` and `metadata` objects cannot be arrays or scalars and timestamps must include
+  timezone information.
 
 ## Validation tips
 

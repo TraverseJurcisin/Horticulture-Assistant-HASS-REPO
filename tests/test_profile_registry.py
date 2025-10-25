@@ -481,6 +481,25 @@ async def test_record_run_event_rejects_invalid_success_rate(hass):
     assert "success_rate" in str(excinfo.value)
 
 
+async def test_record_run_event_rejects_naive_timestamp(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Run Timestamp Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_run_event(
+            profile_id,
+            {
+                "run_id": "run-naive",
+                "started_at": "2024-05-01T00:00:00",
+            },
+        )
+
+    assert "started_at" in str(excinfo.value)
+
+
 async def test_record_harvest_event_updates_statistics(hass):
     species = BioProfile(profile_id="species.1", display_name="Species", profile_type="species")
     cultivar = BioProfile(
@@ -698,6 +717,67 @@ async def test_record_nutrient_event_updates_snapshots(hass):
         None,
     )
     assert species_snapshot is not None
+
+
+async def test_record_nutrient_event_rejects_bad_metadata(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Nutrient Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_nutrient_event(
+            profile_id,
+            {
+                "event_id": "feed-err",
+                "applied_at": "2024-03-01T08:00:00Z",
+                "metadata": ["invalid"],
+            },
+        )
+
+    assert "metadata" in str(excinfo.value)
+
+
+async def test_record_nutrient_event_flags_set_additives(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Nutrient Additives Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_nutrient_event(
+            profile_id,
+            {
+                "event_id": "feed-set",
+                "applied_at": "2024-03-01T08:00:00Z",
+                "additives": {"calmag", "silica"},
+            },
+        )
+
+    assert "additives" in str(excinfo.value)
+
+
+async def test_record_cultivation_event_rejects_non_sequence_tags(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Tag Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_cultivation_event(
+            profile_id,
+            {
+                "event_id": "event-1",
+                "occurred_at": "2024-03-01T08:00:00Z",
+                "event_type": "inspection",
+                "tags": "not-a-list",
+            },
+        )
+
+    assert "tags" in str(excinfo.value)
     assert species_snapshot.payload["metrics"]["total_events"] == pytest.approx(1.0)
     contributors = species_snapshot.payload.get("contributors") or []
     assert any(item.get("profile_id") == "cultivar.1" for item in contributors)

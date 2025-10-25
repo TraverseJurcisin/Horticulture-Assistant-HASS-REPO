@@ -36,12 +36,14 @@ Key constraints include:
 * `yield_grams`, `area_m2`, and other harvest weights must be zero or positive.
 * Nutrient solution measurements cannot be negative and pH must fall between 0 and 14.
 * Run statistics such as `success_rate` are clamped to the `[0, 1]` range.
+* All timestamps must be ISO-8601 strings with timezone offsets (UTC is assumed when omitted).
+* Metadata blocks must be JSON objects, while tags and additives must be sequences of strings.
 * Required identifiers (`event_id`, `run_id`, `profile_id`) require at least one character.
 
 Example failure response from the `record_nutrient_event` service:
 
 ```
-HomeAssistantError: nutrient event validation failed: ph: 15.2 is greater than the maximum of 14
+HomeAssistantError: nutrient event validation failed: ph: must be ≤ 14.0; applied_at: expected an ISO-8601 timestamp
 ```
 
 Consult the schema files for a full list of constraints. Contributors can also invoke

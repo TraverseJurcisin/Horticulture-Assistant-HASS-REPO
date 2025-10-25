@@ -215,7 +215,9 @@ The current entitlements are exposed in diagnostics (cloud connection sensors an
 
 ### Event payload validation
 
-- **Strict schema enforcement:** Every history service validates requests against the bundled JSON schemas before updating the registry. You will see a descriptive error in Home Assistant if a payload is missing required IDs, provides negative weights, or reports a pH outside the 0–14 range.
+- **Strict schema enforcement:** Every history service validates requests against the bundled JSON schemas before updating the registry. You will see a descriptive error in Home Assistant if a payload is missing required IDs, provides negative weights, reports a pH outside the 0–14 range, or supplies non-dictionary metadata.
+- **ISO-8601 timestamp checks:** Run, harvest, nutrient, and cultivation events all require timezone-aware ISO-8601 timestamps. Requests using local time or malformed strings are rejected with a message that points to the offending field so logs stay chronologically accurate.
+- **Typed collections:** Tags, additives, and metadata blocks must be the correct container types. Lists with mixed datatypes (or sets that need conversion) now produce actionable guidance before the registry is mutated.
 - **Actionable profile warnings:** Profiles that fail schema validation now raise a persistent Home Assistant notification that lists the affected plants and the root causes. Fix the JSON or remove the override and the notification clears automatically.
 - **Issue registry integration:** Each invalid profile also registers an `invalid_profile_<plant_id>` issue with Home Assistant so supervisors can surface broken configurations in dashboards or subscribe to updates until the errors are resolved.
 - **Troubleshooting aids:** The `home-assistant.log` file includes the full validation message, and the new [Data validation reference](docs/data_validation.md) summarises the key constraints with example failure responses.

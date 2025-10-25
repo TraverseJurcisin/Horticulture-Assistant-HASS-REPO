@@ -968,6 +968,8 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, RunEvent) else RunEvent.from_json(payload)
+        if not event.profile_id:
+            event.profile_id = profile_id
         self._ensure_valid_event(
             context="run event",
             payload=event.to_json(),
@@ -1008,6 +1010,8 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, HarvestEvent) else HarvestEvent.from_json(payload)
+        if not event.profile_id:
+            event.profile_id = profile_id
         self._ensure_valid_event(
             context="harvest event",
             payload=event.to_json(),
@@ -1035,6 +1039,8 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, NutrientApplication) else NutrientApplication.from_json(payload)
+        if not event.profile_id:
+            event.profile_id = profile_id
         self._ensure_valid_event(
             context="nutrient event",
             payload=event.to_json(),
@@ -1062,6 +1068,8 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, CultivationEvent) else CultivationEvent.from_json(payload)
+        if not event.profile_id:
+            event.profile_id = profile_id
         self._ensure_valid_event(
             context="cultivation event",
             payload=event.to_json(),
