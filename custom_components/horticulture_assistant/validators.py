@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+import datetime as dt
 import json
 from collections.abc import Mapping, Sequence
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-from datetime import datetime, timezone
+UTC = dt.UTC  # type: ignore[attr-defined]
 
 try:
     from jsonschema import Draft202012Validator
@@ -23,12 +24,6 @@ def _validator() -> type[Draft202012Validator] | None:
     if Draft202012Validator is None:  # pragma: no cover - exercised in HA runtime
         return None
     return Draft202012Validator
-
-
-try:
-    UTC = datetime.UTC  # type: ignore[attr-defined]
-except AttributeError:  # pragma: no cover - Py<3.11 fallback
-    UTC = timezone.utc  # noqa: UP017
 
 
 def _format_errors(
@@ -89,12 +84,11 @@ def _ensure_sequence_of_strings(event: Mapping[str, Any], key: str) -> list[str]
     value = event.get(key)
     if value is None:
         return []
-    allowed_iterable = False
-    if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
-        allowed_iterable = True
-    elif isinstance(value, (set, frozenset)):
-        allowed_iterable = True
-    if allowed_iterable:
+    if isinstance(value, set | frozenset):
+        if any(not isinstance(item, str) for item in value):
+            return [f"{key}: expected all items to be strings"]
+        return []
+    if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
         non_strings = [item for item in value if not isinstance(item, str)]
         if non_strings:
             return [f"{key}: expected all items to be strings"]
@@ -134,7 +128,7 @@ def _ensure_timestamp(event: Mapping[str, Any], key: str) -> list[str]:
     if not text:
         return [f"{key}: missing required ISO-8601 timestamp"]
     try:
-        ts = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        ts = dt.datetime.fromisoformat(text.replace("Z", "+00:00"))
     except ValueError:
         return [f"{key}: expected an ISO-8601 timestamp"]
     if ts.tzinfo is None:
@@ -185,14 +179,14 @@ def _manual_nutrient_event_checks(event: Mapping[str, Any]) -> list[str]:
     issues.extend(_ensure_number(event, "ph", minimum=0.0, maximum=14.0))
     additives = event.get("additives")
     if additives is not None:
-        if isinstance(additives, Sequence) and not isinstance(additives, (str, bytes, bytearray)):
-            if any(not isinstance(item, str) for item in additives):
-                issues.append("additives: expected all items to be strings")
-        elif isinstance(additives, (set, frozenset)):
+        if isinstance(additives, set | frozenset):
             if any(not isinstance(item, str) for item in additives):
                 issues.append("additives: expected all items to be strings")
             else:
                 issues.append("additives: convert to list for stable ordering")
+        elif isinstance(additives, Sequence) and not isinstance(additives, str | bytes | bytearray):
+            if any(not isinstance(item, str) for item in additives):
+                issues.append("additives: expected all items to be strings")
         else:
             issues.append("additives: expected a list of strings")
     issues.extend(_ensure_mapping(event, "metadata"))

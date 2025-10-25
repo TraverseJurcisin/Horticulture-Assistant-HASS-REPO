@@ -778,12 +778,6 @@ async def test_record_cultivation_event_rejects_non_sequence_tags(hass):
         )
 
     assert "tags" in str(excinfo.value)
-    assert species_snapshot.payload["metrics"]["total_events"] == pytest.approx(1.0)
-    contributors = species_snapshot.payload.get("contributors") or []
-    assert any(item.get("profile_id") == "cultivar.1" for item in contributors)
-
-    stored = await profile_store.async_load_profile(hass, "cultivar.1")
-    assert stored is not None and len(stored.nutrient_history) == 1
 
 
 async def test_record_nutrient_event_rejects_invalid_ph(hass):

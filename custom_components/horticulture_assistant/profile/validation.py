@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Any, Mapping
+from typing import Any
 
 from ..const import VARIABLE_SPECS
 
@@ -149,7 +150,7 @@ def evaluate_threshold_bounds(thresholds: Mapping[str, Any]) -> list[ThresholdIs
                 )
             )
 
-    for family, entries in family_map.items():
+    for _family, entries in family_map.items():
         min_entry = next(((k, v) for k, v in entries.values() if k.endswith("_min")), None)
         max_entry = next(((k, v) for k, v in entries.values() if k.endswith("_max")), None)
         if not min_entry or not max_entry:
