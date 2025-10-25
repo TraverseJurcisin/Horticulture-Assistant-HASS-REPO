@@ -66,34 +66,80 @@ Tools → Services** panel:
 service: horticulture_assistant.profile_provenance
 data:
   profile_id: alicante_tomato_north_bed
+  include_overlay: true
+  include_citations: true
 ```
 
-The response maps each resolved field to the tier that supplied it, making overrides—and the absence of overrides—obvious:
+You’ll receive both a terse summary (great for automations) and a rich breakdown that lists every ancestor in the inheritance
+chain:
 
 ```jsonc
 {
   "profile_id": "alicante_tomato_north_bed",
-  "provenance": {
+  "profile_name": "Alicante Tomato – North Bed",
+  "summary": {
     "environment.temperature.min_c": {
-      "source": "line",
+      "source_type": "manual",
+      "is_inherited": false,
       "value": 19.5
     },
     "environment.temperature.max_c": {
-      "source": "species",
+      "source_type": "species",
+      "is_inherited": true,
       "value": 27.0
-    },
-    "environment.humidity.min_percent": {
-      "source": "line",
-      "value": 55
     }
-  }
+  },
+  "resolved_provenance": {
+    "environment.temperature.min_c": {
+      "source_type": "manual",
+      "source_id": "line",
+      "value": 19.5,
+      "parents": ["alicante_cultivar", "solanum_lycopersicum"],
+      "citations": []
+    },
+    "environment.temperature.max_c": {
+      "source_type": "species",
+      "source_id": "solanum_lycopersicum",
+      "value": 27.0,
+      "overlay": {
+        "cultivar": 26.5,
+        "species": 27.0
+      }
+    }
+  },
+  "groups": {
+    "inherited": ["environment.temperature.max_c"],
+    "overrides": ["environment.temperature.min_c"],
+    "external": [],
+    "computed": []
+  },
+  "counts": {
+    "total": 2,
+    "inherited": 1,
+    "overrides": 1,
+    "external": 0,
+    "computed": 0
+  },
+  "badges": {
+    "environment.temperature.min_c": {
+      "badge": "override",
+      "label": "Locally overridden"
+    }
+  },
+  "badge_counts": {
+    "inherited": 1,
+    "override": 1,
+    "external": 0,
+    "computed": 0
+  },
+  "last_resolved": "2024-08-14T20:41:51+00:00"
 }
 ```
 
 If the line file omits a property entirely, the provenance report will show the cultivar or species default instead. This makes
 it easy to verify that deleting a key from your overrides really did revert to the upstream default. When hand-editing JSON, dou
-ble-check the `species` and `cultivar` references as well—if a reference file is missing or misspelled, the integration will log
-an error during reload so you can correct it promptly.
+ble-check the `species` and `cultivar` references as well—if a reference file is missing or misspelled, the integration now rais
+es a persistent notification listing the problematic IDs so you can correct them promptly. Manual threshold overrides also perform range checks in the configuration flow and during reloads, blocking unrealistic minimum/maximum pairs before they propagate to automations.
 
 ## How the Repository is Organized
 
@@ -105,6 +151,7 @@ an error during reload so you can correct it promptly.
 | Fertilizer dataset | Detail/index shards, schema history, validation workflow | [Fertilizer dataset](custom_components/horticulture_assistant/data/fertilizers/README.md) |
 | Local working data | User profiles, overrides, cached assets | [Local data](custom_components/horticulture_assistant/data/local/README.md) |
 | Validation | Runtime schema enforcement and troubleshooting | [Data validation reference](docs/data_validation.md) |
+| Schema reference | Sample payloads for profiles and event services | [Schema reference](docs/schema_reference.md) |
 | Scripts | Validation and migration helpers | [Scripts overview](scripts/README.md) *(create your own notes here)* |
 
 ## Reference Data Highlights
@@ -168,10 +215,13 @@ The current entitlements are exposed in diagnostics (cloud connection sensors an
 
 ### Event payload validation
 
-- **Strict schema enforcement:** Every history service validates requests against the bundled JSON schemas before updating the registry. You will see a descriptive error in Home Assistant if a payload is missing required IDs, provides negative weights, or reports a pH outside the 0–14 range.
+- **Strict schema enforcement:** Every history service validates requests against the bundled JSON schemas before updating the registry. You will see a descriptive error in Home Assistant if a payload is missing required IDs, provides negative weights, reports a pH outside the 0–14 range, or supplies non-dictionary metadata.
+- **ISO-8601 timestamp checks:** Run, harvest, nutrient, and cultivation events all require timezone-aware ISO-8601 timestamps. Requests using local time or malformed strings are rejected with a message that points to the offending field so logs stay chronologically accurate.
+- **Typed collections:** Tags, additives, and metadata blocks must be the correct container types. Lists with mixed datatypes (or sets that need conversion) now produce actionable guidance before the registry is mutated.
 - **Actionable profile warnings:** Profiles that fail schema validation now raise a persistent Home Assistant notification that lists the affected plants and the root causes. Fix the JSON or remove the override and the notification clears automatically.
+- **Issue registry integration:** Each invalid profile also registers an `invalid_profile_<plant_id>` issue with Home Assistant so supervisors can surface broken configurations in dashboards or subscribe to updates until the errors are resolved.
 - **Troubleshooting aids:** The `home-assistant.log` file includes the full validation message, and the new [Data validation reference](docs/data_validation.md) summarises the key constraints with example failure responses.
-- **Reference dataset watchdog:** A background monitor checks the bundled catalogues and any local overrides every few hours. If a dataset fails to load, the integration raises a persistent notification identifying which file needs attention so corrupt overrides no longer go unnoticed.
+- **Reference dataset watchdog:** A background monitor checks the bundled catalogues and any local overrides every few hours. If a dataset fails to load, the integration raises a persistent notification and a Home Assistant Repairs issue identifying which file needs attention so corrupt overrides no longer go unnoticed.
 - **Schema-driven contributions:** When contributing new datasets or automation helpers, run `python -m jsonschema` against the schema fragments in `custom_components/horticulture_assistant/data/schema/` to verify custom payloads before opening a PR.
 
 ## Developing & Contributing

@@ -93,7 +93,12 @@ DEFAULT_CLOUD_SYNC_INTERVAL = 300
 
 # Persistent notification identifiers
 NOTIFICATION_PROFILE_VALIDATION = "horticulture_profile_validation"
+NOTIFICATION_PROFILE_LINEAGE = "horticulture_profile_lineage"
 NOTIFICATION_DATASET_HEALTH = "horticulture_dataset_health"
+
+# Issue registry identifiers
+ISSUE_PROFILE_VALIDATION_PREFIX = "invalid_profile_"
+ISSUE_DATASET_HEALTH_PREFIX = "dataset_health_"
 
 # ---------------------------------------------------------------------------
 # Feature & entitlement constants

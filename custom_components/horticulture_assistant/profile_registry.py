@@ -27,6 +27,8 @@ from .const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
     DOMAIN,
+    ISSUE_PROFILE_VALIDATION_PREFIX,
+    NOTIFICATION_PROFILE_LINEAGE,
     NOTIFICATION_PROFILE_VALIDATION,
     PROFILE_SCOPE_CHOICES,
     PROFILE_SCOPE_DEFAULT,
@@ -48,6 +50,7 @@ from .profile.utils import (
     link_species_and_cultivars,
     sync_general_section,
 )
+from .profile.validation import evaluate_threshold_bounds
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .validators import (
     validate_cultivation_event_dict,
@@ -113,6 +116,12 @@ class ProfileRegistry:
         self._validation_issues: dict[str, list[str]] = {}
         self._validation_dirty = False
         self._validation_digest: tuple[tuple[str, str], ...] | None = None
+        self._validation_issue_keys: set[str] = set()
+        self._validation_issue_summaries: dict[str, str] = {}
+        self._lineage_missing_species: set[tuple[str, str]] = set()
+        self._lineage_missing_parents: set[tuple[str, str]] = set()
+        self._lineage_notification_dirty = False
+        self._lineage_notification_digest: tuple[tuple[str, str, str], ...] | None = None
         self._history_exporter: HistoryExporter | None
         try:
             self._history_exporter = HistoryExporter(hass)
@@ -198,6 +207,49 @@ class ProfileRegistry:
         )
         self._missing_parent_issues.discard(issue_key)
 
+    def _create_validation_issue(self, profile: BioProfile, summary: str) -> None:
+        issue_id = f"{ISSUE_PROFILE_VALIDATION_PREFIX}{profile.profile_id}"
+        ir.async_create_issue(
+            self.hass,
+            DOMAIN,
+            issue_id,
+            is_fixable=False,
+            severity=ir.IssueSeverity.WARNING,
+            translation_key="invalid_profile_schema",
+            translation_placeholders={
+                "profile_id": profile.profile_id,
+                "profile_name": profile.display_name,
+                "issue_summary": summary,
+            },
+        )
+        self._validation_issue_keys.add(issue_id)
+        self._validation_issue_summaries[profile.profile_id] = summary
+
+    def _clear_validation_issue(self, profile_id: str) -> None:
+        issue_id = f"{ISSUE_PROFILE_VALIDATION_PREFIX}{profile_id}"
+        if issue_id not in self._validation_issue_keys:
+            self._validation_issue_summaries.pop(profile_id, None)
+            return
+        ir.async_delete_issue(
+            self.hass,
+            DOMAIN,
+            issue_id,
+        )
+        self._validation_issue_keys.discard(issue_id)
+        self._validation_issue_summaries.pop(profile_id, None)
+
+    def _sync_validation_issue(self, profile: BioProfile, issues: list[str]) -> None:
+        if not issues:
+            self._clear_validation_issue(profile.profile_id)
+            return
+        summary = str(issues[0])
+        if len(issues) > 1:
+            summary += f" (+{len(issues) - 1} more)"
+        existing = self._validation_issue_summaries.get(profile.profile_id)
+        if existing == summary:
+            return
+        self._create_validation_issue(profile, summary)
+
     def _log_lineage_warnings(self, report: LineageLinkReport | None) -> None:
         if report is None:
             return
@@ -250,10 +302,16 @@ class ProfileRegistry:
             self._clear_parent_issue(profile_id, parent_id)
             self._missing_parents_logged.discard((profile_id, parent_id))
 
+        self._lineage_missing_species = current_species
+        self._lineage_missing_parents = current_parents
+        self._lineage_notification_dirty = True
+        self.hass.async_create_task(self._async_maybe_refresh_lineage_notification())
+
     def _validate_profile(self, profile: BioProfile) -> list[str]:
         schema = _load_profile_schema()
         if not schema:
             self._validation_issues.pop(profile.profile_id, None)
+            self._clear_validation_issue(profile.profile_id)
             return []
         try:
             payload = profile.to_json()
@@ -265,12 +323,25 @@ class ProfileRegistry:
             for issue in issues:
                 _LOGGER.warning("Profile %s schema validation issue: %s", profile.profile_id, issue)
 
-        if issues:
-            self._validation_issues[profile.profile_id] = [str(issue) for issue in issues]
+            resolved_section = profile.resolved_section()
+            threshold_issues = evaluate_threshold_bounds(resolved_section.thresholds)
+            for violation in threshold_issues:
+                message = violation.message()
+                _LOGGER.warning(
+                    "Profile %s threshold validation issue: %s",
+                    profile.profile_id,
+                    message,
+                )
+                issues.append(message)
+
+        issues_list = [str(issue) for issue in issues]
+        if issues_list:
+            self._validation_issues[profile.profile_id] = issues_list
         else:
             self._validation_issues.pop(profile.profile_id, None)
+        self._sync_validation_issue(profile, issues_list)
         self._validation_dirty = True
-        return [str(issue) for issue in issues]
+        return issues_list
 
     def _ensure_valid_event(
         self,
@@ -351,6 +422,66 @@ class ProfileRegistry:
             message,
             notification_id=NOTIFICATION_PROFILE_VALIDATION,
             title="Horticulture Assistant profile validation error",
+        )
+
+    async def _async_maybe_refresh_lineage_notification(self) -> None:
+        if not self._lineage_notification_dirty:
+            return
+        self._lineage_notification_dirty = False
+        await self._async_refresh_lineage_notification()
+
+    async def _async_refresh_lineage_notification(self) -> None:
+        missing_species = sorted(self._lineage_missing_species)
+        missing_parents = sorted(self._lineage_missing_parents)
+
+        if not missing_species and not missing_parents:
+            if self._lineage_notification_digest is not None:
+                await self._async_dismiss_notification(NOTIFICATION_PROFILE_LINEAGE)
+                self._lineage_notification_digest = None
+            return
+
+        digest: tuple[tuple[str, str, str], ...] = tuple(
+            [("species", pid, sid) for pid, sid in missing_species]
+            + [("parent", pid, parent_id) for pid, parent_id in missing_parents]
+        )
+        if digest == self._lineage_notification_digest:
+            return
+
+        self._lineage_notification_digest = digest
+
+        lines = [
+            (
+                "Some profiles reference missing species or parent profiles, so "
+                "inheritance fallbacks are currently disabled."
+            ),
+            "",
+        ]
+
+        if missing_species:
+            lines.append("Missing species references:")
+            for profile_id, species_id in missing_species:
+                profile = self._profiles.get(profile_id)
+                display_name = profile.display_name if profile else profile_id
+                lines.append(f"- {display_name} ({profile_id}) → {species_id}")
+            lines.append("")
+
+        if missing_parents:
+            lines.append("Missing parent references:")
+            for profile_id, parent_id in missing_parents:
+                profile = self._profiles.get(profile_id)
+                display_name = profile.display_name if profile else profile_id
+                lines.append(f"- {display_name} ({profile_id}) → {parent_id}")
+            lines.append("")
+
+        lines.append(
+            "Add the referenced profiles or update the IDs, then reload Horticulture Assistant to restore inheritance."
+        )
+
+        message = "\n".join(lines)
+        await self._async_create_notification(
+            message,
+            notification_id=NOTIFICATION_PROFILE_LINEAGE,
+            title="Horticulture Assistant lineage warning",
         )
 
     async def _async_create_notification(self, message: str, *, notification_id: str, title: str) -> None:
@@ -758,6 +889,7 @@ class ProfileRegistry:
         self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
         self.entry.options = new_opts
         self._profiles.pop(profile_id, None)
+        self._clear_validation_issue(profile_id)
         self._relink_profiles()
         if self._validation_issues.pop(profile_id, None) is not None:
             self._validation_dirty = True
@@ -836,6 +968,8 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, RunEvent) else RunEvent.from_json(payload)
+        if not event.profile_id:
+            event.profile_id = profile_id
         self._ensure_valid_event(
             context="run event",
             payload=event.to_json(),
@@ -876,6 +1010,8 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, HarvestEvent) else HarvestEvent.from_json(payload)
+        if not event.profile_id:
+            event.profile_id = profile_id
         self._ensure_valid_event(
             context="harvest event",
             payload=event.to_json(),
@@ -903,6 +1039,8 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, NutrientApplication) else NutrientApplication.from_json(payload)
+        if not event.profile_id:
+            event.profile_id = profile_id
         self._ensure_valid_event(
             context="nutrient event",
             payload=event.to_json(),
@@ -930,6 +1068,8 @@ class ProfileRegistry:
             raise ValueError(f"unknown profile {profile_id}")
 
         event = payload if isinstance(payload, CultivationEvent) else CultivationEvent.from_json(payload)
+        if not event.profile_id:
+            event.profile_id = profile_id
         self._ensure_valid_event(
             context="cultivation event",
             payload=event.to_json(),

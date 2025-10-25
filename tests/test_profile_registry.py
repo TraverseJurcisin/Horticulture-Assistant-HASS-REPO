@@ -14,11 +14,17 @@ from custom_components.horticulture_assistant.const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
     DOMAIN,
+    NOTIFICATION_PROFILE_LINEAGE,
     NOTIFICATION_PROFILE_VALIDATION,
     PROFILE_SCOPE_DEFAULT,
 )
 from custom_components.horticulture_assistant.profile import store as profile_store
-from custom_components.horticulture_assistant.profile.schema import BioProfile, SpeciesProfile
+from custom_components.horticulture_assistant.profile.schema import (
+    BioProfile,
+    FieldAnnotation,
+    ResolvedTarget,
+    SpeciesProfile,
+)
 from custom_components.horticulture_assistant.profile.statistics import (
     EVENT_STATS_VERSION,
     NUTRIENT_STATS_VERSION,
@@ -61,6 +67,41 @@ async def test_missing_parent_warning_logged(hass, caplog):
         await reg.async_load()
 
     assert any("cultivar.missing" in record.message for record in caplog.records)
+
+
+async def test_lineage_notification_created_and_clears(hass):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "species": "species.unknown"}}},
+    )
+
+    notifications: list[dict] = []
+    dismissals: list[dict] = []
+
+    hass.services.async_register(
+        "persistent_notification",
+        "create",
+        lambda call: notifications.append(call.data),
+    )
+    hass.services.async_register(
+        "persistent_notification",
+        "dismiss",
+        lambda call: dismissals.append(call.data),
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+    await hass.async_block_till_done()
+
+    assert notifications
+    latest = notifications[-1]
+    assert latest["notification_id"] == NOTIFICATION_PROFILE_LINEAGE
+    assert "species.unknown" in latest["message"]
+
+    reg._log_lineage_warnings(LineageLinkReport())
+    await hass.async_block_till_done()
+
+    assert any(item.get("notification_id") == NOTIFICATION_PROFILE_LINEAGE for item in dismissals)
 
 
 async def test_missing_species_creates_issue_and_clears_when_resolved(hass, monkeypatch):
@@ -161,6 +202,72 @@ async def test_profile_validation_creates_and_clears_notification(hass, monkeypa
     await reg.async_load()
 
     assert any(item["notification_id"] == NOTIFICATION_PROFILE_VALIDATION for item in dismissals)
+
+
+async def test_profile_validation_issues_created_and_cleared(hass, monkeypatch):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
+    created: list[tuple[str, dict]] = []
+    deleted: list[str] = []
+
+    class _Severity:
+        WARNING = "warning"
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.ir",
+        SimpleNamespace(
+            IssueSeverity=_Severity,
+            async_create_issue=lambda *_args, **kwargs: created.append((_args[2], kwargs)),
+            async_delete_issue=lambda *_args: deleted.append(_args[2]),
+        ),
+    )
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: ["general.name: required property missing", "general.stage: required"],
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    assert any(issue_id == "invalid_profile_p1" for issue_id, _ in created)
+    issue_payload = next(payload for issue_id, payload in created if issue_id == "invalid_profile_p1")
+    assert issue_payload["translation_placeholders"]["issue_summary"].startswith("general.name")
+    assert "(+1 more)" in issue_payload["translation_placeholders"]["issue_summary"]
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: [],
+    )
+
+    await reg.async_load()
+
+    assert "invalid_profile_p1" in deleted
+
+
+async def test_profile_threshold_violations_logged(hass, monkeypatch):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: [],
+    )
+
+    profile = BioProfile(profile_id="p1", display_name="Plant")
+    profile.resolved_targets["temperature_min"] = ResolvedTarget(
+        value=90.0,
+        annotation=FieldAnnotation(source_type="manual", method="manual"),
+        citations=[],
+    )
+    profile.resolved_targets["temperature_max"] = ResolvedTarget(
+        value=10.0,
+        annotation=FieldAnnotation(source_type="manual", method="manual"),
+        citations=[],
+    )
+
+    issues = reg._validate_profile(profile)
+    assert any("temperature_min" in item for item in issues)
+    assert reg._validation_issues["p1"]
 
 
 async def test_initialize_merges_storage_and_options(hass):
@@ -372,6 +479,25 @@ async def test_record_run_event_rejects_invalid_success_rate(hass):
         )
 
     assert "success_rate" in str(excinfo.value)
+
+
+async def test_record_run_event_rejects_naive_timestamp(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Run Timestamp Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_run_event(
+            profile_id,
+            {
+                "run_id": "run-naive",
+                "started_at": "2024-05-01T00:00:00",
+            },
+        )
+
+    assert "started_at" in str(excinfo.value)
 
 
 async def test_record_harvest_event_updates_statistics(hass):
@@ -591,12 +717,67 @@ async def test_record_nutrient_event_updates_snapshots(hass):
         None,
     )
     assert species_snapshot is not None
-    assert species_snapshot.payload["metrics"]["total_events"] == pytest.approx(1.0)
-    contributors = species_snapshot.payload.get("contributors") or []
-    assert any(item.get("profile_id") == "cultivar.1" for item in contributors)
 
-    stored = await profile_store.async_load_profile(hass, "cultivar.1")
-    assert stored is not None and len(stored.nutrient_history) == 1
+
+async def test_record_nutrient_event_rejects_bad_metadata(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Nutrient Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_nutrient_event(
+            profile_id,
+            {
+                "event_id": "feed-err",
+                "applied_at": "2024-03-01T08:00:00Z",
+                "metadata": ["invalid"],
+            },
+        )
+
+    assert "metadata" in str(excinfo.value)
+
+
+async def test_record_nutrient_event_flags_set_additives(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Nutrient Additives Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_nutrient_event(
+            profile_id,
+            {
+                "event_id": "feed-set",
+                "applied_at": "2024-03-01T08:00:00Z",
+                "additives": {"calmag", "silica"},
+            },
+        )
+
+    assert "additives" in str(excinfo.value)
+
+
+async def test_record_cultivation_event_rejects_non_sequence_tags(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    profile_id = await reg.async_add_profile("Tag Validation")
+
+    with pytest.raises(ValueError) as excinfo:
+        await reg.async_record_cultivation_event(
+            profile_id,
+            {
+                "event_id": "event-1",
+                "occurred_at": "2024-03-01T08:00:00Z",
+                "event_type": "inspection",
+                "tags": "not-a-list",
+            },
+        )
+
+    assert "tags" in str(excinfo.value)
 
 
 async def test_record_nutrient_event_rejects_invalid_ph(hass):

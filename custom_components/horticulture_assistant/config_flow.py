@@ -46,6 +46,7 @@ from .const import (
 from .opb_client import OpenPlantbookClient
 from .profile.compat import sync_thresholds
 from .profile.utils import determine_species_slug, ensure_sections
+from .profile.validation import evaluate_threshold_bounds
 from .sensor_catalog import collect_sensor_suggestions, format_sensor_hints
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
@@ -350,6 +351,21 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                     errors[key] = "invalid_float"
             if errors:
                 return self.async_show_form(step_id="thresholds", data_schema=schema, errors=errors)
+
+            violations = evaluate_threshold_bounds(cleaned)
+            if violations:
+                error_summary = [violation.message() for violation in violations[:3]]
+                if len(violations) > 3:
+                    error_summary.append(f"(+{len(violations) - 3} more)")
+                placeholders = {"issue_detail": "\n".join(error_summary)}
+                field_errors = {issue.key: "threshold_field_error" for issue in violations}
+                field_errors["base"] = "threshold_out_of_bounds"
+                return self.async_show_form(
+                    step_id="thresholds",
+                    data_schema=schema,
+                    errors=field_errors,
+                    description_placeholders=placeholders,
+                )
             self._thresholds = cleaned
             return await self.async_step_sensors()
 

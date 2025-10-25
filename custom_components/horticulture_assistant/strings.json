@@ -21,7 +21,9 @@
             }
         },
         "error": {
-            "invalid_float": "Enter a number"
+            "invalid_float": "Enter a number",
+            "threshold_field_error": "Adjust this value to stay within the supported range.",
+            "threshold_out_of_bounds": "{issue_detail}"
         }
     },
     "options": {
