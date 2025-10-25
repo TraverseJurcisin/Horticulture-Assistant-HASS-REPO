@@ -139,7 +139,7 @@ chain:
 If the line file omits a property entirely, the provenance report will show the cultivar or species default instead. This makes
 it easy to verify that deleting a key from your overrides really did revert to the upstream default. When hand-editing JSON, dou
 ble-check the `species` and `cultivar` references as well—if a reference file is missing or misspelled, the integration now rais
-es a persistent notification listing the problematic IDs so you can correct them promptly.
+es a persistent notification listing the problematic IDs so you can correct them promptly. Manual threshold overrides also perform range checks in the configuration flow and during reloads, blocking unrealistic minimum/maximum pairs before they propagate to automations.
 
 ## How the Repository is Organized
 
@@ -151,6 +151,7 @@ es a persistent notification listing the problematic IDs so you can correct them
 | Fertilizer dataset | Detail/index shards, schema history, validation workflow | [Fertilizer dataset](custom_components/horticulture_assistant/data/fertilizers/README.md) |
 | Local working data | User profiles, overrides, cached assets | [Local data](custom_components/horticulture_assistant/data/local/README.md) |
 | Validation | Runtime schema enforcement and troubleshooting | [Data validation reference](docs/data_validation.md) |
+| Schema reference | Sample payloads for profiles and event services | [Schema reference](docs/schema_reference.md) |
 | Scripts | Validation and migration helpers | [Scripts overview](scripts/README.md) *(create your own notes here)* |
 
 ## Reference Data Highlights

@@ -16,6 +16,14 @@ matches `invalid_profile_<profile_id>` so supervisors can subscribe to updates o
 problem in dashboards. Once the JSON is corrected and the integration reloaded, the issue is
 automatically dismissed.
 
+* Threshold ranges: Manual overrides entered via the configuration flow are checked against
+  agronomic guard rails before the profile is saved. Temperature, humidity, moisture, EC, CO₂,
+  VPD, and illuminance thresholds must stay within the supported ranges and minimum values
+  cannot exceed their corresponding maximums. If a value is out of bounds the form highlights the
+  offending fields and surfaces a base error explaining the mismatch. The same validations run
+  whenever profiles are reloaded from disk, so mistakes made in a text editor still raise a Repairs
+  issue and block the configuration until corrected.
+
 ## Event Payloads
 
 All event services (`record_run_event`, `record_harvest_event`, `record_nutrient_event`,

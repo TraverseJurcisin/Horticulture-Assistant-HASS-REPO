@@ -50,6 +50,7 @@ from .profile.utils import (
     link_species_and_cultivars,
     sync_general_section,
 )
+from .profile.validation import evaluate_threshold_bounds
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .validators import (
     validate_cultivation_event_dict,
@@ -321,6 +322,17 @@ class ProfileRegistry:
             issues = validate_profile_dict(payload, schema)
             for issue in issues:
                 _LOGGER.warning("Profile %s schema validation issue: %s", profile.profile_id, issue)
+
+            resolved_section = profile.resolved_section()
+            threshold_issues = evaluate_threshold_bounds(resolved_section.thresholds)
+            for violation in threshold_issues:
+                message = violation.message()
+                _LOGGER.warning(
+                    "Profile %s threshold validation issue: %s",
+                    profile.profile_id,
+                    message,
+                )
+                issues.append(message)
 
         issues_list = [str(issue) for issue in issues]
         if issues_list:

@@ -19,7 +19,12 @@ from custom_components.horticulture_assistant.const import (
     PROFILE_SCOPE_DEFAULT,
 )
 from custom_components.horticulture_assistant.profile import store as profile_store
-from custom_components.horticulture_assistant.profile.schema import BioProfile, SpeciesProfile
+from custom_components.horticulture_assistant.profile.schema import (
+    BioProfile,
+    FieldAnnotation,
+    ResolvedTarget,
+    SpeciesProfile,
+)
 from custom_components.horticulture_assistant.profile.statistics import (
     EVENT_STATS_VERSION,
     NUTRIENT_STATS_VERSION,
@@ -237,6 +242,32 @@ async def test_profile_validation_issues_created_and_cleared(hass, monkeypatch):
     await reg.async_load()
 
     assert "invalid_profile_p1" in deleted
+
+
+async def test_profile_threshold_violations_logged(hass, monkeypatch):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: [],
+    )
+
+    profile = BioProfile(profile_id="p1", display_name="Plant")
+    profile.resolved_targets["temperature_min"] = ResolvedTarget(
+        value=90.0,
+        annotation=FieldAnnotation(source_type="manual", method="manual"),
+        citations=[],
+    )
+    profile.resolved_targets["temperature_max"] = ResolvedTarget(
+        value=10.0,
+        annotation=FieldAnnotation(source_type="manual", method="manual"),
+        citations=[],
+    )
+
+    issues = reg._validate_profile(profile)
+    assert any("temperature_min" in item for item in issues)
+    assert reg._validation_issues["p1"]
 
 
 async def test_initialize_merges_storage_and_options(hass):

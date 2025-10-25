@@ -200,6 +200,40 @@ async def test_config_flow_manual_threshold_values(hass):
     }
 
 
+@pytest.mark.asyncio
+async def test_config_flow_threshold_range_validation(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="mint",
+        ),
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        await flow.async_step_threshold_source({"method": "manual"})
+        result = await flow.async_step_thresholds(
+            {
+                "temperature_min": "90",
+                "temperature_max": "10",
+            }
+        )
+
+    assert result["type"] == "form"
+    assert result["errors"]["temperature_min"] == "threshold_field_error"
+    assert result["errors"]["temperature_max"] == "threshold_field_error"
+    assert result["errors"]["base"] == "threshold_out_of_bounds"
+    detail = result.get("description_placeholders", {}).get("issue_detail", "")
+    assert "temperature_min=90" in detail
+    assert "temperature_max" in detail
+
+
 async def test_config_flow_profile_error(hass):
     flow = ConfigFlow()
     flow.hass = hass
