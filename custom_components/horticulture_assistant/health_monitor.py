@@ -80,9 +80,7 @@ def _collect_dataset_failures() -> list[tuple[str, str, str]]:
     return failures
 
 
-async def _async_publish_dataset_state(
-    hass: HomeAssistant, failures: Iterable[tuple[str, str, str]]
-) -> None:
+async def _async_publish_dataset_state(hass: HomeAssistant, failures: Iterable[tuple[str, str, str]]) -> None:
     issues = list(failures)
     domain_data = hass.data.setdefault(DOMAIN, {})
     if not issues:
@@ -170,9 +168,7 @@ async def _async_dismiss_notification(hass: HomeAssistant, notification_id: str)
         return
 
 
-def _sync_dataset_issues(
-    hass: HomeAssistant, failures: Iterable[tuple[str, str, str]]
-) -> None:
+def _sync_dataset_issues(hass: HomeAssistant, failures: Iterable[tuple[str, str, str]]) -> None:
     """Create or update Repairs issues for dataset failures."""
 
     domain_data = hass.data.setdefault(DOMAIN, {})

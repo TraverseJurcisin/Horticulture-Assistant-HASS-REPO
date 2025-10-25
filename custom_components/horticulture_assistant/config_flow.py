@@ -45,8 +45,8 @@ from .const import (
 )
 from .opb_client import OpenPlantbookClient
 from .profile.compat import sync_thresholds
-from .profile.validation import evaluate_threshold_bounds
 from .profile.utils import determine_species_slug, ensure_sections
+from .profile.validation import evaluate_threshold_bounds
 from .sensor_catalog import collect_sensor_suggestions, format_sensor_hints
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator

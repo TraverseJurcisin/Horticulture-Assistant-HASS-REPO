@@ -3,11 +3,10 @@ from __future__ import annotations
 import datetime as dt
 import json
 from collections.abc import Mapping, Sequence
+from datetime import UTC
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
-
-UTC = dt.UTC  # type: ignore[attr-defined]
 
 try:
     from jsonschema import Draft202012Validator
