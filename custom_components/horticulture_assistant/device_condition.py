@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
-from typing import Any, Callable
+from collections.abc import Callable, Mapping
+from typing import Any
 
 import voluptuous as vol
 
@@ -11,7 +11,8 @@ try:  # pragma: no cover - exercised in CI when Home Assistant isn't installed
     from homeassistant.components.device_automation import DEVICE_CONDITION_BASE_SCHEMA
     from homeassistant.core import HomeAssistant, callback
     from homeassistant.exceptions import InvalidDeviceAutomationConfig
-    from homeassistant.helpers import config_validation as cv, entity_registry as er
+    from homeassistant.helpers import config_validation as cv
+    from homeassistant.helpers import entity_registry as er
     from homeassistant.helpers.condition import ConditionCheckerType
 except ModuleNotFoundError:  # pragma: no cover - lightweight shim for unit tests
     import types
@@ -42,12 +43,7 @@ except ModuleNotFoundError:  # pragma: no cover - lightweight shim for unit test
     ConditionCheckerType = Callable[[HomeAssistant, Mapping[str, Any]], bool]
     DEVICE_CONDITION_BASE_SCHEMA = vol.Schema({})
 
-from .const import (
-    DOMAIN,
-    STATUS_OK,
-    STATUS_STATES_PROBLEM,
-    STATUS_STATES_RECOVERED,
-)
+from .const import DOMAIN, STATUS_STATES_PROBLEM, STATUS_STATES_RECOVERED
 
 CONDITION_STATUS_IS = "status_is"
 CONDITION_STATUS_OK = "status_ok"
@@ -126,10 +122,11 @@ async def async_get_condition_capabilities(
     """Return condition capabilities for the given configuration."""
 
     condition_type = config.get("type")
-    if condition_type == CONDITION_STATUS_IS:
-        extra = {vol.Required("state"): vol.Any(cv.string, [cv.string])}
-    else:
-        extra = {}
+    extra = (
+        {vol.Required("state"): vol.Any(cv.string, [cv.string])}
+        if condition_type == CONDITION_STATUS_IS
+        else {}
+    )
     return {"extra_fields": vol.Schema(extra)}
 
 
@@ -160,9 +157,7 @@ async def async_condition_from_config(
             states = _normalise_states(validated.get("state"))
             if not states:
                 raise InvalidDeviceAutomationConfig("status_is condition requires state")
-        elif condition_type == CONDITION_STATUS_OK:
-            states = set(STATUS_STATES_RECOVERED)
-        elif condition_type == CONDITION_STATUS_RECOVERED:
+        elif condition_type in {CONDITION_STATUS_OK, CONDITION_STATUS_RECOVERED}:
             states = set(STATUS_STATES_RECOVERED)
         else:
             states = set(STATUS_STATES_PROBLEM)

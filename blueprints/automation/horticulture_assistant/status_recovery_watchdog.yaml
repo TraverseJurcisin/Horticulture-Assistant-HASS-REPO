@@ -1,5 +1,5 @@
 blueprint:
-  name: Horticulture Assistant: Status recovery watchdog
+  name: "Horticulture Assistant: Status recovery watchdog"
   description: >-
     Send an escalation notification if a plant remains in a warning or critical
     state for longer than the configured timeout. The automation waits for the
