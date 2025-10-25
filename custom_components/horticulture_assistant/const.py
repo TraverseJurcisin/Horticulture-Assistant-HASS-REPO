@@ -10,6 +10,19 @@ PLATFORMS: list[Platform] = [
     Platform.NUMBER,
 ]
 
+# Home Assistant event types fired when profile history is updated.
+EVENT_PROFILE_RUN_RECORDED = "horticulture_assistant_profile_run_recorded"
+EVENT_PROFILE_HARVEST_RECORDED = "horticulture_assistant_profile_harvest_recorded"
+EVENT_PROFILE_NUTRIENT_RECORDED = "horticulture_assistant_profile_nutrient_recorded"
+EVENT_PROFILE_CULTIVATION_RECORDED = "horticulture_assistant_profile_cultivation_recorded"
+
+# Normalised status strings used across entities, triggers and conditions.
+STATUS_OK = "ok"
+STATUS_WARN = "warn"
+STATUS_CRITICAL = "critical"
+STATUS_STATES_PROBLEM: tuple[str, ...] = (STATUS_WARN, STATUS_CRITICAL)
+STATUS_STATES_RECOVERED: tuple[str, ...] = (STATUS_OK,)
+
 CONF_API_KEY = "api_key"
 CONF_MODEL = "model"
 CONF_BASE_URL = "base_url"

@@ -27,6 +27,10 @@ from .const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
     DOMAIN,
+    EVENT_PROFILE_CULTIVATION_RECORDED,
+    EVENT_PROFILE_HARVEST_RECORDED,
+    EVENT_PROFILE_NUTRIENT_RECORDED,
+    EVENT_PROFILE_RUN_RECORDED,
     ISSUE_PROFILE_VALIDATION_PREFIX,
     NOTIFICATION_PROFILE_LINEAGE,
     NOTIFICATION_PROFILE_VALIDATION,
@@ -653,6 +657,37 @@ class ProfileRegistry:
         else:
             self._cloud_pending_snapshot = True
 
+    def _async_fire_history_event(
+        self,
+        event_type: str,
+        profile: BioProfile,
+        payload: Mapping[str, Any],
+        *,
+        event_kind: str,
+        event_subtype: str | None = None,
+        run_id: str | None = None,
+    ) -> None:
+        """Emit a Home Assistant event describing a history update."""
+
+        data: dict[str, Any] = {
+            "profile_id": profile.profile_id,
+            "profile_type": profile.profile_type,
+            "display_name": profile.display_name,
+            "event_kind": event_kind,
+            "event": dict(payload),
+        }
+        if run_id:
+            data["run_id"] = run_id
+        if event_subtype:
+            data["event_subtype"] = event_subtype
+        species_id = getattr(profile, "species", None)
+        if species_id:
+            data["species_id"] = species_id
+        parents = getattr(profile, "parents", None)
+        if parents:
+            data["parents"] = list(parents)
+        self.hass.bus.async_fire(event_type, data)
+
     def _publish_stats_with(
         self,
         publisher: CloudSyncPublisher,
@@ -980,9 +1015,17 @@ class ProfileRegistry:
         prof.refresh_sections()
         await self.async_save()
         stored = prof.run_history[-1]
+        stored_payload = stored.to_json()
         self._cloud_publish_profile(prof)
         self._cloud_publish_run(stored)
-        await self._async_persist_history(profile_id, "run", stored.to_json())
+        self._async_fire_history_event(
+            EVENT_PROFILE_RUN_RECORDED,
+            prof,
+            stored_payload,
+            event_kind="run",
+            run_id=stored.run_id,
+        )
+        await self._async_persist_history(profile_id, "run", stored_payload)
         return stored
 
     async def async_record_harvest_event(
@@ -1022,9 +1065,17 @@ class ProfileRegistry:
         prof.refresh_sections()
         await self.async_save()
         stored = prof.harvest_history[-1]
+        stored_payload = stored.to_json()
         self._cloud_publish_profile(prof)
         self._cloud_publish_harvest(stored)
-        await self._async_persist_history(profile_id, "harvest", stored.to_json())
+        self._async_fire_history_event(
+            EVENT_PROFILE_HARVEST_RECORDED,
+            prof,
+            stored_payload,
+            event_kind="harvest",
+            run_id=stored.run_id,
+        )
+        await self._async_persist_history(profile_id, "harvest", stored_payload)
         return stored
 
     async def async_record_nutrient_event(
@@ -1051,9 +1102,17 @@ class ProfileRegistry:
         prof.refresh_sections()
         await self.async_save()
         stored = prof.nutrient_history[-1]
+        stored_payload = stored.to_json()
         self._cloud_publish_profile(prof)
         self._cloud_publish_nutrient(stored)
-        await self._async_persist_history(profile_id, "nutrient", stored.to_json())
+        self._async_fire_history_event(
+            EVENT_PROFILE_NUTRIENT_RECORDED,
+            prof,
+            stored_payload,
+            event_kind="nutrient",
+            run_id=stored.run_id,
+        )
+        await self._async_persist_history(profile_id, "nutrient", stored_payload)
         return stored
 
     async def async_record_cultivation_event(
@@ -1080,9 +1139,18 @@ class ProfileRegistry:
         prof.refresh_sections()
         await self.async_save()
         stored = prof.event_history[-1]
+        stored_payload = stored.to_json()
         self._cloud_publish_profile(prof)
         self._cloud_publish_cultivation(stored)
-        await self._async_persist_history(profile_id, "cultivation", stored.to_json())
+        self._async_fire_history_event(
+            EVENT_PROFILE_CULTIVATION_RECORDED,
+            prof,
+            stored_payload,
+            event_kind="cultivation",
+            event_subtype=stored.event_type,
+            run_id=stored.run_id,
+        )
+        await self._async_persist_history(profile_id, "cultivation", stored_payload)
         return stored
 
     async def async_import_template(self, template: str, name: str | None = None) -> str:
