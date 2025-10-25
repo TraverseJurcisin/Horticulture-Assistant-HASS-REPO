@@ -48,11 +48,48 @@ async def test_device_triggers_listed(hass):
     )
     hass.states.async_set(entity.entity_id, "ok")
 
+    entity_registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        "avocado:run_status",
+        suggested_object_id="avocado_run_status",
+        config_entry_id="entry1",
+        device_id=device.id,
+    )
+    entity_registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        "avocado:yield_total",
+        suggested_object_id="avocado_yield_total",
+        config_entry_id="entry1",
+        device_id=device.id,
+    )
+    entity_registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        "avocado:feeding_status",
+        suggested_object_id="avocado_feeding_status",
+        config_entry_id="entry1",
+        device_id=device.id,
+    )
+    entity_registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        "avocado:event_activity",
+        suggested_object_id="avocado_event_activity",
+        config_entry_id="entry1",
+        device_id=device.id,
+    )
+
     triggers = await device_trigger.async_get_triggers(hass, device.id)
     trigger_types = {trigger["type"] for trigger in triggers}
     assert device_trigger.TRIGGER_STATUS_PROBLEM in trigger_types
     assert device_trigger.TRIGGER_STATUS_RECOVERED in trigger_types
     assert device_trigger.TRIGGER_STATUS_CHANGED in trigger_types
+    assert device_trigger.TRIGGER_RUN_RECORDED in trigger_types
+    assert device_trigger.TRIGGER_HARVEST_RECORDED in trigger_types
+    assert device_trigger.TRIGGER_NUTRIENT_RECORDED in trigger_types
+    assert device_trigger.TRIGGER_CULTIVATION_RECORDED in trigger_types
 
 
 @pytest.mark.asyncio
@@ -147,4 +184,125 @@ async def test_status_changed_trigger_filters(hass):
     await hass.async_block_till_done()
     assert len(calls) == 1
     assert calls[0]["to_state"].state == "critical"
+    remove()
+
+
+@pytest.mark.asyncio
+async def test_harvest_trigger_fires(hass):
+    device_registry = dr.async_get(hass)
+    entity_registry = er.async_get(hass)
+
+    device = device_registry.async_get_or_create(
+        config_entry_id="entry2",
+        identifiers={(DOMAIN, "profile:basil")},
+        name="Basil",
+    )
+    entity_registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        "basil:yield_total",
+        suggested_object_id="basil_yield_total",
+        config_entry_id="entry2",
+        device_id=device.id,
+    )
+
+    trigger_config = next(
+        trig
+        for trig in await device_trigger.async_get_triggers(hass, device.id)
+        if trig["type"] == device_trigger.TRIGGER_HARVEST_RECORDED
+    )
+
+    calls: list[dict] = []
+
+    async def action(trigger, variables, context):
+        calls.append(trigger)
+
+    remove = await device_trigger.async_attach_trigger(
+        hass,
+        trigger_config,
+        action,
+        {"platform": "device"},
+    )
+
+    hass.bus.async_fire(
+        const.EVENT_PROFILE_HARVEST_RECORDED,
+        {
+            "profile_id": "basil",
+            "profile_type": "individual",
+            "display_name": "Basil",
+            "event_kind": "harvest",
+            "event": {"harvest_id": "harvest-1", "yield_grams": 120.0},
+        },
+    )
+    await hass.async_block_till_done()
+    assert len(calls) == 1
+    remove()
+
+
+@pytest.mark.asyncio
+async def test_cultivation_trigger_filters_subtype(hass):
+    device_registry = dr.async_get(hass)
+    entity_registry = er.async_get(hass)
+
+    device = device_registry.async_get_or_create(
+        config_entry_id="entry3",
+        identifiers={(DOMAIN, "profile:mint")},
+        name="Mint",
+    )
+    entity_registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        "mint:event_activity",
+        suggested_object_id="mint_event_activity",
+        config_entry_id="entry3",
+        device_id=device.id,
+    )
+
+    base_trigger = next(
+        trig
+        for trig in await device_trigger.async_get_triggers(hass, device.id)
+        if trig["type"] == device_trigger.TRIGGER_CULTIVATION_RECORDED
+    )
+    trigger_config = dict(base_trigger)
+    trigger_config["event_subtype"] = "pruning"
+
+    calls: list[dict] = []
+
+    async def action(trigger, variables, context):
+        calls.append(trigger)
+
+    remove = await device_trigger.async_attach_trigger(
+        hass,
+        trigger_config,
+        action,
+        {"platform": "device"},
+    )
+
+    hass.bus.async_fire(
+        const.EVENT_PROFILE_CULTIVATION_RECORDED,
+        {
+            "profile_id": "mint",
+            "profile_type": "individual",
+            "display_name": "Mint",
+            "event_kind": "cultivation",
+            "event_subtype": "transplant",
+            "event": {"event_id": "event-1", "event_type": "transplant"},
+        },
+    )
+    await hass.async_block_till_done()
+    assert not calls
+
+    hass.bus.async_fire(
+        const.EVENT_PROFILE_CULTIVATION_RECORDED,
+        {
+            "profile_id": "mint",
+            "profile_type": "individual",
+            "display_name": "Mint",
+            "event_kind": "cultivation",
+            "event_subtype": "pruning",
+            "event": {"event_id": "event-2", "event_type": "pruning"},
+        },
+    )
+    await hass.async_block_till_done()
+    assert len(calls) == 1
     remove()

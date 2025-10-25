@@ -179,6 +179,62 @@ es a persistent notification listing the problematic IDs so you can correct them
 
 For detailed guidance on data structures, file formats, or extending the integration, follow the Readmes linked above.
 
+## Device triggers, services & blueprints
+
+The integration now exposes rich device triggers so you can automate against plant lifecycle events without building complex template sensors. Each plant device includes:
+
+- `status_problem` – fires when the status sensor transitions into a warning or critical state.
+- `status_recovered` – fires when a plant returns to the "ok" state.
+- `status_changed` – configurable state trigger when you need more granular transitions.
+- `run_recorded`, `harvest_recorded`, `nutrient_recorded`, `cultivation_recorded` – event triggers emitted whenever the matching logging service writes a new entry for the plant. Event payloads include the profile ID, optional run identifiers, subtype metadata, and quantity information (e.g., harvest weight).
+
+### Device conditions
+
+Pair triggers with device conditions to keep automations declarative. Each plant
+device exposes helpers that reuse the same provenance-aware entity IDs:
+
+- `status_is` – match explicit status codes when you want to branch on `warn`,
+  `critical`, or any custom status state.
+- `status_ok` – shorthand for ensuring the plant has returned to the "ok"
+  baseline.
+- `status_problem` – evaluates to true while the plant is in warning or critical
+  states, perfect for escalation guards.
+- `status_recovered` – mirror of the trigger that stays true once recovery is
+  detected.
+- `run_active` – checks whether the `run_status` sensor reports `active` or
+  `running`, helping you prevent overlapping automation runs.
+
+Use device conditions inside blueprints or automations to suppress duplicate
+alerts, run remediation steps only when problems persist, or branch logic based
+on whether a grow cycle is active.
+
+Use the services documented in [`docs/history_logging.md`](docs/history_logging.md) to record events:
+
+- `horticulture_assistant.record_run_event`
+- `horticulture_assistant.record_harvest_event`
+- `horticulture_assistant.record_nutrient_event`
+- `horticulture_assistant.record_cultivation_event`
+
+Each service validates payloads against the bundled schemas before appending to the JSONL history files and updating Home Assistant sensors. Logged events update:
+
+- **Status sensor** – exposes the current health code (`ok`, `warn`, `critical`) and surfaces the last issue/clear timestamps.
+- **Run status** – tracks lifecycle milestones, schedule adherence, and the most recent propagation run ID.
+- **Yield totals** – aggregates harvest weight, fruit counts, rolling windows, and yield density (kg/m²) using the profile's `area_sq_m` metadata.
+- **Feeding status** – summarises nutrient applications, intervals between feedings, and additive tallies.
+- **Event activity** – counts cultivation events with subtype breakdowns for pruning, inspections, transplants, and more.
+
+### Built-in blueprints
+
+Automation blueprints live under [`blueprints/automation/horticulture_assistant/`](blueprints/automation/horticulture_assistant/) and are documented in [`docs/automation_blueprints.md`](docs/automation_blueprints.md):
+
+- **Harvest notification** – Listen for the `harvest_recorded` trigger and create a persistent notification (or a custom action sequence) containing harvest metadata.
+- **Scheduled irrigation log** – Run on a cron-style schedule to call `record_cultivation_event` with preset notes and tags, making it effortless to keep irrigation records without writing YAML.
+- **Status recovery watchdog** – Use the `status_problem` trigger and new device
+  condition helpers to escalate if a plant stays in a degraded state longer than
+  the configured timeout.
+
+Import the blueprints through **Settings → Automations & Scenes → Blueprints → Import Blueprint** and reference the local file path. Each blueprint exposes selectors for plant devices and log metadata so you can tailor the automation without editing templates.
+
 ## Example Automations & Dashboards
 
 - **Alert when conditions drift:** Trigger a notification when `binary_sensor.<profile>_temperature_ok` turns off, then use the accompanying temperature sensors to diagnose the issue.
@@ -212,6 +268,13 @@ The current entitlements are exposed in diagnostics (cloud connection sensors an
 - **Auto-generated manifest:** A `history/index.json` file keeps event counters and the last updated timestamp for each profile, enabling quick audits of which plants have fresh activity. The exporter writes atomically so dashboards can safely tail the files while Home Assistant appends new entries.
 - **Documented file format:** Refer to [`docs/history_logging.md`](docs/history_logging.md) for examples, field descriptions, and guidance on integrating the logs with Pandas or other analytics stacks.
 - **CLI export helpers:** Use `python scripts/profile_manager.py export-history <profile_id> <log_name> -o out.csv --format csv` to convert the append-only feeds into CSV or prettified JSON for spreadsheets and notebooks.
+
+### Unit normalisation & analytics
+
+- **Temperature:** Inputs provided in Fahrenheit or Kelvin are converted to Celsius internally so dew point, VPD, and heat index sensors all operate on a consistent baseline. Output sensors honour your Home Assistant unit preferences.
+- **Light intensity:** Lux readings are calibrated to PPFD via `engine/metrics.py`, enabling daily light integral (DLI) calculations and light saturation checks without manual conversion factors.
+- **Nutrient dosing:** Fertigation helpers convert guaranteed analysis percentages into mg/L and EC targets, ensuring that nutrient budget recommendations align with the species and cultivar defaults.
+- **Yield metrics:** Harvest events normalise mass to kilograms and counts to integers before computing cumulative totals, rolling window averages, and density (kg/m²) using the profile's recorded `area_sq_m`.
 
 ### Event payload validation
 

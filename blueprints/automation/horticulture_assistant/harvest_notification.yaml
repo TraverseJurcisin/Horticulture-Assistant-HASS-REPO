@@ -1,0 +1,46 @@
+blueprint:
+  name: Horticulture Assistant – Harvest notification
+  description: |
+    Receive a notification whenever the selected plant profile logs a harvest event.
+    The automation listens for the integration's harvest device trigger and forwards
+    contextual details (amount, unit, and optional notes) to the action sequence.
+  domain: automation
+  source_url: https://github.com/user/repo/blob/main/blueprints/automation/horticulture_assistant/harvest_notification.yaml
+  input:
+    plant_device:
+      name: Plant profile device
+      description: Device created by the Horticulture Assistant integration.
+      selector:
+        device:
+          integration: horticulture_assistant
+    actions:
+      name: Actions
+      description: |
+        Additional actions to run when a harvest is recorded. You can replace the
+        default persistent notification with mobile push notifications or other
+        automations. The trigger exposes harvest metadata under ``trigger.event.data``.
+      default:
+        - service: persistent_notification.create
+          data:
+            title: "Horticulture harvest logged"
+            message: >-
+              Harvest recorded for {{ trigger.event.data.profile_id }}:
+              {{ trigger.event.data.amount | default('?') }}
+              {{ trigger.event.data.unit | default('') }}
+              {% if trigger.event.data.get('notes') %}
+              ({{ trigger.event.data.notes }})
+              {% endif %}
+      selector:
+        action: {}
+
+automation:
+  alias: Horticulture Assistant – Harvest notification
+  mode: restart
+  max_exceeded: silent
+  trigger:
+    - platform: device
+      device_id: !input plant_device
+      domain: horticulture_assistant
+      type: harvest_recorded
+  condition: []
+  action: !input actions

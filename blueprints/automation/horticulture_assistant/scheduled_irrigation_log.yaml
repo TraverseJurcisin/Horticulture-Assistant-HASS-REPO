@@ -1,0 +1,54 @@
+blueprint:
+  name: Horticulture Assistant – Scheduled irrigation log
+  description: |
+    Record a cultivation event on a recurring schedule to document inspections or
+    irrigation tasks. The blueprint calls the ``horticulture_assistant.record_cultivation_event``
+    service with optional notes and tags so you can keep a lightweight journal directly
+    in Home Assistant.
+  domain: automation
+  source_url: https://github.com/user/repo/blob/main/blueprints/automation/horticulture_assistant/scheduled_irrigation_log.yaml
+  input:
+    schedule:
+      name: Schedule
+      description: Time pattern that should create the log entry.
+      default:
+        - minutes: "/60"
+      selector:
+        time_pattern: {}
+    profile_id:
+      name: Profile ID
+      description: Identifier of the plant or zone to log (matches the profile JSON ``id`` field).
+      selector:
+        text:
+          multiline: false
+    summary:
+      name: Summary
+      description: Short note to include in the cultivation entry.
+      default: Scheduled irrigation run
+      selector:
+        text: {}
+    tags:
+      name: Tags
+      description: Optional tags that will accompany the event (e.g., ``["irrigation", "automated"]``).
+      default: []
+      selector:
+        object: {}
+    extra_actions:
+      name: Extra actions
+      description: Additional steps to run after logging the event (notifications, switching relays, etc.).
+      default: []
+      selector:
+        action: {}
+
+automation:
+  alias: Horticulture Assistant – Scheduled irrigation log
+  mode: queued
+  trigger: !input schedule
+  action:
+    - service: horticulture_assistant.record_cultivation_event
+      data:
+        profile_id: !input profile_id
+        summary: !input summary
+        tags: !input tags
+    - choose: []
+      default: !input extra_actions

@@ -1,0 +1,71 @@
+blueprint:
+  name: "Horticulture Assistant: Status recovery watchdog"
+  description: >-
+    Send an escalation notification if a plant remains in a warning or critical
+    state for longer than the configured timeout. The automation waits for the
+    plant to recover before the deadline and only escalates when the status
+    stays degraded.
+  domain: automation
+  input:
+    plant_device:
+      name: Plant device
+      description: Select the plant profile device to monitor.
+      selector:
+        device:
+          integration: horticulture_assistant
+    status_entity:
+      name: Status sensor
+      description: Choose the status sensor entity exposed by the plant profile.
+      selector:
+        entity:
+          domain: sensor
+    wait_hours:
+      name: Escalation timeout (hours)
+      description: Delay before the notification is sent if the plant does not recover.
+      default: 2
+      selector:
+        number:
+          min: 0.5
+          max: 24
+          step: 0.5
+          unit_of_measurement: hour
+          mode: slider
+    actions:
+      name: Escalation actions
+      description: Sequence to execute when the status remains degraded.
+      default:
+        - service: persistent_notification.create
+          data:
+            title: "Horticulture Assistant"
+            message: >-
+              {{ state_attr(status_entity, "friendly_name") or status_entity }} is still
+              reporting a problem state after {{ wait_hours }} hours.
+      selector:
+        action: {}
+mode: restart
+variables:
+  wait_hours: !input wait_hours
+  status_entity: !input status_entity
+trigger:
+  - platform: device
+    device_id: !input plant_device
+    domain: horticulture_assistant
+    type: status_problem
+condition: []
+action:
+  - wait_for_trigger:
+      - platform: device
+        device_id: !input plant_device
+        domain: horticulture_assistant
+        type: status_recovered
+    continue_on_timeout: true
+    timeout:
+      hours: !input wait_hours
+  - choose:
+      - conditions:
+          - condition: device
+            device_id: !input plant_device
+            domain: horticulture_assistant
+            entity_id: !input status_entity
+            type: status_problem
+        sequence: !input actions
