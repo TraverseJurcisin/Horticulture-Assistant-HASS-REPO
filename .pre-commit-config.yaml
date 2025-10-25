@@ -1,4 +1,4 @@
-﻿repos:
+repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
@@ -6,7 +6,12 @@
       - id: trailing-whitespace
       - id: mixed-line-ending
       - id: check-yaml
-        exclude: custom_components/horticulture_assistant/blueprints/automation/.*\.yaml
+        args: [--unsafe]
+        exclude: |
+          (
+            custom_components/horticulture_assistant/blueprints/automation/.*\.yaml|
+            .*blueprints/automation/.*\.yaml
+          )
       - id: check-json
       - id: pretty-format-json
         files: ^custom_components/horticulture_assistant/data/.*\.json$

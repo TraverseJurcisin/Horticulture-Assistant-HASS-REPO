@@ -12,17 +12,13 @@ except Exception:  # pragma: no cover
 
 if MockConfigEntry is None:
     pkg = types.ModuleType("custom_components.horticulture_assistant")
-    pkg.__path__ = [
-        str(pathlib.Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant")
-    ]
+    pkg.__path__ = [str(pathlib.Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant")]
     sys.modules.setdefault("custom_components.horticulture_assistant", pkg)
 
 const = importlib.import_module("custom_components.horticulture_assistant.const")
 conditions = importlib.import_module("custom_components.horticulture_assistant.device_condition")
 
-pytestmark = pytest.mark.skipif(
-    MockConfigEntry is None, reason="pytest-homeassistant-custom-component not installed"
-)
+pytestmark = pytest.mark.skipif(MockConfigEntry is None, reason="pytest-homeassistant-custom-component not installed")
 
 if MockConfigEntry is not None:
     from homeassistant.helpers import device_registry as dr
@@ -58,10 +54,7 @@ async def test_conditions_listed(hass):
 
     hass.states.async_set(status_entity.entity_id, const.STATUS_OK)
 
-    condition_types = {
-        condition["type"]
-        for condition in await conditions.async_get_conditions(hass, device.id)
-    }
+    condition_types = {condition["type"] for condition in await conditions.async_get_conditions(hass, device.id)}
     assert conditions.CONDITION_STATUS_IS in condition_types
     assert conditions.CONDITION_STATUS_OK in condition_types
     assert conditions.CONDITION_STATUS_PROBLEM in condition_types

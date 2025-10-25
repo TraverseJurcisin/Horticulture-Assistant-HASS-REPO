@@ -109,30 +109,20 @@ async def async_get_conditions(hass: HomeAssistant, device_id: str) -> list[dict
                 ]
             )
         elif suffix == "run_status":
-            conditions.append(
-                base | {"type": CONDITION_RUN_ACTIVE, "metadata": {"secondary": True}}
-            )
+            conditions.append(base | {"type": CONDITION_RUN_ACTIVE, "metadata": {"secondary": True}})
 
     return conditions
 
 
-async def async_get_condition_capabilities(
-    hass: HomeAssistant, config: Mapping[str, Any]
-) -> dict[str, vol.Schema]:
+async def async_get_condition_capabilities(hass: HomeAssistant, config: Mapping[str, Any]) -> dict[str, vol.Schema]:
     """Return condition capabilities for the given configuration."""
 
     condition_type = config.get("type")
-    extra = (
-        {vol.Required("state"): vol.Any(cv.string, [cv.string])}
-        if condition_type == CONDITION_STATUS_IS
-        else {}
-    )
+    extra = {vol.Required("state"): vol.Any(cv.string, [cv.string])} if condition_type == CONDITION_STATUS_IS else {}
     return {"extra_fields": vol.Schema(extra)}
 
 
-async def async_condition_from_config(
-    hass: HomeAssistant, config: Mapping[str, Any]
-) -> ConditionCheckerType:
+async def async_condition_from_config(hass: HomeAssistant, config: Mapping[str, Any]) -> ConditionCheckerType:
     """Create a condition function for the provided configuration."""
 
     validated = CONDITION_SCHEMA(dict(config))
@@ -188,4 +178,3 @@ __all__ = [
     "CONDITION_STATUS_RECOVERED",
     "CONDITION_RUN_ACTIVE",
 ]
-

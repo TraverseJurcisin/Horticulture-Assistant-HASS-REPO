@@ -14,7 +14,8 @@ try:  # pragma: no cover - exercised in CI when Home Assistant isn't installed
     from homeassistant.const import EVENT_STATE_CHANGED
     from homeassistant.core import CALLBACK_TYPE, HomeAssistant, callback
     from homeassistant.exceptions import InvalidDeviceAutomationConfig
-    from homeassistant.helpers import config_validation as cv, entity_registry as er
+    from homeassistant.helpers import config_validation as cv
+    from homeassistant.helpers import entity_registry as er
 except ModuleNotFoundError:  # pragma: no cover - lightweight shim for unit tests
     import types
 
@@ -95,14 +96,10 @@ except ModuleNotFoundError:  # pragma: no cover - lightweight shim for unit test
                 return
             old_state = event.data.get("old_state")
             new_state = event.data.get("new_state")
-            if from_values is not None:
-                if old_state is None or old_state.state not in from_values:
-                    return
-            if to_values is not None:
-                if new_state is None:
-                    return
-                if new_state.state not in to_values:
-                    return
+            if from_values is not None and (old_state is None or old_state.state not in from_values):
+                return
+            if to_values is not None and (new_state is None or new_state.state not in to_values):
+                return
 
             trigger_data = {
                 "platform": platform_type,
@@ -128,7 +125,6 @@ from .const import (
     STATUS_OK,
     STATUS_STATES_PROBLEM,
 )
-
 
 TRIGGER_STATUS_PROBLEM = "status_problem"
 TRIGGER_STATUS_RECOVERED = "status_recovered"

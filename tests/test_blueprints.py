@@ -21,9 +21,7 @@ def test_blueprint_metadata(blueprint_file: pathlib.Path) -> None:
 
 
 def test_harvest_notification_defaults() -> None:
-    data = yaml.safe_load(
-        (BLUEPRINT_ROOT / "harvest_notification.yaml").read_text()
-    )
+    data = yaml.safe_load((BLUEPRINT_ROOT / "harvest_notification.yaml").read_text())
     inputs = data["blueprint"]["input"]
     assert "plant_device" in inputs
     actions = inputs["actions"]
@@ -33,9 +31,7 @@ def test_harvest_notification_defaults() -> None:
 
 
 def test_scheduled_irrigation_blueprint_structure() -> None:
-    data = yaml.safe_load(
-        (BLUEPRINT_ROOT / "scheduled_irrigation_log.yaml").read_text()
-    )
+    data = yaml.safe_load((BLUEPRINT_ROOT / "scheduled_irrigation_log.yaml").read_text())
     trigger = data["automation"]["trigger"]
     assert isinstance(trigger, list)
     first = trigger[0]
@@ -46,9 +42,7 @@ def test_scheduled_irrigation_blueprint_structure() -> None:
 
 
 def test_status_recovery_watchdog_blueprint() -> None:
-    data = yaml.safe_load(
-        (BLUEPRINT_ROOT / "status_recovery_watchdog.yaml").read_text()
-    )
+    data = yaml.safe_load((BLUEPRINT_ROOT / "status_recovery_watchdog.yaml").read_text())
     blueprint = data["blueprint"]
     assert blueprint["name"].endswith("Status recovery watchdog")
     automation = data["automation"]
