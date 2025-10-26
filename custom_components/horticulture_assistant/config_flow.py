@@ -97,22 +97,12 @@ SENSOR_OPTION_FALLBACKS = {
 }
 
 PROFILE_SENSOR_FIELDS = {
-    "temperature": sel.EntitySelector(
-        sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])
-    ),
-    "humidity": sel.EntitySelector(
-        sel.EntitySelectorConfig(domain=["sensor"], device_class=["humidity"])
-    ),
-    "illuminance": sel.EntitySelector(
-        sel.EntitySelectorConfig(domain=["sensor"], device_class=["illuminance"])
-    ),
-    "moisture": sel.EntitySelector(
-        sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])
-    ),
+    "temperature": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])),
+    "humidity": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["humidity"])),
+    "illuminance": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["illuminance"])),
+    "moisture": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])),
     "conductivity": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"])),
-    "co2": sel.EntitySelector(
-        sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])
-    ),
+    "co2": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
 }
 
 
@@ -1010,9 +1000,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         )
         return self.async_show_form(step_id="add_profile", data_schema=schema)
 
-    async def async_step_manage_profiles(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profiles(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         profiles = self._profiles()
         if not profiles:
             return self.async_abort(reason="no_profiles")
@@ -1047,9 +1035,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             return await self.async_step_manage_profile_delete()
         return self.async_abort(reason="unknown_profile")
 
-    async def async_step_manage_profile_general(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profile_general(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         registry = await self._async_get_registry()
         profiles = self._profiles()
         if not self._pid or self._pid not in profiles:
@@ -1100,9 +1086,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             description_placeholders=placeholders,
         )
 
-    async def async_step_manage_profile_sensors(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profile_sensors(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         registry = await self._async_get_registry()
         profiles = self._profiles()
         if not self._pid or self._pid not in profiles:
@@ -1144,22 +1128,16 @@ class OptionsFlow(config_entries.OptionsFlow):
             description_placeholders=description_placeholders,
         )
 
-    async def async_step_manage_profile_thresholds(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profile_thresholds(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         registry = await self._async_get_registry()
         profiles = self._profiles()
         if not self._pid or self._pid not in profiles:
             return self.async_abort(reason="unknown_profile")
 
         profile = profiles[self._pid]
-        thresholds_payload = (
-            profile.get("thresholds") if isinstance(profile.get("thresholds"), Mapping) else {}
-        )
+        thresholds_payload = profile.get("thresholds") if isinstance(profile.get("thresholds"), Mapping) else {}
         resolved_payload = (
-            profile.get("resolved_targets")
-            if isinstance(profile.get("resolved_targets"), Mapping)
-            else {}
+            profile.get("resolved_targets") if isinstance(profile.get("resolved_targets"), Mapping) else {}
         )
 
         def _resolve_default(key: str) -> str:
@@ -1190,11 +1168,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         if user_input is not None:
             cleaned: dict[str, float] = {}
             removed: set[str] = set()
-            candidate = (
-                dict(thresholds_payload)
-                if isinstance(thresholds_payload, Mapping)
-                else {}
-            )
+            candidate = dict(thresholds_payload) if isinstance(thresholds_payload, Mapping) else {}
 
             for key in MANUAL_THRESHOLD_FIELDS:
                 raw = user_input.get(key)
@@ -1254,9 +1228,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             description_placeholders=placeholders,
         )
 
-    async def async_step_manage_profile_delete(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profile_delete(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         registry = await self._async_get_registry()
         primary_id = get_primary_profile_id(self._entry)
         if not self._pid:

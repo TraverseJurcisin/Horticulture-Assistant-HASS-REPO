@@ -980,9 +980,7 @@ class ProfileRegistry:
             self._cloud_publish_profile(prof_obj)
         await self._async_maybe_refresh_validation_notification()
 
-    async def async_set_profile_sensors(
-        self, profile_id: str, sensors: Mapping[str, str] | None
-    ) -> None:
+    async def async_set_profile_sensors(self, profile_id: str, sensors: Mapping[str, str] | None) -> None:
         """Replace the sensor mapping for ``profile_id``."""
 
         profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
@@ -1014,11 +1012,7 @@ class ProfileRegistry:
             plant_id=profile_id,
             display_name=prof_payload.get("name") or profile_id,
         )
-        general = (
-            dict(prof_payload.get("general", {}))
-            if isinstance(prof_payload.get("general"), Mapping)
-            else {}
-        )
+        general = dict(prof_payload.get("general", {})) if isinstance(prof_payload.get("general"), Mapping) else {}
         if cleaned:
             general["sensors"] = dict(cleaned)
             prof_payload["sensors"] = dict(cleaned)
@@ -1071,9 +1065,7 @@ class ProfileRegistry:
         )
 
         threshold_map = (
-            dict(prof_payload.get("thresholds", {}))
-            if isinstance(prof_payload.get("thresholds"), Mapping)
-            else {}
+            dict(prof_payload.get("thresholds", {})) if isinstance(prof_payload.get("thresholds"), Mapping) else {}
         )
 
         cleaned: dict[str, float] = {}
@@ -1088,11 +1080,7 @@ class ProfileRegistry:
                 cleaned[str(key)] = value
 
         allowed_set: set[str]
-        allowed_set = (
-            {str(key) for key in allowed_keys}
-            if allowed_keys is not None
-            else set(cleaned.keys())
-        )
+        allowed_set = {str(key) for key in allowed_keys} if allowed_keys is not None else set(cleaned.keys())
 
         removals = {str(key) for key in removed_keys} if removed_keys else set()
         if removals and allowed_keys is None:
@@ -1170,11 +1158,7 @@ class ProfileRegistry:
             plant_id=profile_id,
             display_name=prof_payload.get("name") or profile_id,
         )
-        general = (
-            dict(prof_payload.get("general", {}))
-            if isinstance(prof_payload.get("general"), Mapping)
-            else {}
-        )
+        general = dict(prof_payload.get("general", {})) if isinstance(prof_payload.get("general"), Mapping) else {}
 
         display_name = name or prof_payload.get("name") or profile_id
         prof_payload["name"] = display_name

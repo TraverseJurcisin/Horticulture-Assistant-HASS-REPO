@@ -47,9 +47,7 @@ reg = importlib.util.module_from_spec(reg_spec)
 sys.modules[reg_spec.name] = reg
 reg_spec.loader.exec_module(reg)
 
-compat_spec = importlib.util.spec_from_file_location(
-    f"{PACKAGE}.profile.compat", BASE_PATH / "profile" / "compat.py"
-)
+compat_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.profile.compat", BASE_PATH / "profile" / "compat.py")
 compat = importlib.util.module_from_spec(compat_spec)
 sys.modules[compat_spec.name] = compat
 compat_spec.loader.exec_module(compat)
@@ -848,9 +846,7 @@ async def test_options_flow_manage_profile_sensors_validates_and_updates(hass):
     hass.states.async_set("sensor.temp_new", 25, {"device_class": "temperature"})
     await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "edit_sensors"})
     with patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry):
-        result = await flow.async_step_manage_profile_sensors(
-            {"temperature": "sensor.temp_new", "humidity": ""}
-        )
+        result = await flow.async_step_manage_profile_sensors({"temperature": "sensor.temp_new", "humidity": ""})
 
     assert result["type"] == "create_entry"
     stored = entry.options[CONF_PROFILES]["alpha"]
