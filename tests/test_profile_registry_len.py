@@ -1,8 +1,8 @@
 import pytest
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.const import CONF_PROFILES, DOMAIN
 from custom_components.horticulture_assistant.profile_registry import ProfileRegistry
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 pytestmark = pytest.mark.asyncio
 

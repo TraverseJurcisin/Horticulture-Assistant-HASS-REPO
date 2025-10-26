@@ -24,6 +24,7 @@ class HomeAssistant:  # pragma: no cover - simple stub
         self.config_entries = _ConfigEntries(self)
         self.services = _ServiceRegistry()
         self.bus = _Bus()
+        self.helpers = types.SimpleNamespace(aiohttp_client=None)
 
     def async_create_task(self, coro, *_args, **_kwargs):  # pragma: no cover - stub
         return asyncio.create_task(coro)
@@ -36,14 +37,23 @@ class HomeAssistant:  # pragma: no cover - simple stub
 
 
 class _State:
-    def __init__(self, state, attributes=None) -> None:
+    def __init__(self, entity_id, state, attributes=None) -> None:
+        self.entity_id = entity_id
         self.state = state
         self.attributes = attributes or {}
+        self.name = self.attributes.get("friendly_name")
+        self.domain = entity_id.split(".")[0] if isinstance(entity_id, str) else ""
 
 
 class _States(dict):
     def async_set(self, entity_id, state, attributes=None) -> None:
-        self[entity_id] = _State(state, attributes)
+        self[entity_id] = _State(entity_id, state, attributes)
+
+    def entity_ids(self):  # pragma: no cover - helper for catalog suggestions
+        return list(self.keys())
+
+    def async_entity_ids(self):  # pragma: no cover - helper for catalog suggestions
+        return self.entity_ids()
 
 
 class _ConfigEntries:
@@ -73,7 +83,9 @@ class _ServiceRegistry(dict):
         self[(domain, service)] = func
 
     async def async_call(self, domain, service, data, blocking=False):  # pragma: no cover - stub
-        func = self[(domain, service)]
+        func = self.get((domain, service))
+        if func is None:
+            return None
         result = func(types.SimpleNamespace(data=data))
         if asyncio.iscoroutine(result):
             await result
@@ -106,31 +118,52 @@ sys.modules["homeassistant.helpers.config_validation"] = config_validation
 selector = types.ModuleType("homeassistant.helpers.selector")
 
 
+class _BaseSelector:  # pragma: no cover - helper implementing a callable selector
+    def __init__(self, config):
+        self.config = config
+
+    def __call__(self, value):  # Return the provided value without validation.
+        return value
+
+
 class SelectSelectorConfig:  # pragma: no cover - minimal container
-    def __init__(self, *, options=None, domain=None, device_class=None):
+    def __init__(self, *, options=None, domain=None, device_class=None, custom_value=False):
         self.options = options or []
         self.domain = domain
         self.device_class = device_class
+        self.custom_value = custom_value
 
 
-class SelectSelector:  # pragma: no cover - minimal container
-    def __init__(self, config):
-        self.config = config
+class SelectSelector(_BaseSelector):
+    pass
 
 
 class EntitySelectorConfig(SelectSelectorConfig):
     pass
 
 
-class EntitySelector:  # pragma: no cover - minimal container
-    def __init__(self, config):
-        self.config = config
+class EntitySelector(_BaseSelector):
+    pass
+
+
+class TextSelectorConfig:  # pragma: no cover - simple container for text selector settings
+    def __init__(self, *, type="text", multiline=False, **kwargs):
+        self.type = type
+        self.multiline = multiline
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+
+class TextSelector(_BaseSelector):
+    pass
 
 
 selector.SelectSelectorConfig = SelectSelectorConfig
 selector.SelectSelector = SelectSelector
 selector.EntitySelectorConfig = EntitySelectorConfig
 selector.EntitySelector = EntitySelector
+selector.TextSelectorConfig = TextSelectorConfig
+selector.TextSelector = TextSelector
 sys.modules["homeassistant.helpers.selector"] = selector
 
 event = types.ModuleType("homeassistant.helpers.event")
@@ -170,7 +203,10 @@ util = types.ModuleType("homeassistant.util")
 
 
 def slugify(value: str) -> str:  # pragma: no cover - simple stub
-    return value
+    if value is None:
+        return ""
+    text = str(value)
+    return "_".join(text.strip().lower().split())
 
 
 util.slugify = slugify
@@ -275,25 +311,63 @@ class ConfigEntry:  # pragma: no cover - minimal stub
 
 
 class _BaseFlow:  # pragma: no cover - provide basic flow helpers
-    def async_show_form(self, *, step_id, data_schema=None, errors=None):
+    def __init__(self) -> None:
+        self.hass = None
+
+    def async_show_form(
+        self,
+        *,
+        step_id,
+        data_schema=None,
+        errors=None,
+        description_placeholders=None,
+    ):
         return {
             "type": "form",
             "step_id": step_id,
             "data_schema": data_schema,
             "errors": errors or {},
+            "description_placeholders": description_placeholders or {},
         }
 
-    def async_create_entry(self, *, title="", data=None):
-        return {"type": "create_entry", "title": title, "data": data or {}}
+    def async_show_menu(self, *, step_id, menu_options, description_placeholders=None):
+        return {
+            "type": "menu",
+            "step_id": step_id,
+            "menu_options": menu_options,
+            "description_placeholders": description_placeholders or {},
+        }
 
-    def async_abort(self, *, reason):
-        return {"type": "abort", "reason": reason}
+    def async_create_entry(self, *, title="", data=None, options=None):
+        return {
+            "type": "create_entry",
+            "title": title,
+            "data": data or {},
+            "options": options or {},
+        }
+
+    def async_abort(self, *, reason, description_placeholders=None):
+        result = {
+            "type": "abort",
+            "reason": reason,
+        }
+        if description_placeholders:
+            result["description_placeholders"] = description_placeholders
+        return result
 
 
 class ConfigFlow(_BaseFlow):  # pragma: no cover - minimal stub
     def __init_subclass__(cls, *, domain=None, **kwargs):
         super().__init_subclass__(**kwargs)
         cls.domain = domain
+
+    def _async_current_entries(self):
+        if not getattr(self, "hass", None):
+            return []
+
+        entries = getattr(self.hass.config_entries, "_entries", {})
+        domain = getattr(self, "domain", None)
+        return [entry for entry in entries.values() if getattr(entry, "domain", None) == domain]
 
 
 class OptionsFlow(_BaseFlow):  # pragma: no cover - minimal stub
@@ -376,10 +450,19 @@ sys.modules["homeassistant.components.diagnostics"] = diagnostics
 @pytest.fixture
 def hass() -> HomeAssistant:
     """Provide a minimal Home Assistant instance."""
-    return HomeAssistant()
+    instance = HomeAssistant()
+    if instance.helpers is not None:
+        instance.helpers.aiohttp_client = aiohttp_client
+    return instance
 
 
 @pytest.fixture
 def enable_custom_integrations():
     """Stub fixture for compatibility with Home Assistant tests."""
     yield
+
+
+@pytest.fixture
+def hass_admin_user():
+    """Provide a simple stub admin user."""
+    return types.SimpleNamespace()

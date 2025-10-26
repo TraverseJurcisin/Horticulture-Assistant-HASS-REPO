@@ -74,7 +74,17 @@ class ProfileStore:
             fallback = (
                 name or profile.get("display_name") or profile.get("name") or profile.get("plant_id") or "profile"
             )
+            preserved: dict[str, Any] = {}
+            for key in ("species_display", "species_pid", "image_url"):
+                value = profile.get(key)
+                if isinstance(value, str) and value:
+                    preserved[key] = value
+            credentials = profile.get("opb_credentials")
+            if isinstance(credentials, dict):
+                preserved["opb_credentials"] = deepcopy(credentials)
             payload = self._normalise_payload(profile, fallback_name=fallback)
+            if preserved:
+                payload.update(preserved)
             target_name = fallback
         await self._atomic_write(self._path_for(target_name), payload)
 
@@ -169,9 +179,20 @@ class ProfileStore:
 
     def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: str) -> dict[str, Any]:
         slug = slugify(fallback_name) or fallback_name or "profile"
+        preserved: dict[str, Any] = {}
+        for key in ("species_display", "species_pid", "image_url"):
+            value = payload.get(key)
+            if isinstance(value, str) and value:
+                preserved[key] = value
+        credentials = payload.get("opb_credentials")
+        if isinstance(credentials, dict):
+            preserved["opb_credentials"] = deepcopy(credentials)
         normalised = normalise_profile_payload(payload, fallback_id=str(slug), display_name=fallback_name)
         profile = BioProfile.from_json(normalised)
-        return self._profile_to_payload(profile)
+        output = self._profile_to_payload(profile)
+        if preserved:
+            output.update(preserved)
+        return output
 
     def _as_profile(self, payload: dict[str, Any], *, fallback_name: str) -> BioProfile:
         data = deepcopy(payload)

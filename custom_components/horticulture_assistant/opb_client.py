@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import Any
 
 import aiohttp
@@ -19,12 +20,41 @@ class OpenPlantbookError(Exception): ...
 
 
 class OpenPlantbookClient:
-    def __init__(self, session: aiohttp.ClientSession, token: str | None):
+    def __init__(
+        self,
+        session_or_hass: aiohttp.ClientSession | Any,
+        token_or_client_id: str | None,
+        secret: str | None = None,
+    ) -> None:
         """Wrap a session with optional bearer token headers."""
+
+        session: aiohttp.ClientSession | None
+        token: str | None
+
+        if secret is None and hasattr(session_or_hass, "get"):
+            session = session_or_hass
+            token = token_or_client_id
+            self._client_id = None
+            self._secret = None
+        else:
+            hass = session_or_hass
+            self._client_id = token_or_client_id
+            self._secret = secret
+            session = None
+            helper = getattr(getattr(hass, "helpers", None), "aiohttp_client", None)
+            if helper is not None:
+                try:
+                    session = helper.async_get_clientsession(hass)
+                except Exception:  # pragma: no cover - helper unavailable in tests
+                    session = None
+            token = secret
+
         self._s = session
         self._h = {"Authorization": f"Bearer {token}"} if token else {}
 
     async def _get(self, path: str) -> Any:
+        if self._s is None:
+            raise OpenPlantbookError("client session unavailable")
         url = f"{BASE_URL}{path}"
         try:
             async with self._s.get(url, headers=self._h, timeout=_TIMEOUT) as r:
@@ -50,6 +80,22 @@ class OpenPlantbookClient:
         results = data if isinstance(data, list) else []
         _SEARCH_CACHE[query] = (results, now)
         return results
+
+    async def get_details(self, pid: str) -> dict[str, Any]:
+        """Fetch species details for ``pid``."""
+
+        detail = await self.species_details(pid)
+        return detail if isinstance(detail, dict) else {}
+
+    async def download_image(self, _name: str, _image_url: str, _target_dir: Path | str) -> str | None:
+        """Placeholder image downloader.
+
+        The real integration stores the file locally and returns a URL. Tests
+        patch this method, so the default implementation simply indicates no
+        download occurred.
+        """
+
+        return None
 
 
 async def async_fetch_field(hass, species: str, field: str, token: str | None = None) -> tuple[float | None, str]:

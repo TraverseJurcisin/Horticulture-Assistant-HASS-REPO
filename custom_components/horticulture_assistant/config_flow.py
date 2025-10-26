@@ -11,6 +11,7 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector as sel
+from homeassistant.util import slugify
 
 if TYPE_CHECKING:
     from homeassistant.data_entry_flow import FlowResult
@@ -48,6 +49,7 @@ from .opb_client import OpenPlantbookClient
 from .profile.compat import sync_thresholds
 from .profile.utils import determine_species_slug, ensure_sections
 from .profile.validation import evaluate_threshold_bounds
+from .profile_store import ProfileStore
 from .sensor_catalog import collect_sensor_suggestions, format_sensor_hints
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
@@ -63,6 +65,20 @@ PROFILE_SCOPE_LABELS = {
     "species_template": "Species template (reusable baseline)",
     "crop_batch": "Crop batch or bed (shared conditions)",
     "grow_zone": "Grow zone or environment",
+}
+SOURCE_FILTER_SYNONYMS = {
+    "entry": {"entry", "local", "existing", "installed", "profile"},
+    "library": {"library", "lib", "template", "catalog", "store"},
+}
+SOURCE_FILTER_LABELS = {
+    "entry": "Existing entries",
+    "library": "Library templates",
+}
+SCOPE_FILTER_SYNONYMS = {
+    "individual": {"individual", "plant", "single"},
+    "species_template": {"species_template", "species", "template", "baseline"},
+    "crop_batch": {"crop_batch", "batch", "crop", "bed"},
+    "grow_zone": {"grow_zone", "zone", "environment", "room"},
 }
 PROFILE_SCOPE_SELECTOR_OPTIONS = [
     {"value": value, "label": PROFILE_SCOPE_LABELS[value]} for value in PROFILE_SCOPE_CHOICES
@@ -143,12 +159,98 @@ def _build_sensor_schema(hass, defaults: Mapping[str, Any] | None = None):
     return vol.Schema(schema_fields), placeholders
 
 
-PROFILE_SCHEMA = vol.Schema(
-    {
-        vol.Required(CONF_PLANT_NAME): cv.string,
-        vol.Optional(CONF_PLANT_TYPE): cv.string,
-    }
-)
+def _normalize_source_filter(value: str) -> str | None:
+    candidate = value.casefold().replace("-", "_")
+    if candidate in {"all", "any", "*"}:
+        return None
+    for canonical, synonyms in SOURCE_FILTER_SYNONYMS.items():
+        if candidate == canonical or candidate in synonyms:
+            return canonical
+    return None
+
+
+def _normalize_scope_filter(value: str) -> str | None:
+    candidate = value.casefold().replace("-", "_")
+    if candidate in {"all", "any", "*"}:
+        return None
+    for canonical, synonyms in SCOPE_FILTER_SYNONYMS.items():
+        if candidate == canonical or candidate in synonyms:
+            return canonical
+    return None
+
+
+def _extract_profile_scope(profile: Mapping[str, Any]) -> str | None:
+    raw_scope = profile.get(CONF_PROFILE_SCOPE)
+    if isinstance(raw_scope, str):
+        normalized = raw_scope.casefold()
+        for option in PROFILE_SCOPE_CHOICES:
+            if normalized == option:
+                return option
+    general = profile.get("general")
+    if isinstance(general, Mapping):
+        nested = general.get(CONF_PROFILE_SCOPE)
+        if isinstance(nested, str):
+            normalized = nested.casefold()
+            for option in PROFILE_SCOPE_CHOICES:
+                if normalized == option:
+                    return option
+    return None
+
+
+def _parse_template_filter(value: str) -> tuple[list[str], set[str], set[str]]:
+    search_terms: list[str] = []
+    source_filters: set[str] = set()
+    scope_filters: set[str] = set()
+    for raw_token in value.split():
+        if not raw_token:
+            continue
+        key, sep, raw_value = raw_token.partition(":")
+        if sep:
+            key_cf = key.casefold()
+            trimmed_value = raw_value.strip()
+            if trimmed_value:
+                if key_cf == "source":
+                    normalized = _normalize_source_filter(trimmed_value)
+                    if normalized:
+                        source_filters.add(normalized)
+                        continue
+                elif key_cf == "scope":
+                    normalized = _normalize_scope_filter(trimmed_value)
+                    if normalized:
+                        scope_filters.add(normalized)
+                        continue
+        search_terms.append(raw_token)
+    return search_terms, source_filters, scope_filters
+
+
+def _normalize_template_source(value: str | None) -> str:
+    if not value:
+        return "entry"
+    return str(value).split(":", 1)[0]
+
+
+def _summarise_template_filters(
+    search_terms: list[str],
+    source_filters: set[str],
+    scope_filters: set[str],
+    visible_count: int,
+    total_count: int,
+) -> str:
+    if not (search_terms or source_filters or scope_filters):
+        return ""
+    parts: list[str] = []
+    if search_terms:
+        parts.append(f"Text: \"{' '.join(search_terms)}\"")
+    if source_filters:
+        labels = sorted(SOURCE_FILTER_LABELS.get(item, item.title()) for item in source_filters)
+        parts.append(f"Sources: {', '.join(labels)}")
+    if scope_filters:
+        labels = sorted(PROFILE_SCOPE_LABELS.get(item, item.replace('_', ' ').title()) for item in scope_filters)
+        parts.append(f"Scopes: {', '.join(labels)}")
+    summary = "Applied filters — " + "; ".join(parts)
+    if total_count:
+        summary += f". Showing {visible_count} of {total_count} templates."
+    return summary
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc,call-arg]
@@ -158,24 +260,258 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         self._config: dict | None = None
         self._profile: dict | None = None
         self._thresholds: dict[str, float] = {}
+        self._threshold_snapshot: dict[str, Any] | None = None
         self._opb_credentials: dict[str, str] | None = None
         self._opb_results: list[dict[str, str]] = []
         self._species_pid: str | None = None
         self._species_display: str | None = None
         self._image_url: str | None = None
+        self._existing_entry: config_entries.ConfigEntry | None = None
+        self._sensor_defaults: dict[str, str] | None = None
+        self._profile_templates: dict[str, Mapping[str, Any]] | None = None
+        self._profile_template_sources: dict[str, str] = {}
+        self._profile_store: ProfileStore | None = None
+        self._template_filter: str | None = None
 
     async def async_step_user(self, user_input=None):
-        if self._async_current_entries():
-            return self.async_abort(reason="single_instance_allowed")
+        entries = self._async_current_entries()
+        if entries:
+            self._existing_entry = entries[0]
+            return await self.async_step_post_setup(user_input)
+
+        if user_input is None:
+            schema = vol.Schema(
+                {
+                    vol.Required("setup_mode", default="profile"): sel.SelectSelector(
+                        sel.SelectSelectorConfig(
+                            options=[
+                                {
+                                    "value": "profile",
+                                    "label": "Create a plant profile now",
+                                },
+                                {
+                                    "value": "skip",
+                                    "label": "Skip for now (add profiles later)",
+                                },
+                            ]
+                        )
+                    )
+                }
+            )
+            return self.async_show_form(step_id="user", data_schema=schema)
+
+        setup_mode = user_input.get("setup_mode", "profile")
+        if setup_mode == "skip":
+            title = self.hass.config.location_name or "Horticulture Assistant"
+            return self.async_create_entry(title=title, data={}, options={})
 
         self._config = {}
-        return await self.async_step_profile(user_input)
+        self._reset_profile_context()
+        return await self.async_step_profile()
+
+    def _reset_profile_context(self) -> None:
+        self._profile = None
+        self._thresholds = {}
+        self._threshold_snapshot = None
+        self._opb_credentials = None
+        self._opb_results = []
+        self._species_pid = None
+        self._species_display = None
+        self._image_url = None
+        self._sensor_defaults = None
+        self._template_filter = None
+
+    def _entry_profile_templates(self) -> dict[str, Mapping[str, Any]]:
+        entry = self._existing_entry
+        if entry is None:
+            entries = self._async_current_entries()
+            entry = entries[0] if entries else None
+
+        if entry is None:
+            return {}
+
+        raw_profiles = entry.options.get(CONF_PROFILES)
+        if not isinstance(raw_profiles, Mapping):
+            return {}
+
+        profiles: dict[str, Mapping[str, Any]] = {}
+        for plant_id, data in raw_profiles.items():
+            if isinstance(plant_id, str) and isinstance(data, Mapping):
+                profiles[plant_id] = data
+        return profiles
+
+    async def _async_profile_store(self) -> ProfileStore | None:
+        if self._profile_store is not None:
+            return self._profile_store
+        try:
+            store = ProfileStore(self.hass)
+            await store.async_init()
+        except Exception as err:  # pragma: no cover - defensive guard
+            _LOGGER.debug("Profile store unavailable: %s", err)
+            self._profile_store = None
+            return None
+        self._profile_store = store
+        return store
+
+    async def _async_available_profile_templates(self) -> dict[str, Mapping[str, Any]]:
+        if self._profile_templates is not None:
+            return self._profile_templates
+
+        templates = self._entry_profile_templates()
+        sources: dict[str, str] = {key: "entry" for key in templates}
+
+        store = await self._async_profile_store()
+        if store is not None:
+            try:
+                names = await store.async_list()
+            except Exception as err:  # pragma: no cover - defensive guard
+                _LOGGER.debug("Unable to list profile library templates: %s", err)
+            else:
+                for name in names:
+                    payload = await store.async_get(name)
+                    if not isinstance(payload, Mapping):
+                        continue
+                    identifier = (
+                        payload.get("plant_id")
+                        or payload.get("profile_id")
+                        or slugify(payload.get("name"))
+                        or slugify(name)
+                        or name
+                    )
+                    key_base = str(identifier)
+                    key = key_base
+                    suffix = 1
+                    while key in templates:
+                        suffix += 1
+                        key = f"{key_base}_{suffix}"
+                    templates[key] = payload
+                    sources[key] = "library"
+
+        self._profile_templates = templates
+        self._profile_template_sources = sources
+        return templates
+
+    def _apply_threshold_copy(self, profile: Mapping[str, Any]) -> None:
+        thresholds = profile.get("thresholds") if isinstance(profile, Mapping) else None
+        snapshot: dict[str, Any] = {
+            "thresholds": deepcopy(thresholds) if isinstance(thresholds, Mapping) else {},
+            "resolved_targets": deepcopy(profile.get("resolved_targets", {}))
+            if isinstance(profile.get("resolved_targets"), Mapping)
+            else {},
+            "variables": deepcopy(profile.get("variables", {}))
+            if isinstance(profile.get("variables"), Mapping)
+            else {},
+        }
+        sections = profile.get("sections") if isinstance(profile, Mapping) else None
+        if isinstance(sections, Mapping):
+            snapshot["sections"] = deepcopy(sections)
+
+        sync_thresholds(snapshot, default_source="manual", prune=False)
+        self._threshold_snapshot = snapshot
+
+        manual_defaults: dict[str, float] = {}
+        for key in MANUAL_THRESHOLD_FIELDS:
+            value = snapshot["thresholds"].get(key)
+            if value in (None, ""):
+                continue
+            try:
+                manual_defaults[key] = float(value)
+            except (TypeError, ValueError):
+                continue
+        self._thresholds = manual_defaults
+
+        general = profile.get("general") if isinstance(profile.get("general"), Mapping) else None
+
+        sensors: Mapping[str, Any] | None = None
+        if isinstance(profile.get("sensors"), Mapping):
+            sensors = profile["sensors"]  # type: ignore[index]
+        elif isinstance(general, Mapping):
+            maybe_sensors = general.get("sensors")
+            if isinstance(maybe_sensors, Mapping):
+                sensors = maybe_sensors
+
+        sensor_defaults: dict[str, str] = {}
+        if sensors:
+            for option_key, role in SENSOR_OPTION_ROLES.items():
+                sensor_value = sensors.get(role)
+                if isinstance(sensor_value, str) and sensor_value:
+                    sensor_defaults[option_key] = sensor_value
+                elif isinstance(sensor_value, list | tuple):
+                    first = next((item for item in sensor_value if isinstance(item, str) and item), None)
+                    if first:
+                        sensor_defaults[option_key] = first
+        self._sensor_defaults = sensor_defaults or None
+
+        scope_candidate = _extract_profile_scope(profile) if isinstance(profile, Mapping) else None
+        if scope_candidate in PROFILE_SCOPE_CHOICES and self._profile is not None:
+            self._profile[CONF_PROFILE_SCOPE] = scope_candidate
+
+        if self._profile is not None and not self._profile.get(CONF_PLANT_TYPE) and isinstance(general, Mapping):
+            plant_type = general.get(CONF_PLANT_TYPE)
+            if isinstance(plant_type, str) and plant_type:
+                self._profile[CONF_PLANT_TYPE] = plant_type
+
+        species_display = profile.get("species_display") if isinstance(profile, Mapping) else None
+        if isinstance(species_display, str) and species_display:
+            self._species_display = species_display
+        elif isinstance(general, Mapping):
+            display = general.get("plant_type")
+            if isinstance(display, str) and display:
+                self._species_display = display
+
+        species_pid = profile.get("species_pid") if isinstance(profile, Mapping) else None
+        if isinstance(species_pid, str) and species_pid:
+            self._species_pid = species_pid
+
+        image_url = profile.get("image_url") if isinstance(profile, Mapping) else None
+        if isinstance(image_url, str) and image_url:
+            self._image_url = image_url
+
+        opb_credentials = profile.get("opb_credentials") if isinstance(profile, Mapping) else None
+        if isinstance(opb_credentials, Mapping):
+            creds: dict[str, str] = {}
+            for key, value in opb_credentials.items():
+                if isinstance(key, str) and isinstance(value, str):
+                    creds[key] = value
+            self._opb_credentials = creds or None
+
+    async def async_step_post_setup(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        if self._existing_entry is None:
+            return self.async_abort(reason="unknown_profile")
+
+        selector = sel.SelectSelector(
+            sel.SelectSelectorConfig(
+                options=[
+                    {"value": "add_profile", "label": "Add another plant profile"},
+                    {"value": "open_options", "label": "Open profile manager"},
+                ]
+            )
+        )
+        schema = vol.Schema({vol.Required("next_action", default="add_profile"): selector})
+
+        if user_input is None:
+            return self.async_show_form(step_id="post_setup", data_schema=schema)
+
+        action = user_input.get("next_action", "add_profile")
+        if action == "open_options":
+            return self.async_abort(reason="post_setup_use_options")
+
+        self._config = {}
+        self._reset_profile_context()
+        return await self.async_step_profile()
 
     async def async_step_profile(self, user_input=None):
         errors = {}
+        defaults: dict[str, Any] = {}
+        if self._profile:
+            defaults.update(self._profile)
         if user_input is not None and self._config is not None:
+            defaults.update(user_input)
             plant_name = user_input[CONF_PLANT_NAME].strip()
             plant_type = user_input.get(CONF_PLANT_TYPE, "").strip()
+            profile_scope = user_input.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
+            if profile_scope not in PROFILE_SCOPE_CHOICES:
+                profile_scope = PROFILE_SCOPE_DEFAULT
             if not plant_name:
                 errors[CONF_PLANT_NAME] = "required"
             else:
@@ -198,11 +534,30 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 self._profile = {
                     CONF_PLANT_ID: plant_id,
                     CONF_PLANT_NAME: plant_name,
+                    CONF_PROFILE_SCOPE: profile_scope,
                 }
                 if plant_type:
                     self._profile[CONF_PLANT_TYPE] = plant_type
                 return await self.async_step_threshold_source()
-        return self.async_show_form(step_id="profile", data_schema=PROFILE_SCHEMA, errors=errors)
+
+        schema_defaults = {
+            CONF_PLANT_NAME: defaults.get(CONF_PLANT_NAME, ""),
+            CONF_PLANT_TYPE: defaults.get(CONF_PLANT_TYPE, ""),
+            CONF_PROFILE_SCOPE: defaults.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT),
+        }
+
+        schema = vol.Schema(
+            {
+                vol.Required(CONF_PLANT_NAME, default=schema_defaults[CONF_PLANT_NAME]): cv.string,
+                vol.Optional(CONF_PLANT_TYPE, default=schema_defaults[CONF_PLANT_TYPE]): cv.string,
+                vol.Required(
+                    CONF_PROFILE_SCOPE,
+                    default=schema_defaults[CONF_PROFILE_SCOPE],
+                ): sel.SelectSelector(sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS)),
+            }
+        )
+
+        return self.async_show_form(step_id="profile", data_schema=schema, errors=errors)
 
     async def async_step_threshold_source(self, user_input=None):
         if self._profile is None:
@@ -213,28 +568,171 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if user_input is not None:
             method = user_input["method"]
             if method == "openplantbook":
+                self._threshold_snapshot = None
+                self._sensor_defaults = None
                 return await self.async_step_opb_credentials()
             if method == "skip":
                 self._thresholds = {}
+                self._threshold_snapshot = None
                 self._species_display = None
                 self._species_pid = None
                 self._image_url = None
-                return await self._complete_profile({})
+                self._sensor_defaults = None
+                return await self.async_step_sensors()
+            if method == "copy":
+                return await self.async_step_threshold_copy()
+            self._threshold_snapshot = None
+            self._sensor_defaults = None
             return await self.async_step_thresholds()
+
+        templates_available = bool(await self._async_available_profile_templates())
+
+        options = [
+            {"value": "openplantbook", "label": "From OpenPlantbook"},
+            {"value": "manual", "label": "Manual entry"},
+            {"value": "skip", "label": "Skip for now"},
+        ]
+        if templates_available:
+            options.insert(1, {"value": "copy", "label": "Copy an existing profile"})
+
         schema = vol.Schema(
-            {
-                vol.Required("method", default="manual"): sel.SelectSelector(
-                    sel.SelectSelectorConfig(
-                        options=[
-                            {"value": "openplantbook", "label": "From OpenPlantbook"},
-                            {"value": "manual", "label": "Manual entry"},
-                            {"value": "skip", "label": "Skip for now"},
-                        ]
-                    )
-                )
-            }
+            {vol.Required("method", default="manual"): sel.SelectSelector(sel.SelectSelectorConfig(options=options))}
         )
         return self.async_show_form(step_id="threshold_source", data_schema=schema)
+
+    async def async_step_threshold_copy(self, user_input=None):
+        if self._profile is None:
+            _LOGGER.debug("Profile metadata missing when copying thresholds; returning to profile step.")
+            if self._config is None:
+                self._config = {}
+            return await self.async_step_profile()
+
+        templates = await self._async_available_profile_templates()
+        if not templates:
+            self._threshold_snapshot = None
+            self._sensor_defaults = None
+            return await self.async_step_thresholds()
+
+        stored_filter = self._template_filter or ""
+        if user_input is not None:
+            requested_filter = str(user_input.get("filter") or "").strip()
+            if requested_filter != stored_filter:
+                self._template_filter = requested_filter
+                return await self.async_step_threshold_copy()
+
+        filter_value = self._template_filter or ""
+        options: list[tuple[str, str]] = []
+        filtered_options: list[tuple[str, str]] = []
+        search_terms, source_filters, scope_filters = _parse_template_filter(filter_value)
+        text_terms = [term.casefold() for term in search_terms if term]
+        filter_active = bool(text_terms or source_filters or scope_filters)
+
+        for plant_id, data in templates.items():
+            display_name = None
+            for key in ("name", "display_name"):
+                value = data.get(key)
+                if isinstance(value, str) and value:
+                    display_name = value
+                    break
+            if not display_name:
+                display_name = plant_id
+            species = data.get("species_display") if isinstance(data.get("species_display"), str) else None
+            if not species:
+                general = data.get("general") if isinstance(data.get("general"), Mapping) else None
+                if isinstance(general, Mapping):
+                    species_value = general.get(CONF_PLANT_TYPE)
+                    if isinstance(species_value, str) and species_value:
+                        species = species_value
+            label = f"{display_name} ({species})" if species else display_name
+            source = self._profile_template_sources.get(plant_id)
+            if source == "library":
+                label = f"[Library] {label}"
+            options.append((label, plant_id))
+            matches = True
+            if text_terms:
+                label_cf = label.casefold()
+                plant_cf = plant_id.casefold()
+                species_cf = species.casefold() if species else ""
+                matches = all(
+                    term in label_cf or term in plant_cf or (species_cf and term in species_cf) for term in text_terms
+                )
+            if matches and source_filters:
+                template_source = _normalize_template_source(self._profile_template_sources.get(plant_id))
+                matches = template_source in source_filters
+            if matches and scope_filters:
+                scope_value = _extract_profile_scope(data)
+                matches = scope_value is not None and scope_value in scope_filters
+            if matches:
+                filtered_options.append((label, plant_id))
+
+        if not options:
+            self._threshold_snapshot = None
+            self._sensor_defaults = None
+            return await self.async_step_thresholds()
+
+        options.sort(key=lambda item: item[0].casefold())
+        if filtered_options:
+            filtered_options.sort(key=lambda item: item[0].casefold())
+        selector_source = filtered_options if filter_active else options
+        selector_options = [{"value": pid, "label": label} for label, pid in selector_source]
+
+        schema_fields: dict[Any, Any] = {
+            vol.Optional("filter", default=filter_value): str,
+        }
+        errors: dict[str, str] = {}
+
+        visible_count = len(selector_source)
+        total_count = len(options)
+        filter_summary = _summarise_template_filters(
+            search_terms,
+            source_filters,
+            scope_filters,
+            visible_count,
+            total_count,
+        )
+        placeholders = {"filter_summary": filter_summary}
+
+        if filter_active and not filtered_options:
+            errors["base"] = "no_template_matches"
+            schema = vol.Schema(schema_fields)
+            return self.async_show_form(
+                step_id="threshold_copy",
+                data_schema=schema,
+                errors=errors,
+                description_placeholders=placeholders,
+            )
+
+        if not selector_options:
+            errors["base"] = "no_template_matches"
+            schema = vol.Schema(schema_fields)
+            return self.async_show_form(
+                step_id="threshold_copy",
+                data_schema=schema,
+                errors=errors,
+                description_placeholders=placeholders,
+            )
+
+        if user_input is None:
+            selector = sel.SelectSelector(sel.SelectSelectorConfig(options=selector_options))
+            schema_fields[vol.Required("profile_id", default=selector_options[0]["value"])] = selector
+            schema = vol.Schema(schema_fields)
+            return self.async_show_form(
+                step_id="threshold_copy",
+                data_schema=schema,
+                errors=errors,
+                description_placeholders=placeholders,
+            )
+
+        profile_id = user_input.get("profile_id")
+        profile = templates.get(profile_id) if isinstance(profile_id, str) else None
+        if profile is None:
+            return self.async_abort(reason="unknown_profile")
+
+        if self._profile is not None:
+            self._apply_threshold_copy(profile)
+
+        self._template_filter = None
+        return await self.async_step_thresholds()
 
     async def async_step_opb_credentials(self, user_input=None):
         errors = {}
@@ -382,7 +880,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 self._config = {}
             return await self.async_step_profile()
 
-        schema, placeholders = _build_sensor_schema(self.hass)
+        schema, placeholders = _build_sensor_schema(self.hass, self._sensor_defaults)
 
         errors = {}
         if user_input is not None:
@@ -455,17 +953,37 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if co2 := user_input.get(CONF_CO2_SENSOR):
             mapped["co2"] = co2
 
+        if not mapped and self._sensor_defaults:
+            for option_key, role in SENSOR_OPTION_ROLES.items():
+                default_value = self._sensor_defaults.get(option_key) if self._sensor_defaults else None
+                if isinstance(default_value, str) and default_value:
+                    mapped[role] = default_value
+
         profile_name = self._profile[CONF_PLANT_NAME]
         plant_id = self._profile[CONF_PLANT_ID]
+        profile_scope = self._profile.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
+
         general_section: dict[str, Any] = {}
         if mapped:
             general_section["sensors"] = dict(mapped)
         if plant_type := self._profile.get(CONF_PLANT_TYPE):
             general_section.setdefault("plant_type", plant_type)
-        general_section.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
+        general_section.setdefault(CONF_PROFILE_SCOPE, profile_scope)
 
-        thresholds_payload = {"thresholds": dict(self._thresholds)}
-        sync_thresholds(thresholds_payload, default_source="manual")
+        if self._threshold_snapshot is not None:
+            thresholds_payload = deepcopy(self._threshold_snapshot)
+            thresholds_section = thresholds_payload.setdefault("thresholds", {})
+            thresholds_section.update(self._thresholds)
+            touched_keys = list(self._thresholds.keys())
+            sync_thresholds(
+                thresholds_payload,
+                default_source="manual",
+                touched_keys=touched_keys or None,
+                prune=False,
+            )
+        else:
+            thresholds_payload = {"thresholds": dict(self._thresholds)}
+            sync_thresholds(thresholds_payload, default_source="manual")
 
         profile_entry: dict[str, Any] = {
             "name": profile_name,
@@ -475,6 +993,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             "resolved_targets": thresholds_payload["resolved_targets"],
             "variables": thresholds_payload["variables"],
         }
+        profile_entry[CONF_PROFILE_SCOPE] = profile_scope
         if general_section:
             profile_entry["general"] = general_section
         if sections := thresholds_payload.get("sections"):
@@ -491,6 +1010,16 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         ensure_sections(profile_entry, plant_id=plant_id, display_name=profile_name)
 
         data = {**(self._config or {}), **self._profile}
+        if self._existing_entry is not None:
+            await self._async_store_profile_for_existing_entry(
+                plant_id,
+                profile_entry,
+            )
+            return self.async_abort(
+                reason="profile_added",
+                description_placeholders={"profile": profile_name},
+            )
+
         options = dict(user_input)
         options["sensors"] = dict(mapped)
         options["thresholds"] = thresholds_payload["thresholds"]
@@ -506,6 +1035,22 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if self._opb_credentials:
             options["opb_credentials"] = self._opb_credentials
         return self.async_create_entry(title=profile_name, data=data, options=options)
+
+    async def _async_store_profile_for_existing_entry(
+        self,
+        plant_id: str,
+        profile_entry: dict[str, Any],
+    ) -> None:
+        entry = self._existing_entry
+        if entry is None:
+            return
+
+        options = dict(entry.options)
+        profiles = dict(options.get(CONF_PROFILES, {}))
+        profiles[plant_id] = profile_entry
+        options[CONF_PROFILES] = profiles
+
+        self.hass.config_entries.async_update_entry(entry, options=options)
 
     @staticmethod
     def async_get_options_flow(config_entry):
@@ -638,6 +1183,24 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         errors = {}
         if user_input is not None:
+            interval_candidate = user_input.get(CONF_UPDATE_INTERVAL)
+            if interval_candidate is not None:
+                try:
+                    interval_value = int(interval_candidate)
+                except (TypeError, ValueError):
+                    errors[CONF_UPDATE_INTERVAL] = "invalid_interval"
+                else:
+                    if interval_value < 1:
+                        errors[CONF_UPDATE_INTERVAL] = "invalid_interval"
+                    else:
+                        user_input[CONF_UPDATE_INTERVAL] = interval_value
+            if errors:
+                return self.async_show_form(
+                    step_id="basic",
+                    data_schema=schema,
+                    errors=errors,
+                    description_placeholders=placeholders,
+                )
             for key in (
                 CONF_MOISTURE_SENSOR,
                 CONF_TEMPERATURE_SENSOR,
@@ -654,7 +1217,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 validation = validate_sensor_links(self.hass, sensor_map)
                 for issue in validation.errors:
                     option_key = next((opt for opt, role in SENSOR_OPTION_ROLES.items() if role == issue.role), None)
-                    if option_key:
+                    if option_key and option_key not in errors:
                         errors[option_key] = issue.issue
                 if validation.warnings:
                     self._notify_sensor_warnings(validation.warnings)
@@ -1305,15 +1868,21 @@ class OptionsFlow(config_entries.OptionsFlow):
             for role in ("temperature", "humidity", "illuminance", "moisture"):
                 if ent := user_input.get(role):
                     sensors[role] = ent
-            if sensors:
-                validation = validate_sensor_links(self.hass, sensors)
-                for issue in validation.errors:
-                    errors[issue.role] = issue.issue
-                if validation.warnings:
-                    self._notify_sensor_warnings(validation.warnings)
-                if not errors:
-                    await registry.async_link_sensors(pid, sensors)
-                    return self.async_create_entry(title="", data={})
+
+            skip_requested = bool(user_input.get("skip_linking"))
+            if not sensors:
+                return self.async_create_entry(title="", data={})
+            if skip_requested:
+                return self.async_create_entry(title="", data={})
+
+            validation = validate_sensor_links(self.hass, sensors)
+            for issue in validation.errors:
+                errors[issue.role] = issue.issue
+            if validation.warnings:
+                self._notify_sensor_warnings(validation.warnings)
+            if not errors:
+                await registry.async_link_sensors(pid, sensors)
+                return self.async_create_entry(title="", data={})
         schema = vol.Schema(
             {
                 vol.Optional("temperature"): sel.EntitySelector(
@@ -1328,6 +1897,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 vol.Optional("moisture"): sel.EntitySelector(
                     sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])
                 ),
+                vol.Optional("skip_linking", default=False): bool,
             }
         )
         return self.async_show_form(step_id="attach_sensors", data_schema=schema, errors=errors)
@@ -1873,11 +2443,10 @@ class OptionsFlow(config_entries.OptionsFlow):
         general_dict["nutrient_schedule"] = safe_schedule
         profile["general"] = general_dict
 
-        ensure_sections(profile, plant_id=profile_id, display_name=profile.get("name") or profile_id)
-
         profiles[profile_id] = profile
         opts[CONF_PROFILES] = profiles
         self.hass.config_entries.async_update_entry(self._entry, options=opts)
+        self._entry.options = opts
 
     async def async_step_apply(self, user_input=None):
         if user_input is not None:
