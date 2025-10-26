@@ -8,4 +8,4 @@ def test_manifest_metadata():
     assert data["domain"] == "horticulture_assistant"
     assert isinstance(data.get("name"), str) and data["name"].strip()
     assert data.get("loggers") == ["custom_components.horticulture_assistant"]
-    assert data.get("integration_type") == "hub"
+    assert data.get("integration_type") == "service"

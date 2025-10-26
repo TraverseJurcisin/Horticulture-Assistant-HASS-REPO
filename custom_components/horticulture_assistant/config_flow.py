@@ -32,6 +32,7 @@ from .const import (
     CONF_PLANT_NAME,
     CONF_PLANT_TYPE,
     CONF_PROFILE_SCOPE,
+    CONF_PROFILES,
     CONF_TEMPERATURE_SENSOR,
     CONF_UPDATE_INTERVAL,
     DEFAULT_BASE_URL,
@@ -50,6 +51,7 @@ from .profile.validation import evaluate_threshold_bounds
 from .sensor_catalog import collect_sensor_suggestions, format_sensor_hints
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
+from .utils.entry_helpers import get_entry_data, get_primary_profile_id
 from .utils.json_io import load_json, save_json
 from .utils.nutrient_schedule import generate_nutrient_schedule
 from .utils.plant_registry import register_plant
@@ -94,6 +96,15 @@ SENSOR_OPTION_FALLBACKS = {
     CONF_CO2_SENSOR: sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
 }
 
+PROFILE_SENSOR_FIELDS = {
+    "temperature": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])),
+    "humidity": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["humidity"])),
+    "illuminance": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["illuminance"])),
+    "moisture": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])),
+    "conductivity": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"])),
+    "co2": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
+}
+
 
 def _build_sensor_schema(hass, defaults: Mapping[str, Any] | None = None):
     """Return a voluptuous schema and hint placeholders for sensor selection."""
@@ -132,11 +143,6 @@ def _build_sensor_schema(hass, defaults: Mapping[str, Any] | None = None):
     return vol.Schema(schema_fields), placeholders
 
 
-CONF_CREATE_INITIAL_PROFILE = "create_initial_profile"
-
-
-DATA_SCHEMA = vol.Schema({vol.Optional(CONF_CREATE_INITIAL_PROFILE, default=False): bool})
-
 PROFILE_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_PLANT_NAME): cv.string,
@@ -146,7 +152,7 @@ PROFILE_SCHEMA = vol.Schema(
 
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc,call-arg]
-    VERSION = 2
+    VERSION = 3
 
     def __init__(self) -> None:
         self._config: dict | None = None
@@ -159,13 +165,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         self._image_url: str | None = None
 
     async def async_step_user(self, user_input=None):
-        if user_input is not None:
-            self._config = {}
-            if user_input.get(CONF_CREATE_INITIAL_PROFILE, True):
-                # Run the legacy profile wizard when explicitly requested.
-                return await self.async_step_profile()
-            return self.async_create_entry(title="Horticulture Assistant", data=self._config, options={})
-        return self.async_show_form(step_id="user", data_schema=DATA_SCHEMA)
+        if self._async_current_entries():
+            return self.async_abort(reason="single_instance_allowed")
+
+        self._config = {}
+        return await self.async_step_profile(user_input)
 
     async def async_step_profile(self, user_input=None):
         errors = {}
@@ -450,14 +454,49 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             mapped["conductivity"] = ec
         if co2 := user_input.get(CONF_CO2_SENSOR):
             mapped["co2"] = co2
-        data = {**(self._config or {}), **self._profile}
-        options = dict(user_input)
-        options["sensors"] = mapped
+
+        profile_name = self._profile[CONF_PLANT_NAME]
+        plant_id = self._profile[CONF_PLANT_ID]
+        general_section: dict[str, Any] = {}
+        if mapped:
+            general_section["sensors"] = dict(mapped)
+        if plant_type := self._profile.get(CONF_PLANT_TYPE):
+            general_section.setdefault("plant_type", plant_type)
+        general_section.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
+
         thresholds_payload = {"thresholds": dict(self._thresholds)}
         sync_thresholds(thresholds_payload, default_source="manual")
+
+        profile_entry: dict[str, Any] = {
+            "name": profile_name,
+            "plant_id": plant_id,
+            "sensors": dict(mapped),
+            "thresholds": thresholds_payload["thresholds"],
+            "resolved_targets": thresholds_payload["resolved_targets"],
+            "variables": thresholds_payload["variables"],
+        }
+        if general_section:
+            profile_entry["general"] = general_section
+        if sections := thresholds_payload.get("sections"):
+            profile_entry["sections"] = sections
+        if self._species_display:
+            profile_entry["species_display"] = self._species_display
+        if self._species_pid:
+            profile_entry["species_pid"] = self._species_pid
+        if self._image_url:
+            profile_entry["image_url"] = self._image_url
+        if self._opb_credentials:
+            profile_entry["opb_credentials"] = self._opb_credentials
+
+        ensure_sections(profile_entry, plant_id=plant_id, display_name=profile_name)
+
+        data = {**(self._config or {}), **self._profile}
+        options = dict(user_input)
+        options["sensors"] = dict(mapped)
         options["thresholds"] = thresholds_payload["thresholds"]
         options["resolved_targets"] = thresholds_payload["resolved_targets"]
         options["variables"] = thresholds_payload["variables"]
+        options[CONF_PROFILES] = {plant_id: profile_entry}
         if self._species_display:
             options["species_display"] = self._species_display
         if self._species_pid:
@@ -466,7 +505,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             options["image_url"] = self._image_url
         if self._opb_credentials:
             options["opb_credentials"] = self._opb_credentials
-        return self.async_create_entry(title=self._profile[CONF_PLANT_NAME], data=data, options=options)
+        return self.async_create_entry(title=profile_name, data=data, options=options)
 
     @staticmethod
     def async_get_options_flow(config_entry):
@@ -490,11 +529,23 @@ class OptionsFlow(config_entries.OptionsFlow):
                 "basic",
                 "cloud_sync",
                 "add_profile",
+                "manage_profiles",
                 "configure_ai",
                 "profile_targets",
                 "nutrient_schedule",
             ],
         )
+
+    async def _async_get_registry(self):
+        from .profile_registry import ProfileRegistry
+
+        domain_data = self.hass.data.setdefault(DOMAIN, {})
+        registry: ProfileRegistry | None = domain_data.get("registry")
+        if registry is None:
+            registry = ProfileRegistry(self.hass, self._entry)
+            await registry.async_initialize()
+            domain_data["registry"] = registry
+        return registry
 
     def _notify_sensor_warnings(self, issues) -> None:
         if not issues:
@@ -668,6 +719,37 @@ class OptionsFlow(config_entries.OptionsFlow):
                 else:
                     opts.pop(key, None)
             opts["sensors"] = mapped
+            profiles = dict(opts.get(CONF_PROFILES, {}))
+            plant_id = self._entry.data.get(CONF_PLANT_ID)
+            if plant_id:
+                primary = dict(profiles.get(plant_id, {}))
+                name = primary.get("name") or self._entry.title or opts.get(CONF_PLANT_NAME) or plant_id
+                primary["name"] = name
+                primary["plant_id"] = plant_id
+                if mapped:
+                    primary["sensors"] = dict(mapped)
+                else:
+                    primary.pop("sensors", None)
+                general = dict(primary.get("general", {}))
+                if mapped:
+                    general["sensors"] = dict(mapped)
+                else:
+                    general.pop("sensors", None)
+                general.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
+                species_value = (
+                    opts.get("species_display")
+                    or self._entry.options.get("species_display")
+                    or self._entry.data.get(CONF_PLANT_TYPE)
+                )
+                if species_value and "plant_type" not in general:
+                    general["plant_type"] = species_value
+                if general:
+                    primary["general"] = general
+                elif "general" in primary:
+                    primary.pop("general")
+                ensure_sections(primary, plant_id=plant_id, display_name=name)
+                profiles[plant_id] = primary
+                opts[CONF_PROFILES] = profiles
             if "species_display" in user_input:
                 value = user_input.get("species_display")
                 if value:
@@ -875,22 +957,15 @@ class OptionsFlow(config_entries.OptionsFlow):
         return self.async_show_form(step_id="cloud_sync", data_schema=schema)
 
     async def async_step_add_profile(self, user_input: dict[str, Any] | None = None) -> FlowResult:
-        from .profile_registry import ProfileRegistry
-
-        domain_data = self.hass.data.setdefault(DOMAIN, {})
-        registry: ProfileRegistry | None = domain_data.get("registry")
-        if registry is None:
-            registry = ProfileRegistry(self.hass, self._entry)
-            await registry.async_load()
-            domain_data["registry"] = registry
+        registry = await self._async_get_registry()
 
         if user_input is not None:
             scope = user_input.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
             copy_from = user_input.get("copy_from")
             pid = await registry.async_add_profile(user_input["name"], copy_from, scope=scope)
 
-            entry_records = domain_data.setdefault(self._entry.entry_id, {})
-            store = entry_records.get("profile_store") if isinstance(entry_records, dict) else None
+            entry_records = get_entry_data(self.hass, self._entry) or {}
+            store = entry_records.get("profile_store") if isinstance(entry_records, Mapping) else None
             if store is not None:
                 new_profile = registry.get_profile(pid)
                 if new_profile is not None:
@@ -924,6 +999,264 @@ class OptionsFlow(config_entries.OptionsFlow):
             }
         )
         return self.async_show_form(step_id="add_profile", data_schema=schema)
+
+    async def async_step_manage_profiles(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        profiles = self._profiles()
+        if not profiles:
+            return self.async_abort(reason="no_profiles")
+
+        if user_input is None:
+            options = {pid: data.get("name", pid) for pid, data in profiles.items()}
+            actions = {
+                "edit_general": "Edit details",
+                "edit_sensors": "Edit sensors",
+                "edit_thresholds": "Edit targets",
+                "delete": "Delete profile",
+            }
+            return self.async_show_form(
+                step_id="manage_profiles",
+                data_schema=vol.Schema(
+                    {
+                        vol.Required("profile_id"): vol.In(options),
+                        vol.Required("action", default="edit_general"): vol.In(actions),
+                    }
+                ),
+            )
+
+        self._pid = user_input["profile_id"]
+        action = user_input["action"]
+        if action == "edit_general":
+            return await self.async_step_manage_profile_general()
+        if action == "edit_sensors":
+            return await self.async_step_manage_profile_sensors()
+        if action == "edit_thresholds":
+            return await self.async_step_manage_profile_thresholds()
+        if action == "delete":
+            return await self.async_step_manage_profile_delete()
+        return self.async_abort(reason="unknown_profile")
+
+    async def async_step_manage_profile_general(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        registry = await self._async_get_registry()
+        profiles = self._profiles()
+        if not self._pid or self._pid not in profiles:
+            return self.async_abort(reason="unknown_profile")
+
+        profile = profiles[self._pid]
+        general = profile.get("general", {}) if isinstance(profile.get("general"), Mapping) else {}
+        defaults = {
+            "name": profile.get("name", self._pid),
+            "plant_type": general.get(CONF_PLANT_TYPE, profile.get("species_display", "")),
+            CONF_PROFILE_SCOPE: general.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT),
+            "species_display": profile.get("species_display", general.get("plant_type", "")),
+        }
+        scope_selector = sel.SelectSelector(sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS))
+        schema = vol.Schema(
+            {
+                vol.Required("name", default=defaults["name"]): str,
+                vol.Optional("plant_type", default=defaults["plant_type"]): str,
+                vol.Required(CONF_PROFILE_SCOPE, default=defaults[CONF_PROFILE_SCOPE]): scope_selector,
+                vol.Optional("species_display", default=defaults["species_display"]): str,
+            }
+        )
+
+        errors: dict[str, str] = {}
+        placeholders: dict[str, str] = {"profile": defaults["name"]}
+        if user_input is not None:
+            new_name = user_input["name"].strip()
+            if not new_name:
+                errors["name"] = "required"
+            if not errors:
+                try:
+                    await registry.async_update_profile_general(
+                        self._pid,
+                        name=new_name,
+                        plant_type=user_input.get("plant_type", "").strip() or None,
+                        scope=user_input.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT),
+                        species_display=user_input.get("species_display", "").strip() or None,
+                    )
+                except ValueError:
+                    errors["base"] = "update_failed"
+                else:
+                    return self.async_create_entry(title="", data={})
+
+        return self.async_show_form(
+            step_id="manage_profile_general",
+            data_schema=schema,
+            errors=errors,
+            description_placeholders=placeholders,
+        )
+
+    async def async_step_manage_profile_sensors(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        registry = await self._async_get_registry()
+        profiles = self._profiles()
+        if not self._pid or self._pid not in profiles:
+            return self.async_abort(reason="unknown_profile")
+
+        profile = profiles[self._pid]
+        general = profile.get("general", {}) if isinstance(profile.get("general"), Mapping) else {}
+        existing = general.get("sensors", {}) if isinstance(general.get("sensors"), Mapping) else {}
+        description_placeholders = {
+            "profile": profile.get("name") or self._pid,
+            "error": "",
+        }
+
+        schema_fields: dict[Any, Any] = {}
+        for measurement, selector in PROFILE_SENSOR_FIELDS.items():
+            default_value = existing.get(measurement, "") if isinstance(existing, Mapping) else ""
+            schema_fields[vol.Optional(measurement, default=default_value)] = vol.Any(selector, str)
+        schema = vol.Schema(schema_fields)
+
+        errors: dict[str, str] = {}
+        if user_input is not None:
+            sensors: dict[str, str] = {}
+            for measurement in PROFILE_SENSOR_FIELDS:
+                raw = user_input.get(measurement)
+                if isinstance(raw, str) and raw.strip():
+                    sensors[measurement] = raw.strip()
+            try:
+                await registry.async_set_profile_sensors(self._pid, sensors)
+            except ValueError as err:
+                errors["base"] = "sensor_validation_failed"
+                description_placeholders["error"] = str(err)
+            else:
+                return self.async_create_entry(title="", data={})
+
+        return self.async_show_form(
+            step_id="manage_profile_sensors",
+            data_schema=schema,
+            errors=errors,
+            description_placeholders=description_placeholders,
+        )
+
+    async def async_step_manage_profile_thresholds(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        registry = await self._async_get_registry()
+        profiles = self._profiles()
+        if not self._pid or self._pid not in profiles:
+            return self.async_abort(reason="unknown_profile")
+
+        profile = profiles[self._pid]
+        thresholds_payload = profile.get("thresholds") if isinstance(profile.get("thresholds"), Mapping) else {}
+        resolved_payload = (
+            profile.get("resolved_targets") if isinstance(profile.get("resolved_targets"), Mapping) else {}
+        )
+
+        def _resolve_default(key: str) -> str:
+            if isinstance(thresholds_payload, Mapping):
+                value = thresholds_payload.get(key)
+                if isinstance(value, int | float):
+                    return str(value)
+                if isinstance(value, str) and value.strip():
+                    return value
+            if isinstance(resolved_payload, Mapping):
+                value = resolved_payload.get(key)
+                if isinstance(value, Mapping):
+                    raw = value.get("value")
+                    if isinstance(raw, int | float):
+                        return str(raw)
+                    if isinstance(raw, str) and raw.strip():
+                        return raw
+            return ""
+
+        schema_fields: dict[Any, Any] = {}
+        for key in MANUAL_THRESHOLD_FIELDS:
+            schema_fields[vol.Optional(key, default=_resolve_default(key))] = vol.Any(str, int, float)
+        schema = vol.Schema(schema_fields)
+
+        errors: dict[str, str] = {}
+        placeholders = {"profile": profile.get("name") or self._pid, "issue_detail": ""}
+
+        if user_input is not None:
+            cleaned: dict[str, float] = {}
+            removed: set[str] = set()
+            candidate = dict(thresholds_payload) if isinstance(thresholds_payload, Mapping) else {}
+
+            for key in MANUAL_THRESHOLD_FIELDS:
+                raw = user_input.get(key)
+                if raw in (None, "", []):
+                    if key in candidate:
+                        candidate.pop(key, None)
+                        removed.add(key)
+                    continue
+                try:
+                    value = float(raw)
+                except (TypeError, ValueError):
+                    errors[key] = "invalid_float"
+                    continue
+                cleaned[key] = value
+                candidate[key] = value
+
+            if errors:
+                return self.async_show_form(
+                    step_id="manage_profile_thresholds",
+                    data_schema=schema,
+                    errors=errors,
+                    description_placeholders=placeholders,
+                )
+
+            violations = evaluate_threshold_bounds(candidate)
+            if violations:
+                placeholders["issue_detail"] = "\n".join(issue.message() for issue in violations[:3])
+                for issue in violations:
+                    if issue.key in MANUAL_THRESHOLD_FIELDS:
+                        errors[issue.key] = "threshold_field_error"
+                errors["base"] = "threshold_out_of_bounds"
+                return self.async_show_form(
+                    step_id="manage_profile_thresholds",
+                    data_schema=schema,
+                    errors=errors,
+                    description_placeholders=placeholders,
+                )
+
+            target_keys = set(cleaned.keys()) | removed
+            try:
+                await registry.async_update_profile_thresholds(
+                    self._pid,
+                    cleaned,
+                    allowed_keys=target_keys,
+                    removed_keys=removed,
+                )
+            except ValueError as err:
+                errors["base"] = "update_failed"
+                placeholders["issue_detail"] = str(err)
+            else:
+                return self.async_create_entry(title="", data={})
+
+        return self.async_show_form(
+            step_id="manage_profile_thresholds",
+            data_schema=schema,
+            errors=errors,
+            description_placeholders=placeholders,
+        )
+
+    async def async_step_manage_profile_delete(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        registry = await self._async_get_registry()
+        primary_id = get_primary_profile_id(self._entry)
+        if not self._pid:
+            return self.async_abort(reason="unknown_profile")
+        if self._pid == primary_id:
+            return self.async_abort(reason="cannot_delete_primary")
+
+        profiles = self._profiles()
+        if self._pid not in profiles:
+            return self.async_abort(reason="unknown_profile")
+
+        profile_name = profiles[self._pid].get("name") or self._pid
+        schema = vol.Schema({vol.Required("confirm", default=False): bool})
+        placeholders = {"profile": profile_name}
+
+        if user_input is not None:
+            if user_input.get("confirm"):
+                try:
+                    await registry.async_delete_profile(self._pid)
+                except ValueError:
+                    return self.async_abort(reason="unknown_profile")
+            return self.async_create_entry(title="", data={})
+
+        return self.async_show_form(
+            step_id="manage_profile_delete",
+            data_schema=schema,
+            description_placeholders=placeholders,
+        )
 
     async def async_step_configure_ai(self, user_input: dict[str, Any] | None = None):
         opts = dict(self._entry.options)
@@ -1198,7 +1531,7 @@ class OptionsFlow(config_entries.OptionsFlow):
 
     def _profiles(self):
         profiles: dict[str, dict[str, Any]] = {}
-        for pid, payload in (self._entry.options.get("profiles", {}) or {}).items():
+        for pid, payload in (self._entry.options.get(CONF_PROFILES, {}) or {}).items():
             copy = dict(payload)
             ensure_sections(copy, plant_id=pid, display_name=copy.get("name") or pid)
             profiles[pid] = copy
@@ -1206,22 +1539,22 @@ class OptionsFlow(config_entries.OptionsFlow):
 
     def _set_source(self, src: dict):
         opts = dict(self._entry.options)
-        prof = dict(opts.get("profiles", {}).get(self._pid, {}))
+        prof = dict(opts.get(CONF_PROFILES, {}).get(self._pid, {}))
         ensure_sections(prof, plant_id=self._pid, display_name=prof.get("name") or self._pid)
         sources = dict(prof.get("sources", {}))
         sources[self._var] = src
         prof["sources"] = sources
         prof["needs_resolution"] = True
-        allp = dict(opts.get("profiles", {}))
+        allp = dict(opts.get(CONF_PROFILES, {}))
         allp[self._pid] = prof
-        opts["profiles"] = allp
+        opts[CONF_PROFILES] = allp
         self.hass.config_entries.async_update_entry(self._entry, options=opts)
 
     def _generate_all(self, mode: str, source_profile_id: str | None = None):
         from .const import VARIABLE_SPECS
 
         opts = dict(self._entry.options)
-        prof = dict(opts.get("profiles", {}).get(self._pid, {}))
+        prof = dict(opts.get(CONF_PROFILES, {}).get(self._pid, {}))
         library_section, local_section = ensure_sections(
             prof,
             plant_id=self._pid,
@@ -1236,7 +1569,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         if mode == "clone":
             if not source_profile_id:
                 raise ValueError("source_profile_id required for clone")
-            other = dict(opts.get("profiles", {}).get(source_profile_id, {}))
+            other = dict(opts.get(CONF_PROFILES, {}).get(source_profile_id, {}))
             ensure_sections(
                 other,
                 plant_id=source_profile_id,
@@ -1269,9 +1602,9 @@ class OptionsFlow(config_entries.OptionsFlow):
                     }
         prof["sources"] = sources
         prof["needs_resolution"] = True
-        allp = dict(opts.get("profiles", {}))
+        allp = dict(opts.get(CONF_PROFILES, {}))
         allp[self._pid] = prof
-        opts["profiles"] = allp
+        opts[CONF_PROFILES] = allp
         self.hass.config_entries.async_update_entry(self._entry, options=opts)
 
     def _infer_nutrient_schedule_plant_type(self, profile: Mapping[str, Any]) -> str | None:
@@ -1522,7 +1855,7 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         safe_schedule = json.loads(json.dumps(schedule, ensure_ascii=False))
         opts = dict(self._entry.options)
-        profiles = dict(opts.get("profiles", {}))
+        profiles = dict(opts.get(CONF_PROFILES, {}))
         profile = dict(profiles.get(profile_id, {}))
 
         ensure_sections(profile, plant_id=profile_id, display_name=profile.get("name") or profile_id)
@@ -1543,7 +1876,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         ensure_sections(profile, plant_id=profile_id, display_name=profile.get("name") or profile_id)
 
         profiles[profile_id] = profile
-        opts["profiles"] = profiles
+        opts[CONF_PROFILES] = profiles
         self.hass.config_entries.async_update_entry(self._entry, options=opts)
 
     async def async_step_apply(self, user_input=None):

@@ -8,7 +8,7 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 
 from .cloudsync import EdgeResolverService
-from .const import DOMAIN, OPB_FIELD_MAP, VARIABLE_SPECS
+from .const import CONF_PROFILES, DOMAIN, OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.options import options_profile_to_dataclass
 from .profile.resolution import (
     annotate_inherited_target,
@@ -82,7 +82,7 @@ class PreferenceResolver:
     def _load_local_payload(self, entry, profile_id: str) -> dict[str, Any]:
         """Return a local payload mapping for ``profile_id``."""
 
-        profiles = entry.options.get("profiles", {}) if isinstance(entry.options, Mapping) else {}
+        profiles = entry.options.get(CONF_PROFILES, {}) if isinstance(entry.options, Mapping) else {}
         payload = profiles.get(profile_id)
         if not isinstance(payload, Mapping):
             return {}
@@ -147,7 +147,7 @@ class PreferenceResolver:
         return resolved
 
     async def resolve_profile(self, entry, profile_id: str) -> dict[str, Any]:
-        prof = dict(entry.options.get("profiles", {}).get(profile_id, {}))
+        prof = dict(entry.options.get(CONF_PROFILES, {}).get(profile_id, {}))
         profile = options_profile_to_dataclass(
             profile_id,
             prof,
@@ -283,10 +283,10 @@ class PreferenceResolver:
             )
             prof["computed_stats"] = profile_payload.get("computed_stats", [])
 
-            allp = dict(entry.options.get("profiles", {}))
+            allp = dict(entry.options.get(CONF_PROFILES, {}))
             allp[profile_id] = prof
             opts = dict(entry.options)
-            opts["profiles"] = allp
+            opts[CONF_PROFILES] = allp
             self.hass.config_entries.async_update_entry(entry, options=opts)
 
         return thresholds
@@ -324,8 +324,9 @@ class PreferenceResolver:
 
             if mode == "clone":
                 clone_from = src.get("copy_from")
-                if clone_from and clone_from in (options.get("profiles") or {}):
-                    other = options["profiles"][clone_from]
+                profiles_map = options.get(CONF_PROFILES) or {}
+                if clone_from and clone_from in profiles_map:
+                    other = profiles_map[clone_from]
                     resolved_payload = (other.get("resolved_targets") or {}).get(key)
                     if isinstance(resolved_payload, dict):
                         return ResolvedTarget.from_json(resolved_payload)
@@ -366,7 +367,7 @@ class PreferenceResolver:
                 if last_run:
                     ts = datetime.fromisoformat(last_run.replace("Z", "+00:00"))
                     if datetime.now(UTC) - ts < timedelta(hours=ttl_h):
-                        prof = options.get("profiles", {}).get(profile_id, {})
+                        prof = options.get(CONF_PROFILES, {}).get(profile_id, {})
                         payload = (prof.get("resolved_targets") or {}).get(key)
                         if isinstance(payload, dict):
                             cached = ResolvedTarget.from_json(payload)
@@ -454,7 +455,7 @@ class PreferenceResolver:
 
     def _update_ai_cache(self, entry, pid, key, val, conf, notes, links):
         opts = dict(entry.options)
-        prof = dict(opts.get("profiles", {}).get(pid, {}))
+        prof = dict(opts.get(CONF_PROFILES, {}).get(pid, {}))
         sources = dict(prof.get("sources", {}))
         ai = dict(sources.get(key, {}).get("ai", {}))
         ai["last_run"] = datetime.now(UTC).isoformat()
@@ -465,9 +466,9 @@ class PreferenceResolver:
         s["ai"] = ai
         sources[key] = s
         prof["sources"] = sources
-        allp = dict(opts.get("profiles", {}))
+        allp = dict(opts.get(CONF_PROFILES, {}))
         allp[pid] = prof
-        opts["profiles"] = allp
+        opts[CONF_PROFILES] = allp
         self.hass.config_entries.async_update_entry(entry, options=opts)
 
 
@@ -481,7 +482,7 @@ async def generate_profile(
     """Populate all variables for a profile from a single source and resolve immediately."""
 
     opts = dict(entry.options)
-    prof = dict(opts.get("profiles", {}).get(profile_id, {}))
+    prof = dict(opts.get(CONF_PROFILES, {}).get(profile_id, {}))
     library_section, local_section = ensure_sections(
         prof,
         plant_id=profile_id,
@@ -497,7 +498,7 @@ async def generate_profile(
     if mode == "clone":
         if not source_profile_id:
             raise ValueError("source_profile_id required for clone")
-        other = dict(opts.get("profiles", {}).get(source_profile_id, {}))
+        other = dict(opts.get(CONF_PROFILES, {}).get(source_profile_id, {}))
         ensure_sections(
             other,
             plant_id=source_profile_id,
@@ -527,9 +528,9 @@ async def generate_profile(
 
     prof["sources"] = sources
     prof["needs_resolution"] = True
-    allp = dict(opts.get("profiles", {}))
+    allp = dict(opts.get(CONF_PROFILES, {}))
     allp[profile_id] = prof
-    opts["profiles"] = allp
+    opts[CONF_PROFILES] = allp
     hass.config_entries.async_update_entry(entry, options=opts)
 
     resolver = PreferenceResolver(hass)

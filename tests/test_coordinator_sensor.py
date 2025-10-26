@@ -51,10 +51,16 @@ ResolvedTarget = schema_mod.ResolvedTarget
 vpd_kpa = metrics_mod.vpd_kpa
 
 
+def _make_entry(*, options=None, data=None, entry_id="entry1") -> MockConfigEntry:
+    entry = MockConfigEntry(domain=DOMAIN, data=data or {}, options=options or {})
+    entry.entry_id = entry_id
+    return entry
+
+
 @pytest.mark.asyncio
 async def test_coordinator_returns_profile_data(hass):
     options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     assert "profiles" in coordinator.data
@@ -68,14 +74,14 @@ async def test_coordinator_returns_profile_data(hass):
 @pytest.mark.asyncio
 async def test_coordinator_honors_update_interval(hass):
     options = {CONF_PROFILES: {}, "update_interval": 10}
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     assert coordinator.update_interval.total_seconds() == 600
 
 
 @pytest.mark.asyncio
 async def test_base_entity_device_info(hass):
     options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     entity = HorticultureEntity(coordinator, "avocado", "Avocado")
@@ -95,7 +101,7 @@ async def test_dli_sensor_reads_illuminance(hass):
             }
         }
     }
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     ppfd_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["ppfd"])
@@ -116,7 +122,7 @@ async def test_dli_accumulates_over_updates(hass):
             }
         }
     }
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
     await coordinator.async_request_refresh()
 
@@ -135,7 +141,7 @@ async def test_dli_resets_daily(hass):
             }
         }
     }
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     start = datetime(2024, 1, 1, tzinfo=dt_util.UTC)
     with patch(
         "custom_components.horticulture_assistant.coordinator.dt_util.utcnow",
@@ -164,7 +170,7 @@ async def test_profile_vpd_and_dew_point_sensors(hass):
             }
         }
     }
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     vpd_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["vpd"])
@@ -193,7 +199,7 @@ async def test_vpd_seven_day_average_rollover(hass):
             }
         }
     }
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     start = datetime(2024, 4, 1, tzinfo=dt_util.UTC)
     with patch(
         "custom_components.horticulture_assistant.coordinator.dt_util.utcnow",
@@ -239,7 +245,7 @@ async def test_profile_moisture_sensor(hass):
             }
         }
     }
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     moisture_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["moisture"])
@@ -263,7 +269,7 @@ async def test_profile_status_sensor(hass):
             }
         }
     }
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
     status_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["status"])
     assert status_sensor.native_value == "critical"
@@ -293,7 +299,7 @@ async def test_garden_summary_sensor_reports_problem_count(hass):
             },
         }
     }
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
     summary_sensor = GardenSummarySensor(coordinator, "entry1", "Garden")
     assert summary_sensor.native_value == 1
@@ -344,7 +350,7 @@ async def test_status_and_recommendation_device_info(hass):
 @pytest.mark.asyncio
 async def test_profile_success_sensor_uses_latest_snapshot(hass):
     options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     profile = BioProfile(profile_id="avocado", display_name="Avocado")
@@ -405,7 +411,7 @@ async def test_profile_success_sensor_uses_latest_snapshot(hass):
 @pytest.mark.asyncio
 async def test_profile_provenance_sensor_summarises_sources(hass):
     options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     profile = BioProfile(profile_id="avocado", display_name="Avocado")
@@ -450,7 +456,7 @@ async def test_profile_provenance_sensor_summarises_sources(hass):
 @pytest.mark.asyncio
 async def test_profile_yield_sensor_reports_totals(hass):
     options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     profile = BioProfile(profile_id="avocado", display_name="Avocado")
@@ -513,7 +519,7 @@ async def test_profile_yield_sensor_reports_totals(hass):
 @pytest.mark.asyncio
 async def test_profile_event_sensor_summarises_activity(hass):
     options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     profile = BioProfile(profile_id="avocado", display_name="Avocado")
@@ -558,7 +564,7 @@ async def test_profile_event_sensor_summarises_activity(hass):
 @pytest.mark.asyncio
 async def test_profile_feeding_sensor_summarises_events(hass):
     options = {CONF_PROFILES: {"avocado": {"name": "Avocado"}}}
-    coordinator = HorticultureCoordinator(hass, "entry1", options)
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
 
     profile = BioProfile(profile_id="avocado", display_name="Avocado")

@@ -28,6 +28,7 @@ CONF_PLANT_NAME = const.CONF_PLANT_NAME
 CONF_PLANT_ID = const.CONF_PLANT_ID
 CONF_PLANT_TYPE = const.CONF_PLANT_TYPE
 CONF_PROFILE_SCOPE = const.CONF_PROFILE_SCOPE
+CONF_PROFILES = const.CONF_PROFILES
 PROFILE_SCOPE_DEFAULT = const.PROFILE_SCOPE_DEFAULT
 CONF_CLOUD_SYNC_ENABLED = const.CONF_CLOUD_SYNC_ENABLED
 CONF_CLOUD_BASE_URL = const.CONF_CLOUD_BASE_URL
@@ -46,10 +47,15 @@ reg = importlib.util.module_from_spec(reg_spec)
 sys.modules[reg_spec.name] = reg
 reg_spec.loader.exec_module(reg)
 
+compat_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.profile.compat", BASE_PATH / "profile" / "compat.py")
+compat = importlib.util.module_from_spec(compat_spec)
+sys.modules[compat_spec.name] = compat
+compat_spec.loader.exec_module(compat)
+
 ConfigFlow = cfg.ConfigFlow
 OptionsFlow = cfg.OptionsFlow
 ProfileRegistry = reg.ProfileRegistry
-CONF_CREATE_INITIAL_PROFILE = cfg.CONF_CREATE_INITIAL_PROFILE
+sync_thresholds = compat.sync_thresholds
 
 pytestmark = [
     pytest.mark.asyncio,
@@ -75,28 +81,11 @@ def _mock_socket():
             yield
 
 
-async def test_config_flow_user_skip_profile(hass):
-    """Finishing setup without creating a profile should create an empty entry."""
-
-    flow = ConfigFlow()
-    flow.hass = hass
-
-    result = await flow.async_step_user()
-    assert result["type"] == "form"
-    assert result["step_id"] == "user"
-
-    result2 = await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: False})
-    assert result2["type"] == "create_entry"
-    assert result2["title"] == "Horticulture Assistant"
-    assert result2["data"] == {}
-    assert result2.get("options", {}) == {}
-
-
 async def test_config_flow_user(hass):
     """Test user config flow."""
     flow = ConfigFlow()
     flow.hass = hass
-    result = await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    result = await flow.async_step_user()
     assert result["type"] == "form"
     assert result["step_id"] == "profile"
 
@@ -142,11 +131,24 @@ async def test_config_flow_user(hass):
     assert result5["type"] == "create_entry"
     assert result5["data"][CONF_PLANT_NAME] == "Mint"
     assert result5["data"][CONF_PLANT_ID] == "mint"
-    assert result5["options"] == {
-        "moisture_sensor": "sensor.good",
-        "sensors": {"moisture": "sensor.good"},
-        "thresholds": {},
-    }
+    options = result5["options"]
+    assert options["moisture_sensor"] == "sensor.good"
+    assert options["sensors"] == {"moisture": "sensor.good"}
+    assert options["thresholds"] == {}
+    assert options["resolved_targets"] == {}
+    assert options["variables"] == {}
+    assert CONF_PROFILES in options
+    profiles = options[CONF_PROFILES]
+    assert set(profiles) == {"mint"}
+    profile_opts = profiles["mint"]
+    assert profile_opts["name"] == "Mint"
+    assert profile_opts["plant_id"] == "mint"
+    assert profile_opts["sensors"]["moisture"] == "sensor.good"
+    assert profile_opts["thresholds"] == {}
+    general = profile_opts["general"]
+    assert general["sensors"]["moisture"] == "sensor.good"
+    assert general["plant_type"] == "Herb"
+    assert general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert exec_mock.call_count == 3
     gen_mock.assert_called_once()
     general = json.loads(Path(hass.config.path("plants", "mint", "general.json")).read_text())
@@ -160,7 +162,7 @@ async def test_config_flow_user(hass):
 async def test_config_flow_manual_threshold_values(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
 
     async def _run(func, *args):
         return func(*args)
@@ -200,11 +202,23 @@ async def test_config_flow_manual_threshold_values(hass):
     }
 
 
+async def test_config_flow_single_instance_abort(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    # Simulate existing entry
+    mock_entry = MockConfigEntry(domain=DOMAIN, data={})
+    mock_entry.add_to_hass(hass)
+
+    result = await flow.async_step_user()
+    assert result == {"type": "abort", "reason": "single_instance_allowed"}
+
+
 @pytest.mark.asyncio
 async def test_config_flow_threshold_range_validation(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
 
     async def _run(func, *args):
         return func(*args)
@@ -237,7 +251,7 @@ async def test_config_flow_threshold_range_validation(hass):
 async def test_config_flow_profile_error(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
 
     async def _run(func, *args):
         return ""
@@ -256,7 +270,7 @@ async def test_config_flow_profile_error(hass):
 async def test_config_flow_profile_requires_name(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
     result = await flow.async_step_profile(
         {
             CONF_PLANT_NAME: "",
@@ -270,7 +284,7 @@ async def test_config_flow_profile_requires_name(hass):
 async def test_config_flow_sensor_not_found(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
 
     async def _run(func, *args):
         return func(*args)
@@ -299,7 +313,7 @@ async def test_config_flow_without_sensors(hass):
     """Profiles can be created without attaching sensors."""
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
 
     async def _run(func, *args):
         return func(*args)
@@ -312,7 +326,17 @@ async def test_config_flow_without_sensors(hass):
     assert result["type"] == "create_entry"
     assert result["data"][CONF_PLANT_NAME] == "Rose"
     assert result["data"][CONF_PLANT_ID] == "rose"
-    assert result["options"] == {"sensors": {}, "thresholds": {}}
+    options = result["options"]
+    assert options["sensors"] == {}
+    assert options["thresholds"] == {}
+    assert options["resolved_targets"] == {}
+    assert options["variables"] == {}
+    profiles = options[CONF_PROFILES]
+    assert set(profiles) == {"rose"}
+    profile_opts = profiles["rose"]
+    assert profile_opts["sensors"] == {}
+    assert profile_opts["thresholds"] == {}
+    assert profile_opts["general"][CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     general = json.loads(Path(hass.config.path("plants", "rose", "general.json")).read_text())
     sensors = general.get("sensor_entities", {})
     assert all(not values for values in sensors.values())
@@ -575,7 +599,7 @@ async def test_options_flow_openplantbook_fields(hass, hass_admin_user):
 async def test_config_flow_openplantbook_prefill(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -634,12 +658,16 @@ async def test_config_flow_openplantbook_prefill(hass):
     assert result["options"]["image_url"] == "/local/mint.jpg"
     assert result["options"]["species_pid"] == "pid123"
     assert result["options"]["opb_credentials"] == {"client_id": "id", "secret": "sec"}
+    profile_opts = result["options"][CONF_PROFILES]["mint"]
+    assert profile_opts["thresholds"]["temperature_min"] == 1
+    assert profile_opts["species_pid"] == "pid123"
+    assert profile_opts["image_url"] == "/local/mint.jpg"
 
 
 async def test_config_flow_openplantbook_no_auto_download(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -681,7 +709,7 @@ async def test_config_flow_openplantbook_no_auto_download(hass):
 async def test_config_flow_opb_missing_sdk(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -707,7 +735,7 @@ async def test_config_flow_opb_missing_sdk(hass):
 async def test_config_flow_opb_search_failure_falls_back(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user({CONF_CREATE_INITIAL_PROFILE: True})
+    await flow.async_step_user()
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -751,6 +779,177 @@ async def test_options_flow_add_profile_attach_sensors(hass):
     assert prof is not None
     assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert prof.general["sensors"]["temperature"] == "sensor.temp"
+
+
+async def test_options_flow_manage_profile_general_updates_profile(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT, "plant_type": "herb"},
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    def _update_entry(target, *, options):
+        target.options = options
+
+    await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "edit_general"})
+    with patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry):
+        result = await flow.async_step_manage_profile_general(
+            {
+                "name": "Renamed Plant",
+                CONF_PROFILE_SCOPE: "grow_zone",
+                "plant_type": "",
+                "species_display": "Mentha",
+            }
+        )
+
+    assert result["type"] == "create_entry"
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    assert stored["name"] == "Renamed Plant"
+    assert stored["general"][CONF_PROFILE_SCOPE] == "grow_zone"
+    assert "plant_type" not in stored["general"]
+    assert stored["species_display"] == "Mentha"
+
+
+async def test_options_flow_manage_profile_sensors_validates_and_updates(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT, "sensors": {"temperature": "sensor.old"}},
+        "sensors": {"temperature": "sensor.old"},
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    def _update_entry(target, *, options):
+        target.options = options
+
+    hass.states.async_set("sensor.temp_new", 25, {"device_class": "temperature"})
+    await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "edit_sensors"})
+    with patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry):
+        result = await flow.async_step_manage_profile_sensors({"temperature": "sensor.temp_new", "humidity": ""})
+
+    assert result["type"] == "create_entry"
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    sensors = stored["general"].get("sensors", {})
+    assert sensors == {"temperature": "sensor.temp_new"}
+
+
+async def test_options_flow_manage_profile_thresholds_updates_targets(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+        "thresholds": {
+            "temperature_min": 16.0,
+            "temperature_max": 24.0,
+            "humidity_min": 40.0,
+        },
+    }
+    sync_thresholds(profile_payload)
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    def _update_entry(target, *, options):
+        target.options = options
+
+    await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "edit_thresholds"})
+    with patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry):
+        result = await flow.async_step_manage_profile_thresholds(
+            {
+                "temperature_min": "18.5",
+                "temperature_max": "25.5",
+                "humidity_min": "",
+                "humidity_max": "",
+                "illuminance_min": "",
+                "illuminance_max": "",
+                "conductivity_min": "",
+                "conductivity_max": "",
+            }
+        )
+
+    assert result["type"] == "create_entry"
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    assert stored["thresholds"]["temperature_min"] == pytest.approx(18.5)
+    assert stored["thresholds"]["temperature_max"] == pytest.approx(25.5)
+    assert "humidity_min" not in stored["thresholds"]
+    assert stored["resolved_targets"]["temperature_min"]["value"] == pytest.approx(18.5)
+    assert stored["resolved_targets"]["temperature_max"]["value"] == pytest.approx(25.5)
+
+
+async def test_options_flow_manage_profile_delete_blocks_primary(hass):
+    profile_payload = {"name": "Alpha", "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}}
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    result = await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "delete"})
+    assert result["type"] == "abort"
+    assert result["reason"] == "cannot_delete_primary"
+
+
+async def test_options_flow_manage_profile_delete_secondary(hass):
+    options = {
+        CONF_PROFILES: {
+            "alpha": {"name": "Primary", "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}},
+            "beta": {"name": "Secondary", "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}},
+        }
+    }
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_PLANT_ID: "alpha"}, options=options)
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    def _update_entry(target, *, options):
+        target.options = options
+
+    await flow.async_step_manage_profiles({"profile_id": "beta", "action": "delete"})
+    with patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry):
+        result = await flow.async_step_manage_profile_delete({"confirm": True})
+
+    assert result["type"] == "create_entry"
+    assert "beta" not in entry.options[CONF_PROFILES]
 
 
 async def test_options_flow_manual_nutrient_schedule(hass):
