@@ -9,6 +9,7 @@ from unittest.mock import patch
 import pytest
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.util import dt as dt_util
+
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 # Bypass the package __init__ which pulls in Home Assistant by creating a minimal

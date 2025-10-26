@@ -5,7 +5,6 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.cloudsync.edge_store import EdgeSyncStore
 from custom_components.horticulture_assistant.cloudsync.manager import CloudSyncConfig
@@ -32,6 +31,7 @@ from custom_components.horticulture_assistant.profile.statistics import (
 )
 from custom_components.horticulture_assistant.profile.utils import LineageLinkReport
 from custom_components.horticulture_assistant.profile_registry import ProfileRegistry
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 pytestmark = pytest.mark.asyncio
 

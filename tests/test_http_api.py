@@ -1,9 +1,9 @@
 import pytest
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.api import ChatApi
 from custom_components.horticulture_assistant.const import CONF_API_KEY, DOMAIN
 from custom_components.horticulture_assistant.profile.schema import FieldAnnotation, ResolvedTarget
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 @pytest.mark.asyncio

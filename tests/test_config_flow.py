@@ -6,6 +6,7 @@ from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 DOMAIN = "horticulture_assistant"
@@ -92,12 +93,14 @@ def _mock_socket():
     def guard_socket(*args, **kwargs):
         return GuardedSocket(original_socket(*args, **kwargs))
 
-    with patch("socket.socket", side_effect=guard_socket):
-        with patch(
+    with (
+        patch("socket.socket", side_effect=guard_socket),
+        patch(
             "socket.create_connection",
             side_effect=ValueError("the socket must be non-blocking"),
-        ):
-            yield
+        ),
+    ):
+        yield
 
 
 async def begin_profile_flow(flow):
@@ -296,9 +299,7 @@ async def test_config_flow_copy_profile_from_existing_entry(hass):
         assert thresholds_result["type"] == "form"
         assert thresholds_result["step_id"] == "sensors"
 
-        sensors_result = await flow.async_step_sensors(
-            {CONF_MOISTURE_SENSOR: "sensor.copy_moisture"}
-        )
+        sensors_result = await flow.async_step_sensors({CONF_MOISTURE_SENSOR: "sensor.copy_moisture"})
 
     assert sensors_result["type"] == "abort"
     assert sensors_result["reason"] == "profile_added"
@@ -369,9 +370,7 @@ async def test_config_flow_copy_profile_from_library_template(hass, tmp_path, mo
         )
 
         templates = await flow._async_available_profile_templates()
-        library_id = next(
-            key for key, data in templates.items() if data.get("name") == "Library Basil"
-        )
+        library_id = next(key for key, data in templates.items() if data.get("name") == "Library Basil")
         assert flow._profile_template_sources[library_id] == "library"
 
         copy_form = await flow.async_step_threshold_source({"method": "copy"})
@@ -474,12 +473,8 @@ async def test_config_flow_copy_profile_filtering(hass, tmp_path, monkeypatch):
         )
 
         templates = await flow._async_available_profile_templates()
-        library_id = next(
-            key for key, data in templates.items() if data.get("name") == "Library Basil"
-        )
-        entry_id = next(
-            key for key, data in templates.items() if data.get("name") == "Installed Mint"
-        )
+        library_id = next(key for key, data in templates.items() if data.get("name") == "Library Basil")
+        entry_id = next(key for key, data in templates.items() if data.get("name") == "Installed Mint")
         assert flow._profile_template_sources[library_id] == "library"
         assert flow._profile_template_sources[entry_id] == "entry"
 

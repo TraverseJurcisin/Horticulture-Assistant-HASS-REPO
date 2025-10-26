@@ -1,6 +1,5 @@
 import pytest
 import voluptuous as vol
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.const import (
     CONF_API_KEY,
@@ -8,6 +7,7 @@ from custom_components.horticulture_assistant.const import (
     DOMAIN,
     FEATURE_IRRIGATION_AUTOMATION,
 )
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 pytestmark = [pytest.mark.asyncio, pytest.mark.usefixtures("enable_custom_integrations")]
 

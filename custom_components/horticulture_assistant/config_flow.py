@@ -245,9 +245,7 @@ def _summarise_template_filters(
         labels = sorted(SOURCE_FILTER_LABELS.get(item, item.title()) for item in source_filters)
         parts.append(f"Sources: {', '.join(labels)}")
     if scope_filters:
-        labels = sorted(
-            PROFILE_SCOPE_LABELS.get(item, item.replace('_', ' ').title()) for item in scope_filters
-        )
+        labels = sorted(PROFILE_SCOPE_LABELS.get(item, item.replace('_', ' ').title()) for item in scope_filters)
         parts.append(f"Scopes: {', '.join(labels)}")
     summary = "Applied filters — " + "; ".join(parts)
     if total_count:
@@ -438,7 +436,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 sensor_value = sensors.get(role)
                 if isinstance(sensor_value, str) and sensor_value:
                     sensor_defaults[option_key] = sensor_value
-                elif isinstance(sensor_value, (list, tuple)):
+                elif isinstance(sensor_value, list | tuple):
                     first = next((item for item in sensor_value if isinstance(item, str) and item), None)
                     if first:
                         sensor_defaults[option_key] = first
@@ -448,11 +446,10 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if scope_candidate in PROFILE_SCOPE_CHOICES and self._profile is not None:
             self._profile[CONF_PROFILE_SCOPE] = scope_candidate
 
-        if self._profile is not None and not self._profile.get(CONF_PLANT_TYPE):
-            if isinstance(general, Mapping):
-                plant_type = general.get(CONF_PLANT_TYPE)
-                if isinstance(plant_type, str) and plant_type:
-                    self._profile[CONF_PLANT_TYPE] = plant_type
+        if self._profile is not None and not self._profile.get(CONF_PLANT_TYPE) and isinstance(general, Mapping):
+            plant_type = general.get(CONF_PLANT_TYPE)
+            if isinstance(plant_type, str) and plant_type:
+                self._profile[CONF_PLANT_TYPE] = plant_type
 
         species_display = profile.get("species_display") if isinstance(profile, Mapping) else None
         if isinstance(species_display, str) and species_display:
@@ -556,9 +553,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 vol.Required(
                     CONF_PROFILE_SCOPE,
                     default=schema_defaults[CONF_PROFILE_SCOPE],
-                ): sel.SelectSelector(
-                    sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS)
-                ),
+                ): sel.SelectSelector(sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS)),
             }
         )
 
@@ -601,11 +596,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             options.insert(1, {"value": "copy", "label": "Copy an existing profile"})
 
         schema = vol.Schema(
-            {
-                vol.Required("method", default="manual"): sel.SelectSelector(
-                    sel.SelectSelectorConfig(options=options)
-                )
-            }
+            {vol.Required("method", default="manual"): sel.SelectSelector(sel.SelectSelectorConfig(options=options))}
         )
         return self.async_show_form(step_id="threshold_source", data_schema=schema)
 
@@ -630,7 +621,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 return await self.async_step_threshold_copy()
 
         filter_value = self._template_filter or ""
-        filter_text = filter_value.casefold()
         options: list[tuple[str, str]] = []
         filtered_options: list[tuple[str, str]] = []
         search_terms, source_filters, scope_filters = _parse_template_filter(filter_value)
@@ -653,10 +643,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                     species_value = general.get(CONF_PLANT_TYPE)
                     if isinstance(species_value, str) and species_value:
                         species = species_value
-            if species:
-                label = f"{display_name} ({species})"
-            else:
-                label = display_name
+            label = f"{display_name} ({species})" if species else display_name
             source = self._profile_template_sources.get(plant_id)
             if source == "library":
                 label = f"[Library] {label}"
@@ -667,8 +654,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 plant_cf = plant_id.casefold()
                 species_cf = species.casefold() if species else ""
                 matches = all(
-                    term in label_cf or term in plant_cf or (species_cf and term in species_cf)
-                    for term in text_terms
+                    term in label_cf or term in plant_cf or (species_cf and term in species_cf) for term in text_terms
                 )
             if matches and source_filters:
                 template_source = _normalize_template_source(self._profile_template_sources.get(plant_id))
@@ -688,10 +674,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if filtered_options:
             filtered_options.sort(key=lambda item: item[0].casefold())
         selector_source = filtered_options if filter_active else options
-        selector_options = [
-            {"value": pid, "label": label}
-            for label, pid in selector_source
-        ]
+        selector_options = [{"value": pid, "label": label} for label, pid in selector_source]
 
         schema_fields: dict[Any, Any] = {
             vol.Optional("filter", default=filter_value): str,
@@ -700,7 +683,13 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 
         visible_count = len(selector_source)
         total_count = len(options)
-        filter_summary = _summarise_template_filters(search_terms, source_filters, scope_filters, visible_count, total_count)
+        filter_summary = _summarise_template_filters(
+            search_terms,
+            source_filters,
+            scope_filters,
+            visible_count,
+            total_count,
+        )
         placeholders = {"filter_summary": filter_summary}
 
         if filter_active and not filtered_options:

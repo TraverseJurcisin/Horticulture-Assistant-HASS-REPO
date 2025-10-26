@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import pytest
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.const import (
     CONF_PLANT_ID,
@@ -20,6 +19,7 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     store_entry_data,
     update_entry_data,
 )
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 def _make_entry(*, data=None, options=None) -> MockConfigEntry:

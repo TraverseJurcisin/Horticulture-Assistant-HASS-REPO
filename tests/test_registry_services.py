@@ -6,7 +6,6 @@ from unittest.mock import AsyncMock, patch
 import pytest
 import voluptuous as vol
 from homeassistant.exceptions import HomeAssistantError
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.cloudsync.auth import CloudAuthTokens, CloudOrganization
 from custom_components.horticulture_assistant.cloudsync.manager import CloudSyncError
@@ -33,6 +32,7 @@ from custom_components.horticulture_assistant.profile.statistics import (
     NUTRIENT_STATS_VERSION,
 )
 from custom_components.horticulture_assistant.services import er
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 pytestmark = [
     pytest.mark.asyncio,

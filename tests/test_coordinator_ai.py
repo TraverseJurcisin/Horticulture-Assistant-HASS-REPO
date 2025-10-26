@@ -5,9 +5,9 @@ import pytest
 from aiohttp import ClientError
 from homeassistant.helpers.entity_registry import async_get
 from homeassistant.helpers.update_coordinator import UpdateFailed
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.const import CONF_API_KEY, DOMAIN
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 pytestmark = [
     pytest.mark.asyncio,
