@@ -29,6 +29,8 @@ CONF_PLANT_ID = const.CONF_PLANT_ID
 CONF_PLANT_TYPE = const.CONF_PLANT_TYPE
 CONF_PROFILE_SCOPE = const.CONF_PROFILE_SCOPE
 CONF_PROFILES = const.CONF_PROFILES
+CONF_MOISTURE_SENSOR = const.CONF_MOISTURE_SENSOR
+CONF_TEMPERATURE_SENSOR = const.CONF_TEMPERATURE_SENSOR
 PROFILE_SCOPE_DEFAULT = const.PROFILE_SCOPE_DEFAULT
 CONF_CLOUD_SYNC_ENABLED = const.CONF_CLOUD_SYNC_ENABLED
 CONF_CLOUD_BASE_URL = const.CONF_CLOUD_BASE_URL
@@ -65,15 +67,32 @@ pytestmark = [
 
 @pytest.fixture(autouse=True)
 def _mock_socket():
-    with patch("socket.socket") as mock_socket:
-        instance = MagicMock()
+    import socket as socket_mod
 
-        def connect(*args, **kwargs):
-            if not instance.setblocking.called or instance.setblocking.call_args[0][0] is not False:
+    original_socket = socket_mod.socket
+
+    class GuardedSocket:
+        def __init__(self, sock):
+            self._sock = sock
+            self._nonblocking = False
+
+        def setblocking(self, flag):  # pragma: no cover - simple wrapper
+            result = self._sock.setblocking(flag)
+            self._nonblocking = flag is False
+            return result
+
+        def connect(self, *conn_args, **conn_kwargs):  # pragma: no cover - ensure non-blocking
+            if not self._nonblocking:
                 raise ValueError("the socket must be non-blocking")
+            return self._sock.connect(*conn_args, **conn_kwargs)
 
-        instance.connect.side_effect = connect
-        mock_socket.return_value = instance
+        def __getattr__(self, attr):  # pragma: no cover - proxy remaining attributes
+            return getattr(self._sock, attr)
+
+    def guard_socket(*args, **kwargs):
+        return GuardedSocket(original_socket(*args, **kwargs))
+
+    with patch("socket.socket", side_effect=guard_socket):
         with patch(
             "socket.create_connection",
             side_effect=ValueError("the socket must be non-blocking"),
@@ -81,11 +100,24 @@ def _mock_socket():
             yield
 
 
+async def begin_profile_flow(flow):
+    result = await flow.async_step_user()
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    result = await flow.async_step_user({"setup_mode": "profile"})
+    assert result["type"] == "form"
+    assert result["step_id"] == "profile"
+    return result
+
+
 async def test_config_flow_user(hass):
     """Test user config flow."""
     flow = ConfigFlow()
     flow.hass = hass
-    result = await flow.async_step_user()
+    first = await flow.async_step_user()
+    assert first["type"] == "form"
+    assert first["step_id"] == "user"
+    result = await flow.async_step_user({"setup_mode": "profile"})
     assert result["type"] == "form"
     assert result["step_id"] == "profile"
 
@@ -111,6 +143,7 @@ async def test_config_flow_user(hass):
             {
                 CONF_PLANT_NAME: "Mint",
                 CONF_PLANT_TYPE: "Herb",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
             }
         )
         assert result3["type"] == "form"
@@ -149,6 +182,7 @@ async def test_config_flow_user(hass):
     assert general["sensors"]["moisture"] == "sensor.good"
     assert general["plant_type"] == "Herb"
     assert general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
+    assert profile_opts[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert exec_mock.call_count == 3
     gen_mock.assert_called_once()
     general = json.loads(Path(hass.config.path("plants", "mint", "general.json")).read_text())
@@ -159,10 +193,371 @@ async def test_config_flow_user(hass):
     assert registry["mint"]["plant_type"] == "Herb"
 
 
+async def test_config_flow_skip_initial_profile(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    hass.config.location_name = "Greenhouse"
+    result = await flow.async_step_user()
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    outcome = await flow.async_step_user({"setup_mode": "skip"})
+    assert outcome["type"] == "create_entry"
+    assert outcome["title"] == "Greenhouse"
+    assert outcome["data"] == {}
+    assert outcome["options"] == {}
+
+
+async def test_config_flow_copy_profile_from_existing_entry(hass):
+    existing_profile = {
+        "name": "Basil Template",
+        "plant_id": "basil",
+        "thresholds": {
+            "temperature_min": 12.0,
+            "temperature_max": 28.0,
+            "humidity_min": 40.0,
+            "humidity_max": 70.0,
+        },
+        "general": {
+            "plant_type": "herb",
+            CONF_PROFILE_SCOPE: "species_template",
+            "sensors": {"moisture": "sensor.copy_moisture"},
+        },
+        "sensors": {"moisture": "sensor.copy_moisture"},
+        CONF_PROFILE_SCOPE: "species_template",
+        "species_display": "Ocimum basilicum",
+        "species_pid": "opb:basil",
+        "image_url": "https://example.com/basil.jpg",
+        "opb_credentials": {"client_id": "abc", "secret": "xyz"},
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={CONF_PROFILES: {"basil": existing_profile}},
+    )
+    entry.add_to_hass(hass)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._async_current_entries = MagicMock(return_value=[entry])
+
+    hass.states.async_set(
+        "sensor.copy_moisture",
+        0,
+        {"device_class": "moisture", "unit_of_measurement": "%"},
+    )
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint_clone"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    result = await flow.async_step_user()
+    assert result["type"] == "form"
+    assert result["step_id"] == "post_setup"
+
+    result = await flow.async_step_post_setup({"next_action": "add_profile"})
+    assert result["type"] == "form"
+    assert result["step_id"] == "profile"
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch.object(hass.config_entries, "async_update_entry") as update_mock,
+    ):
+        profile_result = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint Clone",
+                CONF_PLANT_TYPE: "",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        assert profile_result["step_id"] == "threshold_source"
+
+        source_result = await flow.async_step_threshold_source({"method": "copy"})
+        assert source_result["type"] == "form"
+        assert source_result["step_id"] == "threshold_copy"
+
+        copy_result = await flow.async_step_threshold_copy({"profile_id": "basil"})
+        assert copy_result["type"] == "form"
+        assert copy_result["step_id"] == "thresholds"
+        assert flow._sensor_defaults == {CONF_MOISTURE_SENSOR: "sensor.copy_moisture"}
+        assert flow._species_display == "Ocimum basilicum"
+        assert flow._species_pid == "opb:basil"
+
+        thresholds_result = await flow.async_step_thresholds({})
+        assert thresholds_result["type"] == "form"
+        assert thresholds_result["step_id"] == "sensors"
+
+        sensors_result = await flow.async_step_sensors(
+            {CONF_MOISTURE_SENSOR: "sensor.copy_moisture"}
+        )
+
+    assert sensors_result["type"] == "abort"
+    assert sensors_result["reason"] == "profile_added"
+
+    update_mock.assert_called_once()
+    stored_options = update_mock.call_args.kwargs["options"]
+    stored_profiles = stored_options[CONF_PROFILES]
+    assert set(stored_profiles) == {"basil", "mint_clone"}
+    new_profile = stored_profiles["mint_clone"]
+    assert new_profile["thresholds"]["temperature_min"] == 12.0
+    assert new_profile["species_display"] == "Ocimum basilicum"
+    assert new_profile["species_pid"] == "opb:basil"
+    assert new_profile["sensors"]["moisture"] == "sensor.copy_moisture"
+    assert new_profile["opb_credentials"]["client_id"] == "abc"
+
+
+async def test_config_flow_copy_profile_from_library_template(hass, tmp_path, monkeypatch):
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+
+    from custom_components.horticulture_assistant.profile_store import ProfileStore
+
+    store = ProfileStore(hass)
+    await store.async_init()
+    await store.async_save(
+        {
+            "name": "Library Basil",
+            "plant_id": "library_basil",
+            "thresholds": {"temperature_min": 14.0},
+            "general": {
+                "plant_type": "Herb",
+                CONF_PROFILE_SCOPE: "species_template",
+                "sensors": {"temperature": "sensor.library_temp"},
+            },
+            "sensors": {"temperature": "sensor.library_temp"},
+            "species_display": "Ocimum basilicum",
+        },
+        name="Library Basil",
+    )
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "library_mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "Herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+    ):
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Library Mint",
+                CONF_PLANT_TYPE: "",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+
+        templates = await flow._async_available_profile_templates()
+        library_id = next(
+            key for key, data in templates.items() if data.get("name") == "Library Basil"
+        )
+        assert flow._profile_template_sources[library_id] == "library"
+
+        copy_form = await flow.async_step_threshold_source({"method": "copy"})
+        assert copy_form["type"] == "form"
+        assert copy_form["step_id"] == "threshold_copy"
+
+        copy_result = await flow.async_step_threshold_copy({"profile_id": library_id})
+        assert copy_result["type"] == "form"
+        assert copy_result["step_id"] == "thresholds"
+        assert flow._sensor_defaults == {CONF_TEMPERATURE_SENSOR: "sensor.library_temp"}
+        assert flow._species_display == "Ocimum basilicum"
+
+        thresholds_result = await flow.async_step_thresholds({})
+        assert thresholds_result["type"] == "form"
+        assert thresholds_result["step_id"] == "sensors"
+
+        sensors_result = await flow.async_step_sensors({})
+
+    assert sensors_result["type"] == "create_entry"
+    options = sensors_result["options"]
+    profiles = options[CONF_PROFILES]
+    assert set(profiles) == {"library_mint"}
+    stored_profile = profiles["library_mint"]
+    assert stored_profile["thresholds"]["temperature_min"] == 14.0
+    assert stored_profile["general"][CONF_PROFILE_SCOPE] == "species_template"
+    assert stored_profile[CONF_PROFILE_SCOPE] == "species_template"
+    assert stored_profile["species_display"] == "Ocimum basilicum"
+    assert stored_profile["sensors"]["temperature"] == "sensor.library_temp"
+
+
+async def test_config_flow_copy_profile_filtering(hass, tmp_path, monkeypatch):
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+
+    from custom_components.horticulture_assistant.profile_store import ProfileStore
+
+    store = ProfileStore(hass)
+    await store.async_init()
+    await store.async_save(
+        {
+            "name": "Library Basil",
+            "plant_id": "library_basil",
+            "thresholds": {"temperature_min": 14.0},
+            "general": {
+                "plant_type": "Herb",
+                CONF_PROFILE_SCOPE: "species_template",
+                "sensors": {"temperature": "sensor.library_temp"},
+            },
+            "sensors": {"temperature": "sensor.library_temp"},
+            "species_display": "Ocimum basilicum",
+        },
+        name="Library Basil",
+    )
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    existing_profiles = {
+        "installed_mint": {
+            "name": "Installed Mint",
+            "plant_id": "installed_mint",
+            "thresholds": {"temperature_min": 10.0},
+            "general": {
+                CONF_PLANT_TYPE: "Herb",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            },
+            "sensors": {"temperature": "sensor.entry_temp"},
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+        }
+    }
+    entry = MockConfigEntry(domain=DOMAIN, data={}, options={CONF_PROFILES: existing_profiles})
+    entry.add_to_hass(hass)
+    flow._profile_templates = None
+    flow._profile_template_sources = {}
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "library_mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "Herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+    ):
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Library Mint",
+                CONF_PLANT_TYPE: "",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+
+        templates = await flow._async_available_profile_templates()
+        library_id = next(
+            key for key, data in templates.items() if data.get("name") == "Library Basil"
+        )
+        entry_id = next(
+            key for key, data in templates.items() if data.get("name") == "Installed Mint"
+        )
+        assert flow._profile_template_sources[library_id] == "library"
+        assert flow._profile_template_sources[entry_id] == "entry"
+
+        copy_form = await flow.async_step_threshold_source({"method": "copy"})
+        assert copy_form["type"] == "form"
+        assert copy_form["step_id"] == "threshold_copy"
+
+        def _selector_options(form):
+            schema = form["data_schema"]
+            for key, value in schema.schema.items():
+                if getattr(key, "schema", None) == "profile_id":
+                    return value.config.options
+            return []
+
+        library_form = await flow.async_step_threshold_copy({"filter": "source:library"})
+        assert library_form["errors"] == {}
+        assert flow._template_filter == "source:library"
+        library_options = _selector_options(library_form)
+        assert library_options
+        assert all(option["label"].startswith("[Library]") for option in library_options)
+        summary = library_form["description_placeholders"].get("filter_summary")
+        assert summary
+        assert "Library templates" in summary
+
+        entry_form = await flow.async_step_threshold_copy({"filter": "source:entry"})
+        assert entry_form["errors"] == {}
+        assert flow._template_filter == "source:entry"
+        entry_options = _selector_options(entry_form)
+        assert entry_options
+        assert all(not option["label"].startswith("[Library]") for option in entry_options)
+        entry_summary = entry_form["description_placeholders"].get("filter_summary")
+        assert entry_summary
+        assert "Existing entries" in entry_summary
+
+        scope_form = await flow.async_step_threshold_copy({"filter": "scope:species"})
+        assert scope_form["errors"] == {}
+        assert flow._template_filter == "scope:species"
+        scope_options = _selector_options(scope_form)
+        assert scope_options
+        assert all(option["label"].startswith("[Library]") for option in scope_options)
+        scope_summary = scope_form["description_placeholders"].get("filter_summary")
+        assert scope_summary
+        assert "Species template" in scope_summary
+
+        combined_filter = "Mint scope:individual source:entry"
+        combined_form = await flow.async_step_threshold_copy({"filter": combined_filter})
+        assert combined_form["errors"] == {}
+        assert flow._template_filter == combined_filter
+        combined_options = _selector_options(combined_form)
+        assert combined_options == entry_options
+        combined_summary = combined_form["description_placeholders"].get("filter_summary")
+        assert "Mint" in combined_summary
+        assert "Individual plant" in combined_summary
+
+        no_match = await flow.async_step_threshold_copy({"filter": "orchid", "profile_id": ""})
+        assert no_match["type"] == "form"
+        assert no_match["step_id"] == "threshold_copy"
+        assert no_match["errors"] == {"base": "no_template_matches"}
+        assert flow._template_filter == "orchid"
+        assert "orchid" in no_match["description_placeholders"].get("filter_summary", "").lower()
+
+        reset_result = await flow.async_step_threshold_copy({"filter": "", "profile_id": ""})
+        assert reset_result["type"] == "form"
+        assert reset_result["step_id"] == "threshold_copy"
+        assert reset_result["errors"] == {}
+        assert flow._template_filter == ""
+        assert reset_result["description_placeholders"].get("filter_summary") == ""
+
+        copy_result = await flow.async_step_threshold_copy({"profile_id": library_id})
+        assert copy_result["type"] == "form"
+        assert copy_result["step_id"] == "thresholds"
+        assert flow._template_filter is None
+
+
 async def test_config_flow_manual_threshold_values(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
 
     async def _run(func, *args):
         return func(*args)
@@ -202,23 +597,97 @@ async def test_config_flow_manual_threshold_values(hass):
     }
 
 
-async def test_config_flow_single_instance_abort(hass):
+async def test_config_flow_existing_entry_menu(hass):
     flow = ConfigFlow()
     flow.hass = hass
 
-    # Simulate existing entry
     mock_entry = MockConfigEntry(domain=DOMAIN, data={})
     mock_entry.add_to_hass(hass)
 
     result = await flow.async_step_user()
-    assert result == {"type": "abort", "reason": "single_instance_allowed"}
+    assert result["type"] == "form"
+    assert result["step_id"] == "post_setup"
+
+    abort = await flow.async_step_post_setup({"next_action": "open_options"})
+    assert abort == {"type": "abort", "reason": "post_setup_use_options"}
+
+
+async def test_config_flow_existing_entry_add_profile(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    entry = MockConfigEntry(domain=DOMAIN, data={})
+    entry.add_to_hass(hass)
+
+    result = await flow.async_step_user()
+    assert result["type"] == "form"
+    assert result["step_id"] == "post_setup"
+
+    next_step = await flow.async_step_post_setup({"next_action": "add_profile"})
+    assert next_step["type"] == "form"
+    assert next_step["step_id"] == "profile"
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        data = {"plant_type": "herb", "sensor_entities": {}}
+        path.write_text(json.dumps(data), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run) as exec_mock,
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ) as gen_mock,
+    ):
+        result3 = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        assert result3["type"] == "form"
+        assert result3["step_id"] == "threshold_source"
+        result4 = await flow.async_step_threshold_source({"method": "manual"})
+        assert result4["type"] == "form"
+        assert result4["step_id"] == "thresholds"
+        hass.states.async_set(
+            "sensor.good",
+            0,
+            {"device_class": "moisture", "unit_of_measurement": "%"},
+        )
+        result4 = await flow.async_step_thresholds({})
+        assert result4["type"] == "form"
+        assert result4["step_id"] == "sensors"
+        result5 = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
+    await hass.async_block_till_done()
+    assert result5["type"] == "abort"
+    assert result5["reason"] == "profile_added"
+    placeholders = result5.get("description_placeholders")
+    assert placeholders and placeholders["profile"] == "Mint"
+    options = entry.options
+    profiles = options.get(CONF_PROFILES, {})
+    assert "mint" in profiles
+    profile_opts = profiles["mint"]
+    assert profile_opts["name"] == "Mint"
+    assert profile_opts["plant_id"] == "mint"
+    assert profile_opts["sensors"]["moisture"] == "sensor.good"
+    assert profile_opts[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
+    gen_mock.assert_called_once()
+    assert exec_mock.call_count == 3
 
 
 @pytest.mark.asyncio
 async def test_config_flow_threshold_range_validation(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
 
     async def _run(func, *args):
         return func(*args)
@@ -251,7 +720,7 @@ async def test_config_flow_threshold_range_validation(hass):
 async def test_config_flow_profile_error(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
 
     async def _run(func, *args):
         return ""
@@ -270,7 +739,7 @@ async def test_config_flow_profile_error(hass):
 async def test_config_flow_profile_requires_name(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
     result = await flow.async_step_profile(
         {
             CONF_PLANT_NAME: "",
@@ -284,7 +753,7 @@ async def test_config_flow_profile_requires_name(hass):
 async def test_config_flow_sensor_not_found(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
 
     async def _run(func, *args):
         return func(*args)
@@ -313,7 +782,7 @@ async def test_config_flow_without_sensors(hass):
     """Profiles can be created without attaching sensors."""
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
 
     async def _run(func, *args):
         return func(*args)
@@ -599,7 +1068,7 @@ async def test_options_flow_openplantbook_fields(hass, hass_admin_user):
 async def test_config_flow_openplantbook_prefill(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -667,7 +1136,7 @@ async def test_config_flow_openplantbook_prefill(hass):
 async def test_config_flow_openplantbook_no_auto_download(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -709,7 +1178,7 @@ async def test_config_flow_openplantbook_no_auto_download(hass):
 async def test_config_flow_opb_missing_sdk(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -735,7 +1204,7 @@ async def test_config_flow_opb_missing_sdk(hass):
 async def test_config_flow_opb_search_failure_falls_back(hass):
     flow = ConfigFlow()
     flow.hass = hass
-    await flow.async_step_user()
+    await begin_profile_flow(flow)
 
     async def _run(func, *args, **kwargs):
         return func(*args, **kwargs)
@@ -779,6 +1248,43 @@ async def test_options_flow_add_profile_attach_sensors(hass):
     assert prof is not None
     assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert prof.general["sensors"]["temperature"] == "sensor.temp"
+
+
+async def test_options_flow_attach_sensors_allows_skip(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+    result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+    assert result["type"] == "form" and result["step_id"] == "attach_sensors"
+
+    result2 = await flow.async_step_attach_sensors({})
+    assert result2["type"] == "create_entry"
+    profile = registry.get_profile("basil")
+    assert profile is not None
+    assert profile.general.get("sensors") == {}
+
+
+async def test_options_flow_attach_sensors_validation_errors(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+    await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    result = await flow.async_step_attach_sensors({"temperature": "sensor.missing"})
+    assert result["type"] == "form"
+    assert result["errors"] == {"temperature": "missing_entity"}
 
 
 async def test_options_flow_manage_profile_general_updates_profile(hass):
