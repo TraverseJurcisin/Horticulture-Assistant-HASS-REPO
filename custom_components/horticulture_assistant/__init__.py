@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from collections.abc import Mapping
 import contextlib
 import importlib
 import importlib.util
 import logging
+from collections.abc import Mapping
 from types import SimpleNamespace
 from typing import Any
 
@@ -31,8 +31,8 @@ from .const import (
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
     DOMAIN,
-    PROFILE_SCOPE_DEFAULT,
     PLATFORMS,
+    PROFILE_SCOPE_DEFAULT,
 )
 from .coordinator import HorticultureCoordinator
 from .coordinator_ai import HortiAICoordinator
@@ -40,10 +40,10 @@ from .coordinator_local import HortiLocalCoordinator
 from .entity_utils import ensure_entities_exist
 from .health_monitor import async_release_dataset_health, async_setup_dataset_health
 from .http import async_register_http_views
-from .profile_registry import ProfileRegistry
-from .profile_store import ProfileStore
 from .profile.compat import sync_thresholds
 from .profile.utils import ensure_sections
+from .profile_registry import ProfileRegistry
+from .profile_store import ProfileStore
 from .storage import LocalStore
 from .utils.entry_helpers import (
     get_entry_plant_info,

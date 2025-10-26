@@ -1088,10 +1088,11 @@ class ProfileRegistry:
                 cleaned[str(key)] = value
 
         allowed_set: set[str]
-        if allowed_keys is not None:
-            allowed_set = {str(key) for key in allowed_keys}
-        else:
-            allowed_set = set(cleaned.keys())
+        allowed_set = (
+            {str(key) for key in allowed_keys}
+            if allowed_keys is not None
+            else set(cleaned.keys())
+        )
 
         removals = {str(key) for key in removed_keys} if removed_keys else set()
         if removals and allowed_keys is None:

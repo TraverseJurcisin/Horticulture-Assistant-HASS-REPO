@@ -788,7 +788,11 @@ async def test_options_flow_manage_profile_general_updates_profile(hass):
         "name": "Alpha",
         "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT, "plant_type": "herb"},
     }
-    entry = MockConfigEntry(domain=DOMAIN, data={CONF_PLANT_ID: "alpha"}, options={CONF_PROFILES: {"alpha": profile_payload}})
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
@@ -825,7 +829,11 @@ async def test_options_flow_manage_profile_sensors_validates_and_updates(hass):
         "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT, "sensors": {"temperature": "sensor.old"}},
         "sensors": {"temperature": "sensor.old"},
     }
-    entry = MockConfigEntry(domain=DOMAIN, data={CONF_PLANT_ID: "alpha"}, options={CONF_PROFILES: {"alpha": profile_payload}})
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
@@ -903,7 +911,11 @@ async def test_options_flow_manage_profile_thresholds_updates_targets(hass):
 
 async def test_options_flow_manage_profile_delete_blocks_primary(hass):
     profile_payload = {"name": "Alpha", "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}}
-    entry = MockConfigEntry(domain=DOMAIN, data={CONF_PLANT_ID: "alpha"}, options={CONF_PROFILES: {"alpha": profile_payload}})
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()

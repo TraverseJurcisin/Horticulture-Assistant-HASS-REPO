@@ -51,7 +51,7 @@ from .profile.validation import evaluate_threshold_bounds
 from .sensor_catalog import collect_sensor_suggestions, format_sensor_hints
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
-from .utils.entry_helpers import get_primary_profile_id
+from .utils.entry_helpers import get_entry_data, get_primary_profile_id
 from .utils.json_io import load_json, save_json
 from .utils.nutrient_schedule import generate_nutrient_schedule
 from .utils.plant_registry import register_plant
@@ -974,8 +974,8 @@ class OptionsFlow(config_entries.OptionsFlow):
             copy_from = user_input.get("copy_from")
             pid = await registry.async_add_profile(user_input["name"], copy_from, scope=scope)
 
-            entry_records = domain_data.setdefault(self._entry.entry_id, {})
-            store = entry_records.get("profile_store") if isinstance(entry_records, dict) else None
+            entry_records = get_entry_data(self.hass, self._entry) or {}
+            store = entry_records.get("profile_store") if isinstance(entry_records, Mapping) else None
             if store is not None:
                 new_profile = registry.get_profile(pid)
                 if new_profile is not None:
@@ -1165,7 +1165,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         def _resolve_default(key: str) -> str:
             if isinstance(thresholds_payload, Mapping):
                 value = thresholds_payload.get(key)
-                if isinstance(value, (int, float)):
+                if isinstance(value, int | float):
                     return str(value)
                 if isinstance(value, str) and value.strip():
                     return value
@@ -1173,7 +1173,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 value = resolved_payload.get(key)
                 if isinstance(value, Mapping):
                     raw = value.get("value")
-                    if isinstance(raw, (int, float)):
+                    if isinstance(raw, int | float):
                         return str(raw)
                     if isinstance(raw, str) and raw.strip():
                         return raw
