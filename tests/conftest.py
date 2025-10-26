@@ -60,6 +60,13 @@ class _ConfigEntries:
     async def async_forward_entry_setups(self, _entry, _platforms):  # pragma: no cover - stub
         return None
 
+    def async_update_entry(self, entry, *, data=None, options=None):
+        if data is not None:
+            entry.data = data
+        if options is not None:
+            entry.options = options
+        self._entries[getattr(entry, "entry_id", "")] = entry
+
 
 class _ServiceRegistry(dict):
     def async_register(self, domain, service, func, schema=None):  # pragma: no cover - stub
@@ -137,6 +144,16 @@ def async_track_time_interval(_hass, _action, _interval):  # pragma: no cover - 
 
 
 event.async_track_time_interval = async_track_time_interval
+
+
+def async_track_state_change_event(_hass, _entity_ids, _action):  # pragma: no cover - stub
+    def _cancel():
+        return None
+
+    return _cancel
+
+
+event.async_track_state_change_event = async_track_state_change_event
 sys.modules["homeassistant.helpers.event"] = event
 
 aiohttp_client = types.ModuleType("homeassistant.helpers.aiohttp_client")

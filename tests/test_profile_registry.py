@@ -19,6 +19,7 @@ from custom_components.horticulture_assistant.const import (
     PROFILE_SCOPE_DEFAULT,
 )
 from custom_components.horticulture_assistant.profile import store as profile_store
+from custom_components.horticulture_assistant.profile.compat import sync_thresholds
 from custom_components.horticulture_assistant.profile.schema import (
     BioProfile,
     FieldAnnotation,
@@ -242,6 +243,144 @@ async def test_profile_validation_issues_created_and_cleared(hass, monkeypatch):
     await reg.async_load()
 
     assert "invalid_profile_p1" in deleted
+
+
+async def test_update_profile_general_updates_options_and_profile(hass):
+    options = {
+        CONF_PROFILES: {
+            "alpha": {
+                "name": "Alpha",
+                "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT, "plant_type": "herb"},
+            }
+        }
+    }
+    entry = await _make_entry(hass, options)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    await reg.async_update_profile_general(
+        "alpha",
+        name="Renamed",
+        plant_type=None,
+        scope="grow_zone",
+        species_display="Mentha",
+    )
+
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    assert stored["name"] == "Renamed"
+    assert stored["general"][CONF_PROFILE_SCOPE] == "grow_zone"
+    assert "plant_type" not in stored["general"]
+    assert stored["species_display"] == "Mentha"
+
+    prof = reg.get("alpha")
+    assert prof is not None
+    assert prof.display_name == "Renamed"
+    assert prof.general.get(CONF_PROFILE_SCOPE) == "grow_zone"
+    assert "plant_type" not in prof.general
+
+
+async def test_set_profile_sensors_replaces_mapping(hass):
+    options = {
+        CONF_PROFILES: {
+            "alpha": {
+                "name": "Alpha",
+                "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT, "sensors": {"temperature": "sensor.old"}},
+                "sensors": {"temperature": "sensor.old"},
+            }
+        }
+    }
+    entry = await _make_entry(hass, options)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    hass.states.async_set("sensor.new_temp", 24, {"device_class": "temperature"})
+    await reg.async_set_profile_sensors("alpha", {"temperature": "sensor.new_temp"})
+
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    assert stored["general"]["sensors"] == {"temperature": "sensor.new_temp"}
+    assert stored["sensors"] == {"temperature": "sensor.new_temp"}
+
+
+async def test_update_profile_thresholds_updates_options_and_profile(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "thresholds": {
+            "temperature_min": 16.0,
+            "temperature_max": 24.0,
+            "humidity_min": 35.0,
+        },
+    }
+    sync_thresholds(profile_payload)
+    entry = await _make_entry(hass, {CONF_PROFILES: {"alpha": profile_payload}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    await reg.async_update_profile_thresholds(
+        "alpha",
+        {"temperature_min": 18.5, "temperature_max": 25.5},
+        allowed_keys={"temperature_min", "temperature_max"},
+    )
+
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    assert stored["thresholds"]["temperature_min"] == pytest.approx(18.5)
+    assert stored["thresholds"]["temperature_max"] == pytest.approx(25.5)
+    resolved = stored["resolved_targets"]
+    assert resolved["temperature_min"]["value"] == pytest.approx(18.5)
+    assert resolved["temperature_max"]["value"] == pytest.approx(25.5)
+
+    prof = reg.get("alpha")
+    assert prof is not None
+    assert prof.resolved_targets["temperature_min"].value == pytest.approx(18.5)
+    assert prof.resolved_targets["temperature_max"].value == pytest.approx(25.5)
+
+    await reg.async_update_profile_thresholds(
+        "alpha",
+        {},
+        allowed_keys={"humidity_min"},
+        removed_keys={"humidity_min"},
+    )
+
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    assert "humidity_min" not in stored["thresholds"]
+    assert "humidity_min" not in stored["resolved_targets"]
+
+
+async def test_update_profile_thresholds_validates_bounds(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "thresholds": {
+            "temperature_min": 16.0,
+            "temperature_max": 24.0,
+        },
+    }
+    sync_thresholds(profile_payload)
+    entry = await _make_entry(hass, {CONF_PROFILES: {"alpha": profile_payload}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    with pytest.raises(ValueError):
+        await reg.async_update_profile_thresholds(
+            "alpha",
+            {"temperature_min": 40.0},
+            allowed_keys={"temperature_min"},
+        )
+
+
+async def test_set_profile_sensors_raises_on_invalid_entities(hass):
+    options = {
+        CONF_PROFILES: {
+            "alpha": {
+                "name": "Alpha",
+                "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+            }
+        }
+    }
+    entry = await _make_entry(hass, options)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    with pytest.raises(ValueError):
+        await reg.async_set_profile_sensors("alpha", {"temperature": "sensor.missing"})
 
 
 async def test_profile_threshold_violations_logged(hass, monkeypatch):

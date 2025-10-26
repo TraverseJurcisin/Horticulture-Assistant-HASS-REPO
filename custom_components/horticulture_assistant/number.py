@@ -8,12 +8,16 @@ from homeassistant.const import EVENT_CORE_CONFIG_UPDATE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import CATEGORY_CONTROL, DOMAIN
+from .const import CATEGORY_CONTROL, DOMAIN, CONF_PROFILES
 from .entity_base import HorticultureBaseEntity
 from .profile.citations import manual_note
 from .profile.compat import get_resolved_target, set_resolved_target
 from .profile.schema import FieldAnnotation, ResolvedTarget
-from .utils.entry_helpers import get_entry_data, store_entry_data
+from .utils.entry_helpers import (
+    get_entry_data,
+    get_primary_profile_thresholds,
+    store_entry_data,
+)
 
 THRESHOLD_SPECS = [
     ("temperature_min", UnitOfTemperature.CELSIUS),
@@ -36,7 +40,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
     plant_id: str = stored["plant_id"]
     plant_name: str = stored["plant_name"]
-    thresholds = entry.options.get("thresholds", {})
+    thresholds = get_primary_profile_thresholds(entry)
 
     entities: list[ThresholdNumber] = []
     for key, unit in THRESHOLD_SPECS:
@@ -120,7 +124,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
 
         set_resolved_target(opts, self._key, target)
 
-        profiles = dict(opts.get("profiles", {}))
+        profiles = dict(opts.get(CONF_PROFILES, {}))
         if self._plant_id in profiles:
             prof = dict(profiles[self._plant_id])
             set_resolved_target(prof, self._key, target)
@@ -132,7 +136,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
             }
             prof["citations"] = citations_map
             profiles[self._plant_id] = prof
-            opts["profiles"] = profiles
+            opts[CONF_PROFILES] = profiles
 
         self.hass.config_entries.async_update_entry(self._entry, options=opts)
         self.async_write_ha_state()
@@ -144,7 +148,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
         return self._unit
 
     def coordinator_entry_profile(self):
-        profiles = self._entry.options.get("profiles", {})
+        profiles = self._entry.options.get(CONF_PROFILES, {})
         return profiles.get(self._plant_id, {})
 
     @property

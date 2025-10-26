@@ -5,6 +5,7 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
+from ..const import CONF_PROFILES
 from .options import options_profile_to_dataclass
 from .schema import BioProfile
 from .utils import link_species_and_cultivars, normalise_profile_payload
@@ -44,7 +45,7 @@ async def async_save_profile(hass: HomeAssistant, profile: BioProfile | dict[str
 async def async_save_profile_from_options(hass: HomeAssistant, entry, profile_id: str) -> None:
     """Persist a profile from config entry options to storage."""
 
-    prof = entry.options.get("profiles", {}).get(profile_id, {})
+    prof = entry.options.get(CONF_PROFILES, {}).get(profile_id, {})
     profile = options_profile_to_dataclass(
         profile_id,
         prof,

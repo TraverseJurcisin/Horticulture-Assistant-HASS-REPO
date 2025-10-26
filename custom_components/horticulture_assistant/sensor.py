@@ -42,7 +42,11 @@ from .profile.statistics import (
     SUCCESS_STATS_VERSION,
     YIELD_STATS_VERSION,
 )
-from .utils.entry_helpers import get_entry_data, store_entry_data
+from .utils.entry_helpers import (
+    get_entry_data,
+    get_primary_profile_sensors,
+    store_entry_data,
+)
 
 HORTI_STATUS_DESCRIPTION = SensorEntityDescription(
     key="status",
@@ -336,7 +340,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     sensors.append(EntitlementSummarySensor(entry))
 
-    sensors_cfg = entry.options.get("sensors", {})
+    sensors_cfg = get_primary_profile_sensors(entry)
     if sensors_cfg.get("temperature") and sensors_cfg.get("humidity"):
         sensors.extend(
             [

@@ -38,6 +38,7 @@ from .const import (
     PROFILE_SCOPE_DEFAULT,
 )
 from .history import HistoryExporter
+from .profile.compat import sync_thresholds
 from .profile.options import options_profile_to_dataclass
 from .profile.schema import (
     BioProfile,
@@ -45,6 +46,7 @@ from .profile.schema import (
     CultivationEvent,
     HarvestEvent,
     NutrientApplication,
+    ResolvedTarget,
     RunEvent,
 )
 from .profile.statistics import recompute_statistics
@@ -975,6 +977,244 @@ class ProfileRegistry:
             self._validate_profile(prof_obj)
         await self.async_save()
         if prof_obj := self._profiles.get(profile_id):
+            self._cloud_publish_profile(prof_obj)
+        await self._async_maybe_refresh_validation_notification()
+
+    async def async_set_profile_sensors(
+        self, profile_id: str, sensors: Mapping[str, str] | None
+    ) -> None:
+        """Replace the sensor mapping for ``profile_id``."""
+
+        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profile = profiles.get(profile_id)
+        if profile is None:
+            raise ValueError(f"unknown profile {profile_id}")
+
+        cleaned: dict[str, str] = {}
+        if sensors:
+            for key, value in sensors.items():
+                if isinstance(key, str) and isinstance(value, str) and value:
+                    cleaned[key] = value
+
+        if cleaned:
+            validation = validate_sensor_links(self.hass, cleaned)
+            if validation.errors:
+                message = collate_issue_messages(validation.errors)
+                raise ValueError(message)
+            if validation.warnings:
+                _LOGGER.warning(
+                    "Profile %s sensor validation warnings:\n%s",
+                    profile_id,
+                    collate_issue_messages(validation.warnings),
+                )
+
+        prof_payload = dict(profile)
+        ensure_sections(
+            prof_payload,
+            plant_id=profile_id,
+            display_name=prof_payload.get("name") or profile_id,
+        )
+        general = (
+            dict(prof_payload.get("general", {}))
+            if isinstance(prof_payload.get("general"), Mapping)
+            else {}
+        )
+        if cleaned:
+            general["sensors"] = dict(cleaned)
+            prof_payload["sensors"] = dict(cleaned)
+        else:
+            general.pop("sensors", None)
+            prof_payload.pop("sensors", None)
+        sync_general_section(prof_payload, general)
+        profiles[profile_id] = prof_payload
+        new_opts = dict(self.entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+        self.entry.options = new_opts
+
+        prof_obj = self._profiles.get(profile_id)
+        if prof_obj is not None:
+            general_map = dict(prof_obj.general)
+            if cleaned:
+                general_map["sensors"] = dict(cleaned)
+            else:
+                general_map.pop("sensors", None)
+            prof_obj.general = general_map
+            prof_obj.refresh_sections()
+            self._validate_profile(prof_obj)
+        await self.async_save()
+        if prof_obj is not None:
+            self._cloud_publish_profile(prof_obj)
+        await self._async_maybe_refresh_validation_notification()
+
+    async def async_update_profile_thresholds(
+        self,
+        profile_id: str,
+        thresholds: Mapping[str, Any] | None,
+        *,
+        allowed_keys: Iterable[str] | None = None,
+        removed_keys: Iterable[str] | None = None,
+        default_source: str = "manual",
+    ) -> None:
+        """Update threshold targets for ``profile_id`` while syncing metadata."""
+
+        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profile = profiles.get(profile_id)
+        if profile is None:
+            raise ValueError(f"unknown profile {profile_id}")
+
+        prof_payload = dict(profile)
+        ensure_sections(
+            prof_payload,
+            plant_id=profile_id,
+            display_name=prof_payload.get("name") or profile_id,
+        )
+
+        threshold_map = (
+            dict(prof_payload.get("thresholds", {}))
+            if isinstance(prof_payload.get("thresholds"), Mapping)
+            else {}
+        )
+
+        cleaned: dict[str, float] = {}
+        if thresholds:
+            for key, raw in thresholds.items():
+                if raw is None:
+                    continue
+                try:
+                    value = float(raw)
+                except (TypeError, ValueError) as err:
+                    raise ValueError(f"invalid threshold {key}") from err
+                cleaned[str(key)] = value
+
+        allowed_set: set[str]
+        if allowed_keys is not None:
+            allowed_set = {str(key) for key in allowed_keys}
+        else:
+            allowed_set = set(cleaned.keys())
+
+        removals = {str(key) for key in removed_keys} if removed_keys else set()
+        if removals and allowed_keys is None:
+            allowed_set |= removals
+
+        updated_map = dict(threshold_map)
+        target_keys = allowed_set or set(cleaned.keys())
+        for key in target_keys:
+            if key in cleaned:
+                updated_map[key] = cleaned[key]
+            elif key in removals:
+                updated_map.pop(key, None)
+
+        violations = evaluate_threshold_bounds(updated_map)
+        if violations:
+            summary = [issue.message() for issue in violations]
+            raise ValueError("\n".join(summary))
+
+        prof_payload["thresholds"] = updated_map
+        sync_thresholds(
+            prof_payload,
+            default_source=default_source,
+            touched_keys=target_keys or None,
+            prune=True,
+        )
+
+        profiles[profile_id] = prof_payload
+        new_opts = dict(self.entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+        self.entry.options = new_opts
+
+        prof_obj = self._profiles.get(profile_id)
+        if prof_obj is not None:
+            resolved_payload = (
+                prof_payload.get("resolved_targets")
+                if isinstance(prof_payload.get("resolved_targets"), Mapping)
+                else {}
+            )
+            resolved: dict[str, ResolvedTarget] = {}
+            if isinstance(resolved_payload, Mapping):
+                for key, value in resolved_payload.items():
+                    if isinstance(value, ResolvedTarget):
+                        resolved[str(key)] = value
+                    elif isinstance(value, Mapping):
+                        resolved[str(key)] = ResolvedTarget.from_json(dict(value))
+            prof_obj.resolved_targets = resolved
+            prof_obj.refresh_sections()
+            self._validate_profile(prof_obj)
+
+        await self.async_save()
+        if prof_obj is not None:
+            self._cloud_publish_profile(prof_obj)
+        await self._async_maybe_refresh_validation_notification()
+
+    async def async_update_profile_general(
+        self,
+        profile_id: str,
+        *,
+        name: str | None = None,
+        plant_type: str | None = None,
+        scope: str | None = None,
+        species_display: str | None = None,
+    ) -> None:
+        """Update high level metadata for ``profile_id``."""
+
+        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profile = profiles.get(profile_id)
+        if profile is None:
+            raise ValueError(f"unknown profile {profile_id}")
+
+        prof_payload = dict(profile)
+        ensure_sections(
+            prof_payload,
+            plant_id=profile_id,
+            display_name=prof_payload.get("name") or profile_id,
+        )
+        general = (
+            dict(prof_payload.get("general", {}))
+            if isinstance(prof_payload.get("general"), Mapping)
+            else {}
+        )
+
+        display_name = name or prof_payload.get("name") or profile_id
+        prof_payload["name"] = display_name
+        prof_payload["display_name"] = display_name
+
+        if plant_type:
+            general["plant_type"] = plant_type
+        else:
+            general.pop("plant_type", None)
+
+        resolved_scope = scope or general.get(CONF_PROFILE_SCOPE) or PROFILE_SCOPE_DEFAULT
+        if resolved_scope not in PROFILE_SCOPE_CHOICES:
+            raise ValueError(f"invalid scope {resolved_scope}")
+        general[CONF_PROFILE_SCOPE] = resolved_scope
+
+        if species_display:
+            prof_payload["species_display"] = species_display
+        else:
+            prof_payload.pop("species_display", None)
+
+        sync_general_section(prof_payload, general)
+        profiles[profile_id] = prof_payload
+        new_opts = dict(self.entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+        self.entry.options = new_opts
+
+        prof_obj = self._profiles.get(profile_id)
+        if prof_obj is not None:
+            prof_obj.display_name = display_name
+            general_map = dict(prof_obj.general)
+            if plant_type:
+                general_map["plant_type"] = plant_type
+            else:
+                general_map.pop("plant_type", None)
+            general_map[CONF_PROFILE_SCOPE] = resolved_scope
+            prof_obj.general = general_map
+            prof_obj.refresh_sections()
+            self._validate_profile(prof_obj)
+        await self.async_save()
+        if prof_obj is not None:
             self._cloud_publish_profile(prof_obj)
         await self._async_maybe_refresh_validation_notification()
 

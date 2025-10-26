@@ -2,18 +2,20 @@ from __future__ import annotations
 
 import logging
 from collections import Counter, deque
+from collections.abc import Mapping
 from contextlib import suppress
 from datetime import datetime, timedelta
 from statistics import fmean
 from typing import Any
 
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
 from homeassistant.util.unit_conversion import TemperatureConverter
 
-from .const import CONF_PROFILES, DOMAIN
+from .const import CONF_PROFILES, CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES, DOMAIN
 from .engine.metrics import (
     accumulate_dli,
     dew_point_c,
@@ -29,21 +31,53 @@ _LOGGER = logging.getLogger(__name__)
 class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     """Central data coordinator for plant profile metrics."""
 
-    def __init__(self, hass: HomeAssistant, entry_id: str, options: dict[str, Any]) -> None:
-        self._entry_id = entry_id
-        self._options = options
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
+        self._entry: ConfigEntry = entry
+        self._entry_id = entry.entry_id
+        self._options: dict[str, Any] = dict(entry.options)
         self._dli_totals: dict[str, float] = {}
         self._vpd_history: dict[str, deque[tuple[datetime, float]]] = {}
         self._last_reset: dt_util.date | None = None
 
-        interval = int(options.get("update_interval", 5))
+        interval = self._resolve_interval(entry)
 
         super().__init__(
             hass,
             _LOGGER,
-            name=f"{DOMAIN}-{entry_id}",
+            name=f"{DOMAIN}-{self._entry_id}",
             update_interval=timedelta(minutes=interval),
         )
+
+    @staticmethod
+    def _resolve_interval(entry: ConfigEntry) -> int:
+        """Return the configured update interval in minutes."""
+
+        options = getattr(entry, "options", {}) or {}
+        data = getattr(entry, "data", {}) or {}
+        candidate = (
+            options.get(CONF_UPDATE_INTERVAL)
+            or options.get("update_interval")
+            or data.get(CONF_UPDATE_INTERVAL)
+            or data.get("update_interval")
+            or DEFAULT_UPDATE_MINUTES
+        )
+        try:
+            minutes = int(candidate)
+        except (TypeError, ValueError):  # pragma: no cover - defensive fallback
+            minutes = DEFAULT_UPDATE_MINUTES
+        return max(1, minutes)
+
+    def update_from_entry(self, entry: ConfigEntry) -> None:
+        """Update coordinator options and polling interval from ``entry``."""
+
+        self._entry = entry
+        self._entry_id = entry.entry_id
+        self._options = dict(entry.options)
+
+        interval = self._resolve_interval(entry)
+        new_interval = timedelta(minutes=interval)
+        if self.update_interval != new_interval:
+            self.update_interval = new_interval
 
     async def async_reset_dli(self, profile_id: str | None = None) -> None:
         """Reset accumulated DLI totals for a profile or all profiles."""
@@ -55,7 +89,11 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     async def _async_update_data(self) -> dict[str, Any]:
         try:
-            profiles: dict[str, Any] = self._options.get(CONF_PROFILES, {})
+            raw_profiles = self._options.get(CONF_PROFILES, {})
+            if isinstance(raw_profiles, Mapping):
+                profiles: dict[str, Any] = dict(raw_profiles)
+            else:
+                profiles = {}
             data: dict[str, Any] = {"profiles": {}}
             today = dt_util.utcnow().date()
             if self._last_reset != today:

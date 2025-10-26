@@ -4,10 +4,7 @@
         "step": {
             "user": {
                 "title": "Set up Horticulture Assistant",
-                "description": "Create the integration entry. Use Options to add plant profiles.",
-                "data": {
-                    "create_initial_profile": "Create an initial plant profile during setup"
-                }
+                "description": "Provide details for your first plant profile."
             },
             "sensors": {
                 "title": "Link sensors",
@@ -26,6 +23,12 @@
             "threshold_out_of_bounds": "{issue_detail}"
         }
     },
+    "abort": {
+        "single_instance_allowed": "Only a single instance of Horticulture Assistant can be configured.",
+        "cannot_delete_primary": "The primary profile cannot be deleted.",
+        "no_profiles": "No profiles are available.",
+        "unknown_profile": "The selected profile could not be found."
+    },
     "options": {
         "step": {
             "init": {
@@ -34,6 +37,7 @@
                     "basic": "General settings",
                     "cloud_sync": "Cloud sync",
                     "add_profile": "Add profile",
+                    "manage_profiles": "Manage profiles",
                     "configure_ai": "Configure AI",
                     "profile_targets": "Profile targets",
                     "nutrient_schedule": "Nutrient schedule"
@@ -65,6 +69,57 @@
                     "name": "Profile name",
                     "profile_scope": "What does this profile represent?",
                     "copy_from": "Clone thresholds from (optional)"
+                }
+            },
+            "manage_profiles": {
+                "title": "Manage profiles",
+                "description": "Choose a profile to edit or remove.",
+                "data": {
+                    "profile_id": "Profile",
+                    "action": "Action"
+                }
+            },
+            "manage_profile_general": {
+                "title": "Edit profile details",
+                "description": "Update the profile name, scope, or species metadata for {profile}.",
+                "data": {
+                    "name": "Profile name",
+                    "plant_type": "Plant type",
+                    "profile_scope": "Scope",
+                    "species_display": "Display species name"
+                }
+            },
+            "manage_profile_sensors": {
+                "title": "Edit profile sensors",
+                "description": "Link sensors for {profile}. {error}",
+                "data": {
+                    "temperature": "Temperature sensor",
+                    "humidity": "Humidity sensor",
+                    "illuminance": "Light sensor",
+                    "moisture": "Moisture sensor",
+                    "conductivity": "Conductivity sensor",
+                    "co2": "CO₂ sensor"
+                }
+            },
+            "manage_profile_thresholds": {
+                "title": "Edit profile targets",
+                "description": "Adjust manual thresholds for {profile}. {issue_detail}",
+                "data": {
+                    "temperature_min": "Temperature minimum",
+                    "temperature_max": "Temperature maximum",
+                    "humidity_min": "Humidity minimum",
+                    "humidity_max": "Humidity maximum",
+                    "illuminance_min": "Illuminance minimum",
+                    "illuminance_max": "Illuminance maximum",
+                    "conductivity_min": "Conductivity minimum",
+                    "conductivity_max": "Conductivity maximum"
+                }
+            },
+            "manage_profile_delete": {
+                "title": "Delete profile",
+                "description": "Are you sure you want to delete {profile}? This cannot be undone.",
+                "data": {
+                    "confirm": "Yes, delete this profile"
                 }
             },
             "attach_sensors": {
@@ -118,7 +173,12 @@
             "generation_failed": "Automatic schedule generation failed. Check the logs for details.",
             "invalid_json": "Enter valid JSON for the nutrient schedule.",
             "invalid_format": "Provide a JSON list of schedule entries.",
-            "invalid_row": "One or more schedule entries are missing required fields."
+            "invalid_row": "One or more schedule entries are missing required fields.",
+            "update_failed": "Saving the profile changes failed.",
+            "sensor_validation_failed": "Some sensors were invalid: {error}",
+            "invalid_float": "Enter a number",
+            "threshold_field_error": "Adjust this value to stay within the supported range.",
+            "threshold_out_of_bounds": "{issue_detail}"
         }
     },
     "entity": {
