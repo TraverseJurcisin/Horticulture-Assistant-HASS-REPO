@@ -247,3 +247,33 @@ def test_success_statistics_from_run_history():
     assert contribution_index["cultivar"].stats_version == "success/v1"
     assert contribution_index["cultivar"].weight == pytest.approx(20 / 70, rel=1e-3)
     assert contribution_index["cultivar"].n_runs == 2
+
+
+def test_recompute_statistics_supports_generator_iterables():
+    """Statistics recomputation should consume iterables only once."""
+
+    species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species",
+    )
+
+    cultivar.add_harvest_event(
+        HarvestEvent(
+            harvest_id="h1",
+            profile_id="cultivar",
+            species_id="species",
+            run_id=None,
+            harvested_at="2024-05-01T00:00:00Z",
+            yield_grams=42.0,
+            area_m2=1.5,
+        )
+    )
+
+    # Pass a single-use iterable to ensure recompute_statistics materialises it.
+    recompute_statistics(profile for profile in (species, cultivar))
+
+    assert cultivar.statistics, "Cultivar statistics should be populated when data exists"
+    assert any(stat.scope == "species" for stat in species.statistics)
