@@ -22,10 +22,15 @@ const = importlib.import_module("custom_components.horticulture_assistant.const"
 coordinator_mod = importlib.import_module("custom_components.horticulture_assistant.coordinator")
 entity_mod = importlib.import_module("custom_components.horticulture_assistant.entity")
 sensor_mod = importlib.import_module("custom_components.horticulture_assistant.sensor")
+entry_helpers_mod = importlib.import_module(
+    "custom_components.horticulture_assistant.utils.entry_helpers"
+)
 schema_mod = importlib.import_module("custom_components.horticulture_assistant.profile.schema")
 metrics_mod = importlib.import_module("custom_components.horticulture_assistant.engine.metrics")
 
 CONF_PROFILES = const.CONF_PROFILES
+CONF_PLANT_ID = const.CONF_PLANT_ID
+CONF_PLANT_NAME = const.CONF_PLANT_NAME
 CONF_CLOUD_SYNC_ENABLED = const.CONF_CLOUD_SYNC_ENABLED
 CONF_CLOUD_ACCOUNT_EMAIL = const.CONF_CLOUD_ACCOUNT_EMAIL
 CONF_CLOUD_ACCOUNT_ROLES = const.CONF_CLOUD_ACCOUNT_ROLES
@@ -50,6 +55,7 @@ ProfileContribution = schema_mod.ProfileContribution
 FieldAnnotation = schema_mod.FieldAnnotation
 ResolvedTarget = schema_mod.ResolvedTarget
 vpd_kpa = metrics_mod.vpd_kpa
+store_entry_data = entry_helpers_mod.store_entry_data
 
 
 def _make_entry(*, options=None, data=None, entry_id="entry1") -> MockConfigEntry:
@@ -303,6 +309,8 @@ async def test_garden_summary_sensor_reports_problem_count(hass):
     coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
     await coordinator.async_config_entry_first_refresh()
     summary_sensor = GardenSummarySensor(coordinator, "entry1", "Garden")
+    info = summary_sensor.device_info
+    assert (DOMAIN, "entry:entry1") in info["identifiers"]
     assert summary_sensor.native_value == 1
     attrs = summary_sensor.extra_state_attributes
     assert attrs["total_profiles"] == 2
@@ -322,9 +330,13 @@ async def test_entitlement_sensor_exposes_features(hass):
             CONF_CLOUD_ACCOUNT_ROLES: ["premium"],
         },
     )
-    sensor = EntitlementSummarySensor(entry)
+    entry.entry_id = "entry1"
+    sensor = EntitlementSummarySensor(entry, "Fern")
     sensor.hass = hass
     await sensor.async_update()
+    info = sensor.device_info
+    assert info["identifiers"] == {(DOMAIN, "entry:entry1")}
+    assert info["name"] == "Fern"
     assert sensor.native_value == "premium"
     attrs = sensor.extra_state_attributes
     assert FEATURE_CLOUD_SYNC in attrs["features"]
@@ -340,10 +352,29 @@ async def test_status_and_recommendation_device_info(hass):
 
     ai = DataUpdateCoordinator(hass, logging.getLogger(__name__), name="ai", update_method=_async_update)
     local = DataUpdateCoordinator(hass, logging.getLogger(__name__), name="local", update_method=_async_update)
-    status = sensor_mod.HortiStatusSensor(ai, local, "entry1", "Plant", "pid", True)
-    rec = sensor_mod.HortiRecommendationSensor(ai, "entry1", "Plant", "pid", True)
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "pid", CONF_PLANT_NAME: "Fallback"},
+        options={
+            CONF_PROFILES: {
+                "pid": {
+                    "name": "Plant",
+                    "general": {"species": "Ficus lyrata", "grow_area": "Grow Tent"},
+                }
+            }
+        },
+    )
+    entry.entry_id = "entry1"
+    store_entry_data(hass, entry)
+
+    status = sensor_mod.HortiStatusSensor(ai, local, entry.entry_id, "Plant", "pid", True)
+    rec = sensor_mod.HortiRecommendationSensor(ai, entry.entry_id, "Plant", "pid", True)
+    status.hass = hass
+    rec.hass = hass
+
     info = status.device_info
-    assert info["identifiers"] == {("horticulture_assistant", "plant:pid")}
+    assert info["identifiers"] == {("horticulture_assistant", "entry1:profile:pid")}
+    assert info["via_device"] == ("horticulture_assistant", "entry:entry1")
+    assert info["hw_version"] == "Ficus lyrata"
     assert info["name"] == "Plant"
     assert rec.device_info == info
 

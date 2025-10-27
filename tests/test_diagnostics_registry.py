@@ -26,4 +26,7 @@ async def test_diagnostics_uses_registry(hass):
     result = await async_get_config_entry_diagnostics(hass, entry)
 
     assert result["profile_count"] == 1
-    assert result["profiles"][0]["plant_id"] == "p1"
+    profile = result["profiles"][0]
+    assert profile["plant_id"] == "p1"
+    assert profile["device_identifier"]["domain"] == DOMAIN
+    assert profile["summary"]["device_info"]["identifiers"][0][0] == DOMAIN

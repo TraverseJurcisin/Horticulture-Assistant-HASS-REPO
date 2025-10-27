@@ -20,11 +20,21 @@ base_spec = importlib.util.spec_from_file_location(
 base_mod = importlib.util.module_from_spec(base_spec)
 base_spec.loader.exec_module(base_mod)
 HorticultureBaseEntity = base_mod.HorticultureBaseEntity
+HorticultureEntryEntity = base_mod.HorticultureEntryEntity
 
 
 def test_device_info_model():
-    ent = HorticultureBaseEntity("Plant", "pid", model="Tester")
+    ent = HorticultureBaseEntity("entry-1", "Plant", "pid", model="Tester")
     info = ent.device_info
     assert info["model"] == "Tester"
     assert info["name"] == "Plant"
-    assert ("horticulture_assistant", "pid") in info["identifiers"]
+    assert ("horticulture_assistant", "entry-1:profile:pid") in info["identifiers"]
+    assert info["via_device"] == ("horticulture_assistant", "entry:entry-1")
+
+
+def test_entry_entity_device_info_defaults():
+    ent = HorticultureEntryEntity("entry-1", default_device_name="Plant Entry")
+    info = ent.device_info
+    assert info["identifiers"] == {("horticulture_assistant", "entry:entry-1")}
+    assert info["name"] == "Plant Entry"
+    assert info["manufacturer"] == "Horticulture Assistant"

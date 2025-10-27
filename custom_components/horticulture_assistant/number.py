@@ -13,11 +13,7 @@ from .entity_base import HorticultureBaseEntity
 from .profile.citations import manual_note
 from .profile.compat import get_resolved_target, set_resolved_target
 from .profile.schema import FieldAnnotation, ResolvedTarget
-from .utils.entry_helpers import (
-    get_entry_data,
-    get_primary_profile_thresholds,
-    store_entry_data,
-)
+from .utils.entry_helpers import resolve_profile_context_collection
 
 THRESHOLD_SPECS = [
     ("temperature_min", UnitOfTemperature.CELSIUS),
@@ -37,24 +33,25 @@ THRESHOLD_SPECS = [
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
-    stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
-    plant_id: str = stored["plant_id"]
-    plant_name: str = stored["plant_name"]
-    thresholds = get_primary_profile_thresholds(entry)
+    collection = resolve_profile_context_collection(hass, entry)
 
     entities: list[ThresholdNumber] = []
-    for key, unit in THRESHOLD_SPECS:
-        entities.append(
-            ThresholdNumber(
-                hass,
-                entry,
-                plant_name,
-                plant_id,
-                key,
-                unit,
-                thresholds.get(key),
+    for context in collection.values():
+        profile_id = context.id
+        thresholds = context.thresholds
+        name = context.name
+        for key, unit in THRESHOLD_SPECS:
+            entities.append(
+                ThresholdNumber(
+                    hass,
+                    entry,
+                    name,
+                    profile_id,
+                    key,
+                    unit,
+                    thresholds.get(key),
+                )
             )
-        )
 
     async_add_entities(entities)
 
@@ -74,7 +71,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
         unit: str,
         value: float | None,
     ) -> None:
-        super().__init__(plant_name, plant_id)
+        super().__init__(entry.entry_id, plant_name, plant_id)
         self.hass = hass
         self._entry = entry
         self._key = key

@@ -39,7 +39,7 @@ async def test_status_sensor_citation_summary(hass: HomeAssistant):
         "custom_components.horticulture_assistant.profile.store.async_load_all",
         return_value={"p1": profile},
     ):
-        sensor = HortiStatusSensor(coord, local, "entry", keep_stale=True)
+        sensor = HortiStatusSensor(coord, local, "entry", "Plant", "p1", keep_stale=True)
         sensor.hass = hass
         await sensor.async_added_to_hass()
 

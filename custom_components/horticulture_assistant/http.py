@@ -187,9 +187,15 @@ def async_register_http_views(hass: HomeAssistant) -> None:
     domain_data = hass.data.setdefault(DOMAIN, {})
     if domain_data.get(_HTTP_REGISTERED):
         return
-    hass.http.register_view(ProfilesCollectionView())
-    hass.http.register_view(ProfileDetailView())
-    hass.http.register_view(ProfileTargetView())
-    hass.http.register_view(ProfileBadgesView())
-    hass.http.register_view(CloudStatusView())
+
+    http = getattr(hass, "http", None)
+    if http is None or not hasattr(http, "register_view"):
+        domain_data[_HTTP_REGISTERED] = True
+        return
+
+    http.register_view(ProfilesCollectionView())
+    http.register_view(ProfileDetailView())
+    http.register_view(ProfileTargetView())
+    http.register_view(ProfileBadgesView())
+    http.register_view(CloudStatusView())
     domain_data[_HTTP_REGISTERED] = True

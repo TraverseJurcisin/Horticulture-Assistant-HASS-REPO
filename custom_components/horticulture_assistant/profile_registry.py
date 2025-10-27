@@ -65,6 +65,11 @@ from .validators import (
     validate_profile_dict,
     validate_run_event_dict,
 )
+from .utils.entry_helpers import (
+    profile_device_identifier,
+    resolve_profile_device_info,
+    serialise_device_info,
+)
 
 try:  # pragma: no cover - Home Assistant not available in tests
     from homeassistant.helpers import issue_registry as ir
@@ -142,6 +147,36 @@ class ProfileRegistry:
         self._log_lineage_warnings(report)
         for profile in self._profiles.values():
             profile.refresh_sections()
+
+    def _profile_device_metadata(
+        self,
+        profile_id: str,
+        default_name: str | None = None,
+    ) -> dict[str, Any]:
+        """Return device metadata for ``profile_id`` suitable for diagnostics."""
+
+        domain, identifier = profile_device_identifier(self.entry.entry_id, profile_id)
+        info = resolve_profile_device_info(self.hass, self.entry.entry_id, profile_id)
+        payload: dict[str, Any]
+
+        if isinstance(info, Mapping):
+            payload = dict(info)
+        else:
+            payload = {}
+
+        identifiers = payload.get("identifiers")
+        if not identifiers:
+            payload["identifiers"] = {(domain, identifier)}
+        name = payload.get("name")
+        if not isinstance(name, str) or not name.strip():
+            payload["name"] = default_name or profile_id
+        payload.setdefault("manufacturer", "Horticulture Assistant")
+        payload.setdefault("model", "Plant Profile")
+
+        return {
+            "identifier": {"domain": domain, "id": identifier},
+            "info": serialise_device_info(payload),
+        }
 
     def _create_species_issue(
         self,
@@ -688,7 +723,10 @@ class ProfileRegistry:
         parents = getattr(profile, "parents", None)
         if parents:
             data["parents"] = list(parents)
-        self.hass.bus.async_fire(event_type, data)
+        bus = getattr(self.hass, "bus", None)
+        fire = getattr(bus, "async_fire", None)
+        if callable(fire):
+            fire(event_type, data)
 
     def _publish_stats_with(
         self,
@@ -1447,20 +1485,36 @@ class ProfileRegistry:
     def summaries(self) -> list[dict[str, Any]]:
         """Return a serialisable summary of all profiles."""
 
-        return [p.summary() for p in self._profiles.values()]
+        summaries: list[dict[str, Any]] = []
+        for profile in self._profiles.values():
+            summary = profile.summary()
+            metadata = self._profile_device_metadata(profile.profile_id, summary.get("name"))
+            summary["device_identifier"] = metadata["identifier"]
+            summary["device_info"] = metadata["info"]
+            summaries.append(summary)
+        return summaries
 
     def diagnostics_snapshot(self) -> list[dict[str, Any]]:
         """Return expanded diagnostics data for every profile."""
 
         snapshot: list[dict[str, Any]] = []
         for profile in self._profiles.values():
+            summary = profile.summary()
+            metadata = self._profile_device_metadata(profile.profile_id, summary.get("name"))
+            summary["device_identifier"] = metadata["identifier"]
+            summary["device_info"] = metadata["info"]
             snapshot.append(
                 {
-                    "summary": profile.summary(),
+                    "plant_id": profile.profile_id,
+                    "profile_id": profile.profile_id,
+                    "profile_name": summary.get("name"),
+                    "summary": summary,
                     "run_history": [event.to_json() for event in profile.run_history],
                     "harvest_history": [event.to_json() for event in profile.harvest_history],
                     "statistics": [stat.to_json() for stat in profile.statistics],
                     "lineage": [entry.to_json() for entry in profile.lineage],
+                    "device_identifier": metadata["identifier"],
+                    "device_info": metadata["info"],
                 }
             )
         return snapshot

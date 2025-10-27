@@ -38,6 +38,7 @@ except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
 
 from .const import DOMAIN
 from .entity_base import HorticultureBaseEntity
+from .utils.entry_helpers import ProfileContext
 
 
 async def async_apply_irrigation(
@@ -78,12 +79,21 @@ class PlantIrrigationRecommendationSensor(HorticultureBaseEntity, SensorEntity):
     _attr_native_unit_of_measurement = "s"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str) -> None:
-        super().__init__(plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        context: ProfileContext,
+    ) -> None:
+        super().__init__(entry.entry_id, context.name, context.id)
         self.hass = hass
         self._entry = entry
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_irrigation_rec"
-        self._src = entry.options.get("sensors", {}).get("smart_irrigation")
+        self._context = context
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_irrigation_rec"
+        self._src = context.first_sensor("smart_irrigation")
+        if self._src is None:
+            fallback = entry.options.get("sensors", {})
+            self._src = fallback.get("smart_irrigation")
         self._value: float | None = None
 
     @property

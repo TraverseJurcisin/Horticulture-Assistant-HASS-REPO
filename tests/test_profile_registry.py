@@ -529,20 +529,24 @@ async def test_summaries_return_serialisable_data(hass):
     await reg.async_load()
     await reg.async_replace_sensor("p1", "humidity", "sensor.h")
     summaries = reg.summaries()
-    assert summaries == [
-        {
-            "plant_id": "p1",
-            "name": "Plant",
-            "profile_type": "line",
-            "species": None,
-            "tenant_id": None,
-            "parents": [],
-            "sensors": {"humidity": "sensor.h"},
-            "targets": {},
-            "tags": [],
-            "last_resolved": None,
-        }
+    assert len(summaries) == 1
+    summary = summaries[0]
+    assert summary["plant_id"] == "p1"
+    assert summary["name"] == "Plant"
+    assert summary["profile_type"] == "line"
+    assert summary["sensors"] == {"humidity": "sensor.h"}
+    assert summary["targets"] == {}
+    assert summary["tags"] == []
+    assert summary["device_identifier"] == {
+        "domain": DOMAIN,
+        "id": f"{entry.entry_id}:profile:p1",
+    }
+    assert summary["device_info"]["identifiers"] == [
+        [DOMAIN, f"{entry.entry_id}:profile:p1"],
     ]
+    assert summary["device_info"]["name"] == "Plant"
+    # Ensure payload is JSON serialisable
+    json.dumps(summary)
 
 
 async def test_iteration_and_len(hass):

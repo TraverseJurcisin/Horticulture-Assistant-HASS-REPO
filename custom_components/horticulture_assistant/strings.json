@@ -3,15 +3,15 @@
     "config": {
         "step": {
             "user": {
-                "title": "Add Horticulture Assistant entry",
+                "title": "New Horticulture Assistant entry",
                 "description": "Choose how you want to get started. You can create your first plant profile now or skip and add one later from the profile manager.",
                 "data": {
                     "setup_mode": "Getting started"
                 }
             },
             "post_setup": {
-                "title": "Add entry to Horticulture Assistant",
-                "description": "This integration is already set up. Add another plant profile or open the profile manager from the entry options.",
+                "title": "New entry for Horticulture Assistant",
+                "description": "This integration is already set up. Create another plant profile or open the profile manager from the entry options.",
                 "data": {
                     "next_action": "What would you like to do?"
                 }
@@ -226,6 +226,17 @@
             "garden_summary": {
                 "name": "Garden health summary"
             },
+            "plant_status": {
+                "name": "Plant status",
+                "state": {
+                    "ok": "Healthy",
+                    "attention": "Needs attention",
+                    "problem": "Problem detected"
+                }
+            },
+            "plant_last_sample": {
+                "name": "Last sensor sample"
+            },
             "feature_entitlements": {
                 "name": "Feature entitlements",
                 "state": {
@@ -262,6 +273,10 @@
         "missing_lineage_parent": {
             "title": "Profile missing parent reference",
             "description": "{profile_name} ({profile_id}) lists {parent_id} as a parent profile, but it could not be loaded. Remove the invalid parent reference or create the missing profile to restore inheritance."
+        },
+        "onboarding_stage_failure": {
+            "title": "Setup step failed",
+            "description": "The {stage} step failed while setting up Horticulture Assistant: {error}. Check the logs, fix the issue, then reload the integration."
         }
     }
 }

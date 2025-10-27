@@ -1,21 +1,19 @@
 """Binary sensor platform for Horticulture Assistant."""
 
 import logging
-
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import CATEGORY_CONTROL, CATEGORY_DIAGNOSTIC, DOMAIN
-from .entity_base import HorticultureBaseEntity
+from .entity_base import HorticultureBaseEntity, HorticultureEntryEntity
 from .entity_utils import ensure_entities_exist
-from .utils.entry_helpers import get_entry_data, store_entry_data
-from .utils.sensor_map import build_sensor_map
+from .profile_monitor import ProfileMonitor
+from .utils.entry_helpers import ProfileContext, resolve_profile_context_collection
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -27,41 +25,48 @@ async def async_setup_entry(
 ) -> None:
     """Set up horticulture assistant binary sensors from a config entry."""
     _LOGGER.debug("Setting up horticulture_assistant binary sensors")
-    stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
-    plant_id = stored["plant_id"]
-    plant_name = stored["plant_name"]
+    collection = resolve_profile_context_collection(hass, entry)
+    stored = collection.stored
 
-    sensor_map = build_sensor_map(
-        entry.data,
-        plant_id,
-        keys=(
-            "moisture_sensors",
-            "temperature_sensors",
-            "humidity_sensors",
-            "ec_sensors",
-            "co2_sensors",
-        ),
-    )
-
-    ensure_entities_exist(
-        hass,
-        plant_id,
-        sensor_map.get("moisture_sensors", [])
-        + sensor_map.get("temperature_sensors", [])
-        + sensor_map.get("ec_sensors", [])
-        + sensor_map.get("co2_sensors", []),
-    )
-
-    sensors: list[BinarySensorEntity] = [
-        SensorHealthBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
-        IrrigationReadinessBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
-        FaultDetectionBinarySensor(hass, entry.entry_id, plant_name, plant_id, sensor_map),
-    ]
+    sensors: list[BinarySensorEntity] = []
+    for context in collection.values():
+        profile_id = context.id
+        plant_name = context.name
+        ensure_entities_exist(
+            hass,
+            profile_id,
+            list(
+                context.sensor_ids_for_roles(
+                    "moisture", "temperature", "humidity", "ec", "co2"
+                )
+            ),
+            placeholders={"plant_id": profile_id, "profile_name": plant_name},
+        )
+        sensors.extend(
+            [
+                SensorHealthBinarySensor(
+                    hass,
+                    entry.entry_id,
+                    context,
+                ),
+                IrrigationReadinessBinarySensor(
+                    hass,
+                    entry.entry_id,
+                    context,
+                ),
+                FaultDetectionBinarySensor(
+                    hass,
+                    entry.entry_id,
+                    context,
+                ),
+            ]
+        )
 
     manager = stored.get("cloud_sync_manager")
     if manager:
-        sensors.append(CloudConnectionBinarySensor(manager, entry.entry_id, plant_name))
-        sensors.append(LocalOnlyModeBinarySensor(manager, entry.entry_id, plant_name))
+        entry_name = stored.get("plant_name")
+        sensors.append(CloudConnectionBinarySensor(manager, entry.entry_id, entry_name))
+        sensors.append(LocalOnlyModeBinarySensor(manager, entry.entry_id, entry_name))
 
     async_add_entities(sensors)
 
@@ -73,26 +78,18 @@ class HorticultureBaseBinarySensor(HorticultureBaseEntity, BinarySensorEntity):
         self,
         hass: HomeAssistant,
         entry_id: str,
-        plant_name: str,
-        plant_id: str,
-        sensor_map: dict[str, list[str]] | None = None,
+        context: ProfileContext,
     ) -> None:
-        super().__init__(plant_name, plant_id, model="AI Monitored Plant")
+        super().__init__(entry_id, context.name, context.id, model="AI Monitored Plant")
         self.hass = hass
         self._entry_id = entry_id
-        if sensor_map is None:
-            sensor_map = build_sensor_map(
-                {},
-                plant_id,
-                keys=(
-                    "moisture_sensors",
-                    "temperature_sensors",
-                    "humidity_sensors",
-                    "ec_sensors",
-                    "co2_sensors",
-                ),
-            )
-        self._sensor_map = sensor_map
+        self._context = context
+        self._sensor_map = {
+            role: list(ids)
+            for role, ids in context.sensors.items()
+            if ids
+        }
+        self._monitor = ProfileMonitor(hass, context)
 
 
 class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
@@ -102,36 +99,25 @@ class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
         self,
         hass: HomeAssistant,
         entry_id: str,
-        plant_name: str,
-        plant_id: str,
-        sensor_map: dict[str, list[str]] | None = None,
+        context: ProfileContext,
     ):
-        super().__init__(hass, entry_id, plant_name, plant_id, sensor_map)
+        super().__init__(hass, entry_id, context)
         self._attr_name = "Sensor Health"
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{plant_id}_sensor_health"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.id}_sensor_health"
         self._attr_device_class = BinarySensorDeviceClass.PROBLEM
         self._attr_icon = "mdi:heart-pulse"
         self._attr_entity_category = CATEGORY_DIAGNOSTIC
 
     async def async_update(self):
         """Check if raw sensors are online (no missing or unavailable sensors)."""
-        # List of expected raw sensor entity IDs
-        raw_ids = (
-            self._sensor_map.get("moisture_sensors", [])
-            + self._sensor_map.get("temperature_sensors", [])
-            + self._sensor_map.get("humidity_sensors", [])
-            + self._sensor_map.get("ec_sensors", [])
-        )
-        problem = False
-        for entity_id in raw_ids:
-            state = self.hass.states.get(entity_id)
-            if not state or state.state in ("unknown", "unavailable"):
-                _LOGGER.debug("Raw sensor unavailable: %s", entity_id)
-                problem = True
-                break
 
-        # device_class 'problem': True means problem, False means OK
-        self._attr_is_on = problem
+        result = self._monitor.evaluate()
+        attention = result.issues_for("attention")
+        self._attr_is_on = bool(attention)
+        self._attr_available = bool(result.sensors)
+        self._attr_extra_state_attributes = result.as_attributes(
+            severities=("attention",)
+        )
 
 
 class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
@@ -141,37 +127,71 @@ class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
         self,
         hass: HomeAssistant,
         entry_id: str,
-        plant_name: str,
-        plant_id: str,
-        sensor_map: dict[str, list[str]] | None = None,
+        context: ProfileContext,
     ):
-        super().__init__(hass, entry_id, plant_name, plant_id, sensor_map)
+        super().__init__(hass, entry_id, context)
         self._attr_name = "Irrigation Readiness"
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{plant_id}_irrigation_readiness"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.id}_irrigation_readiness"
         self._attr_device_class = BinarySensorDeviceClass.MOISTURE
         self._attr_icon = "mdi:water-alert"
         self._attr_entity_category = CATEGORY_CONTROL
-        # Threshold for root zone depletion (%)
-        self._threshold = 70.0
+        self._threshold = 30.0
 
     async def async_update(self):
         """Determine if root zone is dry enough for watering."""
-        depletion_id = f"sensor.{self._plant_id}_depletion"
-        state = self.hass.states.get(depletion_id)
-        if not state or state.state in ("unknown", "unavailable"):
-            _LOGGER.debug("Root zone depletion sensor not available: %s", depletion_id)
+
+        moisture_id = (
+            self._context.first_sensor("moisture")
+            or self._context.first_sensor("soil_moisture")
+        )
+        if not moisture_id:
             self._attr_is_on = False
+            self._attr_extra_state_attributes = {
+                "reason": "no_moisture_sensor",
+                "threshold": self._threshold,
+            }
+            return
+
+        state = self.hass.states.get(moisture_id)
+        if not state or state.state in ("unknown", "unavailable"):
+            _LOGGER.debug("Moisture sensor unavailable for irrigation readiness: %s", moisture_id)
+            self._attr_is_on = False
+            self._attr_extra_state_attributes = {
+                "reason": "sensor_unavailable",
+                "sensor": moisture_id,
+                "threshold": self._threshold,
+            }
             return
 
         try:
-            depletion = float(state.state)
+            moisture = float(state.state)
         except (ValueError, TypeError):
-            _LOGGER.error("Invalid root zone depletion value: %s", state.state)
+            _LOGGER.error("Invalid moisture value for irrigation readiness: %s", state.state)
             self._attr_is_on = False
+            self._attr_extra_state_attributes = {
+                "reason": "invalid_state",
+                "sensor": moisture_id,
+                "value": state.state,
+                "threshold": self._threshold,
+            }
             return
 
-        # If depletion above threshold, root zone is dry => irrigation ready
-        self._attr_is_on = depletion > self._threshold
+        threshold = (
+            self._context.get_threshold("moisture_min")
+            or self._context.get_threshold("soil_moisture_min")
+            or self._threshold
+        )
+        try:
+            threshold_value = float(threshold)
+        except (TypeError, ValueError):
+            threshold_value = self._threshold
+
+        self._attr_is_on = moisture <= threshold_value
+        self._attr_extra_state_attributes = {
+            "sensor": moisture_id,
+            "moisture": moisture,
+            "threshold": threshold_value,
+        }
 
 
 class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
@@ -181,73 +201,37 @@ class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
         self,
         hass: HomeAssistant,
         entry_id: str,
-        plant_name: str,
-        plant_id: str,
-        sensor_map: dict[str, list[str]] | None = None,
+        context: ProfileContext,
     ):
-        super().__init__(hass, entry_id, plant_name, plant_id, sensor_map)
+        super().__init__(hass, entry_id, context)
         self._attr_name = "Fault Detection"
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{plant_id}_fault_detection"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.id}_fault_detection"
         self._attr_device_class = BinarySensorDeviceClass.SAFETY
         self._attr_icon = "mdi:alert"
         self._attr_entity_category = CATEGORY_DIAGNOSTIC
 
     async def async_update(self):
         """Check for sensor faults or out-of-range values."""
-        # Expected sensors and their valid ranges
-        checks = []
-        for eid in self._sensor_map.get("moisture_sensors", []):
-            checks.append((eid, 0.0, 100.0))
-        for eid in self._sensor_map.get("humidity_sensors", []):
-            checks.append((eid, 0.0, 100.0))
-        for eid in self._sensor_map.get("temperature_sensors", []):
-            checks.append((eid, -50.0, 60.0))
-        for eid in self._sensor_map.get("ec_sensors", []):
-            checks.append((eid, 0.0, 50.0))
-        fault = False
-        for entity_id, min_val, max_val in checks:
-            state = self.hass.states.get(entity_id)
-            if not state or state.state in ("unknown", "unavailable"):
-                _LOGGER.debug("Fault detected (missing sensor): %s", entity_id)
-                fault = True
-                break
-            try:
-                value = float(state.state)
-            except (ValueError, TypeError):
-                _LOGGER.warning("Invalid sensor value: %s = %s", entity_id, state.state)
-                fault = True
-                break
-            # Check value bounds
-            if value < min_val or value > max_val:
-                _LOGGER.warning(
-                    "Sensor %s out of range: %s not in [%s, %s]",
-                    entity_id,
-                    value,
-                    min_val,
-                    max_val,
-                )
-                fault = True
-                break
 
-        # device_class 'safety': True means unsafe (fault), False means safe
-        self._attr_is_on = fault
+        result = self._monitor.evaluate()
+        problems = result.issues_for("problem")
+        self._attr_is_on = bool(problems)
+        self._attr_available = bool(result.sensors)
+        self._attr_extra_state_attributes = result.as_attributes(
+            severities=("problem",)
+        )
 
 
-class CloudSyncBinarySensor(BinarySensorEntity):
+class CloudSyncBinarySensor(HorticultureEntryEntity, BinarySensorEntity):
     """Base class for cloud sync diagnostic binary sensors."""
 
     _attr_entity_category = CATEGORY_DIAGNOSTIC
     _attr_should_poll = True
 
     def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        HorticultureEntryEntity.__init__(self, entry_id, default_device_name=plant_name)
         self._manager = manager
         self._entry_id = entry_id
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"cloud:{entry_id}")},
-            name=f"{plant_name} Cloud Sync",
-            manufacturer="Horticulture Assistant",
-            model="Cloud Service",
-        )
 
     def _cloud_status(self) -> tuple[dict, dict, bool]:  # type: ignore[override]
         status = self._manager.status()
