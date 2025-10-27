@@ -13,7 +13,7 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import PERCENTAGE, UnitOfTemperature, UnitOfTime
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity import DeviceInfo, EntityCategory
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
@@ -35,6 +35,7 @@ from .derived import (
 )
 from .entitlements import derive_entitlements
 from .entity import HorticultureEntity
+from .entity_base import HorticultureBaseEntity, HorticultureEntryEntity
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
 from .profile.statistics import (
     EVENT_STATS_VERSION,
@@ -42,11 +43,8 @@ from .profile.statistics import (
     SUCCESS_STATS_VERSION,
     YIELD_STATS_VERSION,
 )
-from .utils.entry_helpers import (
-    get_entry_data,
-    get_primary_profile_sensors,
-    store_entry_data,
-)
+from .profile_monitor import ProfileMonitor
+from .utils.entry_helpers import resolve_profile_context_collection
 
 HORTI_STATUS_DESCRIPTION = SensorEntityDescription(
     key="status",
@@ -118,7 +116,59 @@ PROFILE_SENSOR_DESCRIPTIONS = {
 }
 
 
-class CloudSyncSensor(SensorEntity):
+class PlantStatusSensor(HorticultureBaseEntity, SensorEntity):
+    """Summarise the overall health of a plant profile."""
+
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_translation_key = "plant_status"
+    _attr_has_entity_name = True
+
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, context) -> None:
+        super().__init__(entry.entry_id, context.name, context.id, model="Plant Profile")
+        self.hass = hass
+        self._entry_id = entry.entry_id
+        self._context = context
+        self._monitor = ProfileMonitor(hass, context)
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_health"
+        self._attr_icon = "mdi:sprout"
+
+    async def async_update(self) -> None:
+        result = self._monitor.evaluate()
+        self._attr_native_value = result.health
+        icon_map = {
+            "ok": "mdi:sprout",
+            "attention": "mdi:alert-circle-outline",
+            "problem": "mdi:alert-circle",
+        }
+        self._attr_icon = icon_map.get(result.health, "mdi:sprout")
+        self._attr_extra_state_attributes = result.as_attributes()
+
+
+class PlantLastSampleSensor(HorticultureBaseEntity, SensorEntity):
+    """Expose the freshest timestamp seen for a plant profile sensor."""
+
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_device_class = SensorDeviceClass.TIMESTAMP
+    _attr_translation_key = "plant_last_sample"
+    _attr_has_entity_name = True
+
+    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, context) -> None:
+        super().__init__(entry.entry_id, context.name, context.id, model="Plant Profile")
+        self.hass = hass
+        self._monitor = ProfileMonitor(hass, context)
+        self._context = context
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_last_sample"
+
+    async def async_update(self) -> None:
+        result = self._monitor.evaluate()
+        self._attr_native_value = result.last_sample_at
+        self._attr_extra_state_attributes = {
+            "issues": [issue.as_dict() for issue in result.issues],
+            "sensor_count": len(result.sensors),
+        }
+
+
+class CloudSyncSensor(HorticultureEntryEntity, SensorEntity):
     """Base class for cloud sync diagnostic sensors."""
 
     _attr_entity_category = EntityCategory.DIAGNOSTIC
@@ -127,14 +177,9 @@ class CloudSyncSensor(SensorEntity):
     SCAN_INTERVAL = timedelta(minutes=1)
 
     def __init__(self, manager, entry_id: str, plant_name: str) -> None:
+        HorticultureEntryEntity.__init__(self, entry_id, default_device_name=plant_name)
         self._manager = manager
         self._entry_id = entry_id
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"cloud:{entry_id}")},
-            name=f"{plant_name} Cloud Sync",
-            manufacturer="Horticulture Assistant",
-            model="Cloud Service",
-        )
 
     # pylint: disable=missing-return-doc
     def _cloud_status(self) -> dict[str, Any]:
@@ -244,7 +289,7 @@ class CloudConnectionSensor(CloudSyncSensor):
         self._attr_extra_state_attributes = {k: v for k, v in attrs.items() if v is not None}
 
 
-class GardenSummarySensor(CoordinatorEntity[HorticultureCoordinator], SensorEntity):
+class GardenSummarySensor(HorticultureEntryEntity, CoordinatorEntity[HorticultureCoordinator], SensorEntity):
     """Aggregate health insights across all configured profiles."""
 
     _attr_has_entity_name = True
@@ -254,15 +299,9 @@ class GardenSummarySensor(CoordinatorEntity[HorticultureCoordinator], SensorEnti
     _attr_translation_key = "garden_summary"
 
     def __init__(self, coordinator: HorticultureCoordinator, entry_id: str, label: str) -> None:
-        super().__init__(coordinator)
-        friendly = label or "Garden"
+        CoordinatorEntity.__init__(self, coordinator)
+        HorticultureEntryEntity.__init__(self, entry_id, default_device_name=label)
         self._attr_unique_id = f"{DOMAIN}_{entry_id}_garden_summary"
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"garden:{entry_id}")},
-            name=f"{friendly} Garden Overview",
-            manufacturer="Horticulture Assistant",
-            model="Garden Summary",
-        )
 
     @property
     def native_value(self):
@@ -282,7 +321,7 @@ class GardenSummarySensor(CoordinatorEntity[HorticultureCoordinator], SensorEnti
         return attrs
 
 
-class EntitlementSummarySensor(SensorEntity):
+class EntitlementSummarySensor(HorticultureEntryEntity, SensorEntity):
     """Expose the current feature entitlements derived from the config entry."""
 
     _attr_entity_category = EntityCategory.DIAGNOSTIC
@@ -291,16 +330,12 @@ class EntitlementSummarySensor(SensorEntity):
     _attr_should_poll = True
     SCAN_INTERVAL = timedelta(minutes=5)
 
-    def __init__(self, entry: ConfigEntry) -> None:
+    def __init__(self, entry: ConfigEntry, plant_name: str | None = None) -> None:
+        device_name = plant_name or entry.title or entry.entry_id
+        HorticultureEntryEntity.__init__(self, entry.entry_id, default_device_name=device_name)
         self._entry = entry
         self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_feature_entitlements"
         self._attr_name = "Feature entitlements"
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"account:{entry.entry_id}")},
-            name="PhenoLogic Account",
-            manufacturer="Horticulture Assistant",
-            model="Cloud Account",
-        )
 
     async def async_update(self) -> None:
         entitlements = derive_entitlements(self._entry.options)
@@ -323,35 +358,44 @@ class EntitlementSummarySensor(SensorEntity):
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
-    stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
+    collection = resolve_profile_context_collection(hass, entry)
+    stored = collection.stored
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
     coord_local: HortiLocalCoordinator = stored["coordinator_local"]
     profile_coord: HorticultureCoordinator | None = stored.get("coordinator")
     keep_stale: bool = stored.get("keep_stale", True)
-    plant_id: str = stored["plant_id"]
-    plant_name: str = stored["plant_name"]
 
+    contexts = collection.contexts
+    primary_context = collection.primary
+    plant_id = primary_context.id
+    plant_name = primary_context.name
     sensors = [
         HortiStatusSensor(coord_ai, coord_local, entry.entry_id, plant_name, plant_id, keep_stale),
         HortiRecommendationSensor(coord_ai, entry.entry_id, plant_name, plant_id, keep_stale),
-        PlantPPFDSensor(hass, entry, plant_name, plant_id),
-        PlantDLISensor(hass, entry, plant_name, plant_id),
+        EntitlementSummarySensor(entry, plant_name),
     ]
 
-    sensors.append(EntitlementSummarySensor(entry))
-
-    sensors_cfg = get_primary_profile_sensors(entry)
-    if sensors_cfg.get("temperature") and sensors_cfg.get("humidity"):
-        sensors.extend(
-            [
-                PlantVPDSensor(hass, entry, plant_name, plant_id),
-                PlantDewPointSensor(hass, entry, plant_name, plant_id),
-                PlantMoldRiskSensor(hass, entry, plant_name, plant_id),
-            ]
-        )
-
-    if sensors_cfg.get("smart_irrigation"):
-        sensors.append(PlantIrrigationRecommendationSensor(hass, entry, plant_name, plant_id))
+    for context in collection.values():
+        sensors.append(PlantStatusSensor(hass, entry, context))
+        sensors.append(PlantLastSampleSensor(hass, entry, context))
+        sensors.append(PlantPPFDSensor(hass, entry, context))
+        sensors.append(PlantDLISensor(hass, entry, context))
+        if context.has_sensors("temperature", "humidity"):
+            sensors.extend(
+                [
+                    PlantVPDSensor(hass, entry, context),
+                    PlantDewPointSensor(hass, entry, context),
+                    PlantMoldRiskSensor(hass, entry, context),
+                ]
+            )
+        if context.has_sensors("smart_irrigation"):
+            sensors.append(
+                PlantIrrigationRecommendationSensor(
+                    hass,
+                    entry,
+                    context,
+                )
+            )
 
     profiles = entry.options.get(CONF_PROFILES, {})
     registry = stored.get("profile_registry")
@@ -359,7 +403,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         sensors.append(GardenSummarySensor(profile_coord, entry.entry_id, plant_name))
     if profile_coord and profiles:
         for pid, profile in profiles.items():
-            name = profile.get("name", pid)
+            context = contexts.get(pid)
+            name = (context.name if context else None) or profile.get("name", pid)
             sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["ppfd"]))
             sensors.append(ProfileMetricSensor(profile_coord, pid, name, PROFILE_SENSOR_DESCRIPTIONS["dli"]))
             prof_sensors = profile.get("sensors", {})
@@ -394,7 +439,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     async_add_entities(sensors, True)
 
 
-class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
+class HortiStatusSensor(
+    HorticultureBaseEntity,
+    CoordinatorEntity[HortiAICoordinator],
+    SensorEntity,
+):
     entity_description = HORTI_STATUS_DESCRIPTION
     _attr_has_entity_name = True
 
@@ -407,14 +456,15 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
         plant_id: str,
         keep_stale: bool,
     ) -> None:
-        super().__init__(coordinator)
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{self.entity_description.key}"
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"plant:{plant_id}")},
-            name=plant_name,
-            manufacturer="Horticulture Assistant",
+        CoordinatorEntity.__init__(self, coordinator)
+        HorticultureBaseEntity.__init__(
+            self,
+            entry_id,
+            plant_name,
+            plant_id,
             model="Plant Profile",
         )
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{self.entity_description.key}"
         self._local = local
         self._keep_stale = keep_stale
         self._citations: dict | None = None
@@ -529,7 +579,11 @@ class HortiStatusSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
         return super().available
 
 
-class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEntity):
+class HortiRecommendationSensor(
+    HorticultureBaseEntity,
+    CoordinatorEntity[HortiAICoordinator],
+    SensorEntity,
+):
     entity_description = HORTI_RECOMMENDATION_DESCRIPTION
     _attr_has_entity_name = True
 
@@ -541,14 +595,15 @@ class HortiRecommendationSensor(CoordinatorEntity[HortiAICoordinator], SensorEnt
         plant_id: str,
         keep_stale: bool,
     ) -> None:
-        super().__init__(coordinator)
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{self.entity_description.key}"
-        self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, f"plant:{plant_id}")},
-            name=plant_name,
-            manufacturer="Horticulture Assistant",
+        CoordinatorEntity.__init__(self, coordinator)
+        HorticultureBaseEntity.__init__(
+            self,
+            entry_id,
+            plant_name,
+            plant_id,
             model="Plant Profile",
         )
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{self.entity_description.key}"
         self._keep_stale = keep_stale
 
     @property

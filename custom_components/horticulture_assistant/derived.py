@@ -30,17 +30,25 @@ from .engine.metrics import (
     lux_to_ppfd as metric_lux_to_ppfd,
 )
 from .entity_base import HorticultureBaseEntity
-from .utils.entry_helpers import (
-    get_primary_profile_sensors,
-    get_primary_profile_thresholds,
-)
+from .utils.entry_helpers import ProfileContext
 
 
-def _current_temp_humidity(hass: HomeAssistant, entry: ConfigEntry) -> tuple[float | None, float | None]:
+def _first_sensor(context: ProfileContext, key: str) -> str | None:
+    """Return the first entity id for ``key`` from ``context``."""
+
+    if not isinstance(context, ProfileContext):  # pragma: no cover - defensive
+        return None
+    return context.first_sensor(key)
+
+
+def _current_temp_humidity(
+    hass: HomeAssistant,
+    context: ProfileContext,
+) -> tuple[float | None, float | None]:
     """Return current temperature (°C) and humidity (%)."""
-    sensors = get_primary_profile_sensors(entry)
-    temp_id = sensors.get("temperature")
-    hum_id = sensors.get("humidity")
+
+    temp_id = _first_sensor(context, "temperature")
+    hum_id = _first_sensor(context, "humidity")
 
     temp_state = hass.states.get(temp_id) if temp_id else None
     try:
@@ -72,17 +80,19 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
         self,
         hass: HomeAssistant,
         entry: ConfigEntry,
-        plant_name: str,
-        plant_id: str,
+        context: ProfileContext,
     ) -> None:
-        super().__init__(plant_name, plant_id)
+        super().__init__(entry.entry_id, context.name, context.id)
         self.hass = hass
         self._entry = entry
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_dli"
+        self._context = context
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_dli"
         self._value: float | None = None
         self._accum: float = 0.0
         self._last_day: date | None = None
         self._last_ts = None
+        self._thresholds = context.thresholds
+        self._light_sensor: str | None = None
 
     @property
     def native_value(self) -> float | None:
@@ -90,7 +100,7 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        light_sensor = get_primary_profile_sensors(self._entry).get("illuminance")
+        light_sensor = _first_sensor(self._context, "illuminance") or _first_sensor(self._context, "light")
         if light_sensor:
             self.async_on_remove(async_track_state_change_event(self.hass, [light_sensor], self._on_illuminance))
 
@@ -116,7 +126,7 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
             self._last_ts = None
         ppfd = await lux_to_ppfd(self.hass, self._light_sensor, lx)
         if ppfd is None:
-            coeff = get_primary_profile_thresholds(self._entry).get("lux_to_ppfd", 0.0185)
+            coeff = self._thresholds.get("lux_to_ppfd", 0.0185)
             ppfd = metric_lux_to_ppfd(lx, coeff)
         seconds = 60.0 if self._last_ts is None else max(0.0, (now - self._last_ts).total_seconds())
         self._accum = accumulate_dli(self._accum, ppfd, seconds)
@@ -132,14 +142,21 @@ class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
     _attr_native_unit_of_measurement = "µmol/m²/s"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str) -> None:
-        super().__init__(plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        context: ProfileContext,
+    ) -> None:
+        super().__init__(entry.entry_id, context.name, context.id)
         self.hass = hass
         self._entry = entry
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_ppfd"
+        self._context = context
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_ppfd"
         self._value: float | None = None
         self._attrs: dict | None = None
         self._light_sensor: str | None = None
+        self._thresholds = context.thresholds
 
     @property
     def native_value(self) -> float | None:
@@ -151,7 +168,7 @@ class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        self._light_sensor = get_primary_profile_sensors(self._entry).get("illuminance")
+        self._light_sensor = _first_sensor(self._context, "illuminance") or _first_sensor(self._context, "light")
         if self._light_sensor:
             self.async_on_remove(async_track_state_change_event(self.hass, [self._light_sensor], self._on_lux))
 
@@ -181,7 +198,7 @@ class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
             if lx < model["lux_min"] or lx > model["lux_max"]:
                 self._attrs["extrapolating"] = True
         else:
-            coeff = get_primary_profile_thresholds(self._entry).get("lux_to_ppfd", 0.0185)
+            coeff = self._thresholds.get("lux_to_ppfd", 0.0185)
             ppfd = metric_lux_to_ppfd(lx, coeff)
             self._attrs = {"model": "constant", "coefficients": [coeff]}
         self._value = round(ppfd, 2)
@@ -195,11 +212,17 @@ class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
     _attr_native_unit_of_measurement = "kPa"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str) -> None:
-        super().__init__(plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        context: ProfileContext,
+    ) -> None:
+        super().__init__(entry.entry_id, context.name, context.id)
         self.hass = hass
         self._entry = entry
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_vpd"
+        self._context = context
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_vpd"
         self._value: float | None = None
 
     @property
@@ -208,15 +231,20 @@ class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        sensors = get_primary_profile_sensors(self._entry)
-        temp = sensors.get("temperature")
-        hum = sensors.get("humidity")
-        self.async_on_remove(async_track_state_change_event(self.hass, [e for e in (temp, hum) if e], self._on_state))
+        temp = _first_sensor(self._context, "temperature")
+        hum = _first_sensor(self._context, "humidity")
+        self.async_on_remove(
+            async_track_state_change_event(
+                self.hass,
+                [e for e in (temp, hum) if e],
+                self._on_state,
+            )
+        )
         self.hass.loop.call_soon(self._on_state, None)
 
     @callback
     def _on_state(self, _event) -> None:
-        t, h = _current_temp_humidity(self.hass, self._entry)
+        t, h = _current_temp_humidity(self.hass, self._context)
         if t is None or h is None:
             self._value = None
         else:
@@ -232,11 +260,17 @@ class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
     _attr_device_class = SensorDeviceClass.TEMPERATURE
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str) -> None:
-        super().__init__(plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        context: ProfileContext,
+    ) -> None:
+        super().__init__(entry.entry_id, context.name, context.id)
         self.hass = hass
         self._entry = entry
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_dew_point"
+        self._context = context
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_dew_point"
         self._value: float | None = None
 
     @property
@@ -245,15 +279,20 @@ class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        sensors = get_primary_profile_sensors(self._entry)
-        temp = sensors.get("temperature")
-        hum = sensors.get("humidity")
-        self.async_on_remove(async_track_state_change_event(self.hass, [e for e in (temp, hum) if e], self._on_state))
+        temp = _first_sensor(self._context, "temperature")
+        hum = _first_sensor(self._context, "humidity")
+        self.async_on_remove(
+            async_track_state_change_event(
+                self.hass,
+                [e for e in (temp, hum) if e],
+                self._on_state,
+            )
+        )
         self.hass.loop.call_soon(self._on_state, None)
 
     @callback
     def _on_state(self, _event) -> None:
-        t, h = _current_temp_humidity(self.hass, self._entry)
+        t, h = _current_temp_humidity(self.hass, self._context)
         if t is None or h is None:
             self._value = None
         else:
@@ -267,11 +306,17 @@ class PlantMoldRiskSensor(HorticultureBaseEntity, SensorEntity):
     _attr_translation_key = "mold_risk"
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    def __init__(self, hass: HomeAssistant, entry: ConfigEntry, plant_name: str, plant_id: str) -> None:
-        super().__init__(plant_name, plant_id)
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        entry: ConfigEntry,
+        context: ProfileContext,
+    ) -> None:
+        super().__init__(entry.entry_id, context.name, context.id)
         self.hass = hass
         self._entry = entry
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_mold_risk"
+        self._context = context
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_mold_risk"
         self._value: float | None = None
 
     @property
@@ -280,15 +325,20 @@ class PlantMoldRiskSensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        sensors = get_primary_profile_sensors(self._entry)
-        temp = sensors.get("temperature")
-        hum = sensors.get("humidity")
-        self.async_on_remove(async_track_state_change_event(self.hass, [e for e in (temp, hum) if e], self._on_state))
+        temp = _first_sensor(self._context, "temperature")
+        hum = _first_sensor(self._context, "humidity")
+        self.async_on_remove(
+            async_track_state_change_event(
+                self.hass,
+                [e for e in (temp, hum) if e],
+                self._on_state,
+            )
+        )
         self.hass.loop.call_soon(self._on_state, None)
 
     @callback
     def _on_state(self, _event) -> None:
-        t, h = _current_temp_humidity(self.hass, self._entry)
+        t, h = _current_temp_humidity(self.hass, self._context)
         if t is None or h is None:
             self._value = None
         else:

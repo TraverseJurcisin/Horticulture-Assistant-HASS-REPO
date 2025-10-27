@@ -43,6 +43,8 @@ class DummyRegistry:
                     "targets": {},
                     "tags": [],
                     "last_resolved": None,
+                    "device_identifier": {"domain": DOMAIN, "id": "entry:profile:p1"},
+                    "device_info": {"identifiers": [[DOMAIN, "entry:profile:p1"]], "name": "P1"},
                 },
                 "run_history": [
                     {
@@ -55,6 +57,8 @@ class DummyRegistry:
                 "harvest_history": [],
                 "statistics": [],
                 "lineage": [],
+                "device_identifier": {"domain": DOMAIN, "id": "entry:profile:p1"},
+                "device_info": {"identifiers": [[DOMAIN, "entry:profile:p1"]], "name": "P1"},
             }
         ]
 
@@ -83,9 +87,15 @@ async def test_async_get_config_entry_diagnostics(hass):
 
     assert result["entry"]["options"]["api_key"] is REDACTED
     assert result["profile_count"] == 1
-    assert result["profiles"][0]["summary"]["plant_id"] == "p1"
+    summary = result["profiles"][0]["summary"]
+    assert summary["plant_id"] == "p1"
+    assert "device_identifier" in summary
+    assert summary["device_identifier"]["domain"] == DOMAIN
+    assert summary["device_info"]["identifiers"][0][0] == DOMAIN
     assert result["profile_totals"]["run_events"] == 1
     assert result["coordinators"]["coordinator_ai"]["last_update_success"] is True
     assert "last_update" in result["coordinators"]["coordinator_ai"]
     assert "last_exception" in result["coordinators"]["coordinator_ai"]
-    assert result["schema_version"] == 3
+    assert result["schema_version"] == 10
+    assert "onboarding_errors" not in result
+    assert "onboarding_status" not in result

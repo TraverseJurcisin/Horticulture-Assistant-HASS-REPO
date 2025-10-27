@@ -79,6 +79,12 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         if self.update_interval != new_interval:
             self.update_interval = new_interval
 
+    @property
+    def entry_id(self) -> str:
+        """Return the config entry id backing this coordinator."""
+
+        return self._entry_id
+
     async def async_reset_dli(self, profile_id: str | None = None) -> None:
         """Reset accumulated DLI totals for a profile or all profiles."""
 

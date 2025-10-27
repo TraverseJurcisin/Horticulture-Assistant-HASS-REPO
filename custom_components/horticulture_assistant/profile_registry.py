@@ -58,6 +58,11 @@ from .profile.utils import (
 )
 from .profile.validation import evaluate_threshold_bounds
 from .sensor_validation import collate_issue_messages, validate_sensor_links
+from .utils.entry_helpers import (
+    profile_device_identifier,
+    resolve_profile_device_info,
+    serialise_device_info,
+)
 from .validators import (
     validate_cultivation_event_dict,
     validate_harvest_event_dict,
@@ -135,6 +140,30 @@ class ProfileRegistry:
             _LOGGER.debug("History exporter disabled: %s", err)
             self._history_exporter = None
 
+    def collect_onboarding_warnings(self) -> list[str]:
+        """Return human-readable onboarding warnings for outstanding issues."""
+
+        warnings: list[str] = []
+
+        if self._missing_species_issues:
+            affected = sorted({profile_id for profile_id, _ in self._missing_species_issues})
+            sample = ", ".join(affected[:5])
+            if len(affected) > 5:
+                sample = f"{sample}, +{len(affected) - 5} more"
+            warnings.append(f"Missing species metadata for {sample}")
+
+        if self._missing_parent_issues:
+            affected = sorted({profile_id for profile_id, _ in self._missing_parent_issues})
+            sample = ", ".join(affected[:5])
+            if len(affected) > 5:
+                sample = f"{sample}, +{len(affected) - 5} more"
+            warnings.append(f"Missing parent lineage for {sample}")
+
+        if self._validation_issue_summaries:
+            warnings.extend(sorted(self._validation_issue_summaries.values()))
+
+        return warnings
+
     def _relink_profiles(self) -> None:
         if not self._profiles:
             return
@@ -142,6 +171,33 @@ class ProfileRegistry:
         self._log_lineage_warnings(report)
         for profile in self._profiles.values():
             profile.refresh_sections()
+
+    def _profile_device_metadata(
+        self,
+        profile_id: str,
+        default_name: str | None = None,
+    ) -> dict[str, Any]:
+        """Return device metadata for ``profile_id`` suitable for diagnostics."""
+
+        domain, identifier = profile_device_identifier(self.entry.entry_id, profile_id)
+        info = resolve_profile_device_info(self.hass, self.entry.entry_id, profile_id)
+        payload: dict[str, Any] = (
+            dict(info) if isinstance(info, Mapping) else {}
+        )
+
+        identifiers = payload.get("identifiers")
+        if not identifiers:
+            payload["identifiers"] = {(domain, identifier)}
+        name = payload.get("name")
+        if not isinstance(name, str) or not name.strip():
+            payload["name"] = default_name or profile_id
+        payload.setdefault("manufacturer", "Horticulture Assistant")
+        payload.setdefault("model", "Plant Profile")
+
+        return {
+            "identifier": {"domain": domain, "id": identifier},
+            "info": serialise_device_info(payload),
+        }
 
     def _create_species_issue(
         self,
@@ -688,7 +744,10 @@ class ProfileRegistry:
         parents = getattr(profile, "parents", None)
         if parents:
             data["parents"] = list(parents)
-        self.hass.bus.async_fire(event_type, data)
+        bus = getattr(self.hass, "bus", None)
+        fire = getattr(bus, "async_fire", None)
+        if callable(fire):
+            fire(event_type, data)
 
     def _publish_stats_with(
         self,
@@ -1447,20 +1506,36 @@ class ProfileRegistry:
     def summaries(self) -> list[dict[str, Any]]:
         """Return a serialisable summary of all profiles."""
 
-        return [p.summary() for p in self._profiles.values()]
+        summaries: list[dict[str, Any]] = []
+        for profile in self._profiles.values():
+            summary = profile.summary()
+            metadata = self._profile_device_metadata(profile.profile_id, summary.get("name"))
+            summary["device_identifier"] = metadata["identifier"]
+            summary["device_info"] = metadata["info"]
+            summaries.append(summary)
+        return summaries
 
     def diagnostics_snapshot(self) -> list[dict[str, Any]]:
         """Return expanded diagnostics data for every profile."""
 
         snapshot: list[dict[str, Any]] = []
         for profile in self._profiles.values():
+            summary = profile.summary()
+            metadata = self._profile_device_metadata(profile.profile_id, summary.get("name"))
+            summary["device_identifier"] = metadata["identifier"]
+            summary["device_info"] = metadata["info"]
             snapshot.append(
                 {
-                    "summary": profile.summary(),
+                    "plant_id": profile.profile_id,
+                    "profile_id": profile.profile_id,
+                    "profile_name": summary.get("name"),
+                    "summary": summary,
                     "run_history": [event.to_json() for event in profile.run_history],
                     "harvest_history": [event.to_json() for event in profile.harvest_history],
                     "statistics": [stat.to_json() for stat in profile.statistics],
                     "lineage": [entry.to_json() for entry in profile.lineage],
+                    "device_identifier": metadata["identifier"],
+                    "device_info": metadata["info"],
                 }
             )
         return snapshot

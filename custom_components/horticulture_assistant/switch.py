@@ -11,7 +11,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import CATEGORY_CONTROL, DOMAIN
 from .entity_base import HorticultureBaseEntity
-from .utils.entry_helpers import get_entry_data, store_entry_data
+from .utils.entry_helpers import resolve_profile_context_collection
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -22,14 +22,12 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up switch entities for irrigation and fertigation control."""
-    stored = get_entry_data(hass, entry) or store_entry_data(hass, entry)
-    plant_id = stored["plant_id"]
-    plant_name = stored["plant_name"]
+    collection = resolve_profile_context_collection(hass, entry)
+    entities = []
+    for context in collection.values():
+        entities.append(IrrigationSwitch(hass, entry.entry_id, context.name, context.id))
+        entities.append(FertigationSwitch(hass, entry.entry_id, context.name, context.id))
 
-    entities = [
-        IrrigationSwitch(hass, entry.entry_id, plant_name, plant_id),
-        FertigationSwitch(hass, entry.entry_id, plant_name, plant_id),
-    ]
     async_add_entities(entities)
 
 
@@ -37,7 +35,7 @@ class HorticultureBaseSwitch(HorticultureBaseEntity, SwitchEntity):
     """Base class for horticulture switches."""
 
     def __init__(self, hass: HomeAssistant, entry_id: str, plant_name: str, plant_id: str) -> None:
-        super().__init__(plant_name, plant_id, model="Irrigation/Fertigation Controller")
+        super().__init__(entry_id, plant_name, plant_id, model="Irrigation/Fertigation Controller")
         self.hass = hass
         self._entry_id = entry_id
         self._attr_is_on = False  # Optimistic switch model

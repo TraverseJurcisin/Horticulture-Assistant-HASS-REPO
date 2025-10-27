@@ -6,16 +6,26 @@ import pytest
 
 from custom_components.horticulture_assistant.const import (
     CONF_PLANT_ID,
+    CONF_PLANT_NAME,
     CONF_PROFILES,
     DOMAIN,
 )
 from custom_components.horticulture_assistant.utils.entry_helpers import (
     BY_PLANT_ID,
+    ProfileContext,
+    ProfileContextCollection,
     build_entry_snapshot,
+    entry_device_identifier,
     get_entry_plant_info,
     get_primary_profile_id,
     get_primary_profile_sensors,
     get_primary_profile_thresholds,
+    profile_device_identifier,
+    resolve_entry_device_info,
+    resolve_profile_context_collection,
+    resolve_profile_device_info,
+    resolve_profile_image_url,
+    serialise_device_info,
     store_entry_data,
     update_entry_data,
 )
@@ -123,9 +133,205 @@ async def test_update_entry_data_refreshes_mapping(hass, tmp_path):
         options={CONF_PROFILES: {"old": {"name": "Old"}}},
     )
     store_entry_data(hass, entry)
-    entry.options = {CONF_PROFILES: {"new": {"name": "New"}}}
+    entry.options = {CONF_PROFILES: {"new": {"name": "New"}, "child": {"name": "Child"}}}
     entry.data = {CONF_PLANT_ID: "new", "plant_name": "New"}
     refreshed = update_entry_data(hass, entry)
     assert refreshed["plant_id"] == "new"
-    assert hass.data[DOMAIN][BY_PLANT_ID]["new"] is refreshed
-    assert "old" not in hass.data[DOMAIN][BY_PLANT_ID]
+    mapping = hass.data[DOMAIN][BY_PLANT_ID]
+    assert mapping["new"] is refreshed
+    assert mapping["child"] is refreshed
+    assert "old" not in mapping
+    assert refreshed["profile_ids"] == ["child", "new"]
+    profile_devices = refreshed["profile_devices"]
+    assert set(profile_devices) == {"child", "new"}
+    assert profile_devices["new"]["name"] == "New"
+    assert profile_devices["child"]["name"] == "Child"
+
+    contexts = refreshed["profile_contexts"]
+    assert set(contexts) == {"child", "new"}
+    assert contexts["new"]["name"] == "New"
+    assert contexts["child"]["name"] == "Child"
+
+
+@pytest.mark.asyncio
+async def test_store_entry_data_populates_device_info(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "p2", CONF_PLANT_NAME: "Stored"},
+        options={
+            CONF_PROFILES: {
+                "p2": {"name": "Stored", "general": {"plant_type": "herb", "area": "Kitchen"}}
+            }
+        },
+    )
+    stored = store_entry_data(hass, entry)
+    entry_info = stored["entry_device_info"]
+    assert entry_info["name"] == "Stored"
+    assert entry_device_identifier(entry.entry_id) in entry_info["identifiers"]
+
+    profile_devices = stored["profile_devices"]
+    assert "p2" in profile_devices
+    profile_info = profile_devices["p2"]
+    assert profile_device_identifier(entry.entry_id, "p2") in profile_info["identifiers"]
+    assert profile_info["name"] == "Stored"
+    assert profile_info.get("suggested_area") == "Kitchen"
+
+    contexts = stored["profile_contexts"]
+    assert "p2" in contexts
+    ctx = contexts["p2"]
+    assert ctx["name"] == "Stored"
+    assert ctx["sensors"] == {"moisture": ["sensor.moist"]}
+
+
+@pytest.mark.asyncio
+async def test_resolve_profile_device_info_tracks_updates(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "alpha", CONF_PLANT_NAME: "Alpha"},
+        options={CONF_PROFILES: {"alpha": {"name": "Alpha"}}},
+    )
+    store_entry_data(hass, entry)
+    info = resolve_profile_device_info(hass, entry.entry_id, "alpha")
+    assert info["name"] == "Alpha"
+
+    entry.options = {CONF_PROFILES: {"alpha": {"name": "Renamed"}}}
+    update_entry_data(hass, entry)
+    updated = resolve_profile_device_info(hass, entry.entry_id, "alpha")
+    assert updated["name"] == "Renamed"
+
+
+@pytest.mark.asyncio
+async def test_resolve_entry_device_info_returns_metadata(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "beta", CONF_PLANT_NAME: "Beta"},
+        options={CONF_PROFILES: {"beta": {"name": "Beta"}}},
+    )
+    store_entry_data(hass, entry)
+    info = resolve_entry_device_info(hass, entry.entry_id)
+    assert info is not None
+    assert entry_device_identifier(entry.entry_id) in info["identifiers"]
+    assert info["name"] == "Beta"
+
+
+@pytest.mark.asyncio
+async def test_resolve_profile_image_url_prefers_profile_metadata(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "primary", "plant_name": "Primary"},
+        options={
+            "image_url": "https://example.com/entry.png",
+            CONF_PROFILES: {
+                "primary": {"name": "Primary", "image": "https://example.com/profile.png"},
+                "child": {"name": "Child", "image_url": "https://example.com/child.png"},
+            },
+        },
+    )
+
+    store_entry_data(hass, entry)
+
+    child_image = resolve_profile_image_url(hass, entry.entry_id, "child")
+    assert child_image == "https://example.com/child.png"
+
+    primary_image = resolve_profile_image_url(hass, entry.entry_id, "primary")
+    assert primary_image == "https://example.com/profile.png"
+
+    fallback_image = resolve_profile_image_url(hass, entry.entry_id, "missing")
+    assert fallback_image == "https://example.com/entry.png"
+
+
+def test_profile_context_helpers_normalise_payload():
+    context = ProfileContext(
+        id="plant",
+        name="Plant",
+        sensors={"temperature": ["sensor.temp", "sensor.temp_2"], "humidity": "sensor.hum"},
+        thresholds={"temperature_min": 12},
+        payload={"name": "Plant"},
+        device_info={
+            "name": "Plant",
+            "identifiers": {(DOMAIN, "profile:plant")},
+        },
+    )
+
+    assert context.sensor_ids_for_roles("temperature") == ("sensor.temp", "sensor.temp_2")
+    assert context.first_sensor("humidity") == "sensor.hum"
+    assert context.has_sensors("temperature", "humidity") is True
+    assert context.has_sensors("light") is False
+    assert context.has_sensors() is True
+    assert context.get_threshold("temperature_min") == 12
+    info = context.as_device_info()
+    assert info["name"] == "Plant"
+    assert (DOMAIN, "profile:plant") in info["identifiers"]
+
+
+@pytest.mark.asyncio
+async def test_resolve_profile_context_collection_aggregates_profiles(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "alpha", CONF_PLANT_NAME: "Alpha"},
+        options={
+            CONF_PROFILES: {
+                "alpha": {
+                    "name": "Alpha",
+                    "sensors": {"temperature": ["sensor.temp", "sensor.temp_backup"], "humidity": "sensor.hum"},
+                    "thresholds": {"temperature_min": 10},
+                },
+                "beta": {"name": "Beta"},
+            },
+            "thresholds": {"humidity_max": 85},
+        },
+    )
+    store_entry_data(hass, entry)
+
+    collection = resolve_profile_context_collection(hass, entry)
+    assert isinstance(collection, ProfileContextCollection)
+    assert collection.primary_id == "alpha"
+    assert {pid for pid, _ in collection.items()} == {"alpha", "beta"}
+
+    primary = collection.primary
+    assert primary.name == "Alpha"
+    assert primary.sensor_ids_for_roles("temperature")[0] == "sensor.temp"
+    assert primary.get_threshold("temperature_min") == 10
+
+    secondary = collection.get("beta")
+    assert secondary is not None
+    assert secondary.name == "Beta"
+
+
+@pytest.mark.asyncio
+async def test_resolve_profile_context_collection_fallbacks_to_primary(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "gamma", CONF_PLANT_NAME: "Gamma"},
+        options={"sensors": {"temperature": "sensor.temp"}},
+    )
+
+    collection = resolve_profile_context_collection(hass, entry)
+    assert isinstance(collection, ProfileContextCollection)
+    assert collection.primary_id == "gamma"
+
+    primary = collection.primary
+    assert primary.id == "gamma"
+    assert primary.name == "Gamma"
+    assert primary.first_sensor("temperature") == "sensor.temp"
+
+
+def test_serialise_device_info_converts_sets():
+    info = {
+        "identifiers": {(DOMAIN, "entry:alpha")},
+        "connections": {("mac", "00:11:22:33")},
+        "manufacturer": "Horticulture Assistant",
+        "name": "Alpha",
+        "via_device": (DOMAIN, "entry:parent"),
+    }
+
+    serialised = serialise_device_info(info)
+
+    assert serialised["identifiers"] == [[DOMAIN, "entry:alpha"]]
+    assert serialised["connections"] == [["mac", "00:11:22:33"]]
+    assert serialised["via_device"] == {"domain": DOMAIN, "id": "entry:parent"}
+    assert serialised["name"] == "Alpha"
+
+
+def test_serialise_device_info_handles_none():
+    assert serialise_device_info(None) == {}

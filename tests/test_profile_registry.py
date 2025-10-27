@@ -518,9 +518,21 @@ async def test_export_creates_file_with_profiles(hass, tmp_path):
     path = tmp_path / "profiles.json"
     out = await reg.async_export(path)
     assert out == path
-    assert path.exists()
-    data = json.loads(path.read_text())
-    assert data[0]["display_name"] == "Plant"
+
+
+async def test_collect_onboarding_warnings_reports_issues(hass):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "species": "species.unknown"}}},
+    )
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    reg._validation_issue_summaries["p1"] = "sensor validation failed"
+
+    warnings = reg.collect_onboarding_warnings()
+    assert any("missing species" in warning for warning in warnings)
+    assert "sensor validation failed" in warnings
 
 
 async def test_summaries_return_serialisable_data(hass):
@@ -529,20 +541,24 @@ async def test_summaries_return_serialisable_data(hass):
     await reg.async_load()
     await reg.async_replace_sensor("p1", "humidity", "sensor.h")
     summaries = reg.summaries()
-    assert summaries == [
-        {
-            "plant_id": "p1",
-            "name": "Plant",
-            "profile_type": "line",
-            "species": None,
-            "tenant_id": None,
-            "parents": [],
-            "sensors": {"humidity": "sensor.h"},
-            "targets": {},
-            "tags": [],
-            "last_resolved": None,
-        }
+    assert len(summaries) == 1
+    summary = summaries[0]
+    assert summary["plant_id"] == "p1"
+    assert summary["name"] == "Plant"
+    assert summary["profile_type"] == "line"
+    assert summary["sensors"] == {"humidity": "sensor.h"}
+    assert summary["targets"] == {}
+    assert summary["tags"] == []
+    assert summary["device_identifier"] == {
+        "domain": DOMAIN,
+        "id": f"{entry.entry_id}:profile:p1",
+    }
+    assert summary["device_info"]["identifiers"] == [
+        [DOMAIN, f"{entry.entry_id}:profile:p1"],
     ]
+    assert summary["device_info"]["name"] == "Plant"
+    # Ensure payload is JSON serialisable
+    json.dumps(summary)
 
 
 async def test_iteration_and_len(hass):

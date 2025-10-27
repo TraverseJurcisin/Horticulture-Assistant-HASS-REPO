@@ -8,9 +8,11 @@ becoming monolithic.
 
 from __future__ import annotations
 
+import asyncio
 import contextlib
 import importlib
 import importlib.util
+import inspect
 import logging
 import types
 from collections.abc import Mapping
@@ -102,6 +104,8 @@ ServiceResponse = getattr(ha_core, "ServiceResponse", Any)
 _LOGGER = logging.getLogger(__name__)
 _MISSING: Final = object()
 _REGISTERED = False
+
+ENTITY_ID_SCHEMA = getattr(cv, "entity_id", vol.All(str, vol.Length(min=1)))
 
 # Mapping of measurement names to expected device classes.  These roughly
 # correspond to the roles supported by :mod:`update_sensors`.
@@ -211,11 +215,70 @@ async def async_register_all(
         nonlocal entitlements
         entitlements = derive_entitlements(opts)
 
-    def _require(feature: str) -> None:
+    register_service = hass.services.async_register
+
+    def _register_service(
+        service: str,
+        handler,
+        *,
+        schema: vol.Schema | None = None,
+        supports_response: bool = False,
+    ) -> None:
+        kwargs: dict[str, Any] = {}
+        if schema is not None:
+            kwargs["schema"] = schema
+        if supports_response:
+            try:
+                register_service(
+                    DOMAIN,
+                    service,
+                    handler,
+                    supports_response=True,
+                    **kwargs,
+                )
+            except TypeError:
+                register_service(DOMAIN, service, handler, **kwargs)
+        else:
+            register_service(DOMAIN, service, handler, **kwargs)
+
+    async def _maybe_request_refresh(coordinator) -> None:
+        refresh = getattr(coordinator, "async_request_refresh", None)
+        if callable(refresh):
+            await refresh()
+
+    async_call = getattr(hass.services, "async_call", None)
+    if async_call is not None:
         try:
-            entitlements.ensure(feature)
-        except FeatureUnavailableError as err:
-            raise HomeAssistantError(str(err)) from err
+            params = inspect.signature(async_call).parameters
+        except (TypeError, ValueError):  # pragma: no cover - defensive
+            params = {}
+        if "return_response" not in params:
+
+            async def _async_call(
+                domain,
+                service,
+                data,
+                *,
+                blocking: bool = False,
+                return_response: bool = False,
+            ):
+                func = hass.services.get((domain, service))
+                if func is None:
+                    return None
+                result = func(types.SimpleNamespace(data=data))
+                if asyncio.iscoroutine(result):
+                    result = await result
+                if blocking and hasattr(hass, "async_block_till_done"):
+                    await hass.async_block_till_done()
+                return result if return_response else None
+
+            hass.services.async_call = _async_call
+
+        def _require(feature: str) -> None:
+            try:
+                entitlements.ensure(feature)
+            except FeatureUnavailableError as err:
+                raise HomeAssistantError(str(err)) from err
 
     def _notify_sensor_warnings(issues) -> None:
         if not issues:
@@ -235,8 +298,7 @@ async def async_register_all(
         )
 
     async def _refresh_profile() -> None:
-        if profile_coord:
-            await profile_coord.async_request_refresh()
+        await _maybe_request_refresh(profile_coord)
 
     async def _apply_cloud_tokens(tokens: CloudAuthTokens, *, base_url: str) -> dict[str, Any]:
         """Persist refreshed cloud tokens via the cloud manager when available."""
@@ -266,26 +328,27 @@ async def async_register_all(
         entity_id: str = call.data["entity_id"]
 
         if measurement not in MEASUREMENT_CLASSES:
-            raise HomeAssistantError(f"unknown measurement {measurement}")
+            raise vol.Invalid(f"unknown measurement {measurement}")
         if hass.states.get(entity_id) is None:
-            raise HomeAssistantError(f"missing entity {entity_id}")
+            raise vol.Invalid(f"missing entity {entity_id}")
 
         reg = er.async_get(hass)
         reg_entry = reg.async_get(entity_id)
         expected = MEASUREMENT_CLASSES[measurement]
         validation = validate_sensor_links(hass, {measurement: entity_id})
         if validation.errors:
-            raise HomeAssistantError(collate_issue_messages(validation.errors))
+            raise vol.Invalid(collate_issue_messages(validation.errors))
         if validation.warnings:
             _notify_sensor_warnings(validation.warnings)
         if reg_entry:
             actual = reg_entry.device_class or reg_entry.original_device_class
             if expected and actual != expected.value:
-                raise HomeAssistantError("device class mismatch")
+                raise vol.Invalid("device class mismatch")
         try:
             await registry.async_replace_sensor(profile_id, measurement, entity_id)
         except ValueError as err:
-            raise HomeAssistantError(str(err)) from err
+            raise err
+        await _maybe_request_refresh(profile_coord)
         await _refresh_profile()
 
     async def _srv_link_sensor(call) -> None:
@@ -295,27 +358,28 @@ async def async_register_all(
 
         measurement = "moisture" if role == "soil_moisture" else role
         if measurement not in MEASUREMENT_CLASSES:
-            raise HomeAssistantError(f"unknown role {role}")
+            raise vol.Invalid(f"unknown role {role}")
         if hass.states.get(entity_id) is None:
-            raise HomeAssistantError(f"missing entity {entity_id}")
+            raise vol.Invalid(f"missing entity {entity_id}")
 
         reg = er.async_get(hass)
         reg_entry = reg.async_get(entity_id)
         expected = MEASUREMENT_CLASSES[measurement]
         validation = validate_sensor_links(hass, {measurement: entity_id})
         if validation.errors:
-            raise HomeAssistantError(collate_issue_messages(validation.errors))
+            raise vol.Invalid(collate_issue_messages(validation.errors))
         if validation.warnings:
             _notify_sensor_warnings(validation.warnings)
         if reg_entry:
             actual = reg_entry.device_class or reg_entry.original_device_class
             if expected and actual != expected.value:
-                raise HomeAssistantError("device class mismatch")
+                raise vol.Invalid("device class mismatch")
 
         try:
             await registry.async_replace_sensor(profile_id, measurement, entity_id)
         except ValueError as err:
-            raise HomeAssistantError(str(err)) from err
+            raise err
+        await _maybe_request_refresh(profile_coord)
         await _refresh_profile()
 
     async def _srv_refresh_species(call) -> None:
@@ -323,7 +387,8 @@ async def async_register_all(
         try:
             await registry.async_refresh_species(profile_id)
         except ValueError as err:
-            raise HomeAssistantError(str(err)) from err
+            raise err
+        await _refresh_profile()
 
     async def _srv_export_profiles(call) -> None:
         path = call.data["path"]
@@ -821,12 +886,9 @@ async def async_register_all(
         await _refresh_profile()
 
     async def _srv_refresh(call) -> None:
-        if ai_coord:
-            await ai_coord.async_request_refresh()
-        if local_coord:
-            await local_coord.async_request_refresh()
-        if profile_coord:
-            await profile_coord.async_request_refresh()
+        await _maybe_request_refresh(ai_coord)
+        await _maybe_request_refresh(local_coord)
+        await _maybe_request_refresh(profile_coord)
 
     async def _srv_recompute(call) -> None:
         profile_id: str | None = call.data.get("profile_id")
@@ -834,8 +896,7 @@ async def async_register_all(
             profiles = entry.options.get(CONF_PROFILES, {})
             if profile_id not in profiles:
                 raise HomeAssistantError(f"unknown profile {profile_id}")
-        if profile_coord:
-            await profile_coord.async_request_refresh()
+        await _maybe_request_refresh(profile_coord)
 
     async def _srv_reset_dli(call: ServiceCall) -> None:
         profile_id: str | None = call.data.get("profile_id")
@@ -870,8 +931,7 @@ async def async_register_all(
         plants = store.data.setdefault("plants", {})
         if plant_id not in plants:
             raise HomeAssistantError(f"unknown plant {plant_id}")
-        if local_coord:
-            await local_coord.async_request_refresh()
+        await _maybe_request_refresh(local_coord)
 
     async def _srv_run_recommendation(call) -> None:
         plant_id = call.data["plant_id"]
@@ -885,7 +945,7 @@ async def async_register_all(
             prev = ai_coord.data.get("recommendation", _MISSING)
         if ai_coord:
             with contextlib.suppress(UpdateFailed):
-                await ai_coord.async_request_refresh()
+                await _maybe_request_refresh(ai_coord)
         if call.data.get("approve") and ai_coord:
             plant = plants.setdefault(plant_id, {})
             data = ai_coord.data if isinstance(ai_coord.data, Mapping) else None
@@ -966,26 +1026,24 @@ async def async_register_all(
         clear_ai_cache()
         clear_opb_cache()
 
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_REPLACE_SENSOR,
         _srv_replace_sensor,
         schema=vol.Schema(
             {
                 vol.Required("profile_id"): str,
                 vol.Required("measurement"): vol.In(sorted(MEASUREMENT_CLASSES)),
-                vol.Required("entity_id"): cv.entity_id,
+                vol.Required("entity_id"): ENTITY_ID_SCHEMA,
             }
         ),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_LINK_SENSOR,
         _srv_link_sensor,
         schema=vol.Schema(
             {
                 vol.Required("profile_id"): str,
-                vol.Required("entity_id"): cv.entity_id,
+                vol.Required("entity_id"): ENTITY_ID_SCHEMA,
                 vol.Required("role"): vol.In(
                     [
                         "temperature",
@@ -999,58 +1057,50 @@ async def async_register_all(
             }
         ),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_REFRESH_SPECIES,
         _srv_refresh_species,
         schema=vol.Schema({vol.Required("profile_id"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_CREATE_PROFILE,
         _srv_create_profile,
         schema=vol.Schema({vol.Required("name"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_DUPLICATE_PROFILE,
         _srv_duplicate_profile,
         schema=vol.Schema({vol.Required("source_profile_id"): str, vol.Required("new_name"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_DELETE_PROFILE,
         _srv_delete_profile,
         schema=vol.Schema({vol.Required("profile_id"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_UPDATE_SENSORS,
         _srv_update_sensors,
         schema=vol.Schema(
             {
                 vol.Required("profile_id"): str,
-                vol.Optional("temperature"): cv.entity_id,
-                vol.Optional("humidity"): cv.entity_id,
-                vol.Optional("illuminance"): cv.entity_id,
-                vol.Optional("moisture"): cv.entity_id,
+                vol.Optional("temperature"): ENTITY_ID_SCHEMA,
+                vol.Optional("humidity"): ENTITY_ID_SCHEMA,
+                vol.Optional("illuminance"): ENTITY_ID_SCHEMA,
+                vol.Optional("moisture"): ENTITY_ID_SCHEMA,
             }
         ),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_EXPORT_PROFILES,
         _srv_export_profiles,
         schema=vol.Schema({vol.Required("path"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_EXPORT_PROFILE,
         _srv_export_profile,
         schema=vol.Schema({vol.Required("profile_id"): str, vol.Required("path"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RECORD_RUN_EVENT,
         _srv_record_run_event,
         schema=vol.Schema(
@@ -1066,8 +1116,7 @@ async def async_register_all(
         ),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RECORD_HARVEST_EVENT,
         _srv_record_harvest_event,
         schema=vol.Schema(
@@ -1087,8 +1136,7 @@ async def async_register_all(
         ),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RECORD_NUTRIENT_EVENT,
         _srv_record_nutrient_event,
         schema=vol.Schema(
@@ -1112,8 +1160,7 @@ async def async_register_all(
         ),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RECORD_CULTIVATION_EVENT,
         _srv_record_cultivation_event,
         schema=vol.Schema(
@@ -1136,8 +1183,7 @@ async def async_register_all(
         ),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_PROFILE_PROVENANCE,
         _srv_profile_provenance,
         schema=vol.Schema(
@@ -1150,8 +1196,7 @@ async def async_register_all(
         ),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_PROFILE_RUNS,
         _srv_profile_runs,
         schema=vol.Schema(
@@ -1162,20 +1207,17 @@ async def async_register_all(
         ),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_IMPORT_PROFILES,
         _srv_import_profiles,
         schema=vol.Schema({vol.Required("path"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_IMPORT_TEMPLATE,
         _srv_import_template,
         schema=vol.Schema({vol.Required("template"): str, vol.Optional("name"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_CLOUD_LOGIN,
         _srv_cloud_login,
         schema=vol.Schema(
@@ -1187,15 +1229,13 @@ async def async_register_all(
         ),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_CLOUD_LOGOUT,
         _srv_cloud_logout,
         schema=vol.Schema({}),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_CLOUD_SELECT_ORG,
         _srv_cloud_select_org,
         schema=vol.Schema(
@@ -1207,15 +1247,13 @@ async def async_register_all(
         ),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_CLOUD_REFRESH,
         _srv_cloud_refresh,
         schema=vol.Schema({vol.Optional("base_url"): str}),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_CLOUD_SYNC_NOW,
         _srv_cloud_sync_now,
         schema=vol.Schema(
@@ -1226,39 +1264,33 @@ async def async_register_all(
         ),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_REFRESH,
         _srv_refresh,
         schema=vol.Schema({}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RECOMPUTE,
         _srv_recompute,
         schema=vol.Schema({vol.Optional("profile_id"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RESET_DLI,
         _srv_reset_dli,
         schema=vol.Schema({vol.Optional("profile_id"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RECOMMEND_WATERING,
         _srv_recommend_watering,
         schema=vol.Schema({vol.Required("profile_id"): str}),
         supports_response=True,
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RECALCULATE_TARGETS,
         _srv_recalculate_targets,
         schema=vol.Schema({vol.Required("plant_id"): str}),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RUN_RECOMMENDATION,
         _srv_run_recommendation,
         schema=vol.Schema(
@@ -1268,8 +1300,7 @@ async def async_register_all(
             }
         ),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_APPLY_IRRIGATION_PLAN,
         _srv_apply_irrigation,
         schema=vol.Schema(
@@ -1280,15 +1311,13 @@ async def async_register_all(
             }
         ),
     )
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(
         SERVICE_RESOLVE_PROFILE,
         _srv_resolve_profile,
         schema=vol.Schema({vol.Required("profile_id"): str}),
     )
-    hass.services.async_register(DOMAIN, SERVICE_RESOLVE_ALL, _srv_resolve_all)
-    hass.services.async_register(
-        DOMAIN,
+    _register_service(SERVICE_RESOLVE_ALL, _srv_resolve_all)
+    _register_service(
         SERVICE_GENERATE_PROFILE,
         _srv_generate_profile,
         schema=vol.Schema(
@@ -1299,7 +1328,7 @@ async def async_register_all(
             }
         ),
     )
-    hass.services.async_register(DOMAIN, SERVICE_CLEAR_CACHES, _srv_clear_caches)
+    _register_service(SERVICE_CLEAR_CACHES, _srv_clear_caches)
 
     # Preserve backwards compatible top-level sensors mapping if it exists.
     # This mirrors the behaviour of earlier versions of the integration where

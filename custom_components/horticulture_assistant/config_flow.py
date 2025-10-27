@@ -358,7 +358,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             return self._profile_templates
 
         templates = self._entry_profile_templates()
-        sources: dict[str, str] = {key: "entry" for key in templates}
+        sources: dict[str, str] = dict.fromkeys(templates, "entry")
 
         store = await self._async_profile_store()
         if store is not None:
