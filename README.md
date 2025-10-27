@@ -1,8 +1,7 @@
 # BETA – UNDER ACTIVE DEVELOPMENT
+I do blue collar work during the day, so I'm vibe coding this, as such, it currently doesn't work for sh*t, so don't even bother yet, I'll get it working eventually.
 
 # Horticulture Assistant for Home Assistant
-
-> **Status:** Functional beta. The core profile store, data catalogue, and Home Assistant integration are ready for day-to-day experimentation, but the data model and UI may still shift as upcoming logging and cloud features land.
 
 Horticulture Assistant is a local-first companion for growers who want to coordinate plant monitoring, nutrition, and irrigation inside Home Assistant without relying on cloud APIs. The project ships opinionated defaults, extensive reference data, and optional AI/automation hooks while remaining fully usable offline.
 
