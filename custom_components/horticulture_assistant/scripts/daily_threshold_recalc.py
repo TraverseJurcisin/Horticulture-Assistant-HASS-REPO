@@ -132,7 +132,10 @@ def run_daily_threshold_updates():
             update_plant_profile(profile_path, new_thresholds)
             print("✅ Thresholds auto-updated (auto_approve_all: true)")
         else:
-            queue_threshold_updates(plant_id, profile["thresholds"], new_thresholds)
+            existing_thresholds = profile.get("thresholds")
+            if not isinstance(existing_thresholds, dict):
+                existing_thresholds = {}
+            queue_threshold_updates(plant_id, existing_thresholds, new_thresholds)
             print("🛑 Threshold changes queued for approval.")
 
     print("\n✅ Daily threshold recalculation complete.")
