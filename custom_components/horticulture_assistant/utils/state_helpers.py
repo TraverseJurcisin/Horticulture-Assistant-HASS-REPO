@@ -22,6 +22,14 @@ __all__ = [
 # avoids recompiling the regex for every state lookup and handles optional
 # sign and decimal point.
 _NUM_RE = re.compile(r"[-+]?[0-9]*\.?[0-9]+")
+_THOUSANDS_TRANSLATION = str.maketrans(
+    {
+        " ": None,
+        "\u00a0": None,
+        "\u202f": None,
+        "'": None,
+    }
+)
 _SEP_RE = re.compile(r"[;,]")
 
 
@@ -39,18 +47,43 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
         _LOGGER.debug("State unavailable: %s", entity_id)
         return None
 
-    value = str(state.state).replace(",", "").strip()
-    try:
-        return float(value)
-    except (ValueError, TypeError):
-        match = _NUM_RE.search(value)
-        if match:
-            try:
-                return float(match.group(0))
-            except (ValueError, TypeError):
-                pass
-        _LOGGER.warning("State of %s is not numeric: %s", entity_id, value)
-        return None
+    raw_value = str(state.state).strip()
+
+    def normalise(value: str) -> str | None:
+        if not value:
+            return None
+
+        collapsed = value.translate(_THOUSANDS_TRANSLATION)
+
+        if "," in collapsed and "." in collapsed:
+            last_comma = collapsed.rfind(",")
+            last_dot = collapsed.rfind(".")
+            if last_comma > last_dot:
+                return collapsed.replace(".", "").replace(",", ".")
+            return collapsed.replace(",", "")
+
+        if "," in collapsed:
+            if collapsed.count(",") == 1:
+                return collapsed.replace(",", ".")
+            return None
+
+        return collapsed
+
+    normalised = normalise(raw_value)
+    if normalised is not None:
+        try:
+            return float(normalised)
+        except (ValueError, TypeError):
+            pass
+
+    match = _NUM_RE.search(raw_value)
+    if match:
+        try:
+            return float(match.group(0))
+        except (ValueError, TypeError):
+            pass
+    _LOGGER.warning("State of %s is not numeric: %s", entity_id, raw_value)
+    return None
 
 
 def parse_entities(val: str | Iterable[str] | None) -> list[str]:
