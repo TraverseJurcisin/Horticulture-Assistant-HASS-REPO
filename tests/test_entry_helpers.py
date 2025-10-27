@@ -240,6 +240,31 @@ async def test_resolve_profile_image_url_prefers_profile_metadata(hass, tmp_path
     assert fallback_image == "https://example.com/entry.png"
 
 
+@pytest.mark.asyncio
+async def test_resolve_profile_image_url_includes_general_section(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "primary", "plant_name": "Primary"},
+        options={
+            "general": {"image": "https://example.com/general-entry.png"},
+            CONF_PROFILES: {
+                "primary": {
+                    "name": "Primary",
+                    "general": {"image_url": "https://example.com/general-profile.png"},
+                }
+            },
+        },
+    )
+
+    store_entry_data(hass, entry)
+
+    image = resolve_profile_image_url(hass, entry.entry_id, "primary")
+    assert image == "https://example.com/general-profile.png"
+
+    entry_image = resolve_profile_image_url(hass, entry.entry_id, "missing")
+    assert entry_image == "https://example.com/general-entry.png"
+
+
 def test_profile_context_helpers_normalise_payload():
     context = ProfileContext(
         id="plant",

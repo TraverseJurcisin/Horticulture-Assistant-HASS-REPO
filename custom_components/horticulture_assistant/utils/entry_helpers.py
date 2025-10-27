@@ -1005,6 +1005,32 @@ def resolve_profile_device_info(
     )
 
 
+def _resolve_image_from_payload(payload: Mapping[str, Any] | None) -> str | None:
+    """Return an image URL stored in ``payload`` if available."""
+
+    if not isinstance(payload, Mapping):
+        return None
+
+    def _extract(mapping: Mapping[str, Any]) -> str | None:
+        for key in ("image_url", "image", "picture"):
+            value = mapping.get(key)
+            if isinstance(value, str) and value.strip():
+                return value.strip()
+        return None
+
+    direct = _extract(payload)
+    if direct:
+        return direct
+
+    general = payload.get("general")
+    if isinstance(general, Mapping):
+        general_image = _extract(general)
+        if general_image:
+            return general_image
+
+    return None
+
+
 def resolve_profile_image_url(
     hass: HomeAssistant,
     entry_id: str | None,
@@ -1028,25 +1054,25 @@ def resolve_profile_image_url(
         profiles = snapshot.get("profiles")
         if isinstance(profiles, Mapping) and profile_id:
             profile = profiles.get(profile_id)
-            if isinstance(profile, Mapping):
-                for key in ("image_url", "image", "picture"):
-                    value = profile.get(key)
-                    if isinstance(value, str) and value.strip():
-                        return value
+            image = _resolve_image_from_payload(profile) if isinstance(profile, Mapping) else None
+            if image:
+                return image
         primary_id = snapshot.get("primary_profile_id")
         if primary_id and profile_id and primary_id == profile_id:
             primary_profile = snapshot.get("primary_profile")
-            if isinstance(primary_profile, Mapping):
-                for key in ("image_url", "image", "picture"):
-                    value = primary_profile.get(key)
-                    if isinstance(value, str) and value.strip():
-                        return value
+            image = (
+                _resolve_image_from_payload(primary_profile)
+                if isinstance(primary_profile, Mapping)
+                else None
+            )
+            if image:
+                return image
 
     entry = stored.get("config_entry")
     if entry is None:
         return None
-    image_url = entry.options.get("image_url")
-    if isinstance(image_url, str) and image_url:
+    image_url = _resolve_image_from_payload(entry.options)
+    if image_url:
         return image_url
     return None
 
