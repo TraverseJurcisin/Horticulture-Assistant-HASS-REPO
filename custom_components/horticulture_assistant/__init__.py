@@ -49,6 +49,7 @@ from .profile.compat import sync_thresholds
 from .profile.utils import ensure_sections
 from .profile_registry import ProfileRegistry
 from .profile_store import ProfileStore
+
 try:
     from .storage import DEFAULT_DATA, LocalStore
 except ImportError:  # pragma: no cover - fallback for stubbed tests
@@ -147,6 +148,16 @@ _ONBOARDING_STAGE_META: dict[str, dict[str, Any]] = {
     },
     "update_listener": {"required": False, "depends_on": ("platform_setup",)},
 }
+_STAGE_READY_STATUSES = {"success", "warning"}
+_STAGE_SATISFIED_STATUSES = {"success", "skipped", "warning"}
+
+
+def _stage_ready(status: str | None) -> bool:
+    return status in _STAGE_READY_STATUSES
+
+
+def _stage_satisfied(status: str | None) -> bool:
+    return status in _STAGE_SATISFIED_STATUSES
 _ONBOARDING_STAGE_ORDER: tuple[str, ...] = tuple(_ONBOARDING_STAGE_LABELS)
 _ONBOARDING_TIMELINE_LIMIT = 50
 
@@ -164,7 +175,16 @@ def _stage_label(stage: str) -> str:
 class _OnboardingManager:
     """Utility managing onboarding stage outcomes and diagnostics."""
 
-    __slots__ = ("hass", "entry", "entry_data", "status", "_state", "_history", "_timeline")
+    __slots__ = (
+        "hass",
+        "entry",
+        "entry_data",
+        "status",
+        "_state",
+        "_history",
+        "_timeline",
+        "_warnings",
+    )
 
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry, entry_data: dict[str, Any]):
         self.hass = hass
@@ -173,6 +193,7 @@ class _OnboardingManager:
         self.status: dict[str, dict[str, Any]] = {}
         self._state: dict[str, dict[str, Any]] = {}
         self._history: list[dict[str, Any]] = []
+        self._warnings: dict[str, list[str]] = {}
         self._ensure_state_containers()
 
     # ------------------------------------------------------------------
@@ -201,6 +222,36 @@ class _OnboardingManager:
         else:
             self._timeline = []
             self.entry_data["onboarding_timeline"] = self._timeline
+
+        warnings = self.entry_data.get("onboarding_warnings")
+        if isinstance(warnings, dict):
+            cleaned: dict[str, list[str]] = {}
+            for stage, messages in warnings.items():
+                if not isinstance(stage, str):
+                    continue
+                if isinstance(messages, list | tuple | set):
+                    cleaned[stage] = [str(msg) for msg in messages if str(msg)]
+            self._warnings = cleaned
+        else:
+            self._warnings = {}
+        self.entry_data["onboarding_warnings"] = self._warnings
+
+    def _sync_entry_warnings(self) -> None:
+        if not self._warnings:
+            self._warnings = {}
+            self.entry_data.pop("onboarding_warnings", None)
+            return
+        cleaned = {
+            stage: [str(msg) for msg in messages if str(msg)]
+            for stage, messages in self._warnings.items()
+            if messages
+        }
+        if cleaned:
+            self._warnings = cleaned
+            self.entry_data["onboarding_warnings"] = self._warnings
+        else:
+            self._warnings = {}
+            self.entry_data.pop("onboarding_warnings", None)
 
     def _meta(self, stage: str) -> dict[str, Any]:
         return _ONBOARDING_STAGE_META.get(stage, {})
@@ -240,7 +291,7 @@ class _OnboardingManager:
         blocked: list[str] = []
         for dependency in depends_on:
             status = self._stage_status(dependency)
-            if status in ("success", "skipped"):
+            if _stage_satisfied(status):
                 continue
             blocked.append(dependency)
         return not blocked, blocked
@@ -308,24 +359,41 @@ class _OnboardingManager:
             rounded = round(duration, 4)
             state["last_duration"] = rounded
 
+        if status != "warning":
+            self._warnings.pop(stage, None)
         if status == "success":
             state["last_success"] = timestamp
             state.pop("last_error", None)
             state.pop("last_failure", None)
             state.pop("blocked_by", None)
+            state.pop("warnings", None)
+            state.pop("last_warning", None)
         elif status == "failed":
             state["last_failure"] = timestamp
             if error:
                 state["last_error"] = error
+            state.pop("warnings", None)
+            state.pop("last_warning", None)
         elif status == "skipped":
             state["last_skipped"] = timestamp
             state.pop("blocked_by", None)
+            state.pop("warnings", None)
+            state.pop("last_warning", None)
         elif status == "blocked":
             blocked_by = state.get("blocked_by")
             if blocked_by:
                 payload_blocked = [str(dep) for dep in blocked_by if dep]
                 if payload_blocked:
                     state["blocked_by"] = payload_blocked
+            state.pop("warnings", None)
+            state.pop("last_warning", None)
+        elif status == "warning":
+            warnings = state.setdefault("warnings", [])
+            if reason and reason not in warnings:
+                warnings.append(reason)
+            state["last_warning"] = timestamp
+            state.pop("blocked_by", None)
+            self._warnings[stage] = list(warnings)
 
         blocked_by = state.get("blocked_by")
 
@@ -358,6 +426,10 @@ class _OnboardingManager:
             payload["last_skipped"] = last_skipped
         if blocked_by and status == "blocked":
             payload["blocked_by"] = list(blocked_by)
+        if status == "warning":
+            warnings = state.get("warnings")
+            if warnings:
+                payload["warnings"] = list(warnings)
         self.status[stage] = payload
         self._record_timeline_event(
             stage,
@@ -368,6 +440,7 @@ class _OnboardingManager:
             exception=exception,
             duration=rounded,
         )
+        self._sync_entry_warnings()
         return payload
 
     def _record_timeline_event(
@@ -407,6 +480,9 @@ class _OnboardingManager:
         blocked = state.get("blocked_by")
         if blocked and payload.get("status") == "blocked":
             event["blocked_by"] = [str(dep) for dep in blocked if dep]
+        warnings = payload.get("warnings")
+        if warnings:
+            event["warnings"] = list(warnings)
 
         self._timeline.append(event)
         if len(self._timeline) > _ONBOARDING_TIMELINE_LIMIT:
@@ -487,6 +563,25 @@ class _OnboardingManager:
         _clear_onboarding_error(self.hass, self.entry, self.entry_data, stage)
         self._complete_stage(stage, "success", state=state, duration=duration)
 
+    def record_warning(
+        self,
+        stage: str,
+        reason: str,
+        *,
+        state: dict[str, Any] | None = None,
+        duration: float | None = None,
+    ) -> None:
+        """Record a non-fatal warning for ``stage`` while keeping readiness."""
+
+        _clear_onboarding_error(self.hass, self.entry, self.entry_data, stage)
+        self._complete_stage(
+            stage,
+            "warning",
+            state=state,
+            reason=reason,
+            duration=duration,
+        )
+
     async def guard_async(self, stage: str, awaitable) -> tuple[bool, Any]:
         """Await ``awaitable`` while capturing onboarding failures."""
 
@@ -552,11 +647,12 @@ class _OnboardingManager:
         failures: list[str] = []
         skipped: list[str] = []
         blocked: list[str] = []
+        warnings: list[str] = []
 
         for stage in _ONBOARDING_STAGE_ORDER:
             info = self.status.get(stage)
+            state = self._state.get(stage, {})
             if info is None:
-                state = self._state.get(stage, {})
                 info = {
                     "stage": stage,
                     "label": _stage_label(stage),
@@ -564,24 +660,20 @@ class _OnboardingManager:
                     "required": bool(self._meta(stage).get("required", False)),
                     "attempts": int(state.get("attempts", 0)),
                 }
-                last_attempt = state.get("last_attempt")
-                if last_attempt:
-                    info["last_attempt"] = last_attempt
-                last_success = state.get("last_success")
-                if last_success:
-                    info["last_success"] = last_success
-                last_failure = state.get("last_failure")
-                if last_failure:
-                    info["last_failure"] = last_failure
             else:
-                state = self._state.get(stage, {})
+                info = dict(info)
                 info.setdefault("attempts", int(state.get("attempts", 0)))
-                if "last_attempt" not in info and state.get("last_attempt"):
-                    info["last_attempt"] = state["last_attempt"]
-                if "last_success" not in info and state.get("last_success"):
-                    info["last_success"] = state["last_success"]
-                if "last_failure" not in info and state.get("last_failure"):
-                    info["last_failure"] = state["last_failure"]
+            if "last_attempt" not in info and state.get("last_attempt"):
+                info["last_attempt"] = state["last_attempt"]
+            if "last_success" not in info and state.get("last_success"):
+                info["last_success"] = state["last_success"]
+            if "last_failure" not in info and state.get("last_failure"):
+                info["last_failure"] = state["last_failure"]
+            if "warnings" not in info and state.get("warnings"):
+                info["warnings"] = list(state.get("warnings", ()))
+            if "last_warning" not in info and state.get("last_warning"):
+                info["last_warning"] = state["last_warning"]
+
             status = info.get("status")
             if status == "failed":
                 failures.append(stage)
@@ -589,6 +681,8 @@ class _OnboardingManager:
                 blocked.append(stage)
             elif status == "skipped":
                 skipped.append(stage)
+            elif status == "warning":
+                warnings.append(stage)
             summary[stage] = info
 
         ready = True
@@ -596,7 +690,7 @@ class _OnboardingManager:
             if not meta.get("required", False):
                 continue
             status = summary.get(stage, {}).get("status")
-            if status != "success":
+            if not _stage_ready(status):
                 ready = False
                 break
 
@@ -604,24 +698,37 @@ class _OnboardingManager:
             stage for stage, meta in _ONBOARDING_STAGE_META.items() if meta.get("required", False)
         ]
         required_complete = [
-            stage for stage in required_stages if summary.get(stage, {}).get("status") == "success"
+            stage
+            for stage in required_stages
+            if _stage_ready(summary.get(stage, {}).get("status"))
         ]
         pending_required = [
-            stage for stage in required_stages if summary.get(stage, {}).get("status") != "success"
+            stage
+            for stage in required_stages
+            if not _stage_ready(summary.get(stage, {}).get("status"))
         ]
         optional_stages = [stage for stage in summary if stage not in required_stages]
         optional_complete = [
-            stage for stage in optional_stages if summary.get(stage, {}).get("status") == "success"
+            stage
+            for stage in optional_stages
+            if _stage_ready(summary.get(stage, {}).get("status"))
         ]
         status_counts: dict[str, int] = {}
         for info in summary.values():
             status_value = str(info.get("status", "unknown"))
             status_counts[status_value] = status_counts.get(status_value, 0) + 1
 
-        if required_stages:
-            progress = round(len(required_complete) / len(required_stages), 4)
-        else:
-            progress = 1.0
+        progress = (
+            round(len(required_complete) / len(required_stages), 4)
+            if required_stages
+            else 1.0
+        )
+
+        warning_details = {
+            stage: list(messages)
+            for stage, messages in self._warnings.items()
+            if messages
+        }
 
         metrics = {
             "required_total": len(required_stages),
@@ -636,7 +743,11 @@ class _OnboardingManager:
             "next_required_label": summary.get(pending_required[0], {}).get("label") if pending_required else None,
             "status_counts": status_counts,
             "blocked": list(blocked),
+            "warnings_total": len(warnings),
+            "warnings": list(warnings),
         }
+        if warning_details:
+            metrics["warning_details"] = warning_details
 
         metrics_copy = dict(metrics)
 
@@ -648,10 +759,13 @@ class _OnboardingManager:
             "failures": failures,
             "skipped": skipped,
             "blocked": blocked,
+            "warnings": warnings,
             "ready": ready,
             "metrics": metrics_copy,
             "timeline": timeline_snapshot,
         }
+        if warning_details:
+            payload["warning_details"] = warning_details
 
         self.entry_data["onboarding_status"] = payload
         self.entry_data["onboarding_ready"] = ready
@@ -662,6 +776,7 @@ class _OnboardingManager:
             "failures": list(failures),
             "skipped": list(skipped),
             "blocked": list(blocked),
+            "warnings": list(warnings),
             "stages": {stage: info.get("status") for stage, info in summary.items()},
             "attempts": {
                 stage: {
@@ -674,6 +789,7 @@ class _OnboardingManager:
                         "last_success",
                         "last_failure",
                         "last_duration",
+                        "last_warning",
                     }
                 }
                 for stage in summary
@@ -681,14 +797,23 @@ class _OnboardingManager:
             "metrics": dict(metrics_copy),
             "timeline": timeline_snapshot,
         }
+        if warning_details:
+            snapshot["warning_details"] = warning_details
         self._history.append(snapshot)
         if len(self._history) > 5:
             del self._history[:-5]
         self.entry_data["onboarding_history"] = self._history
         self.entry_data["onboarding_last_completed"] = snapshot["completed_at"]
+        self._sync_entry_warnings()
         return payload
 
-def _record_onboarding_error(hass: HomeAssistant, entry: ConfigEntry, entry_data: dict[str, Any], stage: str, err: Exception) -> None:
+def _record_onboarding_error(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    entry_data: dict[str, Any],
+    stage: str,
+    err: Exception,
+) -> None:
     message = str(err) or err.__class__.__name__
     errors = entry_data.setdefault("onboarding_errors", {})
     errors[stage] = {
@@ -835,6 +960,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     elif not profile_registry_ready:
         profile_registry = None
 
+    registry_warnings: list[str] = []
+    if profile_registry_ready and profile_registry is not None:
+        try:
+            registry_warnings = profile_registry.collect_onboarding_warnings()
+        except Exception:  # pragma: no cover - defensive guard
+            registry_warnings = []
+        for warning in registry_warnings:
+            manager.record_warning("profile_registry", warning)
+    if registry_warnings:
+        entry_data["profile_registry_warnings"] = registry_warnings
+    else:
+        entry_data.pop("profile_registry_warnings", None)
+
     coordinator = HorticultureCoordinator(hass, entry)
     coordinator_reason = None
     if not local_store_ready:
@@ -928,7 +1066,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "cloud_sync", cloud_sync_manager.async_start()
         )
     entry_data["cloud_sync_ready"] = cloud_sync_ready
-    entry_data["cloud_sync_status"] = cloud_sync_manager.status()
+    cloud_status = cloud_sync_manager.status()
+    entry_data["cloud_sync_status"] = cloud_status
+    if cloud_sync_ready:
+        reason_parts: list[str] = []
+        if not cloud_status.get("configured", True):
+            reason_parts.append("configuration incomplete")
+        if not cloud_status.get("enabled", True):
+            reason_parts.append("disabled in options")
+        if reason_parts:
+            summary = " and ".join(reason_parts)
+            manager.record_warning("cloud_sync", f"Cloud sync {summary}")
 
     if profile_registry is not None:
         domain_data["registry"] = profile_registry

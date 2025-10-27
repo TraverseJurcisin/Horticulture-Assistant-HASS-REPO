@@ -96,7 +96,7 @@ async def test_diagnostics_redaction(hass: HomeAssistant, enable_custom_integrat
 
     result = await async_get_config_entry_diagnostics(hass, entry)
     assert result["entry"]["data"]["api_key"] == "**REDACTED**"
-    assert result["schema_version"] == 9
+    assert result["schema_version"] == 10
     assert "profile_count" in result
     assert "cloud_sync_status" in result
     assert result["cloud_sync_status"]["configured"] is False
@@ -109,6 +109,11 @@ async def test_diagnostics_redaction(hass: HomeAssistant, enable_custom_integrat
     assert status["metrics"]["progress"] == 1.0
     assert result["onboarding_metrics"]["progress"] == 1.0
     assert status["blocked"] == []
+    assert status["stages"]["cloud_sync"]["status"] == "warning"
+    assert "cloud_sync" in status["warnings"]
+    assert result["onboarding_metrics"]["warnings_total"] >= 1
+    assert "cloud_sync" in result["onboarding_metrics"]["warnings"]
+    assert result["onboarding_warnings"]["cloud_sync"]
     assert isinstance(status.get("timeline"), list) and status["timeline"]
     assert isinstance(result.get("onboarding_timeline"), list) and result["onboarding_timeline"]
     assert "onboarding_stage_state" in result

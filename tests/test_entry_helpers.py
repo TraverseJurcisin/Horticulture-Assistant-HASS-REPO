@@ -6,6 +6,7 @@ import pytest
 
 from custom_components.horticulture_assistant.const import (
     CONF_PLANT_ID,
+    CONF_PLANT_NAME,
     CONF_PROFILES,
     DOMAIN,
 )
@@ -14,17 +15,17 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     ProfileContext,
     ProfileContextCollection,
     build_entry_snapshot,
+    entry_device_identifier,
     get_entry_plant_info,
     get_primary_profile_id,
     get_primary_profile_sensors,
     get_primary_profile_thresholds,
-    resolve_profile_context_collection,
-    entry_device_identifier,
     profile_device_identifier,
-    serialise_device_info,
     resolve_entry_device_info,
+    resolve_profile_context_collection,
     resolve_profile_device_info,
     resolve_profile_image_url,
+    serialise_device_info,
     store_entry_data,
     update_entry_data,
 )
@@ -285,7 +286,7 @@ async def test_resolve_profile_context_collection_aggregates_profiles(hass, tmp_
     collection = resolve_profile_context_collection(hass, entry)
     assert isinstance(collection, ProfileContextCollection)
     assert collection.primary_id == "alpha"
-    assert set(pid for pid, _ in collection.items()) == {"alpha", "beta"}
+    assert {pid for pid, _ in collection.items()} == {"alpha", "beta"}
 
     primary = collection.primary
     assert primary.name == "Alpha"

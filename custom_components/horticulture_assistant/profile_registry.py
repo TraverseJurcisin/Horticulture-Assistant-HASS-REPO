@@ -58,17 +58,17 @@ from .profile.utils import (
 )
 from .profile.validation import evaluate_threshold_bounds
 from .sensor_validation import collate_issue_messages, validate_sensor_links
+from .utils.entry_helpers import (
+    profile_device_identifier,
+    resolve_profile_device_info,
+    serialise_device_info,
+)
 from .validators import (
     validate_cultivation_event_dict,
     validate_harvest_event_dict,
     validate_nutrient_event_dict,
     validate_profile_dict,
     validate_run_event_dict,
-)
-from .utils.entry_helpers import (
-    profile_device_identifier,
-    resolve_profile_device_info,
-    serialise_device_info,
 )
 
 try:  # pragma: no cover - Home Assistant not available in tests
@@ -140,6 +140,30 @@ class ProfileRegistry:
             _LOGGER.debug("History exporter disabled: %s", err)
             self._history_exporter = None
 
+    def collect_onboarding_warnings(self) -> list[str]:
+        """Return human-readable onboarding warnings for outstanding issues."""
+
+        warnings: list[str] = []
+
+        if self._missing_species_issues:
+            affected = sorted({profile_id for profile_id, _ in self._missing_species_issues})
+            sample = ", ".join(affected[:5])
+            if len(affected) > 5:
+                sample = f"{sample}, +{len(affected) - 5} more"
+            warnings.append(f"Missing species metadata for {sample}")
+
+        if self._missing_parent_issues:
+            affected = sorted({profile_id for profile_id, _ in self._missing_parent_issues})
+            sample = ", ".join(affected[:5])
+            if len(affected) > 5:
+                sample = f"{sample}, +{len(affected) - 5} more"
+            warnings.append(f"Missing parent lineage for {sample}")
+
+        if self._validation_issue_summaries:
+            warnings.extend(sorted(self._validation_issue_summaries.values()))
+
+        return warnings
+
     def _relink_profiles(self) -> None:
         if not self._profiles:
             return
@@ -157,12 +181,9 @@ class ProfileRegistry:
 
         domain, identifier = profile_device_identifier(self.entry.entry_id, profile_id)
         info = resolve_profile_device_info(self.hass, self.entry.entry_id, profile_id)
-        payload: dict[str, Any]
-
-        if isinstance(info, Mapping):
-            payload = dict(info)
-        else:
-            payload = {}
+        payload: dict[str, Any] = (
+            dict(info) if isinstance(info, Mapping) else {}
+        )
 
         identifiers = payload.get("identifiers")
         if not identifiers:

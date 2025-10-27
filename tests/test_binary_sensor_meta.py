@@ -5,8 +5,8 @@ from custom_components.horticulture_assistant.binary_sensor import (
     IrrigationReadinessBinarySensor,
     SensorHealthBinarySensor,
 )
-from custom_components.horticulture_assistant.utils.entry_helpers import ProfileContext
 from custom_components.horticulture_assistant.const import DOMAIN
+from custom_components.horticulture_assistant.utils.entry_helpers import ProfileContext
 
 
 @pytest.mark.asyncio

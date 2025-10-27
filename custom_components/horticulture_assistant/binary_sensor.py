@@ -1,6 +1,7 @@
 """Binary sensor platform for Horticulture Assistant."""
 
 import logging
+
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,

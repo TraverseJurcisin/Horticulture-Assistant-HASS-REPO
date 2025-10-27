@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 
@@ -46,7 +46,7 @@ def _context(**kwargs) -> ProfileContext:
 
 
 def test_profile_monitor_reports_ok() -> None:
-    changed = datetime(2024, 1, 1, tzinfo=timezone.utc)
+    changed = datetime(2024, 1, 1, tzinfo=UTC)
     hass = DummyHass(
         DummyStates(
             {
@@ -79,7 +79,7 @@ def test_profile_monitor_flags_missing_sensor() -> None:
 
 
 def test_profile_monitor_flags_out_of_range() -> None:
-    changed = datetime(2024, 5, 1, tzinfo=timezone.utc)
+    changed = datetime(2024, 5, 1, tzinfo=UTC)
     hass = DummyHass(DummyStates({"sensor.moisture": DummyState("10", changed=changed)}))
     context = _context(sensors={"moisture": ("sensor.moisture",)}, thresholds={"moisture_min": 30})
 

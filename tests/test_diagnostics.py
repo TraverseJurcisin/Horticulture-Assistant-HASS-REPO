@@ -96,6 +96,6 @@ async def test_async_get_config_entry_diagnostics(hass):
     assert result["coordinators"]["coordinator_ai"]["last_update_success"] is True
     assert "last_update" in result["coordinators"]["coordinator_ai"]
     assert "last_exception" in result["coordinators"]["coordinator_ai"]
-    assert result["schema_version"] == 9
+    assert result["schema_version"] == 10
     assert "onboarding_errors" not in result
     assert "onboarding_status" not in result

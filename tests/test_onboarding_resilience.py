@@ -2,11 +2,11 @@ import types
 from unittest.mock import AsyncMock
 
 import pytest
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant import async_setup_entry
 from custom_components.horticulture_assistant.const import DOMAIN
 from custom_components.horticulture_assistant.diagnostics import async_get_config_entry_diagnostics
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 @pytest.mark.asyncio
@@ -145,11 +145,12 @@ async def test_onboarding_records_and_clears_stage_errors(hass, enable_custom_in
     assert issue_payload["translation_placeholders"]["stage"]
 
     diagnostics = await async_get_config_entry_diagnostics(hass, entry)
-    assert diagnostics["schema_version"] == 9
+    assert diagnostics["schema_version"] == 10
     assert "profile_store" in diagnostics["onboarding_errors"]
     assert diagnostics["onboarding_status"]["stages"]["profile_store"]["status"] == "failed"
     assert diagnostics["onboarding_status"]["metrics"]["next_required_stage"]
     assert diagnostics["onboarding_status"]["blocked"]
+    assert diagnostics["onboarding_status"]["warnings"] == []
     assert diagnostics["onboarding_ready"] is False
     assert diagnostics["onboarding_metrics"]["next_required_stage"]
     stage_state = diagnostics["onboarding_stage_state"]["profile_store"]
@@ -159,7 +160,12 @@ async def test_onboarding_records_and_clears_stage_errors(hass, enable_custom_in
     assert isinstance(history, list) and history
     diag_timeline = diagnostics.get("onboarding_timeline")
     assert isinstance(diag_timeline, list) and diag_timeline
-    assert diag_timeline[-1]["stage"] in {"profile_registry", "service_registration", "platform_setup", "update_listener"}
+    assert diag_timeline[-1]["stage"] in {
+        "profile_registry",
+        "service_registration",
+        "platform_setup",
+        "update_listener",
+    }
 
     created.clear()
     monkeypatch.setattr(
@@ -184,6 +190,12 @@ async def test_onboarding_records_and_clears_stage_errors(hass, enable_custom_in
     assert stored["onboarding_status"]["metrics"]["next_required_stage"] is None
     assert stored["onboarding_status"]["blocked"] == []
     assert stored["onboarding_metrics"]["progress"] == 1.0
+    assert stored["onboarding_status"]["stages"]["cloud_sync"]["status"] == "warning"
+    assert "cloud_sync" in stored["onboarding_status"]["warnings"]
+    assert stored["onboarding_metrics"]["warnings_total"] >= 1
+    assert "cloud_sync" in stored["onboarding_metrics"]["warnings"]
+    warnings_map = stored.get("onboarding_warnings")
+    assert warnings_map and warnings_map["cloud_sync"]
     assert stored["onboarding_ready"] is True
     assert any("profile_store" in issue for issue in deleted)
     assert stored["onboarding_stage_state"]["profile_store"]["attempts"] == 2
@@ -193,3 +205,6 @@ async def test_onboarding_records_and_clears_stage_errors(hass, enable_custom_in
     profile_events = [event for event in timeline if event["stage"] == "profile_store"]
     assert profile_events[-1]["status"] == "success"
     assert profile_events[-1]["attempt"] == 2
+    cloud_events = [event for event in timeline if event["stage"] == "cloud_sync"]
+    assert cloud_events[-1]["status"] == "warning"
+    assert cloud_events[-1].get("warnings")

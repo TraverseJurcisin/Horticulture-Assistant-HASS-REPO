@@ -376,8 +376,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     ]
 
     for context in collection.values():
-        profile_id = context.id
-        profile_name = context.name
         sensors.append(PlantStatusSensor(hass, entry, context))
         sensors.append(PlantLastSampleSensor(hass, entry, context))
         sensors.append(PlantPPFDSensor(hass, entry, context))

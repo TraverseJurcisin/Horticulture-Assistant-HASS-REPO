@@ -8,8 +8,8 @@ from homeassistant.components.diagnostics import async_redact_data
 from homeassistant.core import HomeAssistant
 
 from .const import CONF_API_KEY, DOMAIN
-from .profile_registry import ProfileRegistry
 from .profile_monitor import ProfileMonitor
+from .profile_registry import ProfileRegistry
 from .utils.entry_helpers import serialise_device_info
 
 TO_REDACT = {CONF_API_KEY}
@@ -30,7 +30,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
         "profile_count": 0,
         "profiles": [],
         "coordinators": {},
-        "schema_version": 9,
+        "schema_version": 10,
     }
     if reg:
         if hasattr(reg, "diagnostics_snapshot"):
@@ -84,13 +84,28 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
                     "order": list(onboarding_status.get("order", [])),
                     "failures": list(onboarding_status.get("failures", [])),
                     "skipped": list(onboarding_status.get("skipped", [])),
+                    "blocked": list(onboarding_status.get("blocked", [])),
+                    "warnings": list(onboarding_status.get("warnings", [])),
                     "ready": bool(onboarding_status.get("ready")),
+                    "metrics": (
+                        dict(onboarding_status.get("metrics", {}))
+                        if isinstance(onboarding_status.get("metrics"), Mapping)
+                        else onboarding_status.get("metrics", {})
+                    ),
                     "stages": {
                         stage: dict(info) if isinstance(info, Mapping) else {"status": info}
                         for stage, info in stages.items()
                     },
                     "timeline": list(timeline) if isinstance(timeline, list) else [],
                 }
+                warning_details = onboarding_status.get("warning_details")
+                if isinstance(warning_details, Mapping):
+                    payload["onboarding_status"]["warning_details"] = {
+                        stage: list(messages)
+                        if isinstance(messages, list | tuple | set)
+                        else [messages]
+                        for stage, messages in warning_details.items()
+                    }
 
         if "onboarding_ready" in entry_data:
             payload["onboarding_ready"] = bool(entry_data.get("onboarding_ready"))
@@ -98,6 +113,19 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
         metrics = entry_data.get("onboarding_metrics")
         if isinstance(metrics, Mapping) and metrics:
             payload["onboarding_metrics"] = dict(metrics)
+
+        warnings_map = entry_data.get("onboarding_warnings")
+        if isinstance(warnings_map, Mapping) and warnings_map:
+            payload["onboarding_warnings"] = {
+                stage: list(messages)
+                if isinstance(messages, list | tuple | set)
+                else [messages]
+                for stage, messages in warnings_map.items()
+            }
+
+        registry_warnings = entry_data.get("profile_registry_warnings")
+        if isinstance(registry_warnings, list) and registry_warnings:
+            payload["profile_registry_warnings"] = list(registry_warnings)
 
         timeline = entry_data.get("onboarding_timeline")
         if isinstance(timeline, list) and timeline:

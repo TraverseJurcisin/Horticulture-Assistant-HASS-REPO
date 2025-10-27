@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, Iterable, Mapping, Sequence
+from typing import Any
 
 try:  # pragma: no cover - Home Assistant runtime provides real classes
     from homeassistant.core import HomeAssistant, State
@@ -275,7 +276,7 @@ def _evaluate_sensor(
 def _coerce_float(value: Any) -> float | None:
     """Return ``value`` coerced to ``float`` when possible."""
 
-    if isinstance(value, (int, float)):
+    if isinstance(value, int | float):
         return float(value)
     if isinstance(value, str):
         try:
@@ -338,7 +339,7 @@ def _candidate_threshold_keys(role: str) -> Iterable[str]:
     seen: set[str] = set()
     normalised = str(role or "").strip().lower()
     if not normalised:
-        return tuple()
+        return ()
     to_visit = [normalised]
     to_visit.extend(alias for alias in ROLE_ALIASES.get(normalised, ()) if alias not in to_visit)
     for candidate in to_visit:

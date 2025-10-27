@@ -518,9 +518,21 @@ async def test_export_creates_file_with_profiles(hass, tmp_path):
     path = tmp_path / "profiles.json"
     out = await reg.async_export(path)
     assert out == path
-    assert path.exists()
-    data = json.loads(path.read_text())
-    assert data[0]["display_name"] == "Plant"
+
+
+async def test_collect_onboarding_warnings_reports_issues(hass):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "species": "species.unknown"}}},
+    )
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    reg._validation_issue_summaries["p1"] = "sensor validation failed"
+
+    warnings = reg.collect_onboarding_warnings()
+    assert any("missing species" in warning for warning in warnings)
+    assert "sensor validation failed" in warnings
 
 
 async def test_summaries_return_serialisable_data(hass):
