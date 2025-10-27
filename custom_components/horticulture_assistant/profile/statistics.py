@@ -518,6 +518,8 @@ class _EnvironmentAggregate:
 
         payload["samples"] = {key: count for key, count in self.metric_counts.items() if count}
 
+        timestamp = computed_at or _now_iso()
+
         contributions: list[ProfileContribution] = []
         contributor_payload: list[dict[str, Any]] = []
         total_runs = sum(summary.run_count for summary in self.contributors or [])
@@ -536,7 +538,7 @@ class _EnvironmentAggregate:
                     profile_id=self.species_id,
                     child_id=summary.profile_id,
                     stats_version=ENVIRONMENT_STATS_VERSION,
-                    computed_at=computed_at,
+                    computed_at=timestamp,
                     n_runs=summary.run_count or None,
                     weight=round(weight, 6) if weight is not None else None,
                 )
@@ -544,7 +546,6 @@ class _EnvironmentAggregate:
 
         payload["contributors"] = contributor_payload
 
-        timestamp = computed_at or _now_iso()
         return ComputedStatSnapshot(
             stats_version=ENVIRONMENT_STATS_VERSION,
             computed_at=timestamp,

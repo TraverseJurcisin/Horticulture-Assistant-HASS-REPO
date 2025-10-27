@@ -247,3 +247,45 @@ def test_success_statistics_from_run_history():
     assert contribution_index["cultivar"].stats_version == "success/v1"
     assert contribution_index["cultivar"].weight == pytest.approx(20 / 70, rel=1e-3)
     assert contribution_index["cultivar"].n_runs == 2
+
+
+def test_environment_species_contribution_has_timestamp():
+    species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species",
+    )
+
+    cultivar.add_run_event(
+        RunEvent(
+            run_id="c-run",
+            profile_id="cultivar",
+            species_id="species",
+            started_at="2024-05-01T00:00:00+00:00",
+            ended_at="2024-05-05T00:00:00+00:00",
+            environment={"temperature_c": 22.0},
+        )
+    )
+    species.add_run_event(
+        RunEvent(
+            run_id="s-run",
+            profile_id="species",
+            species_id="species",
+            started_at="2024-05-02T00:00:00+00:00",
+            ended_at="2024-05-04T00:00:00+00:00",
+            environment={"temperature_c": 21.0},
+        )
+    )
+
+    recompute_statistics([species, cultivar])
+
+    species_env = next(
+        (snap for snap in species.computed_stats if snap.stats_version == "environment/v1"),
+        None,
+    )
+    assert species_env is not None
+    assert species_env.contributions, "expected aggregated contributions for species"
+    for contribution in species_env.contributions:
+        assert contribution.computed_at is not None
