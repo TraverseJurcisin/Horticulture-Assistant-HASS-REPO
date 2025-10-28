@@ -3,9 +3,47 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone, tzinfo
 
 from .product_inventory import ProductInventory
+
+
+def _utcnow() -> datetime:
+    """Return a timezone-aware ``datetime`` in UTC."""
+
+    return datetime.now(timezone.utc)
+
+
+def _local_timezone() -> tzinfo:
+    """Return the system's local timezone.
+
+    ``datetime.now().astimezone()`` consults the host configuration (``TZ``
+    environment variable or system zoneinfo) to determine the active local
+    timezone. ``tzinfo`` may be ``None`` when Python cannot determine the
+    timezone; in that case we fall back to UTC so behaviour remains
+    deterministic.
+    """
+
+    tzinfo = datetime.now().astimezone().tzinfo
+    return tzinfo or timezone.utc
+
+
+def _ensure_utc(dt: datetime | None) -> datetime:
+    """Return a timezone-aware UTC ``datetime`` for ``dt``.
+
+    ``datetime`` values stored in the usage log may come from different sources
+    (for example Home Assistant events or manually provided values) and can be
+    either naive or timezone-aware. Python raises ``TypeError`` when comparing a
+    naive ``datetime`` to an aware one, which caused ``forecast_runout`` to
+    crash if a caller supplied an aware ``datetime``. Normalising to UTC keeps
+    the comparisons safe while preserving ordering semantics.
+    """
+
+    if dt is None:
+        return _utcnow()
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=_local_timezone()).astimezone(timezone.utc)
+    return dt.astimezone(timezone.utc)
 
 
 @dataclass
@@ -17,7 +55,7 @@ class UsageEvent:
     amount: float
     unit: str
     zone: str | None = None
-    date: datetime = field(default_factory=datetime.now)
+    date: datetime = field(default_factory=_utcnow)
 
 
 class UsageForecaster:
@@ -51,7 +89,7 @@ class UsageForecaster:
             amount=amount,
             unit=unit,
             zone=zone,
-            date=date or datetime.now(),
+            date=_ensure_utc(date),
         )
         self.usage_log.setdefault(product_id, []).append(event)
         return batch_id
@@ -67,13 +105,15 @@ class UsageForecaster:
         if not logs:
             return None
 
-        cutoff = datetime.now() - timedelta(days=lookback_days)
-        recent = [e for e in logs if e.date >= cutoff]
+        now = _ensure_utc(None)
+        cutoff = now - timedelta(days=lookback_days)
+        recent = [e for e in logs if _ensure_utc(e.date) >= cutoff]
         if not recent:
             return None
 
-        first_date = min(e.date for e in recent)
-        days_span = max((datetime.now() - first_date).days + 1, 1)
+        first_date = min(_ensure_utc(e.date) for e in recent)
+        elapsed_days = (now - first_date).total_seconds() / 86400
+        days_span = max(elapsed_days, 1.0)
         total_used = sum(e.amount for e in recent)
         avg_daily = total_used / days_span
         if avg_daily <= 0:
