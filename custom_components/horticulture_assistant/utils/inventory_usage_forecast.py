@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, tzinfo
 
 from .product_inventory import ProductInventory
 
@@ -12,6 +12,20 @@ def _utcnow() -> datetime:
     """Return a timezone-aware ``datetime`` in UTC."""
 
     return datetime.now(timezone.utc)
+
+
+def _local_timezone() -> tzinfo:
+    """Return the system's local timezone.
+
+    ``datetime.now().astimezone()`` consults the host configuration (``TZ``
+    environment variable or system zoneinfo) to determine the active local
+    timezone. ``tzinfo`` may be ``None`` when Python cannot determine the
+    timezone; in that case we fall back to UTC so behaviour remains
+    deterministic.
+    """
+
+    tzinfo = datetime.now().astimezone().tzinfo
+    return tzinfo or timezone.utc
 
 
 def _ensure_utc(dt: datetime | None) -> datetime:
@@ -28,7 +42,7 @@ def _ensure_utc(dt: datetime | None) -> datetime:
     if dt is None:
         return _utcnow()
     if dt.tzinfo is None:
-        return dt.replace(tzinfo=timezone.utc)
+        return dt.replace(tzinfo=_local_timezone()).astimezone(timezone.utc)
     return dt.astimezone(timezone.utc)
 
 

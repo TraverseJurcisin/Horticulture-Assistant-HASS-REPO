@@ -1,6 +1,10 @@
 """Tests for inventory usage forecasting utilities."""
 
+import os
+import time
 from datetime import datetime, timedelta, timezone
+
+import pytest
 
 from custom_components.horticulture_assistant.utils.inventory_usage_forecast import (
     UsageForecaster,
@@ -42,3 +46,31 @@ def test_forecast_runout_handles_timezone_aware_usage_dates() -> None:
     # The log should contain timezone-aware ``datetime`` objects so that
     # comparisons do not fail when new entries are added later.
     assert all(event.date.tzinfo is not None for event in forecaster.usage_log["fert-1"])
+
+
+def test_naive_dates_are_localised_before_utc_conversion() -> None:
+    if not hasattr(time, "tzset"):
+        pytest.skip("time.tzset not available on this platform")
+
+    original_tz = os.environ.get("TZ")
+    os.environ["TZ"] = "Etc/GMT+8"
+    time.tzset()
+
+    try:
+        inventory = _inventory_with_product()
+        forecaster = UsageForecaster(inventory)
+
+        naive_local = datetime(2024, 5, 1, 12, 0, 0)
+        forecaster.apply_product("fert-1", amount=1.0, unit="L", date=naive_local)
+
+        stored = forecaster.usage_log["fert-1"][0].date
+        local_zone = datetime.now().astimezone().tzinfo
+        expected = naive_local.replace(tzinfo=local_zone).astimezone(timezone.utc)
+
+        assert stored == expected
+    finally:
+        if original_tz is not None:
+            os.environ["TZ"] = original_tz
+        else:
+            os.environ.pop("TZ", None)
+        time.tzset()
