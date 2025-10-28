@@ -77,6 +77,30 @@ async def test_async_create_profile_clones_sensors_from_dict_payload(hass, tmp_p
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_ignores_blank_sensor_entries(hass, tmp_path, monkeypatch) -> None:
+    """Provided sensor mappings should skip blank or ``None`` values."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_create_profile(
+        "Filtered Sensors",
+        sensors={
+            "moisture": None,
+            "temperature": "",
+            "illuminance": "  sensor.light  ",
+        },
+    )
+
+    profile = await store.async_get("Filtered Sensors")
+    assert profile is not None
+    assert profile["sensors"] == {"illuminance": "sensor.light"}
+    general = profile["general"] if isinstance(profile.get("general"), dict) else {}
+    assert general.get("sensors") == {"illuminance": "sensor.light"}
+
+
+@pytest.mark.asyncio
 async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypatch) -> None:
     """Listing profiles should return stored display names when available."""
 
