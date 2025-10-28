@@ -2,7 +2,7 @@
 
 import os
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import pytest
 
@@ -33,7 +33,7 @@ def test_forecast_runout_handles_timezone_aware_usage_dates() -> None:
     inventory = _inventory_with_product()
     forecaster = UsageForecaster(inventory)
 
-    aware_date = datetime.now(timezone.utc) - timedelta(days=3)
+    aware_date = datetime.now(UTC) - timedelta(days=3)
     naive_date = datetime.now() - timedelta(days=1)
 
     forecaster.apply_product("fert-1", amount=2.0, unit="L", date=aware_date)
@@ -65,7 +65,7 @@ def test_naive_dates_are_localised_before_utc_conversion() -> None:
 
         stored = forecaster.usage_log["fert-1"][0].date
         local_zone = datetime.now().astimezone().tzinfo
-        expected = naive_local.replace(tzinfo=local_zone).astimezone(timezone.utc)
+        expected = naive_local.replace(tzinfo=local_zone).astimezone(UTC)
 
         assert stored == expected
     finally:
