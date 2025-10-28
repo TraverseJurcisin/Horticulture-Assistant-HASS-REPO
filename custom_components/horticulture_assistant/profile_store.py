@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+from collections.abc import Mapping
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
@@ -96,11 +97,14 @@ class ProfileStore:
         scope: str | None = None,
     ) -> None:
         clone_profile: BioProfile | None = None
+        clone_payload: Mapping[str, Any] | None = None
         if isinstance(clone_from, str) and clone_from:
             payload = await self.async_get(clone_from)
             if payload:
+                clone_payload = payload
                 clone_profile = self._as_profile(payload, fallback_name=clone_from)
         elif isinstance(clone_from, dict):
+            clone_payload = clone_from
             clone_profile = self._as_profile(clone_from, fallback_name=name)
 
         sensors_data: dict[str, str]
@@ -169,7 +173,21 @@ class ProfileStore:
             new_profile.general[CONF_PROFILE_SCOPE] = resolved_scope
 
         new_profile.refresh_sections()
-        await self.async_save(new_profile, name=name)
+        preserved: dict[str, Any] = {}
+        if isinstance(clone_payload, Mapping):
+            for key in ("species_display", "species_pid", "image_url"):
+                value = clone_payload.get(key)
+                if isinstance(value, str) and value:
+                    preserved[key] = value
+            credentials = clone_payload.get("opb_credentials")
+            if isinstance(credentials, Mapping):
+                preserved["opb_credentials"] = deepcopy(credentials)
+
+        payload = self._profile_to_payload(new_profile)
+        if preserved:
+            payload.update(preserved)
+
+        await self.async_save(payload, name=name)
 
     async def _atomic_write(self, path: Path, payload: dict[str, Any]) -> None:
         tmp = path.with_suffix(".tmp")

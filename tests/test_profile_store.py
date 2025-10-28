@@ -101,6 +101,34 @@ async def test_async_create_profile_ignores_blank_sensor_entries(hass, tmp_path,
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_preserves_opb_credentials(hass, tmp_path, monkeypatch) -> None:
+    """Profiles cloned from storage should retain OpenPlantbook credentials."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_save(
+        {
+            "display_name": "Source",  # Stored payload includes credentials and sensor metadata
+            "profile_id": "source",
+            "plant_id": "source",
+            "general": {"sensors": {"ec": "sensor.ec"}},
+            "sensors": {"ec": "sensor.ec"},
+            "thresholds": {"ec": 1.23},
+            "opb_credentials": {"client_id": "id", "secret": "sec"},
+        },
+        name="Source",
+    )
+
+    await store.async_create_profile("Clone", clone_from="Source")
+
+    clone = await store.async_get("Clone")
+    assert clone is not None
+    assert clone["opb_credentials"] == {"client_id": "id", "secret": "sec"}
+
+
+@pytest.mark.asyncio
 async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypatch) -> None:
     """Listing profiles should return stored display names when available."""
 
