@@ -36,11 +36,7 @@ async def async_setup_entry(
         ensure_entities_exist(
             hass,
             profile_id,
-            list(
-                context.sensor_ids_for_roles(
-                    "moisture", "temperature", "humidity", "ec", "co2"
-                )
-            ),
+            list(context.sensor_ids_for_roles("moisture", "temperature", "humidity", "ec", "co2")),
             placeholders={"plant_id": profile_id, "profile_name": plant_name},
         )
         sensors.extend(
@@ -85,11 +81,7 @@ class HorticultureBaseBinarySensor(HorticultureBaseEntity, BinarySensorEntity):
         self.hass = hass
         self._entry_id = entry_id
         self._context = context
-        self._sensor_map = {
-            role: list(ids)
-            for role, ids in context.sensors.items()
-            if ids
-        }
+        self._sensor_map = {role: list(ids) for role, ids in context.sensors.items() if ids}
         self._monitor = ProfileMonitor(hass, context)
 
 
@@ -116,9 +108,7 @@ class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
         attention = result.issues_for("attention")
         self._attr_is_on = bool(attention)
         self._attr_available = bool(result.sensors)
-        self._attr_extra_state_attributes = result.as_attributes(
-            severities=("attention",)
-        )
+        self._attr_extra_state_attributes = result.as_attributes(severities=("attention",))
 
 
 class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
@@ -141,10 +131,7 @@ class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
     async def async_update(self):
         """Determine if root zone is dry enough for watering."""
 
-        moisture_id = (
-            self._context.first_sensor("moisture")
-            or self._context.first_sensor("soil_moisture")
-        )
+        moisture_id = self._context.first_sensor("moisture") or self._context.first_sensor("soil_moisture")
         if not moisture_id:
             self._attr_is_on = False
             self._attr_extra_state_attributes = {
@@ -218,9 +205,7 @@ class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
         problems = result.issues_for("problem")
         self._attr_is_on = bool(problems)
         self._attr_available = bool(result.sensors)
-        self._attr_extra_state_attributes = result.as_attributes(
-            severities=("problem",)
-        )
+        self._attr_extra_state_attributes = result.as_attributes(severities=("problem",))
 
 
 class CloudSyncBinarySensor(HorticultureEntryEntity, BinarySensorEntity):

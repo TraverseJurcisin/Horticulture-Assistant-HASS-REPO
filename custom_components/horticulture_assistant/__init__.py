@@ -103,6 +103,7 @@ def _utcnow() -> str:
 
     return datetime.now(tz=UTC).isoformat()
 
+
 _ONBOARDING_ISSUE_PREFIX = "onboarding_stage"
 _ONBOARDING_STAGE_LABELS: dict[str, str] = {
     "local_paths": "initial data directories",
@@ -158,6 +159,8 @@ def _stage_ready(status: str | None) -> bool:
 
 def _stage_satisfied(status: str | None) -> bool:
     return status in _STAGE_SATISFIED_STATUSES
+
+
 _ONBOARDING_STAGE_ORDER: tuple[str, ...] = tuple(_ONBOARDING_STAGE_LABELS)
 _ONBOARDING_TIMELINE_LIMIT = 50
 
@@ -242,9 +245,7 @@ class _OnboardingManager:
             self.entry_data.pop("onboarding_warnings", None)
             return
         cleaned = {
-            stage: [str(msg) for msg in messages if str(msg)]
-            for stage, messages in self._warnings.items()
-            if messages
+            stage: [str(msg) for msg in messages if str(msg)] for stage, messages in self._warnings.items() if messages
         }
         if cleaned:
             self._warnings = cleaned
@@ -694,41 +695,21 @@ class _OnboardingManager:
                 ready = False
                 break
 
-        required_stages = [
-            stage for stage, meta in _ONBOARDING_STAGE_META.items() if meta.get("required", False)
-        ]
-        required_complete = [
-            stage
-            for stage in required_stages
-            if _stage_ready(summary.get(stage, {}).get("status"))
-        ]
+        required_stages = [stage for stage, meta in _ONBOARDING_STAGE_META.items() if meta.get("required", False)]
+        required_complete = [stage for stage in required_stages if _stage_ready(summary.get(stage, {}).get("status"))]
         pending_required = [
-            stage
-            for stage in required_stages
-            if not _stage_ready(summary.get(stage, {}).get("status"))
+            stage for stage in required_stages if not _stage_ready(summary.get(stage, {}).get("status"))
         ]
         optional_stages = [stage for stage in summary if stage not in required_stages]
-        optional_complete = [
-            stage
-            for stage in optional_stages
-            if _stage_ready(summary.get(stage, {}).get("status"))
-        ]
+        optional_complete = [stage for stage in optional_stages if _stage_ready(summary.get(stage, {}).get("status"))]
         status_counts: dict[str, int] = {}
         for info in summary.values():
             status_value = str(info.get("status", "unknown"))
             status_counts[status_value] = status_counts.get(status_value, 0) + 1
 
-        progress = (
-            round(len(required_complete) / len(required_stages), 4)
-            if required_stages
-            else 1.0
-        )
+        progress = round(len(required_complete) / len(required_stages), 4) if required_stages else 1.0
 
-        warning_details = {
-            stage: list(messages)
-            for stage, messages in self._warnings.items()
-            if messages
-        }
+        warning_details = {stage: list(messages) for stage, messages in self._warnings.items() if messages}
 
         metrics = {
             "required_total": len(required_stages),
@@ -806,6 +787,7 @@ class _OnboardingManager:
         self.entry_data["onboarding_last_completed"] = snapshot["completed_at"]
         self._sync_entry_warnings()
         return payload
+
 
 def _record_onboarding_error(
     hass: HomeAssistant,
@@ -886,14 +868,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         dataset_dependencies = ("local_paths",)
 
     dataset_ready = False
-    if manager.ensure_dependencies(
-        "dataset_health",
-        reason=dataset_reason,
-        dependencies=dataset_dependencies,
-    ) and paths_ready:
-        dataset_ready, _ = await manager.guard_async(
-            "dataset_health", async_setup_dataset_health(hass)
+    if (
+        manager.ensure_dependencies(
+            "dataset_health",
+            reason=dataset_reason,
+            dependencies=dataset_dependencies,
         )
+        and paths_ready
+    ):
+        dataset_ready, _ = await manager.guard_async("dataset_health", async_setup_dataset_health(hass))
 
     base_url = entry.options.get(CONF_BASE_URL, entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL))
     api_key = entry.options.get(CONF_API_KEY, entry.data.get(CONF_API_KEY, ""))
@@ -914,11 +897,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         local_store_dependencies = ("local_paths",)
 
     local_store_ready = False
-    if manager.ensure_dependencies(
-        "local_store",
-        reason=local_store_reason,
-        dependencies=local_store_dependencies,
-    ) and paths_ready:
+    if (
+        manager.ensure_dependencies(
+            "local_store",
+            reason=local_store_reason,
+            dependencies=local_store_dependencies,
+        )
+        and paths_ready
+    ):
         local_store_ready, _ = await manager.guard_async("local_store", local_store.load())
     if not local_store_ready and local_store.data is None:
         local_store.data = deepcopy(DEFAULT_DATA)
@@ -929,13 +915,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         profile_store_reason = "local store unavailable"
 
     profile_store_ready = False
-    if manager.ensure_dependencies(
-        "profile_store",
-        reason=profile_store_reason,
-    ) and local_store_ready:
-        profile_store_ready, _ = await manager.guard_async(
-            "profile_store", profile_store.async_init()
+    if (
+        manager.ensure_dependencies(
+            "profile_store",
+            reason=profile_store_reason,
         )
+        and local_store_ready
+    ):
+        profile_store_ready, _ = await manager.guard_async("profile_store", profile_store.async_init())
     if not profile_store_ready:
         profile_store = None
 
@@ -947,13 +934,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         registry_reason = "profile store unavailable"
 
     profile_registry_ready = False
-    if manager.ensure_dependencies(
-        "profile_registry",
-        reason=registry_reason,
-    ) and profile_store_ready:
-        profile_registry_ready, _ = await manager.guard_async(
-            "profile_registry", profile_registry.async_initialize()
+    if (
+        manager.ensure_dependencies(
+            "profile_registry",
+            reason=registry_reason,
         )
+        and profile_store_ready
+    ):
+        profile_registry_ready, _ = await manager.guard_async("profile_registry", profile_registry.async_initialize())
     cloud_publisher = CloudSyncPublisher(cloud_sync_manager, entry.entry_id)
     if profile_registry_ready and profile_registry is not None:
         profile_registry.attach_cloud_publisher(cloud_publisher)
@@ -979,10 +967,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         coordinator_reason = "local store unavailable"
 
     coordinator_ready = False
-    if manager.ensure_dependencies(
-        "coordinator_refresh",
-        reason=coordinator_reason,
-    ) and local_store_ready:
+    if (
+        manager.ensure_dependencies(
+            "coordinator_refresh",
+            reason=coordinator_reason,
+        )
+        and local_store_ready
+    ):
         coordinator_ready, _ = await manager.guard_async(
             "coordinator_refresh", coordinator.async_config_entry_first_refresh()
         )
@@ -1057,14 +1048,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         cloud_dependencies = ("profile_registry",)
 
     cloud_sync_ready = False
-    if manager.ensure_dependencies(
-        "cloud_sync",
-        reason=cloud_reason,
-        dependencies=cloud_dependencies,
-    ) and profile_registry is not None and profile_registry_ready:
-        cloud_sync_ready, _ = await manager.guard_async(
-            "cloud_sync", cloud_sync_manager.async_start()
+    if (
+        manager.ensure_dependencies(
+            "cloud_sync",
+            reason=cloud_reason,
+            dependencies=cloud_dependencies,
         )
+        and profile_registry is not None
+        and profile_registry_ready
+    ):
+        cloud_sync_ready, _ = await manager.guard_async("cloud_sync", cloud_sync_manager.async_start())
     entry_data["cloud_sync_ready"] = cloud_sync_ready
     cloud_status = cloud_sync_manager.status()
     entry_data["cloud_sync_status"] = cloud_status
@@ -1132,14 +1125,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entity_reasons.append("coordinator refresh not ready")
 
     entity_validation_ready = False
-    if manager.ensure_dependencies(
-        "entity_validation",
-        reason=", ".join(entity_reasons) if entity_reasons else None,
-        dependencies=tuple(dict.fromkeys(entity_dependencies)) if entity_dependencies else None,
-    ) and profile_registry is not None and profile_registry_ready and coordinator_ready:
-        entity_validation_ready, _ = await manager.guard_call(
-            "entity_validation", _ensure_profile_entities, entry
+    if (
+        manager.ensure_dependencies(
+            "entity_validation",
+            reason=", ".join(entity_reasons) if entity_reasons else None,
+            dependencies=tuple(dict.fromkeys(entity_dependencies)) if entity_dependencies else None,
         )
+        and profile_registry is not None
+        and profile_registry_ready
+        and coordinator_ready
+    ):
+        entity_validation_ready, _ = await manager.guard_call("entity_validation", _ensure_profile_entities, entry)
     entry_data["entity_validation_ready"] = entity_validation_ready
 
     service_dependencies: list[str] = []
@@ -1155,11 +1151,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         service_reasons.append("coordinator refresh not ready")
 
     services_ready = False
-    if manager.ensure_dependencies(
-        "service_registration",
-        reason=", ".join(service_reasons) if service_reasons else None,
-        dependencies=tuple(dict.fromkeys(service_dependencies)) if service_dependencies else None,
-    ) and profile_registry is not None and profile_registry_ready and coordinator_ready:
+    if (
+        manager.ensure_dependencies(
+            "service_registration",
+            reason=", ".join(service_reasons) if service_reasons else None,
+            dependencies=tuple(dict.fromkeys(service_dependencies)) if service_dependencies else None,
+        )
+        and profile_registry is not None
+        and profile_registry_ready
+        and coordinator_ready
+    ):
         services_ready, _ = await manager.guard_async(
             "service_registration",
             ha_services.async_register_all(
@@ -1176,32 +1177,32 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     entry_data["service_registration_ready"] = services_ready
 
     service_setup_ready = False
-    if manager.ensure_dependencies(
-        "service_setup",
-        reason="service registration incomplete" if not services_ready else None,
-    ) and services_ready:
-        service_setup_ready, _ = await manager.guard_call(
-            "service_setup", ha_services.async_setup_services, hass
+    if (
+        manager.ensure_dependencies(
+            "service_setup",
+            reason="service registration incomplete" if not services_ready else None,
         )
+        and services_ready
+    ):
+        service_setup_ready, _ = await manager.guard_call("service_setup", ha_services.async_setup_services, hass)
     entry_data["service_setup_ready"] = service_setup_ready
 
     calibration_ready = False
-    if manager.ensure_dependencies(
-        "calibration_services",
-        reason="service registration incomplete" if not services_ready else None,
-    ) and services_ready:
-        if calibration_services is not None and hasattr(
-            calibration_services, "async_setup_services"
-        ):
+    if (
+        manager.ensure_dependencies(
+            "calibration_services",
+            reason="service registration incomplete" if not services_ready else None,
+        )
+        and services_ready
+    ):
+        if calibration_services is not None and hasattr(calibration_services, "async_setup_services"):
             calibration_ready, _ = await manager.guard_call(
                 "calibration_services",
                 calibration_services.async_setup_services,
                 hass,
             )
         else:
-            calibration_ready, _ = manager.skip(
-                "calibration_services", "calibration services unavailable"
-            )
+            calibration_ready, _ = manager.skip("calibration_services", "calibration services unavailable")
     entry_data["calibration_services_ready"] = calibration_ready
 
     platform_ready = False
@@ -1216,9 +1217,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 hass.config_entries.async_setup_platforms(entry, PLATFORMS),
             )
         else:
-            platform_ready, _ = manager.skip(
-                "platform_setup", "platform loader unavailable"
-            )
+            platform_ready, _ = manager.skip("platform_setup", "platform loader unavailable")
     entry_data["platform_setup_ready"] = platform_ready
 
     async def _async_entry_updated(hass: HomeAssistant, updated_entry: ConfigEntry) -> None:
@@ -1251,15 +1250,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 except TypeError:
                     return entry.add_update_listener(_async_entry_updated)
 
-            listener_success, unsubscribe = await manager.guard_call(
-                "update_listener", _add_listener
-            )
+            listener_success, unsubscribe = await manager.guard_call("update_listener", _add_listener)
             if listener_success and unsubscribe and hasattr(entry, "async_on_unload"):
                 await manager.guard_call("update_listener", entry.async_on_unload, unsubscribe)
         else:
-            listener_success, unsubscribe = manager.skip(
-                "update_listener", "config entry cannot register listeners"
-            )
+            listener_success, unsubscribe = manager.skip("update_listener", "config entry cannot register listeners")
     entry_data["update_listener_registered"] = listener_success
     if unsubscribe is not None:
         entry_data["update_listener_unsub"] = unsubscribe

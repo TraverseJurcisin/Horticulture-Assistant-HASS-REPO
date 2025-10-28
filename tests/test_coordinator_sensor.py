@@ -22,9 +22,7 @@ const = importlib.import_module("custom_components.horticulture_assistant.const"
 coordinator_mod = importlib.import_module("custom_components.horticulture_assistant.coordinator")
 entity_mod = importlib.import_module("custom_components.horticulture_assistant.entity")
 sensor_mod = importlib.import_module("custom_components.horticulture_assistant.sensor")
-entry_helpers_mod = importlib.import_module(
-    "custom_components.horticulture_assistant.utils.entry_helpers"
-)
+entry_helpers_mod = importlib.import_module("custom_components.horticulture_assistant.utils.entry_helpers")
 schema_mod = importlib.import_module("custom_components.horticulture_assistant.profile.schema")
 metrics_mod = importlib.import_module("custom_components.horticulture_assistant.engine.metrics")
 

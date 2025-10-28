@@ -26,6 +26,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover - tests provide s
         def __init__(self) -> None:
             self.states = {}
 
+
 from .utils.entry_helpers import ProfileContext
 
 
@@ -116,11 +117,7 @@ class ProfileMonitorResult:
     def as_attributes(self, *, severities: Sequence[str] | None = None) -> dict[str, Any]:
         """Return state attributes for use on Home Assistant entities."""
 
-        issues = (
-            issue.as_dict()
-            for issue in self.issues
-            if not severities or issue.severity in severities
-        )
+        issues = (issue.as_dict() for issue in self.issues if not severities or issue.severity in severities)
         attrs: dict[str, Any] = {
             "issues": list(issues),
             "sensor_count": len(self.sensors),

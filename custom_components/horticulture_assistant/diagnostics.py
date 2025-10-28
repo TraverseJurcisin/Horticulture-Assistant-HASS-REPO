@@ -101,9 +101,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
                 warning_details = onboarding_status.get("warning_details")
                 if isinstance(warning_details, Mapping):
                     payload["onboarding_status"]["warning_details"] = {
-                        stage: list(messages)
-                        if isinstance(messages, list | tuple | set)
-                        else [messages]
+                        stage: list(messages) if isinstance(messages, list | tuple | set) else [messages]
                         for stage, messages in warning_details.items()
                     }
 
@@ -117,9 +115,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
         warnings_map = entry_data.get("onboarding_warnings")
         if isinstance(warnings_map, Mapping) and warnings_map:
             payload["onboarding_warnings"] = {
-                stage: list(messages)
-                if isinstance(messages, list | tuple | set)
-                else [messages]
+                stage: list(messages) if isinstance(messages, list | tuple | set) else [messages]
                 for stage, messages in warnings_map.items()
             }
 
@@ -153,8 +149,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
         profile_devices = entry_data.get("profile_devices")
         if isinstance(profile_devices, dict):
             devices["profiles"] = {
-                profile_id: serialise_device_info(info)
-                for profile_id, info in profile_devices.items()
+                profile_id: serialise_device_info(info) for profile_id, info in profile_devices.items()
             }
         if devices:
             payload["devices"] = devices
