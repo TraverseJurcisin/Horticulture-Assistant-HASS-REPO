@@ -245,6 +245,44 @@ async def test_profile_validation_issues_created_and_cleared(hass, monkeypatch):
     assert "invalid_profile_p1" in deleted
 
 
+async def test_profile_validation_issue_clears_without_cached_state(hass, monkeypatch):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
+    created: list[tuple[str, dict]] = []
+    deleted: list[str] = []
+
+    class _Severity:
+        WARNING = "warning"
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.ir",
+        SimpleNamespace(
+            IssueSeverity=_Severity,
+            async_create_issue=lambda *_args, **kwargs: created.append((_args[2], kwargs)),
+            async_delete_issue=lambda *_args: deleted.append(_args[2]),
+        ),
+    )
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: ["general.name: required property missing"],
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    assert "invalid_profile_p1" in [issue_id for issue_id, _ in created]
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.validate_profile_dict",
+        lambda _payload, _schema: [],
+    )
+
+    reg_reloaded = ProfileRegistry(hass, entry)
+    await reg_reloaded.async_load()
+
+    assert "invalid_profile_p1" in deleted
+
+
 async def test_update_profile_general_updates_options_and_profile(hass):
     options = {
         CONF_PROFILES: {

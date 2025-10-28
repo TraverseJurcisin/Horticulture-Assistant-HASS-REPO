@@ -287,9 +287,6 @@ class ProfileRegistry:
 
     def _clear_validation_issue(self, profile_id: str) -> None:
         issue_id = f"{ISSUE_PROFILE_VALIDATION_PREFIX}{profile_id}"
-        if issue_id not in self._validation_issue_keys:
-            self._validation_issue_summaries.pop(profile_id, None)
-            return
         ir.async_delete_issue(
             self.hass,
             DOMAIN,
