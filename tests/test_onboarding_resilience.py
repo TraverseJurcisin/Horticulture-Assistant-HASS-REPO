@@ -131,9 +131,7 @@ async def test_onboarding_records_and_clears_stage_errors(hass, enable_custom_in
         "calibration_services",
         "entity_validation",
         "update_listener",
-    }.issubset(
-        set(status["blocked"])
-    )
+    }.issubset(set(status["blocked"]))
     metrics = status["metrics"]
     assert metrics["required_total"] >= 1
     assert "profile_store" in metrics["pending_required"]

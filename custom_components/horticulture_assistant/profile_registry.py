@@ -181,9 +181,7 @@ class ProfileRegistry:
 
         domain, identifier = profile_device_identifier(self.entry.entry_id, profile_id)
         info = resolve_profile_device_info(self.hass, self.entry.entry_id, profile_id)
-        payload: dict[str, Any] = (
-            dict(info) if isinstance(info, Mapping) else {}
-        )
+        payload: dict[str, Any] = dict(info) if isinstance(info, Mapping) else {}
 
         identifiers = payload.get("identifiers")
         if not identifiers:

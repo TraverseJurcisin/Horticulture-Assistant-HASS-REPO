@@ -158,11 +158,7 @@ async def test_store_entry_data_populates_device_info(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
     entry = _make_entry(
         data={CONF_PLANT_ID: "p2", CONF_PLANT_NAME: "Stored"},
-        options={
-            CONF_PROFILES: {
-                "p2": {"name": "Stored", "general": {"plant_type": "herb", "area": "Kitchen"}}
-            }
-        },
+        options={CONF_PROFILES: {"p2": {"name": "Stored", "general": {"plant_type": "herb", "area": "Kitchen"}}}},
     )
     stored = store_entry_data(hass, entry)
     entry_info = stored["entry_device_info"]

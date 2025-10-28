@@ -37,10 +37,7 @@ class HorticultureEntryEntity(Entity):
             info = resolve_entry_device_info(hass, self._entry_id)
             if info:
                 payload = dict(info)
-                if (
-                    self._entry_device_name
-                    and not str(payload.get("name", "")).strip()
-                ):
+                if self._entry_device_name and not str(payload.get("name", "")).strip():
                     payload["name"] = self._entry_device_name
                 return payload
 
