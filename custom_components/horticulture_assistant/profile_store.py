@@ -105,9 +105,17 @@ class ProfileStore:
 
         sensors_data: dict[str, str]
         if sensors is not None:
-            sensors_data = {str(k): str(v) for k, v in sensors.items()}
+            sensors_data = {
+                str(key): value.strip()
+                for key, value in sensors.items()
+                if isinstance(value, str) and value.strip()
+            }
         elif clone_profile and isinstance(clone_profile.general.get("sensors"), dict):
-            sensors_data = {str(k): str(v) for k, v in clone_profile.general.get("sensors", {}).items()}
+            sensors_data = {
+                str(key): value.strip()
+                for key, value in clone_profile.general.get("sensors", {}).items()
+                if isinstance(value, str) and value.strip()
+            }
         else:
             sensors_data = {}
 
