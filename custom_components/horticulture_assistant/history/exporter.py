@@ -126,11 +126,7 @@ class HistoryExporter:
             # ``occurred_at`` is the canonical timestamp on cultivation events but
             # older payloads may still use ``recorded_at`` or ``timestamp``.
             return (
-                str(
-                    payload.get("occurred_at")
-                    or payload.get("recorded_at")
-                    or payload.get("timestamp")
-                )
+                str(payload.get("occurred_at") or payload.get("recorded_at") or payload.get("timestamp"))
                 if payload
                 else None
             )
