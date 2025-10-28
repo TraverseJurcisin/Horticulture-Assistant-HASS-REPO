@@ -1,11 +1,11 @@
+import importlib
+import sys
 import types
+from enum import Enum
 
 import pytest
 
-from custom_components.horticulture_assistant.sensor_validation import (
-    collate_issue_messages,
-    validate_sensor_links,
-)
+import custom_components.horticulture_assistant.sensor_validation as sensor_validation
 
 
 class DummyStates:
@@ -33,7 +33,7 @@ def test_validate_sensor_links_accepts_illuminance_variants(unit):
             }
         )
     )
-    result = validate_sensor_links(hass, {"illuminance": "sensor.light"})
+    result = sensor_validation.validate_sensor_links(hass, {"illuminance": "sensor.light"})
     assert not result.errors
     assert not result.warnings
 
@@ -47,7 +47,7 @@ def test_validate_sensor_links_accepts_conductivity_variants():
             }
         )
     )
-    result = validate_sensor_links(
+    result = sensor_validation.validate_sensor_links(
         hass,
         {
             "ec": "sensor.ec",
@@ -59,7 +59,40 @@ def test_validate_sensor_links_accepts_conductivity_variants():
 
 def test_validate_sensor_links_missing_entity_reports_error():
     hass = types.SimpleNamespace(states=DummyStates({}))
-    result = validate_sensor_links(hass, {"temperature": "sensor.missing"})
+    result = sensor_validation.validate_sensor_links(hass, {"temperature": "sensor.missing"})
     assert len(result.errors) == 1
-    summary = collate_issue_messages(result.errors)
+    summary = sensor_validation.collate_issue_messages(result.errors)
     assert "missing_entity" in summary
+
+
+def test_validate_sensor_links_accepts_temperature_enum_units(monkeypatch):
+    class UnitOfTemperature(Enum):
+        CELSIUS = "°C"
+        FAHRENHEIT = "°F"
+
+    const_module = types.ModuleType("homeassistant.const")
+    const_module.CONCENTRATION_PARTS_PER_MILLION = "ppm"
+    const_module.LIGHT_LUX = "lx"
+    const_module.PERCENTAGE = "%"
+    const_module.UnitOfTemperature = UnitOfTemperature
+
+    monkeypatch.setitem(sys.modules, "homeassistant.const", const_module)
+    reloaded = importlib.reload(sensor_validation)
+
+    try:
+        hass = types.SimpleNamespace(
+            states=DummyStates(
+                {
+                    "sensor.temperature": DummyState(
+                        device_class="temperature",
+                        unit_of_measurement=UnitOfTemperature.CELSIUS,
+                    ),
+                }
+            )
+        )
+        result = reloaded.validate_sensor_links(hass, {"temperature": "sensor.temperature"})
+        assert result.errors == []
+        assert result.warnings == []
+    finally:
+        monkeypatch.delitem(sys.modules, "homeassistant.const", raising=False)
+        importlib.reload(sensor_validation)
