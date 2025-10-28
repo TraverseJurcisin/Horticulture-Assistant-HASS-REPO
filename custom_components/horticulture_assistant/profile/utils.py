@@ -18,7 +18,10 @@ from .schema import (
 def _ensure_string(value: Any, fallback: str) -> str:
     if value is None:
         return fallback
-    return str(value)
+    text = str(value).strip()
+    if not text:
+        return fallback
+    return text
 
 
 def ensure_sections(
@@ -32,10 +35,13 @@ def ensure_sections(
     data: dict[str, Any] = dict(payload)
     candidate_id = plant_id or data.get("plant_id") or data.get("profile_id") or data.get("name")
     fallback_id = _ensure_string(candidate_id, "profile")
-    data.setdefault("plant_id", fallback_id)
+    data["plant_id"] = _ensure_string(data.get("plant_id"), fallback_id)
     if display_name is None:
-        display_name = data.get("display_name") or data.get("name")
-    data.setdefault("display_name", display_name or fallback_id)
+        fallback_display = fallback_id
+    else:
+        fallback_display = _ensure_string(display_name, fallback_id)
+    display_candidate = data.get("display_name") or data.get("name") or fallback_display
+    data["display_name"] = _ensure_string(display_candidate, fallback_display)
 
     general = data.get("general")
     general_dict = dict(general) if isinstance(general, Mapping) else {}
@@ -50,6 +56,7 @@ def ensure_sections(
     if template is not None:
         general_dict.setdefault("template", template)
     data["general"] = general_dict
+    data.pop("sections", None)
 
     profile = BioProfile.from_json(data)
     sections = profile.refresh_sections()
@@ -77,11 +84,14 @@ def normalise_profile_payload(
     data = dict(payload)
     if fallback_id is None:
         fallback_id = _ensure_string(data.get("profile_id") or data.get("plant_id"), "profile")
-    data.setdefault("profile_id", fallback_id)
-    data.setdefault("plant_id", fallback_id)
+    data["profile_id"] = _ensure_string(data.get("profile_id"), fallback_id)
+    data["plant_id"] = _ensure_string(data.get("plant_id"), fallback_id)
     if display_name is None:
-        display_name = data.get("display_name") or data.get("name")
-    data.setdefault("display_name", display_name or fallback_id)
+        fallback_display = fallback_id
+    else:
+        fallback_display = _ensure_string(display_name, fallback_id)
+    display_candidate = data.get("display_name") or data.get("name") or fallback_display
+    data["display_name"] = _ensure_string(display_candidate, fallback_display)
 
     general = data.get("general")
     general_dict = dict(general) if isinstance(general, Mapping) else {}
@@ -96,6 +106,7 @@ def normalise_profile_payload(
     if template is not None:
         general_dict.setdefault("template", template)
     data["general"] = general_dict
+    data.pop("sections", None)
 
     profile = BioProfile.from_json(data)
     payload = profile.to_json()
