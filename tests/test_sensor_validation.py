@@ -95,4 +95,5 @@ def test_validate_sensor_links_accepts_temperature_enum_units(monkeypatch):
         assert result.warnings == []
     finally:
         monkeypatch.delitem(sys.modules, "homeassistant.const", raising=False)
+        monkeypatch.delitem(sys.modules, "homeassistant", raising=False)
         importlib.reload(sensor_validation)
