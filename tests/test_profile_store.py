@@ -342,6 +342,36 @@ async def test_async_get_handles_corrupt_profile(hass, tmp_path, monkeypatch) ->
 
 
 @pytest.mark.asyncio
+async def test_async_list_handles_invalid_utf8_profile(hass, tmp_path, monkeypatch) -> None:
+    """Profiles with invalid encodings should not break listing."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    bad_path = store._path_for("Invalid UTF8")
+    bad_path.write_bytes(b"\xff\xfe\xfd")
+
+    names = await store.async_list()
+
+    assert bad_path.stem in names
+
+
+@pytest.mark.asyncio
+async def test_async_get_handles_invalid_utf8_profile(hass, tmp_path, monkeypatch) -> None:
+    """Profiles with invalid encodings should be treated as missing."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    bad_path = store._path_for("Invalid UTF8")
+    bad_path.write_bytes(b"\xff\xfe\xfd")
+
+    assert await store.async_get("Invalid UTF8") is None
+
+
+@pytest.mark.asyncio
 async def test_async_get_handles_non_mapping_payload(hass, tmp_path, monkeypatch) -> None:
     """Profiles stored as non-mapping JSON should be ignored."""
 
