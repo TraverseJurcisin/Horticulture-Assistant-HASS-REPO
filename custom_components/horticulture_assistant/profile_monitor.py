@@ -286,6 +286,8 @@ def _coerce_float(value: Any) -> float | None:
             return None
         return number
 
+    if isinstance(value, bool):
+        return None
     if isinstance(value, int | float):
         return _valid(float(value))
     if isinstance(value, str):
