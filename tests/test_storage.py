@@ -71,6 +71,42 @@ async def test_local_store_defaults_are_isolated(monkeypatch):
     assert data_again["inventory"] == {}
 
 
+class FalseyMapping(dict):
+    def __bool__(self) -> bool:  # pragma: no cover - simple guard
+        return False
+
+
+class FalseyStore:
+    def __init__(self, hass, version, key) -> None:  # noqa: D401 - signature mirrors Store
+        self._data = FalseyMapping(
+            {
+                "recipes": ["tea"],
+                "inventory": {"nutrients": 1},
+            }
+        )
+
+    async def async_load(self):
+        return self._data
+
+    async def async_save(self, data):  # pragma: no cover - not needed here
+        self._data = data
+
+
+@pytest.mark.asyncio
+async def test_local_store_load_handles_falsey_mappings(monkeypatch):
+    monkeypatch.setattr(storage, "Store", FalseyStore)
+
+    hass = types.SimpleNamespace()
+    store = storage.LocalStore(hass)
+
+    data = await store.load()
+
+    assert data["recipes"] == ["tea"]
+    assert data["inventory"] == {"nutrients": 1}
+    for key in storage.DEFAULT_DATA:
+        assert key in data
+
+
 class CorruptStore:
     def __init__(self, hass, version, key) -> None:  # noqa: D401 - signature mirrors Store
         self._data = {
