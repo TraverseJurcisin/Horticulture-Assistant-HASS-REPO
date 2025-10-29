@@ -135,6 +135,38 @@ async def test_async_create_profile_preserves_opb_credentials(hass, tmp_path, mo
 
 
 @pytest.mark.asyncio
+async def test_profile_store_preserves_numeric_species_pid(hass, tmp_path, monkeypatch) -> None:
+    """Numeric Plantbook identifiers should be preserved when saving or cloning profiles."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_save(
+        {
+            "display_name": "Numeric Base",
+            "profile_id": "numeric_base",
+            "plant_id": "numeric_base",
+            "species_display": "Tomato",
+            "species_pid": 987654,
+        },
+        name="Numeric Base",
+    )
+
+    stored = await store.async_get("Numeric Base")
+    assert stored is not None
+    assert stored["species_pid"] == "987654"
+    assert stored["species_display"] == "Tomato"
+
+    await store.async_create_profile("Numeric Clone", clone_from="Numeric Base")
+
+    clone = await store.async_get("Numeric Clone")
+    assert clone is not None
+    assert clone["species_pid"] == "987654"
+    assert clone["species_display"] == "Tomato"
+
+
+@pytest.mark.asyncio
 async def test_async_create_profile_handles_mapping_credentials(hass, tmp_path, monkeypatch) -> None:
     """Cloning should normalise mapping-proxy credentials for JSON storage."""
 

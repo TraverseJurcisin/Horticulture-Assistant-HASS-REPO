@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from copy import deepcopy
+from math import isfinite
+from numbers import Integral, Real
 from typing import Any
 
 from homeassistant.core import HomeAssistant
@@ -49,6 +51,26 @@ def _resolve_cache(hass: HomeAssistant | None) -> dict[str, dict[str, Any]]:
     return _FALLBACK_CACHE
 
 
+def _normalise_metadata_value(value: Any) -> str | None:
+    """Return a string representation for preserved metadata keys."""
+
+    if value is None:
+        return None
+    if isinstance(value, str):
+        text = value.strip()
+        return text or None
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, Integral):
+        return str(int(value))
+    if isinstance(value, Real):
+        number = float(value)
+        if not isfinite(number):
+            return None
+        return format(number, "g")
+    return None
+
+
 async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
     raw = await _store(hass).async_load()
     data = dict(raw) if isinstance(raw, Mapping) else {}
@@ -73,9 +95,9 @@ async def async_save_profile(hass: HomeAssistant | None, profile: BioProfile | d
         raw: dict[str, Any] = dict(profile)
 
         for key in ("species_display", "species_pid", "image_url"):
-            value = raw.get(key)
-            if isinstance(value, str) and value:
-                preserved[key] = value
+            normalised = _normalise_metadata_value(raw.get(key))
+            if normalised is not None:
+                preserved[key] = normalised
 
         credentials = raw.get("opb_credentials")
         if isinstance(credentials, Mapping):

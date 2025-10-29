@@ -268,6 +268,43 @@ async def test_async_save_profile_preserves_metadata(monkeypatch):
 
 
 @pytest.mark.asyncio
+async def test_async_save_profile_preserves_numeric_species_pid(monkeypatch):
+    saved: dict[str, dict[str, Any]] = {}
+
+    class DummyStore:
+        async def async_save(self, data):
+            saved.update(data)
+
+    async def fake_load_all(_hass):
+        return {}
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile.store._store",
+        lambda hass: DummyStore(),
+    )
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile.store.async_load_all",
+        fake_load_all,
+    )
+
+    from custom_components.horticulture_assistant.profile.store import async_save_profile
+
+    payload = {
+        "plant_id": "p2",
+        "profile_id": "p2",
+        "display_name": "Numeric Plant",
+        "species_display": "Tomato",
+        "species_pid": 24680,
+    }
+
+    await async_save_profile(None, payload)
+
+    stored = saved["p2"]
+    assert stored["species_pid"] == "24680"
+    assert stored["species_display"] == "Tomato"
+
+
+@pytest.mark.asyncio
 async def test_async_save_profile_accepts_mapping_proxy_credentials(monkeypatch):
     saved: dict[str, dict[str, Any]] = {}
 
