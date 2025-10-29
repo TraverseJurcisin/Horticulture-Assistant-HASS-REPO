@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from typing import Any
 
 from ..const import CONF_PROFILE_SCOPE
@@ -66,6 +66,7 @@ def options_profile_to_dataclass(
     """Build a :class:`BioProfile` from config entry options payload."""
 
     options = dict(payload)
+    raw_citations = options.pop("citations", None)
     name = display_name or options.get("name") or profile_id
     library_section, local_section = ensure_sections(
         options,
@@ -76,7 +77,17 @@ def options_profile_to_dataclass(
     local_payload = local_section.to_json()
 
     sources = options.get("sources") or {}
-    citations_map = options.get("citations") or {}
+    citations_map: dict[str, Any] = {}
+    if isinstance(raw_citations, Mapping):
+        citations_map = {str(key): value for key, value in raw_citations.items()}
+    elif isinstance(raw_citations, Sequence) and not isinstance(raw_citations, str | bytes | bytearray):
+        for item in raw_citations:
+            if not isinstance(item, Mapping):
+                continue
+            field = item.get("field") or item.get("variable")
+            if not isinstance(field, str) or not field:
+                continue
+            citations_map[field] = dict(item)
 
     thresholds = options.get("thresholds") or {}
     resolved_targets: dict[str, ResolvedTarget] = {}
@@ -235,7 +246,7 @@ def options_profile_to_dataclass(
         thresholds=dict(thresholds),
         resolved_targets=resolved_targets,
         variables={key: target.to_legacy() for key, target in resolved_targets.items()},
-        citation_map=dict(citations_map) if isinstance(citations_map, Mapping) else dict(citations_map),
+        citation_map=dict(citations_map),
         metadata=dict(local_metadata),
         last_resolved=last_resolved,
     )
