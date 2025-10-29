@@ -21,7 +21,7 @@ class DummyHass(SimpleNamespace):
 @pytest.mark.parametrize(
     "api_key, base_url, expected",
     [
-        ("apikey-12345", None, ["Base URL must start with http:// or https://"]),
+        ("apikey-12345", None, []),
         ("apikey-12345", "   https://example.com  ", []),
         ("   short  ", "https://example.com", ["API key appears to be too short"]),
     ],
@@ -35,11 +35,20 @@ def test_validate_api_config_handles_non_string_inputs(api_key, base_url, expect
 
 
 def test_validate_api_config_rejects_missing_values() -> None:
-    """Missing API credentials should produce both validation errors."""
+    """Missing API key should error while the optional base URL is accepted."""
 
     validator = ConfigValidator(DummyHass())
 
     errors = validator.validate_api_config(None, None)
 
-    assert "API key is required" in errors
-    assert "Base URL must start with http:// or https://" in errors
+    assert errors == ["API key is required"]
+
+
+def test_validate_api_config_rejects_invalid_custom_base_url() -> None:
+    """Supplying an invalid custom base URL should raise a validation error."""
+
+    validator = ConfigValidator(DummyHass())
+
+    errors = validator.validate_api_config("apikey-12345", "ftp://example.com")
+
+    assert errors == ["Base URL must start with http:// or https://"]
