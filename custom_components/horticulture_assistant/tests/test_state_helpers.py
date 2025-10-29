@@ -41,6 +41,11 @@ def test_parse_entities_iterable_and_empty():
     assert parse_entities(None) == []
 
 
+def test_parse_entities_handles_newlines_and_tabs():
+    result = parse_entities("sensor.a\n  sensor.b\t;sensor.c")
+    assert result == ["sensor.a", "sensor.b", "sensor.c"]
+
+
 def test_get_numeric_state_basic():
     hass = DummyHass()
     hass.states._data["sensor.number"] = "5"
