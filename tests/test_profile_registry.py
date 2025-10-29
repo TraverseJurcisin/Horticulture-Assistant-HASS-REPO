@@ -531,6 +531,27 @@ async def test_replace_sensor_unknown_profile_raises(hass):
         await reg.async_replace_sensor("missing", "temperature", "sensor.temp")
 
 
+async def test_replace_sensor_strips_entity_id_whitespace(hass):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    await reg.async_replace_sensor("p1", "temperature", " sensor.temp ")
+
+    assert entry.options[CONF_PROFILES]["p1"]["sensors"]["temperature"] == "sensor.temp"
+    prof = reg.get("p1")
+    assert prof.general["sensors"]["temperature"] == "sensor.temp"
+
+
+async def test_replace_sensor_rejects_blank_entity_id(hass):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    with pytest.raises(ValueError):
+        await reg.async_replace_sensor("p1", "temperature", "   ")
+
+
 async def test_refresh_species_marks_profile(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
