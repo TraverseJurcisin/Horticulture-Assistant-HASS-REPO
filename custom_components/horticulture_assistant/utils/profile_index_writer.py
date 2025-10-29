@@ -42,8 +42,9 @@ def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool
         return ""
 
     index_path = plant_dir / "profile_index.json"
+    existed_before = index_path.exists()
     # Skip generation if index file exists and not overwriting
-    if index_path.exists() and not overwrite:
+    if existed_before and not overwrite:
         _LOGGER.info("Profile index file already exists: %s. Skipping generation.", index_path)
         return plant_id
 
@@ -80,7 +81,7 @@ def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool
     try:
         with open(index_path, "w", encoding="utf-8") as idx_file:
             json.dump(profiles_index, idx_file, indent=2)
-        if index_path.exists() and overwrite:
+        if existed_before:
             _LOGGER.info("Overwrote existing file: %s", index_path)
         else:
             _LOGGER.info("Created file: %s", index_path)
