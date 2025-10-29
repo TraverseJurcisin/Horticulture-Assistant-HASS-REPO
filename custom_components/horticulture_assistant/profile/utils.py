@@ -81,8 +81,9 @@ def normalise_profile_payload(
     data = dict(payload)
     if fallback_id is None:
         fallback_id = _ensure_string(data.get("profile_id") or data.get("plant_id"), "profile")
-    data["profile_id"] = _ensure_string(data.get("profile_id"), fallback_id)
-    data["plant_id"] = _ensure_string(data.get("plant_id"), fallback_id)
+    profile_id = _ensure_string(data.get("profile_id"), fallback_id)
+    data["profile_id"] = profile_id
+    data["plant_id"] = _ensure_string(data.get("plant_id"), profile_id)
     fallback_display = fallback_id if display_name is None else _ensure_string(display_name, fallback_id)
     display_candidate = data.get("display_name") or data.get("name") or fallback_display
     data["display_name"] = _ensure_string(display_candidate, fallback_display)

@@ -441,6 +441,22 @@ async def test_async_save_handles_numeric_identifiers(hass, tmp_path, monkeypatc
 
 
 @pytest.mark.asyncio
+async def test_async_save_defaults_plant_id_to_profile_id(hass, tmp_path, monkeypatch) -> None:
+    """Profiles missing a plant_id should inherit it from the profile_id."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_save({"profile_id": "existing", "display_name": "My Plant"})
+
+    saved = await store.async_get("My Plant")
+    assert saved is not None
+    assert saved["profile_id"] == "existing"
+    assert saved["plant_id"] == "existing"
+
+
+@pytest.mark.asyncio
 async def test_async_save_profile_from_options_preserves_local_sections(hass, tmp_path, monkeypatch) -> None:
     """Saving from options should materialise library/local sections."""
 

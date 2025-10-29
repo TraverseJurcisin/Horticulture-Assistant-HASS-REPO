@@ -41,6 +41,15 @@ def test_normalise_profile_payload_falls_back_to_generated_identifiers() -> None
     assert normalised["display_name"] == "profile"
 
 
+def test_normalise_profile_payload_prefers_profile_id_for_missing_plant_id() -> None:
+    payload = {"profile_id": "existing", "display_name": "My Plant"}
+
+    normalised = normalise_profile_payload(payload, fallback_id="generated", display_name="My Plant")
+
+    assert normalised["profile_id"] == "existing"
+    assert normalised["plant_id"] == "existing"
+
+
 def test_determine_species_slug_ignores_whitespace_candidates() -> None:
     library = ProfileLibrarySection(profile_id="lib-1", identity={"species": "  Pisum sativum  "})
     local = ProfileLocalSection(species="   ")
