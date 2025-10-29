@@ -48,6 +48,15 @@ def test_get_numeric_state_handles_thousand_separators():
     assert value == pytest.approx(1234.56)
 
 
+def test_get_numeric_state_handles_dotted_thousands():
+    hass = types.SimpleNamespace(
+        states=types.SimpleNamespace(get=lambda entity_id: types.SimpleNamespace(state="1.234.567"))
+    )
+
+    value = state_helpers.get_numeric_state(hass, "sensor.dotted")
+    assert value == pytest.approx(1_234_567)
+
+
 def test_get_numeric_state_handles_european_format():
     hass = types.SimpleNamespace(
         states=types.SimpleNamespace(get=lambda entity_id: types.SimpleNamespace(state="1.234,56"))

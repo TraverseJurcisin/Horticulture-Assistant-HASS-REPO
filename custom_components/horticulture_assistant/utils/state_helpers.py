@@ -44,6 +44,12 @@ def _normalise_numeric_string(value: str) -> str:
         return sign
 
     if "," not in collapsed:
+        if collapsed.count(".") > 1:
+            segments = collapsed.split(".")
+            head, *tail = segments
+            if head and all(segment.isdigit() for segment in segments):
+                if tail and all(len(segment) == 3 for segment in tail):
+                    return f"{sign}{head}{''.join(tail)}"
         return f"{sign}{collapsed}"
 
     if "." in collapsed:
