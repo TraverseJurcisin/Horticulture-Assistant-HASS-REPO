@@ -1,7 +1,7 @@
 """Simple in‑memory product inventory tracking utilities."""
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 @dataclass
@@ -59,10 +59,16 @@ class ProductInventory:
         """Return records with an expiration date within ``within_days``."""
 
         soon: list[InventoryRecord] = []
-        now = datetime.now()
+        default_now = datetime.now()
+        window = timedelta(days=within_days)
         for records in self.inventory.values():
             for r in records:
-                if r.expiration_date and (r.expiration_date - now).days <= within_days:
+                expiry = r.expiration_date
+                if expiry is None:
+                    continue
+
+                reference_now = default_now if expiry.tzinfo is None else datetime.now(expiry.tzinfo)
+                if expiry <= reference_now + window:
                     soon.append(r)
         return soon
 
