@@ -31,6 +31,10 @@ def test_parse_range_reversed_order():
     assert parse_range([5, 1]) == (1.0, 5.0)
 
 
+def test_parse_range_iterable_with_invalid_entries():
+    assert parse_range(["not", 7, "ignored", 3]) == (3.0, 7.0)
+
+
 def test_parse_range_non_finite():
     assert parse_range([float("inf"), 1]) is None
     assert parse_range([float("nan"), 2]) is None

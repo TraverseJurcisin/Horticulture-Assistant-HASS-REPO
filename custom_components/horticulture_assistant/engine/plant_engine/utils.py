@@ -414,10 +414,16 @@ def parse_range(value: Iterable[float] | str) -> tuple[float, float] | None:
     else:
         try:
             iterator = iter(value)
-            numbers.append(float(next(iterator)))
-            numbers.append(float(next(iterator)))
-        except (StopIteration, TypeError, ValueError):
+        except TypeError:
             return None
+
+        for item in iterator:
+            try:
+                numbers.append(float(item))
+            except (TypeError, ValueError):
+                continue
+            if len(numbers) == 2:
+                break
 
     if len(numbers) < 2:
         return None
