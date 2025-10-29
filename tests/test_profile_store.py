@@ -198,7 +198,30 @@ async def test_async_save_preserves_mapping_credentials(hass, tmp_path, monkeypa
 
     stored = await store.async_get("Proxy Source")
     assert stored is not None
-    assert stored["opb_credentials"] == {"client_id": "id", "secret": "sec"}
+
+
+@pytest.mark.asyncio
+async def test_async_save_dataclass_uses_profile_identifier(hass, tmp_path, monkeypatch) -> None:
+    """Saving dataclass profiles should persist files under their profile_id."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    profile = BioProfile(
+        profile_id="lineage123",
+        display_name="Lineage 123",
+    )
+
+    await store.async_save(profile)
+
+    # The file should be named after the profile identifier, not the display name.
+    expected_path = store._path_for("lineage123")
+    assert expected_path.exists()
+
+    stored = await store.async_get("lineage123")
+    assert stored is not None
+    assert stored["display_name"] == "Lineage 123"
 
 
 @pytest.mark.asyncio

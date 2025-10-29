@@ -112,7 +112,16 @@ class ProfileStore:
         if isinstance(profile, BioProfile):
             profile_obj = deepcopy(profile)
             payload = self._profile_to_payload(profile_obj)
-            target_name = name or profile_obj.display_name or profile_obj.profile_id
+            candidate_id: str | None = None
+            if isinstance(profile_obj.profile_id, str):
+                candidate_id = profile_obj.profile_id.strip() or None
+            target_name = name
+            if not target_name:
+                if candidate_id:
+                    target_name = candidate_id
+                else:
+                    fallback = profile_obj.display_name or profile_obj.profile_id or "profile"
+                    target_name = str(fallback) if fallback is not None else "profile"
         else:
             fallback = (
                 name or profile.get("display_name") or profile.get("name") or profile.get("plant_id") or "profile"
