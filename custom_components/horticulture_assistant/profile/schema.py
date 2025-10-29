@@ -19,6 +19,23 @@ def _as_dict(value: Any) -> dict[str, Any]:
     return {}
 
 
+def _optional_string(value: Any) -> str | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    return text
+
+
+def _string_or_fallback(*candidates: Any, fallback: str) -> str:
+    for candidate in candidates:
+        text = _optional_string(candidate)
+        if text is not None:
+            return text
+    return fallback
+
+
 def _parse_timestamp(raw: str | None) -> datetime | None:
     if not raw:
         return None
@@ -119,11 +136,16 @@ class RunEvent:
                 return None
 
         return RunEvent(
-            run_id=str(data.get("run_id") or data.get("id") or "run"),
-            profile_id=str(data.get("profile_id") or data.get("cultivar_id") or ""),
-            species_id=(str(data.get("species_id")) if data.get("species_id") else None),
-            started_at=str(data.get("started_at") or data.get("start")),
-            ended_at=(str(data.get("ended_at")) if data.get("ended_at") else None),
+            run_id=_string_or_fallback(data.get("run_id"), data.get("id"), fallback="run"),
+            profile_id=_string_or_fallback(data.get("profile_id"), data.get("cultivar_id"), fallback=""),
+            species_id=_optional_string(data.get("species_id")),
+            started_at=_string_or_fallback(
+                data.get("started_at"),
+                data.get("start"),
+                data.get("timestamp"),
+                fallback="",
+            ),
+            ended_at=_optional_string(data.get("ended_at")),
             environment=_as_dict(data.get("environment")),
             metadata=_as_dict(data.get("metadata")),
             targets_met=_float_or_none(data.get("targets_met")),
@@ -202,18 +224,18 @@ class CultivationEvent:
                 tags = [text]
 
         return CultivationEvent(
-            event_id=str(data.get("event_id") or data.get("id") or "event"),
-            profile_id=str(data.get("profile_id") or ""),
-            species_id=(str(data.get("species_id")) if data.get("species_id") else None),
-            run_id=(str(data.get("run_id")) if data.get("run_id") else None),
-            occurred_at=str(data.get("occurred_at") or data.get("timestamp") or ""),
-            event_type=str(data.get("event_type") or data.get("type") or "note"),
-            title=(str(data.get("title")) if data.get("title") else None),
-            notes=(str(data.get("notes")) if data.get("notes") else None),
+            event_id=_string_or_fallback(data.get("event_id"), data.get("id"), fallback="event"),
+            profile_id=_string_or_fallback(data.get("profile_id"), fallback=""),
+            species_id=_optional_string(data.get("species_id")),
+            run_id=_optional_string(data.get("run_id")),
+            occurred_at=_string_or_fallback(data.get("occurred_at"), data.get("timestamp"), fallback=""),
+            event_type=_string_or_fallback(data.get("event_type"), data.get("type"), fallback="note"),
+            title=_optional_string(data.get("title")),
+            notes=_optional_string(data.get("notes")),
             metric_value=_float_or_none(data.get("metric_value")),
-            metric_unit=(str(data.get("metric_unit")) if data.get("metric_unit") else None),
-            actor=(str(data.get("actor")) if data.get("actor") else None),
-            location=(str(data.get("location")) if data.get("location") else None),
+            metric_unit=_optional_string(data.get("metric_unit")),
+            actor=_optional_string(data.get("actor")),
+            location=_optional_string(data.get("location")),
             tags=tags,
             metadata=_as_dict(data.get("metadata")),
         )
@@ -306,11 +328,11 @@ class HarvestEvent:
         except (TypeError, ValueError):
             fruit_value = None
         return HarvestEvent(
-            harvest_id=str(data.get("harvest_id") or data.get("id") or "harvest"),
-            profile_id=str(data.get("profile_id") or data.get("cultivar_id") or ""),
-            species_id=(str(data.get("species_id")) if data.get("species_id") else None),
-            run_id=(str(data.get("run_id")) if data.get("run_id") else None),
-            harvested_at=str(data.get("harvested_at") or data.get("timestamp") or ""),
+            harvest_id=_string_or_fallback(data.get("harvest_id"), data.get("id"), fallback="harvest"),
+            profile_id=_string_or_fallback(data.get("profile_id"), data.get("cultivar_id"), fallback=""),
+            species_id=_optional_string(data.get("species_id")),
+            run_id=_optional_string(data.get("run_id")),
+            harvested_at=_string_or_fallback(data.get("harvested_at"), data.get("timestamp"), fallback=""),
             yield_grams=yield_value,
             area_m2=area_value,
             wet_weight_grams=wet_value,
@@ -395,15 +417,15 @@ class NutrientApplication:
             return [str(value)]
 
         return NutrientApplication(
-            event_id=str(data.get("event_id") or data.get("id") or "nutrient"),
-            profile_id=str(data.get("profile_id") or ""),
-            species_id=(str(data.get("species_id")) if data.get("species_id") else None),
-            run_id=(str(data.get("run_id")) if data.get("run_id") else None),
-            applied_at=str(data.get("applied_at") or data.get("timestamp") or ""),
-            product_id=(str(data.get("product_id")) if data.get("product_id") else None),
-            product_name=(str(data.get("product_name")) if data.get("product_name") else None),
-            product_category=(str(data.get("product_category")) if data.get("product_category") else None),
-            source=(str(data.get("source")) if data.get("source") else None),
+            event_id=_string_or_fallback(data.get("event_id"), data.get("id"), fallback="nutrient"),
+            profile_id=_string_or_fallback(data.get("profile_id"), fallback=""),
+            species_id=_optional_string(data.get("species_id")),
+            run_id=_optional_string(data.get("run_id")),
+            applied_at=_string_or_fallback(data.get("applied_at"), data.get("timestamp"), fallback=""),
+            product_id=_optional_string(data.get("product_id")),
+            product_name=_optional_string(data.get("product_name")),
+            product_category=_optional_string(data.get("product_category")),
+            source=_optional_string(data.get("source")),
             solution_volume_liters=_float(data.get("solution_volume_liters") or data.get("volume_liters")),
             concentration_ppm=_float(data.get("concentration_ppm") or data.get("ppm")),
             ec_ms=_float(data.get("ec_ms") or data.get("ec")),
@@ -467,10 +489,10 @@ class YieldStatistic:
                 except (TypeError, ValueError):
                     continue
         return YieldStatistic(
-            stat_id=str(data.get("stat_id") or data.get("id") or "stat"),
-            scope=str(data.get("scope") or "cultivar"),
-            profile_id=str(data.get("profile_id") or ""),
-            computed_at=str(data.get("computed_at") or data.get("timestamp") or ""),
+            stat_id=_string_or_fallback(data.get("stat_id"), data.get("id"), fallback="stat"),
+            scope=_string_or_fallback(data.get("scope"), fallback="cultivar"),
+            profile_id=_string_or_fallback(data.get("profile_id"), fallback=""),
+            computed_at=_string_or_fallback(data.get("computed_at"), data.get("timestamp"), fallback=""),
             metrics=metrics,
             metadata=_as_dict(data.get("metadata")),
         )
