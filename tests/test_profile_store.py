@@ -146,6 +146,36 @@ async def test_async_create_profile_ignores_blank_sensor_entries(hass, tmp_path,
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_accepts_sequence_sensor_entries(hass, tmp_path, monkeypatch) -> None:
+    """Sensor mappings supplied as sequences should retain ordered bindings."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_create_profile(
+        "Sequence Sensors",
+        sensors={
+            "moisture": [" sensor.one ", "sensor.two", None],
+            "temperature": (" sensor.temp ", ""),
+            "illuminance": 42,
+        },
+    )
+
+    profile = await store.async_get("Sequence Sensors")
+    assert profile is not None
+    assert profile["sensors"] == {
+        "moisture": ["sensor.one", "sensor.two"],
+        "temperature": ["sensor.temp"],
+    }
+    general = profile["general"] if isinstance(profile.get("general"), dict) else {}
+    assert general.get("sensors") == {
+        "moisture": ["sensor.one", "sensor.two"],
+        "temperature": ["sensor.temp"],
+    }
+
+
+@pytest.mark.asyncio
 async def test_async_create_profile_preserves_opb_credentials(hass, tmp_path, monkeypatch) -> None:
     """Profiles cloned from storage should retain OpenPlantbook credentials."""
 
