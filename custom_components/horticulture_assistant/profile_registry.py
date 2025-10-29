@@ -9,6 +9,7 @@ needing to parse config entry options or storage files individually.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 from collections.abc import Callable, Iterable, Mapping
@@ -87,6 +88,15 @@ except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in CI 
     )
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _parent_issue_id(profile_id: str, parent_id: str) -> str:
+    """Return a deterministic, unique issue id for a missing parent link."""
+
+    slug = slugify(parent_id) or "unknown_parent"
+    digest = hashlib.sha1(parent_id.encode("utf-8", "ignore")).hexdigest()[:8]
+    return f"missing_parent_{profile_id}_{slug}_{digest}"
+
 
 _SCHEMA_PATH = Path(__file__).parent / "data" / "schema" / "bio_profile.schema.json"
 _PROFILE_SCHEMA: dict[str, Any] | None = None
@@ -244,7 +254,7 @@ class ProfileRegistry:
         ir.async_create_issue(
             self.hass,
             DOMAIN,
-            f"missing_parent_{profile_id}_{slugify(parent_id)}",
+            _parent_issue_id(profile_id, parent_id),
             is_fixable=False,
             severity=ir.IssueSeverity.WARNING,
             translation_key="missing_lineage_parent",
@@ -263,7 +273,7 @@ class ProfileRegistry:
         ir.async_delete_issue(
             self.hass,
             DOMAIN,
-            f"missing_parent_{profile_id}_{slugify(parent_id)}",
+            _parent_issue_id(profile_id, parent_id),
         )
         self._missing_parent_issues.discard(issue_key)
 
