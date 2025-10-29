@@ -83,6 +83,10 @@ class ProfileStore:
             fallback = (
                 name or profile.get("display_name") or profile.get("name") or profile.get("plant_id") or "profile"
             )
+            if fallback == "profile":
+                identifier = profile.get("profile_id")
+                if isinstance(identifier, str) and identifier.strip():
+                    fallback = identifier
             preserved: dict[str, Any] = {}
             for key in ("species_display", "species_pid", "image_url"):
                 value = profile.get(key)

@@ -129,6 +129,27 @@ async def test_async_create_profile_preserves_opb_credentials(hass, tmp_path, mo
 
 
 @pytest.mark.asyncio
+async def test_async_save_prefers_profile_id_for_storage_name(hass, tmp_path, monkeypatch) -> None:
+    """Saving a payload without a name should fall back to the profile id."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_save({"profile_id": "unique_profile"})
+
+    expected_path = store._path_for("unique_profile")
+    assert expected_path.exists(), "Profile should be saved under its profile_id slug"
+
+    saved = json.loads(expected_path.read_text(encoding="utf-8"))
+    assert saved["profile_id"] == "unique_profile"
+
+    fallback_path = store._path_for("profile")
+    if fallback_path != expected_path:
+        assert not fallback_path.exists(), "Default fallback file should not be created"
+
+
+@pytest.mark.asyncio
 async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypatch) -> None:
     """Listing profiles should return stored display names when available."""
 
