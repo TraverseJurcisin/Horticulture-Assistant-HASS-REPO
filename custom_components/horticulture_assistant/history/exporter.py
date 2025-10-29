@@ -122,6 +122,8 @@ class HistoryExporter:
             data = json.loads(self._index_path.read_text(encoding="utf-8"))
         except (OSError, UnicodeDecodeError, json.JSONDecodeError):
             return {}
+        if not isinstance(data, Mapping):
+            return {}
         index: dict[str, HistoryIndex] = {}
         for key, value in data.items():
             counts = value.get("counts") if isinstance(value, Mapping) else {}

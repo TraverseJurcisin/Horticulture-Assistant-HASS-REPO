@@ -136,3 +136,33 @@ async def test_index_recovers_from_corrupted_file(tmp_path: Path, hass) -> None:
     index = await exporter.async_index()
 
     assert index == {}
+
+
+@pytest.mark.asyncio
+async def test_append_recovers_from_non_mapping_index(tmp_path: Path, hass) -> None:
+    """Appending history should survive indexes that are not mappings."""
+
+    # ``HistoryExporter`` initialisation will create the ``history`` directory but
+    # shouldn't validate the index file contents until an operation actually uses
+    # it.  Write a valid JSON value that is not the expected mapping to simulate a
+    # corrupted file on disk.
+    index_file = tmp_path / "index.json"
+    index_file.write_text("[]", encoding="utf-8")
+
+    exporter = HistoryExporter(hass, base_path=tmp_path)
+
+    payload = {
+        "run_id": "run-3",
+        "profile_id": "plant-5",
+        "started_at": "2024-03-07T08:40:00+00:00",
+    }
+
+    # Prior to the fix this call raised ``AttributeError`` when attempting to
+    # iterate ``data.items()`` on a list during index loading.
+    await exporter.async_append("plant-5", "run", payload)
+
+    index = await exporter.async_index()
+    record = index["plant-5"]
+
+    assert record.counts["run"] == 1
+    assert record.last_updated == payload["started_at"]
