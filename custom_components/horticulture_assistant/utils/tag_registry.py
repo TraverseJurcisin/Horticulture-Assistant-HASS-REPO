@@ -8,7 +8,11 @@ from pathlib import Path
 
 __all__ = ["list_tags", "get_plants_with_tag", "search_tags"]
 
-_TAGS_FILE = Path(__file__).resolve().parents[3] / "tags.json"
+# ``tags.json`` lives alongside the integration package. ``parents[1]``
+# resolves to ``custom_components/horticulture_assistant`` ensuring we locate
+# the bundled metadata even when the project root differs (e.g. when the
+# integration is installed via HACS inside ``custom_components``).
+_TAGS_FILE = Path(__file__).resolve().parents[1] / "tags.json"
 
 
 @cache

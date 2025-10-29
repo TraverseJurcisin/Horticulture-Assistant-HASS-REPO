@@ -14,6 +14,17 @@ def _write_tags(tmp_path: Path, data: dict[str, list[str]]) -> Path:
     return tag_file
 
 
+def test_list_tags_uses_bundled_metadata() -> None:
+    """The default tag registry should load the integration's bundled data."""
+
+    tag_registry._load_tags.cache_clear()
+    expected_file = Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant" / "tags.json"
+    expected_data = json.loads(expected_file.read_text(encoding="utf-8"))
+
+    assert tag_registry.list_tags() == sorted(expected_data)
+    tag_registry._load_tags.cache_clear()
+
+
 def test_get_plants_with_tag_returns_copy(tmp_path, monkeypatch) -> None:
     """Mutating results from ``get_plants_with_tag`` should not affect cache."""
 
