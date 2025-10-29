@@ -248,17 +248,6 @@ class ProfileRegistry:
 
         merged = overlay
 
-        stored_general = dict(stored.general)
-        overlay_general = dict(overlay.general)
-        stored_sensors = dict(stored_general.get("sensors", {}))
-        overlay_sensors = dict(overlay_general.get("sensors", {}))
-        if stored_sensors or overlay_sensors:
-            merged_sensors = dict(stored_sensors)
-            merged_sensors.update(overlay_sensors)
-            overlay_general["sensors"] = merged_sensors
-        merged.general = overlay_general
-        merged.refresh_sections()
-
         def _is_empty(value: Any) -> bool:
             if value is None:
                 return True
@@ -267,6 +256,25 @@ class ProfileRegistry:
             if isinstance(value, str):
                 return value.strip() == ""
             return False
+
+        stored_general = dict(stored.general)
+        overlay_general = dict(overlay.general)
+        stored_sensors = dict(stored_general.get("sensors", {}))
+        overlay_sensors = dict(overlay_general.get("sensors", {}))
+        if stored_sensors or overlay_sensors:
+            merged_sensors = dict(stored_sensors)
+            merged_sensors.update(overlay_sensors)
+            overlay_general["sensors"] = merged_sensors
+
+        for key, value in stored_general.items():
+            if key == "sensors":
+                continue
+            existing = overlay_general.get(key)
+            if (key not in overlay_general or _is_empty(existing)) and not _is_empty(value):
+                overlay_general[key] = deepcopy(value)
+
+        merged.general = overlay_general
+        merged.refresh_sections()
 
         def _merge_attr(name: str) -> None:
             stored_value = getattr(stored, name, None)

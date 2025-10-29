@@ -140,6 +140,28 @@ async def test_profile_device_metadata_injects_missing_identifier(hass, monkeypa
     assert expected in identifiers
 
 
+async def test_merge_profile_data_preserves_general_metadata():
+    """Stored general metadata should survive profile merges."""
+
+    stored = BioProfile(
+        profile_id="p1",
+        display_name="Stored",
+        general={"template": "veg", CONF_PROFILE_SCOPE: "entry", "sensors": {"temp": "sensor.temp"}},
+    )
+
+    overlay = BioProfile(
+        profile_id="p1",
+        display_name="Overlay",
+        general={"sensors": {"humidity": "sensor.hum"}},
+    )
+
+    merged = ProfileRegistry._merge_profile_data(stored, overlay)
+
+    assert merged.general.get("template") == "veg"
+    assert merged.general.get(CONF_PROFILE_SCOPE) == "entry"
+    assert merged.general.get("sensors") == {"temp": "sensor.temp", "humidity": "sensor.hum"}
+
+
 async def test_lineage_notification_created_and_clears(hass):
     entry = await _make_entry(
         hass,
