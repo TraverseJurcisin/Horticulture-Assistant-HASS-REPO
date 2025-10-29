@@ -167,3 +167,30 @@ async def test_local_store_load_resets_on_non_mapping(monkeypatch):
     assert data == storage.DEFAULT_DATA
     assert data is not storage.DEFAULT_DATA
     assert data["history"] is not storage.DEFAULT_DATA["history"]
+
+
+class TupleStore:
+    def __init__(self, hass, version, key) -> None:  # noqa: D401 - signature mirrors Store
+        self._data = {
+            "recipes": ("tea", "coffee"),
+            "history": [],
+        }
+
+    async def async_load(self):
+        return dict(self._data)
+
+    async def async_save(self, data):  # pragma: no cover - not needed here
+        self._data = data
+
+
+@pytest.mark.asyncio
+async def test_local_store_load_coerces_tuples_to_lists(monkeypatch):
+    monkeypatch.setattr(storage, "Store", TupleStore)
+
+    hass = types.SimpleNamespace()
+    store = storage.LocalStore(hass)
+
+    data = await store.load()
+
+    assert data["recipes"] == ["tea", "coffee"]
+    assert isinstance(data["recipes"], list)
