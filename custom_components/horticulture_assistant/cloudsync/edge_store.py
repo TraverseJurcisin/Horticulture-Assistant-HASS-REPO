@@ -235,8 +235,8 @@ class EdgeSyncStore:
             params.append(tenant_id)
         if org_id is not None:
             org_norm = str(org_id).strip()
-            query += " ORDER BY (org_id = ?) DESC, updated_at DESC"
-            params.append(org_norm)
+            query += " AND (org_id = ? OR org_id = '') ORDER BY CASE WHEN org_id = ? THEN 0 ELSE 1 END, updated_at DESC"
+            params.extend((org_norm, org_norm))
         else:
             query += " ORDER BY updated_at DESC"
         with self._connection() as conn:
