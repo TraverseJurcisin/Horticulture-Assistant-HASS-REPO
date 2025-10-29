@@ -783,7 +783,10 @@ class ProfileRegistry:
         if isinstance(data, list):  # pragma: no cover - legacy format
             data = {"profiles": {p["plant_id"]: p for p in data if isinstance(p, Mapping) and p.get("plant_id")}}
 
-        stored_profiles = data.get("profiles", {})
+        stored_profiles = data.get("profiles", {}) if isinstance(data, Mapping) else {}
+        if not isinstance(stored_profiles, Mapping):
+            stored_profiles = {}
+
         profiles: dict[str, BioProfile] = {}
 
         options_profiles = self.entry.options.get(CONF_PROFILES, {}) or {}
@@ -805,8 +808,43 @@ class ProfileRegistry:
         for pid, payload in stored_profiles.items():
             if pid in profiles:
                 continue
-            profiles[pid] = BioProfile.from_json(payload)
-            self._validate_profile(profiles[pid])
+            if not isinstance(payload, Mapping):
+                _LOGGER.warning(
+                    "Skipping invalid stored profile %s: expected mapping but received %s",
+                    pid,
+                    type(payload).__name__,
+                )
+                continue
+
+            try:
+                profile = BioProfile.from_json(dict(payload))
+            except Exception:
+                normalised = dict(payload)
+                try:
+                    ensure_sections(
+                        normalised,
+                        plant_id=pid,
+                        display_name=normalised.get("name") or pid,
+                    )
+                except Exception as normalise_err:
+                    _LOGGER.warning(
+                        "Skipping invalid stored profile %s: %s",
+                        pid,
+                        normalise_err,
+                    )
+                    continue
+                try:
+                    profile = BioProfile.from_json(normalised)
+                except Exception as final_err:
+                    _LOGGER.warning(
+                        "Skipping invalid stored profile %s: %s",
+                        pid,
+                        final_err,
+                    )
+                    continue
+
+            profiles[pid] = profile
+            self._validate_profile(profile)
 
         for profile in profiles.values():
             profile.general.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
