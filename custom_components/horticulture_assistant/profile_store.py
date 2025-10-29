@@ -4,7 +4,7 @@ import asyncio
 import json
 from collections.abc import Mapping
 from copy import deepcopy
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import Any
 
 from homeassistant.core import HomeAssistant
@@ -219,8 +219,40 @@ class ProfileStore:
 
     def _path_for(self, name: Any) -> Path:
         base = _slug_source(name)
-        slug = slugify(base) or (base if base else "profile")
+        slug = self._safe_slug(base)
         return self._base / f"{slug}.json"
+
+    def _safe_slug(self, base: str) -> str:
+        """Return a filesystem-safe slug limited to a single path component."""
+
+        for candidate in (slugify(base), base):
+            safe = self._normalise_slug_component(candidate)
+            if safe:
+                return safe
+        return "profile"
+
+    @staticmethod
+    def _normalise_slug_component(candidate: str | None) -> str | None:
+        if not candidate:
+            return None
+        text = str(candidate).strip()
+        if not text:
+            return None
+        # Normalise both POSIX and Windows separators so ``PurePath`` can enforce a
+        # single path component.
+        text = text.replace("\\", "/")
+        pure = PurePath(text)
+        part = pure.name if len(pure.parts) != 1 else pure.parts[0]
+        part = part.strip().strip(".")
+        if not part:
+            return None
+        if part in {".", ".."}:
+            return None
+        if "/" in part or "\\" in part:
+            part = part.replace("/", "_").replace("\\", "_")
+        if not part or part in {".", ".."}:
+            return None
+        return part
 
     def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: Any) -> dict[str, Any]:
         base = _slug_source(fallback_name)
