@@ -26,3 +26,11 @@ def test_search_tags(tmp_path, monkeypatch):
     result = tag_registry.search_tags("co")
     assert result == {"cool": ["p1"]}
     assert tag_registry.search_tags("") == {}
+
+
+def test_packaged_tags_loaded_by_default():
+    tag_registry._load_tags.cache_clear()
+    data = tag_registry._load_tags()
+    assert tag_registry._TAGS_FILE.exists()
+    assert "acid-loving" in data
+    assert "backyard" in data

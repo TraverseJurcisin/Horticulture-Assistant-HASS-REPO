@@ -8,7 +8,7 @@ from pathlib import Path
 
 __all__ = ["list_tags", "get_plants_with_tag", "search_tags"]
 
-_TAGS_FILE = Path(__file__).resolve().parents[3] / "tags.json"
+_TAGS_FILE = Path(__file__).resolve().parents[1] / "tags.json"
 
 
 @cache
