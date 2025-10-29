@@ -4,6 +4,8 @@ import asyncio
 import json
 from collections.abc import Mapping
 from copy import deepcopy
+from math import isfinite
+from numbers import Integral, Real
 from pathlib import Path, PurePath
 from typing import Any
 
@@ -28,6 +30,26 @@ _WINDOWS_RESERVED_NAMES = {
 }
 
 _WINDOWS_INVALID_CHARS = "<>:\\\"|?*"
+
+
+def _normalise_metadata_value(value: Any) -> str | None:
+    """Return a string representation for preserved metadata keys."""
+
+    if value is None:
+        return None
+    if isinstance(value, str):
+        text = value.strip()
+        return text or None
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, Integral):
+        return str(int(value))
+    if isinstance(value, Real):
+        number = float(value)
+        if not isfinite(number):
+            return None
+        return format(number, "g")
+    return None
 
 
 def _slug_source(value: Any) -> str:
@@ -123,9 +145,9 @@ class ProfileStore:
                     fallback = identifier
             preserved: dict[str, Any] = {}
             for key in ("species_display", "species_pid", "image_url"):
-                value = profile.get(key)
-                if isinstance(value, str) and value:
-                    preserved[key] = value
+                normalised = _normalise_metadata_value(profile.get(key))
+                if normalised is not None:
+                    preserved[key] = normalised
             credentials = profile.get("opb_credentials")
             if isinstance(credentials, Mapping):
                 preserved["opb_credentials"] = deepcopy(dict(credentials))
@@ -233,9 +255,9 @@ class ProfileStore:
         preserved: dict[str, Any] = {}
         if isinstance(clone_payload, Mapping):
             for key in ("species_display", "species_pid", "image_url"):
-                value = clone_payload.get(key)
-                if isinstance(value, str) and value:
-                    preserved[key] = value
+                normalised = _normalise_metadata_value(clone_payload.get(key))
+                if normalised is not None:
+                    preserved[key] = normalised
             credentials = clone_payload.get("opb_credentials")
             if isinstance(credentials, Mapping):
                 preserved["opb_credentials"] = deepcopy(dict(credentials))
@@ -311,9 +333,9 @@ class ProfileStore:
         slug = slugify(base) or (base if base else "profile")
         preserved: dict[str, Any] = {}
         for key in ("species_display", "species_pid", "image_url"):
-            value = payload.get(key)
-            if isinstance(value, str) and value:
-                preserved[key] = value
+            normalised = _normalise_metadata_value(payload.get(key))
+            if normalised is not None:
+                preserved[key] = normalised
         credentials = payload.get("opb_credentials")
         if isinstance(credentials, Mapping):
             preserved["opb_credentials"] = deepcopy(dict(credentials))
