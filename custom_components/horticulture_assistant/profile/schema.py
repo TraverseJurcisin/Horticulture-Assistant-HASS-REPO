@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
@@ -9,6 +10,9 @@ try:
     UTC = datetime.UTC  # type: ignore[attr-defined]
 except AttributeError:  # pragma: no cover - Py<3.11 fallback
     UTC = timezone.utc  # noqa: UP017
+
+
+_NUMBER_PATTERN = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
 
 
 def _as_dict(value: Any) -> dict[str, Any]:
@@ -124,6 +128,32 @@ class RunEvent:
     @staticmethod
     def from_json(data: Mapping[str, Any]) -> RunEvent:
         def _float_or_none(value: Any) -> float | None:
+            if value is None:
+                return None
+            if isinstance(value, int | float):
+                try:
+                    return float(value)
+                except (TypeError, ValueError):
+                    return None
+            if isinstance(value, str):
+                text = value.strip()
+                if not text:
+                    return None
+                percent = text.endswith("%")
+                if percent:
+                    text = text[:-1]
+                try:
+                    parsed = float(text)
+                    return parsed / 100 if percent else parsed
+                except ValueError:
+                    match = _NUMBER_PATTERN.search(text)
+                    if match:
+                        try:
+                            parsed = float(match.group(0))
+                            return parsed / 100 if percent else parsed
+                        except ValueError:
+                            return None
+                    return None
             try:
                 return float(value)
             except (TypeError, ValueError):
