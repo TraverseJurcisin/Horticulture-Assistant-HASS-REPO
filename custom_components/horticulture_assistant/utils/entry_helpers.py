@@ -66,11 +66,17 @@ def _normalise_sensor_sequences(
         if not isinstance(key, str) or not key:
             continue
         if isinstance(raw, str):
-            items = (raw,) if raw else tuple()
+            cleaned = raw.strip()
+            items = (cleaned,) if cleaned else tuple()
         elif isinstance(raw, Sequence):
-            items = tuple(
-                item for item in raw if isinstance(item, str) and item
-            )
+            cleaned: list[str] = []
+            for item in raw:
+                if not isinstance(item, str):
+                    continue
+                trimmed = item.strip()
+                if trimmed:
+                    cleaned.append(trimmed)
+            items = tuple(cleaned)
         else:
             items = tuple()
         if items:

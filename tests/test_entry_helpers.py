@@ -260,6 +260,22 @@ def test_profile_context_helpers_normalise_payload():
     assert (DOMAIN, "profile:plant") in info["identifiers"]
 
 
+def test_profile_context_strips_sensor_whitespace():
+    context = ProfileContext(
+        id="plant",
+        name="Plant",
+        sensors={
+            "temperature": ["  sensor.temp  ", "sensor.backup  "],
+            "humidity": "  sensor.hum  ",
+        },
+    )
+
+    assert context.sensor_ids_for_roles("temperature") == ("sensor.temp", "sensor.backup")
+    assert context.first_sensor("humidity") == "sensor.hum"
+    # ``sensor_ids_for_roles`` without args should flatten all roles
+    assert context.sensor_ids_for_roles() == ("sensor.temp", "sensor.backup", "sensor.hum")
+
+
 @pytest.mark.asyncio
 async def test_resolve_profile_context_collection_aggregates_profiles(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
