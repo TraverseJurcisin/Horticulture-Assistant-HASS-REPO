@@ -170,12 +170,20 @@ class AIClient:
 
 async def async_recommend_variable(hass, key: str, plant_id: str, ttl_hours: int = 720, **kwargs) -> dict[str, Any]:
     """Return AI recommendation for a variable with simple caching."""
-    provider = kwargs.get("provider", "openai")
-    model = kwargs.get("model", "gpt-4o-mini")
+
+    raw_provider = kwargs.get("provider")
+    provider = raw_provider.strip() if isinstance(raw_provider, str) else raw_provider
+    if not provider:
+        provider = "openai"
+
+    raw_model = kwargs.get("model")
+    model = raw_model.strip() if isinstance(raw_model, str) else raw_model
+    if not model:
+        model = "gpt-4o-mini"
 
     cache_context = dict(kwargs)
-    cache_context.setdefault("provider", provider)
-    cache_context.setdefault("model", model)
+    cache_context["provider"] = provider
+    cache_context["model"] = model
     cache_key = _make_cache_key(plant_id, key, cache_context)
     now = datetime.now(UTC)
     cached = _AI_CACHE.get(cache_key)

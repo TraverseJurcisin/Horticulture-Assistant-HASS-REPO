@@ -112,6 +112,87 @@ async def test_async_recommend_variable_cache_accounts_for_context(monkeypatch, 
 
 
 @pytest.mark.asyncio
+async def test_generate_setpoint_handles_search_results(monkeypatch, hass):
+    hass.secrets = {}
+    hass.data.setdefault("secrets", {})
+
+    class DummySearchResponse:
+        def __init__(self, payload):
+            self.status = 200
+            self._payload = payload
+
+        async def json(self):
+            return self._payload
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, exc_type, exc, tb):
+            return False
+
+    class DummySession:
+        def __init__(self):
+            self.get_calls = 0
+
+        def get(self, url, timeout):
+            self.get_calls += 1
+            assert "search" in url
+            return DummySearchResponse({"items": [{"link": "https://doc.example/guide"}]})
+
+        def post(self, *args, **kwargs):
+            raise AssertionError("LLM refinement should not be invoked in test")
+
+    dummy_session = DummySession()
+    monkeypatch.setattr(ai_client_mod, "async_get_clientsession", lambda _hass: dummy_session)
+    monkeypatch.setattr(ai_client_mod, "_fetch_text", AsyncMock(return_value="value 10 value 20"))
+
+    client = AIClient(hass, provider="openai", model="gpt-4o")
+    value, confidence, summary, links = await client.generate_setpoint(
+        {
+            "key": "temperature",
+            "plant_id": "plant-1",
+            "search_endpoint": "https://example.test/search",
+            "search_key": "secret",
+        }
+    )
+
+    assert dummy_session.get_calls == 1
+    assert value == pytest.approx(15.0)
+    assert confidence == 0.5
+    assert summary == "Heuristic synthesis (no LLM)"
+    assert links == ["https://doc.example/guide"]
+
+
+@pytest.mark.asyncio
+async def test_async_recommend_variable_normalises_blank_provider(monkeypatch, hass):
+    _AI_CACHE.clear()
+
+    captured: dict[str, str] = {}
+
+    class DummyClient:
+        def __init__(self, _hass, provider, model):
+            captured["provider"] = provider
+            captured["model"] = model
+
+        async def generate_setpoint(self, context):
+            return 2.5, 0.4, "summary", context.get("links", [])
+
+    monkeypatch.setattr(ai_client_mod, "AIClient", DummyClient)
+
+    result = await async_recommend_variable(
+        hass,
+        key="humidity",
+        plant_id="plant-1",
+        provider="  ",
+        model="",
+    )
+
+    assert captured["provider"] == "openai"
+    assert captured["model"] == "gpt-4o-mini"
+    assert result["value"] == 2.5
+
+
+@pytest.mark.asyncio
 async def test_async_recommend_variable_honours_per_call_ttl(monkeypatch, hass):
     _AI_CACHE.clear()
 
