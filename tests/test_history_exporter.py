@@ -123,3 +123,16 @@ async def test_nutrient_events_use_legacy_timestamp(tmp_path: Path, hass) -> Non
 
     assert record.counts["nutrient"] == 1
     assert record.last_updated == payload["recorded_at"]
+
+
+@pytest.mark.asyncio
+async def test_index_recovers_from_corrupted_file(tmp_path: Path, hass) -> None:
+    """The index loader should tolerate files with invalid encodings."""
+
+    exporter = HistoryExporter(hass, base_path=tmp_path)
+    index_file = tmp_path / "index.json"
+    index_file.write_bytes(b"\xff\xfe\x00\x00")
+
+    index = await exporter.async_index()
+
+    assert index == {}
