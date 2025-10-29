@@ -1519,6 +1519,48 @@ async def test_add_profile_copy_from(hass):
     assert sections["local"]["general"]["sensors"]["temperature"] == "sensor.t"
 
 
+async def test_add_profile_copy_preserves_sequence_sensors(hass):
+    """Profiles cloned from options retain multi-entity sensor mappings."""
+
+    entry = await _make_entry(
+        hass,
+        {
+            CONF_PROFILES: {
+                "p1": {
+                    "name": "Plant",
+                    "sensors": {
+                        "environment": ["sensor.one", " sensor.two "],
+                        "temperature": "sensor.temp",
+                    },
+                    "general": {
+                        "sensors": {
+                            "environment": ["sensor.one", " sensor.two ", None],
+                            "temperature": "sensor.temp",
+                        }
+                    },
+                }
+            }
+        },
+    )
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("Clone Multi", base_id="p1")
+
+    sensors = entry.options[CONF_PROFILES][pid]["sensors"]
+    assert sensors["environment"] == ["sensor.one", "sensor.two"]
+    assert sensors["temperature"] == "sensor.temp"
+
+    general = entry.options[CONF_PROFILES][pid]["general"]["sensors"]
+    assert general["environment"] == ["sensor.one", "sensor.two"]
+    assert general["temperature"] == "sensor.temp"
+
+    profile = reg.get(pid)
+    assert profile is not None
+    assert profile.general["sensors"]["environment"] == ["sensor.one", "sensor.two"]
+    assert profile.general["sensors"]["temperature"] == "sensor.temp"
+
+
 async def test_add_profile_clone_from_storage_profile(hass):
     """Profiles persisted only in storage can still be used as clone sources."""
 
