@@ -140,15 +140,17 @@ def get_profile_path(
     return None
 
 
-@cache
-def load_profile_from_path(path: str | Path) -> dict:
-    """Return the legacy mapping structure for the file at ``path``.
+def _path_cache_key(path: str | Path) -> str:
+    """Return a stable cache key for ``path`` regardless of type."""
 
-    The function mirrors the historical behaviour used by several offline
-    scripts.  Modern callers that need the BioProfile dataclass should prefer
-    :func:`load_bio_profile` or :func:`load_bio_profile_by_id`.
-    """
-    path_obj = Path(path)
+    return str(Path(path))
+
+
+@cache
+def _load_profile_from_path_cached(path_key: str) -> dict:
+    """Return the parsed mapping for ``path_key`` using cached IO."""
+
+    path_obj = Path(path_key)
     if not path_obj.is_file():
         _LOGGER.error("Profile file not found: %s", path_obj)
         return {}
@@ -173,7 +175,7 @@ def load_profile_from_path(path: str | Path) -> dict:
         return {}
 
     if not isinstance(data, dict):
-        _LOGGER.error("Profile content is not a dictionary: %s", path)
+        _LOGGER.error("Profile content is not a dictionary: %s", path_obj)
         return {}
 
     # Initialize structured profile
@@ -201,40 +203,74 @@ def load_profile_from_path(path: str | Path) -> dict:
     if profile["thresholds"]:
         for key in REQUIRED_THRESHOLD_KEYS:
             if key not in profile["thresholds"]:
-                _LOGGER.debug("Profile missing threshold '%s' in file %s", key, path)
+                    _LOGGER.debug("Profile missing threshold '%s' in file %s", key, path_obj)
     else:
-        _LOGGER.debug("No thresholds section defined in profile %s", path)
+        _LOGGER.debug("No thresholds section defined in profile %s", path_obj)
 
     if profile["stages"]:
         for stage_name, stage_data in profile["stages"].items():
             if not isinstance(stage_data, dict):
-                _LOGGER.debug("Stage '%s' in %s is not a dict", stage_name, path)
+                _LOGGER.debug("Stage '%s' in %s is not a dict", stage_name, path_obj)
                 continue
             if REQUIRED_STAGE_KEY not in stage_data:
                 _LOGGER.debug(
-                    "Stage '%s' missing '%s' in profile %s", stage_name, REQUIRED_STAGE_KEY, path
+                    "Stage '%s' missing '%s' in profile %s", stage_name, REQUIRED_STAGE_KEY, path_obj
                 )
     else:
-        _LOGGER.debug("No stages defined in profile %s", path)
+        _LOGGER.debug("No stages defined in profile %s", path_obj)
 
     return profile
 
 
+def load_profile_from_path(path: str | Path) -> dict:
+    """Return the legacy mapping structure for the file at ``path``.
+
+    The function mirrors the historical behaviour used by several offline
+    scripts.  Modern callers that need the BioProfile dataclass should prefer
+    :func:`load_bio_profile` or :func:`load_bio_profile_by_id`.
+    """
+
+    cached = _load_profile_from_path_cached(_path_cache_key(path))
+    return deepcopy(cached)
+
+
+def _base_dir_cache_key(base_dir: str | Path | None) -> str | None:
+    """Return a stable cache key for ``base_dir`` values."""
+
+    if base_dir is None:
+        return None
+    return str(Path(base_dir))
+
+
 @cache
-def load_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> dict:
-    """Return structured profile data for ``plant_id``."""
+def _load_profile_by_id_cached(plant_id: str, base_dir_key: str | None) -> dict:
+    """Return structured profile data for ``plant_id`` using cached IO."""
 
-    path = get_profile_path(plant_id, base_dir)
+    path = get_profile_path(plant_id, base_dir_key)
     if path:
-        return load_profile_from_path(path)
+        return _load_profile_from_path_cached(_path_cache_key(path))
 
-    directory = profile_base_dir(base_dir)
+    directory = profile_base_dir(base_dir_key)
     _LOGGER.error(
         "No BioProfile file found for profile '%s' in directory %s",
         plant_id,
         directory,
     )
     return {}
+
+
+def load_profile_by_id(plant_id: str, base_dir: str | Path | None = None) -> dict:
+    """Return structured profile data for ``plant_id``."""
+
+    cached = _load_profile_by_id_cached(plant_id, _base_dir_cache_key(base_dir))
+    return deepcopy(cached)
+
+
+def clear_profile_cache() -> None:
+    """Clear cached BioProfile payloads."""
+
+    _load_profile_from_path_cached.cache_clear()
+    _load_profile_by_id_cached.cache_clear()
 
 
 def _normalise_payload(payload: Mapping[str, Any], plant_id: str) -> dict[str, Any]:
@@ -508,6 +544,7 @@ __all__ = [
     "load_profile",
     "load_bio_profile",
     "load_bio_profile_by_id",
+    "clear_profile_cache",
     "list_available_profiles",
     "save_profile_to_path",
     "save_profile_by_id",
