@@ -51,6 +51,7 @@ def load_recent_entries(log_path: Path, hours: float = 24.0) -> list[dict]:
             dt = datetime.fromisoformat(ts)
         except Exception:
             continue
+        dt = dt.replace(tzinfo=UTC) if dt.tzinfo is None else dt.astimezone(UTC)
         if dt >= cutoff:
             result.append(entry)
     return result
