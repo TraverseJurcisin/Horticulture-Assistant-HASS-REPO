@@ -198,6 +198,43 @@ async def test_async_import_profiles_returns_count(hass, tmp_path):
     assert options_profiles["p1"]["display_name"] == "Plant 1"
 
 
+async def test_async_import_profiles_updates_existing_options(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = await _make_entry(
+        hass,
+        {
+            CONF_PROFILES: {
+                "p1": {
+                    "name": "Plant 1",
+                    "display_name": "Plant 1",
+                    "profile_id": "p1",
+                    "plant_id": "p1",
+                    "general": {"sensors": {"temperature": "sensor.old"}},
+                }
+            }
+        },
+    )
+    registry = ProfileRegistry(hass, entry)
+
+    updated = BioProfile(
+        profile_id="p1",
+        display_name="Imported Plant",
+        general={"sensors": {"temperature": "sensor.new"}},
+    )
+    updated.refresh_sections()
+    (tmp_path / "profiles.json").write_text(json.dumps({"p1": updated.to_json()}))
+
+    count = await registry.async_import_profiles("profiles.json")
+
+    assert count == 1
+    options_profiles = registry.entry.options.get(CONF_PROFILES, {})
+    assert options_profiles["p1"]["display_name"] == "Imported Plant"
+    general = options_profiles["p1"].get("general", {})
+    assert isinstance(general, dict)
+    sensors = general.get("sensors", {})
+    assert sensors.get("temperature") == "sensor.new"
+
+
 async def test_missing_species_creates_issue_and_clears_when_resolved(hass, monkeypatch):
     entry = await _make_entry(
         hass,
