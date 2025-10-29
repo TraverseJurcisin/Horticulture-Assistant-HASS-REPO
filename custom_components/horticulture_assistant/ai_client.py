@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import re
-from collections.abc import Hashable
+from collections.abc import Hashable, Mapping
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -160,12 +160,20 @@ class AIClient:
         # still stuff the same data under ``hass.data['secrets']`` so we fall
         # back to that for compatibility.
         secrets_obj = getattr(self.hass, "secrets", None)
-        if isinstance(secrets_obj, dict) and secrets_obj.get("OPENAI_API_KEY"):
-            return secrets_obj["OPENAI_API_KEY"]
+        if isinstance(secrets_obj, Mapping):
+            value = secrets_obj.get("OPENAI_API_KEY")
+            if isinstance(value, str):
+                value = value.strip()
+            if value:
+                return value
 
         secrets_data = self.hass.data.get("secrets")
-        if isinstance(secrets_data, dict):
-            return secrets_data.get("OPENAI_API_KEY")
+        if isinstance(secrets_data, Mapping):
+            value = secrets_data.get("OPENAI_API_KEY")
+            if isinstance(value, str):
+                value = value.strip()
+            if value:
+                return value
         return None
 
 

@@ -1,6 +1,7 @@
 import importlib.util
 import sys
 import types
+from collections.abc import Mapping
 from datetime import datetime as dt
 from datetime import timedelta
 from pathlib import Path
@@ -269,6 +270,31 @@ def test_get_openai_key_prefers_hass_secrets(hass):
     client = AIClient(hass, provider="openai", model="gpt-4o")
 
     assert client._get_openai_key() == "attr-secret"
+
+
+def test_get_openai_key_supports_mapping_based_secrets(hass):
+    class SecretsMapping(Mapping[str, str]):
+        def __init__(self, data: dict[str, str]) -> None:
+            self._data = data
+
+        def __getitem__(self, key: str) -> str:
+            return self._data[key]
+
+        def __iter__(self):
+            return iter(self._data)
+
+        def __len__(self) -> int:
+            return len(self._data)
+
+        def get(self, key: str, default: str | None = None) -> str | None:
+            return self._data.get(key, default)
+
+    hass.secrets = SecretsMapping({"OPENAI_API_KEY": "  mapped-secret  "})
+    hass.data.setdefault("secrets", {})
+
+    client = AIClient(hass, provider="openai", model="gpt-4o")
+
+    assert client._get_openai_key() == "mapped-secret"
 
 
 def test_get_openai_key_falls_back_to_hass_data(hass):
