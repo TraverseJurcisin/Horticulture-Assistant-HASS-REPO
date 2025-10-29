@@ -26,6 +26,20 @@ def _slug_source(value: Any) -> str:
     return str(value)
 
 
+def _mutable_copy(value: Any) -> Any:
+    """Return a deepcopy-friendly clone with immutable mappings converted."""
+
+    if isinstance(value, Mapping):
+        return {str(key): _mutable_copy(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_mutable_copy(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(_mutable_copy(item) for item in value)
+    if isinstance(value, set):
+        return {_mutable_copy(item) for item in value}
+    return deepcopy(value)
+
+
 class ProfileStore:
     """Offline-first JSON store for ``BioProfile`` documents."""
 
@@ -124,8 +138,8 @@ class ProfileStore:
                 clone_payload = payload
                 clone_profile = self._as_profile(payload, fallback_name=clone_from)
         elif isinstance(clone_from, dict):
-            clone_payload = clone_from
-            clone_profile = self._as_profile(clone_from, fallback_name=name)
+            clone_payload = _mutable_copy(clone_from)
+            clone_profile = self._as_profile(clone_payload, fallback_name=name)
 
         sensors_data: dict[str, str]
         if sensors is not None:
@@ -201,7 +215,7 @@ class ProfileStore:
                     preserved[key] = value
             credentials = clone_payload.get("opb_credentials")
             if isinstance(credentials, Mapping):
-                preserved["opb_credentials"] = deepcopy(credentials)
+                preserved["opb_credentials"] = deepcopy(dict(credentials))
 
         payload = self._profile_to_payload(new_profile)
         if preserved:
