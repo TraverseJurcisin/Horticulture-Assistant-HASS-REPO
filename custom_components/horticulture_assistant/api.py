@@ -65,8 +65,6 @@ class ChatApi:
                     t0 = time.perf_counter()
                     async with session.post(url, headers=self._headers(), json=payload) as resp:
                         if resp.status in {401, 403}:
-                            self._failures += 1
-                            self._open = False
                             resp.raise_for_status()
                         if resp.status in RETRYABLE:
                             raise ClientError(f"Retryable status: {resp.status}")
@@ -79,11 +77,11 @@ class ChatApi:
             except ClientResponseError as err:
                 self._failures += 1
                 if err.status in {401, 403}:
+                    self._trip_circuit()
                     raise
                 warn_once(_LOGGER, f"http_{err.status}", f"API error {err.status}")
                 if attempt == 4:
-                    self._open = False
-                    self._hass.loop.call_later(60, self._half_open)
+                    self._trip_circuit()
                     raise
                 await asyncio.sleep(delay + 0.25 * random.random())
                 delay = min(delay * 2, 30)
@@ -91,8 +89,7 @@ class ChatApi:
                 self._failures += 1
                 warn_once(_LOGGER, "network_error", str(err))
                 if attempt == 4:
-                    self._open = False
-                    self._hass.loop.call_later(60, self._half_open)
+                    self._trip_circuit()
                     raise
                 await asyncio.sleep(delay + 0.25 * random.random())
                 delay = min(delay * 2, 30)
@@ -101,6 +98,16 @@ class ChatApi:
 
     def _half_open(self) -> None:
         self._open = True
+
+    def _trip_circuit(self) -> None:
+        self._open = False
+        loop = getattr(self._hass, "loop", None)
+        if loop is None:
+            return
+        try:
+            loop.call_later(60, self._half_open)
+        except Exception:  # pragma: no cover - defensive guard
+            _LOGGER.debug("Failed to schedule circuit half-open transition", exc_info=True)
 
     async def validate_api_key(self) -> None:
         """Simple call to validate API key."""
