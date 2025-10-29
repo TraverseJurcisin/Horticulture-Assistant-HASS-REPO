@@ -68,7 +68,7 @@ class ProfileStore:
         for path in self._base.glob("*.json"):
             try:
                 raw = json.loads(path.read_text(encoding="utf-8"))
-            except (OSError, json.JSONDecodeError):
+            except (OSError, UnicodeDecodeError, json.JSONDecodeError):
                 names.append(path.stem)
                 continue
 
@@ -91,7 +91,7 @@ class ProfileStore:
             return None
         try:
             raw_text = path.read_text(encoding="utf-8")
-        except OSError:
+        except (OSError, UnicodeDecodeError):
             return None
         try:
             raw = json.loads(raw_text)
