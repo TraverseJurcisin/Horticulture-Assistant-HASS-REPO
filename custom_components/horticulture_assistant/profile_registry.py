@@ -1009,6 +1009,13 @@ class ProfileRegistry:
             self._validate_profile(profile)
 
         options_profiles = self.entry.options.get(CONF_PROFILES, {}) or {}
+        if not isinstance(options_profiles, Mapping):
+            _LOGGER.warning(
+                "Ignoring invalid config entry profiles payload: expected mapping but received %s",
+                type(options_profiles).__name__,
+            )
+            options_profiles = {}
+
         for pid, payload in options_profiles.items():
             display_name = payload.get("name") or pid
             try:

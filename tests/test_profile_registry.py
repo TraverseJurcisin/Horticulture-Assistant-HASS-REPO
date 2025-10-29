@@ -79,6 +79,17 @@ async def test_async_load_skips_invalid_stored_profile(hass, monkeypatch, caplog
     assert [profile.profile_id for profile in reg.list_profiles()] == ["valid"]
 
 
+async def test_async_load_ignores_non_mapping_options_profiles(hass, caplog):
+    entry = await _make_entry(hass, {CONF_PROFILES: ["not", "a", "mapping"]})
+    reg = ProfileRegistry(hass, entry)
+
+    with caplog.at_level(logging.WARNING):
+        await reg.async_load()
+
+    assert any("invalid config entry profiles payload" in record.message for record in caplog.records)
+    assert reg.list_profiles() == []
+
+
 async def test_missing_parent_warning_logged(hass, caplog):
     entry = await _make_entry(
         hass,
