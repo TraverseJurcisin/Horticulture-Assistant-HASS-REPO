@@ -13,6 +13,25 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 
 
+def _coerce_timestamp(value: Any) -> str | None:
+    """Return a normalised timestamp string or ``None`` for missing values."""
+
+    if value is None:
+        return None
+    text = str(value).strip()
+    return text or None
+
+
+def _first_timestamp(payload: Mapping[str, Any], *keys: str) -> str | None:
+    """Return the first truthy timestamp in ``payload`` for the given ``keys``."""
+
+    for key in keys:
+        candidate = _coerce_timestamp(payload.get(key))
+        if candidate:
+            return candidate
+    return None
+
+
 @dataclass
 class HistoryIndex:
     """Simple manifest describing exported history files."""
@@ -116,20 +135,28 @@ class HistoryExporter:
 
     @staticmethod
     def _extract_timestamp(event_type: str, payload: Mapping[str, Any]) -> str | None:
+        if not payload:
+            return None
+
         if event_type == "run":
-            if not payload:
-                return None
-            return str(payload.get("started_at") or payload.get("ended_at") or payload.get("completed_at"))
+            return _first_timestamp(
+                payload,
+                "started_at",
+                "ended_at",
+                "completed_at",
+                "start",
+                "timestamp",
+            )
+
         if event_type == "harvest":
-            return str(payload.get("harvested_at")) if payload else None
+            return _first_timestamp(payload, "harvested_at", "timestamp")
+
         if event_type == "nutrient":
-            return str(payload.get("applied_at")) if payload else None
+            return _first_timestamp(payload, "applied_at", "recorded_at", "timestamp")
+
         if event_type == "cultivation":
             # ``occurred_at`` is the canonical timestamp on cultivation events but
             # older payloads may still use ``recorded_at`` or ``timestamp``.
-            return (
-                str(payload.get("occurred_at") or payload.get("recorded_at") or payload.get("timestamp"))
-                if payload
-                else None
-            )
+            return _first_timestamp(payload, "occurred_at", "recorded_at", "timestamp")
+
         return None
