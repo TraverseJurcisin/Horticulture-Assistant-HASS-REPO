@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, cast
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -43,7 +43,7 @@ from custom_components.horticulture_assistant.const import (
 )
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-UTC = datetime.UTC
+UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 
 def make_event(event_id: str, entity_type: str, patch: dict, *, org_id: str | None = "org-1") -> SyncEvent:
@@ -80,6 +80,19 @@ def test_edge_store_outbox(tmp_path: Path) -> None:
     store.mark_outbox_attempt(["01J9"])
     store.mark_outbox_acked(["01J9"])
     assert store.get_outbox_batch() == []
+
+
+def test_cloud_auth_tokens_parses_numeric_expiry() -> None:
+    now = datetime(2025, 1, 1, tzinfo=UTC)
+    payload = {
+        "access_token": "abc123",
+        "tenant_id": "tenant-1",
+        "expires_at": "3600",
+    }
+
+    tokens = CloudAuthTokens.from_payload(payload, now=now)
+
+    assert tokens.expires_at == now + timedelta(seconds=3600)
 
 
 def test_edge_store_list_cloud_cache(tmp_path: Path) -> None:
