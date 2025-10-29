@@ -125,3 +125,19 @@ def test_profile_monitor_handles_non_numeric_and_high(state: str, expected: str)
 
     result = ProfileMonitor(hass, context).evaluate()
     assert result.health == expected
+
+
+def test_profile_monitor_preserves_last_changed_and_updated() -> None:
+    changed = datetime(2024, 6, 1, 12, tzinfo=UTC)
+    updated = datetime(2024, 6, 1, 13, tzinfo=UTC)
+    state = DummyState("42", changed=changed)
+    state.last_updated = updated
+    hass = DummyHass(DummyStates({"sensor.temp": state}))
+    context = _context(sensors={"temperature": ("sensor.temp",)})
+
+    result = ProfileMonitor(hass, context).evaluate()
+
+    assert result.last_sample_at == updated
+    snapshot = result.sensors[0]
+    assert snapshot.last_changed == changed
+    assert snapshot.last_updated == updated
