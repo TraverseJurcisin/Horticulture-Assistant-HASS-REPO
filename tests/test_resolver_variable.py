@@ -100,7 +100,13 @@ async def test_resolve_opb(hass, monkeypatch):
 @pytest.mark.asyncio
 async def test_resolve_ai(hass, monkeypatch):
     async def fake_ai(hass, key, plant_id, **kwargs):
-        return {"value": 5, "summary": "ai", "links": ["http://ai"]}
+        return {
+            "value": 5,
+            "summary": "ai",
+            "links": ["http://ai"],
+            "provider": "openai",
+            "model": "gpt-4o-mini",
+        }
 
     monkeypatch.setattr(
         "custom_components.horticulture_assistant.ai_client.async_recommend_variable",
@@ -114,4 +120,5 @@ async def test_resolve_ai(hass, monkeypatch):
     )
     assert res.value == 5
     assert res.annotation.source_type == "ai"
+    assert res.annotation.method == "gpt-4o-mini"
     assert res.citations[0].details["links"] == ["http://ai"]

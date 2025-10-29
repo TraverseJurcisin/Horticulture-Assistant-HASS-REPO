@@ -81,6 +81,8 @@ async def test_async_recommend_variable_caches_result(monkeypatch, hass):
     mock = AsyncMock(return_value=(1.0, 0.5, "summary", []))
     monkeypatch.setattr(AIClient, "generate_setpoint", mock)
     first = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=1)
+    assert first["provider"] == "openai"
+    assert first["model"] == "gpt-4o-mini"
     second = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=1)
     assert first == second
     assert mock.call_count == 1
@@ -94,6 +96,8 @@ async def test_async_recommend_variable_accepts_string_ttl(monkeypatch, hass):
 
     first = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours="2")
     assert first["value"] == 4.2
+    assert first["provider"] == "openai"
+    assert first["model"] == "gpt-4o-mini"
     assert mock.call_count == 1
 
     second = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=2)
@@ -232,6 +236,8 @@ async def test_async_recommend_variable_honours_per_call_ttl(monkeypatch, hass):
 
     first = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=1)
     assert first["value"] == 1.0
+    assert first["model"] == "gpt-4o-mini"
+    assert first["provider"] == "openai"
     assert mock.call_count == 1
 
     FixedDateTime.advance(minutes=30)
