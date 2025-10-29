@@ -7,7 +7,11 @@ from custom_components.horticulture_assistant.profile.schema import (
     NutrientApplication,
     RunEvent,
 )
-from custom_components.horticulture_assistant.profile.statistics import recompute_statistics
+from custom_components.horticulture_assistant.profile.statistics import (
+    _build_event_snapshot,
+    _build_nutrient_snapshot,
+    recompute_statistics,
+)
 
 
 def test_recompute_statistics_handles_zero_area():
@@ -271,6 +275,56 @@ def test_nutrient_statistics_include_zero_volume_events():
     contributors = {item["profile_id"]: item for item in species_snapshot.payload["contributors"]}
     assert contributors["cultivar"]["event_count"] == 1
     assert contributors["cultivar"]["total_volume_liters"] == pytest.approx(0.0)
+
+
+def test_nutrient_snapshot_respects_computed_at_timestamp():
+    event = NutrientApplication(
+        event_id="nutrient-1",
+        profile_id="p1",
+        species_id="species",
+        run_id=None,
+        applied_at="2024-04-01T00:00:00+00:00",
+        product_name="Supplement",
+        solution_volume_liters=2.5,
+    )
+    computed_at = "2024-04-08T00:00:00+00:00"
+
+    snapshot = _build_nutrient_snapshot(
+        "p1",
+        "cultivar",
+        [event],
+        computed_at=computed_at,
+    )
+
+    assert snapshot is not None
+    assert snapshot.computed_at == computed_at
+    metrics = snapshot.payload["metrics"]
+    assert metrics["days_since_last_event"] == pytest.approx(7.0)
+
+
+def test_event_snapshot_respects_computed_at_timestamp():
+    event = CultivationEvent(
+        event_id="evt-1",
+        profile_id="p1",
+        species_id="species",
+        run_id=None,
+        occurred_at="2024-04-01T00:00:00+00:00",
+        event_type="inspection",
+    )
+    computed_at = "2024-04-08T00:00:00+00:00"
+
+    snapshot = _build_event_snapshot(
+        "p1",
+        "cultivar",
+        [event],
+        computed_at=computed_at,
+    )
+
+    assert snapshot is not None
+    assert snapshot.computed_at == computed_at
+    metrics = snapshot.payload["metrics"]
+    assert metrics["days_since_last_event"] == pytest.approx(7.0)
+    assert snapshot.payload["last_event"]["days_since"] == pytest.approx(7.0)
 
 
 def test_success_statistics_from_run_history():

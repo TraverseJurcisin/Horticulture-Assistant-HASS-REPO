@@ -169,7 +169,8 @@ def _build_nutrient_snapshot(
     contributor_payload: list[dict[str, Any]] | None = None,
     computed_at: str | None = None,
 ) -> ComputedStatSnapshot | None:
-    payload = _compute_nutrient_payload(events)
+    reference_now = _parse_datetime(computed_at) if computed_at else None
+    payload = _compute_nutrient_payload(events, now=reference_now)
     if payload is None:
         return None
     payload["scope"] = scope
@@ -291,7 +292,8 @@ def _build_event_snapshot(
     contributor_payload: list[dict[str, Any]] | None = None,
     computed_at: str | None = None,
 ) -> ComputedStatSnapshot | None:
-    payload = _compute_event_payload(events)
+    reference_now = _parse_datetime(computed_at) if computed_at else None
+    payload = _compute_event_payload(events, now=reference_now)
     if payload is None:
         return None
     payload["scope"] = scope
