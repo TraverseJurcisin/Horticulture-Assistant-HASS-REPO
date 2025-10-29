@@ -446,6 +446,14 @@ class NutrientApplication:
                 return []
             return [str(value)]
 
+        def _float_pair(primary_key: str, fallback_key: str | None = None) -> float | None:
+            primary = _float(data.get(primary_key))
+            if primary is not None:
+                return primary
+            if fallback_key is not None:
+                return _float(data.get(fallback_key))
+            return None
+
         return NutrientApplication(
             event_id=_string_or_fallback(data.get("event_id"), data.get("id"), fallback="nutrient"),
             profile_id=_string_or_fallback(data.get("profile_id"), fallback=""),
@@ -456,9 +464,9 @@ class NutrientApplication:
             product_name=_optional_string(data.get("product_name")),
             product_category=_optional_string(data.get("product_category")),
             source=_optional_string(data.get("source")),
-            solution_volume_liters=_float(data.get("solution_volume_liters") or data.get("volume_liters")),
-            concentration_ppm=_float(data.get("concentration_ppm") or data.get("ppm")),
-            ec_ms=_float(data.get("ec_ms") or data.get("ec")),
+            solution_volume_liters=_float_pair("solution_volume_liters", "volume_liters"),
+            concentration_ppm=_float_pair("concentration_ppm", "ppm"),
+            ec_ms=_float_pair("ec_ms", "ec"),
             ph=_float(data.get("ph")),
             additives=_list(data.get("additives")),
             metadata=_as_dict(data.get("metadata")),

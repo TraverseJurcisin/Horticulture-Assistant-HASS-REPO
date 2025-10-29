@@ -4,6 +4,7 @@ from custom_components.horticulture_assistant.profile.schema import (
     BioProfile,
     CultivationEvent,
     HarvestEvent,
+    NutrientApplication,
     RunEvent,
 )
 from custom_components.horticulture_assistant.profile.statistics import recompute_statistics
@@ -224,6 +225,52 @@ def test_event_statistics_strips_and_deduplicates_tags():
     assert top_tags[0] == {"tag": "Growth", "count": 3}
     assert {tag["tag"] for tag in top_tags} == {"Growth", "Pruning"}
     assert all(tag["tag"] == tag["tag"].strip() for tag in top_tags)
+
+
+def test_nutrient_statistics_include_zero_volume_events():
+    species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species",
+    )
+
+    cultivar.add_nutrient_event(
+        NutrientApplication(
+            event_id="nutrient-1",
+            profile_id="cultivar",
+            species_id="species",
+            run_id="run-1",
+            applied_at="2024-04-01T00:00:00Z",
+            product_name="Water",
+            solution_volume_liters=0.0,
+        )
+    )
+
+    recompute_statistics([species, cultivar])
+
+    cultivar_snapshot = next(
+        (snap for snap in cultivar.computed_stats if snap.stats_version == "nutrients/v1"),
+        None,
+    )
+    assert cultivar_snapshot is not None
+    cultivar_metrics = cultivar_snapshot.payload["metrics"]
+    assert cultivar_metrics["total_events"] == pytest.approx(1.0)
+    assert cultivar_metrics["total_volume_liters"] == pytest.approx(0.0)
+
+    species_snapshot = next(
+        (snap for snap in species.computed_stats if snap.stats_version == "nutrients/v1"),
+        None,
+    )
+    assert species_snapshot is not None
+    species_metrics = species_snapshot.payload["metrics"]
+    assert species_metrics["total_events"] == pytest.approx(1.0)
+    assert species_metrics["total_volume_liters"] == pytest.approx(0.0)
+
+    contributors = {item["profile_id"]: item for item in species_snapshot.payload["contributors"]}
+    assert contributors["cultivar"]["event_count"] == 1
+    assert contributors["cultivar"]["total_volume_liters"] == pytest.approx(0.0)
 
 
 def test_success_statistics_from_run_history():

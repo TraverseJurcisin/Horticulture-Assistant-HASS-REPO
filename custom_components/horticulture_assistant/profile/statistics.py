@@ -84,6 +84,7 @@ def _compute_nutrient_payload(
     product_counter: Counter[str] = Counter()
     run_ids: set[str] = set()
     total_volume = 0.0
+    volume_samples = 0
     timestamps: list[datetime] = []
     intervals: list[float] = []
 
@@ -96,6 +97,7 @@ def _compute_nutrient_payload(
         volume = _to_float(event.solution_volume_liters)
         if volume is not None:
             total_volume += volume
+            volume_samples += 1
         if ts is not None:
             timestamps.append(ts)
             if previous is not None:
@@ -105,7 +107,7 @@ def _compute_nutrient_payload(
 
     total_events = len(normalised)
     metrics: dict[str, float] = {"total_events": float(total_events)}
-    if total_volume:
+    if volume_samples:
         metrics["total_volume_liters"] = round(total_volume, 3)
     if run_ids:
         metrics["unique_runs"] = float(len(run_ids))
@@ -1044,7 +1046,13 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 species_breakdown[species_id].append(aggregate)
             if nutrient_events:
                 species_nutrient_events[species_id].extend(nutrient_events)
-                total_volume = sum(_to_float(event.solution_volume_liters) or 0.0 for event in nutrient_events)
+                total_volume = 0.0
+                volume_samples = 0
+                for event in nutrient_events:
+                    volume = _to_float(getattr(event, "solution_volume_liters", None))
+                    if volume is not None:
+                        total_volume += volume
+                        volume_samples += 1
                 normalised_events = _normalise_nutrient_events(nutrient_events)
                 last_ts = normalised_events[-1][1] if normalised_events else None
                 contributor_payload = {
@@ -1052,7 +1060,7 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                     "profile_type": profile.profile_type,
                     "event_count": len(nutrient_events),
                 }
-                if total_volume:
+                if volume_samples:
                     contributor_payload["total_volume_liters"] = round(total_volume, 3)
                 if last_ts is not None:
                     contributor_payload["last_applied_at"] = last_ts.isoformat()
@@ -1241,26 +1249,45 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
         contributions: list[ProfileContribution] = []
         contributor_payload: list[dict[str, Any]] = []
         for item in breakdown:
-            child_id = item.get("profile_id")
-            payload = {
-                "profile_id": child_id,
-                "profile_type": item.get("profile_type"),
-                "event_count": item.get("event_count"),
-            }
-            if item.get("total_volume_liters"):
-                payload["total_volume_liters"] = item.get("total_volume_liters")
-            if item.get("last_applied_at"):
-                payload["last_applied_at"] = item.get("last_applied_at")
-            contributor_payload.append({k: v for k, v in payload.items() if v not in (None, 0, 0.0, "")})
-            weight = (item.get("event_count") / total_events) if total_events else None
-            if child_id:
+            raw_child_id = item.get("profile_id")
+            child_id = raw_child_id.strip() if isinstance(raw_child_id, str) else raw_child_id
+            payload: dict[str, Any] = {}
+            if isinstance(child_id, str) and child_id:
+                payload["profile_id"] = child_id
+            profile_type = item.get("profile_type")
+            if isinstance(profile_type, str) and profile_type:
+                payload["profile_type"] = profile_type
+            event_count = item.get("event_count")
+            if event_count is not None:
+                payload["event_count"] = event_count
+            if "total_volume_liters" in item and item["total_volume_liters"] is not None:
+                payload["total_volume_liters"] = item["total_volume_liters"]
+            last_applied = item.get("last_applied_at")
+            if isinstance(last_applied, str) and last_applied:
+                payload["last_applied_at"] = last_applied
+            if payload:
+                contributor_payload.append(payload)
+            weight = (event_count / total_events) if total_events and event_count is not None else None
+            if isinstance(child_id, str):
+                if child_id:
+                    contributions.append(
+                        ProfileContribution(
+                            profile_id=species_id,
+                            child_id=child_id,
+                            stats_version=NUTRIENT_STATS_VERSION,
+                            computed_at=timestamp,
+                            n_runs=event_count or None,
+                            weight=round(weight, 6) if weight is not None else None,
+                        )
+                    )
+            elif child_id:
                 contributions.append(
                     ProfileContribution(
                         profile_id=species_id,
                         child_id=str(child_id),
                         stats_version=NUTRIENT_STATS_VERSION,
                         computed_at=timestamp,
-                        n_runs=item.get("event_count"),
+                        n_runs=event_count or None,
                         weight=round(weight, 6) if weight is not None else None,
                     )
                 )
