@@ -278,6 +278,7 @@ def test_profile_context_helpers_normalise_payload():
     assert context.sensor_ids_for_roles("temperature") == ("sensor.temp", "sensor.temp_2")
     assert context.first_sensor("humidity") == "sensor.hum"
     assert context.has_sensors("temperature", "humidity") is True
+    assert context.has_all_sensors("temperature", "humidity") is True
     assert context.has_sensors("light") is False
     assert context.has_sensors() is True
     assert context.get_threshold("temperature_min") == 12
@@ -300,6 +301,17 @@ def test_profile_context_strips_sensor_whitespace():
     assert context.first_sensor("humidity") == "sensor.hum"
     # ``sensor_ids_for_roles`` without args should flatten all roles
     assert context.sensor_ids_for_roles() == ("sensor.temp", "sensor.backup", "sensor.hum")
+
+
+def test_profile_context_has_sensors_matches_any_role():
+    context = ProfileContext(
+        id="plant",
+        name="Plant",
+        sensors={"temperature": ["sensor.temp"]},
+    )
+
+    assert context.has_sensors("temperature", "humidity") is True
+    assert context.has_all_sensors("temperature", "humidity") is False
 
 
 @pytest.mark.asyncio
@@ -330,6 +342,7 @@ async def test_resolve_profile_context_collection_aggregates_profiles(hass, tmp_
     assert primary.name == "Alpha"
     assert primary.sensor_ids_for_roles("temperature")[0] == "sensor.temp"
     assert primary.get_threshold("temperature_min") == 10
+    assert primary.has_all_sensors("temperature", "humidity") is True
 
     secondary = collection.get("beta")
     assert secondary is not None
@@ -364,6 +377,7 @@ async def test_profile_context_preserves_multiple_sensor_links(hass, tmp_path):
     )
     assert primary.sensor_ids_for_roles("humidity") == ("sensor.hum",)
     assert primary.has_sensors("temperature", "humidity") is True
+    assert primary.has_all_sensors("temperature", "humidity") is True
 
 
 @pytest.mark.asyncio
