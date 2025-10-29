@@ -57,6 +57,28 @@ async def test_missing_species_warning_logged(hass, caplog):
     assert any("species.unknown" in record.message for record in caplog.records)
 
 
+async def test_async_load_skips_invalid_stored_profile(hass, monkeypatch, caplog):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"valid": {"name": "Valid"}}},
+    )
+    reg = ProfileRegistry(hass, entry)
+
+    async def _fake_load(_self):
+        return {"profiles": {"broken": "not-a-mapping"}}
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.Store.async_load",
+        _fake_load,
+    )
+
+    with caplog.at_level(logging.WARNING):
+        await reg.async_load()
+
+    assert any("broken" in record.message for record in caplog.records)
+    assert [profile.profile_id for profile in reg.list_profiles()] == ["valid"]
+
+
 async def test_missing_parent_warning_logged(hass, caplog):
     entry = await _make_entry(
         hass,
