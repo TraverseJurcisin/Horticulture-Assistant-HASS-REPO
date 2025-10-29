@@ -42,6 +42,11 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
         return None
 
     value = str(state.state).replace(",", "").strip()
+    # Many sensors use the dedicated Unicode minus sign (U+2212) when rendering
+    # negative values. ``float()`` cannot parse that character directly so we
+    # normalise it to the ASCII hyphen-minus before attempting the conversion.
+    if "−" in value:
+        value = value.replace("−", "-")
     try:
         return float(value)
     except (ValueError, TypeError):
