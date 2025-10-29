@@ -216,7 +216,16 @@ class RecommendationEngine:
 
         # Basic irrigation recommendation
         irrigation = None
-        if sensors.get("vwc", 100) < profile.get("min_vwc", 30):
+
+        def _to_float(value: object, default: float | None = None) -> float | None:
+            try:
+                return float(value)  # type: ignore[arg-type]
+            except (TypeError, ValueError):
+                return default
+
+        current_vwc = _to_float(sensors.get("vwc"))
+        min_vwc = _to_float(profile.get("min_vwc"), 30.0)
+        if current_vwc is not None and min_vwc is not None and current_vwc < min_vwc:
             target_ml = self._get_irrigation_target(
                 profile.get("plant_type", ""),
                 profile.get("lifecycle_stage", ""),
