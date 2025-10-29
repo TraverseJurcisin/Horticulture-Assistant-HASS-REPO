@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from typing import Any
 
 import pytest
 
@@ -11,7 +12,7 @@ from custom_components.horticulture_assistant.utils.entry_helpers import Profile
 class DummyState:
     def __init__(
         self,
-        state: str,
+        state: Any,
         *,
         unit: str | None = None,
         changed: datetime | None = None,
@@ -197,4 +198,19 @@ def test_profile_monitor_flags_nan_values() -> None:
     assert issues and issues[0].summary == "sensor_non_numeric"
     snapshot = result.sensors[0]
     assert snapshot.status == "non_numeric"
+    assert snapshot.available is False
+
+
+def test_profile_monitor_treats_boolean_states_as_non_numeric() -> None:
+    hass = DummyHass(DummyStates({"sensor.moisture": DummyState(True)}))
+    context = _context(sensors={"moisture": ("sensor.moisture",)}, thresholds={"moisture_min": 10})
+
+    result = ProfileMonitor(hass, context).evaluate()
+
+    assert result.health == "attention"
+    issues = result.issues_for("attention")
+    assert issues and issues[0].summary == "sensor_non_numeric"
+    snapshot = result.sensors[0]
+    assert snapshot.status == "non_numeric"
+    assert snapshot.value is None
     assert snapshot.available is False
