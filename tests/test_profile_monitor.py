@@ -15,11 +15,12 @@ class DummyState:
         *,
         unit: str | None = None,
         changed: datetime | None = None,
+        updated: datetime | None = None,
     ) -> None:
         self.state = state
         self.attributes = {"unit_of_measurement": unit} if unit else {}
         self.last_changed = changed
-        self.last_updated = changed
+        self.last_updated = updated if updated is not None else changed
 
 
 class DummyStates:
@@ -90,6 +91,27 @@ def test_profile_monitor_flags_out_of_range() -> None:
     assert len(problems) == 1
     assert problems[0].summary == "sensor_below_minimum"
     assert result.last_sample_at == changed
+
+
+def test_profile_monitor_preserves_distinct_timestamps() -> None:
+    changed = datetime(2024, 6, 1, tzinfo=UTC)
+    updated = datetime(2024, 6, 1, 12, tzinfo=UTC)
+    hass = DummyHass(
+        DummyStates(
+            {
+                "sensor.temp": DummyState("25", changed=changed, updated=updated),
+            }
+        )
+    )
+    context = _context(sensors={"temperature": ("sensor.temp",)})
+
+    result = ProfileMonitor(hass, context).evaluate()
+
+    attrs = result.as_attributes()
+    sensor_attrs = attrs["sensors"][0]
+    assert sensor_attrs["last_changed"] == changed.isoformat()
+    assert sensor_attrs["last_updated"] == updated.isoformat()
+    assert result.last_sample_at == updated
 
 
 @pytest.mark.parametrize(
