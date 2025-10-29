@@ -331,8 +331,9 @@ def _merge_sensor_lists(*maps: Mapping[str, Any] | None) -> dict[str, list[str]]
                 continue
             bucket = merged.setdefault(str(key), [])
             for item in candidates:
-                if item and item not in bucket:
-                    bucket.append(item)
+                cleaned = item.strip()
+                if cleaned and cleaned not in bucket:
+                    bucket.append(cleaned)
     return merged
 
 
@@ -561,8 +562,11 @@ def _normalise_sensor_map(value: Any) -> dict[str, str]:
     sensors = {}
     mapping = _coerce_mapping(value)
     for key, item in mapping.items():
-        if isinstance(item, str) and item:
-            sensors[str(key)] = item
+        if not isinstance(item, str):
+            continue
+        cleaned = item.strip()
+        if cleaned:
+            sensors[str(key)] = cleaned
     return sensors
 
 

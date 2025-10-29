@@ -79,6 +79,12 @@ def test_primary_sensors_use_top_level_mapping():
     assert get_primary_profile_sensors(entry) == {"temperature": "sensor.temp"}
 
 
+def test_primary_sensors_strip_whitespace():
+    entry = _make_entry(options={"sensors": {"temperature": "  sensor.temp  ", "humidity": "\n"}})
+
+    assert get_primary_profile_sensors(entry) == {"temperature": "sensor.temp"}
+
+
 def test_primary_sensors_from_profile_payload():
     entry = _make_entry(
         options={
