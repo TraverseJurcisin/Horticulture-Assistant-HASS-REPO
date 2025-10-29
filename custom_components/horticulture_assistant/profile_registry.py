@@ -794,12 +794,9 @@ class ProfileRegistry:
             self._cloud_pending_snapshot = True
             return
         ready = publisher.ready
-        if not ready:
-            self._cloud_pending_snapshot = True
-            return
         self._safe_publish(lambda: publisher.publish_profile(profile))
         self._publish_stats_with(publisher, profile)
-        self._cloud_pending_snapshot = False
+        self._cloud_pending_snapshot = not ready
 
     def _cloud_publish_deleted(self, profile_id: str) -> None:
         publisher = self._cloud_publisher
