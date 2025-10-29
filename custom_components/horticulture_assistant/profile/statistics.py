@@ -832,8 +832,10 @@ def _compute_success_snapshot(profile: BioProfile) -> tuple[ComputedStatSnapshot
         if metrics is None:
             continue
         ratio, weight, stress = metrics
-        if event.run_id:
-            summary.run_ids.add(event.run_id)
+        if event.run_id is not None:
+            run_id = str(event.run_id).strip()
+            if run_id:
+                summary.run_ids.add(run_id)
         summary.add_sample(ratio, weight=weight, stress=stress)
 
     if not summary.sample_count:
