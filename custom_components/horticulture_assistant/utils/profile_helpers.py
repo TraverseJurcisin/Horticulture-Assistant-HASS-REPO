@@ -11,6 +11,17 @@ from .json_io import save_json
 
 _LOGGER = logging.getLogger(__name__)
 
+_WINDOWS_RESERVED_NAMES = {
+    "con",
+    "prn",
+    "aux",
+    "nul",
+    *{f"com{idx}" for idx in range(1, 10)},
+    *{f"lpt{idx}" for idx in range(1, 10)},
+}
+
+_WINDOWS_INVALID_CHARS = '<>:"\\|?*'
+
 
 def _safe_component(value: str) -> str:
     """Return a filesystem-safe directory name for ``value``."""
@@ -31,7 +42,22 @@ def _safe_component(value: str) -> str:
         return "plant"
 
     safe = candidate.replace("/", "_").replace("\\", "_")
-    safe = safe.strip()
+    for char in _WINDOWS_INVALID_CHARS:
+        if char in safe:
+            safe = safe.replace(char, "_")
+    safe = safe.strip().strip(".")
+    if not safe:
+        return "plant"
+
+    stem, *suffix = safe.split(".")
+    stem_lower = stem.lower()
+    if stem_lower in _WINDOWS_RESERVED_NAMES:
+        safe = f"{stem_lower}_profile"
+        if suffix:
+            cleaned_suffix = "_".join(part for part in suffix if part)
+            cleaned_suffix = cleaned_suffix.replace(".", "_").strip("_")
+            if cleaned_suffix:
+                safe = f"{safe}_{cleaned_suffix}"
     return safe or "plant"
 
 
