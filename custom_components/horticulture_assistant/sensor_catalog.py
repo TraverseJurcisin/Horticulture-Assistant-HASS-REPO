@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from dataclasses import dataclass
+from enum import Enum
 from typing import Any
 
 try:  # pragma: no cover - fallback for tests without Home Assistant imports
@@ -38,7 +39,12 @@ _ROLE_FRIENDLY_NAMES: dict[str, str] = {
 def _normalise(value: Any | None) -> str | None:
     if value is None:
         return None
-    return str(value).strip().lower()
+    if isinstance(value, Enum):
+        value = value.value
+    text = str(value).strip()
+    if not text:
+        return None
+    return text.lower()
 
 
 def _score_state(role: str, state: State) -> SensorSuggestion | None:
@@ -54,7 +60,9 @@ def _score_state(role: str, state: State) -> SensorSuggestion | None:
         getattr(EXPECTED_DEVICE_CLASSES.get(role), "value", EXPECTED_DEVICE_CLASSES.get(role))
     )
     unit = _normalise(attributes.get("unit_of_measurement"))
-    expected_units = {_normalise(u) for u in EXPECTED_UNITS.get(role, set()) if _normalise(u)}
+    expected_units = {
+        normalised for normalised in (_normalise(unit) for unit in EXPECTED_UNITS.get(role, set())) if normalised
+    }
 
     score = 0
     reasons: list[str] = []

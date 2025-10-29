@@ -1,5 +1,8 @@
+from enum import Enum
+
 import pytest
 
+from custom_components.horticulture_assistant import sensor_catalog
 from custom_components.horticulture_assistant.sensor_catalog import (
     collect_sensor_suggestions,
     format_sensor_hints,
@@ -40,3 +43,24 @@ async def test_format_sensor_hints_handles_missing_roles(hass):
     suggestions = collect_sensor_suggestions(hass, ["temperature"])
     hints = format_sensor_hints({"temperature": suggestions["temperature"]})
     assert "sensor.grow_temp" in hints
+
+
+async def test_collect_sensor_suggestions_handles_enum_units(hass, monkeypatch):
+    class FakeTemperatureUnit(Enum):
+        CELSIUS = "°C"
+
+    hass.states.async_set(
+        "sensor.enum_temp",
+        19,
+        {
+            "device_class": "temperature",
+            "unit_of_measurement": FakeTemperatureUnit.CELSIUS,
+        },
+    )
+
+    monkeypatch.setitem(sensor_catalog.EXPECTED_UNITS, "temperature", {FakeTemperatureUnit.CELSIUS})
+
+    suggestions = collect_sensor_suggestions(hass, ["temperature"])
+
+    assert suggestions["temperature"]
+    assert suggestions["temperature"][0].entity_id == "sensor.enum_temp"
