@@ -186,6 +186,8 @@ def _evaluate_sensor(
         state_obj = states.get(entity_id)
 
     last_timestamp: datetime | None = None
+    last_changed: datetime | None = None
+    last_updated: datetime | None = None
     unit = None
     state_value: str | None = None
     numeric_value: float | None = None
@@ -206,7 +208,9 @@ def _evaluate_sensor(
         state_value = getattr(state_obj, "state", None)
         attributes = getattr(state_obj, "attributes", {}) or {}
         unit = attributes.get("unit_of_measurement")
-        last_timestamp = _latest_timestamp(state_obj)
+        last_changed = _coerce_datetime(getattr(state_obj, "last_changed", None))
+        last_updated = _coerce_datetime(getattr(state_obj, "last_updated", None))
+        last_timestamp = _latest_timestamp(last_changed, last_updated)
         if state_value in (None, "unknown", "unavailable"):
             status = "unavailable"
             issues.append(
@@ -266,8 +270,8 @@ def _evaluate_sensor(
         value=numeric_value,
         available=available,
         status=status,
-        last_changed=last_timestamp,
-        last_updated=last_timestamp,
+        last_changed=last_changed,
+        last_updated=last_updated,
         unit_of_measurement=unit,
     )
     return snapshot, issues, last_timestamp
@@ -293,17 +297,19 @@ def _coerce_float(value: Any) -> float | None:
     return None
 
 
-def _latest_timestamp(state: State) -> datetime | None:
-    """Return the latest timestamp from ``state`` if present."""
+def _coerce_datetime(value: Any) -> datetime | None:
+    """Return ``value`` when it is a ``datetime`` instance."""
 
-    candidates = [
-        getattr(state, "last_updated", None),
-        getattr(state, "last_changed", None),
-    ]
-    timestamps = [candidate for candidate in candidates if isinstance(candidate, datetime)]
-    if not timestamps:
+    return value if isinstance(value, datetime) else None
+
+
+def _latest_timestamp(*timestamps: datetime | None) -> datetime | None:
+    """Return the freshest timestamp from ``timestamps`` when available."""
+
+    candidates = [candidate for candidate in timestamps if isinstance(candidate, datetime)]
+    if not candidates:
         return None
-    return max(timestamps)
+    return max(candidates)
 
 
 ROLE_ALIASES: Mapping[str, tuple[str, ...]] = {
