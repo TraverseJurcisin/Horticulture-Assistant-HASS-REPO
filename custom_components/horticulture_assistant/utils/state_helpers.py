@@ -27,6 +27,46 @@ _NUM_RE = re.compile(r"[-+]?[0-9]*\.?[0-9]+")
 # delimiters so multiline strings from UI forms are handled gracefully.
 _SEP_RE = re.compile(r"[;,\s]+")
 
+_COMMA_THOUSANDS_RE = re.compile(r"^[-+]?(?:[1-9]\d{0,2})(?:,\d{3})+(?:\.\d+)?$")
+_DOT_THOUSANDS_RE = re.compile(r"^[-+]?(?:[1-9]\d{0,2})(?:\.\d{3})+(?:,\d+)?$")
+_DECIMAL_COMMA_RE = re.compile(r"^[-+]?\d+,\d+$")
+
+
+def _normalise_numeric_string(value: str) -> str:
+    """Return ``value`` normalised for float conversion."""
+
+    # Normalise common unicode minus signs and thousands separators.
+    text = value.replace("\u2212", "-").replace("\u2013", "-")
+    # Collapse various non-breaking space characters used as digit groupings.
+    text = text.replace("\u00a0", " ").replace("\u202f", " ")
+    text = text.strip()
+
+    if not text:
+        return text
+
+    # Remove spaces or underscores between digits (e.g. "1 234" or "1_234").
+    text = re.sub(r"(?<=\d)[\s_](?=\d)", "", text)
+
+    if _COMMA_THOUSANDS_RE.match(text):
+        return text.replace(",", "")
+
+    if _DOT_THOUSANDS_RE.match(text):
+        return text.replace(".", "").replace(",", ".")
+
+    if _DECIMAL_COMMA_RE.match(text):
+        return text.replace(",", ".")
+
+    if "," in text and "." not in text:
+        # Single comma without decimal point - determine if it's decimal.
+        parts = text.split(",")
+        if len(parts) == 2 and parts[0] and parts[1] and parts[0].lstrip("+-").isdigit() and parts[1].isdigit():
+            decimals = parts[1]
+            if len(decimals) <= 2 or parts[0] in {"0", "+0", "-0"}:
+                return f"{parts[0]}.{decimals}"
+        text = text.replace(",", "")
+
+    return text
+
 
 def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
     """Return the numeric state of ``entity_id`` or ``None`` if unavailable.
@@ -47,26 +87,32 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
         _LOGGER.debug("State unavailable: %s", entity_id)
         return None
 
-    value = str(raw_state).replace(",", "").strip()
-    try:
-        number = float(value)
+    raw_text = str(raw_state).strip()
+    value = _normalise_numeric_string(raw_text)
+
+    for candidate in filter(None, (value, raw_text)):
+        try:
+            number = float(candidate)
+        except (ValueError, TypeError):
+            continue
         if not math.isfinite(number):
-            _LOGGER.debug("State not finite: %s=%s", entity_id, value)
+            _LOGGER.debug("State not finite: %s=%s", entity_id, candidate)
             return None
         return number
-    except (ValueError, TypeError):
-        match = _NUM_RE.search(value)
-        if match:
-            try:
-                number = float(match.group(0))
-                if not math.isfinite(number):
-                    _LOGGER.debug("State not finite: %s=%s", entity_id, match.group(0))
-                    return None
-                return number
-            except (ValueError, TypeError):
-                pass
-        _LOGGER.warning("State of %s is not numeric: %s", entity_id, value)
-        return None
+
+    match = _NUM_RE.search(value or raw_text)
+    if match:
+        try:
+            number = float(match.group(0))
+            if not math.isfinite(number):
+                _LOGGER.debug("State not finite: %s=%s", entity_id, match.group(0))
+                return None
+            return number
+        except (ValueError, TypeError):
+            pass
+
+    _LOGGER.warning("State of %s is not numeric: %s", entity_id, raw_text)
+    return None
 
 
 def parse_entities(val: str | Iterable[str] | None) -> list[str]:
