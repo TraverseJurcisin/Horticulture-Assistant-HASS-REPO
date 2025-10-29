@@ -32,7 +32,17 @@ def get_requirements(plant_type: str) -> dict[str, float]:
     if not isinstance(raw, Mapping):
         return {}
 
-    return {nutrient: float(value) for nutrient, value in raw.items() if isinstance(value, int | float | str)}
+    parsed: dict[str, float] = {}
+    for nutrient, value in raw.items():
+        if not isinstance(value, (int, float, str)):
+            continue
+
+        try:
+            parsed[nutrient] = float(value)
+        except (TypeError, ValueError):
+            continue
+
+    return parsed
 
 
 def calculate_deficit(current_totals: Mapping[str, float], plant_type: str) -> dict[str, float]:
