@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import re
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
+
+from .utils.entry_helpers import ProfileContext
 
 try:  # pragma: no cover - Home Assistant runtime provides real classes
     from homeassistant.core import HomeAssistant, State
@@ -27,7 +30,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover - tests provide s
             self.states = {}
 
 
-from .utils.entry_helpers import ProfileContext
+_NUMERIC_PATTERN = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
 
 
 @dataclass(slots=True)
@@ -276,12 +279,15 @@ def _coerce_float(value: Any) -> float | None:
     if isinstance(value, int | float):
         return float(value)
     if isinstance(value, str):
+        cleaned = value.strip().replace(",", "")
         try:
-            return float(value)
+            return float(cleaned)
         except ValueError:
-            cleaned = value.strip().replace(",", "")
+            match = _NUMERIC_PATTERN.search(cleaned)
+            if match is None:
+                return None
             try:
-                return float(cleaned)
+                return float(match.group(0))
             except ValueError:
                 return None
     return None

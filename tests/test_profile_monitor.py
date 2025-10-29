@@ -92,6 +92,26 @@ def test_profile_monitor_flags_out_of_range() -> None:
     assert result.last_sample_at == changed
 
 
+def test_profile_monitor_threshold_parses_strings_with_units() -> None:
+    hass = DummyHass(
+        DummyStates(
+            {
+                "sensor.moisture": DummyState("25"),
+            }
+        )
+    )
+    context = _context(
+        sensors={"moisture": ("sensor.moisture",)},
+        thresholds={"moisture_min": "30 %"},
+    )
+
+    result = ProfileMonitor(hass, context).evaluate()
+
+    assert result.health == "problem"
+    problems = result.issues_for("problem")
+    assert problems and problems[0].summary == "sensor_below_minimum"
+
+
 @pytest.mark.parametrize(
     "state, expected",
     [
