@@ -195,3 +195,46 @@ async def test_async_save_profile_accepts_dataclass(monkeypatch):
     assert saved["p1"]["resolved_targets"]["temp"]["value"] == 1
     assert saved["p1"]["library"]["profile_id"] == "p1"
     assert saved["p1"]["local"]["general"] == {}
+
+
+@pytest.mark.asyncio
+async def test_async_save_profile_preserves_metadata(monkeypatch):
+    saved: dict[str, dict[str, Any]] = {}
+
+    class DummyStore:
+        async def async_save(self, data):
+            saved.update(data)
+
+    async def fake_load_all(_hass):
+        return {}
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile.store._store",
+        lambda hass: DummyStore(),
+    )
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile.store.async_load_all",
+        fake_load_all,
+    )
+
+    from custom_components.horticulture_assistant.profile.store import (
+        async_save_profile,
+    )
+
+    payload = {
+        "plant_id": "p1",
+        "profile_id": "p1",
+        "display_name": "Plant",
+        "species_display": "Sweet Basil",
+        "species_pid": "obp123",
+        "image_url": "https://example.invalid/plant.png",
+        "opb_credentials": {"client_id": "id", "secret": "sec"},
+    }
+
+    await async_save_profile(None, payload)
+
+    stored = saved["p1"]
+    assert stored["species_display"] == "Sweet Basil"
+    assert stored["species_pid"] == "obp123"
+    assert stored["image_url"] == "https://example.invalid/plant.png"
+    assert stored["opb_credentials"] == {"client_id": "id", "secret": "sec"}
