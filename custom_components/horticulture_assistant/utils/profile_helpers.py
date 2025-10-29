@@ -4,12 +4,35 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Mapping
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import Any
 
 from .json_io import save_json
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _safe_component(value: str) -> str:
+    """Return a filesystem-safe directory name for ``value``."""
+
+    text = (value or "").strip()
+    if not text:
+        return "plant"
+
+    text = text.replace("\\", "/")
+    pure = PurePath(text)
+    if pure.parts:
+        candidate = pure.name if len(pure.parts) != 1 else pure.parts[0]
+    else:
+        candidate = text
+
+    candidate = candidate.strip().strip(".")
+    if not candidate or candidate in {".", ".."}:
+        return "plant"
+
+    safe = candidate.replace("/", "_").replace("\\", "_")
+    safe = safe.strip()
+    return safe or "plant"
 
 
 def write_profile_sections(
@@ -40,7 +63,8 @@ def write_profile_sections(
         prevented writing any files.
     """
     base_dir = Path(base_path) if base_path else Path("plants")
-    plant_dir = base_dir / plant_id
+    safe_id = _safe_component(plant_id)
+    plant_dir = base_dir / safe_id
     try:
         plant_dir.mkdir(parents=True, exist_ok=True)
     except Exception as err:  # pragma: no cover - unexpected errors
