@@ -1431,13 +1431,16 @@ class ProfileRegistry:
                     raise ValueError(f"non-finite threshold value for {key}")
                 cleaned[str(key)] = value
 
-        allowed_set: set[str]
-        allowed_set = {str(key) for key in allowed_keys} if allowed_keys is not None else set(cleaned.keys())
-
         removals = {str(key) for key in removed_keys} if removed_keys else set()
 
+        if allowed_keys is not None:
+            allowed_set: set[str] = {str(key) for key in allowed_keys}
+            target_keys = allowed_set | removals
+        else:
+            allowed_set = set(cleaned.keys())
+            target_keys = allowed_set | removals
+
         updated_map = dict(threshold_map)
-        target_keys = (allowed_set or set(cleaned.keys())) | removals
         for key in target_keys:
             if key in cleaned:
                 updated_map[key] = cleaned[key]
