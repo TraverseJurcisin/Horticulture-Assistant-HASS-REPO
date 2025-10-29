@@ -376,6 +376,26 @@ async def test_set_profile_sensors_replaces_mapping(hass):
     assert stored["sensors"] == {"temperature": "sensor.new_temp"}
 
 
+async def test_async_link_sensors_strips_whitespace(hass):
+    hass.states.async_set(
+        "sensor.temp_sensor",
+        20,
+        {"device_class": "temperature", "unit_of_measurement": "°C"},
+    )
+
+    entry = await _make_entry(hass, {CONF_PROFILES: {"plant": {"name": "Plant"}}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    await reg.async_link_sensors("plant", {"temperature": " sensor.temp_sensor "})
+
+    stored = entry.options[CONF_PROFILES]["plant"]
+    assert stored["sensors"] == {"temperature": "sensor.temp_sensor"}
+
+    prof = reg._profiles["plant"]
+    assert prof.general["sensors"] == {"temperature": "sensor.temp_sensor"}
+
+
 async def test_update_profile_thresholds_updates_options_and_profile(hass):
     profile_payload = {
         "name": "Alpha",
