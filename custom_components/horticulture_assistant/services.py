@@ -1088,6 +1088,8 @@ async def async_register_all(
                 vol.Optional("humidity"): ENTITY_ID_SCHEMA,
                 vol.Optional("illuminance"): ENTITY_ID_SCHEMA,
                 vol.Optional("moisture"): ENTITY_ID_SCHEMA,
+                vol.Optional("co2"): ENTITY_ID_SCHEMA,
+                vol.Optional("ph"): ENTITY_ID_SCHEMA,
             }
         ),
     )
