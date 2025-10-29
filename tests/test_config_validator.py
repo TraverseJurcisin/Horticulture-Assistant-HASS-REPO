@@ -52,3 +52,31 @@ def test_validate_api_config_rejects_invalid_custom_base_url() -> None:
     errors = validator.validate_api_config("apikey-12345", "ftp://example.com")
 
     assert errors == ["Base URL must start with http:// or https://"]
+
+
+def test_missing_entity_issue_id_is_slugified(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Missing sensor issues should use Home Assistant compliant identifiers."""
+
+    hass = DummyHass()
+    hass.states = {"sensor.plant temperature": None}
+
+    captured = {}
+
+    def _capture_issue(_hass, _domain, issue_id, **kwargs):
+        captured["issue_id"] = issue_id
+        captured["kwargs"] = kwargs
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.utils.config_validator.ir.async_create_issue",
+        _capture_issue,
+    )
+
+    validator = ConfigValidator(hass)
+
+    missing = validator.validate_sensor_entities(
+        "Greenhouse Plant #1",
+        {"temperature": ["sensor.plant temperature"]},
+    )
+
+    assert missing == ["sensor.plant temperature"]
+    assert captured["issue_id"] == "missing_entity_greenhouse_plant_1_sensor_plant_temperature"

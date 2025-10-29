@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from typing import Any
 
 try:  # pragma: no cover - executed when Home Assistant is installed
@@ -73,12 +74,30 @@ class ConfigValidator:
 
         return errors
 
+    @staticmethod
+    def _issue_id_component(value: str) -> str:
+        """Return an issue-id-safe slug for ``value``.
+
+        Home Assistant's issue registry only accepts identifiers matching
+        ``^[a-z0-9_]+$``. Plant IDs and entity IDs regularly contain characters
+        such as spaces, dots or dashes which would otherwise cause
+        ``ValueError`` to be raised when registering the issue. Sanitising the
+        components ensures we always produce valid identifiers while remaining
+        deterministic.
+        """
+
+        slug = re.sub(r"[^a-z0-9_]", "_", value.lower())
+        slug = re.sub(r"_+", "_", slug).strip("_")
+        return slug or "unknown"
+
     def _create_missing_entity_issue(self, plant_id: str, entity_id: str) -> None:
         """Create a Home Assistant issue for missing entity."""
+        plant_component = self._issue_id_component(plant_id)
+        entity_component = self._issue_id_component(entity_id)
         ir.async_create_issue(
             self.hass,
             DOMAIN,
-            f"missing_entity_{plant_id}_{entity_id}",
+            f"missing_entity_{plant_component}_{entity_component}",
             is_fixable=False,
             severity=ir.IssueSeverity.WARNING,
             translation_key="missing_entity",
