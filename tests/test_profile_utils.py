@@ -1,4 +1,9 @@
+from custom_components.horticulture_assistant.profile.schema import (
+    ProfileLibrarySection,
+    ProfileLocalSection,
+)
 from custom_components.horticulture_assistant.profile.utils import (
+    determine_species_slug,
     ensure_sections,
     normalise_profile_payload,
     sync_general_section,
@@ -34,3 +39,22 @@ def test_normalise_profile_payload_falls_back_to_generated_identifiers() -> None
     assert normalised["plant_id"] == "profile"
     assert normalised["profile_id"] == "profile"
     assert normalised["display_name"] == "profile"
+
+
+def test_determine_species_slug_ignores_whitespace_candidates() -> None:
+    library = ProfileLibrarySection(profile_id="lib-1", identity={"species": "  Pisum sativum  "})
+    local = ProfileLocalSection(species="   ")
+
+    slug = determine_species_slug(library=library, local=local, raw="   ")
+
+    assert slug == "Pisum sativum"
+
+
+def test_determine_species_slug_returns_none_for_blank_values() -> None:
+    assert determine_species_slug(raw="   ") is None
+    assert (
+        determine_species_slug(
+            raw={"slug": "   ", "taxonomy": {"species": "   "}},
+        )
+        is None
+    )

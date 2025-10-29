@@ -142,11 +142,18 @@ def _coerce_mapping(value: Any) -> dict[str, Any]:
     return {}
 
 
-def _extract_species_candidate(value: Any) -> str | None:
+def _normalise_species_text(value: Any) -> str | None:
+    """Coerce ``value`` into a usable species identifier string."""
+
     if value is None:
         return None
-    if isinstance(value, str) and value:
-        return value
+    text = str(value).strip()
+    if not text:
+        return None
+    return text
+
+
+def _extract_species_candidate(value: Any) -> str | None:
     if isinstance(value, Mapping):
         mapping = _coerce_mapping(value)
         for key in (
@@ -158,8 +165,8 @@ def _extract_species_candidate(value: Any) -> str | None:
             "identifier",
             "value",
         ):
-            candidate = mapping.get(key)
-            if isinstance(candidate, str) and candidate:
+            candidate = _extract_species_candidate(mapping.get(key))
+            if candidate:
                 return candidate
         # Fall back to nested ``species`` payloads commonly shaped as
         # ``{"taxonomy": {"species": "..."}}``.
@@ -168,7 +175,8 @@ def _extract_species_candidate(value: Any) -> str | None:
             nested = _extract_species_candidate(taxonomy)
             if nested:
                 return nested
-    return None
+        return None
+    return _normalise_species_text(value)
 
 
 def determine_species_slug(
