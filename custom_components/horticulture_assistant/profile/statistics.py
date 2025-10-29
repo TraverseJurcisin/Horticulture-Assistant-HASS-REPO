@@ -785,7 +785,7 @@ def _coerce_ratio_value(value: Any) -> float | None:
         if fraction_match:
             numerator = _to_float(fraction_match.group("numerator"))
             denominator = _to_float(fraction_match.group("denominator"))
-            if denominator and denominator != 0:
+            if numerator is not None and denominator is not None and denominator != 0:
                 ratio = numerator / denominator
                 return max(0.0, min(1.0, ratio))
         if number is None:
