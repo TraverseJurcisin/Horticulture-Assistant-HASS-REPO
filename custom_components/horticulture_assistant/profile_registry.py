@@ -1085,7 +1085,8 @@ class ProfileRegistry:
         p.parent.mkdir(parents=True, exist_ok=True)
         data = [p_.to_json() for p_ in self._profiles.values()]
         with p.open("w", encoding="utf-8") as fp:
-            json.dump(data, fp, indent=2)
+            json.dump(data, fp, indent=2, ensure_ascii=False)
+            fp.write("\n")
         return p
 
     async def async_add_profile(

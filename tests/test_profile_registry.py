@@ -1455,6 +1455,21 @@ async def test_export_round_trip(hass, tmp_path):
     assert data[0]["display_name"] == "Plant"
 
 
+async def test_export_preserves_unicode_characters(hass, tmp_path):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Señor Basil"}}},
+    )
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+    path = tmp_path / "unicode.json"
+    await reg.async_export(path)
+    text = path.read_text(encoding="utf-8")
+    assert "Señor" in text
+    payload = json.loads(text)
+    assert payload[0]["display_name"] == "Señor Basil"
+
+
 async def test_len_after_additions(hass):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
     reg = ProfileRegistry(hass, entry)
