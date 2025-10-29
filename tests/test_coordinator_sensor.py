@@ -193,6 +193,34 @@ async def test_profile_vpd_and_dew_point_sensors(hass):
 
 
 @pytest.mark.asyncio
+async def test_profile_vpd_and_dew_point_fahrenheit_conversion(hass):
+    """Temperature sensors reporting Fahrenheit should be converted to Celsius."""
+
+    hass.states.async_set(
+        "sensor.t",
+        77,
+        {"unit_of_measurement": "°F"},
+    )
+    hass.states.async_set("sensor.h", 60)
+    options = {
+        CONF_PROFILES: {
+            "avocado": {
+                "name": "Avocado",
+                "sensors": {"temperature": "sensor.t", "humidity": "sensor.h"},
+            }
+        }
+    }
+    coordinator = HorticultureCoordinator(hass, _make_entry(options=options))
+    await coordinator.async_config_entry_first_refresh()
+
+    vpd_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["vpd"])
+    dew_sensor = ProfileMetricSensor(coordinator, "avocado", "Avocado", PROFILE_SENSOR_DESCRIPTIONS["dew_point"])
+
+    assert vpd_sensor.native_value == pytest.approx(1.27, rel=1e-2)
+    assert dew_sensor.native_value == pytest.approx(16.7, rel=1e-2)
+
+
+@pytest.mark.asyncio
 async def test_vpd_seven_day_average_rollover(hass):
     hass.states.async_set("sensor.t", 25)
     hass.states.async_set("sensor.h", 60)
