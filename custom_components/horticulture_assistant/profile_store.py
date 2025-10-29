@@ -38,6 +38,10 @@ class ProfileStore:
                 names.append(path.stem)
                 continue
 
+            if not isinstance(raw, Mapping):
+                names.append(path.stem)
+                continue
+
             payload = self._normalise_payload(raw, fallback_name=path.stem)
             name = payload.get("display_name") or payload.get("name") or path.stem
             names.append(str(name))
@@ -59,6 +63,10 @@ class ProfileStore:
             raw = json.loads(raw_text)
         except json.JSONDecodeError:
             return None
+
+        if not isinstance(raw, Mapping):
+            return None
+
         return self._normalise_payload(raw, fallback_name=path.stem)
 
     async def async_save(
