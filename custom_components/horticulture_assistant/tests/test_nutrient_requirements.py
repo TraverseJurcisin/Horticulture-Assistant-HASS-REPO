@@ -45,3 +45,22 @@ def test_temperature_adjusted_requirements():
     assert req["N"] > 150  # factor < 1 so requirement increases
     cumulative = calculate_temperature_adjusted_cumulative_requirements("citrus", 2, 18)
     assert cumulative["N"] == round(req["N"] * 2, 2)
+
+
+def test_get_requirements_ignores_invalid_entries(monkeypatch):
+    get_requirements.cache_clear()
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.utils.nutrient_requirements.load_dataset",
+        lambda _: {"test": {"N": "120", "P": "oops", "K": None}},
+    )
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.utils.nutrient_requirements.normalize_key",
+        lambda plant: plant,
+    )
+
+    req = get_requirements("test")
+
+    assert req == {"N": 120.0}
+
+    get_requirements.cache_clear()
