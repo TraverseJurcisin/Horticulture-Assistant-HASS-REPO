@@ -1,4 +1,5 @@
 import pytest
+
 from plant_engine.fertigation import recommend_uptake_fertigation
 from plant_engine.nutrient_uptake import (
     estimate_area_daily_uptake,

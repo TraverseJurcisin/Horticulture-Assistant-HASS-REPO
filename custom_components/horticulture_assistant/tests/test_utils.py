@@ -1,7 +1,8 @@
 import importlib
 
-import plant_engine.utils as utils
 import pytest
+
+import plant_engine.utils as utils
 from plant_engine.utils import (
     clean_float_map,
     clear_dataset_cache,
