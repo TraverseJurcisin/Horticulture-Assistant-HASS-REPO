@@ -481,20 +481,21 @@ def build_profile_device_info(
     name = _resolve_profile_name(resolved_payload, default_name) or profile_id
     identifier = profile_device_identifier(entry_id, profile_id)
 
+    raw_general = resolved_payload.get("general")
+    general_section = raw_general if isinstance(raw_general, Mapping) else None
+    plant_type = general_section.get("plant_type") if general_section is not None else None
+
     info: dict[str, Any] = {
         "identifiers": {identifier},
         "manufacturer": resolved_payload.get("manufacturer") or "Horticulture Assistant",
-        "model": resolved_payload.get("model")
-        or (resolved_payload.get("general", {}) or {}).get("plant_type")
-        or "Plant Profile",
+        "model": resolved_payload.get("model") or plant_type or "Plant Profile",
         "name": name,
     }
 
     if entry_id:
         info["via_device"] = entry_device_identifier(entry_id)
 
-    general_section = resolved_payload.get("general")
-    if isinstance(general_section, Mapping):
+    if general_section is not None:
         area = general_section.get("area") or general_section.get("grow_area")
         if isinstance(area, str) and area.strip():
             info["suggested_area"] = area.strip()
@@ -858,9 +859,7 @@ def async_sync_entry_devices(
         kwargs = _clean_device_kwargs(info)
         identifiers = kwargs.get("identifiers") or {profile_device_identifier(entry.entry_id, pid)}
         if not isinstance(identifiers, set) or not identifiers:
-            identifiers = _coerce_device_identifiers(identifiers) or {
-                profile_device_identifier(entry.entry_id, pid)
-            }
+            identifiers = _coerce_device_identifiers(identifiers) or {profile_device_identifier(entry.entry_id, pid)}
         kwargs["identifiers"] = identifiers
         desired_identifiers.update(identifiers)
         device_registry.async_get_or_create(
@@ -903,9 +902,7 @@ def remove_entry_data(hass: HomeAssistant, entry_id: str) -> None:
                         continue
                     if by_pid.get(pid) is entry_data:
                         by_pid.pop(pid, None)
-        if not domain_data or (
-            set(domain_data.keys()) <= {BY_PLANT_ID} and not domain_data.get(BY_PLANT_ID)
-        ):
+        if not domain_data or (set(domain_data.keys()) <= {BY_PLANT_ID} and not domain_data.get(BY_PLANT_ID)):
             hass.data.pop(DOMAIN, None)
 
 
@@ -966,9 +963,7 @@ def resolve_entry_device_info(hass: HomeAssistant, entry_id: str | None) -> dict
     entry = stored.get("config_entry")
     snapshot = stored.get("snapshot") if isinstance(stored.get("snapshot"), Mapping) else None
     if entry is not None:
-        return _clean_device_kwargs(
-            _normalise_device_info(build_entry_device_info(entry, snapshot))
-        )
+        return _clean_device_kwargs(_normalise_device_info(build_entry_device_info(entry, snapshot)))
     return None
 
 

@@ -15,6 +15,7 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     ProfileContext,
     ProfileContextCollection,
     build_entry_snapshot,
+    build_profile_device_info,
     entry_device_identifier,
     get_entry_plant_info,
     get_primary_profile_id,
@@ -183,6 +184,16 @@ async def test_store_entry_data_populates_device_info(hass, tmp_path):
     ctx = contexts["p2"]
     assert ctx["name"] == "Stored"
     assert ctx["sensors"] == {"moisture": ["sensor.moist"]}
+
+
+def test_build_profile_device_info_handles_non_mapping_general():
+    payload = {"name": "Plant", "general": ["not", "a", "mapping"]}
+
+    info = build_profile_device_info("entry", "plant", payload, snapshot=None)
+
+    assert info["name"] == "Plant"
+    assert info["model"] == "Plant Profile"
+    assert profile_device_identifier("entry", "plant") in info["identifiers"]
 
 
 @pytest.mark.asyncio
