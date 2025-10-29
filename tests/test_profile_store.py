@@ -229,6 +229,9 @@ async def test_path_for_rewrites_windows_reserved_names(hass, tmp_path, monkeypa
     aux_suffix = store._path_for("aux.report")
     assert aux_suffix.name == "aux_profile_report.json"
 
+    aux_multi_suffix = store._path_for("aux.backup.json")
+    assert aux_multi_suffix.name == "aux_profile_backup_json.json"
+
 
 @pytest.mark.asyncio
 async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypatch) -> None:

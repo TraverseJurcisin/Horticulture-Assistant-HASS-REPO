@@ -283,12 +283,13 @@ class ProfileStore:
         part = part.strip().strip(".")
         if not part or part in {".", ".."}:
             return None
-        stem = PurePath(part).stem.lower()
+        primary, *suffix_parts = part.split(".")
+        stem = primary.lower()
         if stem in _WINDOWS_RESERVED_NAMES:
-            suffix = PurePath(part).suffix
             safe = f"{stem}_profile"
-            if suffix:
-                cleaned_suffix = suffix.replace(".", "_").strip("_")
+            if suffix_parts:
+                cleaned_suffix = "_".join(segment for segment in suffix_parts if segment)
+                cleaned_suffix = cleaned_suffix.replace(".", "_").strip("_")
                 if cleaned_suffix:
                     safe = f"{safe}_{cleaned_suffix}"
             part = safe
