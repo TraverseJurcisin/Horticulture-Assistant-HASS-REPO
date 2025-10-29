@@ -323,12 +323,14 @@ def _aggregate_harvests(
     fruit_total = 0
     densities: list[float] = []
     for event in harvests:
-        total_yield += float(event.yield_grams or 0.0)
-        if event.area_m2:
-            total_area += float(event.area_m2)
-            density = event.yield_density()
-            if density is not None:
-                densities.append(density)
+        yield_value = _to_float(getattr(event, "yield_grams", None))
+        if yield_value is not None:
+            total_yield += yield_value
+        area_value = _to_float(getattr(event, "area_m2", None))
+        if area_value:
+            total_area += area_value
+            if yield_value is not None and area_value > 0:
+                densities.append(round(yield_value / area_value, 3))
         if event.fruit_count:
             with suppress(TypeError, ValueError):
                 fruit_total += int(event.fruit_count)
@@ -376,12 +378,14 @@ def _compute_harvest_windows(
         fruit_total = 0
         densities: list[float] = []
         for event, _ts in window_events:
-            total_yield += float(event.yield_grams or 0.0)
-            if event.area_m2:
-                total_area += float(event.area_m2)
-                density = event.yield_density()
-                if density is not None:
-                    densities.append(density)
+            yield_value = _to_float(getattr(event, "yield_grams", None))
+            if yield_value is not None:
+                total_yield += yield_value
+            area_value = _to_float(getattr(event, "area_m2", None))
+            if area_value:
+                total_area += area_value
+                if yield_value is not None and area_value > 0:
+                    densities.append(round(yield_value / area_value, 3))
             if event.fruit_count:
                 try:
                     fruit_total += int(event.fruit_count)
