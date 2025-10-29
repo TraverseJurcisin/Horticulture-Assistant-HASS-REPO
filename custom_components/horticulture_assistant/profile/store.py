@@ -15,13 +15,24 @@ from .utils import link_species_and_cultivars, normalise_profile_payload
 STORE_VERSION = 1
 STORE_KEY = "horticulture_assistant_profiles"
 
+_CACHE_KEY = "horticulture_assistant.profile_store_cache"
+CACHE_KEY = _CACHE_KEY
+
 
 def _store(hass: HomeAssistant) -> Store:
     return Store(hass, STORE_VERSION, STORE_KEY)
 
 
 async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
-    return await _store(hass).async_load() or {}
+    data = await _store(hass).async_load() or {}
+    cache = hass.data.setdefault(_CACHE_KEY, {})
+    if data:
+        cache.clear()
+        cache.update({k: deepcopy(v) for k, v in data.items()})
+        return data
+    if cache:
+        return {k: deepcopy(v) for k, v in cache.items()}
+    return {}
 
 
 async def async_save_profile(hass: HomeAssistant, profile: BioProfile | dict[str, Any]) -> None:
@@ -56,6 +67,9 @@ async def async_save_profile(hass: HomeAssistant, profile: BioProfile | dict[str
 
     data = await async_load_all(hass)
     data[payload["plant_id"]] = payload
+    cache = hass.data.setdefault(_CACHE_KEY, {})
+    cache.clear()
+    cache.update({k: deepcopy(v) for k, v in data.items()})
     await _store(hass).async_save(data)
 
 
