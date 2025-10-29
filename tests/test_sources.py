@@ -11,6 +11,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
+from custom_components.horticulture_assistant.ai_client import clear_ai_cache
+
 pytest.importorskip("homeassistant.exceptions")
 
 _BASE_DIR = Path(__file__).resolve().parents[1]
@@ -275,6 +277,35 @@ async def test_ai_source_handles_invalid_ttl_gracefully():
     profile_options = entry.options["profiles"]["invalid_ttl_profile"]
     assert profile_options["thresholds"]["temp_c_max"] == 5.5
     assert profile_options["resolved_targets"]["temp_c_max"]["value"] == 5.5
+
+
+@pytest.mark.asyncio
+async def test_ai_source_preserves_fractional_ttl():
+    hass = make_hass()
+    entry = DummyEntry(
+        {
+            "profiles": {
+                "p1": {
+                    "sources": {
+                        "temp_c_max": {"mode": "ai", "ai": {"ttl_hours": 0.5}},
+                    }
+                }
+            }
+        }
+    )
+    mock = AsyncMock(return_value=(6.0, 0.85, "note", []))
+    with patch(
+        "custom_components.horticulture_assistant.ai_client.AIClient.generate_setpoint",
+        mock,
+    ):
+        clear_ai_cache()
+        resolver = PreferenceResolver(hass)
+        await resolver.resolve_profile(entry, "p1")
+        await resolver.resolve_profile(entry, "p1")
+
+    assert mock.call_count == 1
+    ai_meta = entry.options["profiles"]["p1"]["sources"]["temp_c_max"]["ai"]
+    assert ai_meta["ttl_hours"] == pytest.approx(0.5)
 
 
 @pytest.mark.asyncio

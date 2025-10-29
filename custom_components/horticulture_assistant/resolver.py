@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import math
 from collections.abc import Mapping
 from contextlib import suppress
 from datetime import datetime, timedelta, timezone
@@ -28,24 +29,25 @@ UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # no
 _LOGGER = logging.getLogger(__name__)
 
 
-def _coerce_ttl_hours(value: Any, *, default: int) -> int:
-    """Return a positive integer ``ttl_hours`` value or ``default`` when invalid."""
+def _coerce_ttl_hours(value: Any, *, default: float) -> float:
+    """Return a positive ``ttl_hours`` value or ``default`` when invalid."""
 
+    candidate: float
     if isinstance(value, int | float):
-        candidate = int(value)
+        candidate = float(value)
     elif isinstance(value, str):
         text = value.strip()
         if not text:
-            return default
+            return float(default)
         try:
-            candidate = int(float(text))
+            candidate = float(text)
         except (TypeError, ValueError):
-            return default
+            return float(default)
     else:
-        return default
+        return float(default)
 
-    if candidate <= 0:
-        return default
+    if not math.isfinite(candidate) or candidate <= 0:
+        return float(default)
     return candidate
 
 
