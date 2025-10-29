@@ -185,6 +185,45 @@ async def test_missing_species_creates_issue_and_clears_when_resolved(hass, monk
     assert created_issue_id in deleted
 
 
+@pytest.mark.asyncio
+async def test_missing_species_issue_supports_coroutines(hass, monkeypatch):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "species": "species.unknown"}}},
+    )
+    created: list[tuple[str, dict]] = []
+    deleted: list[str] = []
+
+    class _Severity:
+        WARNING = "warning"
+
+    async def _create_issue(*args, **kwargs):
+        created.append((args[2], kwargs))
+
+    async def _delete_issue(*args, **_kwargs):
+        deleted.append(args[2])
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.ir",
+        SimpleNamespace(
+            IssueSeverity=_Severity,
+            async_create_issue=_create_issue,
+            async_delete_issue=_delete_issue,
+        ),
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+    await hass.async_block_till_done()
+
+    assert any(issue_id.startswith("missing_species_p1_") for issue_id, _ in created)
+
+    reg._log_lineage_warnings(LineageLinkReport())
+    await hass.async_block_till_done()
+
+    assert any(issue_id.startswith("missing_species_p1_") for issue_id in deleted)
+
+
 async def test_missing_species_issue_updates_when_reference_changes(hass, monkeypatch):
     entry = await _make_entry(
         hass,
