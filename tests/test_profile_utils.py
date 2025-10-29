@@ -1,10 +1,13 @@
 from custom_components.horticulture_assistant.profile.schema import (
+    CultivarProfile,
     ProfileLibrarySection,
     ProfileLocalSection,
+    SpeciesProfile,
 )
 from custom_components.horticulture_assistant.profile.utils import (
     determine_species_slug,
     ensure_sections,
+    link_species_and_cultivars,
     normalise_profile_payload,
     sync_general_section,
 )
@@ -67,3 +70,33 @@ def test_determine_species_slug_returns_none_for_blank_values() -> None:
         )
         is None
     )
+
+
+def test_link_species_and_cultivars_recovers_from_invalid_species_reference() -> None:
+    species = SpeciesProfile(profile_id="species.valid", display_name="Valid Species")
+    cultivar = CultivarProfile(
+        profile_id="cultivar.one",
+        display_name="Cultivar",
+        species="species.missing",
+    )
+    cultivar.parents = ["species.missing", "species.valid"]
+
+    report = link_species_and_cultivars([species, cultivar])
+
+    assert cultivar.species_profile_id == "species.valid"
+    assert cultivar.parents == ["species.valid"]
+    assert "cultivar.one" in species.cultivar_ids
+    assert report.missing_species["cultivar.one"] == "species.missing"
+
+
+def test_link_species_and_cultivars_clears_missing_species_reference() -> None:
+    cultivar = CultivarProfile(
+        profile_id="cultivar.two",
+        display_name="Cultivar Two",
+        species="species.ghost",
+    )
+
+    report = link_species_and_cultivars([cultivar])
+
+    assert cultivar.species_profile_id is None
+    assert report.missing_species["cultivar.two"] == "species.ghost"
