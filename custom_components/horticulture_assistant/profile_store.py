@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from copy import deepcopy
 from math import isfinite
 from numbers import Integral, Real
@@ -175,17 +175,31 @@ class ProfileStore:
             clone_payload = clone_from
             clone_profile = self._as_profile(clone_from, fallback_name=name)
 
-        sensors_data: dict[str, str]
+        sensors_data: dict[str, str | list[str]]
         if sensors is not None:
             sensors_data = {
                 str(key): value.strip() for key, value in sensors.items() if isinstance(value, str) and value.strip()
             }
         elif clone_profile and isinstance(clone_profile.general.get("sensors"), dict):
-            sensors_data = {
-                str(key): value.strip()
-                for key, value in clone_profile.general.get("sensors", {}).items()
-                if isinstance(value, str) and value.strip()
-            }
+            sensors_data = {}
+            for key, value in clone_profile.general.get("sensors", {}).items():
+                if not isinstance(key, str):
+                    continue
+                if isinstance(value, str):
+                    cleaned = value.strip()
+                    if cleaned:
+                        sensors_data[str(key)] = cleaned
+                    continue
+                if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
+                    items: list[str] = []
+                    for item in value:
+                        if not isinstance(item, str):
+                            continue
+                        trimmed = item.strip()
+                        if trimmed:
+                            items.append(trimmed)
+                    if items:
+                        sensors_data[str(key)] = items
         else:
             sensors_data = {}
 
