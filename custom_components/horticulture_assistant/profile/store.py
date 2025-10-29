@@ -86,7 +86,7 @@ async def async_save_profile_from_options(hass: HomeAssistant, entry, profile_id
         prof,
         display_name=prof.get("name") or profile_id,
     )
-    await async_save_profile(hass, profile)
+    await async_save_profile(hass, profile.to_json())
 
 
 async def async_get_profile(hass: HomeAssistant, plant_id: str) -> dict[str, Any] | None:
