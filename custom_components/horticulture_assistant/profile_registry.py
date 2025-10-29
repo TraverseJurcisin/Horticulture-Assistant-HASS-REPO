@@ -12,7 +12,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-from collections.abc import Callable, Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path
@@ -51,6 +51,7 @@ from .profile.schema import (
     RunEvent,
 )
 from .profile.statistics import recompute_statistics
+from .profile.store import get_profile_store
 from .profile.utils import (
     LineageLinkReport,
     ensure_sections,
@@ -98,6 +99,88 @@ def _parent_issue_id(profile_id: str, parent_id: str) -> str:
     return f"missing_parent_{profile_id}_{slug}_{digest}"
 
 
+def _merge_sensor_mappings(*mappings: Mapping[str, Any] | None) -> dict[str, str]:
+    """Return a normalised union of entity id mappings."""
+
+    merged: dict[str, str] = {}
+    for mapping in mappings:
+        if not isinstance(mapping, Mapping):
+            continue
+        for key, value in mapping.items():
+            if not isinstance(key, str):
+                key = str(key)
+            if not isinstance(value, str):
+                continue
+            entity_id = value.strip()
+            if not entity_id:
+                continue
+            merged[key] = entity_id
+    return merged
+
+
+def _merge_profile_payload(
+    base: Mapping[str, Any],
+    overlay: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Merge ``overlay`` options into a stored profile payload."""
+
+    result = {key: deepcopy(value) for key, value in base.items()}
+    overlay_dict = {str(key): value for key, value in overlay.items()}
+
+    base_general = result.get("general") if isinstance(result.get("general"), Mapping) else {}
+    overlay_general = overlay_dict.pop("general", None)
+    general_map: dict[str, Any] = {}
+    if isinstance(base_general, Mapping):
+        general_map.update({str(key): deepcopy(value) for key, value in base_general.items()})
+    if isinstance(overlay_general, Mapping):
+        general_map.update({str(key): deepcopy(value) for key, value in overlay_general.items()})
+
+    sensors_overlay = overlay_dict.pop("sensors", None)
+    merged_sensors = _merge_sensor_mappings(
+        base_general.get("sensors") if isinstance(base_general, Mapping) else None,
+        result.get("sensors") if isinstance(result.get("sensors"), Mapping) else None,
+        general_map.get("sensors") if isinstance(general_map.get("sensors"), Mapping) else None,
+        sensors_overlay if isinstance(sensors_overlay, Mapping) else None,
+    )
+
+    if merged_sensors:
+        general_map["sensors"] = merged_sensors
+        result["sensors"] = merged_sensors
+        local_section = result.get("local") if isinstance(result.get("local"), Mapping) else {}
+        local_general = local_section.get("general") if isinstance(local_section, Mapping) else None
+        local_general_map = dict(local_general) if isinstance(local_general, Mapping) else {}
+        local_general_map["sensors"] = merged_sensors
+        local_map = dict(local_section) if isinstance(local_section, Mapping) else {}
+        local_map["general"] = local_general_map
+        result["local"] = local_map
+    else:
+        result.pop("sensors", None)
+        if isinstance(general_map, dict):
+            general_map.pop("sensors", None)
+
+    scope = overlay_dict.get(CONF_PROFILE_SCOPE)
+    if scope is None and isinstance(general_map, dict):
+        scope = general_map.get(CONF_PROFILE_SCOPE)
+    if scope is not None:
+        general_map.setdefault(CONF_PROFILE_SCOPE, scope)
+        result[CONF_PROFILE_SCOPE] = scope
+    elif CONF_PROFILE_SCOPE in result:
+        general_map.setdefault(CONF_PROFILE_SCOPE, result[CONF_PROFILE_SCOPE])
+
+    if general_map:
+        result["general"] = general_map
+
+    for key, value in overlay_dict.items():
+        if isinstance(value, Mapping) and isinstance(result.get(key), Mapping):
+            merged = dict(result[key])
+            merged.update(value)
+            result[key] = merged
+        else:
+            result[key] = deepcopy(value)
+
+    return result
+
+
 _SCHEMA_PATH = Path(__file__).parent / "data" / "schema" / "bio_profile.schema.json"
 _PROFILE_SCHEMA: dict[str, Any] | None = None
 
@@ -126,7 +209,7 @@ class ProfileRegistry:
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
         self.hass = hass
         self.entry = entry
-        self._store: Store = Store(hass, STORAGE_VERSION, STORAGE_KEY)
+        self._store: Store = get_profile_store(hass)
         self._profiles: dict[str, BioProfile] = {}
         self._cloud_publisher: CloudSyncPublisher | None = None
         self._cloud_pending_snapshot = False
@@ -160,7 +243,7 @@ class ProfileRegistry:
             sample = ", ".join(affected[:5])
             if len(affected) > 5:
                 sample = f"{sample}, +{len(affected) - 5} more"
-            warnings.append(f"Missing species metadata for {sample}")
+            warnings.append(f"Profiles with missing species metadata: {sample}")
 
         if self._missing_parent_issues:
             affected = sorted({profile_id for profile_id, _ in self._missing_parent_issues})
@@ -631,13 +714,12 @@ class ProfileRegistry:
         if publisher is None:
             self._cloud_pending_snapshot = True
             return
-        ready = publisher.ready
+        if not publisher.ready:
+            self._cloud_pending_snapshot = True
+            return
         self._safe_publish(lambda: publisher.publish_profile(profile))
         self._publish_stats_with(publisher, profile)
-        if ready:
-            self._cloud_pending_snapshot = False
-        else:
-            self._cloud_pending_snapshot = True
+        self._cloud_pending_snapshot = False
 
     def _cloud_publish_deleted(self, profile_id: str) -> None:
         publisher = self._cloud_publisher
@@ -649,12 +731,11 @@ class ProfileRegistry:
         if publisher is None:
             self._cloud_pending_snapshot = True
             return
-        ready = publisher.ready
-        self._safe_publish(lambda: publisher.publish_profile_deleted(profile_id))
-        if ready:
-            self._cloud_pending_snapshot = False
-        else:
+        if not publisher.ready:
             self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_profile_deleted(profile_id))
+        self._cloud_pending_snapshot = False
 
     def _cloud_publish_run(self, event: RunEvent) -> None:
         publisher = self._cloud_publisher
@@ -666,12 +747,11 @@ class ProfileRegistry:
         if publisher is None:
             self._cloud_pending_snapshot = True
             return
-        ready = publisher.ready
-        self._safe_publish(lambda: publisher.publish_run(event))
-        if ready:
-            self._cloud_pending_snapshot = False
-        else:
+        if not publisher.ready:
             self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_run(event))
+        self._cloud_pending_snapshot = False
 
     def _cloud_publish_harvest(self, event: HarvestEvent) -> None:
         publisher = self._cloud_publisher
@@ -683,12 +763,11 @@ class ProfileRegistry:
         if publisher is None:
             self._cloud_pending_snapshot = True
             return
-        ready = publisher.ready
-        self._safe_publish(lambda: publisher.publish_harvest(event))
-        if ready:
-            self._cloud_pending_snapshot = False
-        else:
+        if not publisher.ready:
             self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_harvest(event))
+        self._cloud_pending_snapshot = False
 
     def _cloud_publish_nutrient(self, event: NutrientApplication) -> None:
         publisher = self._cloud_publisher
@@ -700,12 +779,11 @@ class ProfileRegistry:
         if publisher is None:
             self._cloud_pending_snapshot = True
             return
-        ready = publisher.ready
-        self._safe_publish(lambda: publisher.publish_nutrient(event))
-        if ready:
-            self._cloud_pending_snapshot = False
-        else:
+        if not publisher.ready:
             self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_nutrient(event))
+        self._cloud_pending_snapshot = False
 
     def _cloud_publish_cultivation(self, event: CultivationEvent) -> None:
         publisher = self._cloud_publisher
@@ -717,12 +795,11 @@ class ProfileRegistry:
         if publisher is None:
             self._cloud_pending_snapshot = True
             return
-        ready = publisher.ready
-        self._safe_publish(lambda: publisher.publish_cultivation(event))
-        if ready:
-            self._cloud_pending_snapshot = False
-        else:
+        if not publisher.ready:
             self._cloud_pending_snapshot = True
+            return
+        self._safe_publish(lambda: publisher.publish_cultivation(event))
+        self._cloud_pending_snapshot = False
 
     def _async_fire_history_event(
         self,
@@ -780,33 +857,53 @@ class ProfileRegistry:
 
         # Older versions stored profiles as a list; convert to the new mapping
         # structure keyed by the legacy ``plant_id`` identifier.
+        stored_profiles: dict[str, Mapping[str, Any]] = {}
         if isinstance(data, list):  # pragma: no cover - legacy format
-            data = {"profiles": {p["plant_id"]: p for p in data if isinstance(p, Mapping) and p.get("plant_id")}}
+            stored_profiles = {
+                str(item["plant_id"]): item for item in data if isinstance(item, Mapping) and item.get("plant_id")
+            }
+        elif isinstance(data, Mapping):
+            profiles_payload = data.get("profiles") if isinstance(data.get("profiles"), Mapping) else None
+            source = profiles_payload or data
+            stored_profiles = {
+                str(pid): payload
+                for pid, payload in source.items()
+                if isinstance(pid, str) and isinstance(payload, Mapping)
+            }
 
-        stored_profiles = data.get("profiles", {})
         profiles: dict[str, BioProfile] = {}
+
+        for pid, payload in stored_profiles.items():
+            try:
+                profile = BioProfile.from_json(dict(payload))
+            except Exception as err:  # pragma: no cover - defensive logging
+                _LOGGER.warning("Unable to load stored profile %s: %s", pid, err)
+                continue
+            self._validate_profile(profile)
+            profiles[pid] = profile
 
         options_profiles = self.entry.options.get(CONF_PROFILES, {}) or {}
         for pid, payload in options_profiles.items():
-            display_name = payload.get("name") or pid
+            if isinstance(payload, Mapping):
+                payload_map: Mapping[str, Any] = payload
+            else:  # pragma: no cover - defensive guard
+                payload_map = {}
+            display_name = payload_map.get("name") or pid
+            base_profile = profiles.get(pid)
+            if base_profile is not None:
+                payload_map = _merge_profile_payload(base_profile.to_json(), payload_map)
             try:
                 profile = options_profile_to_dataclass(
                     pid,
-                    payload,
+                    payload_map,
                     display_name=display_name,
                 )
             except Exception:
-                copy = dict(payload)
+                copy = dict(payload_map)
                 ensure_sections(copy, plant_id=pid, display_name=display_name)
                 profile = BioProfile.from_json(copy)
             self._validate_profile(profile)
             profiles[pid] = profile
-
-        for pid, payload in stored_profiles.items():
-            if pid in profiles:
-                continue
-            profiles[pid] = BioProfile.from_json(payload)
-            self._validate_profile(profiles[pid])
 
         for profile in profiles.values():
             profile.general.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
@@ -819,7 +916,7 @@ class ProfileRegistry:
     async def async_save(self) -> None:
         self._relink_profiles()
         recompute_statistics(self._profiles.values())
-        await self._store.async_save({"profiles": {pid: prof.to_json() for pid, prof in self._profiles.items()}})
+        await self._store.async_save({pid: prof.to_json() for pid, prof in self._profiles.items()})
 
     # Backwards compatibility for previous method name
     async_initialize = async_load
@@ -973,9 +1070,17 @@ class ProfileRegistry:
         )
         general = dict(new_profile.get("general", {})) if isinstance(new_profile.get("general"), Mapping) else {}
         sensors_map = dict(general.get("sensors", {}))
+        if not sensors_map:
+            local_section = new_profile.get("local") if isinstance(new_profile.get("local"), Mapping) else {}
+            local_general = local_section.get("general") if isinstance(local_section, Mapping) else None
+            if isinstance(local_general, Mapping):
+                sensors_map = {
+                    str(key): value for key, value in local_general.get("sensors", {}).items() if isinstance(value, str)
+                }
         general[CONF_PROFILE_SCOPE] = resolved_scope
         sync_general_section(new_profile, general)
         new_profile["sensors"] = sensors_map
+        new_profile[CONF_PROFILE_SCOPE] = resolved_scope
         new_profile.pop("scope", None)
         new_profile["profile_id"] = candidate
         new_profile["plant_id"] = candidate
@@ -1415,6 +1520,19 @@ class ProfileRegistry:
         if prof is None:
             raise ValueError(f"unknown profile {profile_id}")
 
+        raw_payload = payload if isinstance(payload, Mapping) else None
+        if raw_payload is not None:
+            metadata = raw_payload.get("metadata")
+            if metadata is not None and not isinstance(metadata, Mapping):
+                raise ValueError("metadata must be a mapping")
+            additives = raw_payload.get("additives")
+            if isinstance(additives, set | frozenset):
+                raise ValueError("additives must be provided as an ordered list")
+            if additives is not None and (
+                isinstance(additives, str | bytes | bytearray) or not isinstance(additives, Sequence)
+            ):
+                raise ValueError("additives must be a sequence of strings")
+
         event = payload if isinstance(payload, NutrientApplication) else NutrientApplication.from_json(payload)
         if not event.profile_id:
             event.profile_id = profile_id
@@ -1452,9 +1570,19 @@ class ProfileRegistry:
         if prof is None:
             raise ValueError(f"unknown profile {profile_id}")
 
+        raw_payload = payload if isinstance(payload, Mapping) else None
+        if raw_payload is not None:
+            tags = raw_payload.get("tags")
+            if tags is not None and (isinstance(tags, str | bytes | bytearray) or not isinstance(tags, Sequence)):
+                raise ValueError("tags must be a sequence of strings")
+            if not raw_payload.get("event_type") and not raw_payload.get("type"):
+                raise ValueError("event_type is required")
+
         event = payload if isinstance(payload, CultivationEvent) else CultivationEvent.from_json(payload)
         if not event.profile_id:
             event.profile_id = profile_id
+        if not getattr(event, "event_type", None):
+            raise ValueError("event_type is required")
         self._ensure_valid_event(
             context="cultivation event",
             payload=event.to_json(),

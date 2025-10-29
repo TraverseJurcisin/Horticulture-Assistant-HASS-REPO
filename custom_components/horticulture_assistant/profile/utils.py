@@ -362,6 +362,12 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> LineageLinkRep
             continue
 
         if not species_id:
+            for parent in profile.parents:
+                parent_id = str(parent)
+                if not parent_id:
+                    continue
+                if parent_id not in profile_map:
+                    report.add_missing_parent(profile.profile_id, parent_id)
             continue
 
         profile.species_profile_id = species_id

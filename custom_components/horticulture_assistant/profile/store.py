@@ -12,16 +12,44 @@ from .options import options_profile_to_dataclass
 from .schema import BioProfile
 from .utils import link_species_and_cultivars, normalise_profile_payload
 
-STORE_VERSION = 1
+STORE_VERSION = 2
 STORE_KEY = "horticulture_assistant_profiles"
+STORE_CACHE_KEY = "horticulture_assistant_profile_store"
 
 
 def _store(hass: HomeAssistant) -> Store:
+    cache = getattr(hass, "data", None)
+    if isinstance(cache, dict):
+        store = cache.get(STORE_CACHE_KEY)
+        if store is None:
+            store = Store(hass, STORE_VERSION, STORE_KEY)
+            cache[STORE_CACHE_KEY] = store
+        return store
     return Store(hass, STORE_VERSION, STORE_KEY)
 
 
+def get_profile_store(hass: HomeAssistant) -> Store:
+    """Return the shared Home Assistant storage instance for profiles."""
+
+    return _store(hass)
+
+
 async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
-    return await _store(hass).async_load() or {}
+    raw = await _store(hass).async_load() or {}
+    if isinstance(raw, Mapping):
+        profiles = raw.get("profiles")
+        if isinstance(profiles, Mapping):
+            return {
+                str(pid): dict(payload)
+                for pid, payload in profiles.items()
+                if isinstance(pid, str) and isinstance(payload, Mapping)
+            }
+        return {
+            str(pid): dict(payload)
+            for pid, payload in raw.items()
+            if isinstance(pid, str) and isinstance(payload, Mapping)
+        }
+    return {}
 
 
 async def async_save_profile(hass: HomeAssistant, profile: BioProfile | dict[str, Any]) -> None:
