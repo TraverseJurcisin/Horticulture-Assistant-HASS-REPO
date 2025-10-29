@@ -391,8 +391,18 @@ class PreferenceResolver:
                 ai["ttl_hours"] = ttl_h
                 last_run = ai.get("last_run")
                 if last_run:
-                    ts = datetime.fromisoformat(last_run.replace("Z", "+00:00"))
-                    if datetime.now(UTC) - ts < timedelta(hours=ttl_h):
+                    ts: datetime | None = None
+                    try:
+                        ts = datetime.fromisoformat(str(last_run).replace("Z", "+00:00"))
+                    except (TypeError, ValueError):
+                        _LOGGER.debug(
+                            "Ignoring invalid AI cache timestamp for %s/%s: %s",
+                            profile_id,
+                            key,
+                            last_run,
+                        )
+
+                    if ts is not None and datetime.now(UTC) - ts < timedelta(hours=ttl_h):
                         prof = options.get(CONF_PROFILES, {}).get(profile_id, {})
                         payload = (prof.get("resolved_targets") or {}).get(key)
                         if isinstance(payload, dict):
