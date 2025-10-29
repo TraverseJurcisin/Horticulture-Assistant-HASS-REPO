@@ -520,22 +520,39 @@ def build_profile_device_info(
     return info
 
 
+def _as_identifier_pair(item: Any) -> tuple[str, str] | None:
+    """Return ``item`` coerced into an identifier pair if possible."""
+
+    if isinstance(item, tuple) and len(item) == 2:
+        return str(item[0]), str(item[1])
+    if isinstance(item, Sequence) and not isinstance(item, (str, bytes)):
+        if len(item) != 2:
+            return None
+        first, second = item[0], item[1]
+        return str(first), str(second)
+    return None
+
+
 def _coerce_device_identifiers(value: Any) -> set[tuple[str, str]]:
     identifiers: set[tuple[str, str]] = set()
     if isinstance(value, set):
         for item in value:
-            if isinstance(item, tuple) and len(item) == 2:
-                identifiers.add((str(item[0]), str(item[1])))
+            if pair := _as_identifier_pair(item):
+                identifiers.add(pair)
     elif isinstance(value, Mapping):
         for key, item in value.items():
-            if isinstance(item, tuple) and len(item) == 2:
-                identifiers.add((str(item[0]), str(item[1])))
-            elif isinstance(key, str):
+            if pair := _as_identifier_pair(item):
+                identifiers.add(pair)
+                continue
+            if isinstance(key, str):
                 identifiers.add((str(key), str(item)))
-    elif isinstance(value, list | tuple):
+    elif isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
         for item in value:
-            if isinstance(item, tuple) and len(item) == 2:
-                identifiers.add((str(item[0]), str(item[1])))
+            if pair := _as_identifier_pair(item):
+                identifiers.add(pair)
+    else:
+        if pair := _as_identifier_pair(value):
+            identifiers.add(pair)
     return identifiers
 
 
