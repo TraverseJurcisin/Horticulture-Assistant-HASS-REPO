@@ -1,6 +1,7 @@
 from datetime import date
 
 import pytest
+
 from plant_engine.pest_monitor import (
     assess_pest_pressure,
     calculate_pest_management_index,

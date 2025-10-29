@@ -14,6 +14,11 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import plant_engine.pest_monitor as pest_monitor
+from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile_by_id
+from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
+from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
+    calculate_stage_deficit,
+)
 from plant_engine import water_quality
 from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.deficiency_manager import diagnose_deficiency_actions
@@ -38,12 +43,6 @@ from plant_engine.rootzone_model import estimate_infiltration_time
 from plant_engine.stage_tasks import get_stage_tasks
 from plant_engine.utils import load_dataset
 from plant_engine.yield_prediction import estimate_remaining_yield
-
-from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile_by_id
-from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
-from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
-    calculate_stage_deficit,
-)
 
 from .cycle_helpers import (
     aggregate_nutrients as _aggregate_nutrients,

@@ -5,9 +5,8 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from plant_engine.utils import load_json
-
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
+from plant_engine.utils import load_json
 
 _LOGGER = logging.getLogger(__name__)
 
