@@ -2,6 +2,7 @@ import json
 import logging
 from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
+from typing import Any
 from unittest.mock import patch
 
 import pytest
@@ -1818,7 +1819,7 @@ async def test_cloud_publisher_records_profile_and_events(hass, tmp_path):
         device_token="device-token",
         organization_id="org-1",
     )
-    manager = SimpleNamespace(store=store, config=config)
+    manager = SimpleNamespace(store=store, config=config, record_offline_enqueue=lambda **_kwargs: None)
     publisher = CloudSyncPublisher(manager, device_id="edge-1")
     reg.attach_cloud_publisher(publisher)
 
@@ -1884,12 +1885,25 @@ async def test_cloud_publisher_defers_until_ready(hass, tmp_path):
 
     store = EdgeSyncStore(tmp_path / "sync-disabled.db")
     config = CloudSyncConfig(enabled=False)
-    manager = SimpleNamespace(store=store, config=config)
+    offline_notifications: list[dict[str, Any]] = []
+    manager = SimpleNamespace(
+        store=store,
+        config=config,
+        record_offline_enqueue=lambda **kwargs: offline_notifications.append(kwargs),
+    )
     publisher = CloudSyncPublisher(manager, device_id="edge-2")
     reg.attach_cloud_publisher(publisher)
 
     profile_id = await reg.async_add_profile("Offline Seedling")
-    assert store.outbox_size() == 0
+
+    queued_events = store.get_outbox_batch(10)
+    profile_events = [
+        event for event in queued_events if event.entity_type == "profile" and event.entity_id == profile_id
+    ]
+    assert profile_events, "profile upserts should be queued even when the publisher is offline"
+    assert profile_events[-1].metadata.get("queued_offline") is True
+    assert offline_notifications and offline_notifications[-1].get("reason") == "not_ready"
+    assert reg._cloud_pending_snapshot is True
 
     manager.config.enabled = True
     manager.config.base_url = "https://cloud.example"
@@ -1899,3 +1913,8 @@ async def test_cloud_publisher_defers_until_ready(hass, tmp_path):
 
     events = store.get_outbox_batch(10)
     assert any(event.entity_type == "profile" and event.entity_id == profile_id for event in events)
+    assert any(
+        event.metadata.get("initial_sync")
+        for event in events
+        if event.entity_type == "profile" and event.entity_id == profile_id
+    )
