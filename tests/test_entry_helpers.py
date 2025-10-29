@@ -440,5 +440,17 @@ def test_serialise_device_info_converts_sets():
     assert serialised["name"] == "Alpha"
 
 
+def test_serialise_device_info_accepts_sequence_identifiers():
+    info = {
+        "identifiers": [[DOMAIN, "profile:beta"], (DOMAIN, "profile:beta")],
+        "connections": [["mac", "AA:BB:CC:DD:EE:FF"]],
+    }
+
+    serialised = serialise_device_info(info)
+
+    assert serialised["identifiers"] == [[DOMAIN, "profile:beta"]]
+    assert serialised["connections"] == [["mac", "AA:BB:CC:DD:EE:FF"]]
+
+
 def test_serialise_device_info_handles_none():
     assert serialise_device_info(None) == {}
