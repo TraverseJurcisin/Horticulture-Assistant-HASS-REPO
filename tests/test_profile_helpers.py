@@ -117,3 +117,21 @@ def test_write_profile_sections_returns_empty_when_all_writes_fail(tmp_path, mon
 
     assert result == ""
     assert any("Unable to create any profile files" in message for message in caplog.messages)
+
+
+def test_write_profile_sections_sanitises_directory(tmp_path, caplog):
+    """Ensure dangerous ``plant_id`` values cannot escape the base directory."""
+
+    caplog.set_level(logging.INFO)
+    sections = {"profile.json": {"foo": "bar"}}
+
+    result = write_profile_sections("../evil/..//weeds", sections, base_path=tmp_path)
+
+    # The function still reports the original identifier for compatibility.
+    assert result == "../evil/..//weeds"
+
+    # Files are written to a sanitised directory under the base path.
+    safe_dir = tmp_path / "weeds"
+    assert safe_dir.is_dir()
+    assert (safe_dir / "profile.json").is_file()
+    assert any(str(safe_dir) in message for message in caplog.messages)
