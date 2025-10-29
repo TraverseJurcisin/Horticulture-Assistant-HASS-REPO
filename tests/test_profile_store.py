@@ -135,6 +135,30 @@ async def test_async_create_profile_preserves_opb_credentials(hass, tmp_path, mo
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_allows_clearing_cloned_sensors(hass, tmp_path, monkeypatch) -> None:
+    """Explicit sensors argument should override cloned bindings, even if empty."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    base_profile = BioProfile(
+        profile_id="base_profile",
+        display_name="Base Profile",
+        general={"sensors": {"temp": "sensor.original"}},
+    )
+    await store.async_save(base_profile, name="base_profile")
+
+    await store.async_create_profile("Clone", clone_from="base_profile", sensors={})
+
+    clone = await store.async_get("Clone")
+    assert clone is not None
+    assert "sensors" not in clone
+    general = clone.get("general") or {}
+    assert "sensors" not in general
+
+
+@pytest.mark.asyncio
 async def test_profile_store_preserves_numeric_species_pid(hass, tmp_path, monkeypatch) -> None:
     """Numeric Plantbook identifiers should be preserved when saving or cloning profiles."""
 

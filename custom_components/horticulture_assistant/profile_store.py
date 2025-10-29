@@ -176,7 +176,8 @@ class ProfileStore:
             clone_profile = self._as_profile(clone_from, fallback_name=name)
 
         sensors_data: dict[str, str]
-        if sensors is not None:
+        explicit_sensors = sensors is not None
+        if explicit_sensors:
             sensors_data = {
                 str(key): value.strip() for key, value in sensors.items() if isinstance(value, str) and value.strip()
             }
@@ -248,6 +249,8 @@ class ProfileStore:
 
         if sensors_data:
             new_profile.general["sensors"] = dict(sensors_data)
+        elif explicit_sensors:
+            new_profile.general.pop("sensors", None)
         if resolved_scope is not None:
             new_profile.general[CONF_PROFILE_SCOPE] = resolved_scope
 
