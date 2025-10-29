@@ -322,6 +322,17 @@ async def async_register_all(
     if cloud_manager is not None:
         cloud_manager.register_token_listener(_on_tokens_updated)
 
+    def _expected_device_class_name(device_class: SensorDeviceClass | str | None) -> str | None:
+        if device_class is None:
+            return None
+        if isinstance(device_class, Enum):
+            device_class = device_class.value
+        return str(device_class).lower()
+
+    def _normalise_registry_device_class(entry) -> str | None:
+        value = getattr(entry, "device_class", None) or getattr(entry, "original_device_class", None)
+        return _expected_device_class_name(value)
+
     async def _srv_replace_sensor(call) -> None:
         profile_id: str = call.data["profile_id"]
         measurement: str = call.data["measurement"]
@@ -341,8 +352,9 @@ async def async_register_all(
         if validation.warnings:
             _notify_sensor_warnings(validation.warnings)
         if reg_entry:
-            actual = reg_entry.device_class or reg_entry.original_device_class
-            if expected and actual != expected.value:
+            actual = _normalise_registry_device_class(reg_entry)
+            expected_name = _expected_device_class_name(expected)
+            if expected_name and actual is not None and actual != expected_name:
                 raise vol.Invalid("device class mismatch")
         try:
             await registry.async_replace_sensor(profile_id, measurement, entity_id)
@@ -371,8 +383,9 @@ async def async_register_all(
         if validation.warnings:
             _notify_sensor_warnings(validation.warnings)
         if reg_entry:
-            actual = reg_entry.device_class or reg_entry.original_device_class
-            if expected and actual != expected.value:
+            actual = _normalise_registry_device_class(reg_entry)
+            expected_name = _expected_device_class_name(expected)
+            if expected_name and actual is not None and actual != expected_name:
                 raise vol.Invalid("device class mismatch")
 
         try:
