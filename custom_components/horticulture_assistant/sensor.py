@@ -380,7 +380,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         sensors.append(PlantLastSampleSensor(hass, entry, context))
         sensors.append(PlantPPFDSensor(hass, entry, context))
         sensors.append(PlantDLISensor(hass, entry, context))
-        if context.has_sensors("temperature", "humidity"):
+        if context.has_all_sensors("temperature", "humidity"):
             sensors.extend(
                 [
                     PlantVPDSensor(hass, entry, context),

@@ -129,6 +129,13 @@ class ProfileContext:
 
         if not roles:
             return bool(self.sensors)
+        return any(self.sensors.get(role) for role in roles)
+
+    def has_all_sensors(self, *roles: str) -> bool:
+        """Return ``True`` when every ``role`` has at least one entity id."""
+
+        if not roles:
+            return bool(self.sensors)
         return all(self.sensors.get(role) for role in roles)
 
     def get_threshold(self, key: str, default: Any | None = None) -> Any | None:
