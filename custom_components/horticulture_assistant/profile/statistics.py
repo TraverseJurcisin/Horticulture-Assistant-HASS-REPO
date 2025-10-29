@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections import Counter, defaultdict
 from collections.abc import Iterable
 from dataclasses import dataclass, field
@@ -754,6 +755,34 @@ class _SuccessAggregate:
         return snapshot
 
 
+_RATIO_NUMBER_PATTERN = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
+
+
+def _coerce_ratio_value(value: Any) -> float | None:
+    """Return ``value`` coerced to a 0-1 ratio when possible."""
+
+    percent_notation = False
+    number = _to_float(value)
+
+    if isinstance(value, str):
+        text = value.strip()
+        if text.endswith("%"):
+            percent_notation = True
+            text = text[:-1]
+        if number is None:
+            match = _RATIO_NUMBER_PATTERN.search(text)
+            if match:
+                number = _to_float(match.group(0))
+
+    if number is None:
+        return None
+
+    if percent_notation or number > 1.0:
+        number = number / 100.0
+
+    return max(0.0, min(1.0, number))
+
+
 def _extract_success_metrics(event: RunEvent) -> tuple[float, float | None, int | None] | None:
     metadata = event.metadata if isinstance(event.metadata, dict) else {}
 
@@ -785,14 +814,10 @@ def _extract_success_metrics(event: RunEvent) -> tuple[float, float | None, int 
         "compliance_ratio",
         "compliance",
     )
-    success = _to_float(success_raw)
+    success = _coerce_ratio_value(success_raw)
     if success is None:
         return None
-    ratio = success
-    if ratio > 1.0:
-        ratio = ratio / 100.0
-    ratio = max(0.0, min(1.0, ratio))
-    return ratio, None, stress_value
+    return success, None, stress_value
 
 
 def _compute_success_snapshot(profile: BioProfile) -> tuple[ComputedStatSnapshot, _SuccessSummary] | None:
