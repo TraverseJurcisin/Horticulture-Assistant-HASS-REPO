@@ -165,6 +165,43 @@ async def test_missing_parent_creates_issue_and_clears_when_resolved(hass, monke
     assert any(issue_id.startswith("missing_parent_p1") for issue_id in deleted)
 
 
+async def test_missing_parent_issue_ids_do_not_collide(hass, monkeypatch):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
+
+    created: list[tuple[str, dict]] = []
+    deleted: list[str] = []
+
+    class _Severity:
+        WARNING = "warning"
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.ir",
+        SimpleNamespace(
+            IssueSeverity=_Severity,
+            async_create_issue=lambda *_args, **kwargs: created.append((_args[2], kwargs)),
+            async_delete_issue=lambda *_args: deleted.append(_args[2]),
+        ),
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+    created.clear()
+
+    report = LineageLinkReport()
+    report.missing_parents["p1"] = {"Parent ID", "parent id"}
+    reg._log_lineage_warnings(report)
+
+    issue_ids = {issue_id for issue_id, _meta in created}
+    assert len(issue_ids) == 2
+    for issue_id in issue_ids:
+        assert issue_id.startswith("missing_parent_p1_parent_id_")
+
+    reg._log_lineage_warnings(LineageLinkReport())
+
+    for issue_id in issue_ids:
+        assert issue_id in deleted
+
+
 @pytest.mark.asyncio
 async def test_profile_validation_creates_and_clears_notification(hass, monkeypatch):
     entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
