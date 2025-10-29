@@ -14,7 +14,7 @@ import hashlib
 import inspect
 import json
 import logging
-from collections.abc import Callable, Iterable, Mapping
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from copy import deepcopy
 from datetime import datetime, timezone
 from math import isfinite
@@ -110,6 +110,29 @@ def _species_issue_id(profile_id: str, species_id: str) -> str:
     slug = slugify(species_id) or "unknown_species"
     digest = hashlib.sha1(species_id.encode("utf-8", "ignore")).hexdigest()[:8]
     return f"missing_species_{profile_id}_{slug}_{digest}"
+
+
+def _normalise_sensor_value(value: Any) -> str | list[str] | None:
+    """Return a cleaned representation of a sensor mapping value."""
+
+    if isinstance(value, str):
+        entity_id = value.strip()
+        return entity_id or None
+    if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
+        items: list[str] = []
+        for item in value:
+            if isinstance(item, str):
+                cleaned = item.strip()
+            elif item is None:
+                cleaned = ""
+            else:
+                cleaned = str(item).strip()
+            if cleaned:
+                items.append(cleaned)
+        if items:
+            return items
+        return None
+    return None
 
 
 _SCHEMA_PATH = Path(__file__).parent / "data" / "schema" / "bio_profile.schema.json"
@@ -1169,18 +1192,30 @@ class ProfileRegistry:
             display_name=name,
         )
         general = dict(new_profile.get("general", {})) if isinstance(new_profile.get("general"), Mapping) else {}
-        sensors_map: dict[str, str] = {}
+        sensors_map: dict[str, str | list[str]] = {}
         raw_sensors = new_profile.get("sensors")
         if isinstance(raw_sensors, Mapping):
-            sensors_map.update({str(key): value for key, value in raw_sensors.items() if isinstance(value, str)})
+            for key, value in raw_sensors.items():
+                cleaned = _normalise_sensor_value(value)
+                if cleaned is None:
+                    continue
+                sensors_map[str(key)] = cleaned
         general_sensors = general.get("sensors") if isinstance(general.get("sensors"), Mapping) else {}
-        sensors_map.update({str(key): value for key, value in general_sensors.items() if isinstance(value, str)})
+        for key, value in general_sensors.items():
+            cleaned = _normalise_sensor_value(value)
+            if cleaned is None:
+                continue
+            sensors_map[str(key)] = cleaned
         general[CONF_PROFILE_SCOPE] = resolved_scope
         if sensors_map:
-            general["sensors"] = dict(sensors_map)
+            general["sensors"] = {
+                key: list(value) if isinstance(value, list) else value for key, value in sensors_map.items()
+            }
         sync_general_section(new_profile, general)
         if sensors_map:
-            new_profile["sensors"] = dict(sensors_map)
+            new_profile["sensors"] = {
+                key: list(value) if isinstance(value, list) else value for key, value in sensors_map.items()
+            }
         else:
             new_profile.pop("sensors", None)
         new_profile.pop("scope", None)
