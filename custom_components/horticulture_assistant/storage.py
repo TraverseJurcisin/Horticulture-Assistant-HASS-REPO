@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+from collections.abc import Mapping, Sequence
 from copy import deepcopy
 from typing import Any
 
@@ -22,6 +23,16 @@ DEFAULT_DATA: dict[str, Any] = {
 }
 
 
+def _clone_default(value: Any) -> Any:
+    """Return a new mutable default instance when required."""
+
+    if isinstance(value, dict):
+        return dict(value)
+    if isinstance(value, list):
+        return list(value)
+    return value
+
+
 class LocalStore:
     def __init__(self, hass: HomeAssistant) -> None:
         self._store: Store[dict[str, Any]] = Store(hass, STORAGE_VERSION, STORAGE_KEY)
@@ -32,12 +43,28 @@ class LocalStore:
         if not data:
             data = deepcopy(DEFAULT_DATA)
         else:
-            for key, value in DEFAULT_DATA.items():
-                if key in data:
+            for key, default_value in DEFAULT_DATA.items():
+                if key not in data:
+                    data[key] = _clone_default(default_value)
                     continue
 
-                default_value = value.copy() if isinstance(value, dict | list) else value
-                data[key] = default_value
+                current = data[key]
+
+                if isinstance(default_value, dict):
+                    if not isinstance(current, Mapping):
+                        data[key] = _clone_default(default_value)
+                    elif not isinstance(current, dict):
+                        data[key] = dict(current)
+                elif isinstance(default_value, list):
+                    if not isinstance(current, Sequence) or isinstance(current, str | bytes | bytearray):
+                        data[key] = _clone_default(default_value)
+                    elif not isinstance(current, list):
+                        data[key] = list(current)
+                elif isinstance(default_value, str):
+                    if not isinstance(current, str):
+                        data[key] = default_value
+                elif current is None:
+                    data[key] = default_value
         self.data = data
         return data
 

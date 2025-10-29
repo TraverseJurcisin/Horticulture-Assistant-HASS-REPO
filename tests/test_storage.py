@@ -69,3 +69,40 @@ async def test_local_store_defaults_are_isolated(monkeypatch):
     data_again = await store_again.load()
 
     assert data_again["inventory"] == {}
+
+
+class CorruptStore:
+    def __init__(self, hass, version, key) -> None:  # noqa: D401 - signature mirrors Store
+        self._data = {
+            "recipes": None,
+            "inventory": [],
+            "history": "bad",
+            "plants": None,
+            "profile": (),
+            "recommendation": None,
+            "zones": "invalid",
+        }
+
+    async def async_load(self):
+        return dict(self._data)
+
+    async def async_save(self, data):  # pragma: no cover - not needed here
+        self._data = data
+
+
+@pytest.mark.asyncio
+async def test_local_store_load_recovers_from_invalid_types(monkeypatch):
+    monkeypatch.setattr(storage, "Store", CorruptStore)
+
+    hass = types.SimpleNamespace()
+    store = storage.LocalStore(hass)
+
+    data = await store.load()
+
+    assert data["recipes"] == []
+    assert data["inventory"] == {}
+    assert data["history"] == []
+    assert data["plants"] == {}
+    assert data["profile"] == {}
+    assert data["recommendation"] == ""
+    assert data["zones"] == {}
