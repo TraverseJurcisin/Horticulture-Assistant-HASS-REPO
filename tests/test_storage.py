@@ -106,3 +106,28 @@ async def test_local_store_load_recovers_from_invalid_types(monkeypatch):
     assert data["profile"] == {}
     assert data["recommendation"] == ""
     assert data["zones"] == {}
+
+
+class NonMappingStore:
+    def __init__(self, hass, version, key) -> None:  # noqa: D401 - signature mirrors Store
+        self._data = ["not", "a", "mapping"]
+
+    async def async_load(self):
+        return list(self._data)
+
+    async def async_save(self, data):  # pragma: no cover - not needed here
+        self._data = data
+
+
+@pytest.mark.asyncio
+async def test_local_store_load_resets_on_non_mapping(monkeypatch):
+    monkeypatch.setattr(storage, "Store", NonMappingStore)
+
+    hass = types.SimpleNamespace()
+    store = storage.LocalStore(hass)
+
+    data = await store.load()
+
+    assert data == storage.DEFAULT_DATA
+    assert data is not storage.DEFAULT_DATA
+    assert data["history"] is not storage.DEFAULT_DATA["history"]
