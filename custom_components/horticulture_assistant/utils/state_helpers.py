@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import math
 import re
 from collections.abc import Iterable
 from statistics import mean, median
@@ -37,18 +38,31 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
     """
 
     state = hass.states.get(entity_id)
-    if not state or state.state in {"unknown", "unavailable"}:
+    if not state:
         _LOGGER.debug("State unavailable: %s", entity_id)
         return None
 
-    value = str(state.state).replace(",", "").strip()
+    raw_state = state.state
+    if isinstance(raw_state, str) and raw_state.lower() in {"unknown", "unavailable"}:
+        _LOGGER.debug("State unavailable: %s", entity_id)
+        return None
+
+    value = str(raw_state).replace(",", "").strip()
     try:
-        return float(value)
+        number = float(value)
+        if not math.isfinite(number):
+            _LOGGER.debug("State not finite: %s=%s", entity_id, value)
+            return None
+        return number
     except (ValueError, TypeError):
         match = _NUM_RE.search(value)
         if match:
             try:
-                return float(match.group(0))
+                number = float(match.group(0))
+                if not math.isfinite(number):
+                    _LOGGER.debug("State not finite: %s=%s", entity_id, match.group(0))
+                    return None
+                return number
             except (ValueError, TypeError):
                 pass
         _LOGGER.warning("State of %s is not numeric: %s", entity_id, value)
