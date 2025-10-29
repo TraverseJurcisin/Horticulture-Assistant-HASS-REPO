@@ -93,13 +93,21 @@ class CloudAuthTokens:
             now = now or datetime.now(tz=UTC)
             expires_at = now + timedelta(seconds=float(expiry))
         elif isinstance(expiry, str) and expiry:
-            try:
-                parsed = datetime.fromisoformat(expiry.replace("Z", "+00:00"))
-            except ValueError as err:
-                raise CloudAuthError(f"invalid expiry timestamp: {expiry}") from err
-            if parsed.tzinfo is None:
-                parsed = parsed.replace(tzinfo=UTC)
-            expires_at = parsed.astimezone(UTC)
+            text = expiry.strip()
+            if text:
+                try:
+                    parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+                except ValueError:
+                    try:
+                        seconds = float(text)
+                    except (TypeError, ValueError) as err:
+                        raise CloudAuthError(f"invalid expiry timestamp: {expiry}") from err
+                    now = now or datetime.now(tz=UTC)
+                    expires_at = now + timedelta(seconds=seconds)
+                else:
+                    if parsed.tzinfo is None:
+                        parsed = parsed.replace(tzinfo=UTC)
+                    expires_at = parsed.astimezone(UTC)
 
         roles_raw = payload.get("roles")
         if isinstance(roles_raw, list | tuple | set):
