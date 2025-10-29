@@ -5,8 +5,22 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers import issue_registry as ir
+try:  # pragma: no cover - executed when Home Assistant is installed
+    from homeassistant.core import HomeAssistant
+    from homeassistant.helpers import issue_registry as ir
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in tests
+    from enum import Enum
+    from types import SimpleNamespace
+
+    HomeAssistant = object  # type: ignore[misc,assignment]
+
+    class _IssueSeverity(str, Enum):
+        WARNING = "warning"
+
+    ir = SimpleNamespace(  # type: ignore[assignment]
+        IssueSeverity=_IssueSeverity,
+        async_create_issue=lambda *_args, **_kwargs: None,
+    )
 
 from ..const import DOMAIN
 
@@ -71,16 +85,28 @@ class ConfigValidator:
             translation_placeholders={"plant_id": plant_id, "entity_id": entity_id},
         )
 
-    def validate_api_config(self, api_key: str, base_url: str) -> list[str]:
-        """Validate API configuration."""
-        errors = []
+    def validate_api_config(self, api_key: str | None, base_url: str | None) -> list[str]:
+        """Validate API configuration.
 
-        if not api_key:
+        The configuration flow presents text inputs, but defensive guards are
+        required to account for unexpected ``None`` values or other object
+        types.  Previous implementations assumed ``str`` values which caused an
+        ``AttributeError`` when Home Assistant supplied ``None`` during option
+        updates.  Normalising the inputs up-front keeps the validation resilient
+        and ensures the user receives actionable error messages instead of a
+        stack trace.
+        """
+
+        errors: list[str] = []
+
+        api_value = api_key.strip() if isinstance(api_key, str) else ""
+        if not api_value:
             errors.append("API key is required")
-        elif len(api_key) < 10:
+        elif len(api_value) < 10:
             errors.append("API key appears to be too short")
 
-        if not base_url.startswith(("http://", "https://")):
+        base_value = base_url.strip() if isinstance(base_url, str) else ""
+        if not base_value.startswith(("http://", "https://")):
             errors.append("Base URL must start with http:// or https://")
 
         return errors
