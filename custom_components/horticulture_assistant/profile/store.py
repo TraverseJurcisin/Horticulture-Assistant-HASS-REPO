@@ -52,7 +52,7 @@ async def async_save_profile(hass: HomeAssistant, profile: BioProfile | dict[str
 
         credentials = raw.get("opb_credentials")
         if isinstance(credentials, Mapping):
-            preserved["opb_credentials"] = deepcopy(credentials)
+            preserved["opb_credentials"] = deepcopy(dict(credentials))
 
         candidate_id = raw.get("plant_id") or raw.get("profile_id") or raw.get("name") or "profile"
         fallback_id = str(candidate_id)
