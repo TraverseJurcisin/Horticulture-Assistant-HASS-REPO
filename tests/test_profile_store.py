@@ -310,6 +310,23 @@ async def test_async_get_handles_corrupt_profile(hass, tmp_path, monkeypatch) ->
 
 
 @pytest.mark.asyncio
+async def test_async_get_handles_unicode_decode_errors(hass, tmp_path, monkeypatch) -> None:
+    """Profiles with invalid UTF-8 should be ignored gracefully."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    corrupted_path = store._path_for("Invalid Encoding")
+    corrupted_path.write_bytes(b"\xff\xfe\xff")
+
+    assert await store.async_get("Invalid Encoding") is None
+
+    names = await store.async_list()
+    assert corrupted_path.stem in names
+
+
+@pytest.mark.asyncio
 async def test_async_get_handles_non_mapping_payload(hass, tmp_path, monkeypatch) -> None:
     """Profiles stored as non-mapping JSON should be ignored."""
 
