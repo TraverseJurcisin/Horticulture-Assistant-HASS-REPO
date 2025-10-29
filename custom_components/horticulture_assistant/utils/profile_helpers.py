@@ -74,7 +74,28 @@ def write_profile_sections(
     had_success = False
 
     for filename, data in sections.items():
-        file_path = plant_dir / filename
+        try:
+            relative = PurePath(filename)
+        except TypeError:
+            _LOGGER.warning("Skipping invalid filename %r for '%s'", filename, plant_id)
+            continue
+
+        if relative.is_absolute() or ".." in relative.parts:
+            _LOGGER.warning("Skipping unsafe path '%s' for '%s'", relative, plant_id)
+            continue
+
+        safe_parts = [part for part in relative.parts if part not in {"", "."}]
+        if not safe_parts:
+            _LOGGER.warning("Skipping empty path component '%s' for '%s'", relative, plant_id)
+            continue
+
+        file_path = plant_dir.joinpath(*safe_parts)
+        try:
+            file_path.relative_to(plant_dir)
+        except ValueError:
+            _LOGGER.warning("Skipping unsafe path '%s' for '%s'", relative, plant_id)
+            continue
+
         existed = file_path.exists()
         if existed and not overwrite:
             _LOGGER.info("File %s already exists. Skipping write.", file_path)

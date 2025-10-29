@@ -135,3 +135,22 @@ def test_write_profile_sections_sanitises_directory(tmp_path, caplog):
     assert safe_dir.is_dir()
     assert (safe_dir / "profile.json").is_file()
     assert any(str(safe_dir) in message for message in caplog.messages)
+
+
+def test_write_profile_sections_rejects_path_traversal(tmp_path, caplog):
+    """Section filenames must not escape the plant directory."""
+
+    caplog.set_level(logging.WARNING)
+    sections = {
+        "profile.json": {"foo": "bar"},
+        "../escape.json": {"foo": "baz"},
+    }
+
+    result = write_profile_sections("plant", sections, base_path=tmp_path)
+
+    assert result == "plant"
+
+    plant_dir = tmp_path / "plant"
+    assert (plant_dir / "profile.json").exists()
+    assert not (tmp_path / "escape.json").exists()
+    assert any("Skipping unsafe path" in message for message in caplog.messages)
