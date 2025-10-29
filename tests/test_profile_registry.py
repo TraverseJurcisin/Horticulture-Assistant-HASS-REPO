@@ -1208,6 +1208,57 @@ async def test_add_profile_copy_from(hass):
     assert sections["local"]["general"]["sensors"]["temperature"] == "sensor.t"
 
 
+async def test_add_profile_clone_from_storage_profile(hass):
+    """Profiles persisted only in storage can still be used as clone sources."""
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+
+    base_profile = BioProfile(
+        profile_id="base",
+        display_name="Base",
+        resolved_targets={
+            "temperature": ResolvedTarget(
+                value=21.5,
+                annotation=FieldAnnotation(source_type="manual"),
+            )
+        },
+        general={
+            "sensors": {"temperature": "sensor.base"},
+            CONF_PROFILE_SCOPE: "grow_zone",
+        },
+    )
+    base_profile.refresh_sections()
+    stored_payload = base_profile.to_json()
+
+    class DummyStore:
+        def __init__(self):
+            self.saved = None
+
+        async def async_load(self):
+            return {"profiles": {"base": stored_payload}}
+
+        async def async_save(self, data):
+            self.saved = data
+
+    reg._store = DummyStore()  # type: ignore[assignment]
+
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("Clone Profile", base_id="base")
+
+    assert pid == "clone_profile"
+    clone_options = entry.options[CONF_PROFILES][pid]
+    assert clone_options["sensors"]["temperature"] == "sensor.base"
+    assert clone_options["general"][CONF_PROFILE_SCOPE] == "grow_zone"
+    assert clone_options["general"]["sensors"]["temperature"] == "sensor.base"
+
+    clone_profile = reg.get(pid)
+    assert clone_profile is not None
+    assert clone_profile.general[CONF_PROFILE_SCOPE] == "grow_zone"
+    assert clone_profile.general["sensors"]["temperature"] == "sensor.base"
+
+
 async def test_add_profile_sets_new_plant_id_in_options(hass):
     """New profiles store their own plant_id in config entry options."""
 
