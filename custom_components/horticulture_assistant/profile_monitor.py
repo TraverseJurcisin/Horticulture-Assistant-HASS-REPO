@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import re
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
@@ -280,18 +281,25 @@ def _evaluate_sensor(
 def _coerce_float(value: Any) -> float | None:
     """Return ``value`` coerced to ``float`` when possible."""
 
+    def _valid(number: float) -> float | None:
+        if math.isnan(number) or math.isinf(number):
+            return None
+        return number
+
     if isinstance(value, int | float):
-        return float(value)
+        return _valid(float(value))
     if isinstance(value, str):
         cleaned = value.strip().replace(",", "")
         try:
-            return float(cleaned)
+            number = float(cleaned)
+            return _valid(number)
         except ValueError:
             match = _NUMERIC_PATTERN.search(cleaned)
             if match is None:
                 return None
             try:
-                return float(match.group(0))
+                number = float(match.group(0))
+                return _valid(number)
             except ValueError:
                 return None
     return None

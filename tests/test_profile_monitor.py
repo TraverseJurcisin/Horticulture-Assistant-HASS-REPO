@@ -141,3 +141,17 @@ def test_profile_monitor_preserves_last_changed_and_updated() -> None:
     snapshot = result.sensors[0]
     assert snapshot.last_changed == changed
     assert snapshot.last_updated == updated
+
+
+def test_profile_monitor_flags_nan_values() -> None:
+    hass = DummyHass(DummyStates({"sensor.moisture": DummyState("nan")}))
+    context = _context(sensors={"moisture": ("sensor.moisture",)}, thresholds={"moisture_min": 10})
+
+    result = ProfileMonitor(hass, context).evaluate()
+
+    assert result.health == "attention"
+    issues = result.issues_for("attention")
+    assert issues and issues[0].summary == "sensor_non_numeric"
+    snapshot = result.sensors[0]
+    assert snapshot.status == "non_numeric"
+    assert snapshot.available is False
