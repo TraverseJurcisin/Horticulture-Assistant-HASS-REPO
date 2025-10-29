@@ -177,9 +177,26 @@ class ProfileStore:
 
         sensors_data: dict[str, str | list[str]]
         if sensors is not None:
-            sensors_data = {
-                str(key): value.strip() for key, value in sensors.items() if isinstance(value, str) and value.strip()
-            }
+            sensors_data = {}
+            for key, value in sensors.items():
+                key_text = str(key)
+                if not key_text:
+                    continue
+                if isinstance(value, str):
+                    cleaned = value.strip()
+                    if cleaned:
+                        sensors_data[key_text] = cleaned
+                    continue
+                if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
+                    items: list[str] = []
+                    for item in value:
+                        if not isinstance(item, str):
+                            continue
+                        trimmed = item.strip()
+                        if trimmed:
+                            items.append(trimmed)
+                    if items:
+                        sensors_data[key_text] = items
         elif clone_profile and isinstance(clone_profile.general.get("sensors"), dict):
             sensors_data = {}
             for key, value in clone_profile.general.get("sensors", {}).items():
