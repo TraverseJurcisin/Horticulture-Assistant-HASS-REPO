@@ -344,8 +344,8 @@ def _normalise_profile_sensors(payload: Mapping[str, Any] | None) -> dict[str, l
         return {}
 
     sensors = _merge_sensor_lists(
-        _normalise_sensor_map(payload.get("sensors")),
-        _normalise_sensor_map((payload.get("general") or {}).get("sensors")),
+        _coerce_mapping(payload.get("sensors")),
+        _coerce_mapping((payload.get("general") or {}).get("sensors")),
     )
 
     # Preserve backwards-compatible aliases

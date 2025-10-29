@@ -328,6 +328,36 @@ async def test_resolve_profile_context_collection_aggregates_profiles(hass, tmp_
 
 
 @pytest.mark.asyncio
+async def test_profile_context_preserves_multiple_sensor_links(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "delta", CONF_PLANT_NAME: "Delta"},
+        options={
+            CONF_PROFILES: {
+                "delta": {
+                    "name": "Delta",
+                    "sensors": {
+                        "temperature": ["sensor.primary", "sensor.backup"],
+                        "humidity": ["sensor.hum"],
+                    },
+                }
+            }
+        },
+    )
+
+    store_entry_data(hass, entry)
+    collection = resolve_profile_context_collection(hass, entry)
+    primary = collection.primary
+
+    assert primary.sensor_ids_for_roles("temperature") == (
+        "sensor.primary",
+        "sensor.backup",
+    )
+    assert primary.sensor_ids_for_roles("humidity") == ("sensor.hum",)
+    assert primary.has_sensors("temperature", "humidity") is True
+
+
+@pytest.mark.asyncio
 async def test_resolve_profile_context_collection_fallbacks_to_primary(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
     entry = _make_entry(
