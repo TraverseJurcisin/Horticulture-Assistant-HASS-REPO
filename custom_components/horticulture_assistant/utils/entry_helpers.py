@@ -563,11 +563,18 @@ def _normalise_sensor_map(value: Any) -> dict[str, str]:
     sensors = {}
     mapping = _coerce_mapping(value)
     for key, item in mapping.items():
-        if not isinstance(item, str):
+        items: Sequence[str]
+        if isinstance(item, str):
+            items = [item]
+        elif isinstance(item, Sequence) and not isinstance(item, (str, bytes)):
+            items = [cand for cand in item if isinstance(cand, str)]
+        else:
             continue
-        cleaned = item.strip()
-        if cleaned:
-            sensors[str(key)] = cleaned
+        for candidate in items:
+            cleaned = candidate.strip()
+            if cleaned:
+                sensors[str(key)] = cleaned
+                break
     return sensors
 
 
