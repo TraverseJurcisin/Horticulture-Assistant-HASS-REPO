@@ -502,6 +502,8 @@ class _EnvironmentAggregate:
                 continue
             metrics[key] = round(self.metric_sums.get(key, 0.0) / count, 3)
 
+        timestamp = computed_at or _now_iso()
+
         payload: dict[str, Any] = {
             "scope": "species",
             "metrics": metrics,
@@ -536,7 +538,7 @@ class _EnvironmentAggregate:
                     profile_id=self.species_id,
                     child_id=summary.profile_id,
                     stats_version=ENVIRONMENT_STATS_VERSION,
-                    computed_at=computed_at,
+                    computed_at=timestamp,
                     n_runs=summary.run_count or None,
                     weight=round(weight, 6) if weight is not None else None,
                 )
@@ -544,7 +546,6 @@ class _EnvironmentAggregate:
 
         payload["contributors"] = contributor_payload
 
-        timestamp = computed_at or _now_iso()
         return ComputedStatSnapshot(
             stats_version=ENVIRONMENT_STATS_VERSION,
             computed_at=timestamp,
