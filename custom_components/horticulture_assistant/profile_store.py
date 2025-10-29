@@ -332,7 +332,13 @@ class ProfileStore:
         # single path component.
         text = text.replace("\\", "/")
         pure = PurePath(text)
-        part = pure.name if len(pure.parts) != 1 else pure.parts[0]
+        normalised_parts: list[str] = []
+        for segment in pure.parts:
+            cleaned = segment.strip()
+            if not cleaned or cleaned in {".", ".."}:
+                continue
+            normalised_parts.append(cleaned)
+        part = "_".join(normalised_parts) if normalised_parts else pure.name if len(pure.parts) != 1 else pure.parts[0]
         part = part.strip().strip(".")
         if not part:
             return None
