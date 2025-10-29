@@ -1,7 +1,7 @@
 from custom_components.horticulture_assistant.utils import recommendation_engine as re
 
 
-def _setup_engine(auto=False):
+def _setup_engine(auto: bool = False, *, alerts: object | None = None):
     eng = re.RecommendationEngine()
     eng.set_auto_approve(auto)
     eng.update_plant_profile(
@@ -19,7 +19,8 @@ def _setup_engine(auto=False):
         {"nitrate_ppm": 20, "phosphate_ppm": 10, "potassium_ppm": 70, "vwc": 25},
     )
     eng.update_product_availability({"n_fert": {"elements": ["N"]}})
-    eng.update_ai_feedback("p1", {"alerts": ["check drainage"]})
+    alert_payload = ["check drainage"] if alerts is None else alerts
+    eng.update_ai_feedback("p1", {"alerts": alert_payload})
     eng.update_environment_data("p1", {"temp_c": 30, "humidity_pct": 40, "light_ppfd": 100})
     return eng
 
@@ -63,3 +64,9 @@ def test_fertilizer_recommendation_severity():
     rec = eng.recommend("p1")
     fert = rec.fertilizers[0]
     assert fert.severity in {"mild", "moderate", "severe"}
+
+
+def test_recommendation_engine_accepts_string_alert():
+    eng = _setup_engine(alerts="check drainage")
+    rec = eng.recommend("p1")
+    assert "check drainage" in rec.notes
