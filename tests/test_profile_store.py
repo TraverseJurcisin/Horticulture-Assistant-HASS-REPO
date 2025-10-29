@@ -209,6 +209,24 @@ async def test_path_for_disallows_path_traversal(hass, tmp_path, monkeypatch) ->
 
 
 @pytest.mark.asyncio
+async def test_path_for_rewrites_windows_reserved_names(hass, tmp_path, monkeypatch) -> None:
+    """Reserved Windows device names should be rewritten to safe slugs."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    con_path = store._path_for("CON")
+    assert con_path.name == "con_profile.json"
+
+    com_path = store._path_for("Com1")
+    assert com_path.name == "com1_profile.json"
+
+    aux_suffix = store._path_for("aux.report")
+    assert aux_suffix.name == "aux_profile_report.json"
+
+
+@pytest.mark.asyncio
 async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypatch) -> None:
     """Listing profiles should return stored display names when available."""
 

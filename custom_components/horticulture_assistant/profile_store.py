@@ -18,6 +18,18 @@ LOCAL_RELATIVE_PATH = "custom_components/horticulture_assistant/data/local"
 PROFILES_DIRNAME = "profiles"
 
 
+_WINDOWS_RESERVED_NAMES = {
+    "con",
+    "prn",
+    "aux",
+    "nul",
+    *{f"com{idx}" for idx in range(1, 10)},
+    *{f"lpt{idx}" for idx in range(1, 10)},
+}
+
+_WINDOWS_INVALID_CHARS = "<>:\\\"|?*"
+
+
 def _slug_source(value: Any) -> str:
     if isinstance(value, str):
         return value
@@ -264,8 +276,22 @@ class ProfileStore:
             return None
         if "/" in part or "\\" in part:
             part = part.replace("/", "_").replace("\\", "_")
+        if any(char in part for char in _WINDOWS_INVALID_CHARS):
+            for char in _WINDOWS_INVALID_CHARS:
+                if char in part:
+                    part = part.replace(char, "_")
+        part = part.strip().strip(".")
         if not part or part in {".", ".."}:
             return None
+        stem = PurePath(part).stem.lower()
+        if stem in _WINDOWS_RESERVED_NAMES:
+            suffix = PurePath(part).suffix
+            safe = f"{stem}_profile"
+            if suffix:
+                cleaned_suffix = suffix.replace(".", "_").strip("_")
+                if cleaned_suffix:
+                    safe = f"{safe}_{cleaned_suffix}"
+            part = safe
         return part
 
     def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: Any) -> dict[str, Any]:
