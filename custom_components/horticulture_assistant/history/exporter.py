@@ -8,6 +8,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
+from threading import Lock
 from typing import Any
 
 from homeassistant.core import HomeAssistant
@@ -58,6 +59,7 @@ class HistoryExporter:
         self._base = base_path or (config_dir / "history")
         self._base.mkdir(parents=True, exist_ok=True)
         self._index_path = self._base / "index.json"
+        self._index_lock = Lock()
 
     async def async_append(self, profile_id: str, event_type: str, payload: Mapping[str, Any]) -> None:
         """Append ``payload`` to the history log for ``profile_id``."""
@@ -86,17 +88,22 @@ class HistoryExporter:
         self._update_index(profile_id, event_type, payload)
 
     def _update_index(self, profile_id: str, event_type: str, payload: Mapping[str, Any]) -> None:
-        existing = self._load_index()
-        record = existing.get(profile_id) or HistoryIndex(profile_id)
-        timestamp = self._extract_timestamp(event_type, payload)
-        record.touch(event_type, timestamp)
-        existing[profile_id] = record
-        serialised = {key: value.to_json() for key, value in existing.items()}
-        tmp_path = self._index_path.with_suffix(".tmp")
-        tmp_path.write_text(json.dumps(serialised, indent=2, ensure_ascii=False), encoding="utf-8")
-        tmp_path.replace(self._index_path)
+        with self._index_lock:
+            existing = self._read_index()
+            record = existing.get(profile_id) or HistoryIndex(profile_id)
+            timestamp = self._extract_timestamp(event_type, payload)
+            record.touch(event_type, timestamp)
+            existing[profile_id] = record
+            serialised = {key: value.to_json() for key, value in existing.items()}
+            tmp_path = self._index_path.with_suffix(".tmp")
+            tmp_path.write_text(json.dumps(serialised, indent=2, ensure_ascii=False), encoding="utf-8")
+            tmp_path.replace(self._index_path)
 
     def _load_index(self) -> dict[str, HistoryIndex]:
+        with self._index_lock:
+            return self._read_index()
+
+    def _read_index(self) -> dict[str, HistoryIndex]:
         if not self._index_path.exists():
             return {}
         try:

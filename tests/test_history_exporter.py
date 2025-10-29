@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import threading
 from pathlib import Path
 
 import pytest
@@ -60,3 +61,37 @@ async def test_run_events_fall_back_to_ended_timestamp(tmp_path: Path, hass) -> 
     index_file = tmp_path / "index.json"
     written = json.loads(index_file.read_text(encoding="utf-8"))
     assert written["plant-1"]["last_updated"] == payload["ended_at"]
+
+
+@pytest.mark.asyncio
+async def test_concurrent_appends_do_not_drop_counts(tmp_path: Path, hass) -> None:
+    """Simultaneous writes should increment counts without losing events."""
+
+    exporter = HistoryExporter(hass, base_path=tmp_path)
+
+    barrier = threading.Barrier(2)
+
+    def _writer(run_id: str, ended_at: str) -> None:
+        payload = {
+            "run_id": run_id,
+            "profile_id": "plant-1",
+            "ended_at": ended_at,
+        }
+        barrier.wait()
+        exporter._write_entry("plant-1", "run", payload)
+
+    threads = [
+        threading.Thread(target=_writer, args=("run-1", "2024-04-01T10:00:00+00:00")),
+        threading.Thread(target=_writer, args=("run-2", "2024-04-02T12:00:00+00:00")),
+    ]
+
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+    index = await exporter.async_index()
+    record = index["plant-1"]
+
+    assert record.counts["run"] == 2
+    assert record.last_updated in {"2024-04-01T10:00:00+00:00", "2024-04-02T12:00:00+00:00"}
