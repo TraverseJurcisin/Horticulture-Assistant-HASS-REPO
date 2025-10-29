@@ -53,6 +53,45 @@ async def test_async_create_profile_inherits_sensors_from_existing_profile(hass,
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_preserves_sequence_sensor_bindings(hass, tmp_path, monkeypatch) -> None:
+    """Sensor sequences from a cloned profile should retain all entries."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    base_profile = BioProfile(
+        profile_id="sequence_profile",
+        display_name="Sequence Profile",
+        resolved_targets={
+            "moisture": ResolvedTarget(value=55, annotation=FieldAnnotation(source_type="manual")),
+            "temperature": ResolvedTarget(value=18, annotation=FieldAnnotation(source_type="manual")),
+        },
+        general={
+            "sensors": {
+                "moisture": [" sensor.one ", "sensor.two", ""],
+                "temperature": (" sensor.temp ",),
+            }
+        },
+    )
+    await store.async_save(base_profile, name="sequence_profile")
+
+    await store.async_create_profile("Sequence Clone", clone_from="sequence_profile")
+
+    clone = await store.async_get("Sequence Clone")
+    assert clone is not None
+    assert clone["sensors"] == {
+        "moisture": ["sensor.one", "sensor.two"],
+        "temperature": ["sensor.temp"],
+    }
+    general = clone["general"] if isinstance(clone.get("general"), dict) else {}
+    assert general.get("sensors") == {
+        "moisture": ["sensor.one", "sensor.two"],
+        "temperature": ["sensor.temp"],
+    }
+
+
+@pytest.mark.asyncio
 async def test_async_create_profile_clones_sensors_from_dict_payload(hass, tmp_path, monkeypatch) -> None:
     """Cloning from a raw payload must copy sensor and resolved target data."""
 
