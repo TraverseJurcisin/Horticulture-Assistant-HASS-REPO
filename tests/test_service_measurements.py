@@ -103,3 +103,5 @@ def test_measurement_classes_include_extended_roles():
     assert services_module.MEASUREMENT_CLASSES["co2"] is services_module.SensorDeviceClass.CO2
     assert "ph" in services_module.MEASUREMENT_CLASSES
     assert services_module.MEASUREMENT_CLASSES["ph"] is services_module.SensorDeviceClass.PH
+    assert "conductivity" in services_module.MEASUREMENT_CLASSES
+    assert services_module.MEASUREMENT_CLASSES["conductivity"] is services_module.SensorDeviceClass.CONDUCTIVITY

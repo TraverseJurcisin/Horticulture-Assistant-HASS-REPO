@@ -116,6 +116,7 @@ MEASUREMENT_CLASSES: Final = {
     "moisture": SensorDeviceClass.MOISTURE,
     "co2": SensorDeviceClass.CO2,
     "ph": SensorDeviceClass.PH,
+    "conductivity": SensorDeviceClass.CONDUCTIVITY,
 }
 
 # Service name constants for profile management.
