@@ -41,7 +41,22 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
         _LOGGER.debug("State unavailable: %s", entity_id)
         return None
 
-    value = str(state.state).replace(",", "").strip()
+    value = str(state.state).strip()
+
+    if "," in value:
+        if "." in value:
+            last_comma = value.rfind(",")
+            last_dot = value.rfind(".")
+            if last_comma > last_dot:
+                value = value.replace(".", "")
+                value = value.replace(",", ".")
+            else:
+                value = value.replace(",", "")
+        else:
+            if value.count(",") == 1:
+                value = value.replace(",", ".")
+            else:
+                value = value.replace(",", "")
     try:
         return float(value)
     except (ValueError, TypeError):
@@ -87,9 +102,7 @@ def normalize_entities(val: str | Iterable[str] | None, default: str) -> list[st
     return entities or [default]
 
 
-def aggregate_sensor_values(
-    hass: HomeAssistant, entity_ids: str | Iterable[str] | None
-) -> float | None:
+def aggregate_sensor_values(hass: HomeAssistant, entity_ids: str | Iterable[str] | None) -> float | None:
     """Return the average or median of numeric sensor values.
 
     String inputs may contain multiple IDs separated by commas or semicolons.
