@@ -117,7 +117,9 @@ class HistoryExporter:
     @staticmethod
     def _extract_timestamp(event_type: str, payload: Mapping[str, Any]) -> str | None:
         if event_type == "run":
-            return str(payload.get("started_at") or payload.get("completed_at")) if payload else None
+            if not payload:
+                return None
+            return str(payload.get("started_at") or payload.get("ended_at") or payload.get("completed_at"))
         if event_type == "harvest":
             return str(payload.get("harvested_at")) if payload else None
         if event_type == "nutrient":
