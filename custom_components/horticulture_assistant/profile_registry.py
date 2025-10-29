@@ -1207,17 +1207,37 @@ class ProfileRegistry:
                 continue
             sensors_map[str(key)] = cleaned
         general[CONF_PROFILE_SCOPE] = resolved_scope
+
+        def _materialise_sensor_map() -> dict[str, str | list[str]]:
+            return {key: list(value) if isinstance(value, list) else value for key, value in sensors_map.items()}
+
+        local_payload = new_profile.get("local")
+        local_map: dict[str, Any] | None = None
+        local_general_map: dict[str, Any] | None = None
+        if isinstance(local_payload, Mapping):
+            local_map = dict(local_payload)
+            existing_general = local_map.get("general")
+            local_general_map = dict(existing_general) if isinstance(existing_general, Mapping) else {}
+
         if sensors_map:
-            general["sensors"] = {
-                key: list(value) if isinstance(value, list) else value for key, value in sensors_map.items()
-            }
-        sync_general_section(new_profile, general)
-        if sensors_map:
-            new_profile["sensors"] = {
-                key: list(value) if isinstance(value, list) else value for key, value in sensors_map.items()
-            }
+            general["sensors"] = _materialise_sensor_map()
+            new_profile["sensors"] = _materialise_sensor_map()
+            if local_general_map is not None:
+                local_general_map["sensors"] = _materialise_sensor_map()
         else:
+            general.pop("sensors", None)
             new_profile.pop("sensors", None)
+            if local_general_map is not None:
+                local_general_map.pop("sensors", None)
+
+        if local_map is not None and local_general_map is not None:
+            if local_general_map:
+                local_map["general"] = local_general_map
+            elif "general" in local_map:
+                local_map.pop("general", None)
+            new_profile["local"] = local_map
+
+        sync_general_section(new_profile, general)
         new_profile.pop("scope", None)
         new_profile[CONF_PROFILE_SCOPE] = resolved_scope
         new_profile["profile_id"] = candidate
