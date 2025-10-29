@@ -220,13 +220,28 @@ async def test_async_recommend_variable_honours_per_call_ttl(monkeypatch, hass):
 
     FixedDateTime.advance(minutes=30)
     second = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=1)
-    assert second is first
+    assert second == first
+    assert second is not first
     assert mock.call_count == 1
 
     FixedDateTime.advance(hours=2)
     third = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=1)
     assert third["value"] == 2.0
     assert mock.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_async_recommend_variable_returns_copy_of_cached_result(monkeypatch, hass):
+    _AI_CACHE.clear()
+    monkeypatch.setattr(AIClient, "generate_setpoint", AsyncMock(return_value=(3.0, 0.9, "summary", [])))
+
+    result = await async_recommend_variable(hass, key="ec", plant_id="plant-1", ttl_hours=10)
+    result["value"] = 99.0
+
+    cached = await async_recommend_variable(hass, key="ec", plant_id="plant-1", ttl_hours=10)
+
+    assert cached["value"] == 3.0
+    assert cached is not result
 
 
 def test_get_openai_key_prefers_hass_secrets(hass):
