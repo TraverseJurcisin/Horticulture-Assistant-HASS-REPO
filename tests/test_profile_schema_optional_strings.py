@@ -65,3 +65,22 @@ def test_profile_events_preserve_zero_identifiers() -> None:
     assert nutrient.species_id == "0"
     assert nutrient.product_id == "0"
     assert nutrient.summary()["run_id"] == "0"
+
+
+def test_run_event_rejects_boolean_metrics() -> None:
+    event = RunEvent.from_json(
+        {
+            "run_id": "example",
+            "profile_id": "plant",
+            "started_at": "2024-01-01T00:00:00Z",
+            "targets_met": True,
+            "targets_total": False,
+            "success_rate": True,
+            "stress_events": False,
+        }
+    )
+
+    assert event.targets_met is None
+    assert event.targets_total is None
+    assert event.success_rate is None
+    assert event.stress_events is None
