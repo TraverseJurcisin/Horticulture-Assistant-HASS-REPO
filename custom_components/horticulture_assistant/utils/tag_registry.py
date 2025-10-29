@@ -8,7 +8,11 @@ from pathlib import Path
 
 __all__ = ["list_tags", "get_plants_with_tag", "search_tags"]
 
-_TAGS_FILE = Path(__file__).resolve().parents[3] / "tags.json"
+# ``tags.json`` lives alongside the integration package. Using ``parents[3]``
+# accidentally walked up to the repository root leaving us to look for a file
+# that does not exist.  Resolve the package directory explicitly so lookups
+# work regardless of the working directory.
+_TAGS_FILE = Path(__file__).resolve().parent.parent / "tags.json"
 
 
 @cache
