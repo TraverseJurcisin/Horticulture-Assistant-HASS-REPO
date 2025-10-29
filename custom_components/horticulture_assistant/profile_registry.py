@@ -917,14 +917,33 @@ class ProfileRegistry:
             idx += 1
 
         new_profile: dict[str, Any] = {"name": name}
+        base_profile_obj: BioProfile | None = None
         if base_id:
             source = profiles.get(base_id)
             if source is None:
-                raise ValueError(f"unknown profile {base_id}")
-            new_profile = deepcopy(source)
+                base_profile_obj = self._profiles.get(base_id)
+                if base_profile_obj is None:
+                    raise ValueError(f"unknown profile {base_id}")
+                source = base_profile_obj.to_json()
+            elif isinstance(self._profiles.get(base_id), BioProfile):
+                base_profile_obj = self._profiles.get(base_id)
+
+            if not isinstance(source, Mapping):
+                raise ValueError(f"invalid profile payload for {base_id}")
+
+            source_map = dict(source)
+            new_profile = deepcopy(source_map)
             new_profile["name"] = name
             if scope is None:
-                scope = source.get(CONF_PROFILE_SCOPE, source.get("scope"))
+                candidate_scope = None
+                general = source_map.get("general")
+                if isinstance(general, Mapping):
+                    candidate_scope = general.get(CONF_PROFILE_SCOPE)
+                if candidate_scope is None:
+                    candidate_scope = source_map.get(CONF_PROFILE_SCOPE) or source_map.get("scope")
+                if candidate_scope is None and isinstance(base_profile_obj, BioProfile):
+                    candidate_scope = base_profile_obj.general.get(CONF_PROFILE_SCOPE)
+                scope = candidate_scope
 
         resolved_scope = scope or PROFILE_SCOPE_DEFAULT
         if resolved_scope not in PROFILE_SCOPE_CHOICES:
