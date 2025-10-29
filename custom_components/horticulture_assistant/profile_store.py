@@ -12,7 +12,7 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 from homeassistant.util import slugify
 
-from .const import CONF_PROFILE_SCOPE
+from .const import CONF_PROFILE_SCOPE, PROFILE_SCOPE_CHOICES, PROFILE_SCOPE_DEFAULT
 from .profile.schema import BioProfile, CultivarProfile, SpeciesProfile
 from .profile.utils import normalise_profile_payload
 
@@ -58,6 +58,21 @@ def _slug_source(value: Any) -> str:
     if value is None:
         return ""
     return str(value)
+
+
+def _normalise_scope(value: Any) -> str | None:
+    """Return a canonical profile scope string if ``value`` is valid."""
+
+    if not isinstance(value, str):
+        return None
+    text = value.strip()
+    if not text:
+        return None
+    lowered = text.casefold()
+    for choice in PROFILE_SCOPE_CHOICES:
+        if lowered == choice.casefold():
+            return choice
+    return None
 
 
 def _clone_structure(value: Any) -> Any:
@@ -220,9 +235,13 @@ class ProfileStore:
         else:
             sensors_data = {}
 
-        resolved_scope = scope
+        resolved_scope = _normalise_scope(scope)
         if resolved_scope is None and clone_profile is not None:
-            resolved_scope = clone_profile.general.get(CONF_PROFILE_SCOPE)
+            resolved_scope = _normalise_scope(clone_profile.general.get(CONF_PROFILE_SCOPE))
+        if resolved_scope is None and isinstance(clone_payload, Mapping):
+            resolved_scope = _normalise_scope(clone_payload.get(CONF_PROFILE_SCOPE) or clone_payload.get("scope"))
+        if resolved_scope is None:
+            resolved_scope = PROFILE_SCOPE_DEFAULT
 
         slug = slugify(name) or "profile"
 
