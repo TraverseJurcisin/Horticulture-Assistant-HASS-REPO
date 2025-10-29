@@ -216,6 +216,22 @@ async def test_async_get_handles_non_mapping_payload(hass, tmp_path, monkeypatch
 
 
 @pytest.mark.asyncio
+async def test_async_save_handles_numeric_identifiers(hass, tmp_path, monkeypatch) -> None:
+    """Profiles with numeric ids should be stored without raising errors."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_save({"plant_id": 987, "profile_id": 987})
+
+    saved = await store.async_get("987")
+    assert saved is not None
+    assert saved["plant_id"] == "987"
+    assert saved["display_name"] == "987"
+
+
+@pytest.mark.asyncio
 async def test_async_save_profile_from_options_preserves_local_sections(hass, tmp_path, monkeypatch) -> None:
     """Saving from options should materialise library/local sections."""
 
