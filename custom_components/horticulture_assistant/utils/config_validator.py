@@ -106,7 +106,7 @@ class ConfigValidator:
             errors.append("API key appears to be too short")
 
         base_value = base_url.strip() if isinstance(base_url, str) else ""
-        if not base_value.startswith(("http://", "https://")):
+        if base_value and not base_value.startswith(("http://", "https://")):
             errors.append("Base URL must start with http:// or https://")
 
         return errors
