@@ -190,9 +190,16 @@ class CultivationEvent:
         tags: list[str] = []
         raw_tags = data.get("tags")
         if isinstance(raw_tags, list | tuple | set):
-            tags = [str(item) for item in raw_tags]
-        elif raw_tags:
-            tags = [str(raw_tags)]
+            for item in raw_tags:
+                if item is None:
+                    continue
+                text = item.strip() if isinstance(item, str) else str(item).strip()
+                if text:
+                    tags.append(text)
+        elif raw_tags is not None:
+            text = raw_tags.strip() if isinstance(raw_tags, str) else str(raw_tags).strip()
+            if text:
+                tags = [text]
 
         return CultivationEvent(
             event_id=str(data.get("event_id") or data.get("id") or "event"),

@@ -187,6 +187,45 @@ def test_event_statistics_normalises_blank_event_type():
     assert event_snapshot.payload["event_types"][0]["event_type"] == "note"
 
 
+def test_event_statistics_strips_and_deduplicates_tags():
+    profile = BioProfile(profile_id="plant", display_name="Plant")
+    profile.add_cultivation_event(
+        CultivationEvent(
+            event_id="evt-1",
+            profile_id="plant",
+            species_id=None,
+            run_id=None,
+            occurred_at="2024-03-02T00:00:00Z",
+            event_type="inspection",
+            tags=["  Growth  ", "", None, "\nGrowth\n"],
+        )
+    )
+    profile.add_cultivation_event(
+        CultivationEvent(
+            event_id="evt-2",
+            profile_id="plant",
+            species_id=None,
+            run_id=None,
+            occurred_at="2024-03-03T00:00:00Z",
+            event_type="inspection",
+            tags=["Growth", "\tPruning\t"],
+        )
+    )
+
+    recompute_statistics([profile])
+
+    event_snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "events/v1"),
+        None,
+    )
+    assert event_snapshot is not None
+    top_tags = event_snapshot.payload.get("top_tags")
+    assert top_tags is not None
+    assert top_tags[0] == {"tag": "Growth", "count": 3}
+    assert {tag["tag"] for tag in top_tags} == {"Growth", "Pruning"}
+    assert all(tag["tag"] == tag["tag"].strip() for tag in top_tags)
+
+
 def test_success_statistics_from_run_history():
     species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
     cultivar = BioProfile(
