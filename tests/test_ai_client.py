@@ -244,6 +244,24 @@ async def test_async_recommend_variable_returns_copy_of_cached_result(monkeypatc
     assert cached is not result
 
 
+@pytest.mark.asyncio
+async def test_async_recommend_variable_cached_links_are_isolated(monkeypatch, hass):
+    _AI_CACHE.clear()
+    monkeypatch.setattr(
+        AIClient,
+        "generate_setpoint",
+        AsyncMock(return_value=(5.0, 0.8, "summary", ["https://example.test/one"])),
+    )
+
+    first = await async_recommend_variable(hass, key="ph", plant_id="plant-1", ttl_hours=10)
+    first["links"].append("https://bad.example/extra")
+
+    second = await async_recommend_variable(hass, key="ph", plant_id="plant-1", ttl_hours=10)
+
+    assert second["links"] == ["https://example.test/one"]
+    assert second["links"] is not first["links"]
+
+
 def test_get_openai_key_prefers_hass_secrets(hass):
     hass.secrets = {"OPENAI_API_KEY": "attr-secret"}
     hass.data.setdefault("secrets", {})["OPENAI_API_KEY"] = "data-secret"
