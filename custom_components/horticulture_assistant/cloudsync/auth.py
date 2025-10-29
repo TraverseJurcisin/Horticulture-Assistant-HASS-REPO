@@ -110,12 +110,14 @@ class CloudAuthTokens:
                     expires_at = parsed.astimezone(UTC)
 
         roles_raw = payload.get("roles")
+        roles: tuple[str, ...] = ()
         if isinstance(roles_raw, list | tuple | set):
-            roles = tuple(sorted({str(role) for role in roles_raw if role}))
-        elif isinstance(roles_raw, str) and roles_raw:
-            roles = (roles_raw,)
-        else:
-            roles = ()
+            cleaned = {str(role).strip() for role in roles_raw if str(role).strip()}
+            roles = tuple(sorted(cleaned))
+        elif isinstance(roles_raw, str):
+            role = roles_raw.strip()
+            if role:
+                roles = (role,)
 
         email = payload.get("account") or payload.get("email")
         account_email = str(email).strip() if email else None
