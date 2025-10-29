@@ -2,6 +2,7 @@ import json
 import logging
 import os
 from datetime import datetime
+from pathlib import PurePath
 
 from plant_engine import ai_model
 
@@ -22,6 +23,24 @@ _LOGGER = logging.getLogger(__name__)
 
 
 """Utility for applying AI generated threshold feedback to plant profiles."""
+
+
+def _profile_json_path(plant_id: str) -> str:
+    """Return a sanitised profile JSON path for ``plant_id``."""
+
+    text = str(plant_id or "").strip()
+    if not text:
+        safe_id = "plant"
+    else:
+        text = text.replace("\\", "/")
+        pure = PurePath(text)
+        candidate = pure.name if len(pure.parts) != 1 else pure.parts[0]
+        candidate = candidate.strip().strip(".")
+        if not candidate or candidate in {".", ".."}:
+            safe_id = "plant"
+        else:
+            safe_id = candidate.replace("/", "_").replace("\\", "_").strip() or "plant"
+    return plants_path(None, f"{safe_id}.json")
 
 
 def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
@@ -91,7 +110,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
         auto_approve = not daily_report.get("ai_feedback_required", True)
     else:
         # Fallback: check plant profile for an auto_approve flag
-        profile_path = plants_path(None, f"{plant_id}.json")
+        profile_path = _profile_json_path(plant_id)
         if os.path.exists(profile_path):
             try:
                 with open(profile_path, encoding="utf-8") as pf:
@@ -120,7 +139,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
     # Apply or queue changes based on auto_approve
     if auto_approve:
         # Auto-approve: apply changes directly to the plant's profile
-        profile_path = plants_path(None, f"{plant_id}.json")
+        profile_path = _profile_json_path(plant_id)
         if not os.path.exists(profile_path):
             _LOGGER.error(
                 "Plant profile not found at %s; cannot auto-apply thresholds", profile_path
