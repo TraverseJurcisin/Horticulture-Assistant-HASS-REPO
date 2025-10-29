@@ -70,6 +70,33 @@ async def test_missing_parent_warning_logged(hass, caplog):
     assert any("cultivar.missing" in record.message for record in caplog.records)
 
 
+async def test_profile_device_metadata_populates_defaults_for_blank_fields(hass, monkeypatch):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
+    reg = ProfileRegistry(hass, entry)
+
+    def _device_info(_hass, _entry_id, _profile_id):
+        return {
+            "identifiers": {("horticulture_assistant", "custom")},
+            "name": "  ",
+            "manufacturer": "",
+            "model": " ",
+        }
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.resolve_profile_device_info",
+        _device_info,
+    )
+
+    await reg.async_load()
+    summaries = reg.summaries()
+    assert summaries, "Expected at least one profile summary"
+
+    device_info = summaries[0]["device_info"]
+    assert device_info["name"] == "Plant"
+    assert device_info["manufacturer"] == "Horticulture Assistant"
+    assert device_info["model"] == "Plant Profile"
+
+
 async def test_lineage_notification_created_and_clears(hass):
     entry = await _make_entry(
         hass,

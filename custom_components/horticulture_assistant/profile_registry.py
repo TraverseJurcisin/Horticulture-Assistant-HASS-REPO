@@ -189,8 +189,12 @@ class ProfileRegistry:
         name = payload.get("name")
         if not isinstance(name, str) or not name.strip():
             payload["name"] = default_name or profile_id
-        payload.setdefault("manufacturer", "Horticulture Assistant")
-        payload.setdefault("model", "Plant Profile")
+        manufacturer = payload.get("manufacturer")
+        if not isinstance(manufacturer, str) or not manufacturer.strip():
+            payload["manufacturer"] = "Horticulture Assistant"
+        model = payload.get("model")
+        if not isinstance(model, str) or not model.strip():
+            payload["model"] = "Plant Profile"
 
         return {
             "identifier": {"domain": domain, "id": identifier},
