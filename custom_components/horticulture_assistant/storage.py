@@ -61,7 +61,9 @@ class LocalStore:
                     elif not isinstance(current, dict):
                         data[key] = dict(current)
                 elif isinstance(default_value, list):
-                    if not isinstance(current, Sequence) or isinstance(current, str | bytes | bytearray):
+                    if not isinstance(current, Sequence) or isinstance(  # noqa: UP038 - Python 3.10 compat
+                        current, (str, bytes, bytearray)
+                    ):
                         data[key] = _clone_default(default_value)
                     elif not isinstance(current, list):
                         data[key] = list(current)
