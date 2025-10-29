@@ -213,8 +213,12 @@ def _compute_event_payload(
     for event, ts in normalised:
         event_type = (event.event_type or "note").strip() or "note"
         type_counter[event_type] += 1
-        for tag in event.tags or []:
-            tag_counter[str(tag)] += 1
+        for raw_tag in event.tags or []:
+            if raw_tag is None:
+                continue
+            cleaned_tag = raw_tag.strip() if isinstance(raw_tag, str) else str(raw_tag).strip()
+            if cleaned_tag:
+                tag_counter[cleaned_tag] += 1
         if event.run_id:
             run_ids.add(str(event.run_id))
         if ts is not None:
