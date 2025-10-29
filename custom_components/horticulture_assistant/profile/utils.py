@@ -359,13 +359,9 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> LineageLinkRep
 
         if species_id and species_id not in species_map:
             report.missing_species.setdefault(profile.profile_id, str(species_id))
-            continue
+            species_id = None
 
-        if not species_id:
-            continue
-
-        profile.species_profile_id = species_id
-        species = species_map[species_id]
+        species = species_map.get(species_id) if species_id else None
 
         deduped_parents: list[str] = []
         seen_parent: set[str] = set()
@@ -378,6 +374,12 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> LineageLinkRep
                 report.add_missing_parent(profile.profile_id, parent_id)
                 continue
             deduped_parents.append(parent_id)
+
+        if species is None:
+            profile.parents = deduped_parents
+            continue
+
+        profile.species_profile_id = species.profile_id
         if species.profile_id not in seen_parent:
             deduped_parents.insert(0, species.profile_id)
         profile.parents = deduped_parents

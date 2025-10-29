@@ -51,6 +51,9 @@ from .profile.schema import (
     RunEvent,
 )
 from .profile.statistics import recompute_statistics
+from .profile.store import CACHE_KEY as PROFILE_STORE_CACHE_KEY
+from .profile.store import STORE_KEY as PROFILE_STORE_KEY
+from .profile.store import STORE_VERSION as PROFILE_STORE_VERSION
 from .profile.utils import (
     LineageLinkReport,
     ensure_sections,
@@ -114,8 +117,8 @@ def _load_profile_schema() -> dict[str, Any] | None:
     return _PROFILE_SCHEMA
 
 
-STORAGE_VERSION = 2
-STORAGE_KEY = "horticulture_assistant_profiles"
+STORAGE_VERSION = PROFILE_STORE_VERSION
+STORAGE_KEY = PROFILE_STORE_KEY
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
@@ -160,14 +163,14 @@ class ProfileRegistry:
             sample = ", ".join(affected[:5])
             if len(affected) > 5:
                 sample = f"{sample}, +{len(affected) - 5} more"
-            warnings.append(f"Missing species metadata for {sample}")
+            warnings.append(f"missing species metadata for {sample}")
 
         if self._missing_parent_issues:
             affected = sorted({profile_id for profile_id, _ in self._missing_parent_issues})
             sample = ", ".join(affected[:5])
             if len(affected) > 5:
                 sample = f"{sample}, +{len(affected) - 5} more"
-            warnings.append(f"Missing parent lineage for {sample}")
+            warnings.append(f"missing parent lineage for {sample}")
 
         if self._validation_issue_summaries:
             warnings.extend(sorted(self._validation_issue_summaries.values()))
@@ -210,6 +213,72 @@ class ProfileRegistry:
             "identifier": {"domain": domain, "id": identifier},
             "info": serialise_device_info(payload),
         }
+
+    @staticmethod
+    def _merge_profile_data(stored: BioProfile, overlay: BioProfile) -> BioProfile:
+        """Combine ``stored`` profile data with option ``overlay`` values."""
+
+        merged = overlay
+
+        stored_general = dict(stored.general)
+        overlay_general = dict(overlay.general)
+        stored_sensors = dict(stored_general.get("sensors", {}))
+        overlay_sensors = dict(overlay_general.get("sensors", {}))
+        if stored_sensors or overlay_sensors:
+            merged_sensors = dict(stored_sensors)
+            merged_sensors.update(overlay_sensors)
+            overlay_general["sensors"] = merged_sensors
+        merged.general = overlay_general
+        merged.refresh_sections()
+
+        def _is_empty(value: Any) -> bool:
+            if value is None:
+                return True
+            if isinstance(value, (list | tuple | set | frozenset | dict)):
+                return len(value) == 0
+            if isinstance(value, str):
+                return value.strip() == ""
+            return False
+
+        def _merge_attr(name: str) -> None:
+            stored_value = getattr(stored, name, None)
+            overlay_value = getattr(merged, name, None)
+            if _is_empty(overlay_value) and not _is_empty(stored_value):
+                setattr(merged, name, deepcopy(stored_value))
+
+        for field in (
+            "parents",
+            "identity",
+            "taxonomy",
+            "policies",
+            "stable_knowledge",
+            "lifecycle",
+            "traits",
+            "tags",
+            "curated_targets",
+            "diffs_vs_parent",
+            "local_overrides",
+            "resolver_state",
+            "resolved_targets",
+            "variables",
+            "thresholds",
+            "citations",
+            "event_history",
+            "run_history",
+            "harvest_history",
+            "nutrient_history",
+            "statistics",
+            "computed_stats",
+            "local_metadata",
+            "library_metadata",
+            "last_resolved",
+            "created_at",
+            "updated_at",
+        ):
+            _merge_attr(field)
+
+        merged.refresh_sections()
+        return merged
 
     def _create_species_issue(
         self,
@@ -632,12 +701,12 @@ class ProfileRegistry:
             self._cloud_pending_snapshot = True
             return
         ready = publisher.ready
+        if not ready:
+            self._cloud_pending_snapshot = True
+            return
         self._safe_publish(lambda: publisher.publish_profile(profile))
         self._publish_stats_with(publisher, profile)
-        if ready:
-            self._cloud_pending_snapshot = False
-        else:
-            self._cloud_pending_snapshot = True
+        self._cloud_pending_snapshot = False
 
     def _cloud_publish_deleted(self, profile_id: str) -> None:
         publisher = self._cloud_publisher
@@ -777,37 +846,36 @@ class ProfileRegistry:
         """Load profiles from storage and config entry options."""
 
         data = await self._store.async_load() or {}
+        if not data:
+            cache = self.hass.data.get(PROFILE_STORE_CACHE_KEY)
+            if isinstance(cache, Mapping):
+                data = {k: deepcopy(v) for k, v in cache.items() if isinstance(k, str)}
 
         # Older versions stored profiles as a list; convert to the new mapping
         # structure keyed by the legacy ``plant_id`` identifier.
         if isinstance(data, list):  # pragma: no cover - legacy format
             data = {"profiles": {p["plant_id"]: p for p in data if isinstance(p, Mapping) and p.get("plant_id")}}
 
-        stored_profiles = data.get("profiles", {}) if isinstance(data, Mapping) else {}
-        if not isinstance(stored_profiles, Mapping):
-            stored_profiles = {}
+        stored_profiles: Mapping[str, Any] = {}
+        if isinstance(data, Mapping):
+            candidate = data.get("profiles") if "profiles" in data else None
+            if isinstance(candidate, Mapping):
+                stored_profiles = candidate
+            else:
+                # Older helpers stored the mapping directly without a wrapper key.
+                legacy_profiles: dict[str, Any] = {}
+                for key, value in data.items():
+                    if isinstance(key, str) and isinstance(value, Mapping):
+                        legacy_profiles[key] = value
+                    else:
+                        legacy_profiles = {}
+                        break
+                stored_profiles = legacy_profiles
 
         profiles: dict[str, BioProfile] = {}
 
-        options_profiles = self.entry.options.get(CONF_PROFILES, {}) or {}
-        for pid, payload in options_profiles.items():
-            display_name = payload.get("name") or pid
-            try:
-                profile = options_profile_to_dataclass(
-                    pid,
-                    payload,
-                    display_name=display_name,
-                )
-            except Exception:
-                copy = dict(payload)
-                ensure_sections(copy, plant_id=pid, display_name=display_name)
-                profile = BioProfile.from_json(copy)
-            self._validate_profile(profile)
-            profiles[pid] = profile
-
+        stored_objects: dict[str, BioProfile] = {}
         for pid, payload in stored_profiles.items():
-            if pid in profiles:
-                continue
             if not isinstance(payload, Mapping):
                 _LOGGER.warning(
                     "Skipping invalid stored profile %s: expected mapping but received %s",
@@ -843,8 +911,29 @@ class ProfileRegistry:
                     )
                     continue
 
+            stored_objects[pid] = profile
             profiles[pid] = profile
             self._validate_profile(profile)
+
+        options_profiles = self.entry.options.get(CONF_PROFILES, {}) or {}
+        for pid, payload in options_profiles.items():
+            display_name = payload.get("name") or pid
+            try:
+                profile = options_profile_to_dataclass(
+                    pid,
+                    payload,
+                    display_name=display_name,
+                )
+            except Exception:
+                copy = dict(payload)
+                ensure_sections(copy, plant_id=pid, display_name=display_name)
+                profile = BioProfile.from_json(copy)
+
+            stored_profile = stored_objects.get(pid)
+            if stored_profile is not None:
+                profile = self._merge_profile_data(stored_profile, profile)
+            self._validate_profile(profile)
+            profiles[pid] = profile
 
         for profile in profiles.values():
             profile.general.setdefault(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
@@ -857,7 +946,11 @@ class ProfileRegistry:
     async def async_save(self) -> None:
         self._relink_profiles()
         recompute_statistics(self._profiles.values())
-        await self._store.async_save({"profiles": {pid: prof.to_json() for pid, prof in self._profiles.items()}})
+        payload = {pid: prof.to_json() for pid, prof in self._profiles.items()}
+        cache = self.hass.data.setdefault(PROFILE_STORE_CACHE_KEY, {})
+        cache.clear()
+        cache.update({pid: deepcopy(data) for pid, data in payload.items()})
+        await self._store.async_save({"profiles": payload})
 
     # Backwards compatibility for previous method name
     async_initialize = async_load
@@ -1010,11 +1103,22 @@ class ProfileRegistry:
             display_name=name,
         )
         general = dict(new_profile.get("general", {})) if isinstance(new_profile.get("general"), Mapping) else {}
-        sensors_map = dict(general.get("sensors", {}))
+        sensors_map: dict[str, str] = {}
+        raw_sensors = new_profile.get("sensors")
+        if isinstance(raw_sensors, Mapping):
+            sensors_map.update({str(key): value for key, value in raw_sensors.items() if isinstance(value, str)})
+        general_sensors = general.get("sensors") if isinstance(general.get("sensors"), Mapping) else {}
+        sensors_map.update({str(key): value for key, value in general_sensors.items() if isinstance(value, str)})
         general[CONF_PROFILE_SCOPE] = resolved_scope
+        if sensors_map:
+            general["sensors"] = dict(sensors_map)
         sync_general_section(new_profile, general)
-        new_profile["sensors"] = sensors_map
+        if sensors_map:
+            new_profile["sensors"] = dict(sensors_map)
+        else:
+            new_profile.pop("sensors", None)
         new_profile.pop("scope", None)
+        new_profile[CONF_PROFILE_SCOPE] = resolved_scope
         new_profile["profile_id"] = candidate
         new_profile["plant_id"] = candidate
         profiles[candidate] = new_profile
@@ -1366,14 +1470,24 @@ class ProfileRegistry:
         if prof is None:
             raise ValueError(f"unknown profile {profile_id}")
 
-        event = payload if isinstance(payload, RunEvent) else RunEvent.from_json(payload)
-        if not event.profile_id:
-            event.profile_id = profile_id
-        self._ensure_valid_event(
-            context="run event",
-            payload=event.to_json(),
-            validator=validate_run_event_dict,
-        )
+        if isinstance(payload, RunEvent):
+            event = payload
+            if not event.profile_id:
+                event.profile_id = profile_id
+            self._ensure_valid_event(
+                context="run event",
+                payload=event.to_json(),
+                validator=validate_run_event_dict,
+            )
+        else:
+            raw_payload = dict(payload)
+            raw_payload.setdefault("profile_id", profile_id)
+            self._ensure_valid_event(
+                context="run event",
+                payload=raw_payload,
+                validator=validate_run_event_dict,
+            )
+            event = RunEvent.from_json(raw_payload)
         prof.add_run_event(event)
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
@@ -1416,14 +1530,24 @@ class ProfileRegistry:
         if prof is None:
             raise ValueError(f"unknown profile {profile_id}")
 
-        event = payload if isinstance(payload, HarvestEvent) else HarvestEvent.from_json(payload)
-        if not event.profile_id:
-            event.profile_id = profile_id
-        self._ensure_valid_event(
-            context="harvest event",
-            payload=event.to_json(),
-            validator=validate_harvest_event_dict,
-        )
+        if isinstance(payload, HarvestEvent):
+            event = payload
+            if not event.profile_id:
+                event.profile_id = profile_id
+            self._ensure_valid_event(
+                context="harvest event",
+                payload=event.to_json(),
+                validator=validate_harvest_event_dict,
+            )
+        else:
+            raw_payload = dict(payload)
+            raw_payload.setdefault("profile_id", profile_id)
+            self._ensure_valid_event(
+                context="harvest event",
+                payload=raw_payload,
+                validator=validate_harvest_event_dict,
+            )
+            event = HarvestEvent.from_json(raw_payload)
         prof.add_harvest_event(event)
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
@@ -1453,14 +1577,24 @@ class ProfileRegistry:
         if prof is None:
             raise ValueError(f"unknown profile {profile_id}")
 
-        event = payload if isinstance(payload, NutrientApplication) else NutrientApplication.from_json(payload)
-        if not event.profile_id:
-            event.profile_id = profile_id
-        self._ensure_valid_event(
-            context="nutrient event",
-            payload=event.to_json(),
-            validator=validate_nutrient_event_dict,
-        )
+        if isinstance(payload, NutrientApplication):
+            event = payload
+            if not event.profile_id:
+                event.profile_id = profile_id
+            self._ensure_valid_event(
+                context="nutrient event",
+                payload=event.to_json(),
+                validator=validate_nutrient_event_dict,
+            )
+        else:
+            raw_payload = dict(payload)
+            raw_payload.setdefault("profile_id", profile_id)
+            self._ensure_valid_event(
+                context="nutrient event",
+                payload=raw_payload,
+                validator=validate_nutrient_event_dict,
+            )
+            event = NutrientApplication.from_json(raw_payload)
         prof.add_nutrient_event(event)
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
@@ -1490,14 +1624,24 @@ class ProfileRegistry:
         if prof is None:
             raise ValueError(f"unknown profile {profile_id}")
 
-        event = payload if isinstance(payload, CultivationEvent) else CultivationEvent.from_json(payload)
-        if not event.profile_id:
-            event.profile_id = profile_id
-        self._ensure_valid_event(
-            context="cultivation event",
-            payload=event.to_json(),
-            validator=validate_cultivation_event_dict,
-        )
+        if isinstance(payload, CultivationEvent):
+            event = payload
+            if not event.profile_id:
+                event.profile_id = profile_id
+            self._ensure_valid_event(
+                context="cultivation event",
+                payload=event.to_json(),
+                validator=validate_cultivation_event_dict,
+            )
+        else:
+            raw_payload = dict(payload)
+            raw_payload.setdefault("profile_id", profile_id)
+            self._ensure_valid_event(
+                context="cultivation event",
+                payload=raw_payload,
+                validator=validate_cultivation_event_dict,
+            )
+            event = CultivationEvent.from_json(raw_payload)
         prof.add_cultivation_event(event)
         prof.updated_at = datetime.now(tz=UTC).isoformat()
         prof.refresh_sections()
