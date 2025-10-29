@@ -897,7 +897,8 @@ def _compute_environment_snapshot(profile: BioProfile) -> tuple[ComputedStatSnap
 def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
     """Rebuild species and cultivar yield statistics in-place."""
 
-    profiles_by_id = {profile.profile_id: profile for profile in profiles}
+    profile_list = list(profiles)
+    profiles_by_id = {profile.profile_id: profile for profile in profile_list}
     species_to_harvests: defaultdict[str, list[HarvestEvent]] = defaultdict(list)
     species_breakdown: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
     species_environment: dict[str, _EnvironmentAggregate] = {}
@@ -907,7 +908,7 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
     species_event_history: defaultdict[str, list[CultivationEvent]] = defaultdict(list)
     species_event_breakdown: defaultdict[str, list[dict[str, Any]]] = defaultdict(list)
 
-    for profile in profiles:
+    for profile in profile_list:
         harvests = list(profile.harvest_history)
         run_ids = {event.run_id for event in harvests if event.run_id}
         if not run_ids:
@@ -1245,7 +1246,7 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
         )
         _replace_snapshot(target, NUTRIENT_STATS_VERSION, snapshot)
 
-    for profile in profiles:
+    for profile in profile_list:
         profile.refresh_sections()
 
     for species_id, aggregate in species_environment.items():
