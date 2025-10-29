@@ -315,6 +315,31 @@ def test_profile_context_has_sensors_matches_any_role():
 
 
 @pytest.mark.asyncio
+async def test_resolve_profile_image_url_reads_general_section(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "primary", "plant_name": "Primary"},
+        options={
+            "image_url": "  https://example.com/entry.png  ",
+            CONF_PROFILES: {
+                "primary": {
+                    "name": "Primary",
+                    "general": {"image": " https://example.com/general.png "},
+                },
+            },
+        },
+    )
+
+    store_entry_data(hass, entry)
+
+    image = resolve_profile_image_url(hass, entry.entry_id, "primary")
+    assert image == "https://example.com/general.png"
+
+    fallback = resolve_profile_image_url(hass, entry.entry_id, "missing")
+    assert fallback == "https://example.com/entry.png"
+
+
+@pytest.mark.asyncio
 async def test_resolve_profile_context_collection_aggregates_profiles(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
     entry = _make_entry(
