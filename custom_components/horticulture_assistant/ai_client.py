@@ -235,7 +235,14 @@ async def async_recommend_variable(hass, key: str, plant_id: str, ttl_hours: int
     client = AIClient(hass, provider, model)
     context = {"key": key, "plant_id": plant_id, **cache_context}
     val, conf, summary, links = await client.generate_setpoint(context)
-    result = {"value": val, "confidence": conf, "summary": summary, "links": links}
+    result = {
+        "value": val,
+        "confidence": conf,
+        "summary": summary,
+        "links": links,
+        "provider": provider,
+        "model": model,
+    }
     snapshot = deepcopy(result)
     _AI_CACHE[cache_key] = (snapshot, now)
     return result
