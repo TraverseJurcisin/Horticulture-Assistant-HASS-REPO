@@ -28,6 +28,28 @@ from .engine.metrics import (
 _LOGGER = logging.getLogger(__name__)
 
 
+_FAHRENHEIT_UNITS = {
+    "f",
+    "°f",
+    "ºf",
+    "degf",
+    "deg_f",
+    "fahrenheit",
+}
+
+
+def _is_fahrenheit(unit: Any) -> bool:
+    """Return ``True`` if ``unit`` represents degrees Fahrenheit."""
+
+    if unit == UnitOfTemperature.FAHRENHEIT:
+        return True
+    if isinstance(unit, str):
+        text = unit.strip().lower().replace("º", "°")
+        text = text.replace(" ", "")
+        return text in _FAHRENHEIT_UNITS
+    return False
+
+
 class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     """Central data coordinator for plant profile metrics."""
 
@@ -171,7 +193,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     t = None
                 if t is not None:
                     unit = t_state.attributes.get("unit_of_measurement")
-                    if unit == UnitOfTemperature.FAHRENHEIT:
+                    if _is_fahrenheit(unit):
                         t = TemperatureConverter.convert(t, UnitOfTemperature.FAHRENHEIT, UnitOfTemperature.CELSIUS)
                     t_c = t
 
