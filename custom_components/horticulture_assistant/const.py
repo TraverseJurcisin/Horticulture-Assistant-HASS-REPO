@@ -15,6 +15,7 @@ EVENT_PROFILE_RUN_RECORDED = "horticulture_assistant_profile_run_recorded"
 EVENT_PROFILE_HARVEST_RECORDED = "horticulture_assistant_profile_harvest_recorded"
 EVENT_PROFILE_NUTRIENT_RECORDED = "horticulture_assistant_profile_nutrient_recorded"
 EVENT_PROFILE_CULTIVATION_RECORDED = "horticulture_assistant_profile_cultivation_recorded"
+EVENT_YIELD_UPDATE = "horticulture_assistant_yield_update"
 
 # Normalised status strings used across entities, triggers and conditions.
 STATUS_OK = "ok"
