@@ -8,6 +8,7 @@ import pytest
 from custom_components.horticulture_assistant.profile.schema import (
     BioProfile,
     Citation,
+    CultivarProfile,
     FieldAnnotation,
     ProfileLibrarySection,
     ProfileLocalSection,
@@ -153,6 +154,31 @@ async def test_async_create_profile_handles_mapping_credentials(hass, tmp_path, 
     clone = await store.async_get("Proxy Clone")
     assert clone is not None
     assert clone["opb_credentials"] == {"client_id": "id", "secret": "sec"}
+
+
+@pytest.mark.asyncio
+async def test_async_create_profile_preserves_cultivar_specific_fields(hass, tmp_path, monkeypatch) -> None:
+    """Cloning a cultivar profile should retain subclass-specific metadata."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    base_profile = CultivarProfile(
+        profile_id="cultivar_base",
+        display_name="Cultivar Base",
+        area_m2=4.2,
+        general={"sensors": {"temp": "sensor.source"}},
+    )
+    base_profile.refresh_sections()
+    await store.async_save(base_profile, name="Cultivar Base")
+
+    await store.async_create_profile("Cultivar Clone", clone_from="Cultivar Base")
+
+    clone = await store.async_get("Cultivar Clone")
+    assert clone is not None
+    assert clone["profile_type"] == "cultivar"
+    assert clone["area_m2"] == 4.2
 
 
 @pytest.mark.asyncio
