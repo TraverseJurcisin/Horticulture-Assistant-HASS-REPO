@@ -1,5 +1,6 @@
 """Simple engine for fertilizer and irrigation suggestions."""
 
+from collections.abc import Iterable
 from dataclasses import dataclass
 from functools import cache
 
@@ -242,11 +243,19 @@ class RecommendationEngine:
         if requires_approval:
             notes.append("Approval required for this recommendation bundle.")
 
+        raw_alerts = ai_notes.get("alerts", [])
+        if isinstance(raw_alerts, str):
+            alerts = [raw_alerts] if raw_alerts.strip() else []
+        elif isinstance(raw_alerts, Iterable):
+            alerts = [str(item).strip() for item in raw_alerts if str(item).strip()]
+        else:
+            alerts = []
+
         return RecommendationBundle(
             fertilizers=fert_recs,
             irrigation=irrigation,
             environment=env_rec,
-            notes=notes + ai_notes.get("alerts", []),
+            notes=notes + alerts,
             requires_approval=requires_approval,
         )
 
