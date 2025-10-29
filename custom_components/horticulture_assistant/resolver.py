@@ -51,6 +51,27 @@ def _coerce_ttl_hours(value: Any, *, default: float) -> float:
     return candidate
 
 
+def _parse_last_run(value: Any) -> datetime | None:
+    """Return a timezone-aware timestamp parsed from ``value`` if possible."""
+
+    if isinstance(value, datetime):
+        ts = value
+    elif isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return None
+        try:
+            ts = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+    else:
+        return None
+
+    if ts.tzinfo is None:
+        ts = ts.replace(tzinfo=UTC)
+    return ts.astimezone(UTC)
+
+
 class PreferenceResolver:
     """Resolves per-variable values from manual/clone/opb/ai with TTL + citations."""
 
@@ -393,8 +414,8 @@ class PreferenceResolver:
                 ai["ttl_hours"] = ttl_h
                 last_run = ai.get("last_run")
                 if last_run:
-                    ts = datetime.fromisoformat(last_run.replace("Z", "+00:00"))
-                    if datetime.now(UTC) - ts < timedelta(hours=ttl_h):
+                    ts = _parse_last_run(last_run)
+                    if ts and datetime.now(UTC) - ts < timedelta(hours=ttl_h):
                         prof = options.get(CONF_PROFILES, {}).get(profile_id, {})
                         payload = (prof.get("resolved_targets") or {}).get(key)
                         if isinstance(payload, dict):
