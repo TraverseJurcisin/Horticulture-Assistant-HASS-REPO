@@ -82,22 +82,7 @@ class ConflictResolver:
             current_path = path + (key,)
             path_key = ".".join(current_path)
 
-            if isinstance(value, Mapping) and OP_KEY not in value:
-                target = root.get(key)
-                if not isinstance(target, dict):
-                    target = {}
-                root[key] = target
-                self._apply_patch(target, value, field_meta, current_path, meta_store)
-                continue
-
             policy = self.field_policies.get(path_key, self.default_policy)
-            existing_meta_payload = meta_store.get(path_key)
-            existing_meta = None
-            if isinstance(existing_meta_payload, Mapping):
-                try:
-                    existing_meta = FieldMeta.from_dict(existing_meta_payload)
-                except Exception:  # pragma: no cover - tolerate corrupted metadata
-                    existing_meta = None
 
             if policy == ConflictPolicy.OR_SET:
                 resolved = self._apply_or_set(root.get(key), value)
@@ -109,6 +94,22 @@ class ConflictResolver:
                 root[key] = self._apply_mv_register(root.get(key), value)
                 meta_store[path_key] = field_meta.to_dict()
                 continue
+
+            if isinstance(value, Mapping) and OP_KEY not in value:
+                target = root.get(key)
+                if not isinstance(target, dict):
+                    target = {}
+                root[key] = target
+                self._apply_patch(target, value, field_meta, current_path, meta_store)
+                continue
+
+            existing_meta_payload = meta_store.get(path_key)
+            existing_meta = None
+            if isinstance(existing_meta_payload, Mapping):
+                try:
+                    existing_meta = FieldMeta.from_dict(existing_meta_payload)
+                except Exception:  # pragma: no cover - tolerate corrupted metadata
+                    existing_meta = None
 
             if existing_meta and not field_meta.dominates(existing_meta):
                 continue
