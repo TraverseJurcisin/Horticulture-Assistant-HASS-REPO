@@ -1272,8 +1272,14 @@ class ProfileRegistry:
         cleaned: dict[str, str] = {}
         if sensors:
             for key, value in sensors.items():
-                if isinstance(key, str) and isinstance(value, str) and value:
-                    cleaned[key] = value
+                if not isinstance(key, str):
+                    key = str(key)
+                if not isinstance(value, str):
+                    continue
+                entity_id = value.strip()
+                if not entity_id:
+                    continue
+                cleaned[key] = entity_id
 
         if cleaned:
             validation = validate_sensor_links(self.hass, cleaned)
