@@ -1222,11 +1222,9 @@ class ProfileRegistry:
         allowed_set = {str(key) for key in allowed_keys} if allowed_keys is not None else set(cleaned.keys())
 
         removals = {str(key) for key in removed_keys} if removed_keys else set()
-        if removals and allowed_keys is None:
-            allowed_set |= removals
 
         updated_map = dict(threshold_map)
-        target_keys = allowed_set or set(cleaned.keys())
+        target_keys = (allowed_set or set(cleaned.keys())) | removals
         for key in target_keys:
             if key in cleaned:
                 updated_map[key] = cleaned[key]
