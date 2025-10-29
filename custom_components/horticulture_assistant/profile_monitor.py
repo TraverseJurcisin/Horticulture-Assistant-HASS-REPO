@@ -31,7 +31,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover - tests provide s
             self.states = {}
 
 
-_NUMERIC_PATTERN = re.compile(r"[-+]?(?:\d+(?:[.,]\d+)?|\.\d+)(?:[eE][-+]?\d+)?")
+_NUMERIC_PATTERN = re.compile(r"[-+]?(?:\d+(?:[.,]\d+)*|\.\d+)(?:[eE][-+]?\d+)?")
 
 
 @dataclass(slots=True)

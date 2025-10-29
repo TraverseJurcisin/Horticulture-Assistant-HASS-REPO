@@ -135,6 +135,26 @@ def test_profile_monitor_parses_decimal_comma_states(state: str) -> None:
     assert snapshot.value == pytest.approx(20.5)
 
 
+def test_profile_monitor_parses_grouped_states_with_units() -> None:
+    hass = DummyHass(
+        DummyStates(
+            {
+                "sensor.temperature": DummyState("value=1,234,567°C"),
+            }
+        )
+    )
+    context = _context(
+        sensors={"temperature": ("sensor.temperature",)},
+        thresholds={"temperature_max": 2_000_000},
+    )
+
+    result = ProfileMonitor(hass, context).evaluate()
+
+    assert result.health == "ok"
+    snapshot = result.sensors[0]
+    assert snapshot.value == pytest.approx(1_234_567)
+
+
 @pytest.mark.parametrize(
     "state, expected",
     [
