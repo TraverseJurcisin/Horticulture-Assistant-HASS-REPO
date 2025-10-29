@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 from collections import Counter, defaultdict
 from collections.abc import Iterable
+from contextlib import suppress
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from statistics import mean, median
@@ -325,10 +326,8 @@ def _aggregate_harvests(
             if density is not None:
                 densities.append(density)
         if event.fruit_count:
-            try:
+            with suppress(TypeError, ValueError):
                 fruit_total += int(event.fruit_count)
-            except (TypeError, ValueError):
-                continue
         count += 1
     return total_yield, total_area, count, densities, fruit_total
 
