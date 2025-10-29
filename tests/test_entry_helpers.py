@@ -452,5 +452,17 @@ def test_serialise_device_info_accepts_sequence_identifiers():
     assert serialised["connections"] == [["mac", "AA:BB:CC:DD:EE:FF"]]
 
 
+def test_serialise_device_info_accepts_frozensets():
+    info = {
+        "identifiers": frozenset({(DOMAIN, "profile:frozen")}),
+        "connections": frozenset({("mac", "11:22:33:44:55:66")}),
+    }
+
+    serialised = serialise_device_info(info)
+
+    assert serialised["identifiers"] == [[DOMAIN, "profile:frozen"]]
+    assert serialised["connections"] == [["mac", "11:22:33:44:55:66"]]
+
+
 def test_serialise_device_info_handles_none():
     assert serialise_device_info(None) == {}

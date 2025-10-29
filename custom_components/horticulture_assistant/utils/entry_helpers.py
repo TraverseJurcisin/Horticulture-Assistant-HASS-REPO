@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence, Set
 from dataclasses import dataclass, field
 from pathlib import Path
 from types import MappingProxyType
@@ -535,7 +535,7 @@ def _as_identifier_pair(item: Any) -> tuple[str, str] | None:
 
 def _coerce_device_identifiers(value: Any) -> set[tuple[str, str]]:
     identifiers: set[tuple[str, str]] = set()
-    if isinstance(value, set):
+    if isinstance(value, Set):
         for item in value:
             if pair := _as_identifier_pair(item):
                 identifiers.add(pair)
@@ -962,7 +962,7 @@ def serialise_device_info(info: Mapping[str, Any] | None) -> dict[str, Any]:
     normalised = _normalise_device_info(info)
     for key, value in normalised.items():
         if key in {"identifiers", "connections"}:
-            if isinstance(value, set):
+            if isinstance(value, Set):
                 payload[key] = _serialise_identifier_set(value)
             else:
                 payload[key] = value
