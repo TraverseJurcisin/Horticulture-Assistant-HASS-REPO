@@ -55,3 +55,23 @@ def test_generate_profile_accepts_iterable_tags(tmp_path) -> None:
     assert "needs_sun" in general["tags"]
     # Location is appended as tag when not already present.
     assert "greenhouse" in general["tags"]
+
+
+def test_generate_profile_sanitises_supplied_identifier(tmp_path) -> None:
+    hass = _DummyHass(tmp_path)
+    metadata = {
+        "plant_id": "../Tricky\\Plant",
+        "display_name": "Fancy Plant",
+        "plant_type": "Fruit",
+    }
+
+    plant_id = generate_profile(metadata, hass=hass)
+
+    # The generated directory must remain rooted under ``plants`` despite the
+    # attempted traversal characters.
+    plants_root = tmp_path / "plants"
+    plant_dir = plants_root / plant_id
+    assert plant_dir.is_dir()
+    assert plant_dir.resolve().is_relative_to(plants_root.resolve())
+    # No stray directories should be created alongside ``plants``.
+    assert not (tmp_path / "Tricky\\Plant").exists()
