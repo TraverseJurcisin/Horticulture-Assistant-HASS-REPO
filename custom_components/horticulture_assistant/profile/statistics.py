@@ -760,6 +760,9 @@ class _SuccessAggregate:
 
 
 _RATIO_NUMBER_PATTERN = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
+_FRACTION_PATTERN = re.compile(
+    r"(?P<numerator>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*/\s*(?P<denominator>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)"
+)
 
 
 def _coerce_ratio_value(value: Any) -> float | None:
@@ -770,9 +773,18 @@ def _coerce_ratio_value(value: Any) -> float | None:
 
     if isinstance(value, str):
         text = value.strip()
+        if not text:
+            return None
         if text.endswith("%"):
             percent_notation = True
             text = text[:-1]
+        fraction_match = _FRACTION_PATTERN.search(text)
+        if fraction_match:
+            numerator = _to_float(fraction_match.group("numerator"))
+            denominator = _to_float(fraction_match.group("denominator"))
+            if denominator and denominator != 0:
+                ratio = numerator / denominator
+                return max(0.0, min(1.0, ratio))
         if number is None:
             match = _RATIO_NUMBER_PATTERN.search(text)
             if match:
