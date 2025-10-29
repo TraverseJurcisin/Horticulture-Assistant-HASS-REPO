@@ -332,31 +332,49 @@ class HarvestEvent:
 
     @staticmethod
     def from_json(data: Mapping[str, Any]) -> HarvestEvent:
-        area = data.get("area_m2")
-        try:
-            area_value = float(area) if area is not None else None
-        except (TypeError, ValueError):
-            area_value = None
-        yield_grams = data.get("yield_grams")
-        try:
-            yield_value = float(yield_grams) if yield_grams is not None else 0.0
-        except (TypeError, ValueError):
-            yield_value = 0.0
-        wet_weight = data.get("wet_weight_grams")
-        dry_weight = data.get("dry_weight_grams")
-        try:
-            wet_value = float(wet_weight) if wet_weight is not None else None
-        except (TypeError, ValueError):
-            wet_value = None
-        try:
-            dry_value = float(dry_weight) if dry_weight is not None else None
-        except (TypeError, ValueError):
-            dry_value = None
-        fruit_count = data.get("fruit_count")
-        try:
-            fruit_value = int(fruit_count) if fruit_count is not None else None
-        except (TypeError, ValueError):
+        def _parse_float(value: Any, *, default: float | None = None) -> float | None:
+            if value is None:
+                return default
+            if isinstance(value, int | float):
+                try:
+                    return float(value)
+                except (TypeError, ValueError):
+                    return default
+            if isinstance(value, str):
+                text = value.strip()
+                if not text:
+                    return default
+                cleaned = text.replace(",", "")
+                try:
+                    return float(cleaned)
+                except ValueError:
+                    match = _NUMBER_PATTERN.search(cleaned)
+                    if match:
+                        try:
+                            return float(match.group(0))
+                        except ValueError:
+                            return default
+                    return default
+            try:
+                return float(value)
+            except (TypeError, ValueError):
+                return default
+
+        area_value = _parse_float(data.get("area_m2"))
+        yield_value = _parse_float(data.get("yield_grams"), default=0.0) or 0.0
+        wet_value = _parse_float(data.get("wet_weight_grams"))
+        dry_value = _parse_float(data.get("dry_weight_grams"))
+
+        fruit_raw = data.get("fruit_count")
+        fruit_value: int | None
+        if fruit_raw is None:
             fruit_value = None
+        else:
+            parsed = _parse_float(fruit_raw)
+            try:
+                fruit_value = int(parsed) if parsed is not None else None
+            except (TypeError, ValueError):
+                fruit_value = None
         return HarvestEvent(
             harvest_id=_string_or_fallback(data.get("harvest_id"), data.get("id"), fallback="harvest"),
             profile_id=_string_or_fallback(data.get("profile_id"), data.get("cultivar_id"), fallback=""),
