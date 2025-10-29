@@ -1267,23 +1267,22 @@ class ProfileRegistry:
         self._cloud_publish_deleted(profile_id)
         await self._async_maybe_refresh_validation_notification()
 
-    async def async_link_sensors(self, profile_id: str, sensors: dict[str, str]) -> None:
+    async def async_link_sensors(self, profile_id: str, sensors: Mapping[str, Any]) -> None:
         """Link multiple sensor entities to ``profile_id``."""
 
         profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
-        cleaned: dict[str, str] = {}
+        cleaned: dict[str, str | list[str]] = {}
         for key, value in sensors.items():
-            if not isinstance(key, str):
-                key = str(key)
-            if not isinstance(value, str):
+            key_text = str(key) if not isinstance(key, str) else key
+            if not key_text:
                 continue
-            entity_id = value.strip()
-            if not entity_id:
+            normalised = _normalise_sensor_value(value)
+            if normalised is None:
                 continue
-            cleaned[key] = entity_id
+            cleaned[key_text] = list(normalised) if isinstance(normalised, list) else normalised
 
         validation = validate_sensor_links(self.hass, cleaned)
         if validation.errors:
@@ -1302,12 +1301,17 @@ class ProfileRegistry:
             display_name=prof_payload.get("name") or profile_id,
         )
         general = dict(prof_payload.get("general", {})) if isinstance(prof_payload.get("general"), Mapping) else {}
-        merged = dict(general.get("sensors", {}))
+        existing = general.get("sensors") if isinstance(general.get("sensors"), Mapping) else {}
+        merged: dict[str, str | list[str]] = {
+            str(k): (list(v) if isinstance(v, list) else v) for k, v in existing.items() if isinstance(k, str)
+        }
         for key, value in cleaned.items():
-            merged[str(key)] = value
-        general["sensors"] = merged
+            merged[str(key)] = list(value) if isinstance(value, list) else value
+        general["sensors"] = {key: list(value) if isinstance(value, list) else value for key, value in merged.items()}
         sync_general_section(prof_payload, general)
-        prof_payload["sensors"] = dict(merged)
+        prof_payload["sensors"] = {
+            key: list(value) if isinstance(value, list) else value for key, value in merged.items()
+        }
         profiles[profile_id] = prof_payload
         new_opts = dict(self.entry.options)
         new_opts[CONF_PROFILES] = profiles
@@ -1315,7 +1319,9 @@ class ProfileRegistry:
         self.entry.options = new_opts
         if prof_obj := self._profiles.get(profile_id):
             general_map = dict(prof_obj.general)
-            general_map["sensors"] = dict(merged)
+            general_map["sensors"] = {
+                key: list(value) if isinstance(value, list) else value for key, value in merged.items()
+            }
             prof_obj.general = general_map
             prof_obj.refresh_sections()
             self._validate_profile(prof_obj)
@@ -1324,7 +1330,7 @@ class ProfileRegistry:
             self._cloud_publish_profile(prof_obj)
         await self._async_maybe_refresh_validation_notification()
 
-    async def async_set_profile_sensors(self, profile_id: str, sensors: Mapping[str, str] | None) -> None:
+    async def async_set_profile_sensors(self, profile_id: str, sensors: Mapping[str, Any] | None) -> None:
         """Replace the sensor mapping for ``profile_id``."""
 
         profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
@@ -1332,17 +1338,16 @@ class ProfileRegistry:
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
 
-        cleaned: dict[str, str] = {}
+        cleaned: dict[str, str | list[str]] = {}
         if sensors:
             for key, value in sensors.items():
-                if not isinstance(key, str):
-                    key = str(key)
-                if not isinstance(value, str):
+                key_text = str(key) if not isinstance(key, str) else key
+                if not key_text:
                     continue
-                entity_id = value.strip()
-                if not entity_id:
+                normalised = _normalise_sensor_value(value)
+                if normalised is None:
                     continue
-                cleaned[key] = entity_id
+                cleaned[key_text] = list(normalised) if isinstance(normalised, list) else normalised
 
         if cleaned:
             validation = validate_sensor_links(self.hass, cleaned)
@@ -1364,8 +1369,12 @@ class ProfileRegistry:
         )
         general = dict(prof_payload.get("general", {})) if isinstance(prof_payload.get("general"), Mapping) else {}
         if cleaned:
-            general["sensors"] = dict(cleaned)
-            prof_payload["sensors"] = dict(cleaned)
+            general["sensors"] = {
+                key: list(value) if isinstance(value, list) else value for key, value in cleaned.items()
+            }
+            prof_payload["sensors"] = {
+                key: list(value) if isinstance(value, list) else value for key, value in cleaned.items()
+            }
         else:
             general.pop("sensors", None)
             prof_payload.pop("sensors", None)
@@ -1380,7 +1389,9 @@ class ProfileRegistry:
         if prof_obj is not None:
             general_map = dict(prof_obj.general)
             if cleaned:
-                general_map["sensors"] = dict(cleaned)
+                general_map["sensors"] = {
+                    key: list(value) if isinstance(value, list) else value for key, value in cleaned.items()
+                }
             else:
                 general_map.pop("sensors", None)
             prof_obj.general = general_map

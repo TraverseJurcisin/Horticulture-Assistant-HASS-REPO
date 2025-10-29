@@ -626,6 +626,30 @@ async def test_set_profile_sensors_strips_whitespace(hass):
     assert prof.general["sensors"] == {"temperature": "sensor.temp_sensor"}
 
 
+async def test_set_profile_sensors_accepts_sequence_values(hass):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"plant": {"name": "Plant"}}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    hass.states.async_set("sensor.one", 20, {})
+    hass.states.async_set("sensor.two", 19, {})
+
+    await reg.async_set_profile_sensors(
+        "plant",
+        {
+            "environment": [" sensor.one ", "sensor.two", None],
+        },
+    )
+
+    stored = entry.options[CONF_PROFILES]["plant"]
+    assert stored["general"]["sensors"] == {"environment": ["sensor.one", "sensor.two"]}
+    assert stored["sensors"] == {"environment": ["sensor.one", "sensor.two"]}
+
+    prof = reg.get("plant")
+    assert prof is not None
+    assert prof.general["sensors"] == {"environment": ["sensor.one", "sensor.two"]}
+
+
 async def test_async_link_sensors_strips_whitespace(hass):
     hass.states.async_set(
         "sensor.temp_sensor",

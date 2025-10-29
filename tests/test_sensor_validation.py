@@ -57,6 +57,25 @@ def test_validate_sensor_links_accepts_conductivity_variants():
     assert result.warnings == []
 
 
+def test_validate_sensor_links_handles_sequence_inputs():
+    hass = types.SimpleNamespace(
+        states=DummyStates(
+            {
+                "sensor.one": DummyState(),
+                "sensor.two": DummyState(),
+            }
+        )
+    )
+
+    result = sensor_validation.validate_sensor_links(
+        hass,
+        {"environment": [" sensor.one ", "sensor.two", None]},
+    )
+
+    assert result.errors == []
+    assert result.warnings == []
+
+
 def test_validate_sensor_links_missing_entity_reports_error():
     hass = types.SimpleNamespace(states=DummyStates({}))
     result = sensor_validation.validate_sensor_links(hass, {"temperature": "sensor.missing"})
