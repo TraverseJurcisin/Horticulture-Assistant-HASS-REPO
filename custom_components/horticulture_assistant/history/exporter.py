@@ -120,7 +120,7 @@ class HistoryExporter:
             return {}
         try:
             data = json.loads(self._index_path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError):
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError):
             return {}
         index: dict[str, HistoryIndex] = {}
         for key, value in data.items():
