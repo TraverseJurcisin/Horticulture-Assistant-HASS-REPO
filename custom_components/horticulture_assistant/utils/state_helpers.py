@@ -84,7 +84,10 @@ def parse_entities(val: str | Iterable[str] | None) -> list[str]:
     if isinstance(val, str):
         parts = (p.strip() for p in _SEP_RE.split(val))
     else:
-        parts = (str(v).strip() for v in val)
+        parts = (
+            "" if v is None else (v.strip() if isinstance(v, str) else str(v).strip())
+            for v in val
+        )
 
     return list(dict.fromkeys(filter(None, parts)))
 
