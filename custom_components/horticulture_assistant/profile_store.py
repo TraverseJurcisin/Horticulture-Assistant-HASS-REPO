@@ -11,7 +11,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.util import slugify
 
 from .const import CONF_PROFILE_SCOPE
-from .profile.schema import BioProfile
+from .profile.schema import BioProfile, CultivarProfile, SpeciesProfile
 from .profile.utils import normalise_profile_payload
 
 LOCAL_RELATIVE_PATH = "custom_components/horticulture_assistant/data/local"
@@ -174,7 +174,17 @@ class ProfileStore:
         slug = slugify(name) or "profile"
 
         if clone_profile is not None:
-            new_profile = BioProfile(
+            profile_cls: type[BioProfile] = type(clone_profile)
+            extra_kwargs: dict[str, Any] = {}
+            if not issubclass(profile_cls, BioProfile):
+                profile_cls = BioProfile
+            else:
+                if isinstance(clone_profile, SpeciesProfile):
+                    extra_kwargs["cultivar_ids"] = list(clone_profile.cultivar_ids)
+                if isinstance(clone_profile, CultivarProfile):
+                    extra_kwargs["area_m2"] = clone_profile.area_m2
+
+            new_profile = profile_cls(
                 profile_id=slug,
                 display_name=name,
                 profile_type=clone_profile.profile_type,
@@ -206,6 +216,7 @@ class ProfileStore:
                 last_resolved=clone_profile.last_resolved,
                 created_at=clone_profile.created_at,
                 updated_at=clone_profile.updated_at,
+                **extra_kwargs,
             )
         else:
             new_profile = BioProfile(
