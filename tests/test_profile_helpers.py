@@ -97,3 +97,23 @@ def test_write_profile_sections_overwrite_logging(tmp_path, caplog):
     )
     assert result == "plant-1"
     assert any(message.startswith("Overwrote existing file:") for message in caplog.messages), caplog.messages
+
+
+def test_write_profile_sections_returns_empty_when_all_writes_fail(tmp_path, monkeypatch, caplog):
+    """Return an empty string when no files could be written."""
+
+    caplog.set_level(logging.ERROR)
+
+    def raise_io_error(*_args, **_kwargs):
+        raise OSError("disk full")
+
+    monkeypatch.setattr(profile_helpers, "save_json", raise_io_error)
+
+    result = write_profile_sections(
+        "plant-2",
+        {"profile.json": {"foo": "bar"}},
+        base_path=tmp_path,
+    )
+
+    assert result == ""
+    assert any("Unable to create any profile files" in message for message in caplog.messages)

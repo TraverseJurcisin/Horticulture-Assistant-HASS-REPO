@@ -47,11 +47,14 @@ def write_profile_sections(
         _LOGGER.error("Failed to create directory %s: %s", plant_dir, err)
         return ""
 
+    had_success = False
+
     for filename, data in sections.items():
         file_path = plant_dir / filename
         existed = file_path.exists()
         if existed and not overwrite:
             _LOGGER.info("File %s already exists. Skipping write.", file_path)
+            had_success = True
             continue
         try:
             save_json(file_path, data)
@@ -59,8 +62,13 @@ def write_profile_sections(
                 _LOGGER.info("Overwrote existing file: %s", file_path)
             else:
                 _LOGGER.info("Created file: %s", file_path)
+            had_success = True
         except Exception as err:  # pragma: no cover - unexpected errors
             _LOGGER.error("Failed to write %s: %s", file_path, err)
+
+    if not had_success:
+        _LOGGER.error("Unable to create any profile files for '%s'", plant_id)
+        return ""
 
     _LOGGER.info("Profile files prepared for '%s' at %s", plant_id, plant_dir)
     return plant_id
