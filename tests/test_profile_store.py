@@ -178,6 +178,23 @@ async def test_async_get_handles_corrupt_profile(hass, tmp_path, monkeypatch) ->
 
 
 @pytest.mark.asyncio
+async def test_async_get_handles_non_mapping_payload(hass, tmp_path, monkeypatch) -> None:
+    """Profiles stored as non-mapping JSON should be ignored."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    broken_path = store._path_for("Broken Plant")
+    broken_path.write_text(json.dumps(["not", "a", "mapping"]), encoding="utf-8")
+
+    assert await store.async_get("Broken Plant") is None
+
+    names = await store.async_list()
+    assert broken_path.stem in names
+
+
+@pytest.mark.asyncio
 async def test_async_save_profile_from_options_preserves_local_sections(hass, tmp_path, monkeypatch) -> None:
     """Saving from options should materialise library/local sections."""
 
