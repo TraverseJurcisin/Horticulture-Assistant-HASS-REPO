@@ -31,7 +31,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover - tests provide s
             self.states = {}
 
 
-_NUMERIC_PATTERN = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
+_NUMERIC_PATTERN = re.compile(r"[-+]?(?:\d+(?:[.,]\d+)?|\.\d+)(?:[eE][-+]?\d+)?")
 
 
 @dataclass(slots=True)
@@ -289,20 +289,84 @@ def _coerce_float(value: Any) -> float | None:
     if isinstance(value, int | float):
         return _valid(float(value))
     if isinstance(value, str):
-        cleaned = value.strip().replace(",", "")
-        try:
-            number = float(cleaned)
-            return _valid(number)
-        except ValueError:
-            match = _NUMERIC_PATTERN.search(cleaned)
-            if match is None:
-                return None
+        normalised = _normalise_numeric_text(value)
+        if normalised is not None:
             try:
-                number = float(match.group(0))
-                return _valid(number)
+                return _valid(float(normalised))
             except ValueError:
-                return None
+                pass
+        match = _NUMERIC_PATTERN.search(value)
+        if match is None:
+            return None
+        candidate = _normalise_numeric_text(match.group(0))
+        if candidate is None:
+            return None
+        try:
+            return _valid(float(candidate))
+        except ValueError:
+            return None
     return None
+
+
+def _normalise_numeric_text(value: str) -> str | None:
+    """Return ``value`` normalised for ``float`` parsing."""
+
+    text = value.strip()
+    if not text:
+        return None
+
+    sign = ""
+    if text[0] in "+-":
+        sign, text = text[0], text[1:]
+
+    text = text.strip().replace("\u00a0", "").replace(" ", "").replace("_", "")
+    if not text:
+        return None
+
+    exponent = ""
+    exp_match = re.search(r"[eE][-+]?\d+$", text)
+    if exp_match:
+        exponent = exp_match.group(0)
+        text = text[: exp_match.start()]
+        if not text:
+            return None
+
+    if "," in text and "." in text:
+        last_comma = text.rfind(",")
+        last_dot = text.rfind(".")
+        if last_comma > last_dot:
+            text = text.replace(".", "")
+            text = text.replace(",", ".", 1)
+            text = text.replace(",", "")
+        else:
+            text = text.replace(",", "")
+    elif "," in text:
+        if text.count(",") == 1:
+            integer, fractional = text.split(",", 1)
+            if integer.isdigit() and fractional.isdigit() and len(fractional) == 3:
+                text = integer + fractional
+            else:
+                if integer and fractional:
+                    text = f"{integer}.{fractional}"
+                elif fractional:
+                    text = f"0.{fractional}"
+                else:
+                    text = integer
+        else:
+            text = text.replace(",", "")
+    elif text.count(".") > 1:
+        if text.replace(".", "").isdigit():
+            text = text.replace(".", "")
+        else:
+            head, _, remainder = text.partition(".")
+            text = f"{head}.{remainder.replace('.', '')}"
+
+    text = text.strip()
+    if not text:
+        return None
+
+    normalised = f"{sign}{text}{exponent}" if sign or exponent else text
+    return normalised
 
 
 def _coerce_datetime(value: Any) -> datetime | None:
