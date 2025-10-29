@@ -129,6 +129,26 @@ async def test_async_create_profile_preserves_opb_credentials(hass, tmp_path, mo
 
 
 @pytest.mark.asyncio
+async def test_async_save_preserves_mapping_credentials(hass, tmp_path, monkeypatch) -> None:
+    """Saving payloads with mapping-proxy credentials should keep the secrets."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    payload = {
+        "display_name": "Proxy Source",
+        "opb_credentials": types.MappingProxyType({"client_id": "id", "secret": "sec"}),
+    }
+
+    await store.async_save(payload, name="Proxy Source")
+
+    stored = await store.async_get("Proxy Source")
+    assert stored is not None
+    assert stored["opb_credentials"] == {"client_id": "id", "secret": "sec"}
+
+
+@pytest.mark.asyncio
 async def test_async_save_prefers_profile_id_for_storage_name(hass, tmp_path, monkeypatch) -> None:
     """Saving a payload without a name should fall back to the profile id."""
 

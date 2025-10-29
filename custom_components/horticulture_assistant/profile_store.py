@@ -93,8 +93,8 @@ class ProfileStore:
                 if isinstance(value, str) and value:
                     preserved[key] = value
             credentials = profile.get("opb_credentials")
-            if isinstance(credentials, dict):
-                preserved["opb_credentials"] = deepcopy(credentials)
+            if isinstance(credentials, Mapping):
+                preserved["opb_credentials"] = deepcopy(dict(credentials))
             payload = self._normalise_payload(profile, fallback_name=fallback)
             if preserved:
                 payload.update(preserved)
@@ -221,8 +221,8 @@ class ProfileStore:
             if isinstance(value, str) and value:
                 preserved[key] = value
         credentials = payload.get("opb_credentials")
-        if isinstance(credentials, dict):
-            preserved["opb_credentials"] = deepcopy(credentials)
+        if isinstance(credentials, Mapping):
+            preserved["opb_credentials"] = deepcopy(dict(credentials))
         normalised = normalise_profile_payload(payload, fallback_id=str(slug), display_name=fallback_name)
         profile = BioProfile.from_json(normalised)
         output = self._profile_to_payload(profile)
