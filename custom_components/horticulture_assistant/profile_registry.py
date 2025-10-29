@@ -1014,7 +1014,18 @@ class ProfileRegistry:
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
-        validation = validate_sensor_links(self.hass, sensors)
+        cleaned: dict[str, str] = {}
+        for key, value in sensors.items():
+            if not isinstance(key, str):
+                key = str(key)
+            if not isinstance(value, str):
+                continue
+            entity_id = value.strip()
+            if not entity_id:
+                continue
+            cleaned[key] = entity_id
+
+        validation = validate_sensor_links(self.hass, cleaned)
         if validation.errors:
             message = collate_issue_messages(validation.errors)
             raise ValueError(f"sensor validation failed: {message}")
@@ -1032,7 +1043,7 @@ class ProfileRegistry:
         )
         general = dict(prof_payload.get("general", {})) if isinstance(prof_payload.get("general"), Mapping) else {}
         merged = dict(general.get("sensors", {}))
-        for key, value in sensors.items():
+        for key, value in cleaned.items():
             merged[str(key)] = value
         general["sensors"] = merged
         sync_general_section(prof_payload, general)
