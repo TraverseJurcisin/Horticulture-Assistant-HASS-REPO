@@ -35,18 +35,45 @@ class ProductInventory:
         self.inventory[record.product_id].append(record)
 
     def consume_product(self, product_id: str, amount: float) -> str | None:
-        """Consume ``amount`` of product and return the batch used."""
+        """Consume ``amount`` of product and return the first batch used.
 
-        if product_id not in self.inventory:
+        When the requested quantity spans multiple batches, the inventory is
+        depleted starting with the oldest received stock. The method returns the
+        batch identifier of the first batch affected. If the available quantity
+        is insufficient or ``amount`` is not positive, ``None`` is returned and
+        the inventory remains unchanged.
+        """
+
+        if amount <= 0:
             return None
-        for record in sorted(
-            self.inventory[product_id],
-            key=lambda x: x.date_received or datetime.now(),
-        ):
-            if record.quantity_remaining >= amount:
-                record.quantity_remaining -= amount
-                return record.batch_id
-        return None
+
+        records = self.inventory.get(product_id)
+        if not records:
+            return None
+
+        ordered_records = sorted(
+            records,
+            key=lambda record: record.date_received or datetime.now(),
+        )
+
+        total_available = sum(max(0.0, r.quantity_remaining) for r in ordered_records)
+        if total_available < amount:
+            return None
+
+        remaining = amount
+        first_batch: str | None = None
+        for record in ordered_records:
+            if record.quantity_remaining <= 0:
+                continue
+            if first_batch is None:
+                first_batch = record.batch_id
+            allocation = min(record.quantity_remaining, remaining)
+            record.quantity_remaining -= allocation
+            remaining -= allocation
+            if remaining <= 0:
+                break
+
+        return first_batch
 
     def get_total_quantity(self, product_id: str) -> float:
         """Return total remaining quantity for ``product_id``."""
