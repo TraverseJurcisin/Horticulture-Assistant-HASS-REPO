@@ -117,3 +117,52 @@ async def test_link_sensor_allows_entities_missing_registry(monkeypatch):
     await handler(call)
 
     registry.async_replace_sensor.assert_awaited_once_with("plant", "illuminance", "sensor.light")
+
+
+@pytest.mark.asyncio
+async def test_update_sensors_service_handles_extended_roles(monkeypatch):
+    hass = types.SimpleNamespace(
+        states=DummyStates(
+            {
+                "sensor.co2": DummyState(device_class="carbon_dioxide"),
+                "sensor.ph": DummyState(device_class="ph"),
+            }
+        ),
+        services=DummyServices(),
+        config_entries=DummyConfigEntries(),
+        async_create_task=lambda coro: coro,
+        async_block_till_done=AsyncMock(),
+    )
+    entry = types.SimpleNamespace(
+        entry_id="abc",
+        options={services_module.CONF_PROFILES: {"plant": {"sensors": {}}}},
+    )
+    registry = types.SimpleNamespace(
+        async_link_sensors=AsyncMock(),
+        publish_full_snapshot=lambda: None,
+    )
+    store = types.SimpleNamespace(data=None, save=AsyncMock())
+
+    monkeypatch.setattr(
+        services_module,
+        "validate_sensor_links",
+        lambda _hass, _sensors: types.SimpleNamespace(errors=[], warnings=[]),
+    )
+    monkeypatch.setattr(services_module, "cv", types.SimpleNamespace(entity_id=lambda value: value))
+
+    await services_module.async_register_all(
+        hass,
+        entry,
+        ai_coord=None,
+        local_coord=None,
+        profile_coord=None,
+        registry=registry,
+        store=store,
+    )
+
+    handler = hass.services._registered[(services_module.DOMAIN, services_module.SERVICE_UPDATE_SENSORS)]
+    call = types.SimpleNamespace(data={"profile_id": "plant", "co2": "sensor.co2", "ph": "sensor.ph"})
+
+    await handler(call)
+
+    registry.async_link_sensors.assert_awaited_once_with("plant", {"co2": "sensor.co2", "ph": "sensor.ph"})
