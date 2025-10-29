@@ -126,12 +126,14 @@ class RunEvent:
                 if percent:
                     text = text[:-1]
                 try:
-                    return float(text)
+                    parsed = float(text)
+                    return parsed / 100 if percent else parsed
                 except ValueError:
                     match = _NUMBER_PATTERN.search(text)
                     if match:
                         try:
-                            return float(match.group(0))
+                            parsed = float(match.group(0))
+                            return parsed / 100 if percent else parsed
                         except ValueError:
                             return None
                     return None
