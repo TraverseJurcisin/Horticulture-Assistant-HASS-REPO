@@ -127,8 +127,12 @@ def generate_profile(
 
     # Compile tags from provided list and known metadata fields
     tags = []
-    if "tags" in metadata and isinstance(metadata["tags"], list | tuple):
-        tags = list(metadata["tags"])
+    if "tags" in metadata:
+        raw_tags = metadata["tags"]
+        if isinstance(raw_tags, (list, tuple, set)):
+            tags = list(raw_tags)
+        elif raw_tags is not None:
+            tags = [raw_tags]
     tags_lower = [str(t).lower() for t in tags]
 
     # Include plant_type, cultivar, stage, zone, etc. as tags if not already present and not placeholders

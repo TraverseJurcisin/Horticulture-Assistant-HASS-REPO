@@ -36,3 +36,22 @@ def test_generate_profile_creates_template_files(tmp_path) -> None:
 
     cache_file = tmp_path / "data" / "profile_cache" / f"{plant_id}.json"
     assert cache_file.exists()
+
+
+def test_generate_profile_accepts_iterable_tags(tmp_path) -> None:
+    hass = _DummyHass(tmp_path)
+    metadata = {
+        "display_name": "Berry Plant",
+        "tags": ("Needs Sun", "berries"),
+        "location": "Greenhouse",
+    }
+
+    plant_id = generate_profile(metadata, hass=hass)
+
+    plant_dir = tmp_path / "plants" / plant_id
+    general = json.loads((plant_dir / "general.json").read_text(encoding="utf-8"))
+
+    assert general["tags"]
+    assert "needs_sun" in general["tags"]
+    # Location is appended as tag when not already present.
+    assert "greenhouse" in general["tags"]
