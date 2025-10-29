@@ -129,6 +129,28 @@ async def test_async_create_profile_preserves_opb_credentials(hass, tmp_path, mo
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_handles_mapping_credentials(hass, tmp_path, monkeypatch) -> None:
+    """Cloning should normalise mapping-proxy credentials for JSON storage."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    credentials = types.MappingProxyType({"client_id": "id", "secret": "sec"})
+    await store.async_create_profile(
+        "Proxy Clone",
+        clone_from={
+            "display_name": "Proxy Clone",
+            "opb_credentials": credentials,
+        },
+    )
+
+    clone = await store.async_get("Proxy Clone")
+    assert clone is not None
+    assert clone["opb_credentials"] == {"client_id": "id", "secret": "sec"}
+
+
+@pytest.mark.asyncio
 async def test_async_save_preserves_mapping_credentials(hass, tmp_path, monkeypatch) -> None:
     """Saving payloads with mapping-proxy credentials should keep the secrets."""
 

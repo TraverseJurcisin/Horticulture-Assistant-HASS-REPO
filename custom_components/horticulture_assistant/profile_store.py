@@ -26,6 +26,20 @@ def _slug_source(value: Any) -> str:
     return str(value)
 
 
+def _clone_structure(value: Any) -> Any:
+    """Recursively clone ``value`` while normalising mapping proxies."""
+
+    if isinstance(value, dict):
+        return {key: _clone_structure(item) for key, item in value.items()}
+    if isinstance(value, Mapping):
+        return {key: _clone_structure(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_clone_structure(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(_clone_structure(item) for item in value)
+    return deepcopy(value)
+
+
 class ProfileStore:
     """Offline-first JSON store for ``BioProfile`` documents."""
 
@@ -201,7 +215,7 @@ class ProfileStore:
                     preserved[key] = value
             credentials = clone_payload.get("opb_credentials")
             if isinstance(credentials, Mapping):
-                preserved["opb_credentials"] = deepcopy(credentials)
+                preserved["opb_credentials"] = deepcopy(dict(credentials))
 
         payload = self._profile_to_payload(new_profile)
         if preserved:
@@ -273,7 +287,7 @@ class ProfileStore:
         return output
 
     def _as_profile(self, payload: dict[str, Any], *, fallback_name: Any) -> BioProfile:
-        data = deepcopy(payload)
+        data = _clone_structure(payload)
         display_name = data.get("display_name") or data.get("name") or fallback_name
         display_base = _slug_source(display_name)
         fallback_base = _slug_source(fallback_name)
