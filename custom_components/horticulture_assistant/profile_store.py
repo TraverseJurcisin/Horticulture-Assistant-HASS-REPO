@@ -18,6 +18,14 @@ LOCAL_RELATIVE_PATH = "custom_components/horticulture_assistant/data/local"
 PROFILES_DIRNAME = "profiles"
 
 
+def _slug_source(value: Any) -> str:
+    if isinstance(value, str):
+        return value
+    if value is None:
+        return ""
+    return str(value)
+
+
 class ProfileStore:
     """Offline-first JSON store for ``BioProfile`` documents."""
 
@@ -209,12 +217,14 @@ class ProfileStore:
             tmp.write_text(txt, encoding="utf-8")
             tmp.replace(path)
 
-    def _path_for(self, name: str) -> Path:
-        slug = slugify(name) or "profile"
+    def _path_for(self, name: Any) -> Path:
+        base = _slug_source(name)
+        slug = slugify(base) or (base if base else "profile")
         return self._base / f"{slug}.json"
 
-    def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: str) -> dict[str, Any]:
-        slug = slugify(fallback_name) or fallback_name or "profile"
+    def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: Any) -> dict[str, Any]:
+        base = _slug_source(fallback_name)
+        slug = slugify(base) or (base if base else "profile")
         preserved: dict[str, Any] = {}
         for key in ("species_display", "species_pid", "image_url"):
             value = payload.get(key)
@@ -230,14 +240,16 @@ class ProfileStore:
             output.update(preserved)
         return output
 
-    def _as_profile(self, payload: dict[str, Any], *, fallback_name: str) -> BioProfile:
+    def _as_profile(self, payload: dict[str, Any], *, fallback_name: Any) -> BioProfile:
         data = deepcopy(payload)
         display_name = data.get("display_name") or data.get("name") or fallback_name
+        display_base = _slug_source(display_name)
+        fallback_base = _slug_source(fallback_name)
         slug = (
             data.get("profile_id")
             or data.get("plant_id")
-            or slugify(display_name)
-            or slugify(fallback_name)
+            or slugify(display_base)
+            or slugify(fallback_base)
             or "profile"
         )
         normalised = normalise_profile_payload(data, fallback_id=str(slug), display_name=display_name)
