@@ -98,6 +98,14 @@ def _parent_issue_id(profile_id: str, parent_id: str) -> str:
     return f"missing_parent_{profile_id}_{slug}_{digest}"
 
 
+def _species_issue_id(profile_id: str, species_id: str) -> str:
+    """Return a deterministic issue id for a missing species reference."""
+
+    slug = slugify(species_id) or "unknown_species"
+    digest = hashlib.sha1(species_id.encode("utf-8", "ignore")).hexdigest()[:8]
+    return f"missing_species_{profile_id}_{slug}_{digest}"
+
+
 _SCHEMA_PATH = Path(__file__).parent / "data" / "schema" / "bio_profile.schema.json"
 _PROFILE_SCHEMA: dict[str, Any] | None = None
 
@@ -220,10 +228,11 @@ class ProfileRegistry:
         issue_key = (profile_id, species_id)
         if issue_key in self._missing_species_issues:
             return
+        issue_id = _species_issue_id(profile_id, species_id)
         ir.async_create_issue(
             self.hass,
             DOMAIN,
-            f"missing_species_{profile_id}",
+            issue_id,
             is_fixable=False,
             severity=ir.IssueSeverity.WARNING,
             translation_key="missing_lineage_species",
@@ -239,10 +248,11 @@ class ProfileRegistry:
         issue_key = (profile_id, species_id)
         if issue_key not in self._missing_species_issues:
             return
+        issue_id = _species_issue_id(profile_id, species_id)
         ir.async_delete_issue(
             self.hass,
             DOMAIN,
-            f"missing_species_{profile_id}",
+            issue_id,
         )
         self._missing_species_issues.discard(issue_key)
 

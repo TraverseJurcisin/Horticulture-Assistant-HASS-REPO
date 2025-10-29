@@ -177,11 +177,52 @@ async def test_missing_species_creates_issue_and_clears_when_resolved(hass, monk
     reg = ProfileRegistry(hass, entry)
     await reg.async_load()
 
-    assert any(issue_id == "missing_species_p1" for issue_id, _ in created)
+    assert any(issue_id.startswith("missing_species_p1_") for issue_id, _ in created)
+    created_issue_id = next(issue_id for issue_id, _ in created if issue_id.startswith("missing_species_p1_"))
 
     reg._log_lineage_warnings(LineageLinkReport())
 
-    assert "missing_species_p1" in deleted
+    assert created_issue_id in deleted
+
+
+async def test_missing_species_issue_updates_when_reference_changes(hass, monkeypatch):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "species": "species.old"}}},
+    )
+    created: list[tuple[str, dict]] = []
+    deleted: list[str] = []
+
+    class _Severity:
+        WARNING = "warning"
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.ir",
+        SimpleNamespace(
+            IssueSeverity=_Severity,
+            async_create_issue=lambda *_args, **kwargs: created.append((_args[2], kwargs)),
+            async_delete_issue=lambda *_args: deleted.append(_args[2]),
+        ),
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    assert created, "Expected an issue for missing species"
+    initial_issue_id = created[-1][0]
+
+    created.clear()
+
+    report = LineageLinkReport()
+    report.missing_species["p1"] = "species.new"
+    reg._log_lineage_warnings(report)
+
+    assert initial_issue_id in deleted
+    assert created, "Expected a replacement issue to be created"
+    replacement_issue_id = created[-1][0]
+    assert replacement_issue_id.startswith("missing_species_p1_")
+    assert replacement_issue_id != initial_issue_id
+    assert replacement_issue_id not in deleted
 
 
 async def test_missing_parent_creates_issue_and_clears_when_resolved(hass, monkeypatch):
