@@ -206,9 +206,27 @@ class ProfileRegistry:
         info = resolve_profile_device_info(self.hass, self.entry.entry_id, profile_id)
         payload: dict[str, Any] = dict(info) if isinstance(info, Mapping) else {}
 
-        identifiers = payload.get("identifiers")
-        if not identifiers:
-            payload["identifiers"] = {(domain, identifier)}
+        identifier_tuple = (domain, identifier)
+        identifiers_value = payload.get("identifiers")
+        identifier_set: set[tuple[str, str]] = set()
+
+        candidates = identifiers_value if isinstance(identifiers_value, set | list | tuple) else ()
+
+        for item in candidates:
+            if isinstance(item, tuple) and len(item) == 2:
+                identifier_set.add((str(item[0]), str(item[1])))
+
+        if isinstance(identifiers_value, Mapping):
+            for key, item in identifiers_value.items():
+                if isinstance(item, tuple) and len(item) == 2:
+                    identifier_set.add((str(item[0]), str(item[1])))
+                elif isinstance(key, str):
+                    identifier_set.add((str(key), str(item)))
+
+        if identifier_tuple not in identifier_set:
+            identifier_set.add(identifier_tuple)
+
+        payload["identifiers"] = identifier_set
         name = payload.get("name")
         if not isinstance(name, str) or not name.strip():
             payload["name"] = default_name or profile_id
