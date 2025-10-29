@@ -41,11 +41,11 @@ class LocalStore:
     async def load(self) -> dict[str, Any]:
         loaded = await self._store.async_load()
         if isinstance(loaded, Mapping):
-            data = dict(loaded)
+            data: dict[str, Any] | None = dict(loaded)
         else:
-            loaded = None
+            data = None
 
-        if not loaded:
+        if data is None:
             data = deepcopy(DEFAULT_DATA)
         else:
             for key, default_value in DEFAULT_DATA.items():
