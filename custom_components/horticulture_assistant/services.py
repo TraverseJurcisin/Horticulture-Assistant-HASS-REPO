@@ -423,9 +423,10 @@ async def async_register_all(
     async def _srv_update_sensors(call) -> None:
         pid = call.data["profile_id"]
         sensors: dict[str, str] = {}
-        for role in ("temperature", "humidity", "illuminance", "moisture"):
-            if ent := call.data.get(role):
-                sensors[role] = ent
+        for role in MEASUREMENT_CLASSES:
+            entity_id = call.data.get(role)
+            if isinstance(entity_id, str) and entity_id:
+                sensors[role] = entity_id
         if sensors:
             validation = validate_sensor_links(hass, sensors)
             if validation.errors:
