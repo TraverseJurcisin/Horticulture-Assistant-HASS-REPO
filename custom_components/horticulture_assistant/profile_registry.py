@@ -1367,18 +1367,30 @@ class ProfileRegistry:
                     raise ValueError(f"invalid threshold {key}") from err
                 cleaned[str(key)] = value
 
-        allowed_set: set[str]
-        allowed_set = {str(key) for key in allowed_keys} if allowed_keys is not None else set(cleaned.keys())
+        if allowed_keys is None:
+            allowed_set: set[str] | None = None
+            update_candidates = set(cleaned.keys())
+        else:
+            allowed_set = {str(key) for key in allowed_keys}
+            update_candidates = set(allowed_set)
 
         removals = {str(key) for key in removed_keys} if removed_keys else set()
 
         updated_map = dict(threshold_map)
-        target_keys = (allowed_set or set(cleaned.keys())) | removals
-        for key in target_keys:
-            if key in cleaned:
-                updated_map[key] = cleaned[key]
-            elif key in removals:
-                updated_map.pop(key, None)
+        candidate_keys = set(update_candidates) | removals
+        touched_keys: set[str] = set()
+        for key in candidate_keys:
+            if key in removals:
+                if key in updated_map:
+                    updated_map.pop(key, None)
+                    touched_keys.add(key)
+                continue
+            if key not in cleaned:
+                continue
+            if allowed_set is not None and key not in allowed_set:
+                continue
+            updated_map[key] = cleaned[key]
+            touched_keys.add(key)
 
         violations = evaluate_threshold_bounds(updated_map)
         if violations:
@@ -1389,7 +1401,7 @@ class ProfileRegistry:
         sync_thresholds(
             prof_payload,
             default_source=default_source,
-            touched_keys=target_keys or None,
+            touched_keys=touched_keys or None,
             prune=True,
         )
 
