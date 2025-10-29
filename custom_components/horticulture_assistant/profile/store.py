@@ -35,7 +35,7 @@ async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
     return {}
 
 
-async def async_save_profile(hass: HomeAssistant, profile: BioProfile | dict[str, Any]) -> None:
+async def async_save_profile(hass: HomeAssistant | None, profile: BioProfile | dict[str, Any]) -> None:
     """Persist a profile dictionary or dataclass to storage."""
 
     preserved: dict[str, Any] = {}
@@ -67,9 +67,12 @@ async def async_save_profile(hass: HomeAssistant, profile: BioProfile | dict[str
 
     data = await async_load_all(hass)
     data[payload["plant_id"]] = payload
-    cache = hass.data.setdefault(_CACHE_KEY, {})
-    cache.clear()
-    cache.update({k: deepcopy(v) for k, v in data.items()})
+    if hass is not None:
+        hass_data = getattr(hass, "data", None)
+        if isinstance(hass_data, dict):
+            cache = hass_data.setdefault(_CACHE_KEY, {})
+            cache.clear()
+            cache.update({k: deepcopy(v) for k, v in data.items()})
     await _store(hass).async_save(data)
 
 

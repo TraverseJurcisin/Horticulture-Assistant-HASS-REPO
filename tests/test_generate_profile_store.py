@@ -275,3 +275,40 @@ async def test_async_save_profile_accepts_mapping_proxy_credentials(monkeypatch)
 
     stored = saved["p1"]
     assert stored["opb_credentials"] == {"client_id": "id", "secret": "sec"}
+
+
+@pytest.mark.asyncio
+async def test_async_save_profile_handles_credentials_with_stub_hass(monkeypatch):
+    saved: dict[str, dict[str, Any]] = {}
+
+    class DummyStore:
+        async def async_save(self, data):
+            saved.update(data)
+
+    async def fake_load_all(_hass):
+        return {}
+
+    hass = types.SimpleNamespace(data={})
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile.store._store",
+        lambda _hass: DummyStore(),
+    )
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile.store.async_load_all",
+        fake_load_all,
+    )
+
+    from custom_components.horticulture_assistant.profile.store import async_save_profile
+
+    payload = {
+        "plant_id": "p1",
+        "profile_id": "p1",
+        "display_name": "Plant",
+        "opb_credentials": types.MappingProxyType({"client_id": "id", "secret": "sec"}),
+    }
+
+    await async_save_profile(hass, payload)
+
+    stored = saved["p1"]
+    assert stored["opb_credentials"] == {"client_id": "id", "secret": "sec"}
