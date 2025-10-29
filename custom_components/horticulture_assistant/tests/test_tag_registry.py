@@ -1,4 +1,13 @@
+from pathlib import Path
+
 from custom_components.horticulture_assistant.utils import tag_registry
+
+
+def test_default_tags_file_location():
+    tag_registry._load_tags.cache_clear()
+    expected = Path(tag_registry.__file__).resolve().parent.parent / "tags.json"
+    assert expected == tag_registry._TAGS_FILE
+    assert tag_registry._TAGS_FILE.exists()
 
 
 def test_list_tags(tmp_path, monkeypatch):
