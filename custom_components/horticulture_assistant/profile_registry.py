@@ -9,7 +9,9 @@ needing to parse config entry options or storage files individually.
 
 from __future__ import annotations
 
+import asyncio
 import hashlib
+import inspect
 import json
 import logging
 from collections.abc import Callable, Iterable, Mapping
@@ -298,18 +300,20 @@ class ProfileRegistry:
         if issue_key in self._missing_species_issues:
             return
         issue_id = _species_issue_id(profile_id, species_id)
-        ir.async_create_issue(
-            self.hass,
-            DOMAIN,
-            issue_id,
-            is_fixable=False,
-            severity=ir.IssueSeverity.WARNING,
-            translation_key="missing_lineage_species",
-            translation_placeholders={
-                "profile_id": profile_id,
-                "profile_name": display_name,
-                "species_id": species_id,
-            },
+        self._schedule_issue_result(
+            ir.async_create_issue(
+                self.hass,
+                DOMAIN,
+                issue_id,
+                is_fixable=False,
+                severity=ir.IssueSeverity.WARNING,
+                translation_key="missing_lineage_species",
+                translation_placeholders={
+                    "profile_id": profile_id,
+                    "profile_name": display_name,
+                    "species_id": species_id,
+                },
+            )
         )
         self._missing_species_issues.add(issue_key)
 
@@ -318,10 +322,12 @@ class ProfileRegistry:
         if issue_key not in self._missing_species_issues:
             return
         issue_id = _species_issue_id(profile_id, species_id)
-        ir.async_delete_issue(
-            self.hass,
-            DOMAIN,
-            issue_id,
+        self._schedule_issue_result(
+            ir.async_delete_issue(
+                self.hass,
+                DOMAIN,
+                issue_id,
+            )
         )
         self._missing_species_issues.discard(issue_key)
 
@@ -334,18 +340,20 @@ class ProfileRegistry:
         issue_key = (profile_id, parent_id)
         if issue_key in self._missing_parent_issues:
             return
-        ir.async_create_issue(
-            self.hass,
-            DOMAIN,
-            _parent_issue_id(profile_id, parent_id),
-            is_fixable=False,
-            severity=ir.IssueSeverity.WARNING,
-            translation_key="missing_lineage_parent",
-            translation_placeholders={
-                "profile_id": profile_id,
-                "profile_name": display_name,
-                "parent_id": parent_id,
-            },
+        self._schedule_issue_result(
+            ir.async_create_issue(
+                self.hass,
+                DOMAIN,
+                _parent_issue_id(profile_id, parent_id),
+                is_fixable=False,
+                severity=ir.IssueSeverity.WARNING,
+                translation_key="missing_lineage_parent",
+                translation_placeholders={
+                    "profile_id": profile_id,
+                    "profile_name": display_name,
+                    "parent_id": parent_id,
+                },
+            )
         )
         self._missing_parent_issues.add(issue_key)
 
@@ -353,40 +361,60 @@ class ProfileRegistry:
         issue_key = (profile_id, parent_id)
         if issue_key not in self._missing_parent_issues:
             return
-        ir.async_delete_issue(
-            self.hass,
-            DOMAIN,
-            _parent_issue_id(profile_id, parent_id),
+        self._schedule_issue_result(
+            ir.async_delete_issue(
+                self.hass,
+                DOMAIN,
+                _parent_issue_id(profile_id, parent_id),
+            )
         )
         self._missing_parent_issues.discard(issue_key)
 
     def _create_validation_issue(self, profile: BioProfile, summary: str) -> None:
         issue_id = f"{ISSUE_PROFILE_VALIDATION_PREFIX}{profile.profile_id}"
-        ir.async_create_issue(
-            self.hass,
-            DOMAIN,
-            issue_id,
-            is_fixable=False,
-            severity=ir.IssueSeverity.WARNING,
-            translation_key="invalid_profile_schema",
-            translation_placeholders={
-                "profile_id": profile.profile_id,
-                "profile_name": profile.display_name,
-                "issue_summary": summary,
-            },
+        self._schedule_issue_result(
+            ir.async_create_issue(
+                self.hass,
+                DOMAIN,
+                issue_id,
+                is_fixable=False,
+                severity=ir.IssueSeverity.WARNING,
+                translation_key="invalid_profile_schema",
+                translation_placeholders={
+                    "profile_id": profile.profile_id,
+                    "profile_name": profile.display_name,
+                    "issue_summary": summary,
+                },
+            )
         )
         self._validation_issue_keys.add(issue_id)
         self._validation_issue_summaries[profile.profile_id] = summary
 
     def _clear_validation_issue(self, profile_id: str) -> None:
         issue_id = f"{ISSUE_PROFILE_VALIDATION_PREFIX}{profile_id}"
-        ir.async_delete_issue(
-            self.hass,
-            DOMAIN,
-            issue_id,
+        self._schedule_issue_result(
+            ir.async_delete_issue(
+                self.hass,
+                DOMAIN,
+                issue_id,
+            )
         )
         self._validation_issue_keys.discard(issue_id)
         self._validation_issue_summaries.pop(profile_id, None)
+
+    def _schedule_issue_result(self, result: Any) -> None:
+        if result is None:
+            return
+        if inspect.isawaitable(result):
+            scheduler = getattr(self.hass, "async_create_task", None)
+            if callable(scheduler):
+                scheduler(result)
+            else:  # pragma: no cover - fallback when hass stub unavailable
+                try:
+                    loop = asyncio.get_running_loop()
+                except RuntimeError:
+                    loop = asyncio.get_event_loop()
+                loop.create_task(result)
 
     def _sync_validation_issue(self, profile: BioProfile, issues: list[str]) -> None:
         if not issues:
