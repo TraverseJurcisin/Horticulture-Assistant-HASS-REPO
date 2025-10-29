@@ -48,8 +48,23 @@ def merge_sensor_maps(
     """
 
     merged: dict[str, list[str]] = {}
-    for key in set(base) | set(update):
+    seen: set[str] = set()
+
+    for key in base:
+        key_str = str(key)
         base_list = parse_entities(base.get(key))
-        update_list = parse_entities(update.get(key))
-        merged[key] = list(dict.fromkeys(base_list + update_list))
+        update_value = update.get(key)
+        if update_value is None and key_str != key:
+            update_value = update.get(key_str)
+        update_list = parse_entities(update_value)
+        merged[key_str] = list(dict.fromkeys(base_list + update_list))
+        seen.add(key_str)
+
+    for key in update:
+        key_str = str(key)
+        if key_str in seen:
+            continue
+        merged[key_str] = parse_entities(update.get(key))
+        seen.add(key_str)
+
     return merged
