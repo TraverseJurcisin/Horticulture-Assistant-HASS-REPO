@@ -14,7 +14,7 @@ import hashlib
 import inspect
 import json
 import logging
-from collections.abc import Callable, Iterable, Mapping, Sequence
+from collections.abc import Callable, Iterable, Mapping, Sequence, Set
 from copy import deepcopy
 from datetime import datetime, timezone
 from math import isfinite
@@ -234,7 +234,12 @@ class ProfileRegistry:
         identifiers_value = payload.get("identifiers")
         identifier_set: set[tuple[str, str]] = set()
 
-        candidates = identifiers_value if isinstance(identifiers_value, set | list | tuple) else ()
+        if isinstance(identifiers_value, Set):
+            candidates: Iterable[Any] = identifiers_value
+        elif isinstance(identifiers_value, list | tuple):
+            candidates = identifiers_value
+        else:
+            candidates = ()
 
         for item in candidates:
             if isinstance(item, tuple) and len(item) == 2:
