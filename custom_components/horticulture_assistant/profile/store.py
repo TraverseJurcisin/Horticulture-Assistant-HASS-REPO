@@ -24,7 +24,8 @@ def _store(hass: HomeAssistant) -> Store:
 
 
 async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
-    data = await _store(hass).async_load() or {}
+    raw = await _store(hass).async_load()
+    data = dict(raw) if isinstance(raw, Mapping) else {}
     cache = hass.data.setdefault(_CACHE_KEY, {})
     if data:
         cache.clear()
