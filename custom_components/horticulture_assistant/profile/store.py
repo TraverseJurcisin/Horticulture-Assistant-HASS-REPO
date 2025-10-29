@@ -109,4 +109,7 @@ async def async_delete_profile(hass: HomeAssistant, plant_id: str) -> None:
     data = await async_load_all(hass)
     if plant_id in data:
         del data[plant_id]
+        cache = hass.data.setdefault(_CACHE_KEY, {})
+        cache.clear()
+        cache.update({k: deepcopy(v) for k, v in data.items()})
         await _store(hass).async_save(data)

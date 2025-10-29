@@ -13,6 +13,10 @@ from custom_components.horticulture_assistant.profile.schema import (
     ResolvedTarget,
 )
 from custom_components.horticulture_assistant.profile.store import (
+    CACHE_KEY,
+    async_delete_profile,
+    async_load_all,
+    async_save_profile,
     async_save_profile_from_options,
 )
 from custom_components.horticulture_assistant.profile_store import ProfileStore
@@ -403,3 +407,23 @@ async def test_async_save_profile_from_options_preserves_local_sections(hass, tm
     local = BioProfile.from_json(profile).local_section()
     assert local.metadata["citation_map"]["temp_c_min"]["mode"] == "manual"
     assert local.citations and local.citations[0].source == "manual"
+
+
+@pytest.mark.asyncio
+async def test_async_delete_profile_refreshes_cache(hass, tmp_path, monkeypatch) -> None:
+    """Removing profiles from storage should also evict them from the in-memory cache."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+
+    payload = {"profile_id": "plant", "display_name": "Plant"}
+
+    await async_save_profile(hass, payload)
+    await async_load_all(hass)
+
+    cache = hass.data.get(CACHE_KEY)
+    assert cache is not None and "plant" in cache
+
+    await async_delete_profile(hass, "plant")
+
+    cache = hass.data.get(CACHE_KEY)
+    assert cache is not None and "plant" not in cache
