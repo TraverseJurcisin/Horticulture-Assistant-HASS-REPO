@@ -1,5 +1,6 @@
 import json
 import types
+from copy import deepcopy
 from typing import Any
 
 import pytest
@@ -425,6 +426,32 @@ async def test_async_save_profile_from_options_preserves_local_sections(hass, tm
     local = BioProfile.from_json(profile).local_section()
     assert local.metadata["citation_map"]["temp_c_min"]["mode"] == "manual"
     assert local.citations and local.citations[0].source == "manual"
+
+
+@pytest.mark.asyncio
+async def test_async_load_all_handles_non_mapping_storage(hass, monkeypatch) -> None:
+    """Storage corruption should not blow up the loader."""
+
+    cached_payload = {"cached": {"display_name": "Cached"}}
+    hass.data[CACHE_KEY] = deepcopy(cached_payload)
+
+    class DummyStore:
+        async def async_load(self):
+            return ["not", "a", "mapping"]
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile.store._store",
+        lambda _hass: DummyStore(),
+    )
+
+    result = await async_load_all(hass)
+    assert result == cached_payload
+    assert result is not hass.data[CACHE_KEY]
+    assert result["cached"] is not hass.data[CACHE_KEY]["cached"]
+
+    hass.data[CACHE_KEY].clear()
+    result_no_cache = await async_load_all(hass)
+    assert result_no_cache == {}
 
 
 @pytest.mark.asyncio
