@@ -51,14 +51,33 @@ def _parse_iso_datetime(raw: Any) -> datetime | None:
 def _extract_computed_snapshot(payload: Any) -> ComputedStatSnapshot | None:
     if not isinstance(payload, Mapping):
         return None
-    try:
-        return ComputedStatSnapshot.from_json(dict(payload))
-    except Exception:  # pragma: no cover - tolerate incompatible payloads
-        candidates: list[ComputedStatSnapshot] = []
 
-        versions = payload.get("versions")
-        if isinstance(versions, Mapping):
-            for value in versions.values():
+    direct: ComputedStatSnapshot | None = None
+    try:
+        direct_candidate = ComputedStatSnapshot.from_json(dict(payload))
+    except Exception:  # pragma: no cover - tolerate incompatible payloads
+        direct_candidate = None
+    else:
+        if direct_candidate.payload:
+            return direct_candidate
+        direct = direct_candidate
+
+    candidates: list[ComputedStatSnapshot] = []
+
+    versions = payload.get("versions")
+    if isinstance(versions, Mapping):
+        for value in versions.values():
+            if not isinstance(value, Mapping):
+                continue
+            try:
+                candidates.append(ComputedStatSnapshot.from_json(dict(value)))
+            except Exception:  # pragma: no cover - continue on parse issues
+                continue
+
+    if not candidates:
+        snapshots = payload.get("snapshots")
+        if isinstance(snapshots, Mapping):
+            for value in snapshots.values():
                 if not isinstance(value, Mapping):
                     continue
                 try:
@@ -66,31 +85,23 @@ def _extract_computed_snapshot(payload: Any) -> ComputedStatSnapshot | None:
                 except Exception:  # pragma: no cover - continue on parse issues
                     continue
 
-        if not candidates:
-            snapshots = payload.get("snapshots")
-            if isinstance(snapshots, Mapping):
-                for value in snapshots.values():
-                    if not isinstance(value, Mapping):
-                        continue
-                    try:
-                        candidates.append(ComputedStatSnapshot.from_json(dict(value)))
-                    except Exception:  # pragma: no cover - continue on parse issues
-                        continue
+    if not candidates and isinstance(payload.get("latest"), Mapping):
+        try:
+            candidates.append(ComputedStatSnapshot.from_json(dict(payload["latest"])))
+        except Exception:  # pragma: no cover - continue on parse issues
+            candidates = []
 
-        if not candidates and isinstance(payload.get("latest"), Mapping):
-            try:
-                candidates.append(ComputedStatSnapshot.from_json(dict(payload["latest"])))
-            except Exception:  # pragma: no cover - continue on parse issues
-                candidates = []
+    best: ComputedStatSnapshot | None = None
+    best_ts: datetime | None = None
+    for snapshot in candidates:
+        ts = _parse_iso_datetime(getattr(snapshot, "computed_at", None))
+        if best is None or (ts is not None and (best_ts is None or ts > best_ts)):
+            best = snapshot
+            best_ts = ts
 
-        best: ComputedStatSnapshot | None = None
-        best_ts: datetime | None = None
-        for snapshot in candidates:
-            ts = _parse_iso_datetime(getattr(snapshot, "computed_at", None))
-            if best is None or (ts is not None and (best_ts is None or ts > best_ts)):
-                best = snapshot
-                best_ts = ts
+    if best is not None:
         return best
+    return direct
 
 
 @dataclass(slots=True)
@@ -574,11 +585,11 @@ class EdgeResolverService:
         return overlay, meta
 
     def _extract(self, payload: Any, field_path: str) -> Any:
-        if not isinstance(payload, dict):
+        if not isinstance(payload, Mapping):
             return None
         current: Any = payload
         for part in field_path.split('.'):
-            if isinstance(current, dict):
+            if isinstance(current, Mapping):
                 current = current.get(part)
             else:
                 return None
