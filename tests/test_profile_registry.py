@@ -530,6 +530,33 @@ async def test_update_profile_thresholds_updates_options_and_profile(hass):
     assert "humidity_min" not in stored["resolved_targets"]
 
 
+async def test_update_profile_thresholds_removes_keys_outside_allowed_set(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "thresholds": {
+            "temperature_min": 16.0,
+            "temperature_max": 24.0,
+            "humidity_min": 35.0,
+        },
+    }
+    sync_thresholds(profile_payload)
+    entry = await _make_entry(hass, {CONF_PROFILES: {"alpha": profile_payload}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    await reg.async_update_profile_thresholds(
+        "alpha",
+        {"temperature_min": 18.0},
+        allowed_keys={"temperature_min"},
+        removed_keys={"humidity_min"},
+    )
+
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    assert stored["thresholds"]["temperature_min"] == pytest.approx(18.0)
+    assert "humidity_min" not in stored["thresholds"]
+    assert "humidity_min" not in stored.get("resolved_targets", {})
+
+
 async def test_update_profile_thresholds_validates_bounds(hass):
     profile_payload = {
         "name": "Alpha",
