@@ -6,10 +6,10 @@ import random
 import time
 from typing import Any
 
-from aiohttp import ClientError, ClientResponseError
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import aiohttp_client
 
+from .utils.aiohttp import ClientError, ClientResponseError
 from .utils.logging import warn_once
 
 RETRYABLE = (429, 500, 502, 503, 504)

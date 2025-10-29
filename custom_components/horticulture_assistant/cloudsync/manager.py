@@ -11,7 +11,6 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-from aiohttp import ClientSession
 from homeassistant.core import HomeAssistant
 
 from ..const import (
@@ -31,6 +30,7 @@ from ..const import (
     CONF_CLOUD_TOKEN_EXPIRES_AT,
     DEFAULT_CLOUD_SYNC_INTERVAL,
 )
+from ..utils.aiohttp import ClientSession
 from .auth import CloudAuthClient, CloudAuthError, CloudAuthTokens
 from .edge_store import EdgeSyncStore
 from .edge_worker import EdgeSyncWorker
