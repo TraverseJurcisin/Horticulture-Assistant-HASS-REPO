@@ -7,8 +7,7 @@ from collections.abc import Mapping
 from datetime import datetime, timezone
 from typing import Any
 
-from aiohttp import ClientError, ClientSession
-
+from ..utils.aiohttp import ClientError, ClientSession
 from .conflict import ConflictPolicy, ConflictResolver
 from .edge_store import EdgeSyncStore
 from .events import SyncEvent, encode_ndjson

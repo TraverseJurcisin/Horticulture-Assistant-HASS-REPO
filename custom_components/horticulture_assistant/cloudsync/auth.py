@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from aiohttp import ClientError, ClientResponseError, ClientSession
+from ..utils.aiohttp import ClientError, ClientResponseError, ClientSession
 
 try:
     UTC = datetime.UTC  # type: ignore[attr-defined]

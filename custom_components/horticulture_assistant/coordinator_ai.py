@@ -7,13 +7,13 @@ import time
 from datetime import datetime, timedelta
 from typing import Any
 
-from aiohttp import ClientError
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
 
 from .api import ChatApi
 from .engine import guidelines  # type: ignore[import]
 from .storage import LocalStore
+from .utils.aiohttp import ClientError
 from .utils.logging import warn_once
 
 _LOGGER = logging.getLogger(__name__)
