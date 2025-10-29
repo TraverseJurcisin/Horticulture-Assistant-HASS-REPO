@@ -24,6 +24,42 @@ def test_harvest_event_from_json_parses_numeric_strings() -> None:
     assert harvest.fruit_count == 12
 
 
+def test_harvest_event_from_json_parses_localized_numeric_strings() -> None:
+    harvest = HarvestEvent.from_json(
+        {
+            "harvest_id": "h-eu",
+            "profile_id": "p-eu",
+            "harvested_at": "2024-01-03T00:00:00Z",
+            "yield_grams": "1.234,5 g",
+            "area_m2": "1 234,5 m²",
+            "wet_weight_grams": "1 500,0 g",
+            "dry_weight_grams": "750,0 g",
+            "fruit_count": "1 200 berries",
+        }
+    )
+
+    assert harvest.yield_grams == pytest.approx(1234.5)
+    assert harvest.area_m2 == pytest.approx(1234.5)
+    assert harvest.wet_weight_grams == pytest.approx(1500.0)
+    assert harvest.dry_weight_grams == pytest.approx(750.0)
+    assert harvest.fruit_count == 1200
+
+
+def test_harvest_event_from_json_parses_thousands_with_commas() -> None:
+    harvest = HarvestEvent.from_json(
+        {
+            "harvest_id": "h-comma",
+            "profile_id": "p-comma",
+            "harvested_at": "2024-01-04T00:00:00Z",
+            "yield_grams": "1,234",
+            "area_m2": "3,456",
+        }
+    )
+
+    assert harvest.yield_grams == pytest.approx(1234.0)
+    assert harvest.area_m2 == pytest.approx(3456.0)
+
+
 def test_harvest_event_from_json_handles_missing_numeric_data() -> None:
     harvest = HarvestEvent.from_json(
         {

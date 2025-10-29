@@ -344,17 +344,180 @@ class HarvestEvent:
                 text = value.strip()
                 if not text:
                     return default
-                cleaned = text.replace(",", "")
-                try:
-                    return float(cleaned)
-                except ValueError:
-                    match = _NUMBER_PATTERN.search(cleaned)
-                    if match:
+
+                def _collapse_spaces(sample: str) -> str:
+                    replacements = {
+                        ord("\u00a0"): " ",
+                        ord("\u202f"): " ",
+                        ord("\u2009"): " ",
+                        ord("\u2007"): " ",
+                        ord("\u2060"): " ",
+                    }
+                    collapsed = sample.translate(replacements)
+                    return re.sub(r"\s+", " ", collapsed)
+
+                def _strip_thousands(segment: str, separator: str) -> str | None:
+                    if separator not in segment:
+                        return segment
+                    parts = segment.split(separator)
+                    if any(part == "" for part in parts):
+                        return None
+                    for index, chunk in enumerate(parts):
+                        if not chunk.isdigit():
+                            return None
+                        if index == 0:
+                            if len(chunk) > 3:
+                                return None
+                        elif len(chunk) != 3:
+                            return None
+                    return "".join(parts)
+
+                def _parse_simple_thousands(sample: str, separator: str) -> float | None:
+                    sign = ""
+                    raw = sample
+                    if raw and raw[0] in "+-":
+                        sign = raw[0]
+                        raw = raw[1:].lstrip()
+                    if not raw or not any(ch.isdigit() for ch in raw):
+                        return None
+                    parts = raw.split(separator)
+                    if len(parts) <= 1:
+                        return None
+                    if any(part == "" for part in parts):
+                        return None
+                    if not all(part.isdigit() for part in parts):
+                        return None
+                    if not 1 <= len(parts[0]) <= 3:
+                        return None
+                    if any(len(part) != 3 for part in parts[1:]):
+                        return None
+                    number = sign + "".join(parts)
+                    try:
+                        return float(number)
+                    except ValueError:
+                        return None
+
+                def _parse_localized_number(sample: str) -> float | None:
+                    collapsed = _collapse_spaces(sample)
+                    token_match = re.search(r"[-+]?\d[\d., ]*\d", collapsed)
+                    if not token_match:
+                        return None
+                    token = token_match.group(0).strip()
+                    if not token:
+                        return None
+
+                    Candidate = tuple[float, str, int, int, bool]
+
+                    def _candidate(decimal_sep: str) -> Candidate | None:
+                        raw = token
+                        sign = ""
+                        if raw and raw[0] in "+-":
+                            sign = raw[0]
+                            raw = raw[1:].lstrip()
+                        if not raw or not any(ch.isdigit() for ch in raw):
+                            return None
+                        decimal_count = raw.count(decimal_sep)
+                        if decimal_count > 1:
+                            return None
+                        used_decimal = decimal_count == 1
+                        if used_decimal:
+                            integer_part, fractional_part = raw.rsplit(decimal_sep, 1)
+                        else:
+                            integer_part, fractional_part = raw, ""
+                        integer_part = integer_part.strip()
+                        fractional_part = fractional_part.strip()
+                        if not integer_part and not fractional_part:
+                            return None
+                        if not integer_part:
+                            integer_part = "0"
+                        thousands_seps: set[str] = set()
+                        if decimal_sep == "," and "." in integer_part:
+                            thousands_seps.add(".")
+                        if decimal_sep == "." and "," in integer_part:
+                            thousands_seps.add(",")
+                        if " " in integer_part:
+                            thousands_seps.add(" ")
+                        stripped_integer = integer_part
+                        thousands_count = 0
+                        for sep in sorted(thousands_seps):
+                            occurrences = stripped_integer.count(sep)
+                            if occurrences:
+                                stripped_integer = _strip_thousands(stripped_integer, sep)
+                                if stripped_integer is None:
+                                    return None
+                                thousands_count += occurrences
+                        stripped_integer = stripped_integer.replace(" ", "")
+                        if not stripped_integer:
+                            stripped_integer = "0"
+                        if not stripped_integer.isdigit():
+                            return None
+                        if any(sep in fractional_part for sep in thousands_seps):
+                            return None
+                        if " " in fractional_part:
+                            return None
+                        if fractional_part and not fractional_part.isdigit():
+                            return None
+                        fraction_len = len(fractional_part)
+                        normalized = stripped_integer
+                        if fraction_len:
+                            normalized = f"{stripped_integer}.{fractional_part}"
+                        result_str = sign + normalized
                         try:
-                            return float(match.group(0))
+                            value = float(result_str)
                         except ValueError:
-                            return default
-                    return default
+                            return None
+                        return (value, decimal_sep, fraction_len, thousands_count, used_decimal)
+
+                    candidates: list[Candidate] = []
+                    for sep in (".", ","):
+                        candidate = _candidate(sep)
+                        if candidate is not None:
+                            candidates.append(candidate)
+                    if not candidates:
+                        return None
+                    values = {candidate[0] for candidate in candidates}
+                    if len(values) == 1:
+                        return values.pop()
+
+                    def _resolve_ambiguous() -> float | None:
+                        if len(candidates) != 2:
+                            return None
+                        first, second = candidates
+                        for prefer, other in ((first, second), (second, first)):
+                            frac_len, other_frac_len = prefer[2], other[2]
+                            if frac_len in (1, 2) and other_frac_len not in (1, 2):
+                                return prefer[0]
+                        for prefer, other in ((first, second), (second, first)):
+                            frac_len, thousands_count, other_used_decimal = (
+                                prefer[2],
+                                prefer[3],
+                                other[4],
+                            )
+                            if frac_len == 0 and thousands_count > 0 and not other_used_decimal:
+                                return prefer[0]
+                        return None
+
+                    resolved = _resolve_ambiguous()
+                    if resolved is not None:
+                        return resolved
+
+                    collapsed_token = _collapse_spaces(token)
+                    if "," in collapsed_token and "." not in collapsed_token:
+                        simple = _parse_simple_thousands(collapsed_token, ",")
+                        if simple is not None:
+                            return simple
+                    return None
+
+                parsed = _parse_localized_number(text)
+                if parsed is not None:
+                    return parsed
+                match = _NUMBER_PATTERN.search(text)
+                if match:
+                    try:
+                        return float(match.group(0))
+                    except ValueError:
+                        return default
+                return default
             try:
                 return float(value)
             except (TypeError, ValueError):
