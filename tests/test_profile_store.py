@@ -5,6 +5,7 @@ from typing import Any
 
 import pytest
 
+from custom_components.horticulture_assistant.const import CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT
 from custom_components.horticulture_assistant.profile.schema import (
     BioProfile,
     Citation,
@@ -177,6 +178,36 @@ async def test_async_create_profile_accepts_sequence_sensor_parameters(hass, tmp
         "temperature": ["sensor.temp"],
         "illuminance": "sensor.light",
     }
+
+
+@pytest.mark.asyncio
+async def test_async_create_profile_normalises_scope(hass, tmp_path, monkeypatch) -> None:
+    """Scopes should normalise to recognised values or defaults."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_create_profile("Default Scope", scope="   ")
+    profile = await store.async_get("Default Scope")
+    general = profile["general"] if isinstance(profile.get("general"), dict) else {}
+    assert general.get(CONF_PROFILE_SCOPE) == PROFILE_SCOPE_DEFAULT
+
+    base = BioProfile(
+        profile_id="scope_source",
+        display_name="Scope Source",
+        general={CONF_PROFILE_SCOPE: "crop_batch"},
+    )
+    await store.async_save(base, name="scope_source")
+    await store.async_create_profile("Clone Scope", clone_from="scope_source", scope="invalid")
+    cloned = await store.async_get("Clone Scope")
+    clone_general = cloned["general"] if isinstance(cloned.get("general"), dict) else {}
+    assert clone_general.get(CONF_PROFILE_SCOPE) == "crop_batch"
+
+    await store.async_create_profile("Case Scope", scope="Grow_Zone")
+    case_profile = await store.async_get("Case Scope")
+    case_general = case_profile["general"] if isinstance(case_profile.get("general"), dict) else {}
+    assert case_general.get(CONF_PROFILE_SCOPE) == "grow_zone"
 
 
 @pytest.mark.asyncio
