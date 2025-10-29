@@ -51,7 +51,15 @@ class HistoryIndex:
             except ValueError:
                 parsed = None
             if parsed is not None:
-                self.last_updated = parsed.isoformat()
+                current: datetime | None = None
+                if self.last_updated:
+                    try:
+                        current = datetime.fromisoformat(self.last_updated.replace("Z", "+00:00"))
+                    except ValueError:
+                        current = None
+
+                if current is None or parsed >= current:
+                    self.last_updated = parsed.isoformat()
 
     def to_json(self) -> dict[str, Any]:
         return {

@@ -136,3 +136,35 @@ async def test_index_recovers_from_corrupted_file(tmp_path: Path, hass) -> None:
     index = await exporter.async_index()
 
     assert index == {}
+
+
+@pytest.mark.asyncio
+async def test_index_preserves_newest_timestamp(tmp_path: Path, hass) -> None:
+    """Appending older events should not rewind ``last_updated``."""
+
+    exporter = HistoryExporter(hass, base_path=tmp_path)
+
+    recent_payload = {
+        "run_id": "run-new",
+        "profile_id": "plant-5",
+        "ended_at": "2024-03-10T12:00:00+00:00",
+    }
+    older_payload = {
+        "run_id": "run-old",
+        "profile_id": "plant-5",
+        "ended_at": "2024-03-08T09:00:00+00:00",
+    }
+
+    await exporter.async_append("plant-5", "run", recent_payload)
+    await exporter.async_append("plant-5", "run", older_payload)
+
+    index = await exporter.async_index()
+    record = index["plant-5"]
+
+    assert record.counts["run"] == 2
+    assert record.last_updated == recent_payload["ended_at"]
+
+    # Ensure the persisted index also keeps the newest timestamp.
+    index_file = tmp_path / "index.json"
+    written = json.loads(index_file.read_text(encoding="utf-8"))
+    assert written["plant-5"]["last_updated"] == recent_payload["ended_at"]
