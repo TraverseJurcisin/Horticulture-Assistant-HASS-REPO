@@ -850,6 +850,9 @@ class ProfileRegistry:
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
+        entity_text = str(entity_id).strip() if entity_id is not None else ""
+        if not entity_text:
+            raise ValueError("entity_id must be a non-empty string")
         prof_payload = dict(profile)
         ensure_sections(
             prof_payload,
@@ -858,7 +861,7 @@ class ProfileRegistry:
         )
         general = dict(prof_payload.get("general", {})) if isinstance(prof_payload.get("general"), Mapping) else {}
         sensors = dict(general.get("sensors", {}))
-        sensors[measurement] = entity_id
+        sensors[measurement] = entity_text
         general["sensors"] = sensors
         sync_general_section(prof_payload, general)
         prof_payload["sensors"] = dict(sensors)
@@ -874,7 +877,7 @@ class ProfileRegistry:
             general_map = dict(prof_obj.general)
             current = general_map.get("sensors")
             merged = dict(current) if isinstance(current, Mapping) else {}
-            merged[measurement] = entity_id
+            merged[measurement] = entity_text
             general_map["sensors"] = merged
             prof_obj.general = general_map
             prof_obj.refresh_sections()
