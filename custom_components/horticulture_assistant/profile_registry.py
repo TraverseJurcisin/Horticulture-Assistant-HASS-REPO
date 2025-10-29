@@ -17,6 +17,7 @@ import logging
 from collections.abc import Callable, Iterable, Mapping
 from copy import deepcopy
 from datetime import datetime, timezone
+from math import isfinite
 from pathlib import Path
 from typing import Any
 
@@ -1383,6 +1384,8 @@ class ProfileRegistry:
                     value = float(raw)
                 except (TypeError, ValueError) as err:
                     raise ValueError(f"invalid threshold {key}") from err
+                if not isfinite(value):
+                    raise ValueError(f"non-finite threshold value for {key}")
                 cleaned[str(key)] = value
 
         allowed_set: set[str]
