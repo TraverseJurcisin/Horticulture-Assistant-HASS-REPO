@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from typing import Any, Literal
@@ -801,7 +801,17 @@ class ResolvedTarget:
                 method=data.get("method"),
                 confidence=data.get("confidence"),
             )
-        citations = [Citation(**cit) for cit in data.get("citations", [])]
+        citations: list[Citation] = []
+        raw_citations = data.get("citations")
+        if isinstance(raw_citations, Mapping):
+            candidates = raw_citations.values()
+        elif isinstance(raw_citations, Sequence) and not isinstance(raw_citations, str | bytes | bytearray):
+            candidates = raw_citations
+        else:
+            candidates = ()
+        for citation in candidates:
+            if isinstance(citation, Mapping):
+                citations.append(Citation(**dict(citation)))
         return ResolvedTarget(value=data.get("value"), annotation=annotation, citations=citations)
 
 

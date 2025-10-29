@@ -275,6 +275,42 @@ async def test_async_get_handles_non_mapping_payload(hass, tmp_path, monkeypatch
 
 
 @pytest.mark.asyncio
+async def test_async_get_filters_invalid_resolved_target_citations(hass, tmp_path, monkeypatch) -> None:
+    """Resolved target citations must ignore malformed entries instead of failing."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    payload = {
+        "profile_id": "citations_profile",
+        "display_name": "Citations Profile",
+        "resolved_targets": {
+            "ph": {
+                "value": 6.2,
+                "annotation": {"source_type": "manual"},
+                "citations": [
+                    {"source": "manual", "title": "Valid citation"},
+                    "invalid",
+                    42,
+                ],
+            }
+        },
+    }
+
+    bad_path = store._path_for("Citations Profile")
+    bad_path.write_text(json.dumps(payload), encoding="utf-8")
+
+    profile = await store.async_get("Citations Profile")
+    assert profile is not None
+
+    target = profile["resolved_targets"]["ph"]
+    assert target["value"] == 6.2
+    assert len(target.get("citations", [])) == 1
+    assert target["citations"][0]["source"] == "manual"
+
+
+@pytest.mark.asyncio
 async def test_async_save_handles_numeric_identifiers(hass, tmp_path, monkeypatch) -> None:
     """Profiles with numeric ids should be stored without raising errors."""
 
