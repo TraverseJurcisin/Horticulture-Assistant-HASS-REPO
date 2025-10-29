@@ -1,7 +1,7 @@
 """Simple in‑memory product inventory tracking utilities."""
 
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 @dataclass
@@ -39,10 +39,7 @@ class ProductInventory:
 
         if product_id not in self.inventory:
             return None
-        for record in sorted(
-            self.inventory[product_id],
-            key=lambda x: x.date_received or datetime.now(),
-        ):
+        for record in sorted(self.inventory[product_id], key=_record_sort_key):
             if record.quantity_remaining >= amount:
                 record.quantity_remaining -= amount
                 return record.batch_id
@@ -71,6 +68,22 @@ class ProductInventory:
                 if expiry <= reference_now + window:
                     soon.append(r)
         return soon
+
+
+def _record_sort_key(record: InventoryRecord) -> tuple[int, datetime]:
+    """Return a deterministic sort key handling timezone-aware datetimes."""
+
+    received = record.date_received
+    if received is None:
+        # Place undated batches last while keeping ordering stable.
+        return (1, datetime.min.replace(tzinfo=timezone.utc))
+
+    if received.tzinfo is None:
+        normalised = received.replace(tzinfo=timezone.utc)
+    else:
+        normalised = received.astimezone(timezone.utc)
+
+    return (0, normalised)
 
 
 __all__ = ["InventoryRecord", "ProductInventory"]
