@@ -41,6 +41,7 @@ sys.modules["custom_components.horticulture_assistant.cloudsync"] = cloudsync_mo
 ha_pkg.cloudsync = cloudsync_module
 
 EdgeSyncStore = cloudsync_module.EdgeSyncStore
+import custom_components.horticulture_assistant.resolver as resolver_module  # noqa: E402
 from custom_components.horticulture_assistant.config_flow import OptionsFlow  # noqa: E402
 from custom_components.horticulture_assistant.const import DOMAIN, OPB_FIELD_MAP  # noqa: E402
 from custom_components.horticulture_assistant.profile.schema import (  # noqa: E402
@@ -379,6 +380,53 @@ async def test_generate_profile_opb_sets_sources_and_citations():
     assert prof["resolved_targets"]["temp_c_min"]["annotation"]["source_type"] == "openplantbook"
     local = prof["local"]
     assert local["resolver_state"]["sources"]["temp_c_min"]["mode"] == "opb"
+
+
+@pytest.mark.asyncio
+async def test_resolve_profile_updates_entry_options_when_update_entry_noop(monkeypatch):
+    hass = types.SimpleNamespace(
+        config_entries=types.SimpleNamespace(async_update_entry=lambda *_args, **_kwargs: None),
+        data={},
+    )
+    entry = DummyEntry({"profiles": {"p1": {"name": "Plant"}}})
+
+    monkeypatch.setattr(resolver_module, "VARIABLE_SPECS", [("temp_c_min",)])
+
+    def fake_profile(_profile_id, _payload, *, display_name=None):
+        return BioProfile(profile_id="p1", display_name=display_name or "Plant")
+
+    monkeypatch.setattr(resolver_module, "options_profile_to_dataclass", fake_profile)
+    monkeypatch.setattr(
+        resolver_module.PreferenceResolver,
+        "_profile_registry",
+        lambda self, _entry: None,
+    )
+    monkeypatch.setattr(
+        resolver_module.PreferenceResolver,
+        "_overlay_cloud_profile",
+        lambda self, *_args, **_kwargs: None,
+    )
+
+    async def fake_resolve(self, _entry, _profile_id, key, _src, thresholds, _options):
+        thresholds[key] = 42.0
+        return ResolvedTarget(
+            value=42.0,
+            annotation=FieldAnnotation(source_type="manual", method="manual"),
+            citations=[],
+        )
+
+    monkeypatch.setattr(
+        resolver_module.PreferenceResolver,
+        "_resolve_variable",
+        fake_resolve,
+    )
+
+    resolver = PreferenceResolver(hass)
+    await resolver.resolve_profile(entry, "p1")
+
+    updated = entry.options["profiles"]["p1"]
+    assert updated["thresholds"]["temp_c_min"] == 42.0
+    assert updated["resolved_targets"]["temp_c_min"]["value"] == 42.0
 
 
 @pytest.mark.asyncio

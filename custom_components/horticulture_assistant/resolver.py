@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Mapping
+from contextlib import suppress
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
@@ -288,6 +289,8 @@ class PreferenceResolver:
             opts = dict(entry.options)
             opts[CONF_PROFILES] = allp
             self.hass.config_entries.async_update_entry(entry, options=opts)
+            with suppress(AttributeError):  # pragma: no cover - defensive when entry immutable
+                entry.options = opts
 
         return thresholds
 
@@ -470,6 +473,8 @@ class PreferenceResolver:
         allp[pid] = prof
         opts[CONF_PROFILES] = allp
         self.hass.config_entries.async_update_entry(entry, options=opts)
+        with suppress(AttributeError):  # pragma: no cover - defensive when entry immutable
+            entry.options = opts
 
 
 async def generate_profile(
@@ -532,6 +537,8 @@ async def generate_profile(
     allp[profile_id] = prof
     opts[CONF_PROFILES] = allp
     hass.config_entries.async_update_entry(entry, options=opts)
+    with suppress(AttributeError):  # pragma: no cover - defensive when entry immutable
+        entry.options = opts
 
     resolver = PreferenceResolver(hass)
     await resolver.resolve_profile(entry, profile_id)
