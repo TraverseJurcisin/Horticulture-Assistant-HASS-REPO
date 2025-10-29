@@ -22,7 +22,9 @@ __all__ = [
 # avoids recompiling the regex for every state lookup and handles optional
 # sign and decimal point.
 _NUM_RE = re.compile(r"[-+]?[0-9]*\.?[0-9]+")
-_SEP_RE = re.compile(r"[;,]")
+# Treat commas, semicolons and any whitespace (including newlines) as
+# delimiters so multiline strings from UI forms are handled gracefully.
+_SEP_RE = re.compile(r"[;,\s]+")
 
 
 def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
