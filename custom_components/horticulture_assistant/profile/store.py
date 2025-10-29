@@ -18,15 +18,41 @@ STORE_KEY = "horticulture_assistant_profiles"
 _CACHE_KEY = "horticulture_assistant.profile_store_cache"
 CACHE_KEY = _CACHE_KEY
 
+_FALLBACK_CACHE: dict[str, dict[str, Any]] = {}
 
-def _store(hass: HomeAssistant) -> Store:
+
+class _InMemoryStore:
+    """Fallback storage used when Home Assistant isn't available."""
+
+    async def async_load(self) -> dict[str, dict[str, Any]]:
+        return {k: deepcopy(v) for k, v in _FALLBACK_CACHE.items()}
+
+    async def async_save(self, data: Mapping[str, dict[str, Any]]) -> None:
+        _FALLBACK_CACHE.clear()
+        _FALLBACK_CACHE.update({k: deepcopy(v) for k, v in data.items()})
+
+
+_IN_MEMORY_STORE = _InMemoryStore()
+
+
+def _store(hass: HomeAssistant | None) -> Store | _InMemoryStore:
+    if hass is None:
+        return _IN_MEMORY_STORE
     return Store(hass, STORE_VERSION, STORE_KEY)
+
+
+def _resolve_cache(hass: HomeAssistant | None) -> dict[str, dict[str, Any]]:
+    if hass is not None:
+        hass_data = getattr(hass, "data", None)
+        if isinstance(hass_data, dict):
+            return hass_data.setdefault(_CACHE_KEY, {})
+    return _FALLBACK_CACHE
 
 
 async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
     raw = await _store(hass).async_load()
     data = dict(raw) if isinstance(raw, Mapping) else {}
-    cache = hass.data.setdefault(_CACHE_KEY, {})
+    cache = _resolve_cache(hass)
     if data:
         cache.clear()
         cache.update({k: deepcopy(v) for k, v in data.items()})
@@ -68,12 +94,9 @@ async def async_save_profile(hass: HomeAssistant | None, profile: BioProfile | d
 
     data = await async_load_all(hass)
     data[payload["plant_id"]] = payload
-    if hass is not None:
-        hass_data = getattr(hass, "data", None)
-        if isinstance(hass_data, dict):
-            cache = hass_data.setdefault(_CACHE_KEY, {})
-            cache.clear()
-            cache.update({k: deepcopy(v) for k, v in data.items()})
+    cache = _resolve_cache(hass)
+    cache.clear()
+    cache.update({k: deepcopy(v) for k, v in data.items()})
     await _store(hass).async_save(data)
 
 
@@ -113,7 +136,7 @@ async def async_delete_profile(hass: HomeAssistant, plant_id: str) -> None:
     data = await async_load_all(hass)
     if plant_id in data:
         del data[plant_id]
-        cache = hass.data.setdefault(_CACHE_KEY, {})
+        cache = _resolve_cache(hass)
         cache.clear()
         cache.update({k: deepcopy(v) for k, v in data.items()})
         await _store(hass).async_save(data)

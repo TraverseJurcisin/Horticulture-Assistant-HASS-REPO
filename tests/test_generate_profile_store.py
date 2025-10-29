@@ -122,6 +122,33 @@ async def test_async_load_profile_returns_dataclass(monkeypatch):
 
 
 @pytest.mark.asyncio
+async def test_async_load_all_supports_missing_hass(monkeypatch):
+    from custom_components.horticulture_assistant.profile import store as store_mod
+
+    class DummyStore:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        async def async_load(self) -> dict[str, dict[str, Any]]:
+            self.calls += 1
+            if self.calls == 1:
+                return {"p1": {"plant_id": "p1"}}
+            return {}
+
+    dummy_store = DummyStore()
+
+    monkeypatch.setattr(store_mod, "_store", lambda hass: dummy_store)
+    monkeypatch.setattr(store_mod, "_FALLBACK_CACHE", {}, raising=False)
+
+    first = await store_mod.async_load_all(None)
+    assert first == {"p1": {"plant_id": "p1"}}
+
+    second = await store_mod.async_load_all(None)
+    assert second == first
+    assert dummy_store.calls == 2
+
+
+@pytest.mark.asyncio
 async def test_async_load_profiles_returns_dataclasses(monkeypatch):
     samples = {
         "p1": {"plant_id": "p1", "display_name": "One", "resolved_targets": {}},
