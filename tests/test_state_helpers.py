@@ -32,6 +32,31 @@ def test_state_helpers_import_and_get_numeric_state():
     assert value == 12.5
 
 
+def test_get_numeric_state_handles_decimal_comma():
+    hass = types.SimpleNamespace(states=types.SimpleNamespace(get=lambda entity_id: types.SimpleNamespace(state="5,5")))
+
+    value = state_helpers.get_numeric_state(hass, "sensor.decimal")
+    assert value == pytest.approx(5.5)
+
+
+def test_get_numeric_state_handles_thousand_separators():
+    hass = types.SimpleNamespace(
+        states=types.SimpleNamespace(get=lambda entity_id: types.SimpleNamespace(state="1,234.56"))
+    )
+
+    value = state_helpers.get_numeric_state(hass, "sensor.thousands")
+    assert value == pytest.approx(1234.56)
+
+
+def test_get_numeric_state_handles_european_format():
+    hass = types.SimpleNamespace(
+        states=types.SimpleNamespace(get=lambda entity_id: types.SimpleNamespace(state="1.234,56"))
+    )
+
+    value = state_helpers.get_numeric_state(hass, "sensor.euro")
+    assert value == pytest.approx(1234.56)
+
+
 def test_parse_entities_ignores_none_and_blank_entries():
     """None values or blank strings should be removed when parsing entities."""
 
