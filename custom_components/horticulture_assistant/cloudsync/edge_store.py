@@ -235,7 +235,7 @@ class EdgeSyncStore:
             params.append(tenant_id)
         if org_id is not None:
             org_norm = str(org_id).strip()
-            query += " ORDER BY (org_id = ?) DESC, updated_at DESC"
+            query += " AND org_id = ? ORDER BY updated_at DESC"
             params.append(org_norm)
         else:
             query += " ORDER BY updated_at DESC"
