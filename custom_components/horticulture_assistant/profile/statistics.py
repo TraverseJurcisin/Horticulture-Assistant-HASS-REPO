@@ -5,6 +5,7 @@ from collections import Counter, defaultdict
 from collections.abc import Iterable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
+from math import isfinite
 from statistics import mean, median
 from typing import Any
 
@@ -53,9 +54,12 @@ def _parse_datetime(raw: str | None) -> datetime | None:
 
 def _to_float(value: Any) -> float | None:
     try:
-        return float(value)
+        number = float(value)
     except (TypeError, ValueError):
         return None
+    if not isfinite(number):
+        return None
+    return number
 
 
 def _normalise_nutrient_events(
