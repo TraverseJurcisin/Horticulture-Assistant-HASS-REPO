@@ -27,3 +27,18 @@ async def test_load_large_json_caches(hass, tmp_path, monkeypatch):
     assert data1 == {"a": 1}
     assert data2 == {"a": 1}
     assert opened == 1
+
+
+@pytest.mark.asyncio
+async def test_load_large_json_returns_isolated_copy(hass, tmp_path):
+    file = tmp_path / "data.json"
+    payload = {"a": 1, "nested": {"b": 2}}
+    file.write_text(json.dumps(payload))
+
+    data1 = await load_large_json(hass, str(file))
+    data1["a"] = 99
+    data1["nested"]["b"] = 42
+
+    data2 = await load_large_json(hass, str(file))
+
+    assert data2 == payload
