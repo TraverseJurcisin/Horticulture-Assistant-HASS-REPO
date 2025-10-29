@@ -86,6 +86,21 @@ async def test_async_recommend_variable_caches_result(monkeypatch, hass):
 
 
 @pytest.mark.asyncio
+async def test_async_recommend_variable_accepts_string_ttl(monkeypatch, hass):
+    _AI_CACHE.clear()
+    mock = AsyncMock(return_value=(4.2, 0.5, "summary", []))
+    monkeypatch.setattr(AIClient, "generate_setpoint", mock)
+
+    first = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours="2")
+    assert first["value"] == 4.2
+    assert mock.call_count == 1
+
+    second = await async_recommend_variable(hass, key="temp", plant_id="p1", ttl_hours=2)
+    assert second == first
+    assert mock.call_count == 1
+
+
+@pytest.mark.asyncio
 async def test_async_recommend_variable_cache_accounts_for_context(monkeypatch, hass):
     _AI_CACHE.clear()
     mock = AsyncMock(side_effect=[(1.0, 0.5, "openai", []), (2.0, 0.6, "anthropic", [])])
