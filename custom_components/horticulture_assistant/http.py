@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from dataclasses import asdict
 
 try:  # pragma: no cover - fallback for tests without Home Assistant
@@ -32,8 +32,12 @@ _HTTP_REGISTERED = "http_registered"
 
 def _iter_registries(hass: HomeAssistant) -> Iterable:
     domain_data = hass.data.get(DOMAIN, {})
+    if not isinstance(domain_data, Mapping):
+        return
     for key, value in domain_data.items():
         if key in {BY_PLANT_ID, _HTTP_REGISTERED}:
+            continue
+        if not isinstance(value, Mapping):
             continue
         registry = value.get("profile_registry")
         if registry is not None:
@@ -42,8 +46,12 @@ def _iter_registries(hass: HomeAssistant) -> Iterable:
 
 def _iter_cloud_managers(hass: HomeAssistant) -> Iterable:
     domain_data = hass.data.get(DOMAIN, {})
+    if not isinstance(domain_data, Mapping):
+        return
     for key, value in domain_data.items():
         if key in {BY_PLANT_ID, _HTTP_REGISTERED}:
+            continue
+        if not isinstance(value, Mapping):
             continue
         manager = value.get("cloud_sync_manager")
         if manager is not None:
