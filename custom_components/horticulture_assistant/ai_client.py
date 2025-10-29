@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import math
 import re
 from collections.abc import Hashable, Mapping
 from copy import deepcopy
@@ -18,6 +19,32 @@ UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # no
 CacheKey = tuple[str, str, tuple[tuple[str, Hashable], ...]]
 
 _AI_CACHE: dict[CacheKey, tuple[dict[str, Any], datetime]] = {}
+
+DEFAULT_TTL_HOURS = 720.0
+
+
+def _coerce_positive_hours(value: Any, *, default: float = DEFAULT_TTL_HOURS) -> float:
+    """Return a positive hour duration extracted from ``value``."""
+
+    candidate: float
+    if isinstance(value, bool):
+        return float(default)
+    if isinstance(value, int | float):
+        candidate = float(value)
+    elif isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return float(default)
+        try:
+            candidate = float(text)
+        except ValueError:
+            return float(default)
+    else:
+        return float(default)
+
+    if not math.isfinite(candidate) or candidate <= 0:
+        return float(default)
+    return candidate
 
 
 def _normalise_cache_value(value: Any) -> Hashable:
@@ -190,15 +217,19 @@ async def async_recommend_variable(hass, key: str, plant_id: str, ttl_hours: int
     if not model:
         model = "gpt-4o-mini"
 
+    base_default = _coerce_positive_hours(ttl_hours, default=DEFAULT_TTL_HOURS)
+    ttl = _coerce_positive_hours(kwargs.get("ttl_hours", ttl_hours), default=base_default)
+
     cache_context = dict(kwargs)
     cache_context["provider"] = provider
     cache_context["model"] = model
+    cache_context["ttl_hours"] = ttl
     cache_key = _make_cache_key(plant_id, key, cache_context)
     now = datetime.now(UTC)
     cached = _AI_CACHE.get(cache_key)
     if cached:
         cached_result, created_at = cached
-        if now - created_at < timedelta(hours=ttl_hours):
+        if now - created_at < timedelta(hours=ttl):
             return deepcopy(cached_result)
 
     client = AIClient(hass, provider, model)
