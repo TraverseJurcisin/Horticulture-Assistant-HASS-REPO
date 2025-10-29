@@ -1034,6 +1034,27 @@ def resolve_profile_image_url(
     if hass is None:
         return None
 
+    def _normalise_image(value: Any) -> str | None:
+        if isinstance(value, str):
+            text = value.strip()
+            if text:
+                return text
+        return None
+
+    def _image_from_payload(payload: Mapping[str, Any] | None) -> str | None:
+        if not isinstance(payload, Mapping):
+            return None
+        for key in ("image_url", "image", "picture"):
+            candidate = _normalise_image(payload.get(key))
+            if candidate:
+                return candidate
+        general = payload.get("general") if isinstance(payload.get("general"), Mapping) else None
+        if general:
+            image = _image_from_payload(general)
+            if image:
+                return image
+        return None
+
     stored: dict | None = None
     if entry_id:
         stored = get_entry_data(hass, entry_id)
@@ -1047,25 +1068,21 @@ def resolve_profile_image_url(
         profiles = snapshot.get("profiles")
         if isinstance(profiles, Mapping) and profile_id:
             profile = profiles.get(profile_id)
-            if isinstance(profile, Mapping):
-                for key in ("image_url", "image", "picture"):
-                    value = profile.get(key)
-                    if isinstance(value, str) and value.strip():
-                        return value
+            image = _image_from_payload(profile) if isinstance(profile, Mapping) else None
+            if image:
+                return image
         primary_id = snapshot.get("primary_profile_id")
         if primary_id and profile_id and primary_id == profile_id:
             primary_profile = snapshot.get("primary_profile")
-            if isinstance(primary_profile, Mapping):
-                for key in ("image_url", "image", "picture"):
-                    value = primary_profile.get(key)
-                    if isinstance(value, str) and value.strip():
-                        return value
+            image = _image_from_payload(primary_profile) if isinstance(primary_profile, Mapping) else None
+            if image:
+                return image
 
     entry = stored.get("config_entry")
     if entry is None:
         return None
-    image_url = entry.options.get("image_url")
-    if isinstance(image_url, str) and image_url:
+    image_url = _normalise_image(entry.options.get("image_url"))
+    if image_url:
         return image_url
     return None
 
