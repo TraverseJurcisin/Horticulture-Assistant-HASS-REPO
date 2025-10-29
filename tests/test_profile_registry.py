@@ -119,6 +119,27 @@ async def test_profile_device_metadata_populates_defaults_for_blank_fields(hass,
     assert device_info["model"] == "Plant Profile"
 
 
+async def test_profile_device_metadata_injects_missing_identifier(hass, monkeypatch):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"p1": {"name": "Plant"}}})
+    reg = ProfileRegistry(hass, entry)
+
+    def _device_info(_hass, _entry_id, _profile_id):
+        return {"identifiers": {("other", "device")}}
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile_registry.resolve_profile_device_info",
+        _device_info,
+    )
+
+    await reg.async_load()
+    summaries = reg.summaries()
+    assert summaries, "Expected at least one profile summary"
+
+    identifiers = summaries[0]["device_info"].get("identifiers")
+    expected = [DOMAIN, f"{entry.entry_id}:profile:p1"]
+    assert expected in identifiers
+
+
 async def test_lineage_notification_created_and_clears(hass):
     entry = await _make_entry(
         hass,
