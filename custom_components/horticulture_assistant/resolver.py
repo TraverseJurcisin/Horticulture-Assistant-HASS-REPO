@@ -28,6 +28,27 @@ UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # no
 _LOGGER = logging.getLogger(__name__)
 
 
+def _coerce_ttl_hours(value: Any, *, default: int) -> int:
+    """Return a positive integer ``ttl_hours`` value or ``default`` when invalid."""
+
+    if isinstance(value, int | float):
+        candidate = int(value)
+    elif isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return default
+        try:
+            candidate = int(float(text))
+        except (TypeError, ValueError):
+            return default
+    else:
+        return default
+
+    if candidate <= 0:
+        return default
+    return candidate
+
+
 class PreferenceResolver:
     """Resolves per-variable values from manual/clone/opb/ai with TTL + citations."""
 
@@ -364,8 +385,10 @@ class PreferenceResolver:
                 )
 
             if mode == "ai":
-                ai = src.get("ai", {}) or {}
-                ttl_h = int(ai.get("ttl_hours", 720))
+                raw_ai = src.get("ai", {}) or {}
+                ai = dict(raw_ai) if isinstance(raw_ai, Mapping) else {}
+                ttl_h = _coerce_ttl_hours(ai.get("ttl_hours"), default=720)
+                ai["ttl_hours"] = ttl_h
                 last_run = ai.get("last_run")
                 if last_run:
                     ts = datetime.fromisoformat(last_run.replace("Z", "+00:00"))
@@ -398,7 +421,7 @@ class PreferenceResolver:
                     plant_id=profile_id,
                     key=key,
                     source="ai",
-                    ai_args=src.get("ai"),
+                    ai_args=ai,
                 )
                 if result is not None:
                     self._update_ai_cache(
