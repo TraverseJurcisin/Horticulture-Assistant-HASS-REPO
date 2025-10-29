@@ -1746,6 +1746,38 @@ class ProfileRegistry:
         new_prof.refresh_sections()
         self._validate_profile(new_prof)
         self._relink_profiles()
+
+        # Persist the template payload back to the config entry options so the UI
+        # and other helpers immediately see the imported thresholds and
+        # metadata.  ``BioProfile.to_json`` returns mutable references for the
+        # ``general`` section, so work on copies before storing them.
+        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        options_payload = new_prof.to_json()
+        options_payload["name"] = new_prof.display_name
+        general_payload = (
+            dict(options_payload.get("general", {})) if isinstance(options_payload.get("general"), Mapping) else {}
+        )
+        sensors_payload = (
+            dict(general_payload.get("sensors", {})) if isinstance(general_payload.get("sensors"), Mapping) else {}
+        )
+        if sensors_payload:
+            general_payload["sensors"] = sensors_payload
+            options_payload["sensors"] = dict(sensors_payload)
+        else:
+            general_payload.pop("sensors", None)
+            options_payload.pop("sensors", None)
+        general_payload.setdefault(
+            CONF_PROFILE_SCOPE,
+            new_prof.general.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT),
+        )
+        options_payload["general"] = general_payload
+        options_payload.pop("scope", None)
+        options_payload[CONF_PROFILE_SCOPE] = general_payload.get(CONF_PROFILE_SCOPE)
+        profiles[pid] = options_payload
+        new_opts = dict(self.entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+        self.entry.options = new_opts
         await self.async_save()
         self._cloud_publish_profile(new_prof)
         return pid

@@ -1620,6 +1620,23 @@ async def test_import_template_creates_profile(hass):
     assert prof.species == "Ocimum basilicum"
 
 
+@pytest.mark.asyncio
+async def test_import_template_updates_entry_options(hass):
+    """Imported templates should immediately populate config entry options."""
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_import_template("basil")
+
+    stored = entry.options[CONF_PROFILES][pid]
+    assert stored["name"] == "Basil"
+    assert stored["thresholds"]["min_moisture"] == 30
+    assert stored["resolved_targets"]["max_moisture"]["value"] == 60
+    assert stored["library"]["identity"]["common_name"] == "Basil"
+
+
 async def test_cloud_publisher_records_profile_and_events(hass, tmp_path):
     entry = await _make_entry(hass)
     reg = ProfileRegistry(hass, entry)
