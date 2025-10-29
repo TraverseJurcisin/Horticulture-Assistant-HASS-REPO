@@ -1,6 +1,11 @@
 import pytest
 
-from custom_components.horticulture_assistant.profile.schema import BioProfile, HarvestEvent, RunEvent
+from custom_components.horticulture_assistant.profile.schema import (
+    BioProfile,
+    CultivationEvent,
+    HarvestEvent,
+    RunEvent,
+)
 from custom_components.horticulture_assistant.profile.statistics import recompute_statistics
 
 
@@ -156,6 +161,30 @@ def test_environment_statistics_from_run_history():
     assert contrib.stats_version == "environment/v1"
     assert contrib.computed_at == species_env.computed_at
     assert all(c.computed_at == species_env.computed_at for c in species_env.contributions)
+
+
+def test_event_statistics_normalises_blank_event_type():
+    profile = BioProfile(profile_id="plant", display_name="Plant")
+    profile.add_cultivation_event(
+        CultivationEvent(
+            event_id="evt-1",
+            profile_id="plant",
+            species_id=None,
+            run_id=None,
+            occurred_at="2024-03-01T00:00:00Z",
+            event_type="   ",
+        )
+    )
+
+    recompute_statistics([profile])
+
+    event_snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "events/v1"),
+        None,
+    )
+    assert event_snapshot is not None
+    assert event_snapshot.payload["last_event"]["event_type"] == "note"
+    assert event_snapshot.payload["event_types"][0]["event_type"] == "note"
 
 
 def test_success_statistics_from_run_history():

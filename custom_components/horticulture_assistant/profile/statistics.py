@@ -253,7 +253,8 @@ def _compute_event_payload(
 
     last_event = normalised[-1][0]
     last_payload = last_event.summary()
-    last_payload["event_type"] = last_event.event_type
+    normalised_type = (last_event.event_type or "note").strip() or "note"
+    last_payload["event_type"] = normalised_type
     if last_ts is not None:
         last_payload["days_since"] = metrics.get("days_since_last_event")
 
