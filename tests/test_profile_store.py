@@ -170,6 +170,23 @@ async def test_async_save_prefers_profile_id_for_storage_name(hass, tmp_path, mo
 
 
 @pytest.mark.asyncio
+async def test_path_for_disallows_path_traversal(hass, tmp_path, monkeypatch) -> None:
+    """Profile paths must be constrained to the storage directory."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    outside = store._path_for("../sneaky")
+    assert outside.parent == store._base
+    assert outside.name == "sneaky.json"
+
+    dotdot = store._path_for("../../")
+    assert dotdot.parent == store._base
+    assert dotdot.name == "profile.json"
+
+
+@pytest.mark.asyncio
 async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypatch) -> None:
     """Listing profiles should return stored display names when available."""
 
