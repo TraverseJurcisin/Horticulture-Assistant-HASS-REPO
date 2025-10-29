@@ -280,6 +280,41 @@ async def test_ai_source_handles_invalid_ttl_gracefully():
 
 
 @pytest.mark.asyncio
+async def test_ai_source_handles_invalid_last_run_timestamp():
+    hass = make_hass()
+    entry = DummyEntry(
+        {
+            "profiles": {
+                "p1": {
+                    "sources": {
+                        "temp_c_max": {
+                            "mode": "ai",
+                            "ai": {
+                                "ttl_hours": 720,
+                                "last_run": "not-a-timestamp",
+                            },
+                        }
+                    }
+                }
+            }
+        }
+    )
+    mock = AsyncMock(return_value=(6.2, 0.9, "note", ["http://example"]))
+    with patch(
+        "custom_components.horticulture_assistant.ai_client.AIClient.generate_setpoint",
+        mock,
+    ):
+        clear_ai_cache()
+        await PreferenceResolver(hass).resolve_profile(entry, "p1")
+
+    assert mock.call_count == 1
+    profile_options = entry.options["profiles"]["p1"]
+    assert profile_options["thresholds"]["temp_c_max"] == 6.2
+    resolved = profile_options["resolved_targets"]["temp_c_max"]
+    assert resolved["value"] == 6.2
+
+
+@pytest.mark.asyncio
 async def test_ai_source_preserves_fractional_ttl():
     hass = make_hass()
     entry = DummyEntry(
