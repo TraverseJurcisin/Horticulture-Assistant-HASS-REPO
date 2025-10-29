@@ -190,7 +190,6 @@ def async_register_http_views(hass: HomeAssistant) -> None:
 
     http = getattr(hass, "http", None)
     if http is None or not hasattr(http, "register_view"):
-        domain_data[_HTTP_REGISTERED] = True
         return
 
     http.register_view(ProfilesCollectionView())
