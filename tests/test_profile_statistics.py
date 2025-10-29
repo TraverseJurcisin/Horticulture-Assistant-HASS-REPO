@@ -154,6 +154,8 @@ def test_environment_statistics_from_run_history():
     assert "cultivar" in contributors and "species" in contributors
     contrib = next(c for c in species_env.contributions if c.child_id == "cultivar")
     assert contrib.stats_version == "environment/v1"
+    assert contrib.computed_at == species_env.computed_at
+    assert all(c.computed_at == species_env.computed_at for c in species_env.contributions)
 
 
 def test_success_statistics_from_run_history():
