@@ -13,6 +13,9 @@ except AttributeError:  # pragma: no cover - Py<3.11 fallback
 
 
 _NUMBER_PATTERN = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
+_FRACTION_PATTERN = re.compile(
+    r"(?P<numerator>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*/\s*(?P<denominator>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)"
+)
 
 
 def _as_dict(value: Any) -> dict[str, Any]:
@@ -142,6 +145,18 @@ class RunEvent:
                 percent = text.endswith("%")
                 if percent:
                     text = text[:-1]
+                fraction_match = _FRACTION_PATTERN.search(text)
+                if fraction_match:
+                    numerator_raw = fraction_match.group("numerator")
+                    denominator_raw = fraction_match.group("denominator")
+                    try:
+                        numerator = float(numerator_raw)
+                        denominator = float(denominator_raw)
+                    except (TypeError, ValueError):
+                        numerator = denominator = None
+                    if denominator:
+                        ratio = numerator / denominator
+                        return ratio / 100 if percent else ratio
                 try:
                     parsed = float(text)
                     return parsed / 100 if percent else parsed

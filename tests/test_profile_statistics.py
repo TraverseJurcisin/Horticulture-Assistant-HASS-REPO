@@ -434,3 +434,38 @@ def test_success_statistics_handles_fractional_percent_strings():
     assert snapshot is not None
     assert snapshot.payload["average_success_percent"] == pytest.approx(0.75)
     assert snapshot.payload["weighted_success_percent"] == pytest.approx(0.75)
+
+
+def test_success_statistics_handles_fraction_notation_strings():
+    profile = BioProfile(profile_id="p1", display_name="Plant")
+
+    profile.add_run_event(
+        RunEvent(
+            run_id="run-1",
+            profile_id="p1",
+            species_id=None,
+            started_at="2024-01-05T00:00:00Z",
+            ended_at="2024-01-06T00:00:00Z",
+            success_rate="5/10",
+        )
+    )
+    profile.add_run_event(
+        RunEvent(
+            run_id="run-2",
+            profile_id="p1",
+            species_id=None,
+            started_at="2024-01-07T00:00:00Z",
+            ended_at="2024-01-08T00:00:00Z",
+            success_rate="3/6",
+        )
+    )
+
+    recompute_statistics([profile])
+
+    snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "success/v1"),
+        None,
+    )
+    assert snapshot is not None
+    assert snapshot.payload["average_success_percent"] == pytest.approx(50.0)
+    assert snapshot.payload["weighted_success_percent"] == pytest.approx(50.0)
