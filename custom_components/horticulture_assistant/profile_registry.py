@@ -1755,8 +1755,33 @@ class ProfileRegistry:
 
         from .profile.importer import async_import_profiles
 
+        existing_options = self.entry.options.get(CONF_PROFILES)
+        existing_profiles: dict[str, Any] = {}
+        if isinstance(existing_options, Mapping):
+            for pid, payload in existing_options.items():
+                if not isinstance(pid, str):
+                    continue
+                existing_profiles[pid] = dict(payload)
+
         count = await async_import_profiles(self.hass, path)
         await self.async_load()
+
+        if count:
+            updated_profiles = dict(existing_profiles)
+            added = False
+            for pid, profile in self._profiles.items():
+                if pid in updated_profiles:
+                    continue
+                payload = profile.to_json()
+                payload.setdefault("name", profile.display_name)
+                updated_profiles[pid] = payload
+                added = True
+            if added:
+                new_opts = dict(self.entry.options)
+                new_opts[CONF_PROFILES] = updated_profiles
+                self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+                self.entry.options = new_opts
+
         self.publish_full_snapshot()
         return count
 

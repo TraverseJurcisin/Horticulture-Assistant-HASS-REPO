@@ -154,6 +154,29 @@ async def test_lineage_notification_created_and_clears(hass):
     assert any(item.get("notification_id") == NOTIFICATION_PROFILE_LINEAGE for item in dismissals)
 
 
+async def test_async_import_profiles_returns_count(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = await _make_entry(hass, {CONF_PROFILES: {}})
+    registry = ProfileRegistry(hass, entry)
+
+    payload = {
+        "plant_id": "p1",
+        "display_name": "Plant 1",
+        "resolved_targets": {},
+    }
+    (tmp_path / "profiles.json").write_text(json.dumps({"p1": payload}))
+
+    count = await registry.async_import_profiles("profiles.json")
+
+    assert count == 1
+    profile = registry.get("p1")
+    assert profile is not None
+    assert profile.display_name == "Plant 1"
+    options_profiles = registry.entry.options.get(CONF_PROFILES, {})
+    assert "p1" in options_profiles
+    assert options_profiles["p1"]["display_name"] == "Plant 1"
+
+
 async def test_missing_species_creates_issue_and_clears_when_resolved(hass, monkeypatch):
     entry = await _make_entry(
         hass,
