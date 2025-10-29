@@ -1825,15 +1825,15 @@ class ProfileRegistry:
 
         if count:
             updated_profiles = dict(existing_profiles)
-            added = False
+            changed = False
             for pid, profile in self._profiles.items():
-                if pid in updated_profiles:
-                    continue
                 payload = profile.to_json()
                 payload.setdefault("name", profile.display_name)
-                updated_profiles[pid] = payload
-                added = True
-            if added:
+                existing = updated_profiles.get(pid)
+                if not isinstance(existing, Mapping) or dict(existing) != payload:
+                    updated_profiles[pid] = payload
+                    changed = True
+            if changed:
                 new_opts = dict(self.entry.options)
                 new_opts[CONF_PROFILES] = updated_profiles
                 self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
