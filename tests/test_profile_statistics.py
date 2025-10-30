@@ -212,6 +212,74 @@ def test_recompute_statistics_handles_invalid_numeric_values():
     assert stat.metrics["mean_density_g_m2"] == pytest.approx(21.0)
 
 
+def test_recompute_statistics_counts_zero_run_identifier():
+    profile = BioProfile(profile_id="zero", display_name="Zero")
+    profile.add_run_event(
+        RunEvent(
+            run_id="0",
+            profile_id="zero",
+            species_id=None,
+            started_at="2024-04-01T00:00:00Z",
+        )
+    )
+    profile.add_cultivation_event(
+        CultivationEvent(
+            event_id="evt1",
+            profile_id="zero",
+            species_id=None,
+            run_id="0",
+            occurred_at="2024-04-02T00:00:00Z",
+            event_type="pruning",
+        )
+    )
+    profile.add_nutrient_event(
+        NutrientApplication(
+            event_id="nut1",
+            profile_id="zero",
+            species_id=None,
+            run_id="0",
+            applied_at="2024-04-03T00:00:00Z",
+            solution_volume_liters=1.5,
+        )
+    )
+    profile.add_harvest_event(
+        HarvestEvent(
+            harvest_id="harv1",
+            profile_id="zero",
+            species_id=None,
+            run_id="0",
+            harvested_at="2024-04-04T00:00:00Z",
+            yield_grams=120.0,
+            area_m2=1.2,
+        )
+    )
+
+    recompute_statistics([profile])
+
+    yield_snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "yield/v1"),
+        None,
+    )
+    assert yield_snapshot is not None
+    assert yield_snapshot.payload["runs_tracked"] == 1
+
+    nutrient_snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "nutrients/v1"),
+        None,
+    )
+    assert nutrient_snapshot is not None
+    assert nutrient_snapshot.payload["metrics"]["unique_runs"] == 1.0
+    assert nutrient_snapshot.payload["runs_touched"] == ["0"]
+
+    event_snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "events/v1"),
+        None,
+    )
+    assert event_snapshot is not None
+    assert event_snapshot.payload["metrics"]["unique_runs"] == 1.0
+    assert event_snapshot.payload["runs_touched"] == ["0"]
+
+
 def test_species_runs_tracked_includes_run_history_when_missing_from_harvests():
     species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
     cultivar = BioProfile(

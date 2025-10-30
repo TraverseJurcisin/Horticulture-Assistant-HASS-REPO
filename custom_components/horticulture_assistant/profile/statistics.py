@@ -63,6 +63,17 @@ def _to_float(value: Any) -> float | None:
     return number
 
 
+def _normalise_run_id(value: Any) -> str | None:
+    """Return ``value`` normalised to a non-empty run identifier."""
+
+    if value is None:
+        return None
+    text = value.strip() if isinstance(value, str) else str(value).strip()
+    if not text:
+        return None
+    return text
+
+
 def _normalise_nutrient_events(
     events: Iterable[NutrientApplication],
 ) -> list[tuple[NutrientApplication, datetime | None]]:
@@ -97,8 +108,9 @@ def _compute_nutrient_payload(
     for event, ts in normalised:
         key = event.product_id or event.product_name or "unspecified"
         product_counter[str(key)] += 1
-        if event.run_id:
-            run_ids.add(str(event.run_id))
+        run_id = _normalise_run_id(getattr(event, "run_id", None))
+        if run_id:
+            run_ids.add(run_id)
         volume = _to_float(event.solution_volume_liters)
         if volume is not None:
             total_volume += volume
@@ -228,8 +240,9 @@ def _compute_event_payload(
             cleaned_tag = raw_tag.strip() if isinstance(raw_tag, str) else str(raw_tag).strip()
             if cleaned_tag:
                 tag_counter[cleaned_tag] += 1
-        if event.run_id:
-            run_ids.add(str(event.run_id))
+        run_id = _normalise_run_id(getattr(event, "run_id", None))
+        if run_id:
+            run_ids.add(run_id)
         if ts is not None:
             timestamps.append(ts)
 
@@ -970,11 +983,16 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
 
     for profile in profile_list:
         harvests = list(profile.harvest_history)
-        run_ids = {str(event.run_id).strip() for event in harvests if getattr(event, "run_id", None)}
-        run_ids = {run_id for run_id in run_ids if run_id}
+        run_ids: set[str] = set()
+        for event in harvests:
+            run_id = _normalise_run_id(getattr(event, "run_id", None))
+            if run_id:
+                run_ids.add(run_id)
         if not run_ids:
-            run_ids = {str(event.run_id).strip() for event in profile.run_history if getattr(event, "run_id", None)}
-            run_ids = {run_id for run_id in run_ids if run_id}
+            for event in profile.run_history:
+                run_id = _normalise_run_id(getattr(event, "run_id", None))
+                if run_id:
+                    run_ids.add(run_id)
         run_count = len(run_ids)
 
         nutrient_events = list(profile.nutrient_history)
@@ -1214,11 +1232,14 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 payload["window_totals"] = item["window_totals"]
             contributor_payload.append(payload)
 
-        species_run_ids = {str(event.run_id).strip() for event in harvests if getattr(event, "run_id", None)}
-        species_run_ids = {run_id for run_id in species_run_ids if run_id}
+        species_run_ids: set[str] = set()
+        for event in harvests:
+            run_id = _normalise_run_id(getattr(event, "run_id", None))
+            if run_id:
+                species_run_ids.add(run_id)
         for item in species_breakdown.get(species_id, []):
             for run_id in item.get("run_ids") or ():
-                text = str(run_id).strip()
+                text = _normalise_run_id(run_id)
                 if text:
                     species_run_ids.add(text)
         metrics = dict(stat.metrics)
