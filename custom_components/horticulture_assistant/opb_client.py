@@ -105,7 +105,7 @@ async def async_fetch_field(hass, species: str, field: str, token: str | None = 
     possible, otherwise ``None``. ``url`` points to the species detail page so
     it can be used for citation links.
     """
-    session = hass.helpers.aiohttp_client.async_get_clientsession()
+    session = hass.helpers.aiohttp_client.async_get_clientsession(hass)
     client = OpenPlantbookClient(session, token)
     now = datetime.now(UTC)
     cached = _SPECIES_CACHE.get(species)
