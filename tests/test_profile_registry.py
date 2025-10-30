@@ -70,6 +70,43 @@ async def test_async_add_profile_handles_none_option_profiles(hass):
     assert pid in entry.options[CONF_PROFILES]
 
 
+async def test_async_add_profile_deduplicates_sequence_sensors(hass):
+    """Sensor lists cloned from existing profiles should remove duplicates."""
+
+    entry = await _make_entry(
+        hass,
+        {
+            CONF_PROFILES: {
+                "base": {
+                    "name": "Base",
+                    "sensors": {
+                        "moisture": [
+                            "sensor.one",
+                            "sensor.one",
+                            "sensor.two",
+                            "sensor.two",
+                        ]
+                    },
+                }
+            }
+        },
+    )
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    clone_id = await reg.async_add_profile("Clone", base_id="base")
+
+    payload = entry.options[CONF_PROFILES][clone_id]
+    assert payload["sensors"]["moisture"] == ["sensor.one", "sensor.two"]
+
+    general = payload.get("general") or {}
+    sensors = general.get("sensors") or {}
+    assert sensors["moisture"] == ["sensor.one", "sensor.two"]
+
+    profile = reg._profiles[clone_id]
+    assert profile.general["sensors"]["moisture"] == ["sensor.one", "sensor.two"]
+
+
 async def test_async_load_skips_invalid_stored_profile(hass, monkeypatch, caplog):
     entry = await _make_entry(
         hass,
