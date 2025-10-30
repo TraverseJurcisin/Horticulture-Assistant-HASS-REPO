@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from collections import Counter, defaultdict
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from contextlib import suppress
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
@@ -895,7 +895,7 @@ def _compute_environment_snapshot(profile: BioProfile) -> tuple[ComputedStatSnap
 
     for event in runs:
         env = event.environment
-        if isinstance(env, dict):
+        if isinstance(env, Mapping):
             for raw_key, metric_key in ENVIRONMENT_FIELDS.items():
                 value = _to_float(env.get(raw_key))
                 if value is None:
