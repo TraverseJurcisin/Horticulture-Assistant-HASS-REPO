@@ -118,7 +118,8 @@ def _normalise_sensor_binding(value: Any) -> str | list[str] | None:
             if trimmed:
                 items.append(trimmed)
         if items:
-            return items
+            deduped = list(dict.fromkeys(items))
+            return deduped
         return None
 
     return None
