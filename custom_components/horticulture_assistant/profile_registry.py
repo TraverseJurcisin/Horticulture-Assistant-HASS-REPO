@@ -135,6 +135,36 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
     return None
 
 
+def _normalise_scope(value: Any) -> str | None:
+    """Return a canonical scope string if ``value`` matches a known option."""
+
+    if not isinstance(value, str):
+        return None
+    text = value.strip()
+    if not text:
+        return None
+    lowered = text.casefold()
+    for choice in PROFILE_SCOPE_CHOICES:
+        if lowered == choice.casefold():
+            return choice
+    return None
+
+
+def _coerce_scope(value: Any) -> str | None:
+    """Normalise ``value`` to a profile scope, raising when it is invalid."""
+
+    normalised = _normalise_scope(value)
+    if normalised is not None:
+        return normalised
+    if value:
+        if isinstance(value, str):
+            if value.strip():
+                raise ValueError(f"invalid scope {value}")
+        else:
+            raise ValueError(f"invalid scope {value}")
+    return None
+
+
 _SCHEMA_PATH = Path(__file__).parent / "data" / "schema" / "bio_profile.schema.json"
 _PROFILE_SCHEMA: dict[str, Any] | None = None
 
@@ -1166,6 +1196,8 @@ class ProfileRegistry:
 
         new_profile: dict[str, Any] = {"name": name}
         base_profile_obj: BioProfile | None = None
+        requested_scope = _coerce_scope(scope)
+        inferred_scope: str | None = None
         if base_id:
             source = profiles.get(base_id)
             if source is None:
@@ -1182,7 +1214,7 @@ class ProfileRegistry:
             source_map = dict(source)
             new_profile = deepcopy(source_map)
             new_profile["name"] = name
-            if scope is None:
+            if requested_scope is None:
                 candidate_scope = None
                 general = source_map.get("general")
                 if isinstance(general, Mapping):
@@ -1191,11 +1223,9 @@ class ProfileRegistry:
                     candidate_scope = source_map.get(CONF_PROFILE_SCOPE) or source_map.get("scope")
                 if candidate_scope is None and isinstance(base_profile_obj, BioProfile):
                     candidate_scope = base_profile_obj.general.get(CONF_PROFILE_SCOPE)
-                scope = candidate_scope
+                inferred_scope = _coerce_scope(candidate_scope)
 
-        resolved_scope = scope or PROFILE_SCOPE_DEFAULT
-        if resolved_scope not in PROFILE_SCOPE_CHOICES:
-            raise ValueError(f"invalid scope {resolved_scope}")
+        resolved_scope = requested_scope or inferred_scope or PROFILE_SCOPE_DEFAULT
 
         ensure_sections(
             new_profile,
@@ -1533,9 +1563,11 @@ class ProfileRegistry:
         else:
             general.pop("plant_type", None)
 
-        resolved_scope = scope or general.get(CONF_PROFILE_SCOPE) or PROFILE_SCOPE_DEFAULT
-        if resolved_scope not in PROFILE_SCOPE_CHOICES:
-            raise ValueError(f"invalid scope {resolved_scope}")
+        requested_scope = _coerce_scope(scope)
+        resolved_scope = requested_scope
+        if resolved_scope is None:
+            existing_scope = _coerce_scope(general.get(CONF_PROFILE_SCOPE))
+            resolved_scope = existing_scope or PROFILE_SCOPE_DEFAULT
         general[CONF_PROFILE_SCOPE] = resolved_scope
 
         if species_display:
