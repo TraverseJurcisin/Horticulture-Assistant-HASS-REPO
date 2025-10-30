@@ -38,33 +38,55 @@ def _safe_component(value: Any) -> str:
 
     text = text.replace("\\", "/")
     pure = PurePath(text)
-    if pure.parts:
-        candidate = pure.name if len(pure.parts) != 1 else pure.parts[0]
-    else:
-        candidate = text
 
-    candidate = candidate.strip().strip(".")
-    if not candidate or candidate in {".", ".."}:
+    segments: list[str] = []
+    for segment in pure.parts:
+        cleaned = segment.strip()
+        if not cleaned or cleaned in {".", ".."}:
+            continue
+        segments.append(cleaned)
+
+    if not segments:
+        candidate = text.strip().strip("./")
+        if candidate:
+            segments = [candidate]
+        else:
+            return "plant"
+
+    normalised_parts: list[str] = []
+    for segment in segments:
+        safe = segment.replace("/", "_").replace("\\", "_")
+        for char in _WINDOWS_INVALID_CHARS:
+            if char in safe:
+                safe = safe.replace(char, "_")
+        safe = safe.strip().strip(".")
+        if not safe:
+            continue
+
+        stem, *suffix = safe.split(".")
+        stem_lower = stem.lower()
+        if stem_lower in _WINDOWS_RESERVED_NAMES:
+            safe_value = f"{stem_lower}_profile"
+            if suffix:
+                cleaned_suffix = "_".join(part for part in suffix if part)
+                cleaned_suffix = cleaned_suffix.replace(".", "_").strip("_")
+                if cleaned_suffix:
+                    safe_value = f"{safe_value}_{cleaned_suffix}"
+        else:
+            trailing = "_".join(part for part in suffix if part)
+            if trailing:
+                safe_value = f"{stem}_{trailing}".replace(".", "_")
+            else:
+                safe_value = stem
+
+        safe_value = safe_value.strip("_")
+        if safe_value:
+            normalised_parts.append(safe_value)
+
+    if not normalised_parts:
         return "plant"
 
-    safe = candidate.replace("/", "_").replace("\\", "_")
-    for char in _WINDOWS_INVALID_CHARS:
-        if char in safe:
-            safe = safe.replace(char, "_")
-    safe = safe.strip().strip(".")
-    if not safe:
-        return "plant"
-
-    stem, *suffix = safe.split(".")
-    stem_lower = stem.lower()
-    if stem_lower in _WINDOWS_RESERVED_NAMES:
-        safe = f"{stem_lower}_profile"
-        if suffix:
-            cleaned_suffix = "_".join(part for part in suffix if part)
-            cleaned_suffix = cleaned_suffix.replace(".", "_").strip("_")
-            if cleaned_suffix:
-                safe = f"{safe}_{cleaned_suffix}"
-    return safe or "plant"
+    return "_".join(normalised_parts)
 
 
 def write_profile_sections(
