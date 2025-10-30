@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from custom_components.horticulture_assistant.engine.metrics import lux_to_ppfd
 from custom_components.horticulture_assistant.utils import state_helpers
 
 pkg = types.ModuleType("custom_components.horticulture_assistant")
@@ -120,3 +121,31 @@ async def test_coordinator_converts_fahrenheit_to_celsius(hass, monkeypatch):
 
     assert metrics["dew_point"] == pytest.approx(16.7, rel=1e-2)
     assert metrics["vpd"] == pytest.approx(1.27, rel=1e-2)
+
+
+@pytest.mark.asyncio
+async def test_coordinator_handles_sequence_sensor_bindings(hass):
+    """Coordinator should gracefully handle sequence sensor mappings."""
+
+    entry = types.SimpleNamespace(entry_id="entry", options={}, data={})
+    coordinator = HorticultureCoordinator(hass, entry)
+
+    hass.states.async_set("sensor.light_primary", "250")
+    hass.states.async_set("sensor.temp_primary", "21")
+    hass.states.async_set("sensor.humidity_main", "55")
+    hass.states.async_set("sensor.moisture_probe", "40")
+
+    metrics = await coordinator._compute_metrics(
+        "plant_sequence",
+        {
+            "sensors": {
+                "illuminance": [None, "  sensor.light_primary  "],
+                "temperature": ("sensor.temp_primary", "sensor.temp_backup"),
+                "humidity": ["sensor.humidity_main"],
+                "moisture": ["", "sensor.moisture_probe"],
+            }
+        },
+    )
+
+    assert metrics["ppfd"] == pytest.approx(lux_to_ppfd(250))
+    assert metrics["moisture"] == pytest.approx(40)
