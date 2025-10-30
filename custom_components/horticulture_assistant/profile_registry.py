@@ -134,6 +134,7 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
         return None
     if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
         items: list[str] = []
+        seen: set[str] = set()
         for item in value:
             if isinstance(item, str):
                 cleaned = item.strip()
@@ -141,8 +142,9 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
                 cleaned = ""
             else:
                 cleaned = str(item).strip()
-            if cleaned:
+            if cleaned and cleaned not in seen:
                 items.append(cleaned)
+                seen.add(cleaned)
         if items:
             return list(dict.fromkeys(items))
         return None
