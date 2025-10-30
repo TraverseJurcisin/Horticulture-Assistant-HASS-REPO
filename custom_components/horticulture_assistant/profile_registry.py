@@ -217,6 +217,19 @@ class ProfileRegistry:
             _LOGGER.debug("History exporter disabled: %s", err)
             self._history_exporter = None
 
+    def _options_profiles_copy(self) -> dict[str, Any]:
+        """Return a mutable copy of the stored profile options mapping."""
+
+        stored = self.entry.options.get(CONF_PROFILES)
+        if isinstance(stored, Mapping):
+            return dict(stored)
+        if stored is None:
+            return {}
+        try:
+            return dict(stored)
+        except (TypeError, ValueError):
+            return {}
+
     def collect_onboarding_warnings(self) -> list[str]:
         """Return human-readable onboarding warnings for outstanding issues."""
 
@@ -1110,7 +1123,7 @@ class ProfileRegistry:
         allows tests and other components to call the logic directly.
         """
 
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profiles = self._options_profiles_copy()
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
@@ -1186,7 +1199,7 @@ class ProfileRegistry:
         base_id: str | None = None,
         scope: str | None = None,
     ) -> str:
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profiles = self._options_profiles_copy()
         base = slugify(name) or "profile"
         candidate = base
         idx = 1
@@ -1291,7 +1304,7 @@ class ProfileRegistry:
     async def async_delete_profile(self, profile_id: str) -> None:
         """Remove ``profile_id`` from the registry and storage."""
 
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profiles = self._options_profiles_copy()
         if profile_id not in profiles:
             raise ValueError(f"unknown profile {profile_id}")
         profiles.pop(profile_id)
@@ -1311,7 +1324,7 @@ class ProfileRegistry:
     async def async_link_sensors(self, profile_id: str, sensors: dict[str, str]) -> None:
         """Link multiple sensor entities to ``profile_id``."""
 
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profiles = self._options_profiles_copy()
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
@@ -1368,7 +1381,7 @@ class ProfileRegistry:
     async def async_set_profile_sensors(self, profile_id: str, sensors: Mapping[str, str] | None) -> None:
         """Replace the sensor mapping for ``profile_id``."""
 
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profiles = self._options_profiles_copy()
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
@@ -1443,7 +1456,7 @@ class ProfileRegistry:
     ) -> None:
         """Update threshold targets for ``profile_id`` while syncing metadata."""
 
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profiles = self._options_profiles_copy()
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
@@ -1541,7 +1554,7 @@ class ProfileRegistry:
     ) -> None:
         """Update high level metadata for ``profile_id``."""
 
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profiles = self._options_profiles_copy()
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
@@ -1861,7 +1874,7 @@ class ProfileRegistry:
         # and other helpers immediately see the imported thresholds and
         # metadata.  ``BioProfile.to_json`` returns mutable references for the
         # ``general`` section, so work on copies before storing them.
-        profiles = dict(self.entry.options.get(CONF_PROFILES, {}))
+        profiles = self._options_profiles_copy()
         options_payload = new_prof.to_json()
         options_payload["name"] = new_prof.display_name
         general_payload = (

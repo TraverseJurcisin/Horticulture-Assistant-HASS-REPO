@@ -58,6 +58,18 @@ async def test_missing_species_warning_logged(hass, caplog):
     assert any("species.unknown" in record.message for record in caplog.records)
 
 
+async def test_async_add_profile_handles_none_option_profiles(hass):
+    """Profiles options set to ``None`` should be treated as empty mapping."""
+
+    entry = await _make_entry(hass, {CONF_PROFILES: None})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("Seedling")
+
+    assert pid in entry.options[CONF_PROFILES]
+
+
 async def test_async_load_skips_invalid_stored_profile(hass, monkeypatch, caplog):
     entry = await _make_entry(
         hass,

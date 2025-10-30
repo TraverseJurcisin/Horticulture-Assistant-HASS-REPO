@@ -253,6 +253,43 @@ async def test_async_recommend_variable_honours_per_call_ttl(monkeypatch, hass):
 
 
 @pytest.mark.asyncio
+async def test_async_recommend_variable_rejects_non_positive_ttl(monkeypatch, hass):
+    _AI_CACHE.clear()
+
+    class FixedDateTime(dt):
+        current = dt(2024, 6, 1, tzinfo=ai_client_mod.UTC)
+
+        @classmethod
+        def now(cls, tz=None):
+            if tz is not None:
+                return cls.current.astimezone(tz)
+            return cls.current
+
+        @classmethod
+        def advance(cls, **kwargs):
+            cls.current = cls.current + timedelta(**kwargs)
+
+    monkeypatch.setattr(ai_client_mod, "datetime", FixedDateTime)
+
+    mock = AsyncMock(side_effect=[(3.0, 0.4, "first", []), (4.0, 0.5, "second", [])])
+    monkeypatch.setattr(AIClient, "generate_setpoint", mock)
+
+    first = await async_recommend_variable(hass, key="temp", plant_id="p2", ttl_hours=0)
+    assert first["value"] == 3.0
+    assert mock.call_count == 1
+
+    FixedDateTime.advance(hours=100)
+    second = await async_recommend_variable(hass, key="temp", plant_id="p2", ttl_hours=0)
+    assert second == first
+    assert mock.call_count == 1
+
+    FixedDateTime.advance(hours=800)
+    third = await async_recommend_variable(hass, key="temp", plant_id="p2", ttl_hours=0)
+    assert third["value"] == 4.0
+    assert mock.call_count == 2
+
+
+@pytest.mark.asyncio
 async def test_async_recommend_variable_returns_copy_of_cached_result(monkeypatch, hass):
     _AI_CACHE.clear()
     monkeypatch.setattr(AIClient, "generate_setpoint", AsyncMock(return_value=(3.0, 0.9, "summary", [])))
