@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Sequence
 from functools import cache
 from pathlib import Path
 
@@ -15,6 +16,27 @@ __all__ = ["list_tags", "get_plants_with_tag", "search_tags"]
 _TAGS_FILE = Path(__file__).resolve().parent.parent / "tags.json"
 
 
+def _normalise_plants(value: object) -> list[str]:
+    """Return a list of plant identifiers derived from ``value``."""
+
+    if value is None:
+        return []
+    if isinstance(value, str):
+        plant = value.strip()
+        return [plant] if plant else []
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+        plants: list[str] = []
+        for item in value:
+            if item is None:
+                continue
+            text = str(item).strip()
+            if text:
+                plants.append(text)
+        return plants
+    text = str(value).strip()
+    return [text] if text else []
+
+
 @cache
 def _load_tags() -> dict[str, list[str]]:
     """Return contents of ``tags.json`` as ``{tag: [plant_ids]}``."""
@@ -23,7 +45,12 @@ def _load_tags() -> dict[str, list[str]]:
     with open(_TAGS_FILE, encoding="utf-8") as f:
         try:
             data = json.load(f)
-            return {str(k): list(v) for k, v in data.items()}
+            tags: dict[str, list[str]] = {}
+            for key, value in data.items():
+                plants = _normalise_plants(value)
+                if plants:
+                    tags[str(key)] = plants
+            return tags
         except Exception:
             return {}
 

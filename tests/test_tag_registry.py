@@ -8,7 +8,7 @@ from pathlib import Path
 from custom_components.horticulture_assistant.utils import tag_registry
 
 
-def _write_tags(tmp_path: Path, data: dict[str, list[str]]) -> Path:
+def _write_tags(tmp_path: Path, data: dict[str, object]) -> Path:
     tag_file = tmp_path / "tags.json"
     tag_file.write_text(json.dumps(data), encoding="utf-8")
     return tag_file
@@ -39,4 +39,27 @@ def test_search_tags_returns_copies(tmp_path, monkeypatch) -> None:
     matches["herb"].append("oregano")
 
     assert tag_registry.search_tags("her") == {"herb": ["basil"]}
+    tag_registry._load_tags.cache_clear()
+
+
+def test_load_tags_handles_string_values(tmp_path, monkeypatch) -> None:
+    """Plain string tag values should be normalised into single-item lists."""
+
+    tag_file = _write_tags(tmp_path, {"herb": "basil"})
+    monkeypatch.setattr(tag_registry, "_TAGS_FILE", tag_file, raising=False)
+    tag_registry._load_tags.cache_clear()
+
+    assert tag_registry.get_plants_with_tag("herb") == ["basil"]
+    tag_registry._load_tags.cache_clear()
+
+
+def test_load_tags_handles_non_mapping_root(tmp_path, monkeypatch) -> None:
+    """Non-mapping ``tags.json`` data should be ignored gracefully."""
+
+    tag_file = tmp_path / "tags.json"
+    tag_file.write_text(json.dumps(["not", "mapping"]), encoding="utf-8")
+    monkeypatch.setattr(tag_registry, "_TAGS_FILE", tag_file, raising=False)
+    tag_registry._load_tags.cache_clear()
+
+    assert tag_registry.list_tags() == []
     tag_registry._load_tags.cache_clear()
