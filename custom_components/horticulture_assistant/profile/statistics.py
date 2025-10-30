@@ -766,6 +766,8 @@ _RATIO_NUMBER_PATTERN = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
 _FRACTION_PATTERN = re.compile(
     r"(?P<numerator>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*/\s*(?P<denominator>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)"
 )
+_THOUSANDS_COMMA_PATTERN = re.compile(r"^\d{1,3}(?:,\d{3})+$")
+_THOUSANDS_DOT_PATTERN = re.compile(r"^\d{1,3}(?:\.\d{3})+$")
 
 
 def _normalise_ratio_text(text: str) -> str:
@@ -773,16 +775,40 @@ def _normalise_ratio_text(text: str) -> str:
 
     def _normalise_component(component: str) -> str:
         compact = component.replace(" ", "")
-        if "," in compact:
-            if "." in compact:
-                compact = compact.replace(".", "")
-                compact = compact.replace(",", ".")
-            elif compact.count(",") > 1:
-                compact = compact.replace(",", "")
+        if not compact:
+            return compact
+
+        comma_pos = compact.rfind(",")
+        dot_pos = compact.rfind(".")
+
+        decimal_sep: str | None = None
+        thousand_sep: str | None = None
+
+        if comma_pos != -1 and dot_pos != -1:
+            if comma_pos > dot_pos:
+                decimal_sep, thousand_sep = ",", "."
             else:
-                compact = compact.replace(",", ".")
-        elif "." in compact and compact.count(".") > 1:
-            compact = compact.replace(".", "")
+                decimal_sep, thousand_sep = ".", ","
+        elif comma_pos != -1:
+            if _THOUSANDS_COMMA_PATTERN.fullmatch(compact) or compact.count(",") > 1:
+                decimal_sep = None
+                thousand_sep = ","
+            else:
+                decimal_sep, thousand_sep = ",", "."
+        elif dot_pos != -1:
+            if _THOUSANDS_DOT_PATTERN.fullmatch(compact) or compact.count(".") > 1:
+                decimal_sep = None
+                thousand_sep = "."
+            else:
+                decimal_sep, thousand_sep = ".", ","
+        else:
+            return compact
+
+        if thousand_sep and thousand_sep != decimal_sep:
+            compact = compact.replace(thousand_sep, "")
+        if decimal_sep:
+            compact = compact.replace(decimal_sep, ".")
+
         return compact
 
     if "/" in text:

@@ -105,6 +105,12 @@ def test_coerce_ratio_value_handles_decimal_comma_inputs():
     assert _coerce_ratio_value("3,5/4,0") == pytest.approx(0.875)
 
 
+def test_coerce_ratio_value_handles_us_locale_thousands_and_decimals():
+    assert _coerce_ratio_value("1,234%") == pytest.approx(1.0)
+    assert _coerce_ratio_value("1,234.5%") == pytest.approx(1.0)
+    assert _coerce_ratio_value("50,000") == pytest.approx(1.0)
+
+
 def test_recompute_statistics_handles_profiles_without_harvests():
     profile = BioProfile(profile_id="empty", display_name="Empty")
     recompute_statistics([profile])
