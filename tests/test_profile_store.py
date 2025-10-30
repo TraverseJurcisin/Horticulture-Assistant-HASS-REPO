@@ -1,6 +1,7 @@
 import json
 import types
 from copy import deepcopy
+from enum import Enum
 from typing import Any
 
 import pytest
@@ -371,6 +372,41 @@ async def test_async_create_profile_normalises_scope(hass, tmp_path, monkeypatch
     case_profile = await store.async_get("Case Scope")
     case_general = case_profile["general"] if isinstance(case_profile.get("general"), dict) else {}
     assert case_general.get(CONF_PROFILE_SCOPE) == "grow_zone"
+
+
+@pytest.mark.asyncio
+async def test_async_create_profile_accepts_enum_scope(hass, tmp_path, monkeypatch) -> None:
+    """Enum scope values should round-trip when cloning or creating profiles."""
+
+    class DummyScope(Enum):
+        GROW_ZONE = "grow_zone"
+        CROP_BATCH = "crop_batch"
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    source_payload = {
+        "display_name": "Enum Source",
+        "general": {CONF_PROFILE_SCOPE: DummyScope.GROW_ZONE},
+    }
+
+    await store.async_create_profile("Enum Clone", clone_from=source_payload)
+
+    enum_clone = await store.async_get("Enum Clone")
+    assert enum_clone is not None
+    clone_general = enum_clone["general"] if isinstance(enum_clone.get("general"), dict) else {}
+    assert clone_general.get(CONF_PROFILE_SCOPE) == "grow_zone"
+    assert enum_clone.get("scope") == "grow_zone"
+    # Ensure the source payload is not mutated during cloning
+    assert source_payload["general"][CONF_PROFILE_SCOPE] is DummyScope.GROW_ZONE
+
+    await store.async_create_profile("Enum Scope Param", scope=DummyScope.CROP_BATCH)
+    enum_param = await store.async_get("Enum Scope Param")
+    assert enum_param is not None
+    param_general = enum_param["general"] if isinstance(enum_param.get("general"), dict) else {}
+    assert param_general.get(CONF_PROFILE_SCOPE) == "crop_batch"
+    assert enum_param.get("scope") == "crop_batch"
 
 
 @pytest.mark.asyncio
