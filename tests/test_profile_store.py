@@ -227,6 +227,34 @@ async def test_async_create_profile_accepts_sequence_sensor_parameters(hass, tmp
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_deduplicates_sequence_bindings(hass, tmp_path, monkeypatch) -> None:
+    """Sequence-based sensor mappings should drop duplicate entries."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_create_profile(
+        "Deduplicated Sensors",
+        sensors={
+            "environment": [
+                " sensor.one ",
+                "sensor.one",
+                "SENSOR.ONE",
+                "sensor.two",
+                "sensor.Two ",
+            ]
+        },
+    )
+
+    profile = await store.async_get("Deduplicated Sensors")
+    assert profile is not None
+    assert profile["sensors"] == {"environment": ["sensor.one", "sensor.two"]}
+    general = profile["general"] if isinstance(profile.get("general"), dict) else {}
+    assert general.get("sensors") == {"environment": ["sensor.one", "sensor.two"]}
+
+
+@pytest.mark.asyncio
 async def test_async_list_handles_corrupted_payload(hass, tmp_path, monkeypatch) -> None:
     """Corrupted profile files should not prevent listing remaining entries."""
 

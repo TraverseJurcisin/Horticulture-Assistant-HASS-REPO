@@ -111,12 +111,18 @@ def _normalise_sensor_binding(value: Any) -> str | list[str] | None:
 
     if isinstance(value, Sequence) and not isinstance(value, (str | bytes | bytearray)):
         items: list[str] = []
+        seen: set[str] = set()
         for item in value:
             if not isinstance(item, str):
                 continue
             trimmed = item.strip()
-            if trimmed:
-                items.append(trimmed)
+            if not trimmed:
+                continue
+            key = trimmed.casefold()
+            if key in seen:
+                continue
+            seen.add(key)
+            items.append(trimmed)
         if items:
             return items
         return None
