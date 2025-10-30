@@ -28,6 +28,16 @@ def test_aggregate_nutrients():
     assert totals == {"N": 75, "K": 20, "P": 10}
 
 
+def test_aggregate_nutrients_with_strings_and_invalid_values():
+    entries = [
+        {"nutrient_formulation": {"N": "10", "P": " 5.5 ", "K": None}},
+        {"nutrient_formulation": {"N": 2.5, "P": True, "Ca": ""}},
+        {"nutrient_formulation": "invalid"},
+    ]
+    totals = _aggregate_nutrients(entries)
+    assert totals == {"N": 12.5, "P": 5.5}
+
+
 def test_average_sensor_data():
     entries = [
         {"sensor_type": "moisture", "value": 50},

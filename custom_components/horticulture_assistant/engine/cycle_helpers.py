@@ -84,14 +84,45 @@ def summarize_irrigation(entries: list[dict]) -> dict[str, object]:
     }
 
 
+def _coerce_float(value: object) -> float | None:
+    """Return ``value`` as a float when possible."""
+
+    if value is None:
+        return None
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int | float):
+        return float(value)
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return None
+        try:
+            return float(text)
+        except ValueError:
+            return None
+    return None
+
+
 def aggregate_nutrients(entries: list[dict]) -> dict[str, float]:
     """Return total nutrient amounts from ``entries``."""
     totals: dict[str, float] = {}
     for entry in entries:
         formulation = entry.get("nutrient_formulation", {})
+        if not isinstance(formulation, Mapping):
+            continue
         for nutrient, amount in formulation.items():
-            totals[nutrient] = totals.get(nutrient, 0.0) + amount
-    return totals
+            value = _coerce_float(amount)
+            if value is None:
+                continue
+            totals[nutrient] = totals.get(nutrient, 0.0) + value
+    result: dict[str, float] = {}
+    for nutrient, total in totals.items():
+        if total.is_integer():
+            result[nutrient] = float(int(total))
+        else:
+            result[nutrient] = round(total, 4)
+    return result
 
 
 def average_sensor_data(entries: list[dict]) -> dict[str, float]:
