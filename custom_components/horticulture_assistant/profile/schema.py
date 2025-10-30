@@ -133,6 +133,8 @@ class RunEvent:
         def _float_or_none(value: Any) -> float | None:
             if value is None:
                 return None
+            if isinstance(value, bool):
+                return None
             if isinstance(value, int | float):
                 try:
                     return float(value)
@@ -175,6 +177,8 @@ class RunEvent:
                 return None
 
         def _int_or_none(value: Any) -> int | None:
+            if isinstance(value, bool):
+                return None
             try:
                 return int(float(value))
             except (TypeError, ValueError):
