@@ -45,14 +45,14 @@ def _load_tags() -> dict[str, list[str]]:
     with open(_TAGS_FILE, encoding="utf-8") as f:
         try:
             data = json.load(f)
+            tags: dict[str, list[str]] = {}
+            for key, value in data.items():
+                plants = _normalise_plants(value)
+                if plants:
+                    tags[str(key)] = plants
+            return tags
         except Exception:
             return {}
-    tags: dict[str, list[str]] = {}
-    for key, value in data.items():
-        plants = _normalise_plants(value)
-        if plants:
-            tags[str(key)] = plants
-    return tags
 
 
 def list_tags() -> list[str]:

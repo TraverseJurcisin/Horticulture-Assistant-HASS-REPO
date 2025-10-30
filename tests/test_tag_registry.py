@@ -51,3 +51,15 @@ def test_load_tags_handles_string_values(tmp_path, monkeypatch) -> None:
 
     assert tag_registry.get_plants_with_tag("herb") == ["basil"]
     tag_registry._load_tags.cache_clear()
+
+
+def test_load_tags_handles_non_mapping_root(tmp_path, monkeypatch) -> None:
+    """Non-mapping ``tags.json`` data should be ignored gracefully."""
+
+    tag_file = tmp_path / "tags.json"
+    tag_file.write_text(json.dumps(["not", "mapping"]), encoding="utf-8")
+    monkeypatch.setattr(tag_registry, "_TAGS_FILE", tag_file, raising=False)
+    tag_registry._load_tags.cache_clear()
+
+    assert tag_registry.list_tags() == []
+    tag_registry._load_tags.cache_clear()
