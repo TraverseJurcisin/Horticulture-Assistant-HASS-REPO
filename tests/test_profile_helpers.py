@@ -131,7 +131,7 @@ def test_write_profile_sections_sanitises_directory(tmp_path, caplog):
     assert result == "../evil/..//weeds"
 
     # Files are written to a sanitised directory under the base path.
-    safe_dir = tmp_path / "weeds"
+    safe_dir = tmp_path / "evil_weeds"
     assert safe_dir.is_dir()
     assert (safe_dir / "profile.json").is_file()
     assert any(str(safe_dir) in message for message in caplog.messages)
@@ -168,3 +168,21 @@ def test_write_profile_sections_accepts_non_string_identifier(tmp_path):
     plant_dir = tmp_path / "12345"
     assert plant_dir.is_dir()
     assert (plant_dir / "profile.json").is_file()
+
+
+def test_write_profile_sections_preserves_distinct_path_segments(tmp_path):
+    """Path-like identifiers should produce unique sanitized directories."""
+
+    sections = {"profile.json": {"foo": "bar"}}
+
+    write_profile_sections("north/garden", sections, base_path=tmp_path)
+    write_profile_sections("south/garden", sections, base_path=tmp_path)
+
+    north_dir = tmp_path / "north_garden"
+    south_dir = tmp_path / "south_garden"
+
+    assert north_dir.is_dir()
+    assert south_dir.is_dir()
+    assert north_dir != south_dir
+    assert (north_dir / "profile.json").is_file()
+    assert (south_dir / "profile.json").is_file()
