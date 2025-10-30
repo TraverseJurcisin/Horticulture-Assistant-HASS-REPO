@@ -29,6 +29,19 @@ _SEP_RE = re.compile(r"[;,\s]+")
 # Collapse all whitespace characters (including non-breaking spaces) when
 # normalising numeric strings.
 _WHITESPACE_RE = re.compile(r"\s+")
+# Normalise common Unicode sign variants (e.g. MINUS SIGN, EN DASH) so numeric
+# parsing treats them identically to the ASCII ``-``/``+`` characters.
+_SIGN_TRANSLATION = str.maketrans(
+    {
+        "−": "-",  # U+2212 MINUS SIGN
+        "﹣": "-",  # U+FE63 SMALL HYPHEN-MINUS
+        "－": "-",  # U+FF0D FULLWIDTH HYPHEN-MINUS
+        "–": "-",  # U+2013 EN DASH (sometimes used for negatives)
+        "—": "-",  # U+2014 EM DASH (defensive)
+        "＋": "+",  # U+FF0B FULLWIDTH PLUS SIGN
+        "﹢": "+",  # U+FE62 SMALL PLUS SIGN
+    }
+)
 
 
 def _normalise_numeric_string(value: str) -> str:
@@ -38,7 +51,7 @@ def _normalise_numeric_string(value: str) -> str:
     if not trimmed:
         return trimmed
 
-    collapsed = _WHITESPACE_RE.sub("", trimmed)
+    collapsed = _WHITESPACE_RE.sub("", trimmed).translate(_SIGN_TRANSLATION)
     sign = ""
     if collapsed and collapsed[0] in "+-":
         sign, collapsed = collapsed[0], collapsed[1:]
