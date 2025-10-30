@@ -24,7 +24,7 @@ from .engine.metrics import (
     profile_status,
     vpd_kpa,
 )
-from .utils.state_helpers import parse_entities
+from .utils.state_helpers import get_numeric_state, parse_entities
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -194,58 +194,39 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         status: str | None = None
 
         if illuminance:
-            state = self.hass.states.get(illuminance)
-            if state is not None and state.state not in {"unknown", "unavailable"}:
-                try:
-                    lux = float(state.state)
-                except (TypeError, ValueError):
-                    lux = None
-                if lux is not None:
-                    ppfd = lux_to_ppfd(lux)
-                    interval_td = self.update_interval
-                    interval_seconds = (
-                        interval_td.total_seconds()
-                        if interval_td is not None
-                        else float(self._resolve_interval(self._entry) * 60)
-                    )
-                    total = accumulate_dli(
-                        self._dli_totals.get(profile_id, 0.0),
-                        ppfd,
-                        interval_seconds,
-                    )
-                    self._dli_totals[profile_id] = total
-                    dli = total
+            lux = get_numeric_state(self.hass, illuminance)
+            if lux is not None:
+                ppfd = lux_to_ppfd(lux)
+                interval_td = self.update_interval
+                interval_seconds = (
+                    interval_td.total_seconds()
+                    if interval_td is not None
+                    else float(self._resolve_interval(self._entry) * 60)
+                )
+                total = accumulate_dli(
+                    self._dli_totals.get(profile_id, 0.0),
+                    ppfd,
+                    interval_seconds,
+                )
+                self._dli_totals[profile_id] = total
+                dli = total
 
         t_c: float | None = None
         if temperature:
-            t_state = self.hass.states.get(temperature)
-            if t_state is not None and t_state.state not in {"unknown", "unavailable"}:
-                try:
-                    t = float(t_state.state)
-                except (TypeError, ValueError):
-                    t = None
-                if t is not None:
-                    unit = t_state.attributes.get("unit_of_measurement")
-                    if _is_fahrenheit(unit):
-                        t = TemperatureConverter.convert(t, UnitOfTemperature.FAHRENHEIT, UnitOfTemperature.CELSIUS)
-                    t_c = t
+            t = get_numeric_state(self.hass, temperature)
+            if t is not None:
+                t_state = self.hass.states.get(temperature)
+                unit = t_state.attributes.get("unit_of_measurement") if t_state else None
+                if _is_fahrenheit(unit):
+                    t = TemperatureConverter.convert(t, UnitOfTemperature.FAHRENHEIT, UnitOfTemperature.CELSIUS)
+                t_c = t
 
         h: float | None = None
         if humidity:
-            h_state = self.hass.states.get(humidity)
-            if h_state is not None and h_state.state not in {"unknown", "unavailable"}:
-                try:
-                    h = float(h_state.state)
-                except (TypeError, ValueError):
-                    h = None
+            h = get_numeric_state(self.hass, humidity)
 
         if moisture:
-            m_state = self.hass.states.get(moisture)
-            if m_state is not None and m_state.state not in {"unknown", "unavailable"}:
-                try:
-                    moisture_pct = float(m_state.state)
-                except (TypeError, ValueError):
-                    moisture_pct = None
+            moisture_pct = get_numeric_state(self.hass, moisture)
 
         if t_c is not None and h is not None:
             dew_point = dew_point_c(t_c, h)

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from custom_components.horticulture_assistant.engine.metrics import lux_to_ppfd
+from custom_components.horticulture_assistant.engine.metrics import dew_point_c, lux_to_ppfd, vpd_kpa
 from custom_components.horticulture_assistant.utils import state_helpers
 
 pkg = types.ModuleType("custom_components.horticulture_assistant")
@@ -148,4 +148,35 @@ async def test_coordinator_handles_sequence_sensor_bindings(hass):
     )
 
     assert metrics["ppfd"] == pytest.approx(lux_to_ppfd(250))
+    assert metrics["moisture"] == pytest.approx(40)
+
+
+@pytest.mark.asyncio
+async def test_coordinator_parses_units_in_sensor_states(hass):
+    """Sensor states containing units should still be interpreted as numeric."""
+
+    entry = types.SimpleNamespace(entry_id="entry", options={}, data={})
+    coordinator = HorticultureCoordinator(hass, entry)
+
+    hass.states.async_set("sensor.light_units", "200 lx")
+    hass.states.async_set("sensor.temp_units", "22 °C", {"unit_of_measurement": "°C"})
+    hass.states.async_set("sensor.humidity_units", "55 %")
+    hass.states.async_set("sensor.moisture_units", "40 %")
+
+    metrics = await coordinator._compute_metrics(
+        "profile_units",
+        {
+            "sensors": {
+                "illuminance": "sensor.light_units",
+                "temperature": "sensor.temp_units",
+                "humidity": "sensor.humidity_units",
+                "moisture": "sensor.moisture_units",
+            }
+        },
+    )
+
+    expected_temp_c = 22.0
+    assert metrics["ppfd"] == pytest.approx(lux_to_ppfd(200))
+    assert metrics["dew_point"] == pytest.approx(dew_point_c(expected_temp_c, 55.0), rel=1e-4)
+    assert metrics["vpd"] == pytest.approx(vpd_kpa(expected_temp_c, 55.0), rel=1e-4)
     assert metrics["moisture"] == pytest.approx(40)
