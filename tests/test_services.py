@@ -41,11 +41,14 @@ else:  # pragma: no cover - exercised only when plugin installed
 
 services = importlib.import_module("custom_components.horticulture_assistant.services")
 const = importlib.import_module("custom_components.horticulture_assistant.const")
+sensor_validation = importlib.import_module("custom_components.horticulture_assistant.sensor_validation")
 CONF_API_KEY = const.CONF_API_KEY
 CONF_CLOUD_FEATURE_FLAGS = const.CONF_CLOUD_FEATURE_FLAGS
 DOMAIN = const.DOMAIN
 FEATURE_AI_ASSIST = const.FEATURE_AI_ASSIST
 FEATURE_IRRIGATION_AUTOMATION = const.FEATURE_IRRIGATION_AUTOMATION
+SensorValidationIssue = sensor_validation.SensorValidationIssue
+SensorValidationResult = sensor_validation.SensorValidationResult
 
 pytestmark = [
     pytest.mark.asyncio,
@@ -177,6 +180,78 @@ async def test_replace_sensor_service_device_class_mismatch(hass):
             },
             blocking=True,
         )
+
+
+async def test_sensor_warning_notification_cleared(hass, monkeypatch):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        title="Plant 1",
+        options={"profiles": {"plant1": {"name": "Plant 1"}}},
+    )
+    entry.add_to_hass(hass)
+    await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    notifications: list[tuple[str, dict]] = []
+    original_async_call = hass.services.async_call
+
+    async def spy_async_call(domain, service, data, *, blocking=False, return_response=False):
+        if domain == "persistent_notification":
+            notifications.append((service, dict(data)))
+            return None
+        return await original_async_call(
+            domain,
+            service,
+            data,
+            blocking=blocking,
+            return_response=return_response,
+        )
+
+    monkeypatch.setattr(hass.services, "async_call", spy_async_call)
+
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
+    monkeypatch.setattr(registry, "async_link_sensors", AsyncMock())
+
+    warning_issue = SensorValidationIssue(
+        role="moisture",
+        entity_id="sensor.bad",
+        issue="missing_unit",
+        severity="warning",
+    )
+    warning_result = SensorValidationResult(errors=[], warnings=[warning_issue])
+    clean_result = SensorValidationResult(errors=[], warnings=[])
+    results = iter([warning_result, clean_result])
+
+    def fake_validate(_hass, _sensors):
+        try:
+            return next(results)
+        except StopIteration:
+            return clean_result
+
+    monkeypatch.setattr(services, "validate_sensor_links", fake_validate)
+
+    await hass.services.async_call(
+        DOMAIN,
+        "update_sensors",
+        {"profile_id": "plant1", "moisture": "sensor.bad"},
+        blocking=True,
+    )
+    await hass.async_block_till_done()
+
+    assert notifications and notifications[0][0] == "create"
+    assert notifications[0][1].get("notification_id") == f"horticulture_sensor_{entry.entry_id}"
+
+    await hass.services.async_call(
+        DOMAIN,
+        "update_sensors",
+        {"profile_id": "plant1", "moisture": "sensor.good"},
+        blocking=True,
+    )
+    await hass.async_block_till_done()
+
+    assert notifications[-1][0] == "dismiss"
+    assert notifications[-1][1].get("notification_id") == f"horticulture_sensor_{entry.entry_id}"
 
 
 async def test_refresh_service(hass):

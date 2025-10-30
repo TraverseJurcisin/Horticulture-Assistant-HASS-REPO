@@ -1109,6 +1109,18 @@ class OptionsFlow(config_entries.OptionsFlow):
             )
         )
 
+    def _clear_sensor_warning(self) -> None:
+        if not self.hass.services.has_service("persistent_notification", "dismiss"):
+            return
+        self.hass.async_create_task(
+            self.hass.services.async_call(
+                "persistent_notification",
+                "dismiss",
+                {"notification_id": f"horticulture_sensor_{self._entry.entry_id}"},
+                blocking=False,
+            )
+        )
+
     async def async_step_basic(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         defaults = {
             CONF_MODEL: self._entry.options.get(
@@ -1221,6 +1233,10 @@ class OptionsFlow(config_entries.OptionsFlow):
                         errors[option_key] = issue.issue
                 if validation.warnings:
                     self._notify_sensor_warnings(validation.warnings)
+                else:
+                    self._clear_sensor_warning()
+            else:
+                self._clear_sensor_warning()
             if errors:
                 return self.async_show_form(
                     step_id="basic",
@@ -1871,8 +1887,10 @@ class OptionsFlow(config_entries.OptionsFlow):
 
             skip_requested = bool(user_input.get("skip_linking"))
             if not sensors:
+                self._clear_sensor_warning()
                 return self.async_create_entry(title="", data={})
             if skip_requested:
+                self._clear_sensor_warning()
                 return self.async_create_entry(title="", data={})
 
             validation = validate_sensor_links(self.hass, sensors)
@@ -1880,6 +1898,8 @@ class OptionsFlow(config_entries.OptionsFlow):
                 errors[issue.role] = issue.issue
             if validation.warnings:
                 self._notify_sensor_warnings(validation.warnings)
+            else:
+                self._clear_sensor_warning()
             if not errors:
                 await registry.async_link_sensors(pid, sensors)
                 return self.async_create_entry(title="", data={})
