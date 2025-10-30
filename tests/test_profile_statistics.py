@@ -253,6 +253,81 @@ def test_species_runs_tracked_includes_run_history_when_missing_from_harvests():
     assert contributors["cultivar"]["runs_tracked"] == 1
 
 
+def test_statistics_include_numeric_run_ids():
+    species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species",
+    )
+
+    cultivar.harvest_history.append(
+        HarvestEvent(
+            harvest_id="h-num",
+            profile_id="cultivar",
+            species_id="species",
+            run_id=0,
+            harvested_at="2024-02-01T00:00:00Z",
+            yield_grams=25.0,
+            area_m2=5.0,
+        )
+    )
+    cultivar.event_history.append(
+        CultivationEvent(
+            event_id="evt-num",
+            profile_id="cultivar",
+            species_id="species",
+            run_id=0,
+            occurred_at="2024-02-02T00:00:00Z",
+            event_type="inspection",
+        )
+    )
+    cultivar.nutrient_history.append(
+        NutrientApplication(
+            event_id="nut-num",
+            profile_id="cultivar",
+            species_id="species",
+            run_id=0,
+            applied_at="2024-02-03T00:00:00Z",
+            product_name="Water",
+            solution_volume_liters=0.5,
+        )
+    )
+
+    recompute_statistics([species, cultivar])
+
+    cultivar_yield = next(
+        (snap for snap in cultivar.computed_stats if snap.stats_version == "yield/v1"),
+        None,
+    )
+    assert cultivar_yield is not None
+    assert cultivar_yield.payload["runs_tracked"] == 1
+
+    cultivar_events = next(
+        (snap for snap in cultivar.computed_stats if snap.stats_version == "events/v1"),
+        None,
+    )
+    assert cultivar_events is not None
+    assert cultivar_events.payload.get("runs_touched") == ["0"]
+
+    cultivar_nutrients = next(
+        (snap for snap in cultivar.computed_stats if snap.stats_version == "nutrients/v1"),
+        None,
+    )
+    assert cultivar_nutrients is not None
+    assert cultivar_nutrients.payload.get("runs_touched") == ["0"]
+
+    species_yield = next(
+        (snap for snap in species.computed_stats if snap.stats_version == "yield/v1"),
+        None,
+    )
+    assert species_yield is not None
+    assert species_yield.payload["runs_tracked"] == 1
+    contributor = {item["profile_id"]: item for item in species_yield.payload.get("contributors", [])}
+    assert contributor["cultivar"]["runs_tracked"] == 1
+
+
 def test_environment_statistics_from_run_history():
     species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
     cultivar = BioProfile(
