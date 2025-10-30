@@ -831,6 +831,18 @@ async def test_update_profile_thresholds_rejects_non_finite(hass):
         )
 
 
+async def test_update_profile_thresholds_rejects_booleans(hass):
+    entry = await _make_entry(hass, {CONF_PROFILES: {"alpha": {"name": "Alpha"}}})
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    with pytest.raises(ValueError, match="invalid threshold temperature_max"):
+        await reg.async_update_profile_thresholds(
+            "alpha",
+            {"temperature_max": True},
+        )
+
+
 async def test_set_profile_sensors_raises_on_invalid_entities(hass):
     options = {
         CONF_PROFILES: {
