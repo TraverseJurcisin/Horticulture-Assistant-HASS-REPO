@@ -217,15 +217,19 @@ def sync_general_section(
     """Persist ``general`` metadata while mirroring into the local section."""
 
     general_map = _coerce_mapping(general)
-    payload["general"] = general_map
+    # Always operate on copies so callers holding references to ``general``
+    # mappings do not observe side effects from the normalisation process.
+    payload["general"] = dict(general_map)
 
     local_payload = payload.get("local")
     local_map = local_payload if isinstance(local_payload, MutableMapping) else _coerce_mapping(local_payload)
 
-    existing_general = _coerce_mapping(local_map.get("general"))
-    merged_general = dict(existing_general)
-    merged_general.update(general_map)
-    local_map["general"] = merged_general
+    # ``local.general`` should mirror the canonical general metadata.  Previous
+    # logic merged the new payload into any existing data, which meant keys that
+    # were intentionally removed (for example clearing ``plant_type``) lingered
+    # in the local section.  Rebuild the mapping from scratch to ensure removals
+    # propagate while still keeping a mutable mapping for follow-up updates.
+    local_map["general"] = dict(general_map)
     payload["local"] = local_map
 
     ensure_sections(

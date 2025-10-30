@@ -24,6 +24,19 @@ def test_sync_general_section_updates_structured_sections() -> None:
     assert payload["sections"]["local"]["general"]["sensors"]["temp"] == "sensor.one"
 
 
+def test_sync_general_section_drops_removed_keys() -> None:
+    payload: dict[str, object] = {"plant_id": "p1", "name": "Plant"}
+    ensure_sections(payload, plant_id="p1", display_name="Plant")
+
+    sync_general_section(payload, {"plant_type": "Herb", "sensors": {"temp": "sensor.one"}})
+
+    sync_general_section(payload, {"sensors": {"temp": "sensor.two"}})
+
+    assert "plant_type" not in payload["general"]
+    assert payload["general"]["sensors"]["temp"] == "sensor.two"
+    assert payload["local"]["general"] == payload["general"]
+
+
 def test_ensure_sections_falls_back_to_generated_identifiers() -> None:
     payload: dict[str, object] = {"plant_id": " ", "profile_id": "", "display_name": "   "}
 
