@@ -117,7 +117,13 @@ def _normalise_unit(value: Any) -> str | None:
         return None
     if isinstance(value, Enum):
         value = value.value
-    text = str(value).replace("º", "°").strip()
+    # Normalise similar Unicode characters so unit comparisons remain reliable.
+    # Home Assistant core typically uses the micro sign (``µ``), but a number of
+    # integrations report the Greek mu character (``μ``) instead.  Treat them as
+    # equivalent to avoid false-positive warnings when validating conductivity
+    # sensors.  Perform the replacements before lower-casing to preserve the
+    # canonical symbol in the stored unit string.
+    text = str(value).replace("º", "°").replace("μ", "µ").strip()
     if not text:
         return None
     return text.lower()
