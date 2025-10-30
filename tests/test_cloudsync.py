@@ -366,13 +366,30 @@ def test_edge_resolver_respects_tenant(tmp_path: Path) -> None:
 
 
 @pytest.mark.parametrize(
-    "body, content_type, expected_cursor",
+    "body, content_type, expected_cursor, expected_payload",
     [
-        (json.dumps({"events": "{}", "cursor": "abc"}).encode(), "application/json", "abc"),
-        (b"{ }\n{ }", "application/x-ndjson", "next"),
+        (
+            json.dumps({"events": "{}", "cursor": "abc"}).encode(),
+            "application/json",
+            "abc",
+            "{}",
+        ),
+        (
+            json.dumps({"events": [{"event_id": "1"}, {"event_id": "2"}], "cursor": "xyz"}).encode(),
+            "application/json",
+            "xyz",
+            (
+                json.dumps({"event_id": "1"}, separators=(",", ":"))
+                + "\n"
+                + json.dumps({"event_id": "2"}, separators=(",", ":"))
+            ),
+        ),
+        (b"{ }\n{ }", "application/x-ndjson", "next", "{ }\n{ }"),
     ],
 )
-def test_edge_worker_response_parsing(body: bytes, content_type: str, expected_cursor: str | None) -> None:
+def test_edge_worker_response_parsing(
+    body: bytes, content_type: str, expected_cursor: str | None, expected_payload: str
+) -> None:
     store = EdgeSyncStore(":memory:")
     worker = EdgeSyncWorker(
         store,
@@ -383,10 +400,7 @@ def test_edge_worker_response_parsing(body: bytes, content_type: str, expected_c
         organization_id="org-1",
     )
     ndjson, cursor = worker._parse_down_response(body, content_type, {"X-Sync-Cursor": "next"})
-    if content_type.startswith("application/json"):
-        assert ndjson == "{}"
-    else:
-        assert ndjson == "{ }\n{ }"
+    assert ndjson == expected_payload
     assert cursor == expected_cursor
 
 
