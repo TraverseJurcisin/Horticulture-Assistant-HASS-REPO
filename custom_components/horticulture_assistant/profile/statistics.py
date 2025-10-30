@@ -964,9 +964,11 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
 
     for profile in profile_list:
         harvests = list(profile.harvest_history)
-        run_ids = {event.run_id for event in harvests if event.run_id}
+        run_ids = {str(event.run_id).strip() for event in harvests if getattr(event, "run_id", None)}
+        run_ids = {run_id for run_id in run_ids if run_id}
         if not run_ids:
-            run_ids = {event.run_id for event in profile.run_history if event.run_id}
+            run_ids = {str(event.run_id).strip() for event in profile.run_history if getattr(event, "run_id", None)}
+            run_ids = {run_id for run_id in run_ids if run_id}
         run_count = len(run_ids)
 
         nutrient_events = list(profile.nutrient_history)
@@ -1049,6 +1051,7 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 "harvest_count": count,
                 "mean_density": metrics.get("mean_density_g_m2"),
                 "run_count": run_count,
+                "run_ids": sorted(run_ids),
             }
             if stat.metrics.get("days_since_last_harvest") is not None:
                 aggregate["days_since_last_harvest"] = stat.metrics["days_since_last_harvest"]
@@ -1169,7 +1172,7 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 child_id=item["child_id"],
                 stats_version=YIELD_STATS_VERSION,
                 computed_at=computed_at,
-                n_runs=item["run_count"] or None,
+                n_runs=len(item.get("run_ids") or ()) or None,
                 weight=round(weight, 6) if weight is not None else None,
             )
             contributors.append(contributor)
@@ -1179,7 +1182,7 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 "total_yield_grams": round(item["total_yield"], 3),
                 "total_area_m2": round(item["total_area"], 3),
                 "mean_density_g_m2": item["mean_density"],
-                "runs_tracked": item["run_count"],
+                "runs_tracked": len(item.get("run_ids") or ()),
             }
             if item.get("fruit_count"):
                 payload["total_fruit_count"] = item["fruit_count"]
@@ -1191,7 +1194,13 @@ def recompute_statistics(profiles: Iterable[BioProfile]) -> None:
                 payload["window_totals"] = item["window_totals"]
             contributor_payload.append(payload)
 
-        species_run_ids = {event.run_id for event in harvests if event.run_id}
+        species_run_ids = {str(event.run_id).strip() for event in harvests if getattr(event, "run_id", None)}
+        species_run_ids = {run_id for run_id in species_run_ids if run_id}
+        for item in species_breakdown.get(species_id, []):
+            for run_id in item.get("run_ids") or ():
+                text = str(run_id).strip()
+                if text:
+                    species_run_ids.add(text)
         metrics = dict(stat.metrics)
         snapshot_payload: dict[str, Any] = {
             "scope": "species",

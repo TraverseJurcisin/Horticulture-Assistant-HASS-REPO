@@ -183,6 +183,47 @@ def test_recompute_statistics_handles_invalid_numeric_values():
     assert stat.metrics["mean_density_g_m2"] == pytest.approx(21.0)
 
 
+def test_species_runs_tracked_includes_run_history_when_missing_from_harvests():
+    species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
+    cultivar = BioProfile(
+        profile_id="cultivar",
+        display_name="Cultivar",
+        profile_type="cultivar",
+        species="species",
+    )
+
+    cultivar.add_run_event(
+        RunEvent(
+            run_id="batch-1",
+            profile_id="cultivar",
+            species_id="species",
+            started_at="2024-02-01T00:00:00Z",
+        )
+    )
+    cultivar.add_harvest_event(
+        HarvestEvent(
+            harvest_id="h1",
+            profile_id="cultivar",
+            species_id="species",
+            run_id=None,
+            harvested_at="2024-02-10T00:00:00Z",
+            yield_grams=42.0,
+        )
+    )
+
+    recompute_statistics([species, cultivar])
+
+    species_snapshot = next(
+        (snap for snap in species.computed_stats if snap.stats_version == "yield/v1"),
+        None,
+    )
+    assert species_snapshot is not None
+    assert species_snapshot.payload["runs_tracked"] == 1
+
+    contributors = {item["profile_id"]: item for item in species_snapshot.payload["contributors"]}
+    assert contributors["cultivar"]["runs_tracked"] == 1
+
+
 def test_environment_statistics_from_run_history():
     species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
     cultivar = BioProfile(
