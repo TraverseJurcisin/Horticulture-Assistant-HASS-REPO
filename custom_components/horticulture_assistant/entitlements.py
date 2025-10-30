@@ -125,6 +125,28 @@ class Entitlements:
         }
 
 
+FALSE_STRINGS = {"0", "false", "no", "off"}
+TRUE_STRINGS = {"1", "true", "yes", "on"}
+
+
+def _coerce_bool(value: Any) -> bool:
+    """Return ``value`` interpreted as a boolean flag."""
+
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, int | float):
+        return bool(value)
+    if isinstance(value, str):
+        text = value.strip().casefold()
+        if not text:
+            return False
+        if text in TRUE_STRINGS:
+            return True
+        if text in FALSE_STRINGS:
+            return False
+    return bool(value)
+
+
 def _normalise_roles(raw: Any) -> tuple[str, ...]:
     if isinstance(raw, str) and raw.strip():
         return (raw.strip(),)
@@ -175,7 +197,8 @@ def derive_entitlements(options: Mapping[str, Any] | None) -> Entitlements:
         if mapped:
             base_features.update(mapped)
 
-    if options.get(CONF_CLOUD_SYNC_ENABLED):
+    cloud_sync_enabled = _coerce_bool(options.get(CONF_CLOUD_SYNC_ENABLED))
+    if cloud_sync_enabled:
         base_features.add(FEATURE_CLOUD_SYNC)
 
     account_email_raw = options.get(CONF_CLOUD_ACCOUNT_EMAIL)
@@ -192,7 +215,7 @@ def derive_entitlements(options: Mapping[str, Any] | None) -> Entitlements:
         organization_role=org_role or None,
         organization_id=organization_id or None,
         account_email=account_email or None,
-        source="cloud" if options.get(CONF_CLOUD_SYNC_ENABLED) else "local",
+        source="cloud" if cloud_sync_enabled else "local",
     )
 
 
