@@ -382,6 +382,18 @@ class ProfileStore:
                 if cleaned_suffix:
                     safe = f"{safe}_{cleaned_suffix}"
             part = safe
+        else:
+            suffix_parts = [segment for segment in suffix_parts if segment]
+            if suffix_parts:
+                suffix = "_".join(item.replace(".", "_") for item in suffix_parts)
+                part = f"{primary}_{suffix}" if primary else suffix
+            else:
+                part = primary
+
+        part = part.replace(".", "_")
+        part = part.strip("_")
+        if not part:
+            return None
         return part
 
     def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: Any) -> dict[str, Any]:

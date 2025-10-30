@@ -411,6 +411,21 @@ async def test_path_for_rewrites_windows_reserved_names(hass, tmp_path, monkeypa
 
 
 @pytest.mark.asyncio
+async def test_path_for_removes_embedded_extension(hass, tmp_path, monkeypatch) -> None:
+    """Profile names containing extensions should not duplicate the file suffix."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    json_path = store._path_for("profile.json")
+    assert json_path.name == "profile_json.json"
+
+    nested_path = store._path_for("layout.config.backup")
+    assert nested_path.name == "layout_config_backup.json"
+
+
+@pytest.mark.asyncio
 async def test_async_list_returns_human_readable_names(hass, tmp_path, monkeypatch) -> None:
     """Listing profiles should return stored display names when available."""
 
