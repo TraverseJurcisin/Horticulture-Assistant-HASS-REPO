@@ -53,6 +53,20 @@ async def test_async_create_profile_inherits_sensors_from_existing_profile(hass,
     assert clone["sections"]["resolved"]["thresholds"]["temp"] == 20
 
 
+@pytest.mark.parametrize(
+    ("candidate", "expected"),
+    (
+        ("foo/bar", "foo_bar"),
+        ("foo\\bar", "foo_bar"),
+        ("../config/plant", "config_plant"),
+    ),
+)
+def test_safe_slug_normalises_all_path_segments(candidate: str, expected: str) -> None:
+    """Normalised slugs should retain all path segments instead of truncating."""
+
+    assert ProfileStore._normalise_slug_component(candidate) == expected
+
+
 @pytest.mark.asyncio
 async def test_async_create_profile_preserves_sequence_sensor_bindings(hass, tmp_path, monkeypatch) -> None:
     """Sensor sequences from a cloned profile should retain all entries."""
