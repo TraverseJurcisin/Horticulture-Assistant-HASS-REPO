@@ -6,7 +6,7 @@ import os
 import sys
 import tempfile
 import types
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -60,7 +60,10 @@ from custom_components.horticulture_assistant.resolver import (  # noqa: E402
     generate_profile,
 )
 
-UTC = datetime.UTC
+try:
+    UTC = datetime.UTC  # type: ignore[attr-defined]
+except AttributeError:  # pragma: no cover
+    UTC = timezone.utc  # noqa: UP017
 
 
 class DummyEntry:
