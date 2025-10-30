@@ -73,9 +73,11 @@ def _normalise_metadata_value(value: Any) -> str | None:
 
 async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
     raw = await _store(hass).async_load()
-    data = dict(raw) if isinstance(raw, Mapping) else {}
+    data = dict(raw) if isinstance(raw, Mapping) else None
     cache = _resolve_cache(hass)
-    if data:
+    if data is not None:
+        if hass is None and not data and cache:
+            return {k: deepcopy(v) for k, v in cache.items()}
         cache.clear()
         cache.update({k: deepcopy(v) for k, v in data.items()})
         return data

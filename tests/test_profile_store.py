@@ -666,6 +666,27 @@ async def test_async_load_all_handles_non_mapping_storage(hass, monkeypatch) -> 
 
 
 @pytest.mark.asyncio
+async def test_async_load_all_respects_empty_storage(hass, monkeypatch) -> None:
+    """An explicit empty payload from storage should clear the cache."""
+
+    hass.data[CACHE_KEY] = {"cached": {"display_name": "Cached"}}
+
+    class DummyStore:
+        async def async_load(self):
+            return {}
+
+    monkeypatch.setattr(
+        "custom_components.horticulture_assistant.profile.store._store",
+        lambda _hass: DummyStore(),
+    )
+
+    result = await async_load_all(hass)
+
+    assert result == {}
+    assert hass.data[CACHE_KEY] == {}
+
+
+@pytest.mark.asyncio
 async def test_async_delete_profile_refreshes_cache(hass, tmp_path, monkeypatch) -> None:
     """Removing profiles from storage should also evict them from the in-memory cache."""
 
