@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from collections import Counter, deque
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from contextlib import suppress
 from datetime import datetime, timedelta
 from statistics import fmean
@@ -24,6 +24,7 @@ from .engine.metrics import (
     profile_status,
     vpd_kpa,
 )
+from .utils.state_helpers import parse_entities
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -48,6 +49,32 @@ def _is_fahrenheit(unit: Any) -> bool:
         text = text.replace(" ", "")
         return text in _FAHRENHEIT_UNITS
     return False
+
+
+def _resolve_primary_entity_id(value: Any) -> str | None:
+    """Return the primary entity id extracted from ``value``."""
+
+    if value is None:
+        return None
+
+    if isinstance(value, Mapping):
+        for key in ("entity_id", "entity", "id", "value"):
+            candidate = value.get(key)
+            if candidate is not None:
+                resolved = _resolve_primary_entity_id(candidate)
+                if resolved:
+                    return resolved
+        value = list(value.values())
+
+    if isinstance(value, str | Sequence) and not isinstance(value, bytes | bytearray):
+        entities = parse_entities(value)
+    else:
+        text = str(value).strip()
+        if not text:
+            return None
+        entities = parse_entities([text])
+
+    return entities[0] if entities else None
 
 
 class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
@@ -154,10 +181,10 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
         now = now or dt_util.utcnow()
         sensors: dict[str, Any] = profile.get("sensors", {})
-        illuminance = sensors.get("illuminance")
-        temperature = sensors.get("temperature")
-        humidity = sensors.get("humidity")
-        moisture = sensors.get("moisture")
+        illuminance = _resolve_primary_entity_id(sensors.get("illuminance"))
+        temperature = _resolve_primary_entity_id(sensors.get("temperature"))
+        humidity = _resolve_primary_entity_id(sensors.get("humidity"))
+        moisture = _resolve_primary_entity_id(sensors.get("moisture"))
         dli: float | None = None
         ppfd: float | None = None
         vpd: float | None = None
@@ -175,10 +202,16 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     lux = None
                 if lux is not None:
                     ppfd = lux_to_ppfd(lux)
+                    interval_td = self.update_interval
+                    interval_seconds = (
+                        interval_td.total_seconds()
+                        if interval_td is not None
+                        else float(self._resolve_interval(self._entry) * 60)
+                    )
                     total = accumulate_dli(
                         self._dli_totals.get(profile_id, 0.0),
                         ppfd,
-                        self.update_interval.total_seconds(),
+                        interval_seconds,
                     )
                     self._dli_totals[profile_id] = total
                     dli = total
