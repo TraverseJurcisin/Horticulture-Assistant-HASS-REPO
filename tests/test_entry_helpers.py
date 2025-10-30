@@ -86,6 +86,16 @@ def test_primary_sensors_strip_whitespace():
     assert get_primary_profile_sensors(entry) == {"temperature": "sensor.temp"}
 
 
+def test_profile_context_deduplicates_sequence_sensor_ids():
+    context = ProfileContext(
+        id="plant",
+        name="Plant",
+        sensors={"moisture": [" sensor.one ", "sensor.one", "", "sensor.two", "sensor.two"]},
+    )
+
+    assert context.sensors["moisture"] == ("sensor.one", "sensor.two")
+
+
 def test_primary_sensors_accept_sequence_values():
     entry = _make_entry(options={"sensors": {"moisture": ["sensor.moist", "sensor.backup"]}})
 
