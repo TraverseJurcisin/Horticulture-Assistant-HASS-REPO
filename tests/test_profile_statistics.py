@@ -707,6 +707,31 @@ def test_success_statistics_handles_fraction_notation_strings():
     assert snapshot.payload["weighted_success_percent"] == pytest.approx(50.0)
 
 
+def test_success_statistics_handles_fraction_percent_metadata():
+    profile = BioProfile(profile_id="p1", display_name="Plant")
+
+    profile.add_run_event(
+        RunEvent(
+            run_id="run-1",
+            profile_id="p1",
+            species_id=None,
+            started_at="2024-01-09T00:00:00Z",
+            ended_at="2024-01-10T00:00:00Z",
+            metadata={"success_percent": "1/2%"},
+        )
+    )
+
+    recompute_statistics([profile])
+
+    snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "success/v1"),
+        None,
+    )
+    assert snapshot is not None
+    assert snapshot.payload["average_success_percent"] == pytest.approx(0.5)
+    assert snapshot.payload["weighted_success_percent"] == pytest.approx(0.5)
+
+
 def test_success_statistics_handles_non_finite_fraction_parts():
     profile = BioProfile(profile_id="p1", display_name="Plant")
 

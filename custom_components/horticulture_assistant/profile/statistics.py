@@ -797,6 +797,8 @@ def _coerce_ratio_value(value: Any) -> float | None:
             denominator = _to_float(fraction_match.group("denominator"))
             if numerator is not None and denominator is not None and denominator != 0:
                 ratio = numerator / denominator
+                if percent_notation:
+                    ratio /= 100.0
                 return max(0.0, min(1.0, ratio))
         if number is None:
             match = _RATIO_NUMBER_PATTERN.search(text)
