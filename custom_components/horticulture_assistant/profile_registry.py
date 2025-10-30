@@ -1211,33 +1211,46 @@ class ProfileRegistry:
         def _materialise_sensor_map() -> dict[str, str | list[str]]:
             return {key: list(value) if isinstance(value, list) else value for key, value in sensors_map.items()}
 
+        local_general_sensors: dict[str, str | list[str]] = {}
+        local_had_sensor_map = False
         local_payload = new_profile.get("local")
-        local_map: dict[str, Any] | None = None
-        local_general_map: dict[str, Any] | None = None
         if isinstance(local_payload, Mapping):
-            local_map = dict(local_payload)
-            existing_general = local_map.get("general")
-            local_general_map = dict(existing_general) if isinstance(existing_general, Mapping) else {}
+            existing_general = local_payload.get("general")
+            if isinstance(existing_general, Mapping):
+                existing_local_sensors = existing_general.get("sensors")
+                if isinstance(existing_local_sensors, Mapping):
+                    local_had_sensor_map = True
+                    for key, value in existing_local_sensors.items():
+                        cleaned = _normalise_sensor_value(value)
+                        if cleaned is None:
+                            continue
+                        local_general_sensors[str(key)] = cleaned
+
+        materialised_sensors = _materialise_sensor_map() if sensors_map else {}
 
         if sensors_map:
-            general["sensors"] = _materialise_sensor_map()
-            new_profile["sensors"] = _materialise_sensor_map()
-            if local_general_map is not None:
-                local_general_map["sensors"] = _materialise_sensor_map()
+            general["sensors"] = dict(materialised_sensors)
+            new_profile["sensors"] = dict(materialised_sensors)
         else:
             general.pop("sensors", None)
             new_profile.pop("sensors", None)
-            if local_general_map is not None:
-                local_general_map.pop("sensors", None)
-
-        if local_map is not None and local_general_map is not None:
-            if local_general_map:
-                local_map["general"] = local_general_map
-            elif "general" in local_map:
-                local_map.pop("general", None)
-            new_profile["local"] = local_map
 
         sync_general_section(new_profile, general)
+
+        if local_general_sensors or local_had_sensor_map:
+            local_section = new_profile.get("local")
+            if isinstance(local_section, Mapping):
+                general_section = local_section.get("general")
+                if isinstance(general_section, dict):
+                    merged_local_sensors: dict[str, str | list[str]] = dict(materialised_sensors)
+                    for key, value in local_general_sensors.items():
+                        if key in sensors_map:
+                            continue
+                        merged_local_sensors[key] = list(value) if isinstance(value, list) else value
+                    if merged_local_sensors:
+                        general_section["sensors"] = merged_local_sensors
+                    else:
+                        general_section.pop("sensors", None)
         new_profile.pop("scope", None)
         new_profile[CONF_PROFILE_SCOPE] = resolved_scope
         new_profile["profile_id"] = candidate
