@@ -113,3 +113,24 @@ def test_link_species_and_cultivars_clears_missing_species_reference() -> None:
 
     assert cultivar.species_profile_id is None
     assert report.missing_species["cultivar.two"] == "species.ghost"
+
+
+def test_link_species_and_cultivars_trims_identifiers() -> None:
+    species = SpeciesProfile(profile_id="species.valid", display_name="Valid Species")
+    parent = CultivarProfile(profile_id="cultivar.parent", display_name="Parent Cultivar")
+    parent.parents = [" species.valid "]
+
+    cultivar = CultivarProfile(
+        profile_id="cultivar.trimmed",
+        display_name="Trimmed Cultivar",
+    )
+    cultivar.species_profile_id = " species.valid "
+    cultivar.parents = [" species.valid ", " cultivar.parent "]
+
+    report = link_species_and_cultivars([species, cultivar, parent])
+
+    assert cultivar.species_profile_id == "species.valid"
+    assert cultivar.parents == ["species.valid", "cultivar.parent"]
+    assert "cultivar.trimmed" in species.cultivar_ids
+    assert "cultivar.trimmed" not in report.missing_species
+    assert report.missing_parents.get("cultivar.trimmed") in (None, set())

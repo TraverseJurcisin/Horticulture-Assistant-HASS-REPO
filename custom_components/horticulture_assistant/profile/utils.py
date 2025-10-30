@@ -239,18 +239,25 @@ def sync_general_section(
     )
 
 
+def _normalise_identifier(value: Any) -> str | None:
+    """Return a trimmed identifier string or ``None`` when empty."""
+
+    if value is None:
+        return None
+    text = str(value).strip()
+    return text or None
+
+
 def _iter_parent_ids(profile: BioProfile) -> Iterable[str]:
     """Yield the parent identifiers for ``profile`` in priority order."""
 
     seen: set[str] = set()
-    species_id = profile.species_profile_id
-    if species_id:
-        species_str = str(species_id)
-        if species_str and species_str not in seen:
-            seen.add(species_str)
-            yield species_str
+    species_id = _normalise_identifier(profile.species_profile_id)
+    if species_id and species_id not in seen:
+        seen.add(species_id)
+        yield species_id
     for parent in profile.parents:
-        parent_id = str(parent)
+        parent_id = _normalise_identifier(parent)
         if parent_id and parent_id not in seen:
             seen.add(parent_id)
             yield parent_id
@@ -362,21 +369,21 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> LineageLinkRep
         if profile.profile_type == "species":
             continue
 
-        species_id = profile.species_profile_id
+        species_id = _normalise_identifier(profile.species_profile_id)
         if not species_id:
             for parent in profile.parents:
-                parent_id = str(parent)
-                if parent_id in species_map:
+                parent_id = _normalise_identifier(parent)
+                if parent_id and parent_id in species_map:
                     species_id = parent_id
                     break
         elif species_id not in species_map:
-            report.missing_species.setdefault(profile.profile_id, str(species_id))
+            report.missing_species.setdefault(profile.profile_id, species_id)
             species_id = None
 
         deduped_parents: list[str] = []
         seen_parent: set[str] = set()
         for parent in profile.parents:
-            parent_id = str(parent)
+            parent_id = _normalise_identifier(parent)
             if not parent_id or parent_id in seen_parent:
                 continue
             seen_parent.add(parent_id)
