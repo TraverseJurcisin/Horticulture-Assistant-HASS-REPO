@@ -105,9 +105,14 @@ def collect_sensor_suggestions(
     if not getattr(hass, "states", None):  # pragma: no cover - defensive guard
         return suggestions
 
-    entity_ids: list[str] = list(
-        getattr(hass.states, "async_entity_ids", hass.states.entity_ids)()  # type: ignore[arg-type]
-    )
+    entity_ids_getter = getattr(hass.states, "async_entity_ids", None)
+    if callable(entity_ids_getter):
+        entity_ids_iter = entity_ids_getter()
+    else:
+        entity_ids_attr = getattr(hass.states, "entity_ids", ())
+        entity_ids_iter = entity_ids_attr() if callable(entity_ids_attr) else entity_ids_attr
+
+    entity_ids = [str(entity_id) for entity_id in (entity_ids_iter or ())]
     for entity_id in entity_ids:
         state = hass.states.get(entity_id)
         if state is None:
