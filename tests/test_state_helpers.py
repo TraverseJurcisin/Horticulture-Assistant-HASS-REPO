@@ -76,6 +76,22 @@ def test_get_numeric_state_handles_unicode_whitespace():
     assert value == pytest.approx(1234.5)
 
 
+def test_get_numeric_state_handles_unicode_signs():
+    """Unicode minus/plus signs should be normalised before conversion."""
+
+    states = {
+        "sensor.negative": types.SimpleNamespace(state="−12,5"),
+        "sensor.scientific": types.SimpleNamespace(state="3e−2"),
+        "sensor.positive": types.SimpleNamespace(state="＋7"),
+    }
+
+    hass = types.SimpleNamespace(states=types.SimpleNamespace(get=lambda entity_id: states.get(entity_id)))
+
+    assert state_helpers.get_numeric_state(hass, "sensor.negative") == pytest.approx(-12.5)
+    assert state_helpers.get_numeric_state(hass, "sensor.scientific") == pytest.approx(0.03)
+    assert state_helpers.get_numeric_state(hass, "sensor.positive") == pytest.approx(7.0)
+
+
 def test_parse_entities_ignores_none_and_blank_entries():
     """None values or blank strings should be removed when parsing entities."""
 
