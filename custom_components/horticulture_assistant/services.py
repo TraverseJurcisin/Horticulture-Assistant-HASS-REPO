@@ -281,6 +281,8 @@ async def async_register_all(
             except FeatureUnavailableError as err:
                 raise HomeAssistantError(str(err)) from err
 
+    sensor_notification_id = f"horticulture_sensor_{entry.entry_id}"
+
     def _notify_sensor_warnings(issues) -> None:
         if not issues:
             return
@@ -292,8 +294,21 @@ async def async_register_all(
                 {
                     "title": "Horticulture Assistant sensor warning",
                     "message": message,
-                    "notification_id": f"horticulture_sensor_{entry.entry_id}",
+                    "notification_id": sensor_notification_id,
                 },
+                blocking=False,
+            )
+        )
+
+    def _clear_sensor_warning() -> None:
+        if not hass.services.has_service("persistent_notification", "dismiss"):
+            return
+
+        hass.async_create_task(
+            hass.services.async_call(
+                "persistent_notification",
+                "dismiss",
+                {"notification_id": sensor_notification_id},
                 blocking=False,
             )
         )
@@ -352,6 +367,8 @@ async def async_register_all(
             raise vol.Invalid(collate_issue_messages(validation.errors))
         if validation.warnings:
             _notify_sensor_warnings(validation.warnings)
+        else:
+            _clear_sensor_warning()
         if reg_entry:
             actual = _normalise_registry_device_class(reg_entry)
             expected_name = _expected_device_class_name(expected)
@@ -383,6 +400,8 @@ async def async_register_all(
             raise vol.Invalid(collate_issue_messages(validation.errors))
         if validation.warnings:
             _notify_sensor_warnings(validation.warnings)
+        else:
+            _clear_sensor_warning()
         if reg_entry:
             actual = _normalise_registry_device_class(reg_entry)
             expected_name = _expected_device_class_name(expected)
@@ -447,6 +466,10 @@ async def async_register_all(
                 raise HomeAssistantError(collate_issue_messages(validation.errors))
             if validation.warnings:
                 _notify_sensor_warnings(validation.warnings)
+            else:
+                _clear_sensor_warning()
+        else:
+            _clear_sensor_warning()
         try:
             await registry.async_link_sensors(pid, sensors)
         except ValueError as err:
