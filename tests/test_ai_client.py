@@ -4,6 +4,7 @@ import types
 from collections.abc import Mapping
 from datetime import datetime as dt
 from datetime import timedelta
+from decimal import Decimal
 from pathlib import Path
 from unittest.mock import AsyncMock
 
@@ -75,6 +76,20 @@ def test_normalise_cache_value_stabilises_sets_with_varying_iteration():
     assert first == second
 
 
+def test_normalise_cache_value_handles_non_finite_numbers():
+    nan_norm = _normalise_cache_value(float("nan"))
+    assert nan_norm == _normalise_cache_value(float("nan"))
+
+    inf_norm = _normalise_cache_value(float("inf"))
+    assert inf_norm == _normalise_cache_value(float("inf"))
+
+    neg_inf_norm = _normalise_cache_value(float("-inf"))
+    assert neg_inf_norm == _normalise_cache_value(float("-inf"))
+
+    decimal_nan_norm = _normalise_cache_value(Decimal("NaN"))
+    assert decimal_nan_norm == _normalise_cache_value(Decimal("NaN"))
+
+
 @pytest.mark.asyncio
 async def test_async_recommend_variable_caches_result(monkeypatch, hass):
     _AI_CACHE.clear()
@@ -129,6 +144,31 @@ async def test_async_recommend_variable_cache_accounts_for_context(monkeypatch, 
     )
 
     assert mock.call_count == 2
+
+
+@pytest.mark.asyncio
+async def test_async_recommend_variable_cache_handles_nan_context(monkeypatch, hass):
+    _AI_CACHE.clear()
+    mock = AsyncMock(return_value=(3.2, 0.5, "nan", []))
+    monkeypatch.setattr(AIClient, "generate_setpoint", mock)
+
+    first = await async_recommend_variable(
+        hass,
+        key="temp",
+        plant_id="p1",
+        ttl_hours=5,
+        context_value=float("nan"),
+    )
+    second = await async_recommend_variable(
+        hass,
+        key="temp",
+        plant_id="p1",
+        ttl_hours=5,
+        context_value=float("nan"),
+    )
+
+    assert second == first
+    assert mock.call_count == 1
 
 
 @pytest.mark.asyncio

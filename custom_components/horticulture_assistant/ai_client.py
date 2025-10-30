@@ -7,6 +7,7 @@ import re
 from collections.abc import Hashable, Mapping
 from copy import deepcopy
 from datetime import datetime, timedelta, timezone
+from numbers import Real
 from typing import Any
 
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
@@ -50,7 +51,23 @@ def _coerce_positive_hours(value: Any, *, default: float = DEFAULT_TTL_HOURS) ->
 def _normalise_cache_value(value: Any) -> Hashable:
     """Return a hashable representation for caching purposes."""
 
-    if isinstance(value, str | int | float | bool | type(None)):
+    if isinstance(value, str | bool) or value is None:
+        return value
+    if isinstance(value, float):
+        if math.isnan(value):
+            return ("float", "nan")
+        if math.isinf(value):
+            return ("float", "inf") if value > 0 else ("float", "-inf")
+        return value
+    if isinstance(value, int):
+        return value
+    if isinstance(value, Real):
+        number = float(value)
+        if not math.isfinite(number):
+            label = type(value).__name__
+            if math.isnan(number):
+                return (label, "nan")
+            return (label, "inf") if number > 0 else (label, "-inf")
         return value
     if isinstance(value, list | tuple):
         return tuple(_normalise_cache_value(v) for v in value)
