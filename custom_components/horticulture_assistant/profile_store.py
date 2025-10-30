@@ -4,6 +4,7 @@ import asyncio
 import json
 from collections.abc import Mapping, Sequence, Set
 from copy import deepcopy
+from hashlib import blake2s
 from math import isfinite
 from numbers import Integral, Real
 from pathlib import Path, PurePath
@@ -58,6 +59,14 @@ def _slug_source(value: Any) -> str:
     if value is None:
         return ""
     return str(value)
+
+
+def _fallback_slug(source: str) -> str:
+    """Return a deterministic fallback slug when no slug candidate is usable."""
+
+    data = source.encode("utf-8", "ignore") or b"profile"
+    digest = blake2s(data, digest_size=4).hexdigest()
+    return f"profile_{digest}"
 
 
 def _normalise_scope(value: Any) -> str | None:
@@ -365,11 +374,15 @@ class ProfileStore:
     def _safe_slug(self, base: str) -> str:
         """Return a filesystem-safe slug limited to a single path component."""
 
-        for candidate in (slugify(base), base):
+        source = _slug_source(base)
+        fallback = _fallback_slug(source)
+        for candidate in (slugify(source), source):
             safe = self._normalise_slug_component(candidate)
             if safe:
+                if safe == "profile" and source.strip().casefold() != "profile":
+                    return fallback
                 return safe
-        return "profile"
+        return fallback
 
     @staticmethod
     def _normalise_slug_component(candidate: str | None) -> str | None:

@@ -505,7 +505,34 @@ async def test_path_for_disallows_path_traversal(hass, tmp_path, monkeypatch) ->
 
     dotdot = store._path_for("../../")
     assert dotdot.parent == store._base
-    assert dotdot.name == "profile.json"
+    assert dotdot.name.startswith("profile_")
+
+
+@pytest.mark.asyncio
+async def test_path_for_generates_unique_fallback_slugs(hass, tmp_path, monkeypatch) -> None:
+    """Names without usable characters should not collide on disk."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_create_profile("   ")
+    await store.async_create_profile("\t")
+
+    blank_path = store._path_for("   ")
+    tab_path = store._path_for("\t")
+
+    assert blank_path != tab_path
+    assert blank_path.exists()
+    assert tab_path.exists()
+
+    blank = await store.async_get("   ")
+    tab = await store.async_get("\t")
+
+    assert blank is not None
+    assert tab is not None
+    assert blank_path.name.startswith("profile_")
+    assert tab_path.name.startswith("profile_")
 
 
 @pytest.mark.asyncio
