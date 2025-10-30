@@ -15,6 +15,26 @@ from custom_components.horticulture_assistant.entitlements import (
 )
 
 
+@pytest.mark.parametrize(
+    "flag_value",
+    (True, "true", "1", 1),
+)
+def test_cloud_sync_flag_truthy_values_enable_feature(flag_value) -> None:
+    options = {CONF_CLOUD_SYNC_ENABLED: flag_value}
+    entitlements = derive_entitlements(options)
+    assert entitlements.allows(FEATURE_CLOUD_SYNC)
+
+
+@pytest.mark.parametrize(
+    "flag_value",
+    (False, None, "false", "0", 0, ""),
+)
+def test_cloud_sync_flag_falsey_values_disable_feature(flag_value) -> None:
+    options = {CONF_CLOUD_SYNC_ENABLED: flag_value}
+    entitlements = derive_entitlements(options)
+    assert not entitlements.allows(FEATURE_CLOUD_SYNC)
+
+
 def test_entitlements_from_roles_and_sync_flag():
     options = {
         CONF_CLOUD_ACCOUNT_ROLES: ["premium", "irrigation"],
