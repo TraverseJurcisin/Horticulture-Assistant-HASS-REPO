@@ -598,6 +598,21 @@ async def test_update_profile_general_updates_options_and_profile(hass):
     assert "plant_type" not in prof.general
 
 
+async def test_update_profile_general_normalises_scope_case(hass):
+    options = {CONF_PROFILES: {"alpha": {"name": "Alpha"}}}
+    entry = await _make_entry(hass, options)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    await reg.async_update_profile_general("alpha", scope="Crop_Batch")
+
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    assert stored["general"][CONF_PROFILE_SCOPE] == "crop_batch"
+    profile = reg.get("alpha")
+    assert profile is not None
+    assert profile.general.get(CONF_PROFILE_SCOPE) == "crop_batch"
+
+
 async def test_set_profile_sensors_replaces_mapping(hass):
     options = {
         CONF_PROFILES: {
@@ -1784,6 +1799,22 @@ async def test_add_profile_custom_scope(hass):
     prof = reg.get(pid)
     assert prof is not None
     assert prof.general[CONF_PROFILE_SCOPE] == "grow_zone"
+
+
+async def test_add_profile_normalises_scope_case(hass):
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("Case Scope", scope="  Grow_Zone  ")
+
+    stored = entry.options[CONF_PROFILES][pid]
+    assert stored[CONF_PROFILE_SCOPE] == "grow_zone"
+    general = stored.get("general", {})
+    assert general.get(CONF_PROFILE_SCOPE) == "grow_zone"
+    profile = reg.get(pid)
+    assert profile is not None
+    assert profile.general.get(CONF_PROFILE_SCOPE) == "grow_zone"
 
 
 async def test_import_template_creates_profile(hass):
