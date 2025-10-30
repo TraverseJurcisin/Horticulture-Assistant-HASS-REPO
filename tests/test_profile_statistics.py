@@ -1,3 +1,5 @@
+import datetime as dt
+
 import pytest
 
 from custom_components.horticulture_assistant.profile.schema import (
@@ -10,6 +12,7 @@ from custom_components.horticulture_assistant.profile.schema import (
 from custom_components.horticulture_assistant.profile.statistics import (
     _build_event_snapshot,
     _build_nutrient_snapshot,
+    _compute_nutrient_payload,
     recompute_statistics,
 )
 
@@ -96,6 +99,36 @@ def test_recompute_statistics_handles_zero_area():
     contribution = next(contrib for contrib in species_snapshot.contributions if contrib.child_id == "cultivar")
     assert contribution.weight == pytest.approx(150.0 / 230.0)
     assert contribution.n_runs == 1
+
+
+def test_compute_nutrient_payload_normalises_identifiers():
+    events = [
+        NutrientApplication(
+            event_id="n1",
+            profile_id="cultivar",
+            species_id="species",
+            run_id=" run-1 ",
+            applied_at="2024-01-01T00:00:00Z",
+            product_id=" product-1 ",
+            solution_volume_liters=1.0,
+        ),
+        NutrientApplication(
+            event_id="n2",
+            profile_id="cultivar",
+            species_id="species",
+            run_id="run-1",
+            applied_at="2024-01-02T00:00:00Z",
+            product_id="product-1",
+            solution_volume_liters=2.0,
+        ),
+    ]
+
+    payload = _compute_nutrient_payload(events, now=dt.datetime(2024, 1, 3, tzinfo=dt.UTC))
+
+    assert payload is not None
+    assert payload["metrics"]["unique_products"] == 1.0
+    assert payload["product_usage"] == [{"product": "product-1", "count": 2}]
+    assert payload.get("runs_touched") == ["run-1"]
 
 
 def test_recompute_statistics_handles_profiles_without_harvests():

@@ -94,11 +94,23 @@ def _compute_nutrient_payload(
     intervals: list[float] = []
 
     previous: datetime | None = None
+
+    def _normalise_identifier(value: Any) -> str:
+        if value is None:
+            return ""
+        text = str(value).strip()
+        return text
+
     for event, ts in normalised:
-        key = event.product_id or event.product_name or "unspecified"
-        product_counter[str(key)] += 1
-        if event.run_id:
-            run_ids.add(str(event.run_id))
+        product_key = _normalise_identifier(event.product_id)
+        if not product_key:
+            product_key = _normalise_identifier(event.product_name)
+        if not product_key:
+            product_key = "unspecified"
+        product_counter[product_key] += 1
+        run_id = _normalise_identifier(event.run_id)
+        if run_id:
+            run_ids.add(run_id)
         volume = _to_float(event.solution_volume_liters)
         if volume is not None:
             total_volume += volume
