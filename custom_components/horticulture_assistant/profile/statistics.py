@@ -782,6 +782,54 @@ _RATIO_NUMBER_PATTERN = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
 _FRACTION_PATTERN = re.compile(
     r"(?P<numerator>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)\s*/\s*(?P<denominator>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)"
 )
+_THOUSANDS_COMMA_PATTERN = re.compile(r"^\d{1,3}(?:,\d{3})+$")
+_THOUSANDS_DOT_PATTERN = re.compile(r"^\d{1,3}(?:\.\d{3})+$")
+
+
+def _normalise_ratio_text(text: str) -> str:
+    """Return ``text`` with decimal separators normalised for parsing."""
+
+    def _normalise_component(component: str) -> str:
+        compact = component.replace(" ", "")
+        if not compact:
+            return compact
+
+        comma_pos = compact.rfind(",")
+        dot_pos = compact.rfind(".")
+
+        decimal_sep: str | None = None
+        thousand_sep: str | None = None
+
+        if comma_pos != -1 and dot_pos != -1:
+            if comma_pos > dot_pos:
+                decimal_sep, thousand_sep = ",", "."
+            else:
+                decimal_sep, thousand_sep = ".", ","
+        elif comma_pos != -1:
+            if _THOUSANDS_COMMA_PATTERN.fullmatch(compact) or compact.count(",") > 1:
+                decimal_sep = None
+                thousand_sep = ","
+            else:
+                decimal_sep, thousand_sep = ",", "."
+        elif dot_pos != -1:
+            if _THOUSANDS_DOT_PATTERN.fullmatch(compact) or compact.count(".") > 1:
+                decimal_sep = None
+                thousand_sep = "."
+            else:
+                decimal_sep, thousand_sep = ".", ","
+        else:
+            return compact
+
+        if thousand_sep and thousand_sep != decimal_sep:
+            compact = compact.replace(thousand_sep, "")
+        if decimal_sep:
+            compact = compact.replace(decimal_sep, ".")
+
+        return compact
+
+    if "/" in text:
+        return "/".join(_normalise_component(part) for part in text.split("/"))
+    return _normalise_component(text)
 
 
 def _coerce_ratio_value(value: Any) -> float | None:
@@ -797,6 +845,7 @@ def _coerce_ratio_value(value: Any) -> float | None:
         if text.endswith("%"):
             percent_notation = True
             text = text[:-1]
+        text = _normalise_ratio_text(text)
         fraction_match = _FRACTION_PATTERN.search(text)
         if fraction_match:
             numerator = _to_float(fraction_match.group("numerator"))
@@ -806,6 +855,8 @@ def _coerce_ratio_value(value: Any) -> float | None:
                 if percent_notation:
                     ratio /= 100.0
                 return max(0.0, min(1.0, ratio))
+        if number is None:
+            number = _to_float(text)
         if number is None:
             match = _RATIO_NUMBER_PATTERN.search(text)
             if match:
