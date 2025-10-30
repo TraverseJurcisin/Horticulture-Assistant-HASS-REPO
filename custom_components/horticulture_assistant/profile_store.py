@@ -118,7 +118,13 @@ def _normalise_sensor_binding(value: Any) -> str | list[str] | None:
             if trimmed:
                 items.append(trimmed)
         if items:
-            return items
+            # Preserve the original ordering while dropping duplicate entries.
+            # ``dict.fromkeys`` maintains the first occurrence of each value and
+            # avoids allocating an additional set for most common small lists.
+            unique_items = list(dict.fromkeys(items))
+            if len(unique_items) == len(items):
+                return items
+            return unique_items
         return None
 
     return None

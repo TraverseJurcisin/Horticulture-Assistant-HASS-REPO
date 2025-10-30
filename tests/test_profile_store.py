@@ -111,6 +111,35 @@ async def test_async_create_profile_preserves_sequence_sensor_bindings(hass, tmp
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_deduplicates_sequence_sensor_bindings(hass, tmp_path, monkeypatch) -> None:
+    """Explicit sensor lists should collapse duplicate entries."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_create_profile(
+        "Deduplicated Sensors",
+        sensors={
+            "moisture": [" sensor.one ", "sensor.one", "sensor.two", "sensor.two"],
+            "temperature": ("sensor.temp", "sensor.temp"),
+        },
+    )
+
+    profile = await store.async_get("Deduplicated Sensors")
+    assert profile is not None
+    assert profile["sensors"] == {
+        "moisture": ["sensor.one", "sensor.two"],
+        "temperature": ["sensor.temp"],
+    }
+    general = profile["general"] if isinstance(profile.get("general"), dict) else {}
+    assert general.get("sensors") == {
+        "moisture": ["sensor.one", "sensor.two"],
+        "temperature": ["sensor.temp"],
+    }
+
+
+@pytest.mark.asyncio
 async def test_async_create_profile_can_clear_cloned_sensors(hass, tmp_path, monkeypatch) -> None:
     """Explicit sensor parameters should remove cloned bindings when empty."""
 
