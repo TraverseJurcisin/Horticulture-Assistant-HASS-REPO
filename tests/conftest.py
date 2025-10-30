@@ -3,6 +3,7 @@ import datetime
 import sys
 import types
 from collections.abc import Callable
+from copy import deepcopy
 from pathlib import Path
 
 import pytest
@@ -419,15 +420,19 @@ sys.modules["homeassistant.helpers.update_coordinator"] = update_coordinator
 storage = types.ModuleType("homeassistant.helpers.storage")
 
 
-class Store:  # pragma: no cover - minimal in-memory store
-    def __init__(self, _hass, _version, _key) -> None:
-        self.data: dict[str, object] = {}
+class Store:  # pragma: no cover - minimal persistent store per hass/key
+    _STORAGE: dict[int, dict[str, dict[str, object]]] = {}
+
+    def __init__(self, hass, _version, key) -> None:
+        hass_store = self._STORAGE.setdefault(id(hass), {})
+        self._bucket = hass_store.setdefault(key, {})
 
     async def async_load(self):
-        return self.data
+        return deepcopy(self._bucket)
 
     async def async_save(self, data) -> None:
-        self.data = data
+        self._bucket.clear()
+        self._bucket.update(deepcopy(data))
 
 
 storage.Store = Store
