@@ -209,6 +209,26 @@ async def test_lineage_notification_created_and_clears(hass):
     assert any(item.get("notification_id") == NOTIFICATION_PROFILE_LINEAGE for item in dismissals)
 
 
+async def test_async_delete_profile_clears_lineage_warnings(hass):
+    entry = await _make_entry(
+        hass,
+        {CONF_PROFILES: {"p1": {"name": "Plant", "species": "species.unknown"}}},
+    )
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+    await hass.async_block_till_done()
+
+    assert ("p1", "species.unknown") in reg._lineage_missing_species
+    assert ("p1", "species.unknown") in reg._missing_species_issues
+
+    await reg.async_delete_profile("p1")
+    await hass.async_block_till_done()
+
+    assert not reg._lineage_missing_species
+    assert not reg._missing_species_issues
+
+
 async def test_async_import_profiles_returns_count(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
     entry = await _make_entry(hass, {CONF_PROFILES: {}})

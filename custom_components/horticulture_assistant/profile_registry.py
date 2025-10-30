@@ -213,7 +213,9 @@ class ProfileRegistry:
 
     def _relink_profiles(self) -> None:
         if not self._profiles:
+            self._log_lineage_warnings(LineageLinkReport())
             return
+
         report = link_species_and_cultivars(self._profiles.values())
         self._log_lineage_warnings(report)
         for profile in self._profiles.values():
