@@ -6,9 +6,7 @@ from dataclasses import asdict, dataclass
 from fnmatch import fnmatch
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.load_bio_profile import (
-    load_bio_profile,
-)
+from custom_components.horticulture_assistant.utils.load_bio_profile import load_bio_profile
 from custom_components.horticulture_assistant.utils.validate_profile_structure import (
     validate_profile_structure,
 )
@@ -68,9 +66,7 @@ def load_all_profiles(
 
         # Filter loaded sections based on the pattern
         profile_data = {
-            name: data
-            for name, data in profile_obj.profile_data.items()
-            if fnmatch(f"{name}.json", pattern)
+            name: data for name, data in profile_obj.profile_data.items() if fnmatch(f"{name}.json", pattern)
         }
         if not profile_data:
             # skip this directory if no files match the pattern
@@ -78,9 +74,7 @@ def load_all_profiles(
 
         issues: dict[str, object] = {}
         if validate:
-            validation_issues = validate_profile_structure(
-                plant_id, base_path=base_path, verbose=verbose
-            )
+            validation_issues = validate_profile_structure(plant_id, base_path=base_path, verbose=verbose)
             if validation_issues:
                 issues = validation_issues
 
@@ -94,14 +88,10 @@ def load_all_profiles(
     total_profiles = len(profiles)
     profiles_with_issues = sum(1 for data in profiles.values() if data.issues)
     if validate:
-        _LOGGER.info(
-            "Loaded %d profiles, %d with validation issues.", total_profiles, profiles_with_issues
-        )
+        _LOGGER.info("Loaded %d profiles, %d with validation issues.", total_profiles, profiles_with_issues)
     else:
         if profiles_with_issues:
-            _LOGGER.info(
-                "Loaded %d profiles, %d with issues.", total_profiles, profiles_with_issues
-            )
+            _LOGGER.info("Loaded %d profiles, %d with issues.", total_profiles, profiles_with_issues)
         else:
             _LOGGER.info("Loaded %d profiles with no issues.", total_profiles)
     return profiles

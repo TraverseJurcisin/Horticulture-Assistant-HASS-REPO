@@ -1,3 +1,5 @@
+"""Persistent storage helpers for offline horticulture data."""
+
 from __future__ import annotations
 
 import asyncio
