@@ -1355,6 +1355,44 @@ async def test_options_flow_manage_profile_sensors_validates_and_updates(hass):
     assert sensors == {"temperature": "sensor.temp_new"}
 
 
+async def test_options_flow_manage_profile_sensors_preserves_multi_assignments(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "general": {
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            "sensors": {"temperature": ["sensor.temp_a", "sensor.temp_b"]},
+        },
+        "sensors": {"temperature": ["sensor.temp_a", "sensor.temp_b"]},
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    def _update_entry(target, *, options):
+        target.options = options
+
+    hass.states.async_set("sensor.temp_a", 20, {"device_class": "temperature"})
+    hass.states.async_set("sensor.temp_b", 21, {"device_class": "temperature"})
+
+    await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "edit_sensors"})
+    with patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry):
+        result = await flow.async_step_manage_profile_sensors({"temperature": ["sensor.temp_a", "sensor.temp_b"]})
+
+    assert result["type"] == "create_entry"
+    stored = entry.options[CONF_PROFILES]["alpha"]
+    sensors = stored["general"].get("sensors", {})
+    assert sensors == {"temperature": ["sensor.temp_a", "sensor.temp_b"]}
+
+
 async def test_options_flow_manage_profile_thresholds_updates_targets(hass):
     profile_payload = {
         "name": "Alpha",
