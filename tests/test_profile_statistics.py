@@ -10,6 +10,7 @@ from custom_components.horticulture_assistant.profile.schema import (
 from custom_components.horticulture_assistant.profile.statistics import (
     _build_event_snapshot,
     _build_nutrient_snapshot,
+    _coerce_ratio_value,
     recompute_statistics,
 )
 
@@ -96,6 +97,12 @@ def test_recompute_statistics_handles_zero_area():
     contribution = next(contrib for contrib in species_snapshot.contributions if contrib.child_id == "cultivar")
     assert contribution.weight == pytest.approx(150.0 / 230.0)
     assert contribution.n_runs == 1
+
+
+def test_coerce_ratio_value_handles_decimal_comma_inputs():
+    assert _coerce_ratio_value("75,5%") == pytest.approx(0.755)
+    assert _coerce_ratio_value("0,85") == pytest.approx(0.85)
+    assert _coerce_ratio_value("3,5/4,0") == pytest.approx(0.875)
 
 
 def test_recompute_statistics_handles_profiles_without_harvests():

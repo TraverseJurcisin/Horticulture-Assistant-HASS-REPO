@@ -768,6 +768,28 @@ _FRACTION_PATTERN = re.compile(
 )
 
 
+def _normalise_ratio_text(text: str) -> str:
+    """Return ``text`` with decimal separators normalised for parsing."""
+
+    def _normalise_component(component: str) -> str:
+        compact = component.replace(" ", "")
+        if "," in compact:
+            if "." in compact:
+                compact = compact.replace(".", "")
+                compact = compact.replace(",", ".")
+            elif compact.count(",") > 1:
+                compact = compact.replace(",", "")
+            else:
+                compact = compact.replace(",", ".")
+        elif "." in compact and compact.count(".") > 1:
+            compact = compact.replace(".", "")
+        return compact
+
+    if "/" in text:
+        return "/".join(_normalise_component(part) for part in text.split("/"))
+    return _normalise_component(text)
+
+
 def _coerce_ratio_value(value: Any) -> float | None:
     """Return ``value`` coerced to a 0-1 ratio when possible."""
 
@@ -781,6 +803,7 @@ def _coerce_ratio_value(value: Any) -> float | None:
         if text.endswith("%"):
             percent_notation = True
             text = text[:-1]
+        text = _normalise_ratio_text(text)
         fraction_match = _FRACTION_PATTERN.search(text)
         if fraction_match:
             numerator = _to_float(fraction_match.group("numerator"))
@@ -788,6 +811,8 @@ def _coerce_ratio_value(value: Any) -> float | None:
             if denominator and denominator != 0:
                 ratio = numerator / denominator
                 return max(0.0, min(1.0, ratio))
+        if number is None:
+            number = _to_float(text)
         if number is None:
             match = _RATIO_NUMBER_PATTERN.search(text)
             if match:
