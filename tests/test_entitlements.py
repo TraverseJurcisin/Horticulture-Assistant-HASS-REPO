@@ -23,6 +23,7 @@ def test_cloud_sync_flag_truthy_values_enable_feature(flag_value) -> None:
     options = {CONF_CLOUD_SYNC_ENABLED: flag_value}
     entitlements = derive_entitlements(options)
     assert entitlements.allows(FEATURE_CLOUD_SYNC)
+    assert entitlements.source == "cloud"
 
 
 @pytest.mark.parametrize(
@@ -33,6 +34,7 @@ def test_cloud_sync_flag_falsey_values_disable_feature(flag_value) -> None:
     options = {CONF_CLOUD_SYNC_ENABLED: flag_value}
     entitlements = derive_entitlements(options)
     assert not entitlements.allows(FEATURE_CLOUD_SYNC)
+    assert entitlements.source == "local"
 
 
 def test_entitlements_from_roles_and_sync_flag():

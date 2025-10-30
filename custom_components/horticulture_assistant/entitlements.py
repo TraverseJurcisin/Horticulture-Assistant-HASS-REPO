@@ -197,7 +197,8 @@ def derive_entitlements(options: Mapping[str, Any] | None) -> Entitlements:
         if mapped:
             base_features.update(mapped)
 
-    if _coerce_bool(options.get(CONF_CLOUD_SYNC_ENABLED)):
+    cloud_sync_enabled = _coerce_bool(options.get(CONF_CLOUD_SYNC_ENABLED))
+    if cloud_sync_enabled:
         base_features.add(FEATURE_CLOUD_SYNC)
 
     account_email_raw = options.get(CONF_CLOUD_ACCOUNT_EMAIL)
@@ -214,7 +215,7 @@ def derive_entitlements(options: Mapping[str, Any] | None) -> Entitlements:
         organization_role=org_role or None,
         organization_id=organization_id or None,
         account_email=account_email or None,
-        source="cloud" if options.get(CONF_CLOUD_SYNC_ENABLED) else "local",
+        source="cloud" if cloud_sync_enabled else "local",
     )
 
 
