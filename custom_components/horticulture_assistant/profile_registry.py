@@ -144,7 +144,7 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
             if cleaned:
                 items.append(cleaned)
         if items:
-            return items
+            return list(dict.fromkeys(items))
         return None
     return None
 
