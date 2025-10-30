@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 import json
 import logging
 import os
 import re
-from pathlib import Path
+from pathlib import Path, PurePath
+from typing import Any
 
 from custom_components.horticulture_assistant.utils.path_utils import plants_path
 
@@ -13,6 +16,14 @@ except ImportError:
 
 _LOGGER = logging.getLogger(__name__)
 
+_WINDOWS_RESERVED_NAMES = {
+    "con",
+    "prn",
+    "aux",
+    "nul",
+    *{f"com{idx}" for idx in range(1, 10)},
+    *{f"lpt{idx}" for idx in range(1, 10)},
+}
 
 def _slugify(text: str) -> str:
     """Helper to slugify a string (lowercase, underscores for non-alphanumeric)."""
@@ -23,6 +34,34 @@ def _slugify(text: str) -> str:
     while '__' in text:
         text = text.replace('__', '_')
     return text
+
+
+def _normalise_plant_id(value: Any) -> str:
+    """Return a filesystem-safe identifier derived from ``value``."""
+
+    if value is None:
+        return ""
+    text = str(value).strip()
+    if not text:
+        return ""
+
+    # Collapse explicit path separators so only a single component remains.
+    text = text.replace("\\", "/")
+    candidate = PurePath(text)
+    if len(candidate.parts) != 1:
+        candidate = PurePath(candidate.name)
+    safe = candidate.name.strip().strip(".")
+    if safe in {"", ".", ".."}:
+        return ""
+
+    slug = _slugify(safe)
+    if not slug:
+        return ""
+
+    if slug in _WINDOWS_RESERVED_NAMES:
+        slug = f"{slug}_profile"
+
+    return slug
 
 
 def generate_profile(
@@ -46,25 +85,29 @@ def generate_profile(
     :return: The plant_id of the generated profile (string), or an empty string on error.
     """
     # Determine the plant identifier (plant_id)
-    plant_id = metadata.get("plant_id") or metadata.get("id")
+    plant_id = _normalise_plant_id(metadata.get("plant_id") or metadata.get("id"))
     display_name = (
         metadata.get("display_name") or metadata.get("name") or metadata.get("plant_name")
     )
-    if not plant_id:
-        if display_name:
-            plant_id = _slugify(display_name)
+    if not plant_id and display_name:
+        plant_id = _normalise_plant_id(display_name)
+        if plant_id:
             _LOGGER.debug("Generated plant_id '%s' from display_name '%s'.", plant_id, display_name)
-        else:
-            # Fallback: try plant_type or cultivar as identifier
-            if metadata.get("plant_type"):
-                plant_id = _slugify(str(metadata["plant_type"]))
+
+    if not plant_id:
+        # Fallback: try plant_type or cultivar as identifier
+        if metadata.get("plant_type"):
+            plant_id = _normalise_plant_id(metadata["plant_type"])
+            if plant_id:
                 _LOGGER.warning("No name provided; using plant_type '%s' as plant_id.", plant_id)
-            elif metadata.get("cultivar"):
-                plant_id = _slugify(str(metadata["cultivar"]))
+        if not plant_id and metadata.get("cultivar"):
+            plant_id = _normalise_plant_id(metadata["cultivar"])
+            if plant_id:
                 _LOGGER.warning("No name provided; using cultivar '%s' as plant_id.", plant_id)
-            else:
-                _LOGGER.error("No plant_id or name provided in metadata; cannot generate profile.")
-                return ""
+
+    if not plant_id:
+        _LOGGER.error("No plant_id or name provided in metadata; cannot generate profile.")
+        return ""
 
     # Determine base directory for plant profiles
     if base_dir:
@@ -79,6 +122,11 @@ def generate_profile(
         base_path = Path("plants")
 
     plant_dir = base_path / plant_id
+    try:
+        plant_dir.relative_to(base_path)
+    except ValueError:
+        _LOGGER.error("Unsafe plant_id '%s' resolved outside base directory", plant_id)
+        return ""
     try:
         os.makedirs(plant_dir, exist_ok=True)
     except Exception as e:
