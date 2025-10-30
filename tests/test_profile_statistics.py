@@ -147,6 +147,35 @@ def test_recompute_statistics_ignores_invalid_fruit_count_without_skipping_event
     assert snapshot.payload["harvest_count"] == 2
 
 
+def test_recompute_statistics_preserves_zero_fruit_count():
+    profile = BioProfile(profile_id="plant", display_name="Plant")
+    profile.add_harvest_event(
+        HarvestEvent(
+            harvest_id="h1",
+            profile_id="plant",
+            species_id=None,
+            run_id=None,
+            harvested_at="2024-03-01T00:00:00Z",
+            yield_grams=42.0,
+            area_m2=3.0,
+            fruit_count=0,
+        )
+    )
+
+    recompute_statistics([profile])
+
+    stat = profile.statistics[0]
+    assert stat.metrics["total_fruit_count"] == pytest.approx(0.0)
+
+    snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "yield/v1"),
+        None,
+    )
+    assert snapshot is not None
+    assert snapshot.payload["metrics"]["total_fruit_count"] == pytest.approx(0.0)
+    assert snapshot.payload["yields"]["total_fruit_count"] == 0
+
+
 def test_recompute_statistics_handles_invalid_numeric_values():
     profile = BioProfile(profile_id="plant", display_name="Plant")
     profile.add_harvest_event(
