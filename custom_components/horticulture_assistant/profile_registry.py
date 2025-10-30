@@ -119,7 +119,7 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
         entity_id = value.strip()
         return entity_id or None
     if isinstance(value, Set):
-        items: list[str] = []
+        deduped: dict[str, str] = {}
         for item in value:
             if isinstance(item, str):
                 cleaned = item.strip()
@@ -127,13 +127,16 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
                 cleaned = ""
             else:
                 cleaned = str(item).strip()
-            if cleaned:
-                items.append(cleaned)
-        if items:
-            return sorted(dict.fromkeys(items), key=str.casefold)
+            if not cleaned:
+                continue
+            key = cleaned.casefold()
+            deduped.setdefault(key, cleaned)
+        if deduped:
+            return sorted(deduped.values(), key=str.casefold)
         return None
     if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
         items: list[str] = []
+        seen: set[str] = set()
         for item in value:
             if isinstance(item, str):
                 cleaned = item.strip()
@@ -141,8 +144,13 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
                 cleaned = ""
             else:
                 cleaned = str(item).strip()
-            if cleaned:
-                items.append(cleaned)
+            if not cleaned:
+                continue
+            key = cleaned.casefold()
+            if key in seen:
+                continue
+            seen.add(key)
+            items.append(cleaned)
         if items:
             return items
         return None

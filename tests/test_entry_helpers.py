@@ -314,6 +314,17 @@ def test_profile_context_accepts_set_sensor_sequences():
     assert context.has_all_sensors("light") is True
 
 
+def test_profile_context_deduplicates_sequence_sensors():
+    context = ProfileContext(
+        id="plant",
+        name="Plant",
+        sensors={"temperature": ["sensor.temp", "sensor.temp", "sensor.backup"]},
+    )
+
+    assert context.sensor_ids_for_roles("temperature") == ("sensor.temp", "sensor.backup")
+    assert context.sensor_ids_for_roles() == ("sensor.temp", "sensor.backup")
+
+
 def test_profile_context_has_sensors_matches_any_role():
     context = ProfileContext(
         id="plant",
