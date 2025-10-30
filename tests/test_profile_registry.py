@@ -31,7 +31,10 @@ from custom_components.horticulture_assistant.profile.statistics import (
     NUTRIENT_STATS_VERSION,
 )
 from custom_components.horticulture_assistant.profile.utils import LineageLinkReport
-from custom_components.horticulture_assistant.profile_registry import ProfileRegistry
+from custom_components.horticulture_assistant.profile_registry import (
+    ProfileRegistry,
+    _normalise_sensor_value,
+)
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 pytestmark = pytest.mark.asyncio
@@ -43,6 +46,14 @@ async def _make_entry(hass, options=None):
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=options or {})
     entry.add_to_hass(hass)
     return entry
+
+
+async def test_normalise_sensor_value_deduplicates_sequences() -> None:
+    """Sensor sequences should drop duplicates while preserving order."""
+
+    value = [" sensor.one ", "sensor.one", None, "sensor.two", "sensor.two", 123, "123"]
+
+    assert _normalise_sensor_value(value) == ["sensor.one", "sensor.two", "123"]
 
 
 async def test_missing_species_warning_logged(hass, caplog):
