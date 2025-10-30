@@ -154,3 +154,17 @@ def test_write_profile_sections_rejects_path_traversal(tmp_path, caplog):
     assert (plant_dir / "profile.json").exists()
     assert not (tmp_path / "escape.json").exists()
     assert any("Skipping unsafe path" in message for message in caplog.messages)
+
+
+def test_write_profile_sections_accepts_non_string_identifier(tmp_path):
+    """Numeric identifiers should be converted to safe directory names."""
+
+    sections = {"profile.json": {"foo": "bar"}}
+
+    result = write_profile_sections(12345, sections, base_path=tmp_path)
+
+    assert result == 12345
+
+    plant_dir = tmp_path / "12345"
+    assert plant_dir.is_dir()
+    assert (plant_dir / "profile.json").is_file()
