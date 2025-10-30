@@ -66,6 +66,15 @@ def test_get_numeric_state_handles_european_format():
     assert value == pytest.approx(1234.56)
 
 
+def test_get_numeric_state_handles_unicode_whitespace():
+    hass = types.SimpleNamespace(
+        states=types.SimpleNamespace(get=lambda entity_id: types.SimpleNamespace(state="1\u00a0234,5"))
+    )
+
+    value = state_helpers.get_numeric_state(hass, "sensor.nbsp")
+    assert value == pytest.approx(1234.5)
+
+
 def test_parse_entities_ignores_none_and_blank_entries():
     """None values or blank strings should be removed when parsing entities."""
 

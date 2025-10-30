@@ -26,6 +26,9 @@ _NUM_RE = re.compile(r"[-+]?(?:\d+(?:[.,]\d+)*|\.\d+)(?:[eE][-+]?\d+)?")
 # Treat commas, semicolons and any whitespace (including newlines) as
 # delimiters so multiline strings from UI forms are handled gracefully.
 _SEP_RE = re.compile(r"[;,\s]+")
+# Collapse all whitespace characters (including non-breaking spaces) when
+# normalising numeric strings.
+_WHITESPACE_RE = re.compile(r"\s+")
 
 
 def _normalise_numeric_string(value: str) -> str:
@@ -35,7 +38,7 @@ def _normalise_numeric_string(value: str) -> str:
     if not trimmed:
         return trimmed
 
-    collapsed = trimmed.replace(" ", "")
+    collapsed = _WHITESPACE_RE.sub("", trimmed)
     sign = ""
     if collapsed and collapsed[0] in "+-":
         sign, collapsed = collapsed[0], collapsed[1:]
