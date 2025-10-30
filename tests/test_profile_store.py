@@ -174,6 +174,7 @@ async def test_async_create_profile_accepts_sequence_sensor_parameters(hass, tmp
             "moisture": [" sensor.one ", "sensor.two", ""],
             "temperature": (" sensor.temp ",),
             "illuminance": " sensor.light ",
+            "set_role": {" sensor.alpha ", "sensor.beta"},
             "invalid": [],
             "none": None,
         },
@@ -185,12 +186,14 @@ async def test_async_create_profile_accepts_sequence_sensor_parameters(hass, tmp
         "moisture": ["sensor.one", "sensor.two"],
         "temperature": ["sensor.temp"],
         "illuminance": "sensor.light",
+        "set_role": ["sensor.alpha", "sensor.beta"],
     }
     general = profile["general"] if isinstance(profile.get("general"), dict) else {}
     assert general.get("sensors") == {
         "moisture": ["sensor.one", "sensor.two"],
         "temperature": ["sensor.temp"],
         "illuminance": "sensor.light",
+        "set_role": ["sensor.alpha", "sensor.beta"],
     }
 
 

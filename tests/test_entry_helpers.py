@@ -303,6 +303,17 @@ def test_profile_context_strips_sensor_whitespace():
     assert context.sensor_ids_for_roles() == ("sensor.temp", "sensor.backup", "sensor.hum")
 
 
+def test_profile_context_accepts_set_sensor_sequences():
+    context = ProfileContext(
+        id="plant",
+        name="Plant",
+        sensors={"light": {" sensor.main ", "sensor.backup"}},
+    )
+
+    assert context.sensor_ids_for_roles("light") == ("sensor.backup", "sensor.main")
+    assert context.has_all_sensors("light") is True
+
+
 def test_profile_context_has_sensors_matches_any_role():
     context = ProfileContext(
         id="plant",
