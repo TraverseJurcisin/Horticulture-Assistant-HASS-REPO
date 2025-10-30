@@ -56,14 +56,14 @@
             "threshold_field_error": "Adjust this value to stay within the supported range.",
             "threshold_out_of_bounds": "{issue_detail}",
             "no_template_matches": "No templates match your filter. Clear the filter or try another search."
+        },
+        "abort": {
+            "post_setup_use_options": "Use Configure → Options → Add profile on the Horticulture Assistant entry to manage profiles.",
+            "profile_added": "Created a new profile: {profile}. You can edit it from the profile manager.",
+            "cannot_delete_primary": "The primary profile cannot be deleted.",
+            "no_profiles": "No profiles are available.",
+            "unknown_profile": "The selected profile could not be found."
         }
-    },
-    "abort": {
-        "post_setup_use_options": "Use Configure → Options → Add profile on the Horticulture Assistant entry to manage profiles.",
-        "profile_added": "Created a new profile: {profile}. You can edit it from the profile manager.",
-        "cannot_delete_primary": "The primary profile cannot be deleted.",
-        "no_profiles": "No profiles are available.",
-        "unknown_profile": "The selected profile could not be found."
     },
     "options": {
         "step": {
