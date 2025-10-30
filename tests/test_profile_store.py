@@ -111,6 +111,31 @@ async def test_async_create_profile_preserves_sequence_sensor_bindings(hass, tmp
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_can_clear_cloned_sensors(hass, tmp_path, monkeypatch) -> None:
+    """Explicit sensor parameters should remove cloned bindings when empty."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    base_profile = BioProfile(
+        profile_id="sensors_base",
+        display_name="Sensors Base",
+        general={"sensors": {"moisture": "sensor.old"}},
+    )
+    base_profile.refresh_sections()
+    await store.async_save(base_profile, name="Sensors Base")
+
+    await store.async_create_profile("Sensors Cleared", clone_from="Sensors Base", sensors={})
+
+    cleared = await store.async_get("Sensors Cleared")
+    assert cleared is not None
+    assert cleared.get("sensors") in (None, {})
+    general = cleared.get("general") if isinstance(cleared.get("general"), dict) else {}
+    assert general.get("sensors") in (None, {})
+
+
+@pytest.mark.asyncio
 async def test_async_create_profile_clones_sensors_from_dict_payload(hass, tmp_path, monkeypatch) -> None:
     """Cloning from a raw payload must copy sensor and resolved target data."""
 
