@@ -58,6 +58,13 @@ def _extract_from_mapping(mapping: Mapping[str, Any] | None, key: str) -> Any:
     return None
 
 
+def _normalise_identifier(value: Any) -> str | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    return text or None
+
+
 def _make_origin_target(value: Any, *, source_type: str, method: str, profile_id: str) -> ResolvedTarget:
     return ResolvedTarget(
         value=value,
@@ -73,13 +80,12 @@ def _make_origin_target(value: Any, *, source_type: str, method: str, profile_id
 def _iter_parent_ids(profile: BioProfile) -> list[str]:
     seen: set[str] = set()
     result: list[str] = []
-    if profile.species_profile_id:
-        species_id = str(profile.species_profile_id)
-        if species_id and species_id not in seen:
-            seen.add(species_id)
-            result.append(species_id)
+    species_id = _normalise_identifier(profile.species_profile_id)
+    if species_id and species_id not in seen:
+        seen.add(species_id)
+        result.append(species_id)
     for parent in profile.parents:
-        parent_id = str(parent)
+        parent_id = _normalise_identifier(parent)
         if parent_id and parent_id not in seen:
             seen.add(parent_id)
             result.append(parent_id)
