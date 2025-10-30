@@ -1478,6 +1478,8 @@ class ProfileRegistry:
             for key, raw in thresholds.items():
                 if raw is None:
                     continue
+                if isinstance(raw, bool):
+                    raise ValueError(f"invalid threshold {key}")
                 try:
                     value = float(raw)
                 except (TypeError, ValueError) as err:
