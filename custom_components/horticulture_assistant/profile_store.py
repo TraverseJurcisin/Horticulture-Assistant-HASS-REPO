@@ -104,8 +104,8 @@ def _normalise_sensor_binding(value: Any) -> str | list[str] | None:
             trimmed = item.strip()
             if not trimmed:
                 continue
-            key = trimmed.casefold()
-            cleaned.setdefault(key, trimmed)
+            folded = trimmed.casefold()
+            cleaned.setdefault(folded, trimmed)
         if cleaned:
             return sorted(cleaned.values(), key=str.casefold)
         return None
@@ -119,10 +119,10 @@ def _normalise_sensor_binding(value: Any) -> str | list[str] | None:
             trimmed = item.strip()
             if not trimmed:
                 continue
-            key = trimmed.casefold()
-            if key in seen:
+            folded = trimmed.casefold()
+            if folded in seen:
                 continue
-            seen.add(key)
+            seen.add(folded)
             items.append(trimmed)
         if items:
             return items

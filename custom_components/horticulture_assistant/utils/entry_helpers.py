@@ -76,8 +76,8 @@ def _normalise_sensor_sequences(
                 trimmed = item.strip()
                 if not trimmed:
                     continue
-                key = trimmed.casefold()
-                cleaned.setdefault(key, trimmed)
+                folded = trimmed.casefold()
+                cleaned.setdefault(folded, trimmed)
             items = tuple(sorted(cleaned.values(), key=str.casefold))
         elif isinstance(raw, Sequence):
             cleaned: list[str] = []
@@ -88,10 +88,10 @@ def _normalise_sensor_sequences(
                 trimmed = item.strip()
                 if not trimmed:
                     continue
-                key = trimmed.casefold()
-                if key in seen:
+                folded = trimmed.casefold()
+                if folded in seen:
                     continue
-                seen.add(key)
+                seen.add(folded)
                 cleaned.append(trimmed)
             items = tuple(cleaned)
         else:

@@ -129,8 +129,8 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
                 cleaned = str(item).strip()
             if not cleaned:
                 continue
-            key = cleaned.casefold()
-            deduped.setdefault(key, cleaned)
+            folded = cleaned.casefold()
+            deduped.setdefault(folded, cleaned)
         if deduped:
             return sorted(deduped.values(), key=str.casefold)
         return None
@@ -146,10 +146,10 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
                 cleaned = str(item).strip()
             if not cleaned:
                 continue
-            key = cleaned.casefold()
-            if key in seen:
+            folded = cleaned.casefold()
+            if folded in seen:
                 continue
-            seen.add(key)
+            seen.add(folded)
             items.append(cleaned)
         if items:
             return items
