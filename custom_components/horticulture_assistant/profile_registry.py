@@ -1281,17 +1281,50 @@ class ProfileRegistry:
                 continue
             sensors_map[str(key)] = cleaned
         general[CONF_PROFILE_SCOPE] = resolved_scope
+
+        def _materialise_sensor_map() -> dict[str, str | list[str]]:
+            return {key: list(value) if isinstance(value, list) else value for key, value in sensors_map.items()}
+
+        local_general_sensors: dict[str, str | list[str]] = {}
+        local_had_sensor_map = False
+        local_payload = new_profile.get("local")
+        if isinstance(local_payload, Mapping):
+            existing_general = local_payload.get("general")
+            if isinstance(existing_general, Mapping):
+                existing_local_sensors = existing_general.get("sensors")
+                if isinstance(existing_local_sensors, Mapping):
+                    local_had_sensor_map = True
+                    for key, value in existing_local_sensors.items():
+                        cleaned = _normalise_sensor_value(value)
+                        if cleaned is None:
+                            continue
+                        local_general_sensors[str(key)] = cleaned
+
+        materialised_sensors = _materialise_sensor_map() if sensors_map else {}
+
         if sensors_map:
-            general["sensors"] = {
-                key: list(value) if isinstance(value, list) else value for key, value in sensors_map.items()
-            }
-        sync_general_section(new_profile, general)
-        if sensors_map:
-            new_profile["sensors"] = {
-                key: list(value) if isinstance(value, list) else value for key, value in sensors_map.items()
-            }
+            general["sensors"] = dict(materialised_sensors)
+            new_profile["sensors"] = dict(materialised_sensors)
         else:
+            general.pop("sensors", None)
             new_profile.pop("sensors", None)
+
+        sync_general_section(new_profile, general)
+
+        if local_general_sensors or local_had_sensor_map:
+            local_section = new_profile.get("local")
+            if isinstance(local_section, Mapping):
+                general_section = local_section.get("general")
+                if isinstance(general_section, dict):
+                    merged_local_sensors: dict[str, str | list[str]] = dict(materialised_sensors)
+                    for key, value in local_general_sensors.items():
+                        if key in sensors_map:
+                            continue
+                        merged_local_sensors[key] = list(value) if isinstance(value, list) else value
+                    if merged_local_sensors:
+                        general_section["sensors"] = merged_local_sensors
+                    else:
+                        general_section.pop("sensors", None)
         new_profile.pop("scope", None)
         new_profile[CONF_PROFILE_SCOPE] = resolved_scope
         new_profile["profile_id"] = candidate

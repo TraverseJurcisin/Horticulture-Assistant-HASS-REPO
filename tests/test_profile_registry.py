@@ -1794,6 +1794,88 @@ async def test_add_profile_copy_preserves_sequence_sensors(hass):
     assert profile.general["sensors"]["temperature"] == "sensor.temp"
 
 
+async def test_add_profile_clone_preserves_local_general_overrides(hass):
+    """Local-only sensor bindings survive cloning alongside global sensors."""
+
+    entry = await _make_entry(
+        hass,
+        {
+            CONF_PROFILES: {
+                "p1": {
+                    "name": "Plant",
+                    "sensors": {"temperature": " sensor.temp "},
+                    "general": {"sensors": {"temperature": "sensor.temp"}},
+                    "local": {
+                        "general": {
+                            "sensors": {
+                                "temperature": "sensor.temp",
+                                "soil_moisture": " sensor.soil ",
+                                "humidity": None,
+                            }
+                        }
+                    },
+                }
+            }
+        },
+    )
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("Clone Local Overrides", base_id="p1")
+
+    stored = entry.options[CONF_PROFILES][pid]
+    assert stored["sensors"]["temperature"] == "sensor.temp"
+    assert stored["general"]["sensors"]["temperature"] == "sensor.temp"
+
+    local_general = stored["local"]["general"]
+    assert local_general["sensors"]["temperature"] == "sensor.temp"
+    assert local_general["sensors"]["soil_moisture"] == "sensor.soil"
+    assert "humidity" not in local_general["sensors"]
+
+    profile = reg.get(pid)
+    assert profile is not None
+    assert profile.general["sensors"]["temperature"] == "sensor.temp"
+    assert profile.local.general["sensors"]["soil_moisture"] == "sensor.soil"
+
+
+async def test_add_profile_clone_strips_invalid_sensor_values(hass):
+    """Cloned profiles should drop whitespace-only or null sensor bindings."""
+
+    entry = await _make_entry(
+        hass,
+        {
+            CONF_PROFILES: {
+                "p1": {
+                    "name": "Plant",
+                    "sensors": {"temperature": "  ", "humidity": None},
+                    "general": {
+                        "template": "veg",
+                        "sensors": {"temperature": "  ", "humidity": None},
+                    },
+                }
+            }
+        },
+    )
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("Clone Clean", base_id="p1")
+
+    stored = entry.options[CONF_PROFILES][pid]
+    assert "sensors" not in stored
+
+    general = stored.get("general", {})
+    assert general.get("template") == "veg"
+    assert "sensors" not in general or not general["sensors"]
+
+    local_general = stored.get("local", {}).get("general", {})
+    assert "sensors" not in local_general or not local_general["sensors"]
+
+    profile = reg.get(pid)
+    assert profile is not None
+    assert not profile.general.get("sensors")
+
+
 async def test_add_profile_clone_from_storage_profile(hass):
     """Profiles persisted only in storage can still be used as clone sources."""
 
