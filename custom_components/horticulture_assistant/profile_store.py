@@ -109,7 +109,10 @@ def _normalise_sensor_binding(value: Any) -> str | list[str] | None:
             return deduped
         return None
 
-    if isinstance(value, Sequence) and not isinstance(value, (str | bytes | bytearray)):
+    if isinstance(value, (bytes, bytearray)):  # noqa: UP038 - Union type raises at runtime
+        return None
+
+    if isinstance(value, Sequence):
         items: list[str] = []
         seen: set[str] = set()
         for item in value:
