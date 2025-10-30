@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from datetime import datetime, timezone
 from typing import Any
 
@@ -165,11 +165,36 @@ class EdgeSyncWorker:
     ) -> tuple[str, str | None]:
         if content_type.startswith("application/json"):
             payload = json.loads(body.decode())
-            ndjson_payload = payload.get("events", "")
-            cursor = payload.get("cursor")
-            return ndjson_payload, cursor
+            events = payload.get("events") if isinstance(payload, Mapping) else payload
+            cursor = payload.get("cursor") if isinstance(payload, Mapping) else None
+            return self._normalise_events(events), cursor
         cursor = headers.get("X-Sync-Cursor")
         return body.decode(), cursor
+
+    def _normalise_events(self, events: Any) -> str:
+        if isinstance(events, bytes):
+            return events.decode("utf-8", "ignore")
+        if isinstance(events, str):
+            return events
+        if isinstance(events, Sequence) and not isinstance(events, str | bytes | bytearray):
+            lines: list[str] = []
+            for item in events:
+                text = self._normalise_events(item)
+                text = text.strip()
+                if text:
+                    lines.append(text)
+            return "\n".join(lines)
+        if isinstance(events, Mapping):
+            try:
+                return json.dumps(events, separators=(",", ":"), sort_keys=True)
+            except (TypeError, ValueError):
+                return ""
+        if events is None:
+            return ""
+        try:
+            return json.dumps(events, separators=(",", ":"))
+        except (TypeError, ValueError):
+            return ""
 
     def _apply_to_cache(self, event: SyncEvent) -> None:
         record = self.store.fetch_cloud_cache_entry(
