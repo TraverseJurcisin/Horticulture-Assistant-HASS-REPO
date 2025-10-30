@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -120,6 +120,43 @@ PROFILE_SENSOR_FIELDS = {
     "conductivity": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"])),
     "co2": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
 }
+
+
+def _normalise_sensor_submission(value: Any) -> str | list[str] | None:
+    """Return a cleaned representation of sensor input from the config flow."""
+
+    if value is None:
+        return None
+    if isinstance(value, str):
+        entity_id = value.strip()
+        return entity_id or None
+    if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
+        entries: list[str] = []
+        for item in value:
+            if isinstance(item, str):
+                cleaned = item.strip()
+            elif item is None:
+                cleaned = ""
+            else:
+                cleaned = str(item).strip()
+            if cleaned:
+                entries.append(cleaned)
+        if entries:
+            return entries
+        return None
+    text = str(value).strip()
+    return text or None
+
+
+def _default_sensor_value(value: Any) -> Any:
+    """Return the default value to use for a profile sensor field."""
+
+    normalised = _normalise_sensor_submission(value)
+    if normalised is None:
+        return vol.UNDEFINED
+    if isinstance(normalised, list):
+        return list(normalised)
+    return normalised
 
 
 def _build_sensor_schema(hass, defaults: Mapping[str, Any] | None = None):
@@ -1681,17 +1718,24 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         schema_fields: dict[Any, Any] = {}
         for measurement, selector in PROFILE_SENSOR_FIELDS.items():
-            default_value = existing.get(measurement, "") if isinstance(existing, Mapping) else ""
-            schema_fields[vol.Optional(measurement, default=default_value)] = vol.Any(selector, str)
+            default_value = _default_sensor_value(existing.get(measurement))
+            optional = (
+                vol.Optional(measurement)
+                if default_value is vol.UNDEFINED
+                else vol.Optional(measurement, default=default_value)
+            )
+            schema_fields[optional] = vol.Any(selector, cv.string, vol.All([cv.string]))
         schema = vol.Schema(schema_fields)
 
         errors: dict[str, str] = {}
         if user_input is not None:
-            sensors: dict[str, str] = {}
+            sensors: dict[str, str | list[str]] = {}
             for measurement in PROFILE_SENSOR_FIELDS:
                 raw = user_input.get(measurement)
-                if isinstance(raw, str) and raw.strip():
-                    sensors[measurement] = raw.strip()
+                normalised = _normalise_sensor_submission(raw)
+                if normalised is None:
+                    continue
+                sensors[measurement] = normalised
             try:
                 await registry.async_set_profile_sensors(self._pid, sensors)
             except ValueError as err:

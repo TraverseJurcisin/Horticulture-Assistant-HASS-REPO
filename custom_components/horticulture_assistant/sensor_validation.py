@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from enum import Enum
 from typing import TYPE_CHECKING, Any
@@ -129,68 +129,91 @@ def _normalise_unit(value: Any) -> str | None:
     return text.lower()
 
 
-def validate_sensor_links(hass: HomeAssistant, sensors: dict[str, str]) -> SensorValidationResult:
-    """Validate a mapping of measurement role to entity id."""
+def _iter_sensor_entities(value: Any) -> list[str]:
+    """Return a list of cleaned entity ids for ``value``."""
+
+    if isinstance(value, str):
+        entity_id = value.strip()
+        return [entity_id] if entity_id else []
+    if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
+        entities: list[str] = []
+        for item in value:
+            if isinstance(item, str):
+                candidate = item.strip()
+            elif item is None:
+                candidate = ""
+            else:
+                candidate = str(item).strip()
+            if candidate:
+                entities.append(candidate)
+        return entities
+    if value is None:
+        return []
+    entity_id = str(value).strip()
+    return [entity_id] if entity_id else []
+
+
+def validate_sensor_links(hass: HomeAssistant, sensors: Mapping[str, str | Sequence[Any]]) -> SensorValidationResult:
+    """Validate a mapping of measurement role to entity ids."""
 
     errors: list[SensorValidationIssue] = []
     warnings: list[SensorValidationIssue] = []
 
-    for role, entity_id in sensors.items():
-        if not entity_id:
-            continue
-        state = hass.states.get(entity_id)
-        if state is None:
-            errors.append(
-                SensorValidationIssue(
-                    role=role,
-                    entity_id=entity_id,
-                    issue="missing_entity",
-                    severity="error",
+    for role, raw_value in sensors.items():
+        for entity_id in _iter_sensor_entities(raw_value):
+            state = hass.states.get(entity_id)
+            if state is None:
+                errors.append(
+                    SensorValidationIssue(
+                        role=role,
+                        entity_id=entity_id,
+                        issue="missing_entity",
+                        severity="error",
+                    )
                 )
-            )
-            continue
+                continue
 
-        attributes = state.attributes
-        expected_class = EXPECTED_DEVICE_CLASSES.get(role)
-        actual_class = _normalise_device_class(attributes.get("device_class"))
-        expected_class_name = expected_class.value if expected_class is not None else None
-        if expected_class_name and actual_class not in {
-            expected_class_name,
-            _normalise_device_class(expected_class_name),
-        }:
-            warnings.append(
-                SensorValidationIssue(
-                    role=role,
-                    entity_id=entity_id,
-                    issue="unexpected_device_class",
-                    severity="warning",
-                    expected=expected_class_name,
-                    observed=actual_class,
+            attributes = state.attributes
+            expected_class = EXPECTED_DEVICE_CLASSES.get(role)
+            actual_class = _normalise_device_class(attributes.get("device_class"))
+            expected_class_name = expected_class.value if expected_class is not None else None
+            if expected_class_name and actual_class not in {
+                expected_class_name,
+                _normalise_device_class(expected_class_name),
+            }:
+                warnings.append(
+                    SensorValidationIssue(
+                        role=role,
+                        entity_id=entity_id,
+                        issue="unexpected_device_class",
+                        severity="warning",
+                        expected=expected_class_name,
+                        observed=actual_class,
+                    )
                 )
-            )
 
-        unit = _normalise_unit(attributes.get("unit_of_measurement"))
-        expected_units = {_normalise_unit(unit) for unit in EXPECTED_UNITS.get(role, set())}
-        if expected_units and unit and unit not in expected_units:
-            warnings.append(
-                SensorValidationIssue(
-                    role=role,
-                    entity_id=entity_id,
-                    issue="unexpected_unit",
-                    severity="warning",
-                    expected=", ".join(sorted(filter(None, expected_units))),
-                    observed=unit,
+            unit = _normalise_unit(attributes.get("unit_of_measurement"))
+            expected_units = {_normalise_unit(unit) for unit in EXPECTED_UNITS.get(role, set())}
+            if expected_units and unit and unit not in expected_units:
+                warnings.append(
+                    SensorValidationIssue(
+                        role=role,
+                        entity_id=entity_id,
+                        issue="unexpected_unit",
+                        severity="warning",
+                        expected=", ".join(sorted(filter(None, expected_units))),
+                        observed=unit,
+                    )
                 )
-            )
-        if not unit and role in EXPECTED_UNITS:
-            warnings.append(
-                SensorValidationIssue(
-                    role=role,
-                    entity_id=entity_id,
-                    issue="missing_unit",
-                    severity="warning",
+            if not unit and role in EXPECTED_UNITS:
+                warnings.append(
+                    SensorValidationIssue(
+                        role=role,
+                        entity_id=entity_id,
+                        issue="missing_unit",
+                        severity="warning",
+                    )
                 )
-            )
 
     return SensorValidationResult(errors=errors, warnings=warnings)
 
