@@ -90,7 +90,7 @@ def _clone_structure(value: Any) -> Any:
 
 
 def _normalise_sensor_binding(value: Any) -> str | list[str] | None:
-    """Normalise sensor mapping values to trimmed strings or lists."""
+    """Normalise sensor mapping values to trimmed strings or unique lists."""
 
     if isinstance(value, str):
         cleaned = value.strip()
@@ -118,7 +118,15 @@ def _normalise_sensor_binding(value: Any) -> str | list[str] | None:
             if trimmed:
                 items.append(trimmed)
         if items:
-            return items
+            deduped: list[str] = []
+            seen: set[str] = set()
+            for entry in items:
+                if entry in seen:
+                    continue
+                seen.add(entry)
+                deduped.append(entry)
+            if deduped:
+                return deduped
         return None
 
     return None
