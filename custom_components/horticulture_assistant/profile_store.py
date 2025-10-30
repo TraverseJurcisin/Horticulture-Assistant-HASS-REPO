@@ -111,12 +111,14 @@ def _normalise_sensor_binding(value: Any) -> str | list[str] | None:
 
     if isinstance(value, Sequence) and not isinstance(value, (str | bytes | bytearray)):
         items: list[str] = []
+        seen: set[str] = set()
         for item in value:
             if not isinstance(item, str):
                 continue
             trimmed = item.strip()
-            if trimmed:
+            if trimmed and trimmed not in seen:
                 items.append(trimmed)
+                seen.add(trimmed)
         if items:
             deduped = list(dict.fromkeys(items))
             return deduped

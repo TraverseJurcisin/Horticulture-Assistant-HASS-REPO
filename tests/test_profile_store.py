@@ -136,6 +136,35 @@ async def test_async_create_profile_can_clear_cloned_sensors(hass, tmp_path, mon
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_deduplicates_explicit_sensor_lists(hass, tmp_path, monkeypatch) -> None:
+    """Explicit list sensor bindings should drop duplicates while preserving order."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_create_profile(
+        "Manual Sensors",
+        sensors={
+            "moisture": [" sensor.one ", "sensor.one", "sensor.two", "sensor.one", "sensor.two"],
+            "temperature": ("sensor.temp", "sensor.temp"),
+        },
+    )
+
+    stored = await store.async_get("Manual Sensors")
+    assert stored is not None
+    assert stored["sensors"] == {
+        "moisture": ["sensor.one", "sensor.two"],
+        "temperature": ["sensor.temp"],
+    }
+    general = stored.get("general") if isinstance(stored.get("general"), dict) else {}
+    assert general.get("sensors") == {
+        "moisture": ["sensor.one", "sensor.two"],
+        "temperature": ["sensor.temp"],
+    }
+
+
+@pytest.mark.asyncio
 async def test_async_create_profile_clones_sensors_from_dict_payload(hass, tmp_path, monkeypatch) -> None:
     """Cloning from a raw payload must copy sensor and resolved target data."""
 
