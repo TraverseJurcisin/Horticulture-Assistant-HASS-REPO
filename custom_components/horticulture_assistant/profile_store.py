@@ -113,7 +113,13 @@ class ProfileStore:
                 names.append(path.stem)
                 continue
 
-            payload = self._normalise_payload(raw, fallback_name=path.stem)
+            try:
+                payload = self._normalise_payload(raw, fallback_name=path.stem)
+            except asyncio.CancelledError:  # pragma: no cover - propagate cancellation
+                raise
+            except Exception:  # pragma: no cover - invalid payload
+                names.append(path.stem)
+                continue
             name = payload.get("display_name") or payload.get("name") or path.stem
             names.append(str(name))
 
@@ -138,7 +144,12 @@ class ProfileStore:
         if not isinstance(raw, Mapping):
             return None
 
-        return self._normalise_payload(raw, fallback_name=path.stem)
+        try:
+            return self._normalise_payload(raw, fallback_name=path.stem)
+        except asyncio.CancelledError:  # pragma: no cover - propagate cancellation
+            raise
+        except Exception:  # pragma: no cover - invalid payload
+            return None
 
     async def async_save(
         self,

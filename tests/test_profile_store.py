@@ -22,7 +22,11 @@ from custom_components.horticulture_assistant.profile.store import (
     async_save_profile,
     async_save_profile_from_options,
 )
-from custom_components.horticulture_assistant.profile_store import ProfileStore
+from custom_components.horticulture_assistant.profile_store import (
+    LOCAL_RELATIVE_PATH,
+    PROFILES_DIRNAME,
+    ProfileStore,
+)
 
 
 @pytest.mark.asyncio
@@ -192,6 +196,30 @@ async def test_async_create_profile_accepts_sequence_sensor_parameters(hass, tmp
         "temperature": ["sensor.temp"],
         "illuminance": "sensor.light",
     }
+
+
+@pytest.mark.asyncio
+async def test_async_list_handles_corrupted_payload(hass, tmp_path, monkeypatch) -> None:
+    """Corrupted profile files should not prevent listing remaining entries."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    base_dir = tmp_path / LOCAL_RELATIVE_PATH / PROFILES_DIRNAME
+    base_dir.mkdir(parents=True, exist_ok=True)
+    (base_dir / "broken.json").write_text(
+        json.dumps({"display_name": "Broken", "library": {"parents": 5}}),
+        encoding="utf-8",
+    )
+
+    names = await store.async_list()
+
+    assert names == ["broken"]
+
+    profile = await store.async_get("broken")
+
+    assert profile is None
 
 
 @pytest.mark.asyncio
