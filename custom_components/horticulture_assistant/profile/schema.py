@@ -1595,10 +1595,19 @@ class BioProfile:
                 meta = summary.setdefault("metadata", {})
                 meta.update(event.metadata)
 
-        for harvest in self.harvest_history:
+        for index, harvest in enumerate(self.harvest_history):
             run_id = harvest.run_id or (self.run_history[-1].run_id if self.run_history else None)
             if not run_id:
-                continue
+                base_id = harvest.harvest_id or harvest.harvested_at or f"harvest-{index}"
+                candidate = str(base_id).strip()
+                if not candidate:
+                    candidate = f"harvest-{index}"
+                unique_id = candidate
+                suffix = 1
+                while unique_id in summaries:
+                    suffix += 1
+                    unique_id = f"{candidate}-{suffix}"
+                run_id = unique_id
             summary = _ensure(run_id)
             summary["harvest_count"] = int(summary.get("harvest_count", 0)) + 1
             summary["yield_grams"] = float(summary.get("yield_grams", 0.0)) + float(harvest.yield_grams or 0.0)

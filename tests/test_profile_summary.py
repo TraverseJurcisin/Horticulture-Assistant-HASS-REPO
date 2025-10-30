@@ -3,6 +3,7 @@ from custom_components.horticulture_assistant.profile.schema import (
     Citation,
     ComputedStatSnapshot,
     FieldAnnotation,
+    HarvestEvent,
     ProfileComputedSection,
     ProfileSections,
     ResolvedTarget,
@@ -159,3 +160,24 @@ def test_refresh_sections_preserves_computed_metadata():
     sections = payload["sections"]
     assert sections["computed"]["metadata"]["computed_at"] == "2025-01-01T00:00:00Z"
     assert sections["local"]["general"]["sensors"]["temp"] == "sensor.two"
+
+
+def test_run_summaries_generate_identifier_for_harvest_only_runs():
+    profile = BioProfile(profile_id="harvest-only", display_name="Harvest Only")
+    profile.add_harvest_event(
+        HarvestEvent(
+            harvest_id="harvest-1",
+            profile_id="harvest-only",
+            species_id=None,
+            run_id=None,
+            harvested_at="2024-02-01T00:00:00Z",
+            yield_grams=150.0,
+        )
+    )
+
+    summaries = profile.run_summaries()
+
+    assert summaries
+    assert summaries[0]["run_id"] == "harvest-1"
+    assert summaries[0]["harvest_count"] == 1
+    assert summaries[0]["yield_grams"] == 150.0
