@@ -23,10 +23,16 @@ _WINDOWS_RESERVED_NAMES = {
 _WINDOWS_INVALID_CHARS = '<>:"\\|?*'
 
 
-def _safe_component(value: str) -> str:
+def _safe_component(value: Any) -> str:
     """Return a filesystem-safe directory name for ``value``."""
 
-    text = (value or "").strip()
+    if isinstance(value, str):
+        text = value
+    elif value is None:
+        text = ""
+    else:
+        text = str(value)
+    text = text.strip()
     if not text:
         return "plant"
 
