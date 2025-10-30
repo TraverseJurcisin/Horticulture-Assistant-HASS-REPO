@@ -136,6 +136,36 @@ async def test_async_create_profile_can_clear_cloned_sensors(hass, tmp_path, mon
 
 
 @pytest.mark.asyncio
+async def test_async_create_profile_avoids_overwriting_existing_names(hass, tmp_path, monkeypatch) -> None:
+    """Creating profiles with duplicate names should preserve existing files."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_create_profile("Duplicate", sensors={"moisture": "sensor.one"})
+
+    first = await store.async_get("Duplicate")
+    assert first is not None
+    assert first["sensors"]["moisture"] == "sensor.one"
+    assert first["plant_id"] == "duplicate"
+
+    await store.async_create_profile("Duplicate", sensors={"moisture": "sensor.two"})
+
+    files = sorted(path.name for path in store._base.glob("*.json"))
+    assert files == ["duplicate.json", "duplicate_2.json"]
+
+    first_after = await store.async_get("Duplicate")
+    assert first_after is not None
+    assert first_after["sensors"]["moisture"] == "sensor.one"
+
+    second = await store.async_get("duplicate_2")
+    assert second is not None
+    assert second["sensors"]["moisture"] == "sensor.two"
+    assert second["plant_id"] == "duplicate_2"
+
+
+@pytest.mark.asyncio
 async def test_async_create_profile_deduplicates_explicit_sensor_lists(hass, tmp_path, monkeypatch) -> None:
     """Explicit list sensor bindings should drop duplicates while preserving order."""
 

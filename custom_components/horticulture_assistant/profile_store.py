@@ -272,7 +272,7 @@ class ProfileStore:
         if resolved_scope is None:
             resolved_scope = PROFILE_SCOPE_DEFAULT
 
-        slug = slugify(name) or "profile"
+        slug = self._unique_slug(name)
 
         if clone_profile is not None:
             profile_cls: type[BioProfile] = type(clone_profile)
@@ -350,7 +350,7 @@ class ProfileStore:
         if preserved:
             payload.update(preserved)
 
-        await self.async_save(payload, name=name)
+        await self.async_save(payload, name=slug)
 
     async def _atomic_write(self, path: Path, payload: dict[str, Any]) -> None:
         tmp = path.with_suffix(".tmp")
@@ -364,6 +364,18 @@ class ProfileStore:
         base = _slug_source(name)
         slug = self._safe_slug(base)
         return self._base / f"{slug}.json"
+
+    def _unique_slug(self, name: Any) -> str:
+        """Return a filesystem-safe slug that does not collide with existing files."""
+
+        base = _slug_source(name)
+        slug = self._safe_slug(base)
+        candidate = slug
+        suffix = 2
+        while (self._base / f"{candidate}.json").exists():
+            candidate = f"{slug}_{suffix}"
+            suffix += 1
+        return candidate
 
     def _safe_slug(self, base: str) -> str:
         """Return a filesystem-safe slug limited to a single path component."""
