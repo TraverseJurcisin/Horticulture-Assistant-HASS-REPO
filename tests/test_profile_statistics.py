@@ -147,6 +147,42 @@ def test_recompute_statistics_ignores_invalid_fruit_count_without_skipping_event
     assert snapshot.payload["harvest_count"] == 2
 
 
+def test_recompute_statistics_handles_invalid_numeric_values():
+    profile = BioProfile(profile_id="plant", display_name="Plant")
+    profile.add_harvest_event(
+        HarvestEvent(
+            harvest_id="h1",
+            profile_id="plant",
+            species_id=None,
+            run_id="run-1",
+            harvested_at="2024-01-01T00:00:00Z",
+            yield_grams="not-a-number",
+            area_m2="also-not-a-number",
+        )
+    )
+    profile.add_harvest_event(
+        HarvestEvent(
+            harvest_id="h2",
+            profile_id="plant",
+            species_id=None,
+            run_id="run-2",
+            harvested_at="2024-01-08T00:00:00Z",
+            yield_grams="42",
+            area_m2=2.0,
+        )
+    )
+
+    recompute_statistics([profile])
+
+    stat = profile.statistics[0]
+    assert stat.metrics["harvest_count"] == 2
+    assert stat.metrics["total_yield_grams"] == pytest.approx(42.0)
+    assert stat.metrics["average_yield_grams"] == pytest.approx(21.0)
+    assert stat.metrics["total_area_m2"] == pytest.approx(2.0)
+    assert stat.metrics["average_yield_density_g_m2"] == pytest.approx(21.0)
+    assert stat.metrics["mean_density_g_m2"] == pytest.approx(21.0)
+
+
 def test_environment_statistics_from_run_history():
     species = BioProfile(profile_id="species", display_name="Species", profile_type="species")
     cultivar = BioProfile(
