@@ -1,3 +1,4 @@
+import asyncio
 from enum import Enum
 
 import pytest
@@ -99,3 +100,38 @@ async def test_collect_sensor_suggestions_handles_entity_ids_property():
 
     assert suggestions["temperature"]
     assert suggestions["temperature"][0].entity_id == "sensor.stub_temp"
+
+
+async def test_collect_sensor_suggestions_handles_async_entity_ids_coroutine():
+    class DummyState:
+        def __init__(self, entity_id: str, attributes: dict[str, str]) -> None:
+            self.entity_id = entity_id
+            self.attributes = attributes
+            self.domain = entity_id.split(".")[0]
+            self.name = attributes.get("friendly_name")
+
+    class AsyncStates:
+        def __init__(self, states: list[DummyState]) -> None:
+            self._states = {state.entity_id: state for state in states}
+
+        async def async_entity_ids(self) -> list[str]:
+            await asyncio.sleep(0)
+            return list(self._states)
+
+        def get(self, entity_id: str) -> DummyState | None:
+            return self._states.get(entity_id)
+
+    class DummyHass:
+        def __init__(self, states: list[DummyState]) -> None:
+            self.states = AsyncStates(states)
+
+    dummy_state = DummyState(
+        "sensor.async_temp",
+        {"device_class": "temperature", "unit_of_measurement": "°C"},
+    )
+    hass = DummyHass([dummy_state])
+
+    suggestions = collect_sensor_suggestions(hass, ["temperature"])
+
+    assert suggestions["temperature"]
+    assert suggestions["temperature"][0].entity_id == "sensor.async_temp"

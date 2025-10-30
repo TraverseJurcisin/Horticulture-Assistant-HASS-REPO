@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+import inspect
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any
@@ -105,12 +106,30 @@ def collect_sensor_suggestions(
     if not getattr(hass, "states", None):  # pragma: no cover - defensive guard
         return suggestions
 
-    entity_ids_getter = getattr(hass.states, "async_entity_ids", None)
-    if callable(entity_ids_getter):
-        entity_ids_iter = entity_ids_getter()
-    else:
-        entity_ids_attr = getattr(hass.states, "entity_ids", ())
-        entity_ids_iter = entity_ids_attr() if callable(entity_ids_attr) else entity_ids_attr
+    states = hass.states
+    entity_ids_iter: Iterable[Any] | None = None
+
+    entity_ids_attr = getattr(states, "entity_ids", None)
+    if callable(entity_ids_attr):
+        entity_ids_iter = entity_ids_attr()
+    elif isinstance(entity_ids_attr, Iterable):
+        entity_ids_iter = entity_ids_attr
+
+    if entity_ids_iter is None:
+        entity_ids_getter = getattr(states, "async_entity_ids", None)
+        if callable(entity_ids_getter):
+            maybe_iter = entity_ids_getter()
+            if inspect.isawaitable(maybe_iter):
+                close = getattr(maybe_iter, "close", None)
+                if callable(close):
+                    close()
+                mapping = getattr(states, "_states", None)
+                entity_ids_iter = mapping.keys() if isinstance(mapping, Mapping) else ()
+            else:
+                entity_ids_iter = maybe_iter
+
+    if entity_ids_iter is None and isinstance(states, Mapping):
+        entity_ids_iter = states.keys()
 
     entity_ids = [str(entity_id) for entity_id in (entity_ids_iter or ())]
     for entity_id in entity_ids:
