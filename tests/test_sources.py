@@ -6,6 +6,7 @@ import os
 import sys
 import tempfile
 import types
+from datetime import datetime
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -58,6 +59,8 @@ from custom_components.horticulture_assistant.resolver import (  # noqa: E402
     PreferenceResolver,
     generate_profile,
 )
+
+UTC = datetime.UTC
 
 
 class DummyEntry:
@@ -312,6 +315,40 @@ async def test_ai_source_handles_invalid_last_run_timestamp():
     assert profile_options["thresholds"]["temp_c_max"] == 6.2
     resolved = profile_options["resolved_targets"]["temp_c_max"]
     assert resolved["value"] == 6.2
+
+
+@pytest.mark.asyncio
+async def test_ai_source_refreshes_when_cached_value_missing():
+    hass = make_hass()
+    recent = datetime.now(UTC).isoformat()
+    entry = DummyEntry(
+        {
+            "profiles": {
+                "p1": {
+                    "sources": {
+                        "temp_c_max": {
+                            "mode": "ai",
+                            "ai": {"ttl_hours": 720, "last_run": recent},
+                        }
+                    },
+                    "thresholds": {},
+                }
+            }
+        }
+    )
+    mock = AsyncMock(return_value=(7.5, 0.9, "note", []))
+    with patch(
+        "custom_components.horticulture_assistant.ai_client.AIClient.generate_setpoint",
+        mock,
+    ):
+        clear_ai_cache()
+        await PreferenceResolver(hass).resolve_profile(entry, "p1")
+
+    assert mock.call_count == 1
+    profile_options = entry.options["profiles"]["p1"]
+    assert profile_options["thresholds"]["temp_c_max"] == 7.5
+    resolved = profile_options["resolved_targets"]["temp_c_max"]
+    assert resolved["value"] == 7.5
 
 
 @pytest.mark.asyncio

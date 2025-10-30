@@ -423,21 +423,23 @@ class PreferenceResolver:
                             if cached.annotation.confidence is None:
                                 cached.annotation.confidence = ai.get("confidence")
                             return cached
-                        annotation = FieldAnnotation(
-                            source_type="ai",
-                            method=ai.get("model") or ai.get("provider") or "ai",
-                            confidence=ai.get("confidence"),
-                            extras={
-                                key: value
-                                for key, value in {
-                                    "notes": ai.get("notes"),
-                                    "links": ai.get("links"),
-                                    "summary": ai.get("summary"),
-                                }.items()
-                                if value
-                            },
-                        )
-                        return ResolvedTarget(value=thresholds.get(key), annotation=annotation)
+                        cached_value = thresholds.get(key)
+                        if cached_value is not None:
+                            annotation = FieldAnnotation(
+                                source_type="ai",
+                                method=ai.get("model") or ai.get("provider") or "ai",
+                                confidence=ai.get("confidence"),
+                                extras={
+                                    extra_key: extra_value
+                                    for extra_key, extra_value in {
+                                        "notes": ai.get("notes"),
+                                        "links": ai.get("links"),
+                                        "summary": ai.get("summary"),
+                                    }.items()
+                                    if extra_value
+                                },
+                            )
+                            return ResolvedTarget(value=cached_value, annotation=annotation)
 
                 result = await resolve_variable_from_source(
                     self.hass,
