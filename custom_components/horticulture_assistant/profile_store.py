@@ -4,6 +4,7 @@ import asyncio
 import json
 from collections.abc import Mapping, Sequence, Set
 from copy import deepcopy
+from enum import Enum
 from math import isfinite
 from numbers import Integral, Real
 from pathlib import Path, PurePath
@@ -63,6 +64,9 @@ def _slug_source(value: Any) -> str:
 def _normalise_scope(value: Any) -> str | None:
     """Return a canonical profile scope string if ``value`` is valid."""
 
+    if isinstance(value, Enum):
+        candidate = value.value
+        value = candidate if isinstance(candidate, str) else str(candidate)
     if not isinstance(value, str):
         return None
     text = value.strip()

@@ -17,6 +17,7 @@ import logging
 from collections.abc import Callable, Iterable, Mapping, Sequence, Set
 from copy import deepcopy
 from datetime import datetime, timezone
+from enum import Enum
 from math import isfinite
 from pathlib import Path
 from typing import Any
@@ -154,6 +155,9 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
 def _normalise_scope(value: Any) -> str | None:
     """Return a canonical scope string if ``value`` matches a known option."""
 
+    if isinstance(value, Enum):
+        candidate = value.value
+        value = candidate if isinstance(candidate, str) else str(candidate)
     if not isinstance(value, str):
         return None
     text = value.strip()
