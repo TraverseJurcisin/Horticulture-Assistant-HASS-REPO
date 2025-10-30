@@ -1,3 +1,5 @@
+import types
+
 import pytest
 
 from custom_components.horticulture_assistant.profile.schema import (
@@ -314,6 +316,32 @@ def test_environment_statistics_from_run_history():
     assert contrib.stats_version == "environment/v1"
     assert contrib.computed_at == species_env.computed_at
     assert all(c.computed_at == species_env.computed_at for c in species_env.contributions)
+
+
+def test_environment_statistics_accepts_mapping_environment():
+    profile = BioProfile(profile_id="plant", display_name="Plant")
+    mapping_env = types.MappingProxyType({"temperature_c": 20.5, "humidity_percent": 55})
+    profile.add_run_event(
+        RunEvent(
+            run_id="run-1",
+            profile_id="plant",
+            species_id=None,
+            started_at="2024-02-01T00:00:00+00:00",
+            ended_at="2024-02-03T00:00:00+00:00",
+            environment=mapping_env,
+        )
+    )
+
+    recompute_statistics([profile])
+
+    snapshot = next(
+        (snap for snap in profile.computed_stats if snap.stats_version == "environment/v1"),
+        None,
+    )
+    assert snapshot is not None
+    metrics = snapshot.payload["metrics"]
+    assert metrics["avg_temperature_c"] == pytest.approx(20.5)
+    assert metrics["avg_humidity_percent"] == pytest.approx(55.0)
 
 
 def test_event_statistics_normalises_blank_event_type():
