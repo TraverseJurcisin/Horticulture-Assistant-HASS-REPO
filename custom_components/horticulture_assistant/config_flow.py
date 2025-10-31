@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+from datetime import timedelta
 from collections.abc import Mapping, Sequence
 from copy import deepcopy
 from pathlib import Path
@@ -51,7 +52,11 @@ from .profile.utils import determine_species_slug, ensure_sections
 from .profile.validation import evaluate_threshold_bounds
 from .profile_store import ProfileStore
 from .sensor_catalog import collect_sensor_suggestions, format_sensor_hints
-from .sensor_validation import collate_issue_messages, validate_sensor_links
+from .sensor_validation import (
+    collate_issue_messages,
+    recommended_stale_after,
+    validate_sensor_links,
+)
 from .utils import profile_generator
 from .utils.entry_helpers import get_entry_data, get_primary_profile_id
 from .utils.json_io import load_json, save_json
@@ -1158,6 +1163,16 @@ class OptionsFlow(config_entries.OptionsFlow):
             )
         )
 
+    def _determine_stale_after(self, update_interval: Any | None = None) -> timedelta:
+        """Return the stale threshold for sensor validation."""
+
+        interval = update_interval
+        if interval is None:
+            interval = self._entry.options.get(CONF_UPDATE_INTERVAL)
+            if interval is None:
+                interval = self._entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES)
+        return recommended_stale_after(interval)
+
     async def async_step_basic(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         defaults = {
             CONF_MODEL: self._entry.options.get(
@@ -1259,11 +1274,13 @@ class OptionsFlow(config_entries.OptionsFlow):
                 entity_id = user_input.get(key)
                 if entity_id and self.hass.states.get(entity_id) is None:
                     errors[key] = "not_found"
+            update_interval = user_input.get(CONF_UPDATE_INTERVAL, defaults[CONF_UPDATE_INTERVAL])
+            stale_after = self._determine_stale_after(update_interval)
             sensor_map = {
                 SENSOR_OPTION_ROLES[key]: user_input[key] for key in SENSOR_OPTION_ROLES if user_input.get(key)
             }
             if sensor_map:
-                validation = validate_sensor_links(self.hass, sensor_map)
+                validation = validate_sensor_links(self.hass, sensor_map, stale_after=stale_after)
                 for issue in validation.errors:
                     option_key = next((opt for opt, role in SENSOR_OPTION_ROLES.items() if role == issue.role), None)
                     if option_key and option_key not in errors:
@@ -1937,7 +1954,8 @@ class OptionsFlow(config_entries.OptionsFlow):
                 self._clear_sensor_warning()
                 return self.async_create_entry(title="", data={})
 
-            validation = validate_sensor_links(self.hass, sensors)
+            stale_after = self._determine_stale_after()
+            validation = validate_sensor_links(self.hass, sensors, stale_after=stale_after)
             for issue in validation.errors:
                 errors[issue.role] = issue.issue
             if validation.warnings:

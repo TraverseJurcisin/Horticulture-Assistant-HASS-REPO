@@ -45,6 +45,11 @@ cfg = importlib.util.module_from_spec(cfg_spec)
 sys.modules[cfg_spec.name] = cfg
 cfg_spec.loader.exec_module(cfg)
 
+sensor_validation_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.sensor_validation", BASE_PATH / "sensor_validation.py")
+sensor_validation = importlib.util.module_from_spec(sensor_validation_spec)
+sys.modules[sensor_validation_spec.name] = sensor_validation
+sensor_validation_spec.loader.exec_module(sensor_validation)
+
 reg_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.profile_registry", BASE_PATH / "profile_registry.py")
 reg = importlib.util.module_from_spec(reg_spec)
 sys.modules[reg_spec.name] = reg
@@ -918,6 +923,39 @@ async def test_options_flow_persists_sensors(hass, hass_admin_user):
     assert general["sensor_entities"]["moisture_sensors"] == ["sensor.good"]
 
 
+async def test_options_flow_scales_stale_threshold(hass, monkeypatch):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key", CONF_PLANT_ID: "pid", CONF_PLANT_NAME: "Plant"},
+        title="title",
+    )
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    profile_dir = Path(hass.config.path("plants", "pid"))
+    profile_dir.mkdir(parents=True, exist_ok=True)
+    (profile_dir / "general.json").write_text("{}")
+    hass.states.async_set("sensor.moisture", 0, {"device_class": "moisture", "unit_of_measurement": "%"})
+
+    thresholds: list = []
+
+    def _capture_validate(_hass, sensors, *, stale_after=None):
+        thresholds.append(stale_after)
+        return sensor_validation.SensorValidationResult(errors=[], warnings=[])
+
+    monkeypatch.setattr(cfg, "validate_sensor_links", _capture_validate)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with patch.object(hass, "async_add_executor_job", side_effect=_run):
+        await flow.async_step_init()
+        result = await flow.async_step_basic({"moisture_sensor": "sensor.moisture", "update_interval": 180})
+
+    assert result["type"] == "create_entry"
+    assert thresholds
+    assert thresholds[-1] == sensor_validation.recommended_stale_after(180)
+
+
 async def test_options_flow_ec_co2_sensors(hass):
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -990,6 +1028,50 @@ async def test_options_flow_invalid_entity(hass, hass_admin_user):
     result2 = await flow.async_step_basic({"moisture_sensor": "sensor.bad"})
     assert result2["type"] == "form"
     assert result2["errors"] == {"moisture_sensor": "not_found"}
+
+
+async def test_options_flow_rejects_non_sensor_entities(hass, hass_admin_user):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    hass.states.async_set("light.kitchen", "on")
+
+    await flow.async_step_init()
+    result = await flow.async_step_basic()
+    assert result["type"] == "form"
+
+    result2 = await flow.async_step_basic({"moisture_sensor": "light.kitchen"})
+
+    assert result2["type"] == "form"
+    assert result2["errors"] == {"moisture_sensor": "invalid_sensor_domain"}
+
+
+async def test_options_flow_rejects_shared_sensor_assignments(hass, hass_admin_user):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    hass.states.async_set(
+        "sensor.shared",
+        "50",
+        {"device_class": "humidity", "unit_of_measurement": "%"},
+    )
+
+    await flow.async_step_init()
+    result = await flow.async_step_basic()
+    assert result["type"] == "form"
+
+    result2 = await flow.async_step_basic(
+        {
+            CONF_MOISTURE_SENSOR: "sensor.shared",
+            CONF_TEMPERATURE_SENSOR: "sensor.shared",
+        }
+    )
+
+    assert result2["type"] == "form"
+    assert result2["errors"] == {
+        CONF_MOISTURE_SENSOR: "shared_entity",
+        CONF_TEMPERATURE_SENSOR: "shared_entity",
+    }
 
 
 async def test_options_flow_invalid_interval(hass, hass_admin_user):

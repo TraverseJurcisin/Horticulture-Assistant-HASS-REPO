@@ -16,7 +16,7 @@ import json
 import logging
 from collections.abc import Callable, Iterable, Mapping, Sequence, Set
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from enum import Enum
 from math import isfinite
 from pathlib import Path
@@ -31,6 +31,8 @@ from .cloudsync.publisher import CloudSyncPublisher
 from .const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
+    CONF_UPDATE_INTERVAL,
+    DEFAULT_UPDATE_MINUTES,
     DOMAIN,
     EVENT_PROFILE_CULTIVATION_RECORDED,
     EVENT_PROFILE_HARVEST_RECORDED,
@@ -65,7 +67,11 @@ from .profile.utils import (
     sync_general_section,
 )
 from .profile.validation import evaluate_threshold_bounds
-from .sensor_validation import collate_issue_messages, validate_sensor_links
+from .sensor_validation import (
+    collate_issue_messages,
+    recommended_stale_after,
+    validate_sensor_links,
+)
 from .utils.entry_helpers import (
     profile_device_identifier,
     resolve_profile_device_info,
@@ -236,6 +242,14 @@ class ProfileRegistry:
         except Exception as err:  # pragma: no cover - defensive guard
             _LOGGER.debug("History exporter disabled: %s", err)
             self._history_exporter = None
+
+    def _stale_after_threshold(self) -> timedelta:
+        """Return the configured stale threshold for sensor validation."""
+
+        interval = self.entry.options.get(CONF_UPDATE_INTERVAL)
+        if interval is None:
+            interval = self.entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES)
+        return recommended_stale_after(interval)
 
     def _options_profiles_copy(self) -> dict[str, Any]:
         """Return a mutable copy of the stored profile options mapping."""
@@ -1391,7 +1405,8 @@ class ProfileRegistry:
                 continue
             cleaned[key_text] = list(normalised) if isinstance(normalised, list) else normalised
 
-        validation = validate_sensor_links(self.hass, cleaned)
+        stale_after = self._stale_after_threshold()
+        validation = validate_sensor_links(self.hass, cleaned, stale_after=stale_after)
         if validation.errors:
             message = collate_issue_messages(validation.errors)
             raise ValueError(f"sensor validation failed: {message}")
@@ -1457,7 +1472,8 @@ class ProfileRegistry:
                 cleaned[key_text] = list(normalised) if isinstance(normalised, list) else normalised
 
         if cleaned:
-            validation = validate_sensor_links(self.hass, cleaned)
+            stale_after = self._stale_after_threshold()
+            validation = validate_sensor_links(self.hass, cleaned, stale_after=stale_after)
             if validation.errors:
                 message = collate_issue_messages(validation.errors)
                 raise ValueError(message)

@@ -18,6 +18,9 @@ class DummyStates:
 
 class DummyState:
     def __init__(self, **attrs: object) -> None:
+        self.state = attrs.pop("state", "0")
+        if "state_class" not in attrs:
+            attrs["state_class"] = "measurement"
         self.attributes = attrs
 
 
@@ -193,10 +196,16 @@ async def test_update_sensors_service_handles_extended_roles(monkeypatch):
     )
     store = types.SimpleNamespace(data=None, save=AsyncMock())
 
+    thresholds: list = []
+
+    def _capture_validate(_hass, _sensors, *, stale_after=None):
+        thresholds.append(stale_after)
+        return types.SimpleNamespace(errors=[], warnings=[])
+
     monkeypatch.setattr(
         services_module,
         "validate_sensor_links",
-        lambda _hass, _sensors: types.SimpleNamespace(errors=[], warnings=[]),
+        _capture_validate,
     )
     monkeypatch.setattr(services_module, "cv", types.SimpleNamespace(entity_id=lambda value: value))
 
@@ -214,5 +223,9 @@ async def test_update_sensors_service_handles_extended_roles(monkeypatch):
     call = types.SimpleNamespace(data={"profile_id": "plant", "co2": "sensor.co2", "ph": "sensor.ph"})
 
     await handler(call)
+
+    assert thresholds
+    expected_threshold = services_module.recommended_stale_after(services_module.DEFAULT_UPDATE_MINUTES)
+    assert thresholds[0] == expected_threshold
 
     registry.async_link_sensors.assert_awaited_once_with("plant", {"co2": "sensor.co2", "ph": "sensor.ph"})
