@@ -1509,6 +1509,84 @@ class ProfileRegistry:
             self._cloud_publish_profile(prof_obj)
         await self._async_maybe_refresh_validation_notification()
 
+    async def async_set_profile_nutrient_schedule(
+        self, profile_id: str, schedule: Sequence[Mapping[str, Any]] | Sequence[Any]
+    ) -> None:
+        """Update the nutrient schedule stored for ``profile_id``."""
+
+        profiles = self._options_profiles_copy()
+        profile = profiles.get(profile_id)
+        if profile is None:
+            raise ValueError(f"unknown profile {profile_id}")
+
+        safe_schedule = json.loads(json.dumps(schedule or [], ensure_ascii=False))
+
+        prof_payload = dict(profile)
+        ensure_sections(
+            prof_payload,
+            plant_id=profile_id,
+            display_name=prof_payload.get("name") or profile_id,
+        )
+
+        general = prof_payload.get("general")
+        general_dict = dict(general) if isinstance(general, Mapping) else {}
+        if safe_schedule:
+            general_dict["nutrient_schedule"] = safe_schedule
+        else:
+            general_dict.pop("nutrient_schedule", None)
+        prof_payload["general"] = general_dict
+
+        local = prof_payload.get("local")
+        local_dict = dict(local) if isinstance(local, Mapping) else {}
+        local_general = local_dict.get("general")
+        local_general_dict = dict(local_general) if isinstance(local_general, Mapping) else {}
+        if safe_schedule:
+            local_general_dict["nutrient_schedule"] = safe_schedule
+        else:
+            local_general_dict.pop("nutrient_schedule", None)
+        if local_general_dict:
+            local_dict["general"] = local_general_dict
+        elif "general" in local_dict:
+            local_dict.pop("general")
+        prof_payload["local"] = local_dict
+
+        ensure_sections(
+            prof_payload,
+            plant_id=profile_id,
+            display_name=prof_payload.get("name") or profile_id,
+        )
+
+        profiles[profile_id] = prof_payload
+        new_opts = dict(self.entry.options)
+        new_opts[CONF_PROFILES] = profiles
+        self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
+        self.entry.options = new_opts
+
+        prof_obj = self._profiles.get(profile_id)
+        if prof_obj is not None:
+            general_map = dict(prof_obj.general)
+            if safe_schedule:
+                general_map["nutrient_schedule"] = safe_schedule
+            else:
+                general_map.pop("nutrient_schedule", None)
+            prof_obj.general = general_map
+
+            if prof_obj.sections is not None:
+                local_section = prof_obj.sections.local
+                local_general_map = dict(local_section.general)
+                if safe_schedule:
+                    local_general_map["nutrient_schedule"] = safe_schedule
+                else:
+                    local_general_map.pop("nutrient_schedule", None)
+                local_section.general = local_general_map
+
+            prof_obj.refresh_sections()
+
+        await self.async_save()
+        if prof_obj is not None:
+            self._cloud_publish_profile(prof_obj)
+        await self._async_maybe_refresh_validation_notification()
+
     async def async_update_profile_thresholds(
         self,
         profile_id: str,
