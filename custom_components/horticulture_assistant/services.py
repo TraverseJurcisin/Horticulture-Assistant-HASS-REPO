@@ -62,6 +62,8 @@ from .const import (
     CONF_CLOUD_TENANT_ID,
     CONF_CLOUD_TOKEN_EXPIRES_AT,
     CONF_PROFILES,
+    CONF_UPDATE_INTERVAL,
+    DEFAULT_UPDATE_MINUTES,
     DOMAIN,
     FEATURE_AI_ASSIST,
     FEATURE_IRRIGATION_AUTOMATION,
@@ -70,7 +72,11 @@ from .entitlements import FeatureUnavailableError, derive_entitlements
 from .irrigation_bridge import async_apply_irrigation
 from .profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION, SUCCESS_STATS_VERSION
 from .profile_registry import ProfileRegistry
-from .sensor_validation import collate_issue_messages, validate_sensor_links
+from .sensor_validation import (
+    collate_issue_messages,
+    recommended_stale_after,
+    validate_sensor_links,
+)
 from .storage import LocalStore
 
 try:
@@ -283,6 +289,12 @@ async def async_register_all(
 
     sensor_notification_id = f"horticulture_sensor_{entry.entry_id}"
 
+    entry_data = getattr(entry, "data", {}) or {}
+    update_interval = entry.options.get(CONF_UPDATE_INTERVAL)
+    if update_interval is None:
+        update_interval = entry_data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES)
+    stale_after = recommended_stale_after(update_interval)
+
     def _notify_sensor_warnings(issues) -> None:
         if not issues:
             return
@@ -362,7 +374,7 @@ async def async_register_all(
         reg = er.async_get(hass)
         reg_entry = reg.async_get(entity_id)
         expected = MEASUREMENT_CLASSES[measurement]
-        validation = validate_sensor_links(hass, {measurement: entity_id})
+        validation = validate_sensor_links(hass, {measurement: entity_id}, stale_after=stale_after)
         if validation.errors:
             raise vol.Invalid(collate_issue_messages(validation.errors))
         if validation.warnings:
@@ -395,7 +407,7 @@ async def async_register_all(
         reg = er.async_get(hass)
         reg_entry = reg.async_get(entity_id)
         expected = MEASUREMENT_CLASSES[measurement]
-        validation = validate_sensor_links(hass, {measurement: entity_id})
+        validation = validate_sensor_links(hass, {measurement: entity_id}, stale_after=stale_after)
         if validation.errors:
             raise vol.Invalid(collate_issue_messages(validation.errors))
         if validation.warnings:
@@ -461,7 +473,7 @@ async def async_register_all(
             if isinstance(entity_id, str) and entity_id:
                 sensors[role] = entity_id
         if sensors:
-            validation = validate_sensor_links(hass, sensors)
+            validation = validate_sensor_links(hass, sensors, stale_after=stale_after)
             if validation.errors:
                 raise HomeAssistantError(collate_issue_messages(validation.errors))
             if validation.warnings:
