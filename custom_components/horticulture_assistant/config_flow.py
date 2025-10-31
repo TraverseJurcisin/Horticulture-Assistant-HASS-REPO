@@ -576,51 +576,37 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 return await handler()
         return result
 
-    async def async_step_manage_profiles(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profiles(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_manage_profiles(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
-    async def async_step_manage_profiles_empty(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profiles_empty(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_manage_profiles_empty(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
-    async def async_step_add_profile(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_add_profile(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_add_profile(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
-    async def async_step_attach_sensors(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_attach_sensors(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_attach_sensors(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
-    async def async_step_manage_profile_general(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profile_general(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_manage_profile_general(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
-    async def async_step_manage_profile_sensors(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profile_sensors(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_manage_profile_sensors(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
-    async def async_step_manage_profile_thresholds(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profile_thresholds(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_manage_profile_thresholds(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
@@ -632,23 +618,17 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         result = await flow.async_step_manage_profile_nutrient_schedule(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
-    async def async_step_manage_profile_delete(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profile_delete(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_manage_profile_delete(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
-    async def async_step_nutrient_schedule(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_nutrient_schedule(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_nutrient_schedule(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
-    async def async_step_nutrient_schedule_edit(
-        self, user_input: Mapping[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_nutrient_schedule_edit(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_nutrient_schedule_edit(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
@@ -1223,11 +1203,7 @@ class OptionsFlow(config_entries.OptionsFlow):
     def _async_finish_with_current_options(self, *, title: str = "") -> FlowResult:
         """Return a create-entry result populated with the latest options."""
 
-        options: dict[str, Any]
-        if isinstance(self._entry.options, Mapping):
-            options = dict(self._entry.options)
-        else:  # pragma: no cover - defensive guard for unexpected types
-            options = {}
+        options: dict[str, Any] = dict(self._entry.options) if isinstance(self._entry.options, Mapping) else {}
         return self.async_create_entry(title=title, data=options)
 
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
@@ -1782,9 +1758,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             return await self.async_step_manage_profile_delete()
         return self.async_abort(reason="unknown_profile")
 
-    async def async_step_manage_profiles_empty(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profiles_empty(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         if self._profiles():
             return await self.async_step_manage_profiles(user_input)
 
@@ -1793,9 +1767,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             {"value": "close", "label": "Close profile manager"},
         ]
         selector = sel.SelectSelector(sel.SelectSelectorConfig(options=options))
-        schema = vol.Schema(
-            {vol.Required("next_action", default="add_profile"): selector}
-        )
+        schema = vol.Schema({vol.Required("next_action", default="add_profile"): selector})
 
         if user_input is None:
             return self.async_show_form(
@@ -2008,9 +1980,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             description_placeholders=placeholders,
         )
 
-    async def async_step_manage_profile_nutrient_schedule(
-        self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    async def async_step_manage_profile_nutrient_schedule(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         if not self._pid:
             return self.async_abort(reason="unknown_profile")
         if user_input is not None:
@@ -2651,9 +2621,7 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         return result
 
-    async def _async_apply_nutrient_schedule(
-        self, profile_id: str | None, schedule: list[dict[str, Any]]
-    ) -> None:
+    async def _async_apply_nutrient_schedule(self, profile_id: str | None, schedule: list[dict[str, Any]]) -> None:
         """Persist ``schedule`` to registry and config entry options for ``profile_id``."""
 
         if not profile_id:

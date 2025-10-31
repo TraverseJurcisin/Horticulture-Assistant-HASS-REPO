@@ -708,9 +708,7 @@ async def test_config_flow_profile_manager_applies_options_updates(hass):
     assert options_flow is not None
 
     new_options = {"updated": True, CONF_PROFILES: {"mint": existing_profile}}
-    options_flow.async_step_manage_profiles = AsyncMock(
-        return_value={"type": "create_entry", "data": new_options}
-    )
+    options_flow.async_step_manage_profiles = AsyncMock(return_value={"type": "create_entry", "data": new_options})
 
     result = await flow.async_step_manage_profiles()
     assert result["type"] == "form"
@@ -735,9 +733,7 @@ async def test_config_flow_profile_manager_opens_nutrient_schedule(hass):
     assert first["type"] == "form"
     assert first["step_id"] == "manage_profiles"
 
-    schedule_form = await flow.async_step_manage_profiles(
-        {"profile_id": "mint", "action": "edit_nutrient_schedule"}
-    )
+    schedule_form = await flow.async_step_manage_profiles({"profile_id": "mint", "action": "edit_nutrient_schedule"})
     assert schedule_form["type"] == "form"
     assert schedule_form["step_id"] == "nutrient_schedule_edit"
 
