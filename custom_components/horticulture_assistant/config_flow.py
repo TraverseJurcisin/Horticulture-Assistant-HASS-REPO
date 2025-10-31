@@ -309,6 +309,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         self._profile_template_sources: dict[str, str] = {}
         self._profile_store: ProfileStore | None = None
         self._template_filter: str | None = None
+        self._profile_manager_flow: OptionsFlow | None = None
 
     async def async_step_user(self, user_input=None):
         entries = self._async_current_entries()
@@ -516,26 +517,141 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if self._existing_entry is None:
             return self.async_abort(reason="unknown_profile")
 
-        selector = sel.SelectSelector(
-            sel.SelectSelectorConfig(
-                options=[
-                    {"value": "add_profile", "label": "Add another plant profile"},
-                    {"value": "open_options", "label": "Open profile manager"},
-                ]
-            )
+        if user_input:
+            next_step: str | None = None
+            if isinstance(user_input, str):
+                next_step = user_input
+            elif isinstance(user_input, Mapping):
+                candidate = user_input.get("next_step_id") or user_input.get("menu_option")
+                if isinstance(candidate, str):
+                    next_step = candidate
+
+            if next_step:
+                handler = getattr(self, f"async_step_{next_step}", None)
+                if callable(handler):
+                    return await handler()
+                _LOGGER.warning("Unknown post-setup menu option requested: %%s", next_step)
+
+        return self.async_show_menu(
+            step_id="post_setup",
+            menu_options=["post_setup_add", "manage_profiles"],
         )
-        schema = vol.Schema({vol.Required("next_action", default="add_profile"): selector})
 
-        if user_input is None:
-            return self.async_show_form(step_id="post_setup", data_schema=schema)
-
-        action = user_input.get("next_action", "add_profile")
-        if action == "open_options":
-            return self.async_abort(reason="post_setup_use_options")
-
+    async def async_step_post_setup_add(self, user_input=None):
         self._config = {}
         self._reset_profile_context()
         return await self.async_step_profile()
+
+    async def _async_ensure_profile_manager_flow(self) -> OptionsFlow:
+        if self._existing_entry is None:
+            raise RuntimeError("Profile manager requires an existing entry")
+
+        if self._profile_manager_flow is None:
+            options_flow = OptionsFlow(self._existing_entry)
+            options_flow.hass = self.hass
+            self._profile_manager_flow = options_flow
+        return self._profile_manager_flow
+
+    async def _async_route_profile_manager_result(
+        self,
+        result: FlowResult,
+        resume_step: str = "manage_profiles",
+    ) -> FlowResult:
+        result_type = result.get("type")
+        if result_type == "create_entry":
+            data = result.get("data")
+            title = result.get("title")
+            if isinstance(data, Mapping) and data and self._existing_entry is not None:
+                self.hass.config_entries.async_update_entry(
+                    self._existing_entry,
+                    options=dict(data),
+                )
+            if self._existing_entry is not None:
+                self._profile_manager_flow = None
+            resume_target = resume_step
+            if title == "profile_manager_closed":
+                resume_target = "post_setup"
+            handler = getattr(self, f"async_step_{resume_target}", None)
+            if callable(handler):
+                return await handler()
+        return result
+
+    async def async_step_manage_profiles(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_manage_profiles(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_manage_profiles_empty(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_manage_profiles_empty(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_add_profile(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_add_profile(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_attach_sensors(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_attach_sensors(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_manage_profile_general(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_manage_profile_general(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_manage_profile_sensors(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_manage_profile_sensors(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_manage_profile_thresholds(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_manage_profile_thresholds(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_manage_profile_nutrient_schedule(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_manage_profile_nutrient_schedule(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_manage_profile_delete(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_manage_profile_delete(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_nutrient_schedule(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_nutrient_schedule(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_nutrient_schedule_edit(
+        self, user_input: Mapping[str, Any] | None = None
+    ) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_nutrient_schedule_edit(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
 
     async def async_step_profile(self, user_input=None):
         errors = {}
@@ -1104,6 +1220,16 @@ class OptionsFlow(config_entries.OptionsFlow):
         self._cal_session: str | None = None
         self._new_profile_id: str | None = None
 
+    def _async_finish_with_current_options(self, *, title: str = "") -> FlowResult:
+        """Return a create-entry result populated with the latest options."""
+
+        options: dict[str, Any]
+        if isinstance(self._entry.options, Mapping):
+            options = dict(self._entry.options)
+        else:  # pragma: no cover - defensive guard for unexpected types
+            options = {}
+        return self.async_create_entry(title=title, data=options)
+
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         return self.async_show_menu(
             step_id="init",
@@ -1147,7 +1273,9 @@ class OptionsFlow(config_entries.OptionsFlow):
         )
 
     def _clear_sensor_warning(self) -> None:
-        if not self.hass.services.has_service("persistent_notification", "dismiss"):
+        services = getattr(self.hass, "services", None)
+        has_service = getattr(services, "has_service", None)
+        if not callable(has_service) or not has_service("persistent_notification", "dismiss"):
             return
         self.hass.async_create_task(
             self.hass.services.async_call(
@@ -1505,8 +1633,8 @@ class OptionsFlow(config_entries.OptionsFlow):
                 else:
                     schedule_payload = []
             if not errors and schedule_payload is not None:
-                self._apply_nutrient_schedule(self._pid, schedule_payload)
-                return self.async_create_entry(title="", data={})
+                await self._async_apply_nutrient_schedule(self._pid, schedule_payload)
+                return self._async_finish_with_current_options()
 
         return self.async_show_form(
             step_id="nutrient_schedule_edit",
@@ -1619,7 +1747,7 @@ class OptionsFlow(config_entries.OptionsFlow):
     async def async_step_manage_profiles(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         profiles = self._profiles()
         if not profiles:
-            return self.async_abort(reason="no_profiles")
+            return await self.async_step_manage_profiles_empty(user_input)
 
         if user_input is None:
             options = {pid: data.get("name", pid) for pid, data in profiles.items()}
@@ -1627,6 +1755,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 "edit_general": "Edit details",
                 "edit_sensors": "Edit sensors",
                 "edit_thresholds": "Edit targets",
+                "edit_nutrient_schedule": "Edit nutrient schedule",
                 "delete": "Delete profile",
             }
             return self.async_show_form(
@@ -1647,9 +1776,37 @@ class OptionsFlow(config_entries.OptionsFlow):
             return await self.async_step_manage_profile_sensors()
         if action == "edit_thresholds":
             return await self.async_step_manage_profile_thresholds()
+        if action == "edit_nutrient_schedule":
+            return await self.async_step_manage_profile_nutrient_schedule()
         if action == "delete":
             return await self.async_step_manage_profile_delete()
         return self.async_abort(reason="unknown_profile")
+
+    async def async_step_manage_profiles_empty(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        if self._profiles():
+            return await self.async_step_manage_profiles(user_input)
+
+        options = [
+            {"value": "add_profile", "label": "Create a profile"},
+            {"value": "close", "label": "Close profile manager"},
+        ]
+        selector = sel.SelectSelector(sel.SelectSelectorConfig(options=options))
+        schema = vol.Schema(
+            {vol.Required("next_action", default="add_profile"): selector}
+        )
+
+        if user_input is None:
+            return self.async_show_form(
+                step_id="manage_profiles_empty",
+                data_schema=schema,
+            )
+
+        action = user_input.get("next_action", "add_profile")
+        if action == "add_profile":
+            return await self.async_step_add_profile()
+        return self._async_finish_with_current_options(title="profile_manager_closed")
 
     async def async_step_manage_profile_general(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         registry = await self._async_get_registry()
@@ -1693,7 +1850,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 except ValueError:
                     errors["base"] = "update_failed"
                 else:
-                    return self.async_create_entry(title="", data={})
+                    return self._async_finish_with_current_options()
 
         return self.async_show_form(
             step_id="manage_profile_general",
@@ -1742,7 +1899,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 errors["base"] = "sensor_validation_failed"
                 description_placeholders["error"] = str(err)
             else:
-                return self.async_create_entry(title="", data={})
+                return self._async_finish_with_current_options()
 
         return self.async_show_form(
             step_id="manage_profile_sensors",
@@ -1842,7 +1999,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 errors["base"] = "update_failed"
                 placeholders["issue_detail"] = str(err)
             else:
-                return self.async_create_entry(title="", data={})
+                return self._async_finish_with_current_options()
 
         return self.async_show_form(
             step_id="manage_profile_thresholds",
@@ -1851,13 +2008,23 @@ class OptionsFlow(config_entries.OptionsFlow):
             description_placeholders=placeholders,
         )
 
+    async def async_step_manage_profile_nutrient_schedule(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        if not self._pid:
+            return self.async_abort(reason="unknown_profile")
+        if user_input is not None:
+            return await self.async_step_nutrient_schedule_edit(user_input)
+        return await self.async_step_nutrient_schedule({"profile_id": self._pid})
+
     async def async_step_manage_profile_delete(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         registry = await self._async_get_registry()
         primary_id = get_primary_profile_id(self._entry)
+        errors: dict[str, str] = {}
         if not self._pid:
             return self.async_abort(reason="unknown_profile")
         if self._pid == primary_id:
-            return self.async_abort(reason="cannot_delete_primary")
+            errors["base"] = "cannot_delete_primary"
 
         profiles = self._profiles()
         if self._pid not in profiles:
@@ -1867,17 +2034,18 @@ class OptionsFlow(config_entries.OptionsFlow):
         schema = vol.Schema({vol.Required("confirm", default=False): bool})
         placeholders = {"profile": profile_name}
 
-        if user_input is not None:
+        if user_input is not None and not errors:
             if user_input.get("confirm"):
                 try:
                     await registry.async_delete_profile(self._pid)
                 except ValueError:
                     return self.async_abort(reason="unknown_profile")
-            return self.async_create_entry(title="", data={})
+            return self._async_finish_with_current_options()
 
         return self.async_show_form(
             step_id="manage_profile_delete",
             data_schema=schema,
+            errors=errors,
             description_placeholders=placeholders,
         )
 
@@ -1932,10 +2100,12 @@ class OptionsFlow(config_entries.OptionsFlow):
             skip_requested = bool(user_input.get("skip_linking"))
             if not sensors:
                 self._clear_sensor_warning()
-                return self.async_create_entry(title="", data={})
+                await registry.async_link_sensors(pid, {})
+                return self._async_finish_with_current_options()
             if skip_requested:
                 self._clear_sensor_warning()
-                return self.async_create_entry(title="", data={})
+                await registry.async_link_sensors(pid, {})
+                return self._async_finish_with_current_options()
 
             validation = validate_sensor_links(self.hass, sensors)
             for issue in validation.errors:
@@ -1946,7 +2116,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 self._clear_sensor_warning()
             if not errors:
                 await registry.async_link_sensors(pid, sensors)
-                return self.async_create_entry(title="", data={})
+                return self._async_finish_with_current_options()
         schema = vol.Schema(
             {
                 vol.Optional("temperature"): sel.EntitySelector(
@@ -2018,7 +2188,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                     {"session_id": self._cal_session},
                     blocking=True,
                 )
-                return self.async_create_entry(title="calibration", data={})
+                return self._async_finish_with_current_options(title="calibration")
             if action == "abort":
                 await self.hass.services.async_call(
                     DOMAIN,
@@ -2026,7 +2196,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                     {"session_id": self._cal_session},
                     blocking=True,
                 )
-                return self.async_create_entry(title="calibration", data={})
+                return self._async_finish_with_current_options(title="calibration")
         return self.async_show_form(step_id="calibration_collect", data_schema=schema)
 
     # --- Per-variable source editing ---
@@ -2481,36 +2651,16 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         return result
 
-    def _apply_nutrient_schedule(self, profile_id: str | None, schedule: list[dict[str, Any]]) -> None:
-        """Persist ``schedule`` to the config entry options for ``profile_id``."""
+    async def _async_apply_nutrient_schedule(
+        self, profile_id: str | None, schedule: list[dict[str, Any]]
+    ) -> None:
+        """Persist ``schedule`` to registry and config entry options for ``profile_id``."""
 
         if not profile_id:
             return
 
-        safe_schedule = json.loads(json.dumps(schedule, ensure_ascii=False))
-        opts = dict(self._entry.options)
-        profiles = dict(opts.get(CONF_PROFILES, {}))
-        profile = dict(profiles.get(profile_id, {}))
-
-        ensure_sections(profile, plant_id=profile_id, display_name=profile.get("name") or profile_id)
-
-        local = profile.get("local")
-        local_dict = dict(local) if isinstance(local, Mapping) else {}
-        general_local = local_dict.get("general")
-        general_local_dict = dict(general_local) if isinstance(general_local, Mapping) else {}
-        general_local_dict["nutrient_schedule"] = safe_schedule
-        local_dict["general"] = general_local_dict
-        profile["local"] = local_dict
-
-        general = profile.get("general")
-        general_dict = dict(general) if isinstance(general, Mapping) else {}
-        general_dict["nutrient_schedule"] = safe_schedule
-        profile["general"] = general_dict
-
-        profiles[profile_id] = profile
-        opts[CONF_PROFILES] = profiles
-        self.hass.config_entries.async_update_entry(self._entry, options=opts)
-        self._entry.options = opts
+        registry = await self._async_get_registry()
+        await registry.async_set_profile_nutrient_schedule(profile_id, schedule)
 
     async def async_step_apply(self, user_input=None):
         if user_input is not None:
@@ -2518,7 +2668,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 from .resolver import PreferenceResolver
 
                 await PreferenceResolver(self.hass).resolve_profile(self._entry, self._pid)
-            return self.async_create_entry(title="", data={})
+            return self._async_finish_with_current_options()
         return self.async_show_form(
             step_id="apply",
             data_schema=vol.Schema({vol.Optional("resolve_now", default=True): bool}),

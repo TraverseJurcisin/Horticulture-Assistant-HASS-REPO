@@ -260,10 +260,11 @@ async def test_config_flow_copy_profile_from_existing_entry(hass):
         return plant_id
 
     result = await flow.async_step_user()
-    assert result["type"] == "form"
+    assert result["type"] == "menu"
     assert result["step_id"] == "post_setup"
+    assert result["menu_options"] == ["post_setup_add", "manage_profiles"]
 
-    result = await flow.async_step_post_setup({"next_action": "add_profile"})
+    result = await flow.async_step_post_setup_add()
     assert result["type"] == "form"
     assert result["step_id"] == "profile"
 
@@ -600,11 +601,161 @@ async def test_config_flow_existing_entry_menu(hass):
     mock_entry.add_to_hass(hass)
 
     result = await flow.async_step_user()
-    assert result["type"] == "form"
+    assert result["type"] == "menu"
     assert result["step_id"] == "post_setup"
 
-    abort = await flow.async_step_post_setup({"next_action": "open_options"})
-    assert abort == {"type": "abort", "reason": "post_setup_use_options"}
+    manager = await flow.async_step_manage_profiles()
+    assert manager["type"] == "form"
+    assert manager["step_id"] == "manage_profiles_empty"
+
+
+async def test_config_flow_post_setup_menu_selection_routing(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    mock_entry = MockConfigEntry(domain=DOMAIN, data={})
+    mock_entry.add_to_hass(hass)
+
+    result = await flow.async_step_user()
+    assert result["type"] == "menu"
+    assert result["step_id"] == "post_setup"
+
+    routed = await flow.async_step_post_setup({"next_step_id": "manage_profiles"})
+    assert routed["type"] == "form"
+    assert routed["step_id"] == "manage_profiles_empty"
+
+    add_flow = await flow.async_step_post_setup("post_setup_add")
+    assert add_flow["type"] == "form"
+    assert add_flow["step_id"] == "profile"
+
+
+async def test_config_flow_profile_manager_paths_through_empty_state(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    entry = MockConfigEntry(domain=DOMAIN, data={})
+    entry.add_to_hass(hass)
+
+    await flow.async_step_user()
+    await flow.async_step_manage_profiles()
+
+    next_step = await flow.async_step_manage_profiles_empty({"next_action": "add_profile"})
+    assert next_step["type"] == "form"
+    assert next_step["step_id"] == "add_profile"
+
+    closed = await flow.async_step_manage_profiles_empty({"next_action": "close"})
+    assert closed["type"] == "menu"
+    assert closed["step_id"] == "post_setup"
+
+
+async def test_config_flow_profile_manager_returns_to_menu_after_update(hass):
+    existing_profile = {
+        "name": "Mint",
+        "plant_id": "mint",
+        "general": {"plant_type": "herb"},
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={CONF_PROFILES: {"mint": existing_profile}},
+    )
+    entry.add_to_hass(hass)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    result = await flow.async_step_user()
+    assert result["type"] == "menu"
+    assert result["step_id"] == "post_setup"
+
+    manager = await flow.async_step_manage_profiles()
+    assert manager["type"] == "form"
+    assert manager["step_id"] == "manage_profiles"
+
+    options_flow = flow._profile_manager_flow
+    assert options_flow is not None
+    assert entry.options == {CONF_PROFILES: {"mint": existing_profile}}
+
+    async def fake_update(_user_input=None):
+        return {"type": "create_entry", "data": dict(entry.options)}
+
+    options_flow.async_step_manage_profile_general = AsyncMock(side_effect=fake_update)
+
+    rerouted = await flow.async_step_manage_profiles({"profile_id": "mint", "action": "edit_general"})
+    assert rerouted["type"] == "form"
+    assert rerouted["step_id"] == "manage_profiles"
+    assert entry.options == {CONF_PROFILES: {"mint": existing_profile}}
+
+
+async def test_config_flow_profile_manager_applies_options_updates(hass):
+    existing_profile = {"name": "Mint"}
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={CONF_PROFILES: {"mint": existing_profile}},
+    )
+    entry.add_to_hass(hass)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await flow.async_step_user()
+    first = await flow.async_step_manage_profiles()
+    assert first["type"] == "form"
+    assert first["step_id"] == "manage_profiles"
+
+    options_flow = flow._profile_manager_flow
+    assert options_flow is not None
+
+    new_options = {"updated": True, CONF_PROFILES: {"mint": existing_profile}}
+    options_flow.async_step_manage_profiles = AsyncMock(
+        return_value={"type": "create_entry", "data": new_options}
+    )
+
+    result = await flow.async_step_manage_profiles()
+    assert result["type"] == "form"
+    assert result["step_id"] == "manage_profiles"
+    assert entry.options == new_options
+
+
+async def test_config_flow_profile_manager_opens_nutrient_schedule(hass):
+    existing_profile = {"name": "Mint"}
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={CONF_PROFILES: {"mint": existing_profile}},
+    )
+    entry.add_to_hass(hass)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await flow.async_step_user()
+    first = await flow.async_step_manage_profiles()
+    assert first["type"] == "form"
+    assert first["step_id"] == "manage_profiles"
+
+    schedule_form = await flow.async_step_manage_profiles(
+        {"profile_id": "mint", "action": "edit_nutrient_schedule"}
+    )
+    assert schedule_form["type"] == "form"
+    assert schedule_form["step_id"] == "nutrient_schedule_edit"
+
+    options_flow = flow._profile_manager_flow
+    assert options_flow is not None
+    assert options_flow._pid == "mint"
+
+    updated_profile = dict(existing_profile)
+    updated_profile["nutrient_schedule"] = []
+    new_options = {CONF_PROFILES: {"mint": updated_profile}}
+    options_flow.async_step_nutrient_schedule_edit = AsyncMock(
+        return_value={"type": "create_entry", "data": new_options}
+    )
+
+    rerouted = await flow.async_step_nutrient_schedule_edit({"schedule": "[]"})
+    assert rerouted["type"] == "form"
+    assert rerouted["step_id"] == "manage_profiles"
+    assert entry.options == new_options
 
 
 async def test_config_flow_existing_entry_add_profile(hass):
@@ -615,10 +766,10 @@ async def test_config_flow_existing_entry_add_profile(hass):
     entry.add_to_hass(hass)
 
     result = await flow.async_step_user()
-    assert result["type"] == "form"
+    assert result["type"] == "menu"
     assert result["step_id"] == "post_setup"
 
-    next_step = await flow.async_step_post_setup({"next_action": "add_profile"})
+    next_step = await flow.async_step_post_setup_add()
     assert next_step["type"] == "form"
     assert next_step["step_id"] == "profile"
 
@@ -1243,6 +1394,7 @@ async def test_options_flow_add_profile_attach_sensors(hass):
     assert prof is not None
     assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert prof.general["sensors"]["temperature"] == "sensor.temp"
+    assert result2["data"] == entry.options
 
 
 async def test_options_flow_attach_sensors_allows_skip(hass):
@@ -1263,6 +1415,7 @@ async def test_options_flow_attach_sensors_allows_skip(hass):
     profile = registry.get_profile("basil")
     assert profile is not None
     assert profile.general.get("sensors") == {}
+    assert result2["data"] == entry.options
 
 
 async def test_options_flow_attach_sensors_validation_errors(hass):
@@ -1320,6 +1473,7 @@ async def test_options_flow_manage_profile_general_updates_profile(hass):
     assert stored["general"][CONF_PROFILE_SCOPE] == "grow_zone"
     assert "plant_type" not in stored["general"]
     assert stored["species_display"] == "Mentha"
+    assert result["data"] == entry.options
 
 
 async def test_options_flow_manage_profile_sensors_validates_and_updates(hass):
@@ -1353,6 +1507,7 @@ async def test_options_flow_manage_profile_sensors_validates_and_updates(hass):
     stored = entry.options[CONF_PROFILES]["alpha"]
     sensors = stored["general"].get("sensors", {})
     assert sensors == {"temperature": "sensor.temp_new"}
+    assert result["data"] == entry.options
 
 
 async def test_options_flow_manage_profile_sensors_preserves_multi_assignments(hass):
@@ -1391,6 +1546,7 @@ async def test_options_flow_manage_profile_sensors_preserves_multi_assignments(h
     stored = entry.options[CONF_PROFILES]["alpha"]
     sensors = stored["general"].get("sensors", {})
     assert sensors == {"temperature": ["sensor.temp_a", "sensor.temp_b"]}
+    assert result["data"] == entry.options
 
 
 async def test_options_flow_manage_profile_thresholds_updates_targets(hass):
@@ -1442,6 +1598,7 @@ async def test_options_flow_manage_profile_thresholds_updates_targets(hass):
     assert "humidity_min" not in stored["thresholds"]
     assert stored["resolved_targets"]["temperature_min"]["value"] == pytest.approx(18.5)
     assert stored["resolved_targets"]["temperature_max"]["value"] == pytest.approx(25.5)
+    assert result["data"] == entry.options
 
 
 async def test_options_flow_manage_profile_delete_blocks_primary(hass):
@@ -1460,8 +1617,9 @@ async def test_options_flow_manage_profile_delete_blocks_primary(hass):
     flow.hass = hass
 
     result = await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "delete"})
-    assert result["type"] == "abort"
-    assert result["reason"] == "cannot_delete_primary"
+    assert result["type"] == "form"
+    assert result["step_id"] == "manage_profile_delete"
+    assert result["errors"] == {"base": "cannot_delete_primary"}
 
 
 async def test_options_flow_manage_profile_delete_secondary(hass):
@@ -1488,7 +1646,32 @@ async def test_options_flow_manage_profile_delete_secondary(hass):
         result = await flow.async_step_manage_profile_delete({"confirm": True})
 
     assert result["type"] == "create_entry"
+    assert result["data"] == entry.options
     assert "beta" not in entry.options[CONF_PROFILES]
+
+
+async def test_options_flow_manage_profiles_empty_guides_creation(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    result = await flow.async_step_manage_profiles()
+    assert result["type"] == "form"
+    assert result["step_id"] == "manage_profiles_empty"
+
+    next_step = await flow.async_step_manage_profiles_empty({"next_action": "add_profile"})
+    assert next_step["type"] == "form"
+    assert next_step["step_id"] == "add_profile"
+
+    closed = await flow.async_step_manage_profiles_empty({"next_action": "close"})
+    assert closed["type"] == "create_entry"
+    assert closed["title"] == "profile_manager_closed"
+    assert closed["data"] == entry.options
 
 
 async def test_options_flow_manual_nutrient_schedule(hass):
@@ -1524,6 +1707,16 @@ async def test_options_flow_manual_nutrient_schedule(hass):
     assert stored[0]["duration_days"] == 14
     assert stored[0]["totals_mg"]["N"] == pytest.approx(280.0)
     assert stored[0]["daily_mg"]["N"] == pytest.approx(20.0)
+    assert result["data"] == entry.options
+
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get_profile("plant")
+    assert profile is not None
+    schedule = profile.general.get("nutrient_schedule")
+    assert isinstance(schedule, list)
+    assert schedule[0]["stage"] == "veg"
+    assert schedule[0]["duration_days"] == 14
+    assert profile.sections.local.general["nutrient_schedule"][0]["stage"] == "veg"
 
 
 async def test_options_flow_auto_generate_nutrient_schedule(hass):
@@ -1562,6 +1755,62 @@ async def test_options_flow_auto_generate_nutrient_schedule(hass):
     assert stored[0]["daily_mg"]["N"] == pytest.approx(10.0)
     assert stored[0]["start_day"] == 1
     assert stored[0]["end_day"] == 10
+    assert result["data"] == entry.options
+
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get_profile("plant")
+    assert profile is not None
+    schedule = profile.general.get("nutrient_schedule")
+    assert isinstance(schedule, list)
+    assert schedule[0]["stage"] == "flower"
+    assert profile.sections.local.general["nutrient_schedule"][0]["stage"] == "flower"
+
+
+async def test_options_flow_clear_nutrient_schedule(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={
+            "profiles": {
+                "plant": {
+                    "name": "Demo plant",
+                    "general": {
+                        "plant_type": "citrus",
+                        "nutrient_schedule": [{"stage": "seedling", "duration_days": 5}],
+                    },
+                    "local": {
+                        "general": {
+                            "plant_type": "citrus",
+                            "nutrient_schedule": [{"stage": "seedling", "duration_days": 5}],
+                        }
+                    },
+                }
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    def _update_entry(target, *, options):
+        target.options = options
+
+    await flow.async_step_nutrient_schedule({"profile_id": "plant"})
+    with patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry):
+        result = await flow.async_step_nutrient_schedule_edit({"schedule": ""})
+
+    assert result["type"] == "create_entry"
+    general = entry.options["profiles"]["plant"].get("general", {})
+    local = entry.options["profiles"]["plant"].get("local", {}).get("general", {})
+    assert "nutrient_schedule" not in general
+    assert "nutrient_schedule" not in local
+    assert result["data"] == entry.options
+
+    registry = hass.data[DOMAIN]["registry"]
+    profile = registry.get_profile("plant")
+    assert profile is not None
+    assert "nutrient_schedule" not in profile.general
+    assert "nutrient_schedule" not in profile.sections.local.general
 
 
 async def test_options_flow_invalid_schedule_input(hass):
