@@ -309,9 +309,7 @@ def _coerce_threshold_source_method(value: Any) -> str:
     return str(value).strip()
 
 
-def _build_manual_threshold_payload(
-    thresholds: Mapping[str, Any], *, source: str = "manual"
-) -> dict[str, Any]:
+def _build_manual_threshold_payload(thresholds: Mapping[str, Any], *, source: str = "manual") -> dict[str, Any]:
     """Return a minimal resolved payload using ``thresholds`` and ``source``."""
 
     cleaned_thresholds = {str(key): value for key, value in thresholds.items()}
@@ -893,9 +891,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             suffix += 1
 
         if candidate != plant_id:
-            _LOGGER.warning(
-                "Plant identifier '%s' already in use; using fallback '%s' instead", plant_id, candidate
-            )
+            _LOGGER.warning("Plant identifier '%s' already in use; using fallback '%s' instead", plant_id, candidate)
 
         return candidate
 
@@ -950,18 +946,14 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 except TypeError:
                     iterable_names = []
                 except Exception as err:  # pragma: no cover - defensive guard
-                    _LOGGER.warning(
-                        "Unable to iterate profile library templates: %s", err
-                    )
+                    _LOGGER.warning("Unable to iterate profile library templates: %s", err)
                     iterable_names = []
 
                 for name in iterable_names:
                     try:
                         payload = await store.async_get(name)
                     except Exception as err:  # pragma: no cover - defensive guard
-                        _LOGGER.warning(
-                            "Unable to load profile template '%s' from library: %s", name, err
-                        )
+                        _LOGGER.warning("Unable to load profile template '%s' from library: %s", name, err)
                         continue
                     if not isinstance(payload, Mapping):
                         continue
@@ -997,9 +989,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if not issues:
             return
         if not _has_registered_service(self.hass, "persistent_notification", "create"):
-            _LOGGER.debug(
-                "Skipping sensor warning notification; persistent_notification.create not available"
-            )
+            _LOGGER.debug("Skipping sensor warning notification; persistent_notification.create not available")
             return
         message = collate_issue_messages(issues)
         notification_id = self._sensor_notification_id()
@@ -1049,12 +1039,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         try:
             sync_thresholds(snapshot, default_source="manual", prune=False)
         except Exception as err:  # pragma: no cover - exercised via regression test
-            identifier = (
-                profile.get("plant_id")
-                or profile.get("name")
-                or profile.get("display_name")
-                or "profile"
-            )
+            identifier = profile.get("plant_id") or profile.get("name") or profile.get("display_name") or "profile"
             _LOGGER.warning(
                 "Unable to synchronise copied thresholds for '%s': %s",
                 identifier,
@@ -1547,14 +1532,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             try:
                 violations = evaluate_threshold_bounds(cleaned)
             except Exception as err:  # pragma: no cover - defensive fallback
-                plant_reference = (
-                    self._profile.get(CONF_PLANT_ID)
-                    or self._profile.get(CONF_PLANT_NAME)
-                    or "<unknown>"
-                )
-                _LOGGER.exception(
-                    "Unable to validate manual thresholds for '%s': %s", plant_reference, err
-                )
+                plant_reference = self._profile.get(CONF_PLANT_ID) or self._profile.get(CONF_PLANT_NAME) or "<unknown>"
+                _LOGGER.exception("Unable to validate manual thresholds for '%s': %s", plant_reference, err)
                 violations = []
             if violations:
                 error_summary = [violation.message() for violation in violations[:3]]
@@ -1617,16 +1596,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 return self.async_show_form(
                     step_id="sensors", data_schema=schema, errors=errors, description_placeholders=placeholders
                 )
-            sensor_map = {
-                SENSOR_OPTION_ROLES[key]: entity_id for key, entity_id in normalised_values.items()
-            }
+            sensor_map = {SENSOR_OPTION_ROLES[key]: entity_id for key, entity_id in normalised_values.items()}
             if sensor_map:
                 try:
                     validation = validate_sensor_links(self.hass, sensor_map)
                 except Exception as err:  # pragma: no cover - defensive guard
-                    _LOGGER.warning(
-                        "Unable to validate sensors for '%s': %s", plant_id, err
-                    )
+                    _LOGGER.warning("Unable to validate sensors for '%s': %s", plant_id, err)
                     self._clear_sensor_warning()
                 else:
                     issues = _coerce_validation_items(validation, "errors")
@@ -1677,6 +1652,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         cleaned_input = dict(user_input)
 
         try:
+
             def _sensor_entry(option_key: str) -> str | None:
                 try:
                     value = _select_sensor_value(user_input.get(option_key))
@@ -1716,9 +1692,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                     sensor_map if sensor_map else None,
                 )
             except Exception as err:  # pragma: no cover - defensive guard
-                _LOGGER.warning(
-                    "Unable to persist profile metadata for '%s': %s", plant_id, err
-                )
+                _LOGGER.warning("Unable to persist profile metadata for '%s': %s", plant_id, err)
             try:
                 await self.hass.async_add_executor_job(
                     register_plant,
@@ -1726,11 +1700,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                     {
                         "display_name": profile_name,
                         "profile_path": f"plants/{plant_id}/general.json",
-                        **(
-                            {"plant_type": plant_type}
-                            if plant_type
-                            else {}
-                        ),
+                        **({"plant_type": plant_type} if plant_type else {}),
                     },
                     self.hass,
                 )
@@ -1776,9 +1746,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             try:
                 sync_thresholds(thresholds_payload, **sync_kwargs)
             except Exception as err:  # pragma: no cover - defensive guard
-                _LOGGER.warning(
-                    "Unable to synchronise profile thresholds for '%s': %s", plant_id, err
-                )
+                _LOGGER.warning("Unable to synchronise profile thresholds for '%s': %s", plant_id, err)
                 thresholds_payload = _build_manual_threshold_payload(fallback_thresholds)
 
             thresholds_payload.setdefault("thresholds", fallback_thresholds)
@@ -1810,9 +1778,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             try:
                 ensure_sections(profile_entry, plant_id=plant_id, display_name=profile_name)
             except Exception as err:
-                _LOGGER.warning(
-                    "Unable to normalise profile sections for '%s': %s", plant_id, err
-                )
+                _LOGGER.warning("Unable to normalise profile sections for '%s': %s", plant_id, err)
                 fallback_sections = dict(profile_entry.get("sections") or {})
                 fallback_sections.setdefault("library", {})
                 fallback_sections.setdefault("local", {})
@@ -1922,9 +1888,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 sensor_map if sensor_map else None,
             )
         except Exception as general_err:  # pragma: no cover - defensive guard
-            _LOGGER.debug(
-                "Unable to persist fallback metadata for '%s': %s", plant_id, general_err
-            )
+            _LOGGER.debug("Unable to persist fallback metadata for '%s': %s", plant_id, general_err)
 
         base_thresholds: dict[str, Any] = {}
         if self._threshold_snapshot is not None:
@@ -2036,12 +2000,8 @@ class OptionsFlow(config_entries.OptionsFlow):
     def _notify_sensor_warnings(self, issues) -> None:
         if not issues:
             return
-        if not _has_registered_service(
-            self.hass, "persistent_notification", "create"
-        ):
-            _LOGGER.debug(
-                "Skipping sensor warning notification; persistent_notification.create not available"
-            )
+        if not _has_registered_service(self.hass, "persistent_notification", "create"):
+            _LOGGER.debug("Skipping sensor warning notification; persistent_notification.create not available")
             return
         message = collate_issue_messages(issues)
         self.hass.async_create_task(
@@ -2058,9 +2018,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         )
 
     def _clear_sensor_warning(self) -> None:
-        if not _has_registered_service(
-            self.hass, "persistent_notification", "dismiss"
-        ):
+        if not _has_registered_service(self.hass, "persistent_notification", "dismiss"):
             return
         self.hass.async_create_task(
             self.hass.services.async_call(
@@ -2177,17 +2135,12 @@ class OptionsFlow(config_entries.OptionsFlow):
             }
             if sensor_map:
                 identifier = (
-                    self._entry.data.get(CONF_PLANT_ID)
-                    or self._entry.title
-                    or self._entry.entry_id
-                    or "<unknown>"
+                    self._entry.data.get(CONF_PLANT_ID) or self._entry.title or self._entry.entry_id or "<unknown>"
                 )
                 try:
                     validation = validate_sensor_links(self.hass, sensor_map)
                 except Exception as err:  # pragma: no cover - defensive guard
-                    _LOGGER.warning(
-                        "Unable to validate sensors for '%s': %s", identifier, err
-                    )
+                    _LOGGER.warning("Unable to validate sensors for '%s': %s", identifier, err)
                     self._clear_sensor_warning()
                 else:
                     for issue in validation.errors:

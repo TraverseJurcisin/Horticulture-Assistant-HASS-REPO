@@ -837,9 +837,7 @@ async def test_config_flow_copy_profile_from_library_template(hass, tmp_path, mo
     assert stored_profile["sensors"]["temperature"] == "sensor.library_temp"
 
 
-async def test_config_flow_library_template_load_failure_falls_back_to_manual(
-    hass, tmp_path, monkeypatch
-):
+async def test_config_flow_library_template_load_failure_falls_back_to_manual(hass, tmp_path, monkeypatch):
     monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
 
     flow = ConfigFlow()
@@ -902,9 +900,7 @@ async def test_config_flow_library_template_load_failure_falls_back_to_manual(
     store.async_get.assert_awaited_once_with("broken_template")
 
 
-async def test_config_flow_library_template_iteration_failure_falls_back_to_manual(
-    hass, tmp_path, monkeypatch
-):
+async def test_config_flow_library_template_iteration_failure_falls_back_to_manual(hass, tmp_path, monkeypatch):
     monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
 
     flow = ConfigFlow()
@@ -1460,9 +1456,7 @@ async def test_config_flow_sensors_accept_selector_payload(hass, tmp_path, monke
             side_effect=fake_generate,
         ),
     ):
-        await flow.async_step_profile(
-            {CONF_PLANT_NAME: "Selector Plant", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}
-        )
+        await flow.async_step_profile({CONF_PLANT_NAME: "Selector Plant", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
         await flow.async_step_threshold_source({"method": "manual"})
         thresholds_form = await flow.async_step_thresholds({})
         assert thresholds_form["type"] == "form"
@@ -1974,9 +1968,7 @@ async def test_config_flow_threshold_validation_failure_does_not_abort(hass, cap
         )
         await flow.async_step_threshold_source({"method": "manual"})
         caplog.set_level(logging.ERROR)
-        thresholds_result = await flow.async_step_thresholds(
-            {"temperature_min": "10", "temperature_max": "20"}
-        )
+        thresholds_result = await flow.async_step_thresholds({"temperature_min": "10", "temperature_max": "20"})
 
     assert thresholds_result["type"] == "form"
     assert thresholds_result["step_id"] == "sensors"
@@ -2509,6 +2501,7 @@ async def test_options_flow_sensor_warning_skips_missing_notification_service(ha
     entry = MockConfigEntry(domain=DOMAIN, data={}, options={})
     flow = OptionsFlow(entry)
     flow.hass = hass
+
     async def unexpected_call(*args, **kwargs):
         raise AssertionError("notification service should not be invoked")
 
@@ -2520,9 +2513,7 @@ async def test_options_flow_sensor_warning_skips_missing_notification_service(ha
             "async_create_task",
             side_effect=AssertionError("notification task should not be scheduled"),
         ) as create_task,
-        patch(
-            "custom_components.horticulture_assistant.config_flow.collate_issue_messages"
-        ) as collate,
+        patch("custom_components.horticulture_assistant.config_flow.collate_issue_messages") as collate,
     ):
         flow._notify_sensor_warnings([object()])
 
@@ -2540,9 +2531,7 @@ async def test_options_flow_sensor_warning_creates_notification_when_service_ava
             self.calls: list[tuple[str, str, dict[str, str], bool]] = []
             self._services = {"persistent_notification": {"create": object()}}
 
-        async def async_call(
-            self, domain: str, service: str, data: dict[str, str], *, blocking: bool = False
-        ) -> None:
+        async def async_call(self, domain: str, service: str, data: dict[str, str], *, blocking: bool = False) -> None:
             self.calls.append((domain, service, data, blocking))
 
     services = FakeServices()
