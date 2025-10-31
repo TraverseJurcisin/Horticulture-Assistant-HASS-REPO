@@ -1,8 +1,13 @@
+import asyncio
 import importlib.util
 import json
+import logging
+import shutil
 import sys
 import types
+from collections.abc import Mapping
 from pathlib import Path
+from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -194,6 +199,437 @@ async def test_config_flow_user(hass):
     registry = json.loads(Path(hass.config.path("data", "local", "plants", "plant_registry.json")).read_text())
     assert registry["mint"]["display_name"] == "Mint"
     assert registry["mint"]["plant_type"] == "Herb"
+
+
+@pytest.mark.asyncio
+async def test_config_flow_register_plant_failure_does_not_block_profile(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    hass.states.async_set(
+        "sensor.good",
+        0,
+        {"device_class": "moisture", "unit_of_measurement": "%"},
+    )
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.register_plant",
+            side_effect=RuntimeError("registry unavailable"),
+        ) as register_mock,
+    ):
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        await flow.async_step_threshold_source({"method": "manual"})
+        await flow.async_step_thresholds({})
+        result = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
+
+    assert result["type"] == "create_entry"
+    assert register_mock.called
+
+
+@pytest.mark.asyncio
+async def test_config_flow_sensor_validation_failure_does_not_abort(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    hass.states.async_set(
+        "sensor.good",
+        0,
+        {"device_class": "moisture", "unit_of_measurement": "%"},
+    )
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.validate_sensor_links",
+            side_effect=RuntimeError("validation unavailable"),
+        ) as validate_mock,
+    ):
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        await flow.async_step_threshold_source({"method": "manual"})
+        await flow.async_step_thresholds({})
+        result = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
+
+    assert result["type"] == "create_entry"
+    assert validate_mock.called
+
+
+@pytest.mark.asyncio
+async def test_config_flow_sensor_persistence_failure_does_not_abort(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    hass.states.async_set(
+        "sensor.good",
+        0,
+        {"device_class": "moisture", "unit_of_measurement": "%"},
+    )
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.save_json",
+            side_effect=OSError("disk full"),
+        ) as save_mock,
+    ):
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        await flow.async_step_threshold_source({"method": "manual"})
+        await flow.async_step_thresholds({})
+        result = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
+
+    assert result["type"] == "create_entry"
+    options = result["options"]
+    assert options["sensors"] == {"moisture": "sensor.good"}
+    profiles = options[CONF_PROFILES]
+    assert profiles["mint"]["sensors"] == {"moisture": "sensor.good"}
+    general = profiles["mint"].get("general", {})
+    assert general.get("display_name") == "Mint"
+    assert save_mock.called
+
+
+@pytest.mark.asyncio
+async def test_config_flow_profile_completion_error_falls_back(hass, caplog):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    hass.states.async_set(
+        "sensor.good",
+        0,
+        {"device_class": "moisture", "unit_of_measurement": "%"},
+    )
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    calls: list[tuple[str, str, dict[str, Any], dict[str, Any]]] = []
+
+    def create_entry_side_effect(*, title: str, data: dict[str, Any], options: dict[str, Any]):
+        if not calls:
+            calls.append(("fail", title, data, options))
+            raise RuntimeError("boom")
+        calls.append(("success", title, data, options))
+        return {"type": "create_entry", "title": title, "data": data, "options": options}
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch.object(
+            ConfigFlow,
+            "async_create_entry",
+            side_effect=create_entry_side_effect,
+        ) as create_entry,
+        caplog.at_level(logging.ERROR),
+    ):
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        await flow.async_step_threshold_source({"method": "manual"})
+        await flow.async_step_thresholds({})
+        result = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
+
+    assert result["type"] == "create_entry"
+    assert create_entry.call_count == 2
+    assert calls[0][0] == "fail"
+    assert calls[1][0] == "success"
+    assert result["options"]["sensors"] == {"moisture": "sensor.good"}
+    profiles = result["options"][CONF_PROFILES]
+    assert profiles["mint"]["general"]["display_name"] == "Mint"
+    assert profiles["mint"]["thresholds"] == {}
+    assert any("storing manual fallback" in record.message for record in caplog.records)
+
+
+@pytest.mark.asyncio
+async def test_config_flow_sensor_suggestions_failure_is_non_blocking(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.collect_sensor_suggestions",
+            side_effect=RuntimeError("catalog unavailable"),
+        ) as suggestion_mock,
+    ):
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        await flow.async_step_threshold_source({"method": "manual"})
+        result = await flow.async_step_thresholds({})
+
+    assert suggestion_mock.called
+    assert result["type"] == "form"
+    assert result["step_id"] == "sensors"
+    hints = result["description_placeholders"].get("sensor_hints", "")
+    assert "No matching sensors detected." in hints
+
+
+@pytest.mark.asyncio
+async def test_config_flow_sensor_suggestions_with_unexpected_shapes(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    class SuggestionStub:
+        def __init__(self, entity_id: str, name: str, score: int = 0, reason: str = "") -> None:
+            self.entity_id = entity_id
+            self.name = name
+            self.score = score
+            self.reason = reason
+
+    class WeirdSuggestion:
+        def __init__(self) -> None:
+            self.id = "sensor.weird"
+            self.label = "Weird Sensor"
+
+    suggestions = {role: [] for role in cfg.SENSOR_OPTION_ROLES.values()}
+    suggestions["moisture"] = [
+        {"name": "Missing Identifier"},
+        {"entity_id": ["sensor.dict_primary", "sensor.dict_secondary"], "label": "Dict Sensor"},
+        SuggestionStub("sensor.stub", "Stub Sensor", 3, "scored"),
+        WeirdSuggestion(),
+        ("sensor.tuple", "Tuple Sensor"),
+        {"value": "sensor.value", "title": "Value Sensor"},
+        ["sensor.sequence", "ignored"],
+        object(),
+    ]
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.collect_sensor_suggestions",
+            return_value=suggestions,
+        ),
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        await flow.async_step_threshold_source({"method": "manual"})
+        result = await flow.async_step_thresholds({})
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "sensors"
+    hints = result["description_placeholders"].get("sensor_hints", "")
+    assert "Dict Sensor (sensor.dict_primary)" in hints
+    assert "Stub Sensor (sensor.stub)" in hints
+    assert "Weird Sensor (sensor.weird)" in hints
+    assert "Missing Identifier" not in hints
+
+
+@pytest.mark.asyncio
+async def test_config_flow_sensor_suggestions_iterable_failure_is_non_blocking(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    class ExplodingIterable:
+        def __iter__(self):
+            raise RuntimeError("catalog iteration failed")
+
+    suggestions = {role: [] for role in cfg.SENSOR_OPTION_ROLES.values()}
+    suggestions["moisture"] = ExplodingIterable()
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.collect_sensor_suggestions",
+            return_value=suggestions,
+        ) as suggestion_mock,
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        await flow.async_step_threshold_source({"method": "manual"})
+        result = await flow.async_step_thresholds({})
+
+    assert suggestion_mock.called
+    assert result["type"] == "form"
+    assert result["step_id"] == "sensors"
+    hints = result["description_placeholders"].get("sensor_hints", "")
+    assert "No matching sensors detected." in hints
+
+
+@pytest.mark.asyncio
+async def test_config_flow_profile_sections_failure_does_not_abort(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.ensure_sections",
+            side_effect=RuntimeError("failed"),
+        ),
+        patch("custom_components.horticulture_assistant.config_flow._LOGGER") as logger,
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        await flow.async_step_threshold_source({"method": "manual"})
+        await flow.async_step_thresholds({})
+        result = await flow.async_step_sensors({})
+
+    assert result["type"] == "create_entry"
+    assert result["title"] == "Mint"
+    options = result["options"]
+    profiles = options.get(CONF_PROFILES, {})
+    assert "mint" in profiles
+    profile_opts = profiles["mint"]
+    assert profile_opts["name"] == "Mint"
+    assert profile_opts["plant_id"] == "mint"
+    assert profile_opts.get("library") == {}
+    assert profile_opts.get("local") == {}
+    sections = profile_opts.get("sections")
+    assert isinstance(sections, Mapping)
+    assert sections.get("library") == {}
+    assert sections.get("local") == {}
+    general = profile_opts.get("general")
+    assert isinstance(general, Mapping)
+    assert general.get(CONF_PROFILE_SCOPE) == PROFILE_SCOPE_DEFAULT
+    assert general.get("display_name") == "Mint"
+    logger.warning.assert_called()
 
 
 async def test_config_flow_skip_initial_profile(hass):
@@ -399,6 +835,242 @@ async def test_config_flow_copy_profile_from_library_template(hass, tmp_path, mo
     assert stored_profile[CONF_PROFILE_SCOPE] == "species_template"
     assert stored_profile["species_display"] == "Ocimum basilicum"
     assert stored_profile["sensors"]["temperature"] == "sensor.library_temp"
+
+
+async def test_config_flow_library_template_load_failure_falls_back_to_manual(
+    hass, tmp_path, monkeypatch
+):
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "library_failure_mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("{}", encoding="utf-8")
+        return plant_id
+
+    store = AsyncMock()
+    store.async_list.return_value = ["broken_template"]
+    store.async_get.side_effect = RuntimeError("template load failed")
+    flow._profile_store = store
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+    ):
+        profile_result = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Library Failure Mint",
+                CONF_PLANT_TYPE: "",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        assert profile_result["step_id"] == "threshold_source"
+
+        source_form = await flow.async_step_threshold_source()
+        assert source_form["type"] == "form"
+        assert source_form["step_id"] == "threshold_source"
+        assert flow._profile_templates == {}
+        assert flow._profile_template_sources == {}
+
+        manual_result = await flow.async_step_threshold_source({"method": "manual"})
+        assert manual_result["type"] == "form"
+        assert manual_result["step_id"] == "thresholds"
+
+        thresholds_result = await flow.async_step_thresholds({})
+        assert thresholds_result["type"] == "form"
+        assert thresholds_result["step_id"] == "sensors"
+
+        sensors_result = await flow.async_step_sensors({})
+
+    assert sensors_result["type"] == "create_entry"
+    profiles = sensors_result["options"][CONF_PROFILES]
+    assert set(profiles) == {"library_failure_mint"}
+
+    store.async_list.assert_awaited_once()
+    store.async_get.assert_awaited_once_with("broken_template")
+
+
+async def test_config_flow_library_template_iteration_failure_falls_back_to_manual(
+    hass, tmp_path, monkeypatch
+):
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "library_iterator_mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("{}", encoding="utf-8")
+        return plant_id
+
+    class ExplodingIterable:
+        def __iter__(self):
+            raise RuntimeError("iterator failed")
+
+    store = AsyncMock()
+    store.async_list.return_value = ExplodingIterable()
+    store.async_get.return_value = {}
+    flow._profile_store = store
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+    ):
+        profile_result = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Library Iterator Mint",
+                CONF_PLANT_TYPE: "",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        assert profile_result["step_id"] == "threshold_source"
+
+        source_form = await flow.async_step_threshold_source()
+        assert source_form["type"] == "form"
+        assert source_form["step_id"] == "threshold_source"
+        assert flow._profile_templates == {}
+        assert flow._profile_template_sources == {}
+
+        manual_result = await flow.async_step_threshold_source({"method": "manual"})
+        assert manual_result["type"] == "form"
+        assert manual_result["step_id"] == "thresholds"
+
+        thresholds_result = await flow.async_step_thresholds({})
+        assert thresholds_result["type"] == "form"
+        assert thresholds_result["step_id"] == "sensors"
+
+        sensors_result = await flow.async_step_sensors({})
+
+    assert sensors_result["type"] == "create_entry"
+    profiles = sensors_result["options"][CONF_PROFILES]
+    assert set(profiles) == {"library_iterator_mint"}
+
+    store.async_list.assert_awaited_once()
+    store.async_get.assert_not_awaited()
+
+
+async def test_config_flow_threshold_copy_sync_failure_falls_back_to_manual(hass, tmp_path, monkeypatch):
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+
+    from custom_components.horticulture_assistant.profile_store import ProfileStore
+
+    store = ProfileStore(hass)
+    await store.async_init()
+    await store.async_save(
+        {
+            "name": "Library Basil",
+            "plant_id": "library_basil",
+            "thresholds": {"temperature_min": 14.0, "temperature_max": 26.0},
+            "general": {
+                "plant_type": "Herb",
+                CONF_PROFILE_SCOPE: "species_template",
+                "sensors": {"temperature": "sensor.library_temp"},
+            },
+            "sensors": {"temperature": "sensor.library_temp"},
+            "species_display": "Ocimum basilicum",
+        },
+        name="Library Basil",
+    )
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "library_mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "Herb"}), encoding="utf-8")
+        return plant_id
+
+    real_sync = sync_thresholds
+    call_count = 0
+
+    def guarded_sync(payload, *args, **kwargs):
+        nonlocal call_count
+        call_count += 1
+        if call_count == 1:
+            raise RuntimeError("sync failure")
+        return real_sync(payload, *args, **kwargs)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.sync_thresholds",
+            side_effect=guarded_sync,
+        ) as sync_mock,
+    ):
+        profile_result = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Library Mint",
+                CONF_PLANT_TYPE: "",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+        assert profile_result["step_id"] == "threshold_source"
+
+        templates = await flow._async_available_profile_templates()
+        library_id = next(key for key, data in templates.items() if data.get("name") == "Library Basil")
+
+        copy_form = await flow.async_step_threshold_source({"method": "copy"})
+        assert copy_form["type"] == "form"
+        assert copy_form["step_id"] == "threshold_copy"
+
+        copy_result = await flow.async_step_threshold_copy({"profile_id": library_id})
+        assert copy_result["type"] == "form"
+        assert copy_result["step_id"] == "thresholds"
+
+        snapshot = flow._threshold_snapshot
+        assert isinstance(snapshot, Mapping)
+        assert snapshot["thresholds"]["temperature_min"] == 14.0
+        resolved = snapshot["resolved_targets"]["temperature_min"]
+        assert resolved["value"] == 14.0
+        assert resolved["annotation"]["method"] == "manual"
+        sections = snapshot.get("sections", {})
+        assert sections["resolved"]["thresholds"]["temperature_min"] == 14.0
+
+        thresholds_result = await flow.async_step_thresholds({})
+        assert thresholds_result["step_id"] == "sensors"
+
+        sensors_result = await flow.async_step_sensors({})
+
+    assert sensors_result["type"] == "create_entry"
+    profiles = sensors_result["options"][CONF_PROFILES]
+    stored_profile = profiles["library_mint"]
+    assert stored_profile["thresholds"]["temperature_min"] == 14.0
+    resolved_target = stored_profile["resolved_targets"]["temperature_min"]
+    assert resolved_target["annotation"]["method"] == "manual"
+    assert sync_mock.call_count >= 1
 
 
 async def test_config_flow_copy_profile_filtering(hass, tmp_path, monkeypatch):
@@ -679,6 +1351,145 @@ async def test_config_flow_existing_entry_add_profile(hass):
 
 
 @pytest.mark.asyncio
+async def test_config_flow_threshold_source_defaults_when_missing(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="mint",
+        ),
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        result = await flow.async_step_threshold_source({})
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "thresholds"
+
+
+@pytest.mark.asyncio
+async def test_config_flow_threshold_source_skip(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="mint",
+        ),
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        result = await flow.async_step_threshold_source({"method": "skip"})
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "sensors"
+    assert flow._thresholds == {}
+    assert flow._threshold_snapshot is None
+
+
+@pytest.mark.asyncio
+async def test_config_flow_threshold_source_accepts_selector_payload(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._profile = {
+        CONF_PLANT_NAME: "Mint",
+        CONF_PLANT_ID: "mint",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+
+    skip_payload = {"method": {"value": "skip", "label": "Skip for now"}}
+    result_skip = await flow.async_step_threshold_source(skip_payload)
+    assert result_skip["type"] == "form"
+    assert result_skip["step_id"] == "sensors"
+
+    flow2 = ConfigFlow()
+    flow2.hass = hass
+    flow2._profile = {
+        CONF_PLANT_NAME: "Basil",
+        CONF_PLANT_ID: "basil",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+
+    manual_payload = {"method": [{"value": "manual", "label": "Manual entry"}]}
+    result_manual = await flow2.async_step_threshold_source(manual_payload)
+    assert result_manual["type"] == "form"
+    assert result_manual["step_id"] == "thresholds"
+
+
+@pytest.mark.asyncio
+async def test_config_flow_sensors_accept_selector_payload(hass, tmp_path, monkeypatch):
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    hass.states.async_set(
+        "sensor.soil_probe",
+        0,
+        {"device_class": "moisture", "unit_of_measurement": "%"},
+    )
+    hass.states.async_set(
+        "sensor.greenhouse_temperature",
+        22,
+        {"device_class": "temperature", "unit_of_measurement": "°C"},
+    )
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        return "selector_plant"
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+    ):
+        await flow.async_step_profile(
+            {CONF_PLANT_NAME: "Selector Plant", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}
+        )
+        await flow.async_step_threshold_source({"method": "manual"})
+        thresholds_form = await flow.async_step_thresholds({})
+        assert thresholds_form["type"] == "form"
+        assert thresholds_form["step_id"] == "sensors"
+
+        sensor_payload = {
+            CONF_MOISTURE_SENSOR: {"entity_id": "sensor.soil_probe"},
+            CONF_TEMPERATURE_SENSOR: ["sensor.greenhouse_temperature", "sensor.backup_temp"],
+        }
+
+        result = await flow.async_step_sensors(sensor_payload)
+
+    assert result["type"] == "create_entry"
+    options = result["options"]
+    assert options[CONF_MOISTURE_SENSOR] == "sensor.soil_probe"
+    assert options[CONF_TEMPERATURE_SENSOR] == "sensor.greenhouse_temperature"
+    assert options["sensors"] == {
+        "moisture": "sensor.soil_probe",
+        "temperature": "sensor.greenhouse_temperature",
+    }
+    profile_entry = options[CONF_PROFILES]["selector_plant"]
+    general = profile_entry["general"]
+    assert general["sensors"]["moisture"] == "sensor.soil_probe"
+    assert general["sensors"]["temperature"] == "sensor.greenhouse_temperature"
+
+
+@pytest.mark.asyncio
 async def test_config_flow_threshold_range_validation(hass):
     flow = ConfigFlow()
     flow.hass = hass
@@ -712,7 +1523,7 @@ async def test_config_flow_threshold_range_validation(hass):
     assert "temperature_max" in detail
 
 
-async def test_config_flow_profile_error(hass):
+async def test_config_flow_profile_generation_failure_falls_back(hass):
     flow = ConfigFlow()
     flow.hass = hass
     await begin_profile_flow(flow)
@@ -727,8 +1538,178 @@ async def test_config_flow_profile_error(hass):
                 CONF_PLANT_TYPE: "Herb",
             }
         )
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "threshold_source"
+    assert flow._profile[CONF_PLANT_ID] == "mint"
+
+
+async def test_config_flow_profile_generation_exception_falls_back(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=RuntimeError("boom"),
+        ),
+    ):
+        result = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+            }
+        )
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "threshold_source"
+    assert flow._profile[CONF_PLANT_ID] == "mint"
+
+
+async def test_config_flow_profile_error_when_no_fallback_identifier(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return ""
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch("custom_components.horticulture_assistant.config_flow.slugify", return_value=""),
+    ):
+        result = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+            }
+        )
+
     assert result["type"] == "form"
     assert result["errors"] == {"base": "profile_error"}
+
+
+async def test_config_flow_profile_fallback_creates_general_file_without_sensors(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    plant_dir = Path(hass.config.path("plants", "mint"))
+    if plant_dir.exists():
+        shutil.rmtree(plant_dir)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="",
+        ),
+    ):
+        result = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+            }
+        )
+        assert result["type"] == "form"
+        assert result["step_id"] == "threshold_source"
+
+        await flow.async_step_threshold_source({"method": "manual"})
+        await flow.async_step_thresholds({})
+        final = await flow.async_step_sensors({})
+
+    assert final["type"] == "create_entry"
+    general_path = Path(hass.config.path("plants", "mint", "general.json"))
+    assert general_path.exists()
+    general = json.loads(general_path.read_text())
+    assert general["display_name"] == "Mint"
+    assert general["plant_type"] == "herb"
+    assert general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
+    assert "sensor_entities" not in general or general["sensor_entities"] == {}
+
+
+async def test_config_flow_profile_fallback_avoids_duplicate_identifier(hass, tmp_path, monkeypatch):
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+
+    existing_profiles = {
+        "mint": {
+            "name": "Existing Mint",
+            "plant_id": "mint",
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            "general": {"display_name": "Existing Mint", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+        }
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint"},
+        options={CONF_PROFILES: existing_profiles},
+    )
+    entry.add_to_hass(hass)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    result = await flow.async_step_user()
+    assert result["type"] == "form"
+    assert result["step_id"] == "post_setup"
+
+    next_step = await flow.async_step_post_setup({"next_action": "add_profile"})
+    assert next_step["type"] == "form"
+    assert next_step["step_id"] == "profile"
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=RuntimeError("boom"),
+        ),
+    ):
+        result_profile = await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+
+    assert result_profile["type"] == "form"
+    assert result_profile["step_id"] == "threshold_source"
+    assert flow._profile[CONF_PLANT_ID] == "mint_2"
+
+    result_threshold_source = await flow.async_step_threshold_source({"method": "manual"})
+    assert result_threshold_source["type"] == "form"
+    assert result_threshold_source["step_id"] == "thresholds"
+
+    result_thresholds = await flow.async_step_thresholds({})
+    assert result_thresholds["type"] == "form"
+    assert result_thresholds["step_id"] == "sensors"
+
+    result_sensors = await flow.async_step_sensors({})
+    await hass.async_block_till_done()
+    assert result_sensors["type"] == "abort"
+    assert result_sensors["reason"] == "profile_added"
+
+    profiles = entry.options.get(CONF_PROFILES, {})
+    assert set(profiles) == {"mint", "mint_2"}
+    assert profiles["mint"]["name"] == "Existing Mint"
+    assert profiles["mint_2"]["name"] == "Mint"
+    assert profiles["mint_2"]["plant_id"] == "mint_2"
+
+    general_path = Path(tmp_path / "plants" / "mint_2" / "general.json")
+    assert general_path.exists()
+    general_data = json.loads(general_path.read_text())
+    assert general_data["plant_id"] == "mint_2"
+    assert general_data["display_name"] == "Mint"
 
 
 async def test_config_flow_profile_requires_name(hass):
@@ -773,6 +1754,101 @@ async def test_config_flow_sensor_not_found(hass):
     assert result["errors"] == {"moisture_sensor": "not_found"}
 
 
+async def test_config_flow_sensor_validation_mapping_payload_handled(hass, caplog):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        general = Path(hass.config.path("plants", plant_id, "general.json"))
+        general.parent.mkdir(parents=True, exist_ok=True)
+        general.write_text("{}", encoding="utf-8")
+        return plant_id
+
+    hass.states.async_set(
+        "sensor.good",
+        0,
+        {"device_class": "moisture", "unit_of_measurement": "%"},
+    )
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.validate_sensor_links",
+            return_value={
+                "errors": [{"role": "moisture", "issue": "custom_issue"}],
+                "warnings": [{"role": "moisture", "issue": "warn"}],
+            },
+        ),
+        patch.object(flow, "_notify_sensor_warnings") as notify_mock,
+        patch.object(flow, "_clear_sensor_warning") as clear_mock,
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        await flow.async_step_threshold_source({"method": "manual"})
+        await flow.async_step_thresholds({})
+        caplog.set_level(logging.DEBUG)
+        result = await flow.async_step_sensors({CONF_MOISTURE_SENSOR: "sensor.good"})
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "sensors"
+    assert result["errors"] == {CONF_MOISTURE_SENSOR: "custom_issue"}
+    notify_mock.assert_not_called()
+    clear_mock.assert_called()
+    assert "Dropping sensor warning payload" in caplog.text
+
+
+async def test_config_flow_sensor_validation_unexpected_payload_does_not_abort(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        general = Path(hass.config.path("plants", plant_id, "general.json"))
+        general.parent.mkdir(parents=True, exist_ok=True)
+        general.write_text("{}", encoding="utf-8")
+        return plant_id
+
+    hass.states.async_set(
+        "sensor.good",
+        0,
+        {"device_class": "moisture", "unit_of_measurement": "%"},
+    )
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.validate_sensor_links",
+            return_value=object(),
+        ),
+        patch.object(flow, "_clear_sensor_warning") as clear_mock,
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        await flow.async_step_threshold_source({"method": "manual"})
+        await flow.async_step_thresholds({})
+        result = await flow.async_step_sensors({CONF_MOISTURE_SENSOR: "sensor.good"})
+
+    assert result["type"] == "create_entry"
+    options = result["options"]
+    assert options["sensors"]["moisture"] == "sensor.good"
+    clear_mock.assert_called()
+
+
 async def test_config_flow_without_sensors(hass):
     """Profiles can be created without attaching sensors."""
     flow = ConfigFlow()
@@ -810,6 +1886,116 @@ async def test_config_flow_without_sensors(hass):
     assert general["plant_type"] == "TBD"
 
 
+async def test_config_flow_threshold_sync_failure_falls_back(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="mint",
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.sync_thresholds",
+            side_effect=RuntimeError("sync failed"),
+        ),
+    ):
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+            }
+        )
+        await flow.async_step_threshold_source({"method": "manual"})
+        await flow.async_step_thresholds({"temperature_min": "10", "temperature_max": "20"})
+        result = await flow.async_step_sensors({})
+
+    assert result["type"] == "create_entry"
+    options = result["options"]
+    assert options["thresholds"] == {
+        "temperature_min": pytest.approx(10.0),
+        "temperature_max": pytest.approx(20.0),
+    }
+    resolved = options["resolved_targets"]
+    assert set(resolved) == {"temperature_min", "temperature_max"}
+    for key, expected in options["thresholds"].items():
+        annotation = resolved[key]["annotation"]
+        assert resolved[key]["value"] == pytest.approx(expected)
+        assert annotation["source_type"] == "manual"
+        assert annotation["method"] == "manual"
+    variables = options["variables"]
+    for key, payload in variables.items():
+        assert payload["value"] == pytest.approx(options["thresholds"][key])
+        assert payload["source"] == "manual"
+        assert payload["annotation"]["source_type"] == "manual"
+    profile_opts = options[CONF_PROFILES]["mint"]
+    resolved_section = profile_opts["sections"]["resolved"]
+    assert resolved_section["thresholds"] == options["thresholds"]
+    assert resolved_section["resolved_targets"] == resolved
+    assert resolved_section["variables"] == variables
+
+
+async def test_config_flow_threshold_validation_failure_does_not_abort(hass, caplog):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    def fake_generate(metadata, hass):
+        plant_id = "mint"
+        path = Path(hass.config.path("plants", plant_id, "general.json"))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({"plant_type": "herb"}), encoding="utf-8")
+        return plant_id
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            side_effect=fake_generate,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.evaluate_threshold_bounds",
+            side_effect=RuntimeError("validation failed"),
+        ) as evaluate_mock,
+    ):
+        await flow.async_step_profile(
+            {
+                CONF_PLANT_NAME: "Mint",
+                CONF_PLANT_TYPE: "Herb",
+            }
+        )
+        await flow.async_step_threshold_source({"method": "manual"})
+        caplog.set_level(logging.ERROR)
+        thresholds_result = await flow.async_step_thresholds(
+            {"temperature_min": "10", "temperature_max": "20"}
+        )
+
+    assert thresholds_result["type"] == "form"
+    assert thresholds_result["step_id"] == "sensors"
+    assert "Unable to validate manual thresholds" in caplog.text
+    evaluate_mock.assert_called_once()
+    assert flow._thresholds == {
+        "temperature_min": pytest.approx(10.0),
+        "temperature_max": pytest.approx(20.0),
+    }
+
+    result = await flow.async_step_sensors({})
+    assert result["type"] == "create_entry"
+    options = result["options"]
+    assert options["thresholds"] == {
+        "temperature_min": pytest.approx(10.0),
+        "temperature_max": pytest.approx(20.0),
+    }
+
+
 async def test_options_flow(hass, hass_admin_user):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"}, title="title")
     flow = OptionsFlow(entry)
@@ -825,6 +2011,43 @@ async def test_options_flow(hass, hass_admin_user):
     assert "sensor.greenhouse_temp" in result["description_placeholders"]["sensor_hints"]
     result2 = await flow.async_step_basic({})
     assert result2["type"] == "create_entry"
+
+
+async def test_options_flow_sensor_validation_failure_does_not_abort(hass, hass_admin_user):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key", CONF_PLANT_ID: "mint"},
+        options={
+            CONF_PROFILES: {
+                "mint": {
+                    "name": "Mint",
+                    "plant_id": "mint",
+                    "general": {"display_name": "Mint"},
+                }
+            }
+        },
+        title="Mint",
+    )
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    hass.states.async_set(
+        "sensor.good",
+        0,
+        {"device_class": "moisture", "unit_of_measurement": "%"},
+    )
+    await flow.async_step_init()
+    await flow.async_step_basic()
+
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.validate_sensor_links",
+        side_effect=RuntimeError("validation offline"),
+    ) as validate_mock:
+        result = await flow.async_step_basic({CONF_MOISTURE_SENSOR: "sensor.good"})
+
+    assert result["type"] == "create_entry"
+    assert validate_mock.called
+    assert result["data"][CONF_MOISTURE_SENSOR] == "sensor.good"
+    assert result["data"]["sensors"]["moisture"] == "sensor.good"
 
 
 async def test_options_flow_cloud_sync(hass, hass_admin_user):
@@ -1280,6 +2503,74 @@ async def test_options_flow_attach_sensors_validation_errors(hass):
     result = await flow.async_step_attach_sensors({"temperature": "sensor.missing"})
     assert result["type"] == "form"
     assert result["errors"] == {"temperature": "missing_entity"}
+
+
+async def test_options_flow_sensor_warning_skips_missing_notification_service(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={}, options={})
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    async def unexpected_call(*args, **kwargs):
+        raise AssertionError("notification service should not be invoked")
+
+    hass.services = types.SimpleNamespace(async_call=unexpected_call)
+
+    with (
+        patch.object(
+            hass,
+            "async_create_task",
+            side_effect=AssertionError("notification task should not be scheduled"),
+        ) as create_task,
+        patch(
+            "custom_components.horticulture_assistant.config_flow.collate_issue_messages"
+        ) as collate,
+    ):
+        flow._notify_sensor_warnings([object()])
+
+    collate.assert_not_called()
+    create_task.assert_not_called()
+
+
+async def test_options_flow_sensor_warning_creates_notification_when_service_available(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={}, options={})
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    class FakeServices:
+        def __init__(self):
+            self.calls: list[tuple[str, str, dict[str, str], bool]] = []
+            self._services = {"persistent_notification": {"create": object()}}
+
+        async def async_call(
+            self, domain: str, service: str, data: dict[str, str], *, blocking: bool = False
+        ) -> None:
+            self.calls.append((domain, service, data, blocking))
+
+    services = FakeServices()
+    hass.services = services
+
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow.collate_issue_messages",
+            return_value="warning",
+        ) as collate,
+    ):
+        flow._notify_sensor_warnings([object()])
+
+    await asyncio.sleep(0)
+
+    collate.assert_called_once()
+    assert services.calls == [
+        (
+            "persistent_notification",
+            "create",
+            {
+                "title": "Horticulture Assistant sensor warning",
+                "message": "warning",
+                "notification_id": f"horticulture_sensor_{entry.entry_id}",
+            },
+            False,
+        )
+    ]
 
 
 async def test_options_flow_manage_profile_general_updates_profile(hass):

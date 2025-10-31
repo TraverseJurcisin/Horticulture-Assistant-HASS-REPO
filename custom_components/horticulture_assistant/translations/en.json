@@ -55,7 +55,10 @@
             "invalid_float": "Enter a number",
             "threshold_field_error": "Adjust this value to stay within the supported range.",
             "threshold_out_of_bounds": "{issue_detail}",
-            "no_template_matches": "No templates match your filter. Clear the filter or try another search."
+            "invalid_sensor": "Enter a valid sensor entity ID.",
+            "no_template_matches": "No templates match your filter. Clear the filter or try another search.",
+            "profile_error": "Creating the plant profile failed. Check the logs for more details.",
+            "opb_missing": "OpenPlantbook credentials are required. Enter a client ID and secret to continue."
         },
         "abort": {
             "post_setup_use_options": "Use Configure → Options → Add profile on the Horticulture Assistant entry to manage profiles.",
