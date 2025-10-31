@@ -224,7 +224,7 @@ def _coerce_validation_items(payload: Any, attribute: str) -> list[Any]:
     if isinstance(container, Mapping):
         return [item for item in container.values() if item is not None]
 
-    if isinstance(container, Sequence) and not isinstance(container, (str, bytes, bytearray)):
+    if isinstance(container, Sequence) and not isinstance(container, str | bytes | bytearray):
         return [item for item in container if item is not None]
 
     try:
@@ -238,11 +238,7 @@ def _coerce_validation_items(payload: Any, attribute: str) -> list[Any]:
 def _issue_role(issue: Any) -> str | None:
     """Return the sensor role encoded in ``issue`` when available."""
 
-    candidate: Any
-    if isinstance(issue, Mapping):
-        candidate = issue.get("role")
-    else:
-        candidate = getattr(issue, "role", None)
+    candidate = issue.get("role") if isinstance(issue, Mapping) else getattr(issue, "role", None)
     if isinstance(candidate, str):
         cleaned = candidate.strip()
         return cleaned or None
@@ -251,8 +247,6 @@ def _issue_role(issue: Any) -> str | None:
 
 def _issue_code(issue: Any) -> str:
     """Return the validation code encoded in ``issue``."""
-
-    candidate: Any
     if isinstance(issue, Mapping):
         for key in ("issue", "code", "error"):
             value = issue.get(key)
@@ -306,7 +300,7 @@ def _coerce_threshold_source_method(value: Any) -> str:
                 if cleaned:
                     return cleaned
 
-    if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+    if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
         for item in value:
             cleaned = _coerce_threshold_source_method(item)
             if cleaned:
@@ -390,10 +384,9 @@ def _ensure_general_profile_file(
             data["plant_type"] = slug or plant_type
             changed = True
 
-    if profile_scope:
-        if data.get(CONF_PROFILE_SCOPE) != profile_scope:
-            data[CONF_PROFILE_SCOPE] = profile_scope
-            changed = True
+    if profile_scope and data.get(CONF_PROFILE_SCOPE) != profile_scope:
+        data[CONF_PROFILE_SCOPE] = profile_scope
+        changed = True
 
     if sensor_map:
         container = data.get("sensor_entities")
@@ -509,7 +502,7 @@ def _extract_suggestion_entity_id(candidate: Any) -> str | None:
             for entry in _iter_sensor_values(raw):
                 if entry:
                     return entry
-    if isinstance(candidate, Sequence) and not isinstance(candidate, (str, bytes, bytearray)):
+    if isinstance(candidate, Sequence) and not isinstance(candidate, str | bytes | bytearray):
         for item in candidate:
             for entry in _iter_sensor_values(item):
                 if entry:
@@ -525,11 +518,7 @@ def _is_valid_entity_id(entity_id: str | None) -> bool:
 
     if not entity_id:
         return False
-    if "." not in entity_id:
-        return False
-    if any(ch.isspace() for ch in entity_id):
-        return False
-    return True
+    return "." in entity_id and not any(ch.isspace() for ch in entity_id)
 
 
 def _extract_suggestion_name(candidate: Any, entity_id: str | None = None) -> str | None:
@@ -545,7 +534,7 @@ def _extract_suggestion_name(candidate: Any, entity_id: str | None = None) -> st
             text = _as_str(value)
             if text:
                 return text
-    if isinstance(candidate, Sequence) and not isinstance(candidate, (str, bytes, bytearray)):
+    if isinstance(candidate, Sequence) and not isinstance(candidate, str | bytes | bytearray):
         for item in candidate:
             text = _as_str(item)
             if text and (entity_id is None or text != entity_id):
@@ -610,7 +599,7 @@ def _normalise_sensor_suggestions(
             except Exception as err:  # pragma: no cover - defensive guard
                 _LOGGER.debug("Skipping sensor suggestions for role '%s': %s", role, err)
                 iterable = []
-        elif isinstance(raw_entries, (str, bytes, bytearray)):
+        elif isinstance(raw_entries, str | bytes | bytearray):
             iterable = [raw_entries]
         elif isinstance(raw_entries, Sequence):
             try:
@@ -1775,7 +1764,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 thresholds_payload = deepcopy(self._threshold_snapshot)
                 thresholds_section = thresholds_payload.setdefault("thresholds", {})
                 thresholds_section.update(self._thresholds)
-                touched_keys = [key for key in self._thresholds.keys()]
+                touched_keys = list(self._thresholds)
                 if touched_keys:
                     sync_kwargs["touched_keys"] = touched_keys
                 sync_kwargs["prune"] = False
@@ -1867,7 +1856,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             if self._opb_credentials:
                 options["opb_credentials"] = self._opb_credentials
             return self.async_create_entry(title=profile_name, data=data, options=options)
-        except Exception as err:  # pragma: no cover - defensive guard
+        except Exception:  # pragma: no cover - defensive guard
             _LOGGER.exception(
                 "Profile completion for '%s' failed; storing manual fallback.",
                 plant_id,
