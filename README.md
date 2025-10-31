@@ -1,3 +1,4 @@
+***Under development, not ready for use***
 # Horticulture Assistant for Home Assistant
 
 **Feel like a pro grower without living in spreadsheets.** Horticulture Assistant turns Home Assistant into a greenhouse co-pilot that watches your environment, suggests the next best task, and celebrates every harvest with you.
