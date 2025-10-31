@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import json
 import logging
-from datetime import timedelta
 from collections.abc import Mapping, Sequence
 from copy import deepcopy
+from datetime import timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 

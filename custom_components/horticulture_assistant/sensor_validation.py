@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Mapping, Sequence
-from dataclasses import dataclass
-from enum import Enum
-from datetime import datetime, timedelta, timezone
-from typing import TYPE_CHECKING, Any
-
 import math
 import re
+from collections.abc import Iterable, Mapping, Sequence
+from dataclasses import dataclass
+from datetime import datetime, timedelta
+from enum import Enum
+from typing import TYPE_CHECKING, Any
+
 try:  # pragma: no cover - fallback for tests without Home Assistant
     from homeassistant import const as ha_const
 except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
@@ -55,10 +55,11 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover - executed in stu
 try:  # pragma: no cover - fallback when Home Assistant not installed
     from homeassistant.util import dt as dt_util  # type: ignore[attr-defined]
 except (ModuleNotFoundError, ImportError):  # pragma: no cover - executed in stubbed env
+
     class _FallbackDateTimeModule:  # pragma: no cover - simple fallback for tests
         @staticmethod
         def utcnow() -> datetime:
-            return datetime.now(timezone.utc)
+            return datetime.now(datetime.UTC)
 
     dt_util = _FallbackDateTimeModule()  # type: ignore[assignment]
 
@@ -183,9 +184,9 @@ def _coerce_datetime(*values: Any) -> datetime | None:
         if not isinstance(candidate, datetime):
             continue
         if candidate.tzinfo is None:
-            candidate = candidate.replace(tzinfo=timezone.utc)
+            candidate = candidate.replace(tzinfo=datetime.UTC)
         else:
-            candidate = candidate.astimezone(timezone.utc)
+            candidate = candidate.astimezone(datetime.UTC)
         if latest is None or candidate > latest:
             latest = candidate
     return latest
@@ -210,8 +211,6 @@ def _normalise_stale_after(value: timedelta | None) -> timedelta:
     return value
 
 
-
-
 def _coerce_minutes(value: Any) -> float | None:
     """Return ``value`` expressed in minutes when possible."""
 
@@ -221,7 +220,7 @@ def _coerce_minutes(value: Any) -> float | None:
             return None
         return seconds / 60
 
-    if isinstance(value, (int, float)):
+    if isinstance(value, int | float):
         minutes = float(value)
         if not math.isfinite(minutes):
             return None
@@ -317,10 +316,8 @@ def _normalise_device_class(value: Any) -> str | None:
     if isinstance(value, Enum):
         value = value.value
     elif hasattr(value, "value"):
-        candidate = getattr(value, "value")
-        if isinstance(candidate, str):
-            value = candidate
-        elif candidate is not None:
+        candidate = value.value
+        if isinstance(candidate, str) or candidate is not None:
             value = candidate
     text = str(value).strip()
     if not text:
@@ -551,9 +548,7 @@ def validate_sensor_links(
             raw_state = getattr(state, "state", None)
             observed_state = str(raw_state).strip() if raw_state is not None else ""
             observed_state_lower = observed_state.lower()
-            is_unavailable_state = bool(
-                observed_state_lower and observed_state_lower in _UNAVAILABLE_STATES
-            )
+            is_unavailable_state = bool(observed_state_lower and observed_state_lower in _UNAVAILABLE_STATES)
             if is_unavailable_state:
                 warnings.append(
                     SensorValidationIssue(
@@ -565,9 +560,7 @@ def validate_sensor_links(
                     )
                 )
             has_reported_value = bool(observed_state)
-            last_updated = _coerce_datetime(
-                getattr(state, "last_updated", None), getattr(state, "last_changed", None)
-            )
+            last_updated = _coerce_datetime(getattr(state, "last_updated", None), getattr(state, "last_changed", None))
             if (
                 has_reported_value
                 and not is_unavailable_state
@@ -611,14 +604,8 @@ def validate_sensor_links(
             expected_class = EXPECTED_DEVICE_CLASSES.get(role)
             raw_device_class = _resolve_device_class(attributes)
             actual_class = _normalise_device_class(raw_device_class)
-            expected_class_name = (
-                expected_class.value if expected_class is not None else None
-            )
-            expected_class_normalised = (
-                _normalise_device_class(expected_class_name)
-                if expected_class_name
-                else None
-            )
+            expected_class_name = expected_class.value if expected_class is not None else None
+            expected_class_normalised = _normalise_device_class(expected_class_name) if expected_class_name else None
             if expected_class_name and not actual_class:
                 warnings.append(
                     SensorValidationIssue(
@@ -629,9 +616,7 @@ def validate_sensor_links(
                         expected=expected_class_name,
                     )
                 )
-            elif expected_class_normalised and actual_class not in {
-                expected_class_normalised
-            }:
+            elif expected_class_normalised and actual_class not in {expected_class_normalised}:
                 observed_label = _format_device_class_label(raw_device_class) or actual_class
                 warnings.append(
                     SensorValidationIssue(
@@ -776,17 +761,11 @@ def _format_sensor_issue(issue: SensorValidationIssue) -> str:
     if issue.issue == "entity_disabled":
         disabled_by = str(issue.observed or "").strip().replace("_", " ")
         reason = f" (disabled by {disabled_by})" if disabled_by else ""
-        return (
-            f"{severity}: {role_label} sensor {entity_label} is disabled{reason}. "
-            "Re-enable it in Home Assistant."
-        )
+        return f"{severity}: {role_label} sensor {entity_label} is disabled{reason}. Re-enable it in Home Assistant."
 
     if issue.issue == "missing_device_class":
         expected = issue.expected or "the expected device class"
-        return (
-            f"{severity}: {role_label} sensor {entity_label} is missing a device class. "
-            f"Set it to '{expected}'."
-        )
+        return f"{severity}: {role_label} sensor {entity_label} is missing a device class. Set it to '{expected}'."
 
     if issue.issue == "unexpected_device_class":
         expected = issue.expected or "the expected class"
@@ -800,23 +779,18 @@ def _format_sensor_issue(issue: SensorValidationIssue) -> str:
         expected = issue.expected or "the expected state class"
         observed = issue.observed or "unknown"
         return (
-            f"{severity}: {role_label} sensor {entity_label} reports state class "
-            f"'{observed}' but expected {expected}."
+            f"{severity}: {role_label} sensor {entity_label} reports state class '{observed}' but expected {expected}."
         )
 
     if issue.issue == "missing_state_class":
         expected = issue.expected or "a supported state class"
-        return (
-            f"{severity}: {role_label} sensor {entity_label} is missing a state class. "
-            f"Set it to {expected}."
-        )
+        return f"{severity}: {role_label} sensor {entity_label} is missing a state class. Set it to {expected}."
 
     if issue.issue == "unexpected_unit":
         expected_units = issue.expected or "supported units"
         observed_unit = issue.observed or "unknown"
         return (
-            f"{severity}: {role_label} sensor {entity_label} uses unit '{observed_unit}' "
-            f"but expected {expected_units}."
+            f"{severity}: {role_label} sensor {entity_label} uses unit '{observed_unit}' but expected {expected_units}."
         )
 
     if issue.issue == "missing_unit":
@@ -827,10 +801,7 @@ def _format_sensor_issue(issue: SensorValidationIssue) -> str:
         )
 
     if issue.issue == "invalid_sensor_domain":
-        return (
-            f"{severity}: {role_label} entity {entity_label} isn't a sensor. "
-            "Select a sensor entity for this role."
-        )
+        return f"{severity}: {role_label} entity {entity_label} isn't a sensor. Select a sensor entity for this role."
 
     if issue.issue == "unavailable_state":
         observed_state = (issue.observed or "").strip().lower()
@@ -879,7 +850,13 @@ def collate_issue_messages(issues: Iterable[SensorValidationIssue]) -> str:
     return "\n".join(_format_sensor_issue(issue) for issue in issues)
 
 
-__all__ = ["SensorValidationIssue", "SensorValidationResult", "validate_sensor_links", "collate_issue_messages", "recommended_stale_after"]
+__all__ = [
+    "SensorValidationIssue",
+    "SensorValidationResult",
+    "validate_sensor_links",
+    "collate_issue_messages",
+    "recommended_stale_after",
+]
 
 
 def _has_value(value: Any) -> bool:
@@ -890,9 +867,7 @@ def _has_value(value: Any) -> bool:
     return True
 
 
-def _augment_with_registry_attributes(
-    attributes: Mapping[str, Any], registry_entry: Any
-) -> dict[str, Any]:
+def _augment_with_registry_attributes(attributes: Mapping[str, Any], registry_entry: Any) -> dict[str, Any]:
     """Merge relevant metadata from ``registry_entry`` into ``attributes``."""
 
     merged: dict[str, Any] = dict(attributes)
@@ -906,9 +881,7 @@ def _augment_with_registry_attributes(
         "original_device_class",
         getattr(registry_entry, "original_device_class", None),
     )
-    _setdefault(
-        "unit_of_measurement", getattr(registry_entry, "unit_of_measurement", None)
-    )
+    _setdefault("unit_of_measurement", getattr(registry_entry, "unit_of_measurement", None))
 
     capabilities = getattr(registry_entry, "capabilities", None)
     if isinstance(capabilities, Mapping):
@@ -938,4 +911,3 @@ def _get_entity_registry(hass: HomeAssistant) -> Any:
         return get_registry(hass)
     except Exception:  # pragma: no cover - best effort access
         return None
-

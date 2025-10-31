@@ -45,7 +45,10 @@ cfg = importlib.util.module_from_spec(cfg_spec)
 sys.modules[cfg_spec.name] = cfg
 cfg_spec.loader.exec_module(cfg)
 
-sensor_validation_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.sensor_validation", BASE_PATH / "sensor_validation.py")
+sensor_validation_spec = importlib.util.spec_from_file_location(
+    f"{PACKAGE}.sensor_validation",
+    BASE_PATH / "sensor_validation.py",
+)
 sensor_validation = importlib.util.module_from_spec(sensor_validation_spec)
 sys.modules[sensor_validation_spec.name] = sensor_validation
 sensor_validation_spec.loader.exec_module(sensor_validation)

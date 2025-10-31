@@ -1,9 +1,8 @@
 import importlib
 import sys
 import types
+from datetime import datetime, timedelta
 from enum import Enum
-
-from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -31,7 +30,7 @@ class DummyState:
         if "state_class" not in attrs:
             attrs["state_class"] = "measurement"
         self.attributes = attrs
-        now = datetime.now(timezone.utc)
+        now = datetime.now(datetime.UTC)
         self.last_changed = last_changed or now
         self.last_updated = last_updated or last_changed or now
 
@@ -116,17 +115,13 @@ def test_validate_sensor_links_reports_disabled_registry_entity(monkeypatch):
         types.SimpleNamespace(async_get=lambda _hass: DummyRegistry()),
     )
 
-    result = sensor_validation.validate_sensor_links(
-        hass, {"temperature": "sensor.temp"}
-    )
+    result = sensor_validation.validate_sensor_links(hass, {"temperature": "sensor.temp"})
 
     assert [issue.issue for issue in result.errors] == ["entity_disabled"]
 
 
 def test_validate_sensor_links_rejects_non_sensor_domain():
-    hass = types.SimpleNamespace(
-        states=DummyStates({"light.kitchen": DummyState(device_class="light")})
-    )
+    hass = types.SimpleNamespace(states=DummyStates({"light.kitchen": DummyState(device_class="light")}))
 
     result = sensor_validation.validate_sensor_links(
         hass,
@@ -632,7 +627,7 @@ def test_validate_sensor_links_flags_boolean_states():
 
 
 def test_validate_sensor_links_warns_on_stale_state(monkeypatch):
-    now = datetime(2024, 1, 1, 12, 0, tzinfo=timezone.utc)
+    now = datetime(2024, 1, 1, 12, 0, tzinfo=datetime.UTC)
     stale = now - timedelta(hours=3, minutes=5)
     hass = types.SimpleNamespace(
         states=DummyStates(
@@ -665,7 +660,7 @@ def test_validate_sensor_links_warns_on_stale_state(monkeypatch):
 
 
 def test_validate_sensor_links_uses_custom_stale_threshold(monkeypatch):
-    now = datetime(2024, 1, 1, 12, 0, tzinfo=timezone.utc)
+    now = datetime(2024, 1, 1, 12, 0, tzinfo=datetime.UTC)
     stale = now - timedelta(hours=5)
     hass = types.SimpleNamespace(
         states=DummyStates(
@@ -719,7 +714,7 @@ def test_recommended_stale_after_parses_extended_formats():
 
 
 def test_validate_sensor_links_allows_recent_state(monkeypatch):
-    now = datetime(2024, 1, 1, 12, 0, tzinfo=timezone.utc)
+    now = datetime(2024, 1, 1, 12, 0, tzinfo=datetime.UTC)
     recent = now - timedelta(minutes=15)
     hass = types.SimpleNamespace(
         states=DummyStates(
