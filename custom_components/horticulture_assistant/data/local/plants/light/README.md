@@ -1,8 +1,12 @@
-﻿# Light Targets by Growth Stage
+# Light Targets by Growth Stage
 
-Each JSON file in this folder describes light expectations for a species across growth stages. These values inform DLI/VPD dashboards and help advisory logic detect when a plant is under- or over-exposed.
+Each JSON file defines photon/light expectations for a species across growth
+stages. Coordinators use these values to compute DLI gaps and surface advisory
+messages when plants drift from target ranges.
 
-## Schema
+---
+
+## Schema Overview
 
 ```json
 {
@@ -24,18 +28,26 @@ Each JSON file in this folder describes light expectations for a species across 
 }
 ```
 
-### Field Notes
+Fields:
 
-- `ppfd_umol_m2_s` – Instantaneous photon flux density ranges.
-- `dli_mol_m2_day` – Daily light integral bands; coordinators compare actual DLI to this range.
-- `photoperiod_hours` – Optional; specify light/dark cycles if plants require strict photoperiods.
-- `spectrum` – Preferred spectral mix or correlated color temperature.
+- `ppfd_umol_m2_s` – Instantaneous photon flux density range (µmol·m⁻²·s⁻¹).
+- `dli_mol_m2_day` – Daily light integral band (mol·m⁻²·day⁻¹) used by the DLI
+  calculator.
+- `photoperiod_hours` – Optional light/dark cycle for photoperiod-sensitive
+  species.
+- `spectrum` – Preferred spectral mix or CCT notes.
+- `notes` – Freeform adjustments, shading recommendations, acclimation tips.
+- `sources` – Citations or experience notes.
+
+---
 
 ## Adding New Species
 
 1. Name the file using the species slug (e.g., `persea_americana.json`).
-2. Populate stages relevant to the crop (`propagation`, `vegetative`, `flowering`, etc.).
-3. Include notes for acclimation, shading tolerance, or any cultivar-specific nuances.
-4. Add at least one citation in `sources`.
+2. Populate every relevant stage; coordinators gracefully ignore missing stages
+   but consistent coverage improves advisory accuracy.
+3. Include at least one citation in `sources` for traceability.
+4. Run `pre-commit run --all-files` to normalise JSON formatting.
 
-Remember to run `pre-commit run --all-files` after editing to keep formatting consistent.
+If you introduce new fields, document them here and update any tooling that
+consumes light templates (`profile_registry`, analytics pipelines, services).
