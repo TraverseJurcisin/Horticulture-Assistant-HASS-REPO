@@ -11,6 +11,8 @@ from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
+import voluptuous as vol
+from homeassistant.helpers import selector as sel
 
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
@@ -60,15 +62,61 @@ compat = importlib.util.module_from_spec(compat_spec)
 sys.modules[compat_spec.name] = compat
 compat_spec.loader.exec_module(compat)
 
+validation_spec = importlib.util.spec_from_file_location(
+    f"{PACKAGE}.sensor_validation", BASE_PATH / "sensor_validation.py"
+)
+sensor_validation = importlib.util.module_from_spec(validation_spec)
+sys.modules[validation_spec.name] = sensor_validation
+validation_spec.loader.exec_module(sensor_validation)
+
 ConfigFlow = cfg.ConfigFlow
 OptionsFlow = cfg.OptionsFlow
 ProfileRegistry = reg.ProfileRegistry
 sync_thresholds = compat.sync_thresholds
+SensorSuggestion = cfg.SensorSuggestion
+SensorValidationIssue = sensor_validation.SensorValidationIssue
+SensorValidationResult = sensor_validation.SensorValidationResult
+_normalise_sensor_submission = cfg._normalise_sensor_submission
+_sensor_selection_signature = cfg._sensor_selection_signature
 
 pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
+
+
+async def test_normalise_sensor_submission_deduplicates_sequences():
+    values = ["sensor.one", "sensor.one", "sensor.two", "", None, "sensor.two"]
+
+    result = _normalise_sensor_submission(values)
+
+    assert result == ["sensor.one", "sensor.two"]
+
+
+async def test_normalise_sensor_submission_collapses_mappings():
+    values = {
+        "entity_id": "sensor.primary",
+        "option": "sensor.primary",
+        "extra": ["sensor.secondary", "sensor.secondary"],
+    }
+
+    result = _normalise_sensor_submission(values)
+
+    assert result == ["sensor.primary", "sensor.secondary"]
+
+
+async def test_sensor_selection_signature_is_stable_for_duplicate_entries():
+    signature = _sensor_selection_signature(
+        {
+            "conductivity": ["sensor.alpha", "sensor.alpha", "sensor.beta"],
+            "moisture": {"entity_id": "sensor.shared", "option": "sensor.shared"},
+        }
+    )
+
+    assert signature == (
+        ("conductivity", ("sensor.alpha", "sensor.beta")),
+        ("moisture", ("sensor.shared",)),
+    )
 
 
 @pytest.fixture(autouse=True)
@@ -1260,6 +1308,66 @@ async def test_config_flow_manual_threshold_values(hass):
     }
 
 
+async def test_config_flow_threshold_form_uses_number_selectors(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    await begin_profile_flow(flow)
+
+    async def _run(func, *args):
+        return func(*args)
+
+    with (
+        patch.object(hass, "async_add_executor_job", side_effect=_run),
+        patch(
+            "custom_components.horticulture_assistant.utils.profile_generator.generate_profile",
+            return_value="mint",
+        ),
+    ):
+        await flow.async_step_profile({CONF_PLANT_NAME: "Mint"})
+        form = await flow.async_step_threshold_source({"method": "manual"})
+        assert form["step_id"] == "thresholds"
+        thresholds_form = await flow.async_step_thresholds()
+
+    assert thresholds_form["type"] == "form"
+    assert thresholds_form["step_id"] == "thresholds"
+
+    schema = thresholds_form["data_schema"]
+    assert isinstance(schema, vol.Schema)
+
+    selector_type = getattr(sel, "NumberSelector", None)
+
+    for option, validator in schema.schema.items():
+        field = getattr(option, "schema", option)
+        if field not in cfg.MANUAL_THRESHOLD_FIELDS:
+            continue
+        assert isinstance(validator, vol.Any)
+        selectors = []
+        for value in validator.validators:
+            is_selector = (selector_type is not None and isinstance(value, selector_type)) or (
+                selector_type is None and isinstance(value, cfg._CompatNumberSelector)
+            )
+            if is_selector:
+                selectors.append(value)
+        assert selectors, f"expected number selector for {field}"
+        selector = selectors[0]
+        meta = cfg.MANUAL_THRESHOLD_METADATA.get(field, {})
+        config_obj = getattr(selector, "config", None)
+        if isinstance(config_obj, dict):
+            min_val = config_obj.get("min")
+            max_val = config_obj.get("max")
+            step_val = config_obj.get("step")
+            unit_val = config_obj.get("unit_of_measurement")
+        else:
+            min_val = getattr(config_obj, "min", None)
+            max_val = getattr(config_obj, "max", None)
+            step_val = getattr(config_obj, "step", None)
+            unit_val = getattr(config_obj, "unit_of_measurement", None)
+        assert min_val == meta.get("min")
+        assert max_val == meta.get("max")
+        assert step_val == meta.get("step")
+        assert unit_val == meta.get("unit")
+
+
 async def test_config_flow_existing_entry_menu(hass):
     flow = ConfigFlow()
     flow.hass = hass
@@ -2005,6 +2113,41 @@ async def test_options_flow(hass, hass_admin_user):
     assert result2["type"] == "create_entry"
 
 
+async def test_options_flow_menu_hides_profile_actions_without_profiles(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={}, title="title")
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    result = await flow.async_step_init()
+
+    assert result["type"] == "menu"
+    assert result["menu_options"] == ["basic", "cloud_sync", "add_profile", "configure_ai"]
+
+
+async def test_options_flow_menu_includes_profile_actions_when_available(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={CONF_PROFILES: {"mint": {"name": "Mint", "plant_id": "mint"}}},
+        title="title",
+    )
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    result = await flow.async_step_init()
+
+    assert result["type"] == "menu"
+    assert result["menu_options"] == [
+        "basic",
+        "cloud_sync",
+        "add_profile",
+        "manage_profiles",
+        "configure_ai",
+        "profile_targets",
+        "nutrient_schedule",
+    ]
+
+
 async def test_options_flow_sensor_validation_failure_does_not_abort(hass, hass_admin_user):
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -2449,15 +2592,30 @@ async def test_options_flow_add_profile_attach_sensors(hass):
     flow = OptionsFlow(entry)
     flow.hass = hass
     await flow.async_step_init()
+    hass.states.async_set("sensor.temp", 20, {"device_class": "temperature"})
     result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
     assert result["type"] == "form" and result["step_id"] == "attach_sensors"
-    hass.states.async_set("sensor.temp", 20, {"device_class": "temperature"})
-    result2 = await flow.async_step_attach_sensors({"temperature": "sensor.temp"})
+    assert "sensor.temp" in result["description_placeholders"]["sensor_hints"]
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow._has_registered_service",
+            return_value=True,
+        ),
+        patch.object(hass.services, "async_call", AsyncMock()) as async_call,
+    ):
+        result2 = await flow.async_step_attach_sensors({"temperature": "sensor.temp"})
+        await hass.async_block_till_done()
     assert result2["type"] == "create_entry"
     prof = registry.get_profile("basil")
     assert prof is not None
     assert prof.general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert prof.general["sensors"]["temperature"] == "sensor.temp"
+    dismiss_calls = [
+        call
+        for call in async_call.call_args_list
+        if call.args[0] == "persistent_notification" and call.args[1] == "dismiss"
+    ]
+    assert any("_link" in call.args[2].get("notification_id", "") for call in dismiss_calls)
 
 
 async def test_options_flow_attach_sensors_allows_skip(hass):
@@ -2473,11 +2631,338 @@ async def test_options_flow_attach_sensors_allows_skip(hass):
     result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
     assert result["type"] == "form" and result["step_id"] == "attach_sensors"
 
-    result2 = await flow.async_step_attach_sensors({})
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow._has_registered_service",
+            return_value=True,
+        ),
+        patch.object(hass.services, "async_call", AsyncMock()) as async_call,
+    ):
+        result2 = await flow.async_step_attach_sensors({})
+        await hass.async_block_till_done()
     assert result2["type"] == "create_entry"
     profile = registry.get_profile("basil")
     assert profile is not None
     assert profile.general.get("sensors") == {}
+    create_calls = [
+        call
+        for call in async_call.call_args_list
+        if call.args[0] == "persistent_notification" and call.args[1] == "create"
+    ]
+    assert create_calls
+    payload = create_calls[-1].args[2]
+    assert "Basil" in payload["message"]
+    assert payload["notification_id"].endswith("_link")
+
+
+async def test_options_flow_attach_sensors_conflict_requires_confirmation(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "k"},
+        options={
+            CONF_PROFILES: {
+                "mint": {
+                    "name": "Mint",
+                    "general": {
+                        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+                        "sensors": {"temperature": "sensor.shared"},
+                    },
+                    "sensors": {"temperature": "sensor.shared"},
+                }
+            }
+        },
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+    await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    hass.states.async_set("sensor.shared", 20, {"device_class": "temperature"})
+
+    conflict = await flow.async_step_attach_sensors({"temperature": "sensor.shared"})
+    assert conflict["type"] == "form"
+    assert conflict["step_id"] == "attach_sensors"
+    warning = conflict["description_placeholders"].get("conflict_warning", "")
+    assert "Warning" in warning
+
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow._has_registered_service",
+            return_value=True,
+        ),
+        patch.object(hass.services, "async_call", AsyncMock()),
+    ):
+        result = await flow.async_step_attach_sensors({"temperature": "sensor.shared"})
+        await hass.async_block_till_done()
+
+    assert result["type"] == "create_entry"
+
+
+async def test_options_flow_add_profile_requires_known_species(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    result = await flow.async_step_add_profile(
+        {"name": "Basil", "species_id": "missing", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}
+    )
+
+    assert result["type"] == "form"
+    assert result["errors"] == {"species_id": "unknown_species"}
+
+
+async def test_options_flow_add_profile_persists_species_selection(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    result = await flow.async_step_add_profile(
+        {
+            "name": "Basil",
+            "species_id": "global_basil",
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+        }
+    )
+    assert result["type"] == "form" and result["step_id"] == "attach_sensors"
+
+    outcome = await flow.async_step_attach_sensors({})
+    assert outcome["type"] == "create_entry"
+
+    profile = registry.get_profile("basil")
+    assert profile is not None
+    stored = registry.entry.options[CONF_PROFILES]["basil"]
+    assert stored.get("species_display")
+    local_meta = stored.get("local", {}).get("metadata", {})
+    assert local_meta.get("requested_species_id") == "global_basil"
+
+
+async def test_options_flow_add_profile_accepts_existing_profile_species(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    await registry.async_add_profile(
+        "Existing Plant",
+        species_id="existing_species",
+        species_display="Existing Species",
+        cultivar_id="existing_cultivar",
+        cultivar_display="Existing Cultivar",
+    )
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    result = await flow.async_step_add_profile(
+        {
+            "name": "Seedling",
+            "species_id": "existing_species",
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+        }
+    )
+
+    assert result["type"] == "form" and result["step_id"] == "attach_sensors"
+
+
+async def test_options_flow_add_profile_accepts_profile_store_species(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    store = AsyncMock()
+    store.async_list.return_value = ["Library Basil"]
+    store.async_get.return_value = {
+        "name": "Library Basil",
+        "species_display": "Library Basil",
+        "local": {"metadata": {"requested_species_id": "library_basil", "requested_cultivar_id": "library_gen"}},
+        "cultivar_display": "Library Gen",
+        "general": {"cultivar": "Library Gen"},
+    }
+
+    with patch.object(flow, "_async_profile_store", AsyncMock(return_value=store)):
+        flow._species_catalog = None
+        flow._cultivar_index = None
+        result = await flow.async_step_add_profile(
+            {
+                "name": "Library Plant",
+                "species_id": "library_basil",
+                "cultivar_id": "library_gen",
+                CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            }
+        )
+
+    assert result["type"] == "form" and result["step_id"] == "attach_sensors"
+    store.async_list.assert_awaited()
+    store.async_get.assert_awaited()
+
+
+async def test_options_flow_add_profile_rejects_unknown_cultivar(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    catalog = {
+        "global_basil": {
+            "label": "Global Basil",
+            "payload": {},
+            "sources": {"library"},
+            "cultivars": {},
+        }
+    }
+    flow._async_species_catalog = AsyncMock(return_value=(catalog, {}))  # type: ignore[method-assign]
+
+    result = await flow.async_step_add_profile(
+        {
+            "name": "Basil",
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            "cultivar_id": "unknown",
+        }
+    )
+
+    assert result["type"] == "form"
+    assert result["errors"] == {"cultivar_id": "unknown_cultivar"}
+
+
+async def test_options_flow_add_profile_infers_species_from_cultivar(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    cultivar_entry = {"label": "Genovese Basil", "source": "library", "sources": {"library"}, "payload": {}}
+    catalog = {
+        "global_basil": {
+            "label": "Global Basil",
+            "payload": {},
+            "sources": {"library"},
+            "cultivars": {"basil_genovese": cultivar_entry},
+        }
+    }
+    cultivar_index = {"basil_genovese": ("global_basil", cultivar_entry)}
+    flow._async_species_catalog = AsyncMock(  # type: ignore[method-assign]
+        return_value=(catalog, cultivar_index)
+    )
+
+    result = await flow.async_step_add_profile(
+        {
+            "name": "Genovese",
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            "cultivar_id": "basil_genovese",
+        }
+    )
+
+    assert result["type"] == "form" and result["step_id"] == "attach_sensors"
+
+    stored = registry.entry.options[CONF_PROFILES]["genovese"]
+    metadata = stored.get("local", {}).get("metadata", {})
+    assert metadata.get("requested_species_id") == "global_basil"
+    assert metadata.get("requested_cultivar_id") == "basil_genovese"
+    assert stored.get("cultivar_display") == "Genovese Basil"
+    general = stored.get("general", {})
+    assert general.get("cultivar") == "Genovese Basil"
+
+
+async def test_options_flow_add_profile_species_hint_guidance(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    cultivar_entry = {"label": "Genovese Basil", "sources": {"library"}}
+    catalog = {
+        "global_basil": {
+            "label": "Global Basil",
+            "payload": {},
+            "sources": {"library"},
+            "cultivars": {"basil_genovese": cultivar_entry},
+        }
+    }
+    cultivar_index = {"basil_genovese": ("global_basil", cultivar_entry)}
+    flow._async_species_catalog = AsyncMock(  # type: ignore[method-assign]
+        return_value=(catalog, cultivar_index)
+    )
+
+    result = await flow.async_step_add_profile(
+        {
+            "name": "",
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            "species_id": "global_basil",
+            "cultivar_id": "basil_genovese",
+        }
+    )
+
+    assert result["type"] == "form"
+    placeholders = result.get("description_placeholders")
+    assert placeholders is not None
+    assert "Species template: Global Basil" in placeholders.get("species_hint", "")
+    assert "Library templates" in placeholders.get("species_hint", "")
+    assert "Cultivar: Genovese Basil" in placeholders.get("cultivar_hint", "")
+    assert "Parent species: Global Basil" in placeholders.get("cultivar_hint", "")
+
+
+async def test_options_flow_add_profile_species_hint_defaults(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    flow._async_species_catalog = AsyncMock(  # type: ignore[method-assign]
+        return_value=({}, {})
+    )
+
+    result = await flow.async_step_add_profile({"name": "", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    assert result["type"] == "form"
+    placeholders = result.get("description_placeholders")
+    assert placeholders is not None
+    assert placeholders.get("species_hint") == "No species template selected — profile will rely on manual defaults."
+    assert placeholders.get("cultivar_hint") == "No cultivar overrides selected — using the base species defaults."
 
 
 async def test_options_flow_attach_sensors_validation_errors(hass):
@@ -2495,6 +2980,90 @@ async def test_options_flow_attach_sensors_validation_errors(hass):
     result = await flow.async_step_attach_sensors({"temperature": "sensor.missing"})
     assert result["type"] == "form"
     assert result["errors"] == {"temperature": "missing_entity"}
+
+
+async def test_options_flow_add_profile_rejects_duplicate_name(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    await registry.async_add_profile("Basil")
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    assert result["type"] == "form"
+    assert result["errors"] == {"name": "duplicate_profile_id"}
+
+
+async def test_options_flow_add_profile_invalid_name(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    result = await flow.async_step_add_profile({"name": "!!!", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    assert result["type"] == "form"
+    assert result["errors"] == {"name": "invalid_profile_id"}
+
+
+async def test_options_flow_add_profile_persist_failure_rolls_back(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    from custom_components.horticulture_assistant.profile_store import ProfileStoreError
+
+    store = AsyncMock()
+    store.async_create_profile.side_effect = ProfileStoreError("write failed", user_message="disk full")
+
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.get_entry_data",
+        return_value={"profile_store": store},
+    ):
+        result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    assert result["type"] == "form"
+    assert result["errors"] == {"base": "profile_error"}
+    assert result["description_placeholders"]["error"] == "disk full"
+    assert registry.get_profile("basil") is None
+
+
+async def test_options_flow_add_profile_registry_save_error(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    with patch.object(registry, "async_save", AsyncMock(side_effect=OSError("disk full"))):
+        result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    assert result["type"] == "form"
+    assert result["errors"] == {"base": "profile_error"}
+    assert registry.get_profile("basil") is None
+    assert entry.options.get(CONF_PROFILES, {}) == {}
 
 
 async def test_options_flow_sensor_warning_skips_missing_notification_service(hass):
@@ -2671,6 +3240,192 @@ async def test_options_flow_manage_profile_sensors_preserves_multi_assignments(h
     stored = entry.options[CONF_PROFILES]["alpha"]
     sensors = stored["general"].get("sensors", {})
     assert sensors == {"temperature": ["sensor.temp_a", "sensor.temp_b"]}
+
+
+async def test_options_flow_manage_profile_sensors_includes_hints(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "edit_sensors"})
+
+    suggestions = {role: [] for role in ("temperature", "humidity", "illuminance", "moisture", "conductivity", "co2")}
+    suggestions["temperature"] = [SensorSuggestion("sensor.tent_temp", "Grow Tent Temp", 6, "matched")]
+
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.collect_sensor_suggestions",
+        return_value=suggestions,
+    ):
+        result = await flow.async_step_manage_profile_sensors()
+
+    assert result["type"] == "form"
+    hints = result["description_placeholders"]["sensor_hints"]
+    assert "Grow Tent Temp (sensor.tent_temp)" in hints
+
+
+async def test_options_flow_manage_profile_sensors_conflict_requires_confirmation(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+        "sensors": {},
+    }
+    conflict_payload = {
+        "name": "Beta",
+        "general": {
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+            "sensors": {"temperature": "sensor.shared"},
+        },
+        "sensors": {"temperature": "sensor.shared"},
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload, "beta": conflict_payload}},
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    hass.states.async_set("sensor.shared", 21, {"device_class": "temperature"})
+
+    await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "edit_sensors"})
+    conflict = await flow.async_step_manage_profile_sensors({"temperature": "sensor.shared"})
+    assert conflict["type"] == "form"
+    assert "Warning" in conflict["description_placeholders"].get("conflict_warning", "")
+
+    def _update_entry(target, *, options):
+        target.options = options
+
+    with patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry):
+        result = await flow.async_step_manage_profile_sensors({"temperature": "sensor.shared"})
+
+    assert result["type"] == "create_entry"
+
+
+async def test_options_flow_manage_profile_sensors_handles_validation_errors(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "edit_sensors"})
+
+    validation = SensorValidationResult(
+        errors=[
+            SensorValidationIssue(
+                role="temperature",
+                entity_id="sensor.missing",
+                issue="missing_entity",
+                severity="error",
+            )
+        ],
+        warnings=[],
+    )
+
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow.collect_sensor_suggestions",
+            return_value={},
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.validate_sensor_links",
+            return_value=validation,
+        ),
+        patch.object(flow, "_clear_sensor_warning") as clear_warning,
+        patch.object(registry, "async_set_profile_sensors", new=AsyncMock()) as set_sensors,
+    ):
+        result = await flow.async_step_manage_profile_sensors({"temperature": "sensor.missing"})
+
+    assert result["type"] == "form"
+    assert result["errors"]["temperature"] == "missing_entity"
+    assert result["errors"]["base"] == "sensor_validation_failed"
+    assert "missing_entity" in result["description_placeholders"]["error"]
+    set_sensors.assert_not_called()
+    clear_warning.assert_called_once()
+
+
+async def test_options_flow_manage_profile_sensors_notifies_warnings(hass):
+    profile_payload = {
+        "name": "Alpha",
+        "general": {CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+    }
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "alpha"},
+        options={CONF_PROFILES: {"alpha": profile_payload}},
+    )
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+
+    await flow.async_step_manage_profiles({"profile_id": "alpha", "action": "edit_sensors"})
+
+    validation = SensorValidationResult(
+        errors=[],
+        warnings=[
+            SensorValidationIssue(
+                role="temperature",
+                entity_id="sensor.flagged",
+                issue="unexpected_device_class",
+                severity="warning",
+                expected="temperature",
+                observed="humidity",
+            )
+        ],
+    )
+
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow.collect_sensor_suggestions",
+            return_value={},
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.validate_sensor_links",
+            return_value=validation,
+        ),
+        patch.object(flow, "_notify_sensor_warnings") as notify_warnings,
+        patch.object(flow, "_clear_sensor_warning") as clear_warning,
+        patch.object(registry, "async_set_profile_sensors", new=AsyncMock()) as set_sensors,
+    ):
+        result = await flow.async_step_manage_profile_sensors({"temperature": "sensor.flagged"})
+
+    notify_warnings.assert_called_once()
+    clear_warning.assert_not_called()
+    set_sensors.assert_awaited_once()
+    assert result["type"] == "create_entry"
 
 
 async def test_options_flow_manage_profile_thresholds_updates_targets(hass):
