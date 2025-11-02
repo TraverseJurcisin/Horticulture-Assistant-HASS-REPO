@@ -222,10 +222,8 @@ async def test_sensor_warning_notification_cleared(hass, monkeypatch):
     warning_result = SensorValidationResult(errors=[], warnings=[warning_issue])
     clean_result = SensorValidationResult(errors=[], warnings=[])
     results = iter([warning_result, clean_result])
-    thresholds: list = []
 
-    def fake_validate(_hass, _sensors, *, stale_after=None):
-        thresholds.append(stale_after)
+    def fake_validate(_hass, _sensors):
         try:
             return next(results)
         except StopIteration:
@@ -251,9 +249,6 @@ async def test_sensor_warning_notification_cleared(hass, monkeypatch):
         blocking=True,
     )
     await hass.async_block_till_done()
-
-    expected_threshold = sensor_validation.recommended_stale_after(const.DEFAULT_UPDATE_MINUTES)
-    assert thresholds == [expected_threshold, expected_threshold]
 
     assert notifications[-1][0] == "dismiss"
     assert notifications[-1][1].get("notification_id") == f"horticulture_sensor_{entry.entry_id}"

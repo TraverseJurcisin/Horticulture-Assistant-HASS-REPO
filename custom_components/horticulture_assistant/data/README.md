@@ -1,62 +1,36 @@
-# Data Catalogue
+﻿# Data Catalogue
 
-The `data/` tree ships the agronomy datasets that back profile defaults,
-validation, and analytics. Everything is human-readable JSON so you can audit,
-extend, or replace the individual catalogues.
+The `data/` tree ships with reference material that powers derived metrics, profile templates, and fertilizer validation. Everything is stored as human-readable JSON so you can audit or replace individual datasets.
 
----
-
-## Directory Layout
+## Layout
 
 ```
 data/
-├── dataset_catalog.json   # Machine-readable index of bundled datasets
-├── fertilizers/           # Product catalogue, schema, and search shards
-├── global_profiles/       # Canonical species/cultivar blueprints
-├── local/                 # Site-specific overrides created at runtime
-├── schema/                # Shared JSON schema fragments
-├── [environment|light|temperature|...]  # Thematic reference tables
-└── README.md
+├── fertilizers/           # Product catalogue, schema, and search indexes
+├── local/                 # User-specific working data (profiles, zones, overrides)
+├── ...                    # Agronomy reference tables (environment, pests, irrigation, etc.)
 ```
 
-Highlights:
+Each subdirectory has its own README with full descriptions. Highlighted areas:
 
-- [Fertilizers](fertilizers/README.md) – Detail shards, search indexes, and the
-  V3e schema used to validate nutrient products.
-- [Local working data](local/README.md) – Profiles, plant templates, and private
-  catalogues that live alongside a Home Assistant install.
-- [Plant templates](local/plants/README.md) – Stage-based light/temperature
-  targets that populate new profiles.
-- Thematic folders (`environment/`, `irrigation/`, `pests/`, `yield/`, etc.)
-  provide curated baselines for coordinators and advisory logic.
-
-Every folder you extend should document its schema in a `README.md` and, when
-possible, include a matching JSON schema under `schema/`.
-
----
+- [Fertilizers](fertilizers/README.md) – sharded product listings, detail schema, and the CI validator.
+- [Local working data](local/README.md) – where Home Assistant writes profiles and zone registries.
+- [Plants/light](local/plants/light/README.md) – stage-based light targets for template profiles.
+- [Plants/temperature](local/plants/temperature/README.md) – air/root temperature guidelines used by coordinators.
+- [Products](local/products/README.md) – private catalogues for fertilizers, pesticides, or additives that should stay local.
 
 ## Editing Guidelines
 
-1. **Encoding** – Use UTF-8 with a trailing newline; `pre-commit` enforces this
-   automatically.
-2. **Naming** – Prefer lowercase snake_case filenames (e.g.,
-   `nutrient_guidelines.json`).
-3. **Schemas** – Version schema files and store them next to the datasets. When
-   fields change, bump the schema version and update validators.
-4. **Validation** – Run `pre-commit run --all-files` and the relevant scripts in
-   [`scripts/`](../../scripts/) (for example,
-   `python scripts/validate_fertilizers_v3e.py`).
-
----
+1. **UTF-8 and newline** – Pre-commit enforces one trailing newline and LF line endings.
+2. **Naming** – Use lowercase snake_case filenames (`nutrient_guidelines.json`).
+3. **Schemas** – Schema files live alongside data (e.g., `fertilizers/schema/2025-09-V3e.schema.json`). Update schemas when fields change and bump validators.
+4. **Validation** – Run `pre-commit run --all-files` and `python scripts/validate_fertilizers_v3e.py` before committing.
 
 ## Contributing New Datasets
 
-- Choose the closest thematic folder or create a new one with a README that
-  explains the fields and units.
-- Provide `sources` arrays or metadata blocks that credit origin data.
-- Keep measurements explicit (units in field names or companion metadata).
-- Large/proprietary datasets can be referenced in `dataset_catalog.json` with a
-  pointer to private storage; surface only the schema and sample rows publicly.
+- Drop the JSON in the appropriate subdirectory.
+- Document the schema assumptions in that folder’s README.
+- Provide source attribution where possible (e.g., extension bulletins, research papers).
+- If the dataset is large or proprietary, consider storing only metadata here and referencing your private location in `local/`.
 
-See [`docs/data_validation.md`](../../docs/data_validation.md) for more details
-about repository-wide validation expectations.
+For details about specific themes (environment, irrigation, pests, etc.) open the corresponding README in this directory.

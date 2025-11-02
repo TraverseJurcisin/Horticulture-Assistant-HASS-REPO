@@ -1,16 +1,16 @@
-# Local Product Overrides
+﻿# Local Product Overrides
 
-Use this folder for proprietary or site-specific product catalogues. Files
-placed here are merged with the global fertilizer dataset at runtime but are
-never validated by CI, making it safe to store restricted-use formulations or
-internal recipes.
+Use this folder for site-specific catalogues that should not be shared publicly. Files placed here are merged with the global fertilizer dataset at runtime but are skipped by CI validation.
 
----
+Typical examples:
+
+- Proprietary nutrient blends or stock solutions made on-site.
+- Restricted-use pesticides for which you hold local licensing.
+- Beneficial microbe brews, compost teas, or hormone mixes with farm-specific recipes.
 
 ## File Format
 
-Local records follow the same shape as the global fertilizer schema but can omit
-fields that are irrelevant to your workflow.
+The JSON structure mirrors the main fertilizer schema but can omit fields that are irrelevant for your operation. Suggested minimal payload:
 
 ```json
 {
@@ -31,21 +31,15 @@ fields that are irrelevant to your workflow.
     "recommended_dilution": "1:150"
   },
   "notes": {
-    "sources": ["In-house formulation 2025"],
-    "restricted_use": true
+    "sources": ["In-house formulation 2025"]
   }
 }
 ```
 
-### Tips
+## Tips
 
-- Prefix IDs with a site-specific namespace (e.g., `LOCAL-`, `FARM-`) to avoid
-  collisions with upstream catalogues.
-- Include enough metadata for advisors and analytics to produce meaningful
-  recommendations (application methods, dilution rates, hazard notes).
-- Because CI skips these files, manually review units and ranges before deploying
-  automation based on them.
-- Consider encrypting or excluding the folder from backups if it contains
-  proprietary recipes.
+- Prefix IDs with `LOCAL-` (or similar) to avoid collisions with upstream dataset IDs.
+- Because CI does not validate these files, double-check units and formatting manually.
+- If you need to keep recipes entirely private, add the folder to your local backups but keep `.gitignore` entries consistent with your security requirements.
 
-Local overrides are optional—delete files to fall back to the shared catalogue.
+This directory is the best place to stash any operational knowledge that is unique to your facility.

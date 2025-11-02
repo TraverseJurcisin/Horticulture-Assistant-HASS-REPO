@@ -13,7 +13,6 @@ from homeassistant.core import HomeAssistant
 _LOGGER = logging.getLogger(__name__)
 
 __all__ = [
-    "coerce_numeric_value",
     "get_numeric_state",
     "normalize_entities",
     "aggregate_sensor_values",
@@ -97,40 +96,6 @@ def _normalise_numeric_string(value: str) -> str:
     return f"{sign}{collapsed.replace(',', '')}"
 
 
-def coerce_numeric_value(value: object) -> float | None:
-    """Return ``value`` as a ``float`` when it represents a numeric reading."""
-
-    if value is None:
-        return None
-
-    if isinstance(value, bool):
-        return None
-
-    if isinstance(value, (int, float)):
-        number = float(value)
-        return number if math.isfinite(number) else None
-
-    text = str(value).strip()
-    if not text:
-        return None
-
-    try:
-        normalised = _normalise_numeric_string(text)
-        number = float(normalised)
-        return number if math.isfinite(number) else None
-    except (ValueError, TypeError):
-        match = _NUM_RE.search(text)
-        if not match:
-            return None
-        fragment = match.group(0)
-        try:
-            normalised = _normalise_numeric_string(fragment)
-            number = float(normalised)
-            return number if math.isfinite(number) else None
-        except (ValueError, TypeError):
-            return None
-
-
 def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
     """Return the numeric state of ``entity_id`` or ``None`` if unavailable.
 
@@ -150,13 +115,28 @@ def get_numeric_state(hass: HomeAssistant, entity_id: str) -> float | None:
         _LOGGER.debug("State unavailable: %s", entity_id)
         return None
 
-    coerced = coerce_numeric_value(raw_state)
-    if coerced is not None:
-        return coerced
-
     value = str(raw_state).strip()
-    _LOGGER.warning("State of %s is not numeric: %s", entity_id, value)
-    return None
+    try:
+        normalised = _normalise_numeric_string(value)
+        number = float(normalised)
+        if not math.isfinite(number):
+            _LOGGER.debug("State not finite: %s=%s", entity_id, value)
+            return None
+        return number
+    except (ValueError, TypeError):
+        match = _NUM_RE.search(value)
+        if match:
+            try:
+                fragment = _normalise_numeric_string(match.group(0))
+                number = float(fragment)
+                if not math.isfinite(number):
+                    _LOGGER.debug("State not finite: %s=%s", entity_id, match.group(0))
+                    return None
+                return number
+            except (ValueError, TypeError):
+                pass
+        _LOGGER.warning("State of %s is not numeric: %s", entity_id, value)
+        return None
 
 
 def parse_entities(val: str | Iterable[str] | None) -> list[str]:

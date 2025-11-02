@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-import contextlib
 import json
-import logging
 from collections.abc import Mapping, Sequence, Set
 from copy import deepcopy
 from enum import Enum
@@ -21,17 +19,6 @@ from .profile.utils import normalise_profile_payload
 
 LOCAL_RELATIVE_PATH = "custom_components/horticulture_assistant/data/local"
 PROFILES_DIRNAME = "profiles"
-
-
-_LOGGER = logging.getLogger(__name__)
-
-
-class ProfileStoreError(Exception):
-    """Raised when profile library persistence fails."""
-
-    def __init__(self, message: str, *, user_message: str | None = None) -> None:
-        super().__init__(message)
-        self.user_message = user_message or message
 
 
 _WINDOWS_RESERVED_NAMES = {
@@ -156,14 +143,7 @@ class ProfileStore:
         self._lock = asyncio.Lock()
 
     async def async_init(self) -> None:
-        try:
-            self._base.mkdir(parents=True, exist_ok=True)
-        except asyncio.CancelledError:  # pragma: no cover - propagate cancellation
-            raise
-        except OSError as err:
-            message = f"Unable to initialise profile library at {self._base}: {err}"
-            _LOGGER.error("%s", message)
-            raise ProfileStoreError(message, user_message=str(err) or "unable to access profile library") from err
+        self._base.mkdir(parents=True, exist_ok=True)
 
     async def async_list(self) -> list[str]:
         names: list[str] = []
@@ -378,35 +358,11 @@ class ProfileStore:
 
     async def _atomic_write(self, path: Path, payload: dict[str, Any]) -> None:
         tmp = path.with_suffix(".tmp")
-        try:
-            txt = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
-        except (TypeError, ValueError) as err:
-            message = f"Unable to serialise profile '{path.stem}': {err}"
-            _LOGGER.error("%s", message)
-            raise ProfileStoreError(message, user_message=str(err) or "unable to encode profile") from err
-
+        txt = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
         async with self._lock:
-            try:
-                tmp.parent.mkdir(parents=True, exist_ok=True)
-            except asyncio.CancelledError:  # pragma: no cover - propagate cancellation
-                raise
-            except OSError as err:
-                message = f"Unable to prepare profile directory {tmp.parent}: {err}"
-                _LOGGER.error("%s", message)
-                raise ProfileStoreError(message, user_message=str(err) or "unable to access profile directory") from err
-
-            try:
-                tmp.write_text(txt, encoding="utf-8")
-                tmp.replace(path)
-            except asyncio.CancelledError:  # pragma: no cover - propagate cancellation
-                raise
-            except OSError as err:
-                message = f"Unable to write profile file {path.name}: {err}"
-                _LOGGER.error("%s", message)
-                with contextlib.suppress(OSError):
-                    if tmp.exists():
-                        tmp.unlink()
-                raise ProfileStoreError(message, user_message=str(err) or "unable to save profile") from err
+            tmp.parent.mkdir(parents=True, exist_ok=True)
+            tmp.write_text(txt, encoding="utf-8")
+            tmp.replace(path)
 
     def _path_for(self, name: Any) -> Path:
         base = _slug_source(name)

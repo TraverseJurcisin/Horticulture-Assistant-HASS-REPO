@@ -1,75 +1,45 @@
-# Local Working Data
+﻿# Local Working Data
 
-`data/local/` is created under your Home Assistant configuration directory
-(`config/custom_components/horticulture_assistant/data/local/`). Everything here
-is site-specific and safe to edit, back up, or version-control.
-
----
+The `local/` directory is created under your Home Assistant config path (`config/custom_components/horticulture_assistant/data/local/`). Everything here is user-specific and safe to edit or backup.
 
 ## Contents
 
-| Path | Purpose |
-|------|---------|
-| `profiles/` | JSON documents managed by the Profile Registry. Each file represents a line/zone and stores overrides, sensor bindings, and metadata. |
-| `plants/` | Template datasets (light, temperature, etc.) that seed new profiles through the options flow. |
-| `products/` | Private fertilizer/pesticide catalogues merged with the global dataset at runtime but skipped by CI. |
-| `zones.json` | Mapping between irrigation/lighting/ventilation zones and profile IDs for automation helpers. |
-| `cache/` *(created on demand)* | Export snapshots, AI prompts/responses, and derived analytics cached by services. |
-| `history/` *(optional)* | When enabled, lifecycle logging services can mirror JSONL history here for external processing. |
+| File/Folder | Purpose |
+|-------------|---------|
+| `profiles/` | JSON documents created through the Options flow or by hand. Each file contains sensors, thresholds, and profile metadata. |
+| `products/` | Private catalogues for fertilizers, pesticides, growth media, or microbial inoculants that should stay local. |
+| `plants/` | Reference templates (light/temperature) used when cloning or generating profiles. |
+| `zones.json` | Registry that maps irrigation/lighting/ventilation zones to profiles; consumed by automation hooks. |
+| `cache/` (runtime) | Temporary exports, analytics snapshots, and AI prompts. Created on demand. |
 
-Folders are generated automatically the first time the integration runs. Missing
-folders are recreated on reload.
+## Profile JSON Primer
 
----
+Each profile file (e.g., `avocado.json`) contains:
 
-## Editing Profiles
-
-Profiles are standard JSON files. The registry reloads them automatically when
-the file changes, so you can iterate quickly:
-
-```jsonc
+```json
 {
-  "id": "alicante_tomato_north_bed",
-  "display_name": "Alicante Tomato – North Bed",
-  "species": "solanum_lycopersicum",
-  "cultivar": "alicante",
+  "name": "Avocado",
   "sensors": {
     "temperature": "sensor.greenhouse_temp",
     "humidity": "sensor.greenhouse_rh"
   },
-  "overrides": {
-    "environment": {
-      "temperature": {
-        "min_c": 19.5,
-        "max_c": 28.0
-      }
-    }
-  }
+  "thresholds": {
+    "vpd_min": 0.6,
+    "vpd_max": 1.2
+  },
+  "notes": "Add foliar calcium during fruit set"
 }
 ```
 
-Tips:
-
-- Remove a key to fall back to cultivar/species defaults.
-- Use the options flow **Clone thresholds** action to materialise inherited
-  values before editing.
-- Run `python scripts/validate_profiles.py` to check for structural issues before
-  reloading Home Assistant.
-
----
+You can edit these files while Home Assistant is running; the integration will reload on the next coordinator refresh.
 
 ## Best Practices
 
-- Keep this directory under version control (or at minimum in your backups) to
-  preserve configuration history.
-- Place proprietary or site-specific datasets in `products/` rather than the
-  shared catalogue.
-- Document any new template categories you add under `plants/` with a README so
-  future contributors understand the schema.
-- Sensitive data (API keys, private research) should remain outside the
-  repository—adjust `.gitignore` in your Home Assistant config if necessary.
+- Keep this directory under version control if you want portable greenhouse configurations.
+- Sensitive/large datasets (e.g., commercial formulations) belong here rather than in the shared `data/` catalogue.
+- After manual edits, run `pre-commit run --all-files` to ensure formatting stays consistent.
 
-See the nested READMEs for template specifics:
+See the sub-Readmes for more detail:
 
 - [Plant templates](plants/README.md)
 - [Light targets](plants/light/README.md)

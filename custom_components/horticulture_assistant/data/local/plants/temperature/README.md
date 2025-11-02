@@ -1,12 +1,8 @@
-# Temperature Targets
+﻿# Temperature Targets
 
-Temperature templates define recommended air and root-zone conditions for each
-stage. Coordinators reference these values to raise binary sensors, compute heat
-stress warnings, and enrich the provenance reports returned by services.
+Temperature templates describe recommended air and root-zone conditions for each growth stage. Coordinators use these values to flag environment deviations and to calculate advisory metrics.
 
----
-
-## Schema Overview
+## Schema
 
 ```json
 {
@@ -32,28 +28,17 @@ stress warnings, and enrich the provenance reports returned by services.
 }
 ```
 
-Common fields:
+### Field Notes
 
-- `air_day_c` / `air_night_c` – Day/night air temperature ranges in °C.
-- `root_zone_c` – Root-zone media temperature targets (hydroponics or heated
-  benches).
-- `humidity_target_percent` – Optional humidity bands that pair well with the
-  listed temperatures.
-- `stress_thresholds` – Boundaries that drive status sensors and automation
-  triggers.
-- `notes` and `sources` – Context and traceability.
-
----
+- `air_day_c` / `air_night_c` – Day/night air temperature ranges.
+- `root_zone_c` – Root-zone media temperature targets (useful for hydroponics or bottom-heated benches).
+- `humidity_target_percent` – Optional humidity guidance paired with temperature.
+- `stress_thresholds` – Boundaries above/below which stress automation can trigger.
 
 ## Contribution Tips
 
-1. Use `[min, max]` arrays even when you only have a single value; it keeps the
-   schema uniform.
-2. Add new keys only when coordinators or analytics consume them—otherwise document
-   optional fields here.
-3. Update related tooling (`profile_registry`, `sensor_validation`, analytics)
-   if you introduce new measurements.
-4. Run `pre-commit run --all-files` to normalise formatting.
+- Provide ranges whenever possible; single values can be represented as `[value, value]` for consistency.
+- Include regional caveats in `notes` if thresholds depend on cultivar or production system.
+- When integrating new fields, update any logic that consumes these templates (profile generation, dashboards).
 
-Temperature templates complement light templates; keep stages aligned so cloned
-profiles inherit coherent targets across environment dimensions.
+Run `pre-commit run --all-files` after changes to ensure formatting matches repository standards.

@@ -3,7 +3,7 @@ import logging
 from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 from typing import Any
-from unittest.mock import AsyncMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -14,9 +14,7 @@ from custom_components.horticulture_assistant.const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
     DOMAIN,
-    ISSUE_PROFILE_SENSOR_PREFIX,
     NOTIFICATION_PROFILE_LINEAGE,
-    NOTIFICATION_PROFILE_SENSORS,
     NOTIFICATION_PROFILE_VALIDATION,
     PROFILE_SCOPE_DEFAULT,
 )
@@ -90,55 +88,6 @@ async def test_async_add_profile_handles_none_option_profiles(hass):
     pid = await reg.async_add_profile("Seedling")
 
     assert pid in entry.options[CONF_PROFILES]
-
-
-async def test_async_add_profile_sets_species_metadata(hass):
-    entry = await _make_entry(hass, {CONF_PROFILES: {}})
-    reg = ProfileRegistry(hass, entry)
-    await reg.async_load()
-
-    pid = await reg.async_add_profile(
-        "Template",
-        species_id="global_basil",
-        species_display="Global Basil",
-    )
-
-    stored = entry.options[CONF_PROFILES][pid]
-    assert stored.get("species_display") == "Global Basil"
-    local_meta = stored.get("local", {}).get("metadata", {})
-    assert local_meta.get("requested_species_id") == "global_basil"
-
-
-async def test_async_add_profile_sets_cultivar_metadata(hass):
-    entry = await _make_entry(hass, {CONF_PROFILES: {}})
-    reg = ProfileRegistry(hass, entry)
-    await reg.async_load()
-
-    pid = await reg.async_add_profile(
-        "Genovese",
-        cultivar_id="basil_genovese",
-        cultivar_display="Genovese Basil",
-    )
-
-    stored = entry.options[CONF_PROFILES][pid]
-    assert stored.get("cultivar_display") == "Genovese Basil"
-    general = stored.get("general", {})
-    assert general.get("cultivar") == "Genovese Basil"
-    local_meta = stored.get("local", {}).get("metadata", {})
-    assert local_meta.get("requested_cultivar_id") == "basil_genovese"
-
-
-async def test_async_add_profile_rolls_back_on_save_error(hass):
-    entry = await _make_entry(hass, {CONF_PROFILES: {}})
-    reg = ProfileRegistry(hass, entry)
-    await reg.async_load()
-
-    with patch.object(reg, "async_save", AsyncMock(side_effect=OSError("disk full"))), pytest.raises(ValueError) as err:
-        await reg.async_add_profile("Basil")
-
-    assert "disk full" in str(err.value)
-    assert entry.options[CONF_PROFILES] == {}
-    assert "basil" not in reg._profiles
 
 
 async def test_async_add_profile_deduplicates_sequence_sensors(hass):
@@ -624,249 +573,6 @@ async def test_profile_validation_creates_and_clears_notification(hass, monkeypa
     await reg.async_load()
 
     assert any(item["notification_id"] == NOTIFICATION_PROFILE_VALIDATION for item in dismissals)
-
-
-async def test_missing_sensor_creates_issue_and_notification(hass, monkeypatch):
-    entry = await _make_entry(
-        hass,
-        {
-            CONF_PROFILES: {
-                "p1": {
-                    "name": "Plant",
-                    "general": {"sensors": {"temperature": "sensor.missing"}},
-                    "sensors": {"temperature": "sensor.missing"},
-                }
-            }
-        },
-    )
-
-    notifications: list[dict] = []
-    dismissals: list[dict] = []
-    hass.services.async_register(
-        "persistent_notification",
-        "create",
-        lambda call: notifications.append(call.data),
-    )
-    hass.services.async_register(
-        "persistent_notification",
-        "dismiss",
-        lambda call: dismissals.append(call.data),
-    )
-
-    created: list[tuple[str, dict]] = []
-    deleted: list[str] = []
-
-    class _Severity:
-        WARNING = "warning"
-
-    monkeypatch.setattr(
-        "custom_components.horticulture_assistant.profile_registry.ir",
-        SimpleNamespace(
-            IssueSeverity=_Severity,
-            async_create_issue=lambda *_args, **kwargs: created.append((_args[2], kwargs)),
-            async_delete_issue=lambda *_args: deleted.append(_args[2]),
-        ),
-    )
-
-    reg = ProfileRegistry(hass, entry)
-    await reg.async_load()
-    await hass.async_block_till_done()
-
-    assert any(issue_id.startswith(ISSUE_PROFILE_SENSOR_PREFIX) for issue_id, _ in created)
-    sensor_issue_id = next(issue_id for issue_id, _ in created if issue_id.startswith(ISSUE_PROFILE_SENSOR_PREFIX))
-
-    assert notifications
-    latest = notifications[-1]
-    assert latest["notification_id"] == NOTIFICATION_PROFILE_SENSORS
-    assert "sensor.missing" in latest["message"]
-
-    # Restore the sensor entity so the issue is cleared
-    hass.states.async_set(
-        "sensor.missing",
-        21,
-        {"device_class": "temperature", "unit_of_measurement": "°C"},
-    )
-    await reg.async_load()
-    await hass.async_block_till_done()
-
-    assert sensor_issue_id in deleted
-    assert any(item["notification_id"] == NOTIFICATION_PROFILE_SENSORS for item in dismissals)
-
-
-async def test_profile_registry_sensor_conflicts(hass):
-    entry = await _make_entry(
-        hass,
-        {
-            CONF_PROFILES: {
-                "alpha": {
-                    "name": "Alpha",
-                    "general": {"sensors": {"temperature": "sensor.shared"}},
-                    "sensors": {"temperature": "sensor.shared"},
-                },
-                "beta": {
-                    "name": "Beta",
-                    "general": {"sensors": {"humidity": "sensor.hum"}},
-                    "sensors": {"humidity": "sensor.hum"},
-                },
-            }
-        },
-    )
-
-    reg = ProfileRegistry(hass, entry)
-    await reg.async_load()
-
-    conflicts = reg.sensor_conflicts("gamma", {"temperature": "sensor.shared", "humidity": "sensor.hum"})
-
-    assert "sensor.shared" in conflicts
-    assert conflicts["sensor.shared"]["alpha"][0] == "Alpha"
-    assert conflicts["sensor.shared"]["alpha"][1] == ("temperature",)
-    assert conflicts["sensor.hum"]["beta"][1] == ("humidity",)
-
-
-async def test_profile_registry_sensor_conflicts_with_multi_entity_bindings(hass):
-    entry = await _make_entry(
-        hass,
-        {
-            CONF_PROFILES: {
-                "alpha": {
-                    "name": "Alpha",
-                    "general": {"sensors": {"conductivity": ["sensor.ec1", "sensor.ec2"]}},
-                    "sensors": {"conductivity": ["sensor.ec1", "sensor.ec2"]},
-                },
-                "beta": {
-                    "name": "Beta",
-                    "general": {"sensors": {"moisture": ["sensor.ec2", "sensor.moist"]}},
-                    "sensors": {"moisture": ["sensor.ec2", "sensor.moist"]},
-                },
-            }
-        },
-    )
-
-    reg = ProfileRegistry(hass, entry)
-    await reg.async_load()
-
-    conflicts = reg.sensor_conflicts(
-        "gamma",
-        {
-            "conductivity": ["sensor.ec2", "sensor.ec2", "sensor.ec3"],
-            "moisture": ["sensor.ec1", "sensor.ec1"],
-        },
-    )
-
-    assert set(conflicts) == {"sensor.ec1", "sensor.ec2"}
-    assert conflicts["sensor.ec2"]["alpha"][1] == ("conductivity",)
-    assert conflicts["sensor.ec2"]["beta"][1] == ("moisture",)
-    assert conflicts["sensor.ec1"]["alpha"][1] == ("conductivity",)
-
-
-async def test_sensor_conflict_creates_notification(hass):
-    hass.states.async_set("sensor.shared", 22, {"device_class": "temperature", "unit_of_measurement": "°C"})
-
-    entry = await _make_entry(
-        hass,
-        {
-            CONF_PROFILES: {
-                "alpha": {
-                    "name": "Alpha",
-                    "general": {"sensors": {"temperature": "sensor.shared"}},
-                    "sensors": {"temperature": "sensor.shared"},
-                },
-                "beta": {
-                    "name": "Beta",
-                    "general": {"sensors": {"temperature": "sensor.shared"}},
-                    "sensors": {"temperature": "sensor.shared"},
-                },
-            }
-        },
-    )
-
-    notifications: list[dict] = []
-    hass.services.async_register(
-        "persistent_notification",
-        "create",
-        lambda call: notifications.append(call.data),
-    )
-
-    reg = ProfileRegistry(hass, entry)
-    await reg.async_load()
-    await hass.async_block_till_done()
-
-    assert notifications
-    latest = notifications[-1]
-    assert latest["notification_id"] == NOTIFICATION_PROFILE_SENSORS
-    assert "sensor.shared" in latest["message"]
-    assert "Alpha" in latest["message"] and "Beta" in latest["message"]
-
-
-async def test_sensor_warning_creates_notification(hass, monkeypatch):
-    hass.states.async_set(
-        "sensor.h1",
-        45,
-        {"device_class": "humidity", "unit_of_measurement": "kPa"},
-    )
-
-    entry = await _make_entry(
-        hass,
-        {
-            CONF_PROFILES: {
-                "p1": {
-                    "name": "Plant",
-                    "general": {"sensors": {"humidity": "sensor.h1"}},
-                    "sensors": {"humidity": "sensor.h1"},
-                }
-            }
-        },
-    )
-
-    notifications: list[dict] = []
-    dismissals: list[dict] = []
-    hass.services.async_register(
-        "persistent_notification",
-        "create",
-        lambda call: notifications.append(call.data),
-    )
-    hass.services.async_register(
-        "persistent_notification",
-        "dismiss",
-        lambda call: dismissals.append(call.data),
-    )
-
-    created: list[tuple[str, dict]] = []
-    deleted: list[str] = []
-
-    class _Severity:
-        WARNING = "warning"
-
-    monkeypatch.setattr(
-        "custom_components.horticulture_assistant.profile_registry.ir",
-        SimpleNamespace(
-            IssueSeverity=_Severity,
-            async_create_issue=lambda *_args, **kwargs: created.append((_args[2], kwargs)),
-            async_delete_issue=lambda *_args: deleted.append(_args[2]),
-        ),
-    )
-
-    reg = ProfileRegistry(hass, entry)
-    await reg.async_load()
-    await hass.async_block_till_done()
-
-    assert not created
-    assert notifications
-    latest = notifications[-1]
-    assert latest["notification_id"] == NOTIFICATION_PROFILE_SENSORS
-    assert "sensor.h1" in latest["message"]
-    assert "unexpected_unit" in latest["message"]
-
-    hass.states.async_set(
-        "sensor.h1",
-        45,
-        {"device_class": "humidity", "unit_of_measurement": "%"},
-    )
-
-    await reg.async_load()
-    await hass.async_block_till_done()
-
-    assert any(item["notification_id"] == NOTIFICATION_PROFILE_SENSORS for item in dismissals)
 
 
 async def test_profile_validation_issues_created_and_cleared(hass, monkeypatch):
@@ -1414,14 +1120,10 @@ async def test_collect_onboarding_warnings_reports_issues(hass):
     await reg.async_load()
 
     reg._validation_issue_summaries["p1"] = "sensor validation failed"
-    reg._sensor_missing_entities["p1"] = ("sensor.one",)
-    reg._sensor_warning_messages["p1"] = ("temperature -> sensor.one: unexpected_unit",)
 
     warnings = reg.collect_onboarding_warnings()
     assert any("missing species" in warning for warning in warnings)
     assert "sensor validation failed" in warnings
-    assert any("missing sensors" in warning for warning in warnings)
-    assert any("sensor configuration warnings" in warning for warning in warnings)
 
 
 async def test_summaries_return_serialisable_data(hass):

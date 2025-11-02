@@ -18,16 +18,11 @@
             },
             "profile": {
                 "title": "Create plant profile",
-                "description": "Name your plant and choose how you want to organise its data. We'll generate a safe identifier from the name so entity IDs stay unique.",
+                "description": "Name your plant and choose how you want to organise its data.",
                 "data": {
                     "plant_name": "Plant name",
                     "plant_type": "Plant type",
                     "profile_scope": "What does this profile represent?"
-                },
-                "data_description": {
-                    "plant_name": "Used to build the profile identifier and entity IDs. Stick to letters, numbers, and spaces for best results.",
-                    "plant_type": "Optional label shown in dashboards. We will slugify it automatically when syncing files.",
-                    "profile_scope": "Helps organise automations by describing whether this profile is for a single plant, a batch, or a zone."
                 }
             },
             "threshold_source": {
@@ -37,40 +32,12 @@
                     "method": "Target source"
                 }
             },
-            "thresholds": {
-                "title": "Set manual targets",
-                "description": "Enter minimum and maximum values for each metric. Leave any field blank to keep the inherited default. Minimums must stay below their matching maximums. Each field lists the supported range.",
-                "data": {
-                    "temperature_min": "Temperature minimum",
-                    "temperature_max": "Temperature maximum",
-                    "humidity_min": "Humidity minimum",
-                    "humidity_max": "Humidity maximum",
-                    "illuminance_min": "Illuminance minimum",
-                    "illuminance_max": "Illuminance maximum",
-                    "conductivity_min": "Conductivity minimum",
-                    "conductivity_max": "Conductivity maximum"
-                },
-                "data_description": {
-                    "temperature_min": "Lowest acceptable temperature before alerts trigger (-20 to 60 °C).",
-                    "temperature_max": "Highest safe temperature before alerts trigger (-20 to 60 °C).",
-                    "humidity_min": "Minimum relative humidity for the plant (0 to 100%).",
-                    "humidity_max": "Maximum relative humidity before mould risks (0 to 100%).",
-                    "illuminance_min": "Minimum light level (0 to 250000 lx).",
-                    "illuminance_max": "Maximum light level before shading is required (0 to 250000 lx).",
-                    "conductivity_min": "Lowest electrical conductivity (fertility) target (0 to 20000 µS/cm).",
-                    "conductivity_max": "Highest electrical conductivity target before dilution (0 to 20000 µS/cm)."
-                }
-            },
             "threshold_copy": {
                 "title": "Copy profile targets",
                 "description": "Select an existing profile or library template to copy thresholds, sensors, and metadata from. Use the filter field to narrow long lists, or apply keywords such as `source:library` or `scope:individual` to focus results.\n{filter_summary}",
                 "data": {
                     "filter": "Filter templates",
                     "profile_id": "Copy from profile"
-                },
-                "data_description": {
-                    "filter": "Search by name, or add `source:`/`scope:` qualifiers to zero in on templates.",
-                    "profile_id": "The profile whose thresholds and sensor wiring you want to clone."
                 }
             },
             "sensors": {
@@ -81,12 +48,6 @@
                     "temperature_sensor": "Temperature sensor",
                     "ec_sensor": "EC sensor",
                     "co2_sensor": "CO₂ sensor"
-                },
-                "data_description": {
-                    "moisture_sensor": "Entity reporting soil moisture or volumetric water content.",
-                    "temperature_sensor": "Ambient or canopy temperature sensor for the plant.",
-                    "ec_sensor": "Electrical conductivity or nutrient strength sensor.",
-                    "co2_sensor": "Carbon dioxide concentration sensor near the plant."
                 }
             }
         },
@@ -139,20 +100,11 @@
             },
             "add_profile": {
                 "title": "Add profile",
-                "description": "Pick what the profile represents so dashboards and automations stay organised. Optionally link it to a bundled species template to inherit defaults immediately.\n{error}\n{species_hint}\n{cultivar_hint}",
+                "description": "Pick what the profile represents so dashboards and automations stay organised.",
                 "data": {
                     "name": "Profile name",
                     "profile_scope": "What does this profile represent?",
-                    "copy_from": "Clone thresholds from (optional)",
-                    "species_id": "Base species template (optional)",
-                    "cultivar_id": "Cultivar profile (optional)"
-                },
-                "data_description": {
-                    "name": "Displayed in the UI and converted into a filesystem-safe identifier.",
-                    "profile_scope": "Decides whether thresholds apply to a single plant, a batch, or an entire zone.",
-                    "copy_from": "Start with an existing profile's settings instead of a blank slate.",
-                    "species_id": "Load defaults from one of the bundled species reference profiles.",
-                    "cultivar_id": "Refine defaults by inheriting from a cultivar-specific blueprint."
+                    "copy_from": "Clone thresholds from (optional)"
                 }
             },
             "manage_profiles": {
@@ -171,17 +123,11 @@
                     "plant_type": "Plant type",
                     "profile_scope": "Scope",
                     "species_display": "Display species name"
-                },
-                "data_description": {
-                    "name": "Visible label and base for the internal identifier.",
-                    "plant_type": "Optional species or cultivar label shown on dashboards.",
-                    "profile_scope": "Controls how automations interpret this profile (individual plant, batch, or zone).",
-                    "species_display": "Friendly display name stored with the profile metadata."
                 }
             },
             "manage_profile_sensors": {
                 "title": "Edit profile sensors",
-                "description": "Link sensors for {profile}. {conflict_warning}{error}\n{sensor_hints}",
+                "description": "Link sensors for {profile}. {error}",
                 "data": {
                     "temperature": "Temperature sensor",
                     "humidity": "Humidity sensor",
@@ -189,14 +135,6 @@
                     "moisture": "Moisture sensor",
                     "conductivity": "Conductivity sensor",
                     "co2": "CO₂ sensor"
-                },
-                "data_description": {
-                    "temperature": "Ambient or canopy temperature entity.",
-                    "humidity": "Relative humidity near the plant.",
-                    "illuminance": "Lux or light-level measurement for the grow area.",
-                    "moisture": "Substrate moisture or water content sensor.",
-                    "conductivity": "Electrical conductivity / nutrient strength sensor.",
-                    "co2": "Carbon dioxide sensor for the growing environment."
                 }
             },
             "manage_profile_thresholds": {
@@ -211,16 +149,6 @@
                     "illuminance_max": "Illuminance maximum",
                     "conductivity_min": "Conductivity minimum",
                     "conductivity_max": "Conductivity maximum"
-                },
-                "data_description": {
-                    "temperature_min": "Lowest temperature before alerts trigger (-20 to 60 °C).",
-                    "temperature_max": "Highest temperature before alerts trigger (-20 to 60 °C).",
-                    "humidity_min": "Minimum relative humidity threshold (0 to 100%).",
-                    "humidity_max": "Maximum relative humidity threshold (0 to 100%).",
-                    "illuminance_min": "Minimum light level the plant should receive (0 to 250000 lx).",
-                    "illuminance_max": "Maximum comfortable light level before shading is required (0 to 250000 lx).",
-                    "conductivity_min": "Lowest acceptable nutrient strength (0 to 20000 µS/cm).",
-                    "conductivity_max": "Upper limit for nutrient strength (0 to 20000 µS/cm)."
                 }
             },
             "manage_profile_delete": {
@@ -232,20 +160,13 @@
             },
             "attach_sensors": {
                 "title": "Attach sensors",
-                "description": "Link sensors for {profile} so automations and analytics receive live data. You can skip now and we'll remind you to link them later.\n{conflict_warning}{sensor_hints}",
+                "description": "Optionally link sensors for the new profile or finish without linking.",
                 "data": {
                     "temperature": "Temperature sensor",
                     "humidity": "Humidity sensor",
                     "illuminance": "Light sensor",
                     "moisture": "Moisture sensor",
                     "skip_linking": "Finish without linking sensors"
-                },
-                "data_description": {
-                    "temperature": "Pick the entity that measures air or canopy temperature.",
-                    "humidity": "Choose a relative humidity entity near this plant.",
-                    "illuminance": "Lux or light sensor that tracks the grow area.",
-                    "moisture": "Moisture, VWC, or substrate probe entity for the plant.",
-                    "skip_linking": "Finish onboarding without wiring sensors. We'll create a reminder."
                 }
             },
             "configure_ai": {
@@ -295,22 +216,13 @@
             "invalid_float": "Enter a number",
             "threshold_field_error": "Adjust this value to stay within the supported range.",
             "threshold_out_of_bounds": "{issue_detail}",
-            "invalid_profile_id": "Use letters, numbers, or underscores for the profile name.",
-            "duplicate_profile_id": "A profile with this identifier already exists. Choose a different name.",
-            "profile_error": "Creating the profile failed: {error}",
-            "unknown_species": "Select a species from the list.",
-            "unknown_cultivar": "Pick a cultivar from the known templates or leave the field blank.",
-            "cultivar_requires_species": "Select a species to pair with this cultivar.",
-            "cultivar_mismatch": "Choose a cultivar that belongs to the selected species.",
             "invalid_interval": "Enter a whole number of minutes greater than zero.",
             "not_found": "Couldn't find this entity. Double-check the entity ID.",
             "missing_entity": "Link an existing entity for this sensor role.",
-            "entity_disabled": "Re-enable this entity before linking it.",
-            "invalid_sensor_domain": "Choose a sensor entity for this role.",
-            "shared_entity": "This sensor is already linked to another role. Pick a different sensor.",
-            "stale_state": "This sensor hasn't updated recently. Check that it's still reporting.",
-            "empty_state": "This sensor hasn't reported a value yet.",
-            "non_numeric_state": "This sensor must report numeric readings."
+            "unexpected_device_class": "This sensor reports a different device class than expected.",
+            "unexpected_unit": "This sensor reports a different unit than expected.",
+            "missing_unit": "This sensor is missing a unit of measurement.",
+            "stale_state": "This sensor hasn't updated recently. Check that it's still reporting."
         }
     },
     "entity": {
@@ -368,10 +280,6 @@
         "missing_lineage_parent": {
             "title": "Profile missing parent reference",
             "description": "{profile_name} ({profile_id}) lists {parent_id} as a parent profile, but it could not be loaded. Remove the invalid parent reference or create the missing profile to restore inheritance."
-        },
-        "missing_profile_sensor": {
-            "title": "Profile sensor entity missing",
-            "description": "{profile_name} ({profile_id}) references {entity_id}, but that entity could not be found. Update the sensor mapping or restore the entity, then reload Horticulture Assistant."
         },
         "onboarding_stage_failure": {
             "title": "Setup step failed",

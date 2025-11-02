@@ -2,9 +2,7 @@ import json
 import types
 from copy import deepcopy
 from enum import Enum
-from pathlib import Path
 from typing import Any
-from unittest.mock import patch
 
 import pytest
 
@@ -29,7 +27,6 @@ from custom_components.horticulture_assistant.profile_store import (
     LOCAL_RELATIVE_PATH,
     PROFILES_DIRNAME,
     ProfileStore,
-    ProfileStoreError,
 )
 
 
@@ -921,25 +918,3 @@ async def test_async_delete_profile_refreshes_cache(hass, tmp_path, monkeypatch)
 
     cache = hass.data.get(CACHE_KEY)
     assert cache is not None and "plant" not in cache
-
-
-@pytest.mark.asyncio
-async def test_profile_store_atomic_write_failure_surfaces_error(hass, tmp_path, monkeypatch) -> None:
-    """Disk errors should raise a ``ProfileStoreError`` with a helpful message."""
-
-    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
-    store = ProfileStore(hass)
-    await store.async_init()
-
-    original_write_text = Path.write_text
-
-    def failing_write(self, *args, **kwargs):
-        if self.suffix == ".tmp":
-            raise OSError("disk full")
-        return original_write_text(self, *args, **kwargs)
-
-    with patch.object(Path, "write_text", failing_write), pytest.raises(ProfileStoreError) as err:
-        await store.async_save({"display_name": "Failed", "profile_id": "failed"})
-
-    assert "disk full" in err.value.user_message
-    assert not store._path_for("failed").with_suffix(".tmp").exists()

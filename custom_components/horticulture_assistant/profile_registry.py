@@ -14,10 +14,9 @@ import hashlib
 import inspect
 import json
 import logging
-import re
 from collections.abc import Callable, Iterable, Mapping, Sequence, Set
 from copy import deepcopy
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from enum import Enum
 from math import isfinite
 from pathlib import Path
@@ -39,10 +38,8 @@ from .const import (
     EVENT_PROFILE_HARVEST_RECORDED,
     EVENT_PROFILE_NUTRIENT_RECORDED,
     EVENT_PROFILE_RUN_RECORDED,
-    ISSUE_PROFILE_SENSOR_PREFIX,
     ISSUE_PROFILE_VALIDATION_PREFIX,
     NOTIFICATION_PROFILE_LINEAGE,
-    NOTIFICATION_PROFILE_SENSORS,
     NOTIFICATION_PROFILE_VALIDATION,
     PROFILE_SCOPE_CHOICES,
     PROFILE_SCOPE_DEFAULT,
@@ -71,7 +68,6 @@ from .profile.utils import (
 )
 from .profile.validation import evaluate_threshold_bounds
 from .sensor_validation import (
-    SensorValidationResult,
     collate_issue_messages,
     recommended_stale_after,
     validate_sensor_links,
@@ -107,34 +103,6 @@ except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in CI 
 _LOGGER = logging.getLogger(__name__)
 
 
-_SENSOR_ROLE_ALIASES = {
-    "temp": "temperature",
-    "temperature": "temperature",
-    "temperature_min": "temperature",
-    "temperature_max": "temperature",
-    "humidity": "humidity",
-    "humidity_min": "humidity",
-    "humidity_max": "humidity",
-    "illuminance": "illuminance",
-    "light": "illuminance",
-    "lux": "illuminance",
-    "moisture": "moisture",
-    "conductivity": "conductivity",
-    "ec": "conductivity",
-    "co2": "co2",
-    "carbon_dioxide": "co2",
-}
-
-_SENSOR_ROLE_LABELS = {
-    "temperature": "Temperature",
-    "humidity": "Humidity",
-    "illuminance": "Light",
-    "moisture": "Moisture",
-    "conductivity": "Conductivity",
-    "co2": "CO₂",
-}
-
-
 def _parent_issue_id(profile_id: str, parent_id: str) -> str:
     """Return a deterministic, unique issue id for a missing parent link."""
 
@@ -149,22 +117,6 @@ def _species_issue_id(profile_id: str, species_id: str) -> str:
     slug = slugify(species_id) or "unknown_species"
     digest = hashlib.sha1(species_id.encode("utf-8", "ignore")).hexdigest()[:8]
     return f"missing_species_{profile_id}_{slug}_{digest}"
-
-
-def _issue_id_component(value: str) -> str:
-    """Return a Repairs-safe slug for identifiers containing punctuation."""
-
-    slug = re.sub(r"[^a-z0-9_]", "_", value.lower())
-    slug = re.sub(r"_+", "_", slug).strip("_")
-    return slug or "unknown"
-
-
-def _sensor_issue_id(profile_id: str, entity_id: str) -> str:
-    """Build a deterministic issue identifier for missing sensors."""
-
-    profile_component = _issue_id_component(profile_id)
-    entity_component = _issue_id_component(entity_id)
-    return f"{ISSUE_PROFILE_SENSOR_PREFIX}{profile_component}_{entity_component}"
 
 
 def _normalise_sensor_value(value: Any) -> str | list[str] | None:
@@ -206,21 +158,6 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
     return None
 
 
-def _canonical_sensor_role(value: Any) -> str | None:
-    """Return a canonical sensor role identifier for ``value``."""
-
-    if not isinstance(value, str):
-        value = str(value)
-    text = value.strip().lower()
-    if not text:
-        return None
-    for suffix in ("_sensors", "_sensor"):
-        if text.endswith(suffix):
-            text = text[: -len(suffix)]
-            break
-    return _SENSOR_ROLE_ALIASES.get(text, text)
-
-
 def _normalise_scope(value: Any) -> str | None:
     """Return a canonical scope string if ``value`` matches a known option."""
 
@@ -252,126 +189,6 @@ def _coerce_scope(value: Any) -> str | None:
         else:
             raise ValueError(f"invalid scope {value}")
     return None
-
-
-def _profile_display_name(payload: Mapping[str, Any] | None, *, profile_id: str) -> str:
-    """Best-effort lookup for a profile's display name."""
-
-    if payload is None:
-        return profile_id
-
-    for key in ("display_name", "name"):
-        candidate = payload.get(key)
-        if isinstance(candidate, str) and candidate.strip():
-            return candidate.strip()
-
-    general = payload.get("general") if isinstance(payload.get("general"), Mapping) else None
-    if isinstance(general, Mapping):
-        for key in ("name", "plant_type"):
-            candidate = general.get(key)
-            if isinstance(candidate, str) and candidate.strip():
-                return candidate.strip()
-
-    local = payload.get("local") if isinstance(payload.get("local"), Mapping) else None
-    if isinstance(local, Mapping):
-        metadata = local.get("metadata") if isinstance(local.get("metadata"), Mapping) else None
-        if isinstance(metadata, Mapping):
-            candidate = metadata.get("display_name")
-            if isinstance(candidate, str) and candidate.strip():
-                return candidate.strip()
-
-    return profile_id
-
-
-def _collect_sensor_usage(
-    profiles: Mapping[str, Any],
-) -> dict[str, dict[str, dict[str, Any]]]:
-    """Return mapping of entity id to profiles and sensor roles."""
-
-    usage: dict[str, dict[str, dict[str, Any]]] = {}
-
-    for profile_id, payload in profiles.items():
-        payload_map = payload if isinstance(payload, Mapping) else {}
-        display_name = _profile_display_name(payload_map, profile_id=profile_id)
-        containers: list[Mapping[str, Any]] = []
-
-        sensors_section = payload_map.get("sensors")
-        if isinstance(sensors_section, Mapping):
-            containers.append(sensors_section)
-
-        general_section = payload_map.get("general")
-        if isinstance(general_section, Mapping):
-            general_sensors = general_section.get("sensors")
-            if isinstance(general_sensors, Mapping):
-                containers.append(general_sensors)
-
-        local_section = payload_map.get("local")
-        if isinstance(local_section, Mapping):
-            local_general = local_section.get("general")
-            if isinstance(local_general, Mapping):
-                local_sensors = local_general.get("sensors")
-                if isinstance(local_sensors, Mapping):
-                    containers.append(local_sensors)
-
-        for container in containers:
-            for raw_key, raw_value in container.items():
-                role = _canonical_sensor_role(raw_key)
-                if role is None:
-                    continue
-                normalised = _normalise_sensor_value(raw_value)
-                if normalised is None:
-                    continue
-                entities = normalised if isinstance(normalised, list) else [normalised]
-                for entity_id in entities:
-                    entity = str(entity_id).strip()
-                    if not entity:
-                        continue
-                    entry = usage.setdefault(entity, {}).setdefault(
-                        profile_id,
-                        {"display": display_name, "roles": set()},
-                    )
-                    entry_roles = entry.setdefault("roles", set())
-                    entry_roles.add(role)
-
-    return usage
-
-
-def collect_sensor_conflicts(
-    profiles: Mapping[str, Any],
-    *,
-    profile_id: str,
-    sensors: Mapping[str, Any] | None,
-) -> dict[str, dict[str, tuple[str, tuple[str, ...]]]]:
-    """Return entity conflicts for ``profile_id`` against ``profiles``."""
-
-    if not sensors:
-        return {}
-
-    usage = _collect_sensor_usage(profiles)
-    conflicts: dict[str, dict[str, tuple[str, tuple[str, ...]]]] = {}
-
-    for key, raw_value in sensors.items():
-        role = _canonical_sensor_role(key)
-        normalised = _normalise_sensor_value(raw_value)
-        if role is None or normalised is None:
-            continue
-        entities = normalised if isinstance(normalised, list) else [normalised]
-        for entity_id in entities:
-            entity = str(entity_id).strip()
-            if not entity:
-                continue
-            other_profiles = usage.get(entity)
-            if not other_profiles:
-                continue
-            entries = conflicts.setdefault(entity, {})
-            for other_pid, info in other_profiles.items():
-                if other_pid == profile_id:
-                    continue
-                display = info.get("display") or other_pid
-                roles = tuple(sorted({str(role) for role in info.get("roles", set()) if role}))
-                entries[other_pid] = (str(display), roles)
-
-    return {entity: data for entity, data in conflicts.items() if data}
 
 
 _SCHEMA_PATH = Path(__file__).parent / "data" / "schema" / "bio_profile.schema.json"
@@ -410,12 +227,6 @@ class ProfileRegistry:
         self._missing_parents_logged: set[tuple[str, str]] = set()
         self._missing_species_issues: set[tuple[str, str]] = set()
         self._missing_parent_issues: set[tuple[str, str]] = set()
-        self._sensor_issue_entries: dict[str, set[str]] = {}
-        self._sensor_issue_summaries: dict[str, str] = {}
-        self._sensor_missing_entities: dict[str, tuple[str, ...]] = {}
-        self._sensor_warning_messages: dict[str, tuple[str, ...]] = {}
-        self._sensor_notification_dirty = False
-        self._sensor_notification_digest: str | None = None
         self._validation_issues: dict[str, list[str]] = {}
         self._validation_dirty = False
         self._validation_digest: tuple[tuple[str, str], ...] | None = None
@@ -432,14 +243,6 @@ class ProfileRegistry:
             _LOGGER.debug("History exporter disabled: %s", err)
             self._history_exporter = None
 
-    def _stale_after_threshold(self) -> timedelta:
-        """Return the configured stale threshold for sensor validation."""
-
-        interval = self.entry.options.get(CONF_UPDATE_INTERVAL)
-        if interval is None:
-            interval = self.entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES)
-        return recommended_stale_after(interval)
-
     def _options_profiles_copy(self) -> dict[str, Any]:
         """Return a mutable copy of the stored profile options mapping."""
 
@@ -452,16 +255,6 @@ class ProfileRegistry:
             return dict(stored)
         except (TypeError, ValueError):
             return {}
-
-    def sensor_conflicts(
-        self,
-        profile_id: str,
-        sensors: Mapping[str, Any] | None,
-    ) -> dict[str, dict[str, tuple[str, tuple[str, ...]]]]:
-        """Return conflicts between ``sensors`` and other profiles."""
-
-        profiles = self._options_profiles_copy()
-        return collect_sensor_conflicts(profiles, profile_id=profile_id, sensors=sensors)
 
     def collect_onboarding_warnings(self) -> list[str]:
         """Return human-readable onboarding warnings for outstanding issues."""
@@ -484,22 +277,6 @@ class ProfileRegistry:
 
         if self._validation_issue_summaries:
             warnings.extend(sorted(self._validation_issue_summaries.values()))
-
-        if any(self._sensor_missing_entities.values()):
-            affected = sorted(profile_id for profile_id, entities in self._sensor_missing_entities.items() if entities)
-            if affected:
-                sample = ", ".join(affected[:5])
-                if len(affected) > 5:
-                    sample = f"{sample}, +{len(affected) - 5} more"
-                warnings.append(f"missing sensors for {sample}")
-
-        if any(self._sensor_warning_messages.values()):
-            affected = sorted(profile_id for profile_id, messages in self._sensor_warning_messages.items() if messages)
-            if affected:
-                sample = ", ".join(affected[:5])
-                if len(affected) > 5:
-                    sample = f"{sample}, +{len(affected) - 5} more"
-                warnings.append(f"sensor configuration warnings for {sample}")
 
         return warnings
 
@@ -777,229 +554,6 @@ class ProfileRegistry:
             return
         self._create_validation_issue(profile, summary)
 
-    def _profile_sensor_map(self, profile: BioProfile) -> dict[str, list[str]]:
-        """Return the current sensor mapping for ``profile``."""
-
-        mapping: dict[str, list[str]] = {}
-        general = profile.general if isinstance(profile.general, Mapping) else {}
-        sensors = general.get("sensors") if isinstance(general, Mapping) else {}
-        if isinstance(sensors, Mapping):
-            for key, value in sensors.items():
-                cleaned = _normalise_sensor_value(value)
-                if cleaned is None:
-                    continue
-                if isinstance(cleaned, list):
-                    mapping[str(key)] = list(cleaned)
-                else:
-                    mapping[str(key)] = [cleaned]
-        return mapping
-
-    def _clear_sensor_issues(self, profile_id: str) -> None:
-        """Remove Repairs issues and notifications for ``profile_id`` sensors."""
-
-        issue_ids = self._sensor_issue_entries.pop(profile_id, set())
-        for issue_id in issue_ids:
-            self._schedule_issue_result(
-                ir.async_delete_issue(
-                    self.hass,
-                    DOMAIN,
-                    issue_id,
-                )
-            )
-            self._sensor_issue_summaries.pop(issue_id, None)
-
-        if profile_id in self._sensor_missing_entities:
-            self._sensor_missing_entities.pop(profile_id, None)
-            self._sensor_notification_dirty = True
-
-        if profile_id in self._sensor_warning_messages:
-            self._sensor_warning_messages.pop(profile_id, None)
-            self._sensor_notification_dirty = True
-
-    def _sync_sensor_validation(
-        self,
-        profile: BioProfile,
-        validation: SensorValidationResult | None,
-    ) -> None:
-        """Update Repairs issues and notifications using ``validation``."""
-
-        profile_id = profile.profile_id
-        display_name = profile.display_name or profile_id
-        missing_entities: list[str] = []
-        warning_messages: tuple[str, ...] = ()
-
-        if validation is not None:
-            missing_entities = sorted(
-                {issue.entity_id for issue in validation.errors if issue.issue == "missing_entity" and issue.entity_id}
-            )
-            warning_messages = tuple(
-                sorted(
-                    {
-                        collate_issue_messages([issue])
-                        for issue in validation.warnings
-                        if issue.entity_id and issue.issue
-                    }
-                )
-            )
-
-        conflict_messages: tuple[str, ...] = ()
-        try:
-            sensor_map = self._profile_sensor_map(profile)
-            sensors_payload = {key: list(values) for key, values in sensor_map.items()}
-            options_profiles = self._options_profiles_copy()
-            conflicts = collect_sensor_conflicts(
-                options_profiles,
-                profile_id=profile_id,
-                sensors=sensors_payload,
-            )
-            if conflicts:
-                formatted: list[str] = []
-                for entity_id, others in sorted(conflicts.items()):
-                    for other_pid, (other_display, roles) in sorted(
-                        others.items(), key=lambda item: (item[1][0].casefold(), item[0])
-                    ):
-                        label = other_display or other_pid
-                        if roles:
-                            role_labels = ", ".join(
-                                _SENSOR_ROLE_LABELS.get(role, role.replace("_", " ").title()) for role in roles
-                            )
-                            formatted.append(f"{entity_id} also linked to {label} ({other_pid}) – {role_labels}")
-                        else:
-                            formatted.append(f"{entity_id} also linked to {label} ({other_pid})")
-                conflict_messages = tuple(formatted)
-        except Exception as err:  # pragma: no cover - defensive guard
-            _LOGGER.debug(
-                "Unable to build sensor conflict warnings for %s: %s",
-                profile_id,
-                err,
-            )
-
-        if conflict_messages:
-            warning_set = set(warning_messages)
-            warning_set.update(conflict_messages)
-            warning_messages = tuple(sorted(warning_set))
-
-        existing_ids = self._sensor_issue_entries.get(profile_id, set())
-        new_issue_ids: set[str] = set()
-
-        for entity_id in missing_entities:
-            issue_id = _sensor_issue_id(profile_id, entity_id)
-            new_issue_ids.add(issue_id)
-            summary = f"{profile_id}:{entity_id}"
-            if self._sensor_issue_summaries.get(issue_id) == summary:
-                continue
-            self._schedule_issue_result(
-                ir.async_create_issue(
-                    self.hass,
-                    DOMAIN,
-                    issue_id,
-                    is_fixable=False,
-                    severity=ir.IssueSeverity.WARNING,
-                    translation_key="missing_profile_sensor",
-                    translation_placeholders={
-                        "profile_id": profile_id,
-                        "profile_name": display_name,
-                        "entity_id": entity_id,
-                    },
-                )
-            )
-            self._sensor_issue_summaries[issue_id] = summary
-
-        for issue_id in existing_ids - new_issue_ids:
-            self._schedule_issue_result(
-                ir.async_delete_issue(
-                    self.hass,
-                    DOMAIN,
-                    issue_id,
-                )
-            )
-            self._sensor_issue_summaries.pop(issue_id, None)
-
-        if new_issue_ids:
-            self._sensor_issue_entries[profile_id] = new_issue_ids
-        else:
-            self._sensor_issue_entries.pop(profile_id, None)
-
-        if missing_entities:
-            self._sensor_missing_entities[profile_id] = tuple(missing_entities)
-        elif profile_id in self._sensor_missing_entities:
-            self._sensor_missing_entities.pop(profile_id, None)
-
-        if warning_messages:
-            self._sensor_warning_messages[profile_id] = warning_messages
-        elif profile_id in self._sensor_warning_messages:
-            self._sensor_warning_messages.pop(profile_id, None)
-
-        self._sensor_notification_dirty = True
-
-    async def _async_maybe_refresh_sensor_notification(self) -> None:
-        if not self._sensor_notification_dirty:
-            return
-        self._sensor_notification_dirty = False
-        await self._async_refresh_sensor_notification()
-
-    async def _async_refresh_sensor_notification(self) -> None:
-        missing = {
-            profile_id: tuple(sorted(entities))
-            for profile_id, entities in self._sensor_missing_entities.items()
-            if entities
-        }
-        warnings = {profile_id: messages for profile_id, messages in self._sensor_warning_messages.items() if messages}
-
-        if not missing and not warnings:
-            if self._sensor_notification_digest is not None:
-                await self._async_dismiss_notification(NOTIFICATION_PROFILE_SENSORS)
-                self._sensor_notification_digest = None
-            return
-
-        digest_payload = json.dumps(
-            {
-                "missing": sorted((profile_id, entities) for profile_id, entities in missing.items()),
-                "warnings": sorted((profile_id, list(messages)) for profile_id, messages in warnings.items()),
-            },
-            sort_keys=True,
-        )
-
-        if digest_payload == self._sensor_notification_digest:
-            return
-
-        self._sensor_notification_digest = digest_payload
-
-        lines: list[str] = []
-
-        if missing:
-            lines.extend(["Some profiles reference sensors that no longer exist:", ""])
-            for profile_id, entities in sorted(missing.items()):
-                profile = self._profiles.get(profile_id)
-                display_name = profile.display_name if profile else profile_id
-                lines.append(f"- {display_name} ({profile_id})")
-                for entity_id in entities:
-                    lines.append(f"  • {entity_id}")
-                lines.append("")
-            lines.append("Restore or remap the missing sensors, then reload Horticulture Assistant.")
-
-        if warnings:
-            if lines:
-                lines.append("")
-            lines.extend(["Some profile sensors may need attention:", ""])
-            for profile_id, messages in sorted(warnings.items()):
-                profile = self._profiles.get(profile_id)
-                display_name = profile.display_name if profile else profile_id
-                lines.append(f"- {display_name} ({profile_id})")
-                for message in messages:
-                    lines.append(f"  • {message}")
-                lines.append("")
-            lines.append(
-                "Verify these sensors report the expected units and device classes to ensure accurate guidance."
-            )
-
-        message = "\n".join(line for line in lines if line is not None)
-        await self._async_create_notification(
-            message,
-            notification_id=NOTIFICATION_PROFILE_SENSORS,
-            title="Horticulture Assistant sensor warning",
-        )
-
     def _log_lineage_warnings(self, report: LineageLinkReport | None) -> None:
         if report is None:
             return
@@ -1083,19 +637,6 @@ class ProfileRegistry:
                     message,
                 )
                 issues.append(message)
-
-        validation: SensorValidationResult | None = None
-        try:
-            sensor_map = self._profile_sensor_map(profile)
-            if sensor_map:
-                validation = validate_sensor_links(self.hass, sensor_map)
-        except Exception as err:  # pragma: no cover - defensive logging
-            _LOGGER.debug(
-                "Unable to validate sensors for profile %s: %s",
-                profile.profile_id,
-                err,
-            )
-        self._sync_sensor_validation(profile, validation)
 
         issues_list = [str(issue) for issue in issues]
         if issues_list:
@@ -1502,7 +1043,6 @@ class ProfileRegistry:
                     pid,
                     type(payload).__name__,
                 )
-                self._clear_sensor_issues(pid)
                 continue
 
             try:
@@ -1521,7 +1061,6 @@ class ProfileRegistry:
                         pid,
                         normalise_err,
                     )
-                    self._clear_sensor_issues(pid)
                     continue
                 try:
                     profile = BioProfile.from_json(normalised)
@@ -1531,7 +1070,6 @@ class ProfileRegistry:
                         pid,
                         final_err,
                     )
-                    self._clear_sensor_issues(pid)
                     continue
 
             stored_objects[pid] = profile
@@ -1572,7 +1110,6 @@ class ProfileRegistry:
         self._relink_profiles()
         recompute_statistics(self._profiles.values())
         await self._async_maybe_refresh_validation_notification()
-        await self._async_maybe_refresh_sensor_notification()
 
     async def async_save(self) -> None:
         self._relink_profiles()
@@ -1652,7 +1189,6 @@ class ProfileRegistry:
         if prof_obj := self._profiles.get(profile_id):
             self._cloud_publish_profile(prof_obj)
         await self._async_maybe_refresh_validation_notification()
-        await self._async_maybe_refresh_sensor_notification()
 
     async def async_refresh_species(self, profile_id: str) -> None:
         """Placeholder for species refresh logic.
@@ -1688,15 +1224,8 @@ class ProfileRegistry:
         name: str,
         base_id: str | None = None,
         scope: str | None = None,
-        *,
-        species_id: str | None = None,
-        species_display: str | None = None,
-        cultivar_id: str | None = None,
-        cultivar_display: str | None = None,
     ) -> str:
         profiles = self._options_profiles_copy()
-        previous_profiles = dict(profiles)
-        previous_options = dict(self.entry.options)
         base = slugify(name) or "profile"
         candidate = base
         idx = 1
@@ -1786,36 +1315,7 @@ class ProfileRegistry:
             general.pop("sensors", None)
             new_profile.pop("sensors", None)
 
-        if cultivar_display and isinstance(general, dict):
-            general.setdefault("cultivar", cultivar_display)
-
         sync_general_section(new_profile, general)
-
-        if species_display:
-            new_profile["species_display"] = species_display
-
-        if species_id:
-            local_section = new_profile.get("local")
-            if isinstance(local_section, Mapping):
-                metadata = local_section.get("metadata")
-                metadata_map = dict(metadata) if isinstance(metadata, Mapping) else {}
-                metadata_map["requested_species_id"] = str(species_id)
-                updated_local = dict(local_section)
-                updated_local["metadata"] = metadata_map
-                new_profile["local"] = updated_local
-
-        if cultivar_display:
-            new_profile["cultivar_display"] = cultivar_display
-
-        if cultivar_id:
-            local_section = new_profile.get("local")
-            if isinstance(local_section, Mapping):
-                metadata = local_section.get("metadata")
-                metadata_map = dict(metadata) if isinstance(metadata, Mapping) else {}
-                metadata_map["requested_cultivar_id"] = str(cultivar_id)
-                updated_local = dict(local_section)
-                updated_local["metadata"] = metadata_map
-                new_profile["local"] = updated_local
 
         if local_general_sensors or local_had_sensor_map:
             local_section = new_profile.get("local")
@@ -1847,24 +1347,12 @@ class ProfileRegistry:
             display_name=name,
         )
         prof_obj.refresh_sections()
-        self._profiles[candidate] = prof_obj
-
-        try:
-            await self.async_save()
-        except Exception as err:
-            _LOGGER.error("Unable to persist profile '%s': %s", candidate, err, exc_info=True)
-            rollback_options = dict(previous_options)
-            rollback_options[CONF_PROFILES] = previous_profiles
-            self.hass.config_entries.async_update_entry(self.entry, options=rollback_options)
-            self.entry.options = rollback_options
-            self._profiles.pop(candidate, None)
-            raise ValueError(f"Unable to save profile: {err}") from err
-
         self._validate_profile(prof_obj)
+        self._profiles[candidate] = prof_obj
+        self._relink_profiles()
+        await self.async_save()
         self._cloud_publish_profile(prof_obj)
         await self._async_maybe_refresh_validation_notification()
-        await self._async_maybe_refresh_sensor_notification()
-
         return candidate
 
     async def async_duplicate_profile(self, source_id: str, new_name: str) -> str:
@@ -1885,14 +1373,12 @@ class ProfileRegistry:
         self.entry.options = new_opts
         self._profiles.pop(profile_id, None)
         self._clear_validation_issue(profile_id)
-        self._clear_sensor_issues(profile_id)
         self._relink_profiles()
         if self._validation_issues.pop(profile_id, None) is not None:
             self._validation_dirty = True
         await self.async_save()
         self._cloud_publish_deleted(profile_id)
         await self._async_maybe_refresh_validation_notification()
-        await self._async_maybe_refresh_sensor_notification()
 
     async def async_link_sensors(self, profile_id: str, sensors: Mapping[str, Any]) -> None:
         """Link multiple sensor entities to ``profile_id``."""
@@ -1911,8 +1397,15 @@ class ProfileRegistry:
                 continue
             cleaned[key_text] = list(normalised) if isinstance(normalised, list) else normalised
 
-        stale_after = self._stale_after_threshold()
-        validation = validate_sensor_links(self.hass, cleaned, stale_after=stale_after)
+        update_interval = self.entry.options.get(
+            CONF_UPDATE_INTERVAL,
+            self.entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+        )
+        validation = validate_sensor_links(
+            self.hass,
+            cleaned,
+            stale_after=recommended_stale_after(update_interval),
+        )
         if validation.errors:
             message = collate_issue_messages(validation.errors)
             raise ValueError(f"sensor validation failed: {message}")
@@ -1957,7 +1450,6 @@ class ProfileRegistry:
         if prof_obj := self._profiles.get(profile_id):
             self._cloud_publish_profile(prof_obj)
         await self._async_maybe_refresh_validation_notification()
-        await self._async_maybe_refresh_sensor_notification()
 
     async def async_set_profile_sensors(self, profile_id: str, sensors: Mapping[str, Any] | None) -> None:
         """Replace the sensor mapping for ``profile_id``."""
@@ -1979,8 +1471,15 @@ class ProfileRegistry:
                 cleaned[key_text] = list(normalised) if isinstance(normalised, list) else normalised
 
         if cleaned:
-            stale_after = self._stale_after_threshold()
-            validation = validate_sensor_links(self.hass, cleaned, stale_after=stale_after)
+            update_interval = self.entry.options.get(
+                CONF_UPDATE_INTERVAL,
+                self.entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
+            )
+            validation = validate_sensor_links(
+                self.hass,
+                cleaned,
+                stale_after=recommended_stale_after(update_interval),
+            )
             if validation.errors:
                 message = collate_issue_messages(validation.errors)
                 raise ValueError(message)
@@ -2031,7 +1530,6 @@ class ProfileRegistry:
         if prof_obj is not None:
             self._cloud_publish_profile(prof_obj)
         await self._async_maybe_refresh_validation_notification()
-        await self._async_maybe_refresh_sensor_notification()
 
     async def async_update_profile_thresholds(
         self,
@@ -2201,7 +1699,6 @@ class ProfileRegistry:
         if prof_obj is not None:
             self._cloud_publish_profile(prof_obj)
         await self._async_maybe_refresh_validation_notification()
-        await self._async_maybe_refresh_sensor_notification()
 
     async def async_record_run_event(
         self,

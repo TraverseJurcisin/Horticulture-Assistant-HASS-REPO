@@ -33,19 +33,6 @@ def test_state_helpers_import_and_get_numeric_state():
     assert value == 12.5
 
 
-def test_coerce_numeric_value_handles_units():
-    assert state_helpers.coerce_numeric_value("42 %") == pytest.approx(42.0)
-
-
-def test_coerce_numeric_value_rejects_text():
-    assert state_helpers.coerce_numeric_value("high") is None
-
-
-def test_coerce_numeric_value_rejects_booleans():
-    assert state_helpers.coerce_numeric_value(True) is None
-    assert state_helpers.coerce_numeric_value(False) is None
-
-
 def test_get_numeric_state_handles_decimal_comma():
     hass = types.SimpleNamespace(states=types.SimpleNamespace(get=lambda entity_id: types.SimpleNamespace(state="5,5")))
 
