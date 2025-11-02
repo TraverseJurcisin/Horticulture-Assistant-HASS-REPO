@@ -167,16 +167,14 @@ class FakeDeviceRegistry:
 
     def _coerce_identifiers(self, identifiers) -> set[tuple[str, str]]:
         ident_set: set[tuple[str, str]] = set()
-        if isinstance(identifiers, (list, tuple, set)):
+        if isinstance(identifiers, list | tuple | set):
             iterable = identifiers
         elif identifiers is None:
             iterable = []
         else:
             iterable = [identifiers]
         for item in iterable:
-            if isinstance(item, tuple) and len(item) == 2:
-                ident_set.add((str(item[0]), str(item[1])))
-            elif isinstance(item, list) and len(item) == 2:
+            if isinstance(item, tuple | list) and len(item) == 2:
                 ident_set.add((str(item[0]), str(item[1])))
         return ident_set
 
@@ -1689,12 +1687,13 @@ async def test_config_flow_threshold_form_uses_number_selectors(hass):
         assert isinstance(validator, vol.Any)
         selectors = []
         for value in validator.validators:
-            is_selector = False
-            if selector_type is not None and isinstance(value, selector_type):
-                is_selector = True
-            elif selector_type is None and compat_selector is not None and isinstance(value, compat_selector):
-                is_selector = True
-            if is_selector:
+            if (
+                selector_type is not None
+                and isinstance(value, selector_type)
+                or selector_type is None
+                and compat_selector is not None
+                and isinstance(value, compat_selector)
+            ):
                 selectors.append(value)
         assert selectors, f"expected number selector for {field}"
         selector = selectors[0]
@@ -2062,10 +2061,7 @@ async def test_build_select_selector_downgrades_option_shape(monkeypatch):
 
     assert selector is not None
     config = selector.config
-    if hasattr(config, "options"):
-        options = config.options
-    else:
-        options = config.get("options")
+    options = config.options if hasattr(config, "options") else config.get("options")
     assert options == ["openplantbook", "manual"]
 
 

@@ -4,8 +4,8 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 
-from custom_components.horticulture_assistant import async_setup_entry
 import custom_components.horticulture_assistant as hca_module
+from custom_components.horticulture_assistant import async_setup_entry
 from custom_components.horticulture_assistant.const import (
     CONF_PLANT_ID,
     CONF_PLANT_NAME,
@@ -47,7 +47,7 @@ class _DeviceRegistryProbe:
 
     def async_get_device(self, identifiers):  # pragma: no cover - helper
         ident_set: set[tuple[str, str]] = set()
-        if isinstance(identifiers, (set, list, tuple)):
+        if isinstance(identifiers, set | list | tuple):
             for item in identifiers:
                 if isinstance(item, tuple) and len(item) == 2:
                     ident_set.add((str(item[0]), str(item[1])))
@@ -106,9 +106,9 @@ async def test_entry_devices_registered_when_setup_aborts(hass, enable_custom_in
             "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
             return_value=registry_probe,
         ),
+        pytest.raises(RuntimeError),
     ):
-        with pytest.raises(RuntimeError):
-            await async_setup_entry(hass, entry)
+        await async_setup_entry(hass, entry)
 
     stored = hass.data[DOMAIN][entry.entry_id]
     assert stored["profiles"]["mint"]["name"] == "Mint"
