@@ -119,6 +119,34 @@ async def test_sensor_selection_signature_is_stable_for_duplicate_entries():
     )
 
 
+async def test_threshold_source_falls_back_without_select_selector(hass):
+    """Ensure the method selector gracefully degrades when selectors are unsupported."""
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._config = {}
+    flow._profile = {
+        CONF_PLANT_ID: "mint",
+        CONF_PLANT_NAME: "Mint",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+    flow._async_available_profile_templates = AsyncMock(return_value={})
+
+    with (
+        patch.object(sel, "SelectSelector", side_effect=TypeError("unsupported")),
+        patch.object(sel, "SelectSelectorConfig", side_effect=TypeError("unsupported"), create=True),
+    ):
+        first = await flow.async_step_threshold_source()
+
+        assert first["type"] == "form"
+        assert first["step_id"] == "threshold_source"
+
+        follow_up = await flow.async_step_threshold_source({"method": "manual"})
+
+    assert follow_up["type"] == "form"
+    assert follow_up["step_id"] == "thresholds"
+
+
 @pytest.fixture(autouse=True)
 def _mock_socket():
     import socket as socket_mod
@@ -1529,6 +1557,203 @@ async def test_config_flow_threshold_source_accepts_selector_payload(hass):
     result_manual = await flow2.async_step_threshold_source(manual_payload)
     assert result_manual["type"] == "form"
     assert result_manual["step_id"] == "thresholds"
+
+
+async def test_config_flow_threshold_source_accepts_option_objects(hass):
+    class DummyOption:
+        def __init__(self, value, label):
+            self.value = value
+            self.label = label
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._profile = {
+        CONF_PLANT_NAME: "Rosemary",
+        CONF_PLANT_ID: "rosemary",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+
+    skip_option = DummyOption("skip", "Skip for now")
+    result_skip = await flow.async_step_threshold_source({"method": skip_option})
+    assert result_skip["type"] == "form"
+    assert result_skip["step_id"] == "sensors"
+
+    flow2 = ConfigFlow()
+    flow2.hass = hass
+    flow2._profile = {
+        CONF_PLANT_NAME: "Lavender",
+        CONF_PLANT_ID: "lavender",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+
+    manual_option = DummyOption("manual", "Manual entry")
+    result_manual = await flow2.async_step_threshold_source({"method": manual_option})
+    assert result_manual["type"] == "form"
+    assert result_manual["step_id"] == "thresholds"
+
+
+async def test_config_flow_threshold_source_walks_nested_option_values(hass):
+    class NestedValue:
+        def __init__(self, value):
+            self.value = value
+
+    class NestedOption:
+        def __init__(self, value, label):
+            self.value = NestedValue(value)
+            self.label = label
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._profile = {
+        CONF_PLANT_NAME: "Basil",
+        CONF_PLANT_ID: "basil",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+
+    nested_skip = NestedOption("skip", "Skip for now")
+    result_skip = await flow.async_step_threshold_source({"method": nested_skip})
+
+    assert result_skip["type"] == "form"
+    assert result_skip["step_id"] == "sensors"
+
+    flow2 = ConfigFlow()
+    flow2.hass = hass
+    flow2._profile = {
+        CONF_PLANT_NAME: "Mint",
+        CONF_PLANT_ID: "mint",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+
+    nested_manual = NestedOption("manual", "Manual entry")
+    result_manual = await flow2.async_step_threshold_source({"method": nested_manual})
+
+    assert result_manual["type"] == "form"
+    assert result_manual["step_id"] == "thresholds"
+
+
+async def test_config_flow_threshold_source_accepts_label_strings(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._profile = {
+        CONF_PLANT_NAME: "Basil",
+        CONF_PLANT_ID: "basil",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+
+    skip_result = await flow.async_step_threshold_source({"method": "Skip for now"})
+    assert skip_result["type"] == "form"
+    assert skip_result["step_id"] == "sensors"
+
+    flow2 = ConfigFlow()
+    flow2.hass = hass
+    flow2._profile = {
+        CONF_PLANT_NAME: "Mint",
+        CONF_PLANT_ID: "mint",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+
+    manual_result = await flow2.async_step_threshold_source({"method": "Manual entry"})
+    assert manual_result["type"] == "form"
+    assert manual_result["step_id"] == "thresholds"
+
+
+async def test_config_flow_threshold_source_label_paths_trigger_actions(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._profile = {
+        CONF_PLANT_NAME: "Parsley",
+        CONF_PLANT_ID: "parsley",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+    flow._async_available_profile_templates = AsyncMock(return_value={"template": {}})
+    flow.async_step_threshold_copy = AsyncMock(return_value={"type": "form", "step_id": "copy"})
+
+    copy_result = await flow.async_step_threshold_source({"method": "Copy an existing profile"})
+
+    assert copy_result["type"] == "form"
+    assert copy_result["step_id"] == "copy"
+    flow.async_step_threshold_copy.assert_awaited_once()
+
+    flow2 = ConfigFlow()
+    flow2.hass = hass
+    flow2._profile = {
+        CONF_PLANT_NAME: "Rosemary",
+        CONF_PLANT_ID: "rosemary",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+    }
+    flow2._async_available_profile_templates = AsyncMock(return_value={})
+    flow2.async_step_opb_credentials = AsyncMock(return_value={"type": "form", "step_id": "opb"})
+
+    opb_result = await flow2.async_step_threshold_source({"method": "From OpenPlantbook"})
+
+    assert opb_result["type"] == "form"
+    assert opb_result["step_id"] == "opb"
+    flow2.async_step_opb_credentials.assert_awaited_once()
+
+
+async def test_coerce_threshold_source_method_handles_label_synonyms():
+    assert cfg._coerce_threshold_source_method(" Skip this step ") == "skip"
+    assert cfg._coerce_threshold_source_method("Use OpenPlantbook") == "openplantbook"
+    assert cfg._coerce_threshold_source_method("ENTER MANUALLY") == "manual"
+
+
+async def test_build_threshold_selectors_handles_missing_number_selector(monkeypatch):
+    import custom_components.horticulture_assistant.config_flow as config_flow
+
+    monkeypatch.setattr(config_flow.sel, "NumberSelector", None, raising=False)
+    monkeypatch.setattr(config_flow.sel, "NumberSelectorConfig", None, raising=False)
+
+    selectors = config_flow._build_threshold_selectors()
+
+    assert selectors == {}
+
+
+async def test_build_threshold_selectors_falls_back_to_text(monkeypatch):
+    import custom_components.horticulture_assistant.config_flow as config_flow
+
+    def dummy_selector(_value):  # pragma: no cover - stub behaviour
+        raise TypeError
+
+    monkeypatch.setattr(config_flow.sel, "NumberSelector", dummy_selector, raising=False)
+    monkeypatch.setattr(config_flow.sel, "NumberSelectorConfig", None, raising=False)
+
+    selectors = config_flow._build_threshold_selectors()
+
+    assert selectors == {}
+
+
+async def test_build_select_selector_downgrades_option_shape(monkeypatch):
+    import custom_components.horticulture_assistant.config_flow as config_flow
+
+    class DummyConfig:
+        def __init__(self, **kwargs):
+            self.options = kwargs.get("options", [])
+            self.kwargs = kwargs
+
+    class DummySelector:
+        def __init__(self, config):
+            if isinstance(config, DummyConfig):
+                options = config.options
+            else:
+                options = config.get("options")
+            if options and isinstance(options[0], dict):
+                raise TypeError("dict options unsupported")
+            self.config = config
+
+    monkeypatch.setattr(config_flow.sel, "SelectSelector", DummySelector, raising=False)
+    monkeypatch.setattr(config_flow.sel, "SelectSelectorConfig", DummyConfig, raising=False)
+
+    selector = config_flow._build_select_selector(
+        [
+            {"value": "openplantbook", "label": "From OpenPlantbook"},
+            {"value": "manual", "label": "Manual entry"},
+        ]
+    )
+
+    assert selector is not None
+    config = selector.config
+    options = getattr(config, "options", config.get("options"))
+    assert options == ["openplantbook", "manual"]
 
 
 @pytest.mark.asyncio
