@@ -4,6 +4,7 @@ import json
 import logging
 from collections.abc import Iterable, Mapping, Sequence
 from copy import deepcopy
+from functools import lru_cache
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -44,12 +45,13 @@ from .const import (
     DOMAIN,
     PROFILE_SCOPE_CHOICES,
     PROFILE_SCOPE_DEFAULT,
+    VARIABLE_SPECS,
 )
 from .opb_client import OpenPlantbookClient
 from .profile.compat import sync_thresholds
 from .profile.utils import determine_species_slug, ensure_sections
 from .profile.validation import evaluate_threshold_bounds
-from .profile_store import ProfileStore
+from .profile_store import ProfileStore, ProfileStoreError
 from .sensor_catalog import SensorSuggestion, collect_sensor_suggestions, format_sensor_hints
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
@@ -96,6 +98,113 @@ MANUAL_THRESHOLD_FIELDS = (
 )
 
 
+_THRESHOLD_ALIAS_MAP = {
+    "temperature_min": "temp_c_min",
+    "temperature_max": "temp_c_max",
+    "humidity_min": "rh_min",
+    "humidity_max": "rh_max",
+    "conductivity_min": "ec_min",
+    "conductivity_max": "ec_max",
+}
+
+
+def _build_threshold_selector_metadata() -> dict[str, dict[str, Any]]:
+    """Return selector metadata for manual threshold fields."""
+
+    spec_index = {
+        key: {
+            "unit": unit,
+            "step": step,
+            "min": minimum,
+            "max": maximum,
+        }
+        for key, unit, step, minimum, maximum in VARIABLE_SPECS
+    }
+
+    illuminance_defaults = {
+        "unit": "lx",
+        "step": 1,
+        "min": 0,
+        "max": 250000,
+    }
+
+    metadata: dict[str, dict[str, Any]] = {}
+    for field in MANUAL_THRESHOLD_FIELDS:
+        canonical = _THRESHOLD_ALIAS_MAP.get(field, field)
+        entry = spec_index.get(canonical)
+        if entry is None and field.startswith("illuminance"):
+            entry = dict(illuminance_defaults)
+        metadata[field] = entry or {}
+    return metadata
+
+
+MANUAL_THRESHOLD_METADATA = _build_threshold_selector_metadata()
+
+
+class _CompatNumberSelector:
+    """Fallback number selector wrapper for older Home Assistant versions."""
+
+    __slots__ = ("config",)
+
+    def __init__(self, config: dict[str, Any]) -> None:
+        self.config = config
+
+    def __call__(self, value: Any) -> Any:
+        return value
+
+
+def _build_threshold_selectors() -> dict[str, Any]:
+    """Return NumberSelector instances for each manual threshold field."""
+
+    selectors: dict[str, Any] = {}
+    number_mode = getattr(sel, "NumberSelectorMode", None)
+    mode_value = getattr(number_mode, "BOX", "box") if number_mode is not None else "box"
+    selector_factory = getattr(sel, "NumberSelector", None)
+    if selector_factory is None:
+        selector_factory = _CompatNumberSelector
+    config_cls = getattr(sel, "NumberSelectorConfig", None)
+
+    for field, meta in MANUAL_THRESHOLD_METADATA.items():
+        if config_cls is not None:
+            config = config_cls(
+                min=meta.get("min"),
+                max=meta.get("max"),
+                step=meta.get("step"),
+                unit_of_measurement=meta.get("unit"),
+                mode=mode_value,
+            )
+            selectors[field] = selector_factory(config)
+            continue
+
+        config_dict: dict[str, Any] = {"mode": mode_value}
+        for key in ("min", "max", "step", "unit"):
+            meta_key = "unit_of_measurement" if key == "unit" else key
+            value = meta.get(key if key != "unit" else "unit")
+            if value is not None:
+                config_dict[meta_key] = value
+        selectors[field] = selector_factory(config_dict)
+    return selectors
+
+
+MANUAL_THRESHOLD_SELECTORS = _build_threshold_selectors()
+
+
+def _coerce_threshold_value(value: Any) -> float | None:
+    """Return ``value`` as a float when possible."""
+
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return None
+        try:
+            return float(text)
+        except ValueError:
+            return None
+    return None
+
+
 SENSOR_OPTION_ROLES = {
     CONF_MOISTURE_SENSOR: "moisture",
     CONF_TEMPERATURE_SENSOR: "temperature",
@@ -120,6 +229,357 @@ PROFILE_SENSOR_FIELDS = {
     "conductivity": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"])),
     "co2": sel.EntitySelector(sel.EntitySelectorConfig(domain=["sensor"], device_class=["carbon_dioxide"])),
 }
+
+SENSOR_CONFLICT_ROLE_LABELS = {
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "illuminance": "Light",
+    "moisture": "Moisture",
+    "conductivity": "Conductivity",
+    "ec": "Conductivity",
+    "co2": "CO₂",
+}
+
+LINKING_NOTIFICATION_TITLE = "Horticulture Assistant setup reminder"
+LINKING_NOTIFICATION_MESSAGE = (
+    "Profile '{profile}' was created without sensors. "
+    "Open Configure → Options → Manage profiles → Edit sensors to finish wiring hardware."
+)
+
+
+def _sensor_role_label(role: str | None) -> str:
+    if not role:
+        return "Sensor"
+    return SENSOR_CONFLICT_ROLE_LABELS.get(role, role.replace("_", " ").title())
+
+
+def _format_sensor_conflict_warning(
+    conflicts: Mapping[str, Mapping[str, tuple[str, tuple[str, ...]]]]
+) -> str:
+    """Build a human-readable warning for conflicting sensor assignments."""
+
+    if not conflicts:
+        return ""
+
+    lines: list[str] = ["Warning: Some sensors are already linked to other profiles:", ""]
+    for entity_id, mappings in sorted(conflicts.items()):
+        lines.append(f"- {entity_id}")
+        for other_pid, (display, roles) in sorted(
+            mappings.items(), key=lambda item: (item[1][0].casefold(), item[0])
+        ):
+            label = display or other_pid
+            if roles:
+                role_text = ", ".join(_sensor_role_label(role) for role in roles)
+                lines.append(f"  • {label} ({other_pid}) – {role_text}")
+            else:
+                lines.append(f"  • {label} ({other_pid})")
+        lines.append("")
+    lines.append("Submit again to reuse these sensors or choose different entities.")
+    return "\n".join(lines)
+
+
+def _sensor_selection_signature(mapping: Mapping[str, Any]) -> tuple[tuple[str, tuple[str, ...]], ...]:
+    """Return a deterministic signature for sensor selections."""
+
+    signature: list[tuple[str, tuple[str, ...]]] = []
+    for key, value in mapping.items():
+        normalised = _normalise_sensor_submission(value)
+        if normalised is None:
+            continue
+        if isinstance(normalised, list):
+            entries = tuple(sorted(normalised))
+        else:
+            entries = (normalised,)
+        signature.append((str(key), entries))
+    return tuple(sorted(signature))
+
+
+@lru_cache(maxsize=1)
+def _load_builtin_species_catalog() -> tuple[dict[str, Mapping[str, Any]], dict[str, str]]:
+    """Return bundled species templates mapped by identifier and labels."""
+
+    base = Path(__file__).parent / "data" / "global_profiles"
+    payloads: dict[str, Mapping[str, Any]] = {}
+    labels: dict[str, str] = {}
+
+    try:
+        paths = list(base.glob("*.json"))
+    except Exception as err:  # pragma: no cover - filesystem guard
+        _LOGGER.debug("Unable to enumerate bundled species profiles: %s", err)
+        return payloads, labels
+
+    for path in paths:
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as err:
+            _LOGGER.debug("Skipping malformed species template %s: %s", path.name, err)
+            continue
+
+        if not isinstance(payload, Mapping):
+            continue
+
+        profile_id = (
+            payload.get("plant_id")
+            or payload.get("profile_id")
+            or (payload.get("library") or {}).get("profile_id")
+            or path.stem
+        )
+        if not isinstance(profile_id, str) or not profile_id.strip():
+            continue
+
+        label = (
+            payload.get("display_name")
+            or payload.get("name")
+            or (payload.get("library") or {}).get("profile_id")
+            or profile_id
+        )
+        payloads[str(profile_id)] = payload
+        labels[str(profile_id)] = str(label)
+
+    return payloads, labels
+
+
+@lru_cache(maxsize=1)
+def _load_builtin_species_index() -> dict[str, str]:
+    """Return bundled species identifiers mapped to labels."""
+
+    _, labels = _load_builtin_species_catalog()
+    return dict(labels)
+
+
+def _as_mapping(value: Any) -> Mapping[str, Any] | None:
+    """Return ``value`` as a mapping if possible."""
+
+    if isinstance(value, Mapping):
+        return value
+    if hasattr(value, "to_json"):
+        try:
+            payload = value.to_json()
+        except Exception:  # pragma: no cover - defensive guard
+            return None
+        if isinstance(payload, Mapping):
+            return payload
+    return None
+
+
+def _first_text(*values: Any) -> str | None:
+    """Return the first non-empty string from ``values``."""
+
+    for candidate in values:
+        if isinstance(candidate, str):
+            text = candidate.strip()
+            if text:
+                return text
+    return None
+
+
+def _extract_catalog_metadata(payload: Mapping[str, Any]) -> tuple[str | None, str | None, str | None, str | None]:
+    """Return species/cultivar identifiers and display labels from ``payload``."""
+
+    general = payload.get("general") if isinstance(payload.get("general"), Mapping) else None
+    local = payload.get("local") if isinstance(payload.get("local"), Mapping) else None
+    local_metadata = local.get("metadata") if isinstance(local, Mapping) and isinstance(local.get("metadata"), Mapping) else None
+    library = payload.get("library") if isinstance(payload.get("library"), Mapping) else None
+    library_identity = library.get("identity") if isinstance(library, Mapping) and isinstance(library.get("identity"), Mapping) else None
+
+    species_id = _first_text(
+        local_metadata.get("requested_species_id") if isinstance(local_metadata, Mapping) else None,
+        payload.get("species_id"),
+        payload.get("species_profile_id"),
+        payload.get("species"),
+    )
+    if species_id is None and isinstance(library, Mapping):
+        species_id = _first_text(library.get("profile_id"))
+    if species_id is None:
+        species_id = _first_text(payload.get("plant_id"), payload.get("profile_id"))
+
+    species_label = _first_text(
+        payload.get("species_display"),
+        general.get("plant_type") if isinstance(general, Mapping) else None,
+        library_identity.get("common_name") if isinstance(library_identity, Mapping) else None,
+        payload.get("display_name"),
+        payload.get("name"),
+    )
+
+    cultivar_id = _first_text(
+        payload.get("cultivar_id"),
+        payload.get("cultivar"),
+        local_metadata.get("requested_cultivar_id") if isinstance(local_metadata, Mapping) else None,
+    )
+
+    cultivar_label = _first_text(
+        payload.get("cultivar_display"),
+        general.get("cultivar") if isinstance(general, Mapping) else None,
+    )
+
+    return species_id, species_label, cultivar_id, cultivar_label
+
+
+def _extract_template_profile_type(payload: Mapping[str, Any]) -> str | None:
+    """Return the template profile type if available."""
+
+    for container in (payload, payload.get("library"), payload.get("general"), payload.get("local")):
+        if not isinstance(container, Mapping):
+            continue
+        profile_type = container.get("profile_type")
+        if isinstance(profile_type, str) and profile_type.strip():
+            return profile_type.strip()
+    return None
+
+
+def _extract_template_parent(payload: Mapping[str, Any]) -> str | None:
+    """Attempt to determine the parent species identifier for a template."""
+
+    parents = payload.get("parents")
+    if isinstance(parents, Sequence) and not isinstance(parents, (str, bytes, bytearray)):
+        for item in parents:
+            if isinstance(item, str) and item.strip():
+                return item.strip()
+
+    library = payload.get("library") if isinstance(payload.get("library"), Mapping) else None
+    if library:
+        identity = library.get("identity") if isinstance(library.get("identity"), Mapping) else None
+        if identity:
+            for key in ("parent_profile_id", "species_profile_id", "species_id"):
+                candidate = identity.get(key)
+                if isinstance(candidate, str) and candidate.strip():
+                    return candidate.strip()
+        metadata = library.get("metadata") if isinstance(library.get("metadata"), Mapping) else None
+        if metadata:
+            candidate = metadata.get("species_profile_id")
+            if isinstance(candidate, str) and candidate.strip():
+                return candidate.strip()
+
+    local = payload.get("local") if isinstance(payload.get("local"), Mapping) else None
+    if local:
+        metadata = local.get("metadata") if isinstance(local.get("metadata"), Mapping) else None
+        if metadata:
+            candidate = metadata.get("requested_species_id")
+            if isinstance(candidate, str) and candidate.strip():
+                return candidate.strip()
+
+    general = payload.get("general") if isinstance(payload.get("general"), Mapping) else None
+    if general:
+        candidate = general.get("species_id") or general.get("species_profile_id")
+        if isinstance(candidate, str) and candidate.strip():
+            return candidate.strip()
+
+    return None
+
+
+def _template_display_name(payload: Mapping[str, Any]) -> str | None:
+    """Return a human-friendly label for a template payload."""
+
+    for key in ("display_name", "name"):
+        value = payload.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    general = payload.get("general") if isinstance(payload.get("general"), Mapping) else None
+    if general:
+        candidate = general.get("plant_type")
+        if isinstance(candidate, str) and candidate.strip():
+            return candidate.strip()
+    library = payload.get("library") if isinstance(payload.get("library"), Mapping) else None
+    if library:
+        identity = library.get("identity") if isinstance(library.get("identity"), Mapping) else None
+        if identity:
+            for key in ("common_name", "profile_id"):
+                value = identity.get(key)
+                if isinstance(value, str) and value.strip():
+                    return value.strip()
+    return None
+
+
+def _format_catalog_label(label: str, sources: Iterable[str] | None) -> str:
+    """Return a label annotated with its origin if applicable."""
+
+    if sources:
+        source_set = {str(item) for item in sources if isinstance(item, str)}
+    else:
+        source_set = set()
+    for source, prefix in (("library", "[Library] "), ("entry", "[Existing] ")):
+        if source in source_set:
+            return f"{prefix}{label}"
+    return label
+
+
+def _format_source_hint(sources: Iterable[str] | None) -> str:
+    """Return a user-friendly description of template sources."""
+
+    if not sources:
+        return ""
+    labels = []
+    for item in sources:
+        if not isinstance(item, str):
+            continue
+        label = SOURCE_FILTER_LABELS.get(item)
+        if label is None:
+            label = item.replace("_", " ").title()
+        labels.append(label)
+    if not labels:
+        return ""
+    unique = []
+    seen: set[str] = set()
+    for label in labels:
+        if label in seen:
+            continue
+        unique.append(label)
+        seen.add(label)
+    if len(unique) == 1:
+        return unique[0]
+    return ", ".join(unique)
+
+
+def _build_species_hint(species_id: str | None, entry: Mapping[str, Any] | None) -> str:
+    """Return guidance text describing the selected species template."""
+
+    if not species_id:
+        return "No species template selected — profile will rely on manual defaults."
+
+    if not isinstance(entry, Mapping):
+        return f"Species template: {species_id}"
+
+    label = entry.get("label")
+    label_text = str(label) if isinstance(label, str) and label.strip() else species_id
+    source_hint = _format_source_hint(entry.get("sources"))
+    cultivars = entry.get("cultivars") if isinstance(entry.get("cultivars"), Mapping) else {}
+    cultivar_count = len(cultivars)
+
+    parts = [f"Species template: {label_text} ({species_id})"]
+    if source_hint:
+        parts.append(f"Source: {source_hint}")
+    if cultivar_count:
+        parts.append(
+            "Cultivars available: " + ("1" if cultivar_count == 1 else str(cultivar_count))
+        )
+    return " — ".join(parts)
+
+
+def _build_cultivar_hint(
+    cultivar_id: str | None,
+    cultivar_entry: Mapping[str, Any] | None,
+    species_label: str | None,
+) -> str:
+    """Return guidance text describing the selected cultivar template."""
+
+    if not cultivar_id:
+        return "No cultivar overrides selected — using the base species defaults."
+
+    if not isinstance(cultivar_entry, Mapping):
+        return f"Cultivar: {cultivar_id}"
+
+    label = cultivar_entry.get("label")
+    label_text = str(label) if isinstance(label, str) and label.strip() else cultivar_id
+    source_hint = _format_source_hint(
+        cultivar_entry.get("sources") or {cultivar_entry.get("source")}
+    )
+
+    parts = [f"Cultivar: {label_text} ({cultivar_id})"]
+    if species_label:
+        parts.append(f"Parent species: {species_label}")
+    if source_hint:
+        parts.append(f"Source: {source_hint}")
+    return " — ".join(parts)
 
 
 def _derive_fallback_plant_id(name: str, plant_type: str | None = None) -> str | None:
@@ -153,7 +613,7 @@ def _normalise_sensor_submission(value: Any) -> str | list[str] | None:
                 collected.extend(cleaned)
             else:
                 collected.append(cleaned)
-        if not collected:
+        if not collected or len(collected) < len(value):
             for candidate in value.values():
                 cleaned = _normalise_sensor_submission(candidate)
                 if cleaned is None:
@@ -164,11 +624,10 @@ def _normalise_sensor_submission(value: Any) -> str | list[str] | None:
                     collected.append(cleaned)
         if not collected:
             return None
-        if len(collected) == 1:
-            return collected[0]
-        return collected
+        return _normalise_sensor_submission(collected)
     if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
         entries: list[str] = []
+        seen: set[str] = set()
         for item in value:
             if isinstance(item, str):
                 cleaned = item.strip()
@@ -176,9 +635,12 @@ def _normalise_sensor_submission(value: Any) -> str | list[str] | None:
                 cleaned = ""
             else:
                 cleaned = str(item).strip()
-            if cleaned:
+            if cleaned and cleaned not in seen:
                 entries.append(cleaned)
+                seen.add(cleaned)
         if entries:
+            if len(entries) == 1:
+                return entries[0]
             return entries
         return None
     text = str(value).strip()
@@ -653,7 +1115,7 @@ def _build_sensor_schema(hass, defaults: Mapping[str, Any] | None = None):
     if not isinstance(suggestions, Mapping):
         suggestions = {}
     hint_map, selector_entries = _normalise_sensor_suggestions(suggestions, role_names)
-    placeholders = {"sensor_hints": format_sensor_hints(hint_map)}
+    placeholders = {"sensor_hints": format_sensor_hints(hint_map), "conflict_warning": ""}
 
     schema_fields: dict[Any, Any] = {}
     for option_key, role in SENSOR_OPTION_ROLES.items():
@@ -920,6 +1382,10 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         try:
             store = ProfileStore(self.hass)
             await store.async_init()
+        except ProfileStoreError as err:
+            _LOGGER.warning("Profile store unavailable: %s", err)
+            self._profile_store = None
+            return None
         except Exception as err:  # pragma: no cover - defensive guard
             _LOGGER.debug("Profile store unavailable: %s", err)
             self._profile_store = None
@@ -985,6 +1451,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             return f"horticulture_sensor_{flow_id}"
         return "horticulture_sensor_setup"
 
+    def _linking_notification_id(self, profile_id: str | None = None) -> str:
+        base = self._sensor_notification_id()
+        if profile_id:
+            return f"{base}_{profile_id}_link"
+        return f"{base}_link"
+
     def _notify_sensor_warnings(self, issues) -> None:
         if not issues:
             return
@@ -1010,6 +1482,40 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if not _has_registered_service(self.hass, "persistent_notification", "dismiss"):
             return
         notification_id = self._sensor_notification_id()
+        self.hass.async_create_task(
+            self.hass.services.async_call(
+                "persistent_notification",
+                "dismiss",
+                {"notification_id": notification_id},
+                blocking=False,
+            )
+        )
+
+    def _notify_linking_pending(self, profile_name: str, profile_id: str | None = None) -> None:
+        if not _has_registered_service(self.hass, "persistent_notification", "create"):
+            _LOGGER.debug(
+                "Skipping sensor linking reminder; persistent_notification.create not available"
+            )
+            return
+        notification_id = self._linking_notification_id(profile_id)
+        message = LINKING_NOTIFICATION_MESSAGE.format(profile=profile_name)
+        self.hass.async_create_task(
+            self.hass.services.async_call(
+                "persistent_notification",
+                "create",
+                {
+                    "title": LINKING_NOTIFICATION_TITLE,
+                    "message": message,
+                    "notification_id": notification_id,
+                },
+                blocking=False,
+            )
+        )
+
+    def _clear_linking_pending(self, profile_id: str | None = None) -> None:
+        if not _has_registered_service(self.hass, "persistent_notification", "dismiss"):
+            return
+        notification_id = self._linking_notification_id(profile_id)
         self.hass.async_create_task(
             self.hass.services.async_call(
                 "persistent_notification",
@@ -1510,9 +2016,13 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         defaults = self._thresholds
         schema_fields: dict[Any, Any] = {}
         for key in MANUAL_THRESHOLD_FIELDS:
+            selector = MANUAL_THRESHOLD_SELECTORS.get(key)
             default = defaults.get(key)
-            option = vol.Optional(key, default=str(default) if default is not None else "")
-            schema_fields[option] = vol.Any(str, int, float)
+            option = vol.Optional(key) if default is None else vol.Optional(key, default=default)
+            if selector is None:
+                schema_fields[option] = vol.Any(str, int, float)
+            else:
+                schema_fields[option] = vol.Any(selector, str, int, float)
         schema = vol.Schema(schema_fields, extra=vol.ALLOW_EXTRA)
 
         if user_input is not None:
@@ -1560,8 +2070,13 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 self._config = {}
             return await self.async_step_profile()
 
+        if user_input is None:
+            self._last_sensor_conflict_signature = None
+
         schema, placeholders = _build_sensor_schema(self.hass, self._sensor_defaults)
         plant_id = self._profile.get(CONF_PLANT_ID, "<unknown>")
+
+        placeholders.setdefault("error", "")
 
         errors = {}
         if user_input is not None:
@@ -1592,11 +2107,40 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 normalised_values[key] = entity_id
                 if entity_id and self.hass.states.get(entity_id) is None:
                     errors[key] = "not_found"
+            if normalised_values:
+                defaults = dict(self._sensor_defaults or {})
+                defaults.update(normalised_values)
+                self._sensor_defaults = defaults
             if errors:
                 return self.async_show_form(
                     step_id="sensors", data_schema=schema, errors=errors, description_placeholders=placeholders
                 )
             sensor_map = {SENSOR_OPTION_ROLES[key]: entity_id for key, entity_id in normalised_values.items()}
+            if sensor_map:
+                conflicts: dict[str, dict[str, tuple[str, tuple[str, ...]]]] = {}
+                try:
+                    registry = await self._async_get_registry()
+                    conflicts = registry.sensor_conflicts(plant_id, sensor_map)
+                except Exception as err:  # pragma: no cover - defensive guard
+                    _LOGGER.debug(
+                        "Unable to evaluate sensor conflicts for '%s': %s",
+                        plant_id,
+                        err,
+                    )
+                if conflicts:
+                    signature = ("add_profile_sensors", plant_id, _sensor_selection_signature(sensor_map))
+                    if signature != self._last_sensor_conflict_signature:
+                        self._last_sensor_conflict_signature = signature
+                        conflict_message = _format_sensor_conflict_warning(conflicts)
+                        schema, placeholders = _build_sensor_schema(self.hass, self._sensor_defaults)
+                        placeholders.setdefault("error", "")
+                        placeholders["conflict_warning"] = f"{conflict_message}\n" if conflict_message else ""
+                        return self.async_show_form(
+                            step_id="sensors",
+                            data_schema=schema,
+                            errors={},
+                            description_placeholders=placeholders,
+                        )
             if sensor_map:
                 try:
                     validation = validate_sensor_links(self.hass, sensor_map)
@@ -1633,6 +2177,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 return self.async_show_form(
                     step_id="sensors", data_schema=schema, errors=errors, description_placeholders=placeholders
                 )
+            self._last_sensor_conflict_signature = None
             return await self._complete_profile(cleaned_input)
 
         return self.async_show_form(step_id="sensors", data_schema=schema, description_placeholders=placeholders)
@@ -1971,19 +2516,32 @@ class OptionsFlow(config_entries.OptionsFlow):
         self._mode: str | None = None
         self._cal_session: str | None = None
         self._new_profile_id: str | None = None
+        self._new_profile_label: str | None = None
+        self._species_catalog: dict[str, dict[str, Any]] | None = None
+        self._cultivar_index: dict[str, tuple[str, dict[str, Any]]] | None = None
+        self._selected_species_id: str | None = None
+        self._selected_cultivar_id: str | None = None
+        self._profile_store: ProfileStore | None = None
+        self._last_sensor_conflict_signature: tuple[Any, ...] | None = None
+        self._attach_sensor_defaults: dict[str, Any] | None = None
+        self._manage_sensor_defaults: dict[str, Any] | None = None
 
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
+        profiles_available = bool(self._profiles())
+        menu_plan = [
+            ("basic", True),
+            ("cloud_sync", True),
+            ("add_profile", True),
+            ("manage_profiles", profiles_available),
+            ("configure_ai", True),
+            ("profile_targets", profiles_available),
+            ("nutrient_schedule", profiles_available),
+        ]
+        menu_options = [step for step, include in menu_plan if include]
+
         return self.async_show_menu(
             step_id="init",
-            menu_options=[
-                "basic",
-                "cloud_sync",
-                "add_profile",
-                "manage_profiles",
-                "configure_ai",
-                "profile_targets",
-                "nutrient_schedule",
-            ],
+            menu_options=menu_options,
         )
 
     async def _async_get_registry(self):
@@ -1997,6 +2555,142 @@ class OptionsFlow(config_entries.OptionsFlow):
             domain_data["registry"] = registry
         return registry
 
+    async def _async_profile_store(self) -> ProfileStore | None:
+        if self._profile_store is not None:
+            return self._profile_store
+        try:
+            store = ProfileStore(self.hass)
+            await store.async_init()
+        except ProfileStoreError as err:
+            _LOGGER.warning("Profile store unavailable: %s", err)
+            self._profile_store = None
+            return None
+        except Exception as err:  # pragma: no cover - defensive guard
+            _LOGGER.debug("Profile store unavailable: %s", err)
+            self._profile_store = None
+            return None
+        self._profile_store = store
+        return store
+
+    async def _async_species_catalog(self) -> tuple[dict[str, dict[str, Any]], dict[str, tuple[str, dict[str, Any]]]]:
+        """Return species templates sourced from the library, store, and existing profiles."""
+
+        if self._species_catalog is not None and self._cultivar_index is not None:
+            return self._species_catalog, self._cultivar_index
+
+        catalog: dict[str, dict[str, Any]] = {}
+        cultivar_index: dict[str, tuple[str, dict[str, Any]]] = {}
+
+        def _register(
+            species_id: str | None,
+            *,
+            species_label: str | None,
+            source: str,
+            cultivar_id: str | None = None,
+            cultivar_label: str | None = None,
+            payload: Mapping[str, Any] | None = None,
+        ) -> None:
+            if not species_id:
+                return
+            entry = catalog.get(species_id)
+            if entry is None:
+                entry = {
+                    "label": species_label or species_id,
+                    "payload": payload,
+                    "sources": {source},
+                    "cultivars": {},
+                }
+                catalog[species_id] = entry
+            else:
+                entry.setdefault("sources", set()).add(source)
+                if payload is not None and entry.get("payload") is None:
+                    entry["payload"] = payload
+                if species_label and (not entry.get("label") or entry.get("label") == species_id):
+                    entry["label"] = species_label
+
+            cultivars = entry.setdefault("cultivars", {})
+            if cultivar_id:
+                cultivar_entry = cultivars.get(cultivar_id)
+                if cultivar_entry is None:
+                    cultivar_entry = {
+                        "label": cultivar_label or cultivar_id,
+                        "source": source,
+                        "sources": {source},
+                    }
+                    cultivars[cultivar_id] = cultivar_entry
+                else:
+                    cultivar_entry.setdefault("sources", set()).add(source)
+                    if not cultivar_entry.get("source"):
+                        cultivar_entry["source"] = source
+                    if cultivar_label and (not cultivar_entry.get("label") or cultivar_entry.get("label") == cultivar_id):
+                        cultivar_entry["label"] = cultivar_label
+
+                cultivar_index[cultivar_id] = (species_id, cultivars[cultivar_id])
+
+        builtin_payloads, builtin_labels = _load_builtin_species_catalog()
+        for species_id, payload in builtin_payloads.items():
+            label = builtin_labels.get(species_id, species_id)
+            _register(
+                species_id,
+                species_label=label,
+                source="library",
+                payload=payload,
+            )
+
+        for profile in self._profiles().values():
+            payload = _as_mapping(profile)
+            if payload is None:
+                continue
+            species_id, species_label, cultivar_id, cultivar_label = _extract_catalog_metadata(payload)
+            _register(
+                species_id,
+                species_label=species_label,
+                source="entry",
+                cultivar_id=cultivar_id,
+                cultivar_label=cultivar_label,
+            )
+
+        store = await self._async_profile_store()
+        if store is not None:
+            try:
+                names = await store.async_list()
+            except Exception as err:  # pragma: no cover - defensive guard
+                _LOGGER.debug("Unable to list library profiles: %s", err)
+            else:
+                for name in names:
+                    try:
+                        payload = await store.async_get(name)
+                    except Exception as err:  # pragma: no cover - defensive guard
+                        _LOGGER.debug("Unable to load library profile %s: %s", name, err)
+                        continue
+                    mapping = _as_mapping(payload)
+                    if mapping is None:
+                        continue
+                    species_id, species_label, cultivar_id, cultivar_label = _extract_catalog_metadata(mapping)
+                    _register(
+                        species_id,
+                        species_label=species_label or name,
+                        source="library",
+                        cultivar_id=cultivar_id,
+                        cultivar_label=cultivar_label,
+                    )
+
+        self._species_catalog = catalog
+        self._cultivar_index = cultivar_index
+        return catalog, cultivar_index
+
+    def _sensor_notification_id(self) -> str:
+        flow_id = getattr(self, "flow_id", None)
+        if isinstance(flow_id, str) and flow_id:
+            return f"horticulture_sensor_{flow_id}"
+        return f"horticulture_sensor_{self._entry.entry_id}"
+
+    def _linking_notification_id(self, profile_id: str | None = None) -> str:
+        base = self._sensor_notification_id()
+        if profile_id:
+            return f"{base}_{profile_id}_link"
+        return f"{base}_link"
+
     def _notify_sensor_warnings(self, issues) -> None:
         if not issues:
             return
@@ -2004,6 +2698,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             _LOGGER.debug("Skipping sensor warning notification; persistent_notification.create not available")
             return
         message = collate_issue_messages(issues)
+        notification_id = self._sensor_notification_id()
         self.hass.async_create_task(
             self.hass.services.async_call(
                 "persistent_notification",
@@ -2011,7 +2706,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 {
                     "title": "Horticulture Assistant sensor warning",
                     "message": message,
-                    "notification_id": f"horticulture_sensor_{self._entry.entry_id}",
+                    "notification_id": notification_id,
                 },
                 blocking=False,
             )
@@ -2020,11 +2715,46 @@ class OptionsFlow(config_entries.OptionsFlow):
     def _clear_sensor_warning(self) -> None:
         if not _has_registered_service(self.hass, "persistent_notification", "dismiss"):
             return
+        notification_id = self._sensor_notification_id()
         self.hass.async_create_task(
             self.hass.services.async_call(
                 "persistent_notification",
                 "dismiss",
-                {"notification_id": f"horticulture_sensor_{self._entry.entry_id}"},
+                {"notification_id": notification_id},
+                blocking=False,
+            )
+        )
+
+    def _notify_linking_pending(self, profile_name: str, profile_id: str | None = None) -> None:
+        if not _has_registered_service(self.hass, "persistent_notification", "create"):
+            _LOGGER.debug(
+                "Skipping sensor linking reminder; persistent_notification.create not available"
+            )
+            return
+        notification_id = self._linking_notification_id(profile_id)
+        message = LINKING_NOTIFICATION_MESSAGE.format(profile=profile_name)
+        self.hass.async_create_task(
+            self.hass.services.async_call(
+                "persistent_notification",
+                "create",
+                {
+                    "title": LINKING_NOTIFICATION_TITLE,
+                    "message": message,
+                    "notification_id": notification_id,
+                },
+                blocking=False,
+            )
+        )
+
+    def _clear_linking_pending(self, profile_id: str | None = None) -> None:
+        if not _has_registered_service(self.hass, "persistent_notification", "dismiss"):
+            return
+        notification_id = self._linking_notification_id(profile_id)
+        self.hass.async_create_task(
+            self.hass.services.async_call(
+                "persistent_notification",
+                "dismiss",
+                {"notification_id": notification_id},
                 blocking=False,
             )
         )
@@ -2456,47 +3186,247 @@ class OptionsFlow(config_entries.OptionsFlow):
 
     async def async_step_add_profile(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         registry = await self._async_get_registry()
+        self._new_profile_id = None
+        self._new_profile_label = None
+        profiles = {p.plant_id: p.display_name for p in registry.iter_profiles()}
+        profile_ids = {p.plant_id for p in registry.iter_profiles()}
+        errors: dict[str, str] = {}
+        catalog, cultivar_index = await self._async_species_catalog()
+        species_options = [
+            {
+                "value": species_id,
+                "label": _format_catalog_label(
+                    str(entry.get("label") or species_id),
+                    entry.get("sources", set()),
+                ),
+            }
+            for species_id, entry in catalog.items()
+            if entry.get("label") or species_id
+        ]
+        species_options.sort(key=lambda item: item["label"].casefold())
+        species_option_values = {opt["value"] for opt in species_options}
+
+        cultivar_options: list[dict[str, str]] = []
+        for species_id, entry in catalog.items():
+            species_label = str(entry.get("label") or species_id)
+            cultivars = entry.get("cultivars", {}) if isinstance(entry.get("cultivars"), Mapping) else {}
+            for cultivar_id, cultivar_entry in cultivars.items():
+                cultivar_label = str(cultivar_entry.get("label") or cultivar_id)
+                sources = cultivar_entry.get("sources")
+                if not sources:
+                    source = cultivar_entry.get("source")
+                    sources = {source} if source else None
+                formatted = _format_catalog_label(cultivar_label, sources)
+                if species_label and species_label.casefold() not in {cultivar_label.casefold()}:
+                    formatted = f"{formatted} ({species_label})"
+                cultivar_options.append({"value": cultivar_id, "label": formatted})
+                cultivar_index[cultivar_id] = (species_id, cultivar_entry)
+        cultivar_options.sort(key=lambda item: item["label"].casefold())
+        cultivar_option_values = {opt["value"] for opt in cultivar_options}
+
+        species_index = _load_builtin_species_index()
+        description_placeholders: dict[str, str] = {"error": ""}
+
+        selected_species: str | None = self._selected_species_id
+        selected_species_label: str | None = None
+        selected_cultivar: str | None = self._selected_cultivar_id
+        selected_cultivar_label: str | None = None
+        pid: str | None = None
+        profile_label: str | None = None
 
         if user_input is not None:
+            raw_name = str(user_input.get("name", "")).strip()
             scope = user_input.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
             copy_from = user_input.get("copy_from")
-            pid = await registry.async_add_profile(user_input["name"], copy_from, scope=scope)
+            species_candidate = str(user_input.get("species_id") or "").strip()
+            cultivar_candidate = str(user_input.get("cultivar_id") or "").strip()
 
-            entry_records = get_entry_data(self.hass, self._entry) or {}
-            store = entry_records.get("profile_store") if isinstance(entry_records, Mapping) else None
-            if store is not None:
-                new_profile = registry.get_profile(pid)
-                if new_profile is not None:
-                    profile_json = new_profile.to_json()
-                    sensors = profile_json.get("general", {}).get("sensors", {})
-                    clone_payload = deepcopy(profile_json)
-                    general = clone_payload.setdefault("general", {})
-                    if isinstance(sensors, dict):
-                        general.setdefault("sensors", dict(sensors))
-                        clone_payload["sensors"] = dict(sensors)
-                    if scope is not None:
-                        general[CONF_PROFILE_SCOPE] = scope
-                    elif CONF_PROFILE_SCOPE not in general:
-                        general[CONF_PROFILE_SCOPE] = PROFILE_SCOPE_DEFAULT
-                    clone_payload["name"] = profile_json.get("display_name", user_input["name"])
-                    await store.async_create_profile(
-                        name=profile_json.get("display_name", user_input["name"]),
-                        sensors=sensors,
-                        clone_from=clone_payload,
+            if not species_candidate and cultivar_candidate and cultivar_candidate in cultivar_index:
+                species_candidate = cultivar_index[cultivar_candidate][0]
+
+            selected_species = species_candidate or None
+            self._selected_species_id = selected_species
+            selected_cultivar = cultivar_candidate or None
+            self._selected_cultivar_id = selected_cultivar
+
+            species_entry = catalog.get(selected_species) if selected_species else None
+            if selected_species and species_entry is None:
+                errors["species_id"] = "unknown_species"
+            elif species_entry:
+                selected_species_label = species_entry.get("label")
+
+            if not raw_name:
+                errors["name"] = "required"
+            else:
+                has_alnum = any(char.isalnum() for char in raw_name)
+                slug = slugify(raw_name)
+                if not has_alnum or not slug:
+                    errors["name"] = "invalid_profile_id"
+                elif slug in profile_ids:
+                    errors["name"] = "duplicate_profile_id"
+
+            if copy_from and profiles and copy_from not in profiles:
+                errors["copy_from"] = "unknown_profile"
+
+            if selected_cultivar:
+                cultivar_entry = None
+                if species_entry and isinstance(species_entry.get("cultivars"), Mapping):
+                    cultivar_entry = species_entry.get("cultivars", {}).get(selected_cultivar)
+                if cultivar_entry is None and selected_cultivar in cultivar_index:
+                    parent_id, entry = cultivar_index[selected_cultivar]
+                    cultivar_entry = entry
+                    if selected_species is None:
+                        selected_species = parent_id
+                        self._selected_species_id = parent_id
+                        species_entry = catalog.get(parent_id)
+                        if species_entry:
+                            selected_species_label = species_entry.get("label")
+                    elif selected_species != parent_id:
+                        errors["cultivar_id"] = "cultivar_mismatch"
+                if cultivar_entry is None and "cultivar_id" not in errors:
+                    errors["cultivar_id"] = "unknown_cultivar"
+                elif cultivar_entry is not None and "cultivar_id" not in errors:
+                    selected_cultivar_label = cultivar_entry.get("label")
+                    if selected_species is None:
+                        errors["cultivar_id"] = "cultivar_requires_species"
+
+            if selected_species and selected_species_label is None:
+                if selected_species in species_index:
+                    selected_species_label = species_index[selected_species]
+                else:
+                    entry = catalog.get(selected_species)
+                    if entry:
+                        selected_species_label = entry.get("label")
+
+            profile_label = raw_name
+
+            if not errors:
+                try:
+                    pid = await registry.async_add_profile(
+                        raw_name,
+                        copy_from,
                         scope=scope,
+                        species_id=selected_species,
+                        species_display=selected_species_label,
+                        cultivar_id=selected_cultivar,
+                        cultivar_display=selected_cultivar_label,
                     )
-            self._new_profile_id = pid
-            return await self.async_step_attach_sensors()
-        profiles = {p.plant_id: p.display_name for p in registry.iter_profiles()}
-        scope_selector = sel.SelectSelector(sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS))
-        schema = vol.Schema(
-            {
-                vol.Required("name"): str,
-                vol.Required(CONF_PROFILE_SCOPE, default=PROFILE_SCOPE_DEFAULT): scope_selector,
-                vol.Optional("copy_from"): vol.In(profiles) if profiles else str,
-            }
+                except ValueError as err:
+                    errors["base"] = "profile_error"
+                    description_placeholders["error"] = str(err)
+                else:
+                    entry_records = get_entry_data(self.hass, self._entry) or {}
+                    store = entry_records.get("profile_store") if isinstance(entry_records, Mapping) else None
+                    profile_label = raw_name
+                    if store is not None:
+                        new_profile = registry.get_profile(pid)
+                        if new_profile is not None:
+                            profile_json = new_profile.to_json()
+                            sensors = profile_json.get("general", {}).get("sensors", {})
+                            clone_payload = deepcopy(profile_json)
+                            general = clone_payload.setdefault("general", {})
+                            if isinstance(sensors, dict):
+                                general.setdefault("sensors", dict(sensors))
+                                clone_payload["sensors"] = dict(sensors)
+                            if selected_species is not None:
+                                clone_payload["species"] = selected_species
+                                if selected_species_label:
+                                    clone_payload["species_display"] = selected_species_label
+                            if selected_cultivar is not None:
+                                clone_payload["cultivar"] = selected_cultivar
+                                clone_payload["cultivar_id"] = selected_cultivar
+                                if selected_cultivar_label:
+                                    clone_payload["cultivar_display"] = selected_cultivar_label
+                            if scope is not None:
+                                general[CONF_PROFILE_SCOPE] = scope
+                            elif CONF_PROFILE_SCOPE not in general:
+                                general[CONF_PROFILE_SCOPE] = PROFILE_SCOPE_DEFAULT
+                            if selected_species_label and isinstance(general, Mapping):
+                                general.setdefault("plant_type", selected_species_label)
+                            if selected_cultivar_label and isinstance(general, Mapping):
+                                general.setdefault("cultivar", selected_cultivar_label)
+                            profile_label = profile_json.get("display_name", raw_name)
+                            clone_payload["name"] = profile_label
+                            try:
+                                await store.async_create_profile(
+                                    name=profile_label,
+                                    sensors=sensors,
+                                    clone_from=clone_payload,
+                                    scope=scope,
+                                )
+                            except ProfileStoreError as err:
+                                _LOGGER.error(
+                                    "Failed to persist profile '%s' via profile store: %s",
+                                    pid,
+                                    err,
+                                )
+                                errors["base"] = "profile_error"
+                                description_placeholders["error"] = getattr(err, "user_message", str(err))
+                                await registry.async_delete_profile(pid)
+                                pid = None
+                            except Exception as err:  # pragma: no cover - persistence guard
+                                _LOGGER.error("Failed to persist profile '%s': %s", pid, err, exc_info=True)
+                                errors["base"] = "profile_error"
+                                description_placeholders["error"] = str(err)
+                                await registry.async_delete_profile(pid)
+                                pid = None
+
+                    if not errors and pid is not None:
+                        self._new_profile_id = pid
+                        self._new_profile_label = profile_label or raw_name
+                        return await self.async_step_attach_sensors()
+
+        species_entry = catalog.get(selected_species) if selected_species else None
+        if selected_species and selected_species_label is None and species_entry:
+            candidate = species_entry.get("label")
+            if isinstance(candidate, str) and candidate.strip():
+                selected_species_label = candidate
+
+        cultivar_entry: Mapping[str, Any] | None = None
+        if selected_cultivar:
+            if species_entry and isinstance(species_entry.get("cultivars"), Mapping):
+                cultivar_entry = species_entry.get("cultivars", {}).get(selected_cultivar)
+            if cultivar_entry is None and selected_cultivar in cultivar_index:
+                _, cultivar_entry = cultivar_index[selected_cultivar]
+
+        species_hint = _build_species_hint(selected_species, species_entry)
+        cultivar_hint = _build_cultivar_hint(
+            selected_cultivar,
+            cultivar_entry,
+            str(selected_species_label) if selected_species_label else None,
         )
-        return self.async_show_form(step_id="add_profile", data_schema=schema)
+        description_placeholders["species_hint"] = species_hint
+        description_placeholders["cultivar_hint"] = cultivar_hint
+
+        scope_selector = sel.SelectSelector(sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS))
+        schema_fields: dict[Any, Any] = {
+            vol.Required("name"): str,
+            vol.Required(CONF_PROFILE_SCOPE, default=PROFILE_SCOPE_DEFAULT): scope_selector,
+            vol.Optional("copy_from"): vol.In(profiles) if profiles else str,
+        }
+        if species_options:
+            species_selector = sel.SelectSelector(
+                sel.SelectSelectorConfig(options=species_options)
+            )
+            if self._selected_species_id and self._selected_species_id in species_option_values:
+                schema_fields[vol.Optional("species_id", default=self._selected_species_id)] = species_selector
+            else:
+                schema_fields[vol.Optional("species_id")] = species_selector
+        if cultivar_options:
+            cultivar_selector = sel.SelectSelector(
+                sel.SelectSelectorConfig(options=cultivar_options)
+            )
+            if self._selected_cultivar_id and self._selected_cultivar_id in cultivar_option_values:
+                schema_fields[vol.Optional("cultivar_id", default=self._selected_cultivar_id)] = cultivar_selector
+            else:
+                schema_fields[vol.Optional("cultivar_id")] = cultivar_selector
+        schema = vol.Schema(schema_fields)
+        return self.async_show_form(
+            step_id="add_profile",
+            data_schema=schema,
+            errors=errors,
+            description_placeholders=description_placeholders,
+        )
 
     async def async_step_manage_profiles(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         profiles = self._profiles()
@@ -2593,37 +3523,134 @@ class OptionsFlow(config_entries.OptionsFlow):
         profile = profiles[self._pid]
         general = profile.get("general", {}) if isinstance(profile.get("general"), Mapping) else {}
         existing = general.get("sensors", {}) if isinstance(general.get("sensors"), Mapping) else {}
+        if user_input is None:
+            self._last_sensor_conflict_signature = None
+            self._manage_sensor_defaults = dict(existing)
+        roles = tuple(PROFILE_SENSOR_FIELDS.keys())
+        try:
+            suggestions = collect_sensor_suggestions(self.hass, roles, limit=6)
+        except Exception as err:  # pragma: no cover - defensive guard
+            _LOGGER.debug("Unable to collect profile sensor suggestions: %s", err)
+            suggestions = {}
+        if not isinstance(suggestions, Mapping):
+            suggestions = {}
+        hint_map, selector_entries = _normalise_sensor_suggestions(suggestions, roles)
+
         description_placeholders = {
             "profile": profile.get("name") or self._pid,
             "error": "",
+            "sensor_hints": format_sensor_hints(hint_map),
+            "conflict_warning": "",
         }
 
         schema_fields: dict[Any, Any] = {}
         for measurement, selector in PROFILE_SENSOR_FIELDS.items():
-            default_value = _default_sensor_value(existing.get(measurement))
+            defaults_source = self._manage_sensor_defaults or existing
+            default_value = _default_sensor_value(defaults_source.get(measurement))
             optional = (
                 vol.Optional(measurement)
                 if default_value is vol.UNDEFINED
                 else vol.Optional(measurement, default=default_value)
             )
-            schema_fields[optional] = vol.Any(selector, cv.string, vol.All([cv.string]))
+            options = selector_entries.get(measurement, [])
+            if options:
+                display_options = [
+                    {
+                        "value": entity_id,
+                        "label": f"{name} ({entity_id})" if name and name != entity_id else entity_id,
+                    }
+                    for entity_id, name in options
+                ]
+                selector_schema = sel.SelectSelector(
+                    sel.SelectSelectorConfig(options=display_options, custom_value=True)
+                )
+            else:
+                selector_schema = selector
+            schema_fields[optional] = vol.Any(selector_schema, cv.string, vol.All([cv.string]))
         schema = vol.Schema(schema_fields)
 
         errors: dict[str, str] = {}
         if user_input is not None:
             sensors: dict[str, str | list[str]] = {}
+            updated_defaults = dict(self._manage_sensor_defaults or {})
             for measurement in PROFILE_SENSOR_FIELDS:
                 raw = user_input.get(measurement)
                 normalised = _normalise_sensor_submission(raw)
                 if normalised is None:
+                    updated_defaults.pop(measurement, None)
                     continue
                 sensors[measurement] = normalised
+                updated_defaults[measurement] = normalised
+            self._manage_sensor_defaults = updated_defaults
+            validation = validate_sensor_links(self.hass, sensors)
+            if validation.warnings:
+                self._notify_sensor_warnings(validation.warnings)
+            else:
+                self._clear_sensor_warning()
+            if sensors:
+                conflicts = registry.sensor_conflicts(self._pid, sensors)
+                if conflicts:
+                    signature = ("manage_profile_sensors", self._pid, _sensor_selection_signature(sensors))
+                    if signature != self._last_sensor_conflict_signature:
+                        self._last_sensor_conflict_signature = signature
+                        conflict_message = _format_sensor_conflict_warning(conflicts)
+                        conflict_schema_fields: dict[Any, Any] = {}
+                        defaults_source = self._manage_sensor_defaults or existing
+                        for measurement, selector in PROFILE_SENSOR_FIELDS.items():
+                            default_value = _default_sensor_value(defaults_source.get(measurement))
+                            optional = (
+                                vol.Optional(measurement)
+                                if default_value is vol.UNDEFINED
+                                else vol.Optional(measurement, default=default_value)
+                            )
+                            options = selector_entries.get(measurement, [])
+                            if options:
+                                display_options = [
+                                    {
+                                        "value": entity_id,
+                                        "label": f"{name} ({entity_id})" if name and name != entity_id else entity_id,
+                                    }
+                                    for entity_id, name in options
+                                ]
+                                selector_schema = sel.SelectSelector(
+                                    sel.SelectSelectorConfig(options=display_options, custom_value=True)
+                                )
+                            else:
+                                selector_schema = selector
+                            conflict_schema_fields[optional] = vol.Any(selector_schema, cv.string, vol.All([cv.string]))
+                        conflict_schema = vol.Schema(conflict_schema_fields)
+                        description_placeholders["conflict_warning"] = (
+                            f"{conflict_message}\n" if conflict_message else ""
+                        )
+                        return self.async_show_form(
+                            step_id="manage_profile_sensors",
+                            data_schema=conflict_schema,
+                            errors=errors,
+                            description_placeholders=description_placeholders,
+                        )
+            if validation.errors:
+                description_placeholders["error"] = collate_issue_messages(validation.errors)
+                for issue in validation.errors:
+                    role_key = issue.role if issue.role in PROFILE_SENSOR_FIELDS else "base"
+                    if role_key == "base":
+                        errors.setdefault("base", "sensor_validation_failed")
+                        continue
+                    errors[role_key] = issue.issue
+                errors.setdefault("base", "sensor_validation_failed")
+                return self.async_show_form(
+                    step_id="manage_profile_sensors",
+                    data_schema=schema,
+                    errors=errors,
+                    description_placeholders=description_placeholders,
+                )
             try:
                 await registry.async_set_profile_sensors(self._pid, sensors)
             except ValueError as err:
                 errors["base"] = "sensor_validation_failed"
                 description_placeholders["error"] = str(err)
             else:
+                self._last_sensor_conflict_signature = None
+                self._manage_sensor_defaults = None
                 return self.async_create_entry(title="", data={})
 
         return self.async_show_form(
@@ -2645,26 +3672,30 @@ class OptionsFlow(config_entries.OptionsFlow):
             profile.get("resolved_targets") if isinstance(profile.get("resolved_targets"), Mapping) else {}
         )
 
-        def _resolve_default(key: str) -> str:
+        def _resolve_default(key: str) -> float | None:
             if isinstance(thresholds_payload, Mapping):
                 value = thresholds_payload.get(key)
-                if isinstance(value, int | float):
-                    return str(value)
-                if isinstance(value, str) and value.strip():
-                    return value
+                coerced = _coerce_threshold_value(value)
+                if coerced is not None:
+                    return coerced
             if isinstance(resolved_payload, Mapping):
                 value = resolved_payload.get(key)
                 if isinstance(value, Mapping):
                     raw = value.get("value")
-                    if isinstance(raw, int | float):
-                        return str(raw)
-                    if isinstance(raw, str) and raw.strip():
-                        return raw
-            return ""
+                    coerced = _coerce_threshold_value(raw)
+                    if coerced is not None:
+                        return coerced
+            return None
 
         schema_fields: dict[Any, Any] = {}
         for key in MANUAL_THRESHOLD_FIELDS:
-            schema_fields[vol.Optional(key, default=_resolve_default(key))] = vol.Any(str, int, float)
+            selector = MANUAL_THRESHOLD_SELECTORS.get(key)
+            default = _resolve_default(key)
+            option = vol.Optional(key) if default is None else vol.Optional(key, default=default)
+            if selector is None:
+                schema_fields[option] = vol.Any(str, int, float)
+            else:
+                schema_fields[option] = vol.Any(selector, str, int, float)
         schema = vol.Schema(schema_fields)
 
         errors: dict[str, str] = {}
@@ -2804,19 +3835,81 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
         pid = self._new_profile_id
+        if user_input is None:
+            self._last_sensor_conflict_signature = None
+            self._attach_sensor_defaults = None
+        roles = ("temperature", "humidity", "illuminance", "moisture")
+        try:
+            suggestions = collect_sensor_suggestions(self.hass, roles, limit=6)
+        except Exception as err:  # pragma: no cover - defensive guard
+            _LOGGER.debug("Unable to collect profile sensor suggestions: %s", err)
+            suggestions = {}
+        if not isinstance(suggestions, Mapping):
+            suggestions = {}
+        hint_map, selector_entries = _normalise_sensor_suggestions(suggestions, roles)
+
         errors: dict[str, str] = {}
         if user_input is not None and pid:
             sensors: dict[str, str] = {}
             for role in ("temperature", "humidity", "illuminance", "moisture"):
                 if ent := user_input.get(role):
                     sensors[role] = ent
+            defaults = dict(self._attach_sensor_defaults or {})
+            defaults.update({key: value for key, value in sensors.items()})
+            self._attach_sensor_defaults = defaults if defaults else None
 
             skip_requested = bool(user_input.get("skip_linking"))
             if not sensors or skip_requested:
                 self._clear_sensor_warning()
                 if pid:
                     await registry.async_link_sensors(pid, {})
+                    label = self._new_profile_label or pid
+                    self._notify_linking_pending(label, pid)
                 return self.async_create_entry(title="", data={})
+
+            conflicts = registry.sensor_conflicts(pid, sensors)
+            if conflicts:
+                signature = ("attach_profile_sensors", pid, _sensor_selection_signature(sensors))
+                if signature != self._last_sensor_conflict_signature:
+                    self._last_sensor_conflict_signature = signature
+                    conflict_message = _format_sensor_conflict_warning(conflicts)
+                    conflict_fields: dict[Any, Any] = {}
+                    defaults_source = self._attach_sensor_defaults or {}
+                    for role in ("temperature", "humidity", "illuminance", "moisture"):
+                        default_value = defaults_source.get(role)
+                        options = selector_entries.get(role, [])
+                        if options:
+                            display_options = [
+                                {
+                                    "value": entity_id,
+                                    "label": f"{name} ({entity_id})" if name and name != entity_id else entity_id,
+                                }
+                                for entity_id, name in options
+                            ]
+                            selector = sel.SelectSelector(
+                                sel.SelectSelectorConfig(options=display_options, custom_value=True)
+                            )
+                        else:
+                            selector = PROFILE_SENSOR_FIELDS[role]
+                        optional = (
+                            vol.Optional(role)
+                            if default_value in (None, "")
+                            else vol.Optional(role, default=default_value)
+                        )
+                        conflict_fields[optional] = vol.Any(selector, cv.string, vol.All([cv.string]))
+                    conflict_fields[vol.Optional("skip_linking", default=False)] = bool
+                    conflict_schema = vol.Schema(conflict_fields)
+                    description_placeholders = {
+                        "profile": self._new_profile_label or "",
+                        "sensor_hints": format_sensor_hints(hint_map),
+                        "conflict_warning": f"{conflict_message}\n" if conflict_message else "",
+                    }
+                    return self.async_show_form(
+                        step_id="attach_sensors",
+                        data_schema=conflict_schema,
+                        errors=errors,
+                        description_placeholders=description_placeholders,
+                    )
 
             validation = validate_sensor_links(self.hass, sensors)
             for issue in validation.errors:
@@ -2826,26 +3919,58 @@ class OptionsFlow(config_entries.OptionsFlow):
             else:
                 self._clear_sensor_warning()
             if not errors:
+                self._clear_linking_pending(pid)
                 await registry.async_link_sensors(pid, sensors)
+                self._last_sensor_conflict_signature = None
+                self._attach_sensor_defaults = None
                 return self.async_create_entry(title="", data={})
-        schema = vol.Schema(
-            {
-                vol.Optional("temperature"): sel.EntitySelector(
-                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["temperature"])
-                ),
-                vol.Optional("humidity"): sel.EntitySelector(
-                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["humidity"])
-                ),
-                vol.Optional("illuminance"): sel.EntitySelector(
-                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["illuminance"])
-                ),
-                vol.Optional("moisture"): sel.EntitySelector(
-                    sel.EntitySelectorConfig(domain=["sensor"], device_class=["moisture"])
-                ),
-                vol.Optional("skip_linking", default=False): bool,
-            }
+        schema_fields: dict[Any, Any] = {}
+        for role in roles:
+            options = selector_entries.get(role, [])
+            default_value = (self._attach_sensor_defaults or {}).get(role)
+            if options:
+                selector = sel.SelectSelector(
+                    sel.SelectSelectorConfig(
+                        options=[
+                            {
+                                "value": entity_id,
+                                "label": f"{name} ({entity_id})" if name and name != entity_id else entity_id,
+                            }
+                            for entity_id, name in options
+                        ],
+                        custom_value=True,
+                    )
+                )
+                optional = (
+                    vol.Optional(role)
+                    if default_value in (None, "")
+                    else vol.Optional(role, default=default_value)
+                )
+                schema_fields[optional] = vol.Any(selector, cv.string, vol.All([cv.string]))
+            else:
+                optional = (
+                    vol.Optional(role)
+                    if default_value in (None, "")
+                    else vol.Optional(role, default=default_value)
+                )
+                schema_fields[optional] = vol.Any(
+                    PROFILE_SENSOR_FIELDS[role],
+                    cv.string,
+                    vol.All([cv.string]),
+                )
+        schema_fields[vol.Optional("skip_linking", default=False)] = bool
+        schema = vol.Schema(schema_fields)
+        description_placeholders = {
+            "profile": self._new_profile_label or "",
+            "sensor_hints": format_sensor_hints(hint_map),
+            "conflict_warning": "",
+        }
+        return self.async_show_form(
+            step_id="attach_sensors",
+            data_schema=schema,
+            errors=errors,
+            description_placeholders=description_placeholders,
         )
-        return self.async_show_form(step_id="attach_sensors", data_schema=schema, errors=errors)
 
     async def async_step_calibration(self, user_input=None):
         schema = vol.Schema(
