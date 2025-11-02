@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 from collections.abc import Iterable, Mapping, Sequence
+from contextlib import suppress
 from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
@@ -108,6 +109,22 @@ _THRESHOLD_ALIAS_MAP = {
 }
 
 
+_THRESHOLD_METHOD_SYNONYMS = {
+    "manual": "manual",
+    "manual entry": "manual",
+    "enter manually": "manual",
+    "skip": "skip",
+    "skip for now": "skip",
+    "skip this step": "skip",
+    "openplantbook": "openplantbook",
+    "from openplantbook": "openplantbook",
+    "use openplantbook": "openplantbook",
+    "copy": "copy",
+    "copy an existing profile": "copy",
+    "copy existing profile": "copy",
+}
+
+
 def _build_threshold_selector_metadata() -> dict[str, dict[str, Any]]:
     """Return selector metadata for manual threshold fields."""
 
@@ -141,48 +158,112 @@ def _build_threshold_selector_metadata() -> dict[str, dict[str, Any]]:
 MANUAL_THRESHOLD_METADATA = _build_threshold_selector_metadata()
 
 
-class _CompatNumberSelector:
-    """Fallback number selector wrapper for older Home Assistant versions."""
+def _build_select_selector(
+    options: Sequence[Any],
+    *,
+    custom_value: bool | None = None,
+    multiple: bool | None = None,
+    translation_key: str | None = None,
+) -> Any | None:
+    """Return a SelectSelector instance when supported by the host version."""
 
-    __slots__ = ("config",)
+    selector_factory = getattr(sel, "SelectSelector", None)
+    if selector_factory is None:
+        return None
 
-    def __init__(self, config: dict[str, Any]) -> None:
-        self.config = config
+    config_cls = getattr(sel, "SelectSelectorConfig", None)
 
-    def __call__(self, value: Any) -> Any:
-        return value
+    option_variants: list[Sequence[Any]] = [list(options)]
+
+    simple_options: list[Any] = []
+    simple_supported = True
+    for option in options:
+        if isinstance(option, Mapping):
+            value = option.get("value")
+            if value is None:
+                simple_supported = False
+                break
+            simple_options.append(value)
+        else:
+            simple_options.append(option)
+    if simple_supported and simple_options and simple_options != option_variants[0]:
+        option_variants.append(list(simple_options))
+
+    base_kwargs: dict[str, Any] = {}
+    if custom_value is not None:
+        base_kwargs["custom_value"] = custom_value
+    if multiple is not None:
+        base_kwargs["multiple"] = multiple
+    if translation_key is not None:
+        base_kwargs["translation_key"] = translation_key
+
+    candidates: list[Any] = []
+    for variant in option_variants:
+        config_kwargs = dict(base_kwargs)
+        config_kwargs["options"] = list(variant)
+        if config_cls is not None:
+            with suppress(TypeError):
+                candidates.append(config_cls(**config_kwargs))
+        candidates.append(dict(config_kwargs))
+
+    for candidate in candidates:
+        try:
+            return selector_factory(candidate)
+        except TypeError:
+            continue
+        except Exception:  # pragma: no cover - defensive guard for selector regressions
+            continue
+
+    return None
 
 
 def _build_threshold_selectors() -> dict[str, Any]:
     """Return NumberSelector instances for each manual threshold field."""
 
     selectors: dict[str, Any] = {}
-    number_mode = getattr(sel, "NumberSelectorMode", None)
-    mode_value = getattr(number_mode, "BOX", "box") if number_mode is not None else "box"
     selector_factory = getattr(sel, "NumberSelector", None)
     if selector_factory is None:
-        selector_factory = _CompatNumberSelector
+        return selectors
+
+    number_mode = getattr(sel, "NumberSelectorMode", None)
+    mode_value = getattr(number_mode, "BOX", "box") if number_mode is not None else "box"
     config_cls = getattr(sel, "NumberSelectorConfig", None)
 
     for field, meta in MANUAL_THRESHOLD_METADATA.items():
+        candidates: list[Any] = []
         if config_cls is not None:
-            config = config_cls(
-                min=meta.get("min"),
-                max=meta.get("max"),
-                step=meta.get("step"),
-                unit_of_measurement=meta.get("unit"),
-                mode=mode_value,
-            )
-            selectors[field] = selector_factory(config)
-            continue
-
+            with suppress(TypeError):
+                candidates.append(
+                    config_cls(
+                        min=meta.get("min"),
+                        max=meta.get("max"),
+                        step=meta.get("step"),
+                        unit_of_measurement=meta.get("unit"),
+                        mode=mode_value,
+                    )
+                )
         config_dict: dict[str, Any] = {"mode": mode_value}
         for key in ("min", "max", "step", "unit"):
             meta_key = "unit_of_measurement" if key == "unit" else key
-            value = meta.get(key if key != "unit" else "unit")
+            value = meta.get("unit" if key == "unit" else key)
             if value is not None:
                 config_dict[meta_key] = value
-        selectors[field] = selector_factory(config_dict)
+        candidates.append(config_dict)
+
+        selector: Any | None = None
+        for candidate in candidates:
+            try:
+                selector = selector_factory(candidate)
+            except TypeError:
+                continue
+            except Exception:  # pragma: no cover - defensive guard for selector regressions
+                continue
+            else:
+                break
+
+        if selector is not None:
+            selectors[field] = selector
+
     return selectors
 
 
@@ -726,35 +807,60 @@ def _filter_sensor_warning_payload(items: Sequence[Any]) -> list[Any]:
     return filtered
 
 
-def _coerce_threshold_source_method(value: Any) -> str:
+def _coerce_threshold_source_method(value: Any, _visited: set[int] | None = None) -> str:
     """Best-effort conversion of selector submissions to a method string."""
 
     if value is None:
         return ""
 
     if isinstance(value, str):
-        return value.strip()
+        text = value.strip()
+        if not text:
+            return ""
+        return _THRESHOLD_METHOD_SYNONYMS.get(text.casefold(), text)
+
+    if _visited is None:
+        _visited = set()
+
+    marker = id(value)
+    if marker in _visited:
+        return ""
+    _visited.add(marker)
 
     if isinstance(value, Mapping):
         for key in ("value", "id", "option", "method", "name"):
             candidate = value.get(key)
-            if isinstance(candidate, str):
-                cleaned = candidate.strip()
-                if cleaned:
-                    return cleaned
+            cleaned = _coerce_threshold_source_method(candidate, _visited)
+            if cleaned:
+                return cleaned
         for candidate in value.values():
-            if isinstance(candidate, str):
-                cleaned = candidate.strip()
-                if cleaned:
-                    return cleaned
-
-    if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
-        for item in value:
-            cleaned = _coerce_threshold_source_method(item)
+            cleaned = _coerce_threshold_source_method(candidate, _visited)
             if cleaned:
                 return cleaned
 
-    return str(value).strip()
+    attribute_candidates = ("value", "id", "option", "method", "name")
+    for attribute in attribute_candidates:
+        if not hasattr(value, attribute):
+            continue
+        try:
+            candidate = getattr(value, attribute)
+        except Exception:  # pragma: no cover - defensive guard
+            continue
+        cleaned = _coerce_threshold_source_method(candidate, _visited)
+        if cleaned:
+            return cleaned
+
+    if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
+        for item in value:
+            cleaned = _coerce_threshold_source_method(item, _visited)
+            if cleaned:
+                return cleaned
+
+    text = str(value).strip()
+    if not text:
+        return ""
+
+    return _THRESHOLD_METHOD_SYNONYMS.get(text.casefold(), text)
 
 
 def _build_manual_threshold_payload(thresholds: Mapping[str, Any], *, source: str = "manual") -> dict[str, Any]:
@@ -1760,9 +1866,21 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if templates_available:
             options.insert(1, {"value": "copy", "label": "Copy an existing profile"})
 
-        schema = vol.Schema(
-            {vol.Required("method", default="manual"): sel.SelectSelector(sel.SelectSelectorConfig(options=options))}
-        )
+        selector = _build_select_selector(options)
+
+        field = vol.Required("method", default="manual")
+        if selector is None:
+            valid_values: list[str] = []
+            for option in options:
+                if isinstance(option, Mapping):
+                    value = option.get("value")
+                    if isinstance(value, str):
+                        valid_values.append(value)
+                elif isinstance(option, str):
+                    valid_values.append(option)
+            schema = vol.Schema({field: vol.In(valid_values or ("manual",))})
+        else:
+            schema = vol.Schema({field: selector})
         return self.async_show_form(step_id="threshold_source", data_schema=schema)
 
     async def async_step_threshold_copy(self, user_input=None):
