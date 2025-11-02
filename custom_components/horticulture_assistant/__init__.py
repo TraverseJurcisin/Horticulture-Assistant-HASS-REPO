@@ -5,6 +5,7 @@ import contextlib
 import importlib
 import importlib.util
 import logging
+import sys
 import time
 from collections.abc import Mapping
 from copy import deepcopy
@@ -163,6 +164,25 @@ def _stage_satisfied(status: str | None) -> bool:
 
 _ONBOARDING_STAGE_ORDER: tuple[str, ...] = tuple(_ONBOARDING_STAGE_LABELS)
 _ONBOARDING_TIMELINE_LIMIT = 50
+
+
+def __getattr__(name: str) -> Any:
+    """Dynamically expose child modules as package attributes.
+
+    Tests patch paths like ``custom_components.horticulture_assistant.profile.store``
+    before explicitly importing those submodules. Python only populates attributes
+    for child modules on a package once they have been imported, so lookups would
+    fail with ``AttributeError``. Expose a lazy importer that resolves the module
+    when an attribute is first accessed, mirroring Home Assistant's packaging.
+    """
+
+    try:
+        module = importlib.import_module(f".{name}", __name__)
+    except ModuleNotFoundError as exc:  # pragma: no cover - passthrough to default error
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}") from exc
+    else:
+        setattr(sys.modules[__name__], name, module)
+        return module
 
 
 def _stage_issue_id(entry_id: str | None, stage: str) -> str:
@@ -878,6 +898,30 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     ):
         dataset_ready, _ = await manager.guard_async("dataset_health", async_setup_dataset_health(hass))
 
+    existing_errors = dict(entry_data.get("onboarding_errors", {}))
+    existing_state = entry_data.get("onboarding_stage_state")
+    if not isinstance(existing_state, dict):
+        existing_state = {}
+    existing_history = entry_data.get("onboarding_history")
+    if not isinstance(existing_history, list):
+        existing_history = []
+    existing_timeline = entry_data.get("onboarding_timeline")
+    if not isinstance(existing_timeline, list):
+        existing_timeline = []
+    last_completed = entry_data.get("onboarding_last_completed")
+
+    entry_data = store_entry_data(hass, entry)
+    entry_data["onboarding_stage_state"] = existing_state
+    entry_data["onboarding_history"] = existing_history
+    entry_data["onboarding_timeline"] = existing_timeline
+    if last_completed:
+        entry_data["onboarding_last_completed"] = last_completed
+    manager.rebind(entry_data)
+    if existing_errors:
+        entry_data["onboarding_errors"] = existing_errors
+    else:
+        entry_data.setdefault("onboarding_errors", {})
+
     base_url = entry.options.get(CONF_BASE_URL, entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL))
     api_key = entry.options.get(CONF_API_KEY, entry.data.get(CONF_API_KEY, ""))
     model = entry.options.get(CONF_MODEL, entry.data.get(CONF_MODEL, DEFAULT_MODEL))
@@ -991,28 +1035,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         update_minutes,
     )
 
-    existing_errors = dict(entry_data.get("onboarding_errors", {}))
-    existing_state = entry_data.get("onboarding_stage_state")
-    if not isinstance(existing_state, dict):
-        existing_state = {}
-    existing_history = entry_data.get("onboarding_history")
-    if not isinstance(existing_history, list):
-        existing_history = []
-    existing_timeline = entry_data.get("onboarding_timeline")
-    if not isinstance(existing_timeline, list):
-        existing_timeline = []
-    last_completed = entry_data.get("onboarding_last_completed")
-    entry_data = store_entry_data(hass, entry)
-    entry_data["onboarding_stage_state"] = existing_state
-    entry_data["onboarding_history"] = existing_history
-    entry_data["onboarding_timeline"] = existing_timeline
-    if last_completed:
-        entry_data["onboarding_last_completed"] = last_completed
-    manager.rebind(entry_data)
-    if existing_errors:
-        entry_data["onboarding_errors"] = existing_errors
-    else:
-        entry_data.setdefault("onboarding_errors", {})
     entry_data["dataset_monitor_attached"] = dataset_ready
     entry_data.update(
         {

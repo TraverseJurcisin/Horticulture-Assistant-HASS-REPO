@@ -56,7 +56,11 @@ from .profile_store import ProfileStore, ProfileStoreError
 from .sensor_catalog import SensorSuggestion, collect_sensor_suggestions, format_sensor_hints
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
-from .utils.entry_helpers import get_entry_data, get_primary_profile_id
+from .utils.entry_helpers import (
+    get_entry_data,
+    get_primary_profile_id,
+    update_entry_data,
+)
 from .utils.json_io import load_json, save_json
 from .utils.nutrient_schedule import generate_nutrient_schedule
 from .utils.plant_registry import register_plant
@@ -1352,10 +1356,24 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         self._template_filter: str | None = None
 
     async def async_step_user(self, user_input=None):
-        entries = self._async_current_entries()
-        if entries:
-            self._existing_entry = entries[0]
-            return await self.async_step_post_setup(user_input)
+        context = getattr(self, "context", {}) or {}
+        source = context.get("source")
+        source_user = getattr(config_entries, "SOURCE_USER", "user")
+        if source not in (source_user, None):
+            entry_id = context.get("config_entry_id") or context.get("entry_id")
+            entries = self._async_current_entries()
+            target_entry = None
+            if entries:
+                if entry_id:
+                    for entry in entries:
+                        if getattr(entry, "entry_id", None) == entry_id:
+                            target_entry = entry
+                            break
+                if target_entry is None:
+                    target_entry = entries[0]
+            if target_entry is not None:
+                self._existing_entry = target_entry
+                return await self.async_step_post_setup(user_input)
 
         if user_input is None:
             schema = vol.Schema(
@@ -2603,6 +2621,15 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         options[CONF_PROFILES] = profiles
 
         self.hass.config_entries.async_update_entry(entry, options=options)
+        try:
+            update_entry_data(self.hass, entry)
+        except Exception as err:  # pragma: no cover - defensive guard
+            _LOGGER.debug(
+                "Unable to refresh entry data for '%s' after adding profile '%s': %s",
+                getattr(entry, "entry_id", "unknown"),
+                plant_id,
+                err,
+            )
 
     @staticmethod
     def async_get_options_flow(config_entry):

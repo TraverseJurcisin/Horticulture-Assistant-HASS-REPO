@@ -1,5 +1,6 @@
 import asyncio
 import datetime
+import importlib
 import sys
 import types
 from collections.abc import Callable
@@ -471,3 +472,8 @@ def enable_custom_integrations():
 def hass_admin_user():
     """Provide a simple stub admin user."""
     return types.SimpleNamespace()
+
+
+hca_module = importlib.import_module("custom_components.horticulture_assistant")
+hca_module.__init__ = hca_module  # type: ignore[attr-defined]
+sys.modules["custom_components.horticulture_assistant.__init__"] = hca_module

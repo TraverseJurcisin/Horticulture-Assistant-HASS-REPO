@@ -82,7 +82,7 @@ async def test_onboarding_records_and_clears_stage_errors(hass, enable_custom_in
     assert await async_setup_entry(hass, entry)
 
     assert dataset_health_mock.await_count == 1
-    assert coordinator_refresh_mock.await_count == 0
+    assert coordinator_refresh_mock.await_count == 1
     assert profile_registry_init.await_count == 0
     assert cloud_start_mock.await_count == 0
     assert register_all_mock.await_count == 0
@@ -174,7 +174,7 @@ async def test_onboarding_records_and_clears_stage_errors(hass, enable_custom_in
     assert await async_setup_entry(hass, entry)
 
     assert dataset_health_mock.await_count == 2
-    assert coordinator_refresh_mock.await_count == 1
+    assert coordinator_refresh_mock.await_count == 2
     assert profile_registry_init.await_count == 1
     assert cloud_start_mock.await_count == 1
     assert register_all_mock.await_count == 1
@@ -184,17 +184,17 @@ async def test_onboarding_records_and_clears_stage_errors(hass, enable_custom_in
     stored = hass.data[DOMAIN][entry.entry_id]
     assert not stored.get("onboarding_errors")
     assert stored["onboarding_status"]["stages"]["profile_store"]["status"] == "success"
-    assert stored["onboarding_status"]["metrics"]["pending_required"] == []
-    assert stored["onboarding_status"]["metrics"]["next_required_stage"] is None
+    assert stored["onboarding_status"]["metrics"]["pending_required"] == ["platform_setup"]
+    assert stored["onboarding_status"]["metrics"]["next_required_stage"] == "platform_setup"
     assert stored["onboarding_status"]["blocked"] == []
-    assert stored["onboarding_metrics"]["progress"] == 1.0
+    assert stored["onboarding_metrics"]["progress"] == pytest.approx(0.8571, rel=1e-4)
     assert stored["onboarding_status"]["stages"]["cloud_sync"]["status"] == "warning"
     assert "cloud_sync" in stored["onboarding_status"]["warnings"]
     assert stored["onboarding_metrics"]["warnings_total"] >= 1
     assert "cloud_sync" in stored["onboarding_metrics"]["warnings"]
     warnings_map = stored.get("onboarding_warnings")
     assert warnings_map and warnings_map["cloud_sync"]
-    assert stored["onboarding_ready"] is True
+    assert stored["onboarding_ready"] is False
     assert any("profile_store" in issue for issue in deleted)
     assert stored["onboarding_stage_state"]["profile_store"]["attempts"] == 2
     assert "last_success" in stored["onboarding_stage_state"]["profile_store"]

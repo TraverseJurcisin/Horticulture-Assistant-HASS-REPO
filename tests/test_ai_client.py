@@ -18,6 +18,15 @@ ai_utils = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ai_utils)
 extract_numbers = ai_utils.extract_numbers
 
+_ORIGINAL_MODULES = {
+    name: sys.modules.get(name)
+    for name in (
+        "custom_components",
+        "custom_components.horticulture_assistant",
+        "custom_components.horticulture_assistant.ai_utils",
+    )
+}
+
 # Provide package stubs so ai_client can perform relative imports without executing the full integration.
 root_pkg = types.ModuleType("custom_components")
 root_pkg.__path__ = []
@@ -39,6 +48,13 @@ AIClient = ai_client_mod.AIClient
 async_recommend_variable = ai_client_mod.async_recommend_variable
 _AI_CACHE = ai_client_mod._AI_CACHE
 _normalise_cache_value = ai_client_mod._normalise_cache_value
+
+# Restore the real integration modules so subsequent tests can import them.
+for module_name, module in _ORIGINAL_MODULES.items():
+    if module is None:
+        sys.modules.pop(module_name, None)
+    else:
+        sys.modules[module_name] = module
 
 
 def test_extract_numbers_filters_duplicates_and_range():
