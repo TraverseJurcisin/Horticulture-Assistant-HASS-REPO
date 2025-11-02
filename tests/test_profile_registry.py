@@ -14,10 +14,10 @@ from custom_components.horticulture_assistant.const import (
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
     DOMAIN,
+    ISSUE_PROFILE_SENSOR_PREFIX,
     NOTIFICATION_PROFILE_LINEAGE,
     NOTIFICATION_PROFILE_SENSORS,
     NOTIFICATION_PROFILE_VALIDATION,
-    ISSUE_PROFILE_SENSOR_PREFIX,
     PROFILE_SCOPE_DEFAULT,
 )
 from custom_components.horticulture_assistant.profile import store as profile_store
@@ -133,9 +133,8 @@ async def test_async_add_profile_rolls_back_on_save_error(hass):
     reg = ProfileRegistry(hass, entry)
     await reg.async_load()
 
-    with patch.object(reg, "async_save", AsyncMock(side_effect=OSError("disk full"))):
-        with pytest.raises(ValueError) as err:
-            await reg.async_add_profile("Basil")
+    with patch.object(reg, "async_save", AsyncMock(side_effect=OSError("disk full"))), pytest.raises(ValueError) as err:
+        await reg.async_add_profile("Basil")
 
     assert "disk full" in str(err.value)
     assert entry.options[CONF_PROFILES] == {}
@@ -674,9 +673,7 @@ async def test_missing_sensor_creates_issue_and_notification(hass, monkeypatch):
     await hass.async_block_till_done()
 
     assert any(issue_id.startswith(ISSUE_PROFILE_SENSOR_PREFIX) for issue_id, _ in created)
-    sensor_issue_id = next(
-        issue_id for issue_id, _ in created if issue_id.startswith(ISSUE_PROFILE_SENSOR_PREFIX)
-    )
+    sensor_issue_id = next(issue_id for issue_id, _ in created if issue_id.startswith(ISSUE_PROFILE_SENSOR_PREFIX))
 
     assert notifications
     latest = notifications[-1]

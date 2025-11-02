@@ -12,10 +12,9 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 import voluptuous as vol
+from homeassistant.helpers import selector as sel
 
 from pytest_homeassistant_custom_component.common import MockConfigEntry
-
-from homeassistant.helpers import selector as sel
 
 DOMAIN = "horticulture_assistant"
 CONF_API_KEY = "api_key"
@@ -1344,9 +1343,10 @@ async def test_config_flow_threshold_form_uses_number_selectors(hass):
         assert isinstance(validator, vol.Any)
         selectors = []
         for value in validator.validators:
-            if selector_type is not None and isinstance(value, selector_type):
-                selectors.append(value)
-            elif selector_type is None and isinstance(value, cfg._CompatNumberSelector):
+            is_selector = (selector_type is not None and isinstance(value, selector_type)) or (
+                selector_type is None and isinstance(value, cfg._CompatNumberSelector)
+            )
+            if is_selector:
                 selectors.append(value)
         assert selectors, f"expected number selector for {field}"
         selector = selectors[0]
@@ -2596,10 +2596,13 @@ async def test_options_flow_add_profile_attach_sensors(hass):
     result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
     assert result["type"] == "form" and result["step_id"] == "attach_sensors"
     assert "sensor.temp" in result["description_placeholders"]["sensor_hints"]
-    with patch(
-        "custom_components.horticulture_assistant.config_flow._has_registered_service",
-        return_value=True,
-    ), patch.object(hass.services, "async_call", AsyncMock()) as async_call:
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow._has_registered_service",
+            return_value=True,
+        ),
+        patch.object(hass.services, "async_call", AsyncMock()) as async_call,
+    ):
         result2 = await flow.async_step_attach_sensors({"temperature": "sensor.temp"})
         await hass.async_block_till_done()
     assert result2["type"] == "create_entry"
@@ -2628,10 +2631,13 @@ async def test_options_flow_attach_sensors_allows_skip(hass):
     result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
     assert result["type"] == "form" and result["step_id"] == "attach_sensors"
 
-    with patch(
-        "custom_components.horticulture_assistant.config_flow._has_registered_service",
-        return_value=True,
-    ), patch.object(hass.services, "async_call", AsyncMock()) as async_call:
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow._has_registered_service",
+            return_value=True,
+        ),
+        patch.object(hass.services, "async_call", AsyncMock()) as async_call,
+    ):
         result2 = await flow.async_step_attach_sensors({})
         await hass.async_block_till_done()
     assert result2["type"] == "create_entry"
@@ -2684,10 +2690,13 @@ async def test_options_flow_attach_sensors_conflict_requires_confirmation(hass):
     warning = conflict["description_placeholders"].get("conflict_warning", "")
     assert "Warning" in warning
 
-    with patch(
-        "custom_components.horticulture_assistant.config_flow._has_registered_service",
-        return_value=True,
-    ), patch.object(hass.services, "async_call", AsyncMock()):
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow._has_registered_service",
+            return_value=True,
+        ),
+        patch.object(hass.services, "async_call", AsyncMock()),
+    ):
         result = await flow.async_step_attach_sensors({"temperature": "sensor.shared"})
         await hass.async_block_till_done()
 
@@ -2947,21 +2956,13 @@ async def test_options_flow_add_profile_species_hint_defaults(hass):
         return_value=({}, {})
     )
 
-    result = await flow.async_step_add_profile(
-        {"name": "", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}
-    )
+    result = await flow.async_step_add_profile({"name": "", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
 
     assert result["type"] == "form"
     placeholders = result.get("description_placeholders")
     assert placeholders is not None
-    assert (
-        placeholders.get("species_hint")
-        == "No species template selected — profile will rely on manual defaults."
-    )
-    assert (
-        placeholders.get("cultivar_hint")
-        == "No cultivar overrides selected — using the base species defaults."
-    )
+    assert placeholders.get("species_hint") == "No species template selected — profile will rely on manual defaults."
+    assert placeholders.get("cultivar_hint") == "No cultivar overrides selected — using the base species defaults."
 
 
 async def test_options_flow_attach_sensors_validation_errors(hass):
@@ -3031,9 +3032,7 @@ async def test_options_flow_add_profile_persist_failure_rolls_back(hass):
     from custom_components.horticulture_assistant.profile_store import ProfileStoreError
 
     store = AsyncMock()
-    store.async_create_profile.side_effect = ProfileStoreError(
-        "write failed", user_message="disk full"
-    )
+    store.async_create_profile.side_effect = ProfileStoreError("write failed", user_message="disk full")
 
     with patch(
         "custom_components.horticulture_assistant.config_flow.get_entry_data",

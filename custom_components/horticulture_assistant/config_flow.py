@@ -192,7 +192,7 @@ MANUAL_THRESHOLD_SELECTORS = _build_threshold_selectors()
 def _coerce_threshold_value(value: Any) -> float | None:
     """Return ``value`` as a float when possible."""
 
-    if isinstance(value, (int, float)):
+    if isinstance(value, int | float):
         return float(value)
     if isinstance(value, str):
         text = value.strip()
@@ -253,9 +253,7 @@ def _sensor_role_label(role: str | None) -> str:
     return SENSOR_CONFLICT_ROLE_LABELS.get(role, role.replace("_", " ").title())
 
 
-def _format_sensor_conflict_warning(
-    conflicts: Mapping[str, Mapping[str, tuple[str, tuple[str, ...]]]]
-) -> str:
+def _format_sensor_conflict_warning(conflicts: Mapping[str, Mapping[str, tuple[str, tuple[str, ...]]]]) -> str:
     """Build a human-readable warning for conflicting sensor assignments."""
 
     if not conflicts:
@@ -264,9 +262,7 @@ def _format_sensor_conflict_warning(
     lines: list[str] = ["Warning: Some sensors are already linked to other profiles:", ""]
     for entity_id, mappings in sorted(conflicts.items()):
         lines.append(f"- {entity_id}")
-        for other_pid, (display, roles) in sorted(
-            mappings.items(), key=lambda item: (item[1][0].casefold(), item[0])
-        ):
+        for other_pid, (display, roles) in sorted(mappings.items(), key=lambda item: (item[1][0].casefold(), item[0])):
             label = display or other_pid
             if roles:
                 role_text = ", ".join(_sensor_role_label(role) for role in roles)
@@ -286,10 +282,7 @@ def _sensor_selection_signature(mapping: Mapping[str, Any]) -> tuple[tuple[str, 
         normalised = _normalise_sensor_submission(value)
         if normalised is None:
             continue
-        if isinstance(normalised, list):
-            entries = tuple(sorted(normalised))
-        else:
-            entries = (normalised,)
+        entries = tuple(sorted(normalised)) if isinstance(normalised, list) else (normalised,)
         signature.append((str(key), entries))
     return tuple(sorted(signature))
 
@@ -376,11 +369,11 @@ def _first_text(*values: Any) -> str | None:
 def _extract_catalog_metadata(payload: Mapping[str, Any]) -> tuple[str | None, str | None, str | None, str | None]:
     """Return species/cultivar identifiers and display labels from ``payload``."""
 
-    general = payload.get("general") if isinstance(payload.get("general"), Mapping) else None
-    local = payload.get("local") if isinstance(payload.get("local"), Mapping) else None
-    local_metadata = local.get("metadata") if isinstance(local, Mapping) and isinstance(local.get("metadata"), Mapping) else None
-    library = payload.get("library") if isinstance(payload.get("library"), Mapping) else None
-    library_identity = library.get("identity") if isinstance(library, Mapping) and isinstance(library.get("identity"), Mapping) else None
+    general = _as_mapping(payload.get("general"))
+    local = _as_mapping(payload.get("local"))
+    local_metadata = _as_mapping(local.get("metadata")) if local else None
+    library = _as_mapping(payload.get("library"))
+    library_identity = _as_mapping(library.get("identity")) if library else None
 
     species_id = _first_text(
         local_metadata.get("requested_species_id") if isinstance(local_metadata, Mapping) else None,
@@ -431,7 +424,7 @@ def _extract_template_parent(payload: Mapping[str, Any]) -> str | None:
     """Attempt to determine the parent species identifier for a template."""
 
     parents = payload.get("parents")
-    if isinstance(parents, Sequence) and not isinstance(parents, (str, bytes, bytearray)):
+    if isinstance(parents, Sequence) and not isinstance(parents, str | bytes | bytearray):
         for item in parents:
             if isinstance(item, str) and item.strip():
                 return item.strip()
@@ -493,10 +486,7 @@ def _template_display_name(payload: Mapping[str, Any]) -> str | None:
 def _format_catalog_label(label: str, sources: Iterable[str] | None) -> str:
     """Return a label annotated with its origin if applicable."""
 
-    if sources:
-        source_set = {str(item) for item in sources if isinstance(item, str)}
-    else:
-        source_set = set()
+    source_set = {str(item) for item in sources if isinstance(item, str)} if sources else set()
     for source, prefix in (("library", "[Library] "), ("entry", "[Existing] ")):
         if source in source_set:
             return f"{prefix}{label}"
@@ -549,9 +539,7 @@ def _build_species_hint(species_id: str | None, entry: Mapping[str, Any] | None)
     if source_hint:
         parts.append(f"Source: {source_hint}")
     if cultivar_count:
-        parts.append(
-            "Cultivars available: " + ("1" if cultivar_count == 1 else str(cultivar_count))
-        )
+        parts.append("Cultivars available: " + ("1" if cultivar_count == 1 else str(cultivar_count)))
     return " — ".join(parts)
 
 
@@ -570,9 +558,7 @@ def _build_cultivar_hint(
 
     label = cultivar_entry.get("label")
     label_text = str(label) if isinstance(label, str) and label.strip() else cultivar_id
-    source_hint = _format_source_hint(
-        cultivar_entry.get("sources") or {cultivar_entry.get("source")}
-    )
+    source_hint = _format_source_hint(cultivar_entry.get("sources") or {cultivar_entry.get("source")})
 
     parts = [f"Cultivar: {label_text} ({cultivar_id})"]
     if species_label:
@@ -1493,9 +1479,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 
     def _notify_linking_pending(self, profile_name: str, profile_id: str | None = None) -> None:
         if not _has_registered_service(self.hass, "persistent_notification", "create"):
-            _LOGGER.debug(
-                "Skipping sensor linking reminder; persistent_notification.create not available"
-            )
+            _LOGGER.debug("Skipping sensor linking reminder; persistent_notification.create not available")
             return
         notification_id = self._linking_notification_id(profile_id)
         message = LINKING_NOTIFICATION_MESSAGE.format(profile=profile_name)
@@ -2622,7 +2606,8 @@ class OptionsFlow(config_entries.OptionsFlow):
                     cultivar_entry.setdefault("sources", set()).add(source)
                     if not cultivar_entry.get("source"):
                         cultivar_entry["source"] = source
-                    if cultivar_label and (not cultivar_entry.get("label") or cultivar_entry.get("label") == cultivar_id):
+                    existing_label = cultivar_entry.get("label")
+                    if cultivar_label and (not existing_label or existing_label == cultivar_id):
                         cultivar_entry["label"] = cultivar_label
 
                 cultivar_index[cultivar_id] = (species_id, cultivars[cultivar_id])
@@ -2727,9 +2712,7 @@ class OptionsFlow(config_entries.OptionsFlow):
 
     def _notify_linking_pending(self, profile_name: str, profile_id: str | None = None) -> None:
         if not _has_registered_service(self.hass, "persistent_notification", "create"):
-            _LOGGER.debug(
-                "Skipping sensor linking reminder; persistent_notification.create not available"
-            )
+            _LOGGER.debug("Skipping sensor linking reminder; persistent_notification.create not available")
             return
         notification_id = self._linking_notification_id(profile_id)
         message = LINKING_NOTIFICATION_MESSAGE.format(profile=profile_name)
@@ -3405,17 +3388,13 @@ class OptionsFlow(config_entries.OptionsFlow):
             vol.Optional("copy_from"): vol.In(profiles) if profiles else str,
         }
         if species_options:
-            species_selector = sel.SelectSelector(
-                sel.SelectSelectorConfig(options=species_options)
-            )
+            species_selector = sel.SelectSelector(sel.SelectSelectorConfig(options=species_options))
             if self._selected_species_id and self._selected_species_id in species_option_values:
                 schema_fields[vol.Optional("species_id", default=self._selected_species_id)] = species_selector
             else:
                 schema_fields[vol.Optional("species_id")] = species_selector
         if cultivar_options:
-            cultivar_selector = sel.SelectSelector(
-                sel.SelectSelectorConfig(options=cultivar_options)
-            )
+            cultivar_selector = sel.SelectSelector(sel.SelectSelectorConfig(options=cultivar_options))
             if self._selected_cultivar_id and self._selected_cultivar_id in cultivar_option_values:
                 schema_fields[vol.Optional("cultivar_id", default=self._selected_cultivar_id)] = cultivar_selector
             else:
@@ -3855,7 +3834,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 if ent := user_input.get(role):
                     sensors[role] = ent
             defaults = dict(self._attach_sensor_defaults or {})
-            defaults.update({key: value for key, value in sensors.items()})
+            defaults.update(sensors)
             self._attach_sensor_defaults = defaults if defaults else None
 
             skip_requested = bool(user_input.get("skip_linking"))
@@ -3942,16 +3921,12 @@ class OptionsFlow(config_entries.OptionsFlow):
                     )
                 )
                 optional = (
-                    vol.Optional(role)
-                    if default_value in (None, "")
-                    else vol.Optional(role, default=default_value)
+                    vol.Optional(role) if default_value in (None, "") else vol.Optional(role, default=default_value)
                 )
                 schema_fields[optional] = vol.Any(selector, cv.string, vol.All([cv.string]))
             else:
                 optional = (
-                    vol.Optional(role)
-                    if default_value in (None, "")
-                    else vol.Optional(role, default=default_value)
+                    vol.Optional(role) if default_value in (None, "") else vol.Optional(role, default=default_value)
                 )
                 schema_fields[optional] = vol.Any(
                     PROFILE_SENSOR_FIELDS[role],

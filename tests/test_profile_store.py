@@ -938,9 +938,8 @@ async def test_profile_store_atomic_write_failure_surfaces_error(hass, tmp_path,
             raise OSError("disk full")
         return original_write_text(self, *args, **kwargs)
 
-    with patch.object(Path, "write_text", failing_write):
-        with pytest.raises(ProfileStoreError) as err:
-            await store.async_save({"display_name": "Failed", "profile_id": "failed"})
+    with patch.object(Path, "write_text", failing_write), pytest.raises(ProfileStoreError) as err:
+        await store.async_save({"display_name": "Failed", "profile_id": "failed"})
 
     assert "disk full" in err.value.user_message
     assert not store._path_for("failed").with_suffix(".tmp").exists()

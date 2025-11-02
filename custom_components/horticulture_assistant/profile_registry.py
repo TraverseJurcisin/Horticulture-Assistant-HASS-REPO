@@ -37,8 +37,8 @@ from .const import (
     EVENT_PROFILE_HARVEST_RECORDED,
     EVENT_PROFILE_NUTRIENT_RECORDED,
     EVENT_PROFILE_RUN_RECORDED,
-    ISSUE_PROFILE_VALIDATION_PREFIX,
     ISSUE_PROFILE_SENSOR_PREFIX,
+    ISSUE_PROFILE_VALIDATION_PREFIX,
     NOTIFICATION_PROFILE_LINEAGE,
     NOTIFICATION_PROFILE_SENSORS,
     NOTIFICATION_PROFILE_VALIDATION,
@@ -475,9 +475,7 @@ class ProfileRegistry:
             warnings.extend(sorted(self._validation_issue_summaries.values()))
 
         if any(self._sensor_missing_entities.values()):
-            affected = sorted(
-                profile_id for profile_id, entities in self._sensor_missing_entities.items() if entities
-            )
+            affected = sorted(profile_id for profile_id, entities in self._sensor_missing_entities.items() if entities)
             if affected:
                 sample = ", ".join(affected[:5])
                 if len(affected) > 5:
@@ -485,9 +483,7 @@ class ProfileRegistry:
                 warnings.append(f"missing sensors for {sample}")
 
         if any(self._sensor_warning_messages.values()):
-            affected = sorted(
-                profile_id for profile_id, messages in self._sensor_warning_messages.items() if messages
-            )
+            affected = sorted(profile_id for profile_id, messages in self._sensor_warning_messages.items() if messages)
             if affected:
                 sample = ", ".join(affected[:5])
                 if len(affected) > 5:
@@ -823,11 +819,7 @@ class ProfileRegistry:
 
         if validation is not None:
             missing_entities = sorted(
-                {
-                    issue.entity_id
-                    for issue in validation.errors
-                    if issue.issue == "missing_entity" and issue.entity_id
-                }
+                {issue.entity_id for issue in validation.errors if issue.issue == "missing_entity" and issue.entity_id}
             )
             warning_messages = tuple(
                 sorted(
@@ -858,12 +850,9 @@ class ProfileRegistry:
                         label = other_display or other_pid
                         if roles:
                             role_labels = ", ".join(
-                                _SENSOR_ROLE_LABELS.get(role, role.replace("_", " ").title())
-                                for role in roles
+                                _SENSOR_ROLE_LABELS.get(role, role.replace("_", " ").title()) for role in roles
                             )
-                            formatted.append(
-                                f"{entity_id} also linked to {label} ({other_pid}) – {role_labels}"
-                            )
+                            formatted.append(f"{entity_id} also linked to {label} ({other_pid}) – {role_labels}")
                         else:
                             formatted.append(f"{entity_id} also linked to {label} ({other_pid})")
                 conflict_messages = tuple(formatted)
@@ -944,11 +933,7 @@ class ProfileRegistry:
             for profile_id, entities in self._sensor_missing_entities.items()
             if entities
         }
-        warnings = {
-            profile_id: messages
-            for profile_id, messages in self._sensor_warning_messages.items()
-            if messages
-        }
+        warnings = {profile_id: messages for profile_id, messages in self._sensor_warning_messages.items() if messages}
 
         if not missing and not warnings:
             if self._sensor_notification_digest is not None:
@@ -980,9 +965,7 @@ class ProfileRegistry:
                 for entity_id in entities:
                     lines.append(f"  • {entity_id}")
                 lines.append("")
-            lines.append(
-                "Restore or remap the missing sensors, then reload Horticulture Assistant."
-            )
+            lines.append("Restore or remap the missing sensors, then reload Horticulture Assistant.")
 
         if warnings:
             if lines:
@@ -1804,10 +1787,7 @@ class ProfileRegistry:
             local_section = new_profile.get("local")
             if isinstance(local_section, Mapping):
                 metadata = local_section.get("metadata")
-                if isinstance(metadata, Mapping):
-                    metadata_map = dict(metadata)
-                else:
-                    metadata_map = {}
+                metadata_map = dict(metadata) if isinstance(metadata, Mapping) else {}
                 metadata_map["requested_species_id"] = str(species_id)
                 updated_local = dict(local_section)
                 updated_local["metadata"] = metadata_map
@@ -1820,10 +1800,7 @@ class ProfileRegistry:
             local_section = new_profile.get("local")
             if isinstance(local_section, Mapping):
                 metadata = local_section.get("metadata")
-                if isinstance(metadata, Mapping):
-                    metadata_map = dict(metadata)
-                else:
-                    metadata_map = {}
+                metadata_map = dict(metadata) if isinstance(metadata, Mapping) else {}
                 metadata_map["requested_cultivar_id"] = str(cultivar_id)
                 updated_local = dict(local_section)
                 updated_local["metadata"] = metadata_map
