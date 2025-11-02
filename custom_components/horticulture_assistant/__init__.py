@@ -5,6 +5,7 @@ import contextlib
 import importlib
 import importlib.util
 import logging
+import sys
 import time
 from collections.abc import Mapping
 from copy import deepcopy
@@ -163,6 +164,25 @@ def _stage_satisfied(status: str | None) -> bool:
 
 _ONBOARDING_STAGE_ORDER: tuple[str, ...] = tuple(_ONBOARDING_STAGE_LABELS)
 _ONBOARDING_TIMELINE_LIMIT = 50
+
+
+def __getattr__(name: str) -> Any:
+    """Dynamically expose child modules as package attributes.
+
+    Tests patch paths like ``custom_components.horticulture_assistant.profile.store``
+    before explicitly importing those submodules. Python only populates attributes
+    for child modules on a package once they have been imported, so lookups would
+    fail with ``AttributeError``. Expose a lazy importer that resolves the module
+    when an attribute is first accessed, mirroring Home Assistant's packaging.
+    """
+
+    try:
+        module = importlib.import_module(f".{name}", __name__)
+    except ModuleNotFoundError as exc:  # pragma: no cover - passthrough to default error
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}") from exc
+    else:
+        setattr(sys.modules[__name__], name, module)
+        return module
 
 
 def _stage_issue_id(entry_id: str | None, stage: str) -> str:
