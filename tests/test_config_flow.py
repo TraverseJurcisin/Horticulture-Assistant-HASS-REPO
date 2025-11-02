@@ -1732,10 +1732,7 @@ async def test_build_select_selector_downgrades_option_shape(monkeypatch):
 
     class DummySelector:
         def __init__(self, config):
-            if isinstance(config, DummyConfig):
-                options = config.options
-            else:
-                options = config.get("options")
+            options = config.options if isinstance(config, DummyConfig) else config.get("options")
             if options and isinstance(options[0], dict):
                 raise TypeError("dict options unsupported")
             self.config = config

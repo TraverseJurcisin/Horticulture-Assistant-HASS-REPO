@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 from collections.abc import Iterable, Mapping, Sequence
+from contextlib import suppress
 from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
@@ -201,11 +202,8 @@ def _build_select_selector(
         config_kwargs = dict(base_kwargs)
         config_kwargs["options"] = list(variant)
         if config_cls is not None:
-            try:
+            with suppress(TypeError):
                 candidates.append(config_cls(**config_kwargs))
-            except TypeError:
-                # Older Home Assistant builds expect dict-style configuration.
-                pass
         candidates.append(dict(config_kwargs))
 
     for candidate in candidates:
@@ -234,7 +232,7 @@ def _build_threshold_selectors() -> dict[str, Any]:
     for field, meta in MANUAL_THRESHOLD_METADATA.items():
         candidates: list[Any] = []
         if config_cls is not None:
-            try:
+            with suppress(TypeError):
                 candidates.append(
                     config_cls(
                         min=meta.get("min"),
@@ -244,9 +242,6 @@ def _build_threshold_selectors() -> dict[str, Any]:
                         mode=mode_value,
                     )
                 )
-            except TypeError:
-                # Older Home Assistant builds expect dict-style configuration.
-                pass
         config_dict: dict[str, Any] = {"mode": mode_value}
         for key in ("min", "max", "step", "unit"):
             meta_key = "unit_of_measurement" if key == "unit" else key
