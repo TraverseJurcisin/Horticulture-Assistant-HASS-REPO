@@ -206,10 +206,12 @@ def _normalise_sensor_value(value: Any) -> str | list[str] | None:
 def _canonical_sensor_role(value: Any) -> str | None:
     """Return a canonical sensor role identifier for ``value``."""
 
+    if value is None:
+        return None
     if not isinstance(value, str):
         value = str(value)
     text = value.strip().lower()
-    if not text:
+    if not text or text in {"none", "null"}:
         return None
     for suffix in ("_sensors", "_sensor"):
         if text.endswith(suffix):

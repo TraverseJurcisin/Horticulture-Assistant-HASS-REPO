@@ -36,6 +36,7 @@ from custom_components.horticulture_assistant.profile.utils import LineageLinkRe
 from custom_components.horticulture_assistant.profile_registry import (
     ProfileRegistry,
     _normalise_sensor_value,
+    collect_sensor_conflicts,
 )
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
@@ -65,6 +66,29 @@ async def test_normalise_sensor_value_sequence_deduplicates():
     )
 
     assert result == ["sensor.one", "sensor.two"]
+
+
+async def test_collect_sensor_conflicts_ignores_null_roles():
+    """Profiles with null or placeholder sensor roles should be ignored."""
+
+    profiles = {
+        "p1": {
+            "name": "Plant",
+            "sensors": {
+                None: "sensor.one",
+                "null": "sensor.two",
+                "": "sensor.three",
+            },
+        }
+    }
+
+    conflicts = collect_sensor_conflicts(
+        profiles,
+        profile_id="p2",
+        sensors={"moisture": "sensor.one"},
+    )
+
+    assert conflicts == {}
 
 
 async def test_missing_species_warning_logged(hass, caplog):
