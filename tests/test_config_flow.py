@@ -158,8 +158,6 @@ async def test_threshold_source_falls_back_without_select_selector(hass):
     assert follow_up["step_id"] == "thresholds"
 
 
-
-
 class FakeDeviceRegistry:
     def __init__(self) -> None:
         self.devices: dict[str, Any] = {}
@@ -211,6 +209,7 @@ class FakeDeviceRegistry:
     def async_remove_device(self, device_id):
         self.calls.append(("remove", {(DOMAIN, device_id)}))
         self.devices.pop(device_id, None)
+
 
 @pytest.fixture(autouse=True)
 def _mock_socket():
