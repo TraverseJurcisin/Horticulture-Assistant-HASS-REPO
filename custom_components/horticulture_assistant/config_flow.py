@@ -569,8 +569,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             if self._existing_entry is not None:
                 self._profile_manager_flow = None
             resume_target = resume_step
-            if title == "profile_manager_closed":
-                resume_target = "post_setup"
+            if isinstance(title, str) and title:
+                if title == "profile_manager_closed":
+                    resume_target = "post_setup"
+                elif hasattr(self, f"async_step_{title}"):
+                    resume_target = title
             handler = getattr(self, f"async_step_{resume_target}", None)
             if callable(handler):
                 return await handler()
@@ -631,6 +634,16 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
     async def async_step_nutrient_schedule_edit(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
         flow = await self._async_ensure_profile_manager_flow()
         result = await flow.async_step_nutrient_schedule_edit(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_calibration(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_calibration(user_input)
+        return await self._async_route_profile_manager_result(result, "manage_profiles")
+
+    async def async_step_calibration_collect(self, user_input: Mapping[str, Any] | None = None) -> FlowResult:
+        flow = await self._async_ensure_profile_manager_flow()
+        result = await flow.async_step_calibration_collect(user_input)
         return await self._async_route_profile_manager_result(result, "manage_profiles")
 
     async def async_step_profile(self, user_input=None):

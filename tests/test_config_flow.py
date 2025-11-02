@@ -754,6 +754,36 @@ async def test_config_flow_profile_manager_opens_nutrient_schedule(hass):
     assert entry.options == new_options
 
 
+async def test_config_flow_profile_manager_routes_calibration(hass):
+    existing_profile = {"name": "Mint"}
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={CONF_PROFILES: {"mint": existing_profile}},
+    )
+    entry.add_to_hass(hass)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await flow.async_step_user()
+    initial = await flow.async_step_manage_profiles()
+    assert initial["type"] == "form"
+    assert initial["step_id"] == "manage_profiles"
+
+    options_flow = flow._profile_manager_flow
+    assert options_flow is not None
+
+    options_flow.async_step_manage_profile_sensors = AsyncMock(
+        return_value={"type": "create_entry", "title": "calibration", "data": dict(entry.options)}
+    )
+
+    result = await flow.async_step_manage_profiles({"profile_id": "mint", "action": "edit_sensors"})
+    assert result["type"] == "form"
+    assert result["step_id"] == "calibration"
+    assert flow._profile_manager_flow is not options_flow
+
+
 async def test_config_flow_existing_entry_add_profile(hass):
     flow = ConfigFlow()
     flow.hass = hass

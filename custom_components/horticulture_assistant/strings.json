@@ -5,17 +5,15 @@
             "user": {
                 "title": "New Horticulture Assistant entry",
                 "description": "Choose how you want to get started. You can create your first plant profile now or skip and add one later from the profile manager.",
-                "data": {
-                    "setup_mode": "Getting started"
-                }
+                "data": {"setup_mode": "Getting started"},
             },
             "post_setup": {
                 "title": "New entry for Horticulture Assistant",
                 "description": "This integration is already set up. Open the Horticulture Assistant entry, choose Configure → Options, then pick Open profile manager to edit existing plants. Continue here to create another plant profile.",
                 "menu_options": {
                     "post_setup_add": "Create another plant profile",
-                    "manage_profiles": "Open profile manager"
-                }
+                    "manage_profiles": "Open profile manager",
+                },
             },
             "profile": {
                 "title": "Create plant profile",
@@ -23,23 +21,18 @@
                 "data": {
                     "plant_name": "Plant name",
                     "plant_type": "Plant type",
-                    "profile_scope": "What does this profile represent?"
-                }
+                    "profile_scope": "What does this profile represent?",
+                },
             },
             "threshold_source": {
                 "title": "How should we set targets?",
                 "description": "Choose how you want to populate thresholds for this profile.",
-                "data": {
-                    "method": "Target source"
-                }
+                "data": {"method": "Target source"},
             },
             "threshold_copy": {
                 "title": "Copy profile targets",
                 "description": "Select an existing profile or library template to copy thresholds, sensors, and metadata from. Use the filter field to narrow long lists, or apply keywords such as `source:library` or `scope:individual` to focus results.\n{filter_summary}",
-                "data": {
-                    "filter": "Filter templates",
-                    "profile_id": "Copy from profile"
-                }
+                "data": {"filter": "Filter templates", "profile_id": "Copy from profile"},
             },
             "sensors": {
                 "title": "Link sensors",
@@ -48,23 +41,18 @@
                     "moisture_sensor": "Moisture sensor",
                     "temperature_sensor": "Temperature sensor",
                     "ec_sensor": "EC sensor",
-                    "co2_sensor": "CO₂ sensor"
-                }
+                    "co2_sensor": "CO₂ sensor",
+                },
             },
             "manage_profiles": {
                 "title": "Profile manager",
                 "description": "Choose a profile to edit, update nutrient schedules, or remove.",
-                "data": {
-                    "profile_id": "Profile",
-                    "action": "Action"
-                }
+                "data": {"profile_id": "Profile", "action": "Action"},
             },
             "manage_profiles_empty": {
                 "title": "Profile manager",
                 "description": "No profiles are configured yet. Create your first profile now or close the manager to come back later.",
-                "data": {
-                    "next_action": "What would you like to do?"
-                }
+                "data": {"next_action": "What would you like to do?"},
             },
             "add_profile": {
                 "title": "Add profile",
@@ -72,8 +60,8 @@
                 "data": {
                     "name": "Profile name",
                     "profile_scope": "What does this profile represent?",
-                    "copy_from": "Clone thresholds from (optional)"
-                }
+                    "copy_from": "Clone thresholds from (optional)",
+                },
             },
             "attach_sensors": {
                 "title": "Attach sensors",
@@ -83,8 +71,8 @@
                     "humidity": "Humidity sensor",
                     "illuminance": "Light sensor",
                     "moisture": "Moisture sensor",
-                    "skip_linking": "Finish without linking sensors"
-                }
+                    "skip_linking": "Finish without linking sensors",
+                },
             },
             "manage_profile_general": {
                 "title": "Edit profile details",
@@ -93,8 +81,8 @@
                     "name": "Profile name",
                     "plant_type": "Plant type",
                     "profile_scope": "Scope",
-                    "species_display": "Display species name"
-                }
+                    "species_display": "Display species name",
+                },
             },
             "manage_profile_sensors": {
                 "title": "Edit profile sensors",
@@ -105,8 +93,8 @@
                     "illuminance": "Light sensor",
                     "moisture": "Moisture sensor",
                     "conductivity": "Conductivity sensor",
-                    "co2": "CO₂ sensor"
-                }
+                    "co2": "CO₂ sensor",
+                },
             },
             "manage_profile_thresholds": {
                 "title": "Edit profile targets",
@@ -119,38 +107,47 @@
                     "illuminance_min": "Illuminance minimum",
                     "illuminance_max": "Illuminance maximum",
                     "conductivity_min": "Conductivity minimum",
-                    "conductivity_max": "Conductivity maximum"
-                }
+                    "conductivity_max": "Conductivity maximum",
+                },
+            },
+            "calibration": {
+                "title": "Calibrate lux sensor",
+                "description": "Start a calibration session to map lux readings to PPFD before linking sensors.",
+                "data": {
+                    "lux_entity_id": "Lux sensor",
+                    "ppfd_entity_id": "PPFD sensor (optional)",
+                    "model": "Calibration model",
+                    "averaging_seconds": "Averaging window (seconds)",
+                    "notes": "Notes",
+                },
+            },
+            "calibration_collect": {
+                "title": "Collect calibration samples",
+                "description": "Record PPFD readings during calibration, or finish when you have enough data.",
+                "data": {"action": "Action", "ppfd_value": "PPFD reading"},
             },
             "manage_profile_delete": {
                 "title": "Delete profile",
                 "description": "Are you sure you want to delete {profile}? This cannot be undone.",
-                "data": {
-                    "confirm": "Yes, delete this profile"
-                }
+                "data": {"confirm": "Yes, delete this profile"},
             },
             "nutrient_schedule": {
                 "title": "Select profile",
                 "description": "Choose which profile's nutrient schedule to edit.",
-                "data": {
-                    "profile_id": "Profile"
-                }
+                "data": {"profile_id": "Profile"},
             },
             "nutrient_schedule_edit": {
                 "title": "Edit nutrient schedule",
                 "description": "Update the nutrient schedule for {profile}. Current stages: {current_count}. Auto-generate using plant type {plant_type}. Example:\n{example}",
-                "data": {
-                    "auto_generate": "Auto-generate from plant data",
-                    "schedule": "Schedule JSON"
-                }
-            }
+                "data": {"auto_generate": "Auto-generate from plant data", "schedule": "Schedule JSON"},
+            },
         },
         "error": {
             "invalid_float": "Enter a number",
             "threshold_field_error": "Adjust this value to stay within the supported range.",
             "threshold_out_of_bounds": "{issue_detail}",
             "cannot_delete_primary": "You can't delete the primary profile. Pick another profile or change which plant is primary.",
-            "no_template_matches": "No templates match your filter. Clear the filter or try another search."
+            "no_template_matches": "No templates match your filter. Clear the filter or try another search.",
         },
         "abort": {
             "post_setup_use_options": "Open the Horticulture Assistant entry, choose Configure → Options, then select Open profile manager to edit existing plants.",
@@ -158,8 +155,8 @@
             "profile_added": "Created a new profile: {profile}. You can edit it from the profile manager.",
             "cannot_delete_primary": "The primary profile cannot be deleted.",
             "no_profiles": "No profiles are available.",
-            "unknown_profile": "The selected profile could not be found."
-        }
+            "unknown_profile": "The selected profile could not be found.",
+        },
     },
     "options": {
         "step": {
@@ -172,8 +169,8 @@
                     "manage_profiles": "Manage profiles",
                     "configure_ai": "Configure AI",
                     "profile_targets": "Profile targets",
-                    "nutrient_schedule": "Nutrient schedule"
-                }
+                    "nutrient_schedule": "Nutrient schedule",
+                },
             },
             "basic": {
                 "title": "General settings",
@@ -191,8 +188,8 @@
                     "opb_auto_download_images": "Auto-download OpenPlantbook images",
                     "opb_download_dir": "Image download directory",
                     "opb_location_share": "Share location accuracy with OpenPlantbook",
-                    "opb_enable_upload": "Allow contributing data back to OpenPlantbook"
-                }
+                    "opb_enable_upload": "Allow contributing data back to OpenPlantbook",
+                },
             },
             "add_profile": {
                 "title": "Add profile",
@@ -200,23 +197,18 @@
                 "data": {
                     "name": "Profile name",
                     "profile_scope": "What does this profile represent?",
-                    "copy_from": "Clone thresholds from (optional)"
-                }
+                    "copy_from": "Clone thresholds from (optional)",
+                },
             },
             "manage_profiles": {
                 "title": "Manage profiles",
                 "description": "Choose a profile to edit, update nutrient schedules, or remove.",
-                "data": {
-                    "profile_id": "Profile",
-                    "action": "Action"
-                }
+                "data": {"profile_id": "Profile", "action": "Action"},
             },
             "manage_profiles_empty": {
                 "title": "Profile manager",
                 "description": "No profiles are configured yet. Create your first profile now or close the manager to come back later.",
-                "data": {
-                    "next_action": "What would you like to do?"
-                }
+                "data": {"next_action": "What would you like to do?"},
             },
             "manage_profile_general": {
                 "title": "Edit profile details",
@@ -225,8 +217,8 @@
                     "name": "Profile name",
                     "plant_type": "Plant type",
                     "profile_scope": "Scope",
-                    "species_display": "Display species name"
-                }
+                    "species_display": "Display species name",
+                },
             },
             "manage_profile_sensors": {
                 "title": "Edit profile sensors",
@@ -237,8 +229,8 @@
                     "illuminance": "Light sensor",
                     "moisture": "Moisture sensor",
                     "conductivity": "Conductivity sensor",
-                    "co2": "CO₂ sensor"
-                }
+                    "co2": "CO₂ sensor",
+                },
             },
             "manage_profile_thresholds": {
                 "title": "Edit profile targets",
@@ -251,15 +243,29 @@
                     "illuminance_min": "Illuminance minimum",
                     "illuminance_max": "Illuminance maximum",
                     "conductivity_min": "Conductivity minimum",
-                    "conductivity_max": "Conductivity maximum"
-                }
+                    "conductivity_max": "Conductivity maximum",
+                },
+            },
+            "calibration": {
+                "title": "Calibrate lux sensor",
+                "description": "Start a calibration session to map lux readings to PPFD before linking sensors.",
+                "data": {
+                    "lux_entity_id": "Lux sensor",
+                    "ppfd_entity_id": "PPFD sensor (optional)",
+                    "model": "Calibration model",
+                    "averaging_seconds": "Averaging window (seconds)",
+                    "notes": "Notes",
+                },
+            },
+            "calibration_collect": {
+                "title": "Collect calibration samples",
+                "description": "Record PPFD readings during calibration, or finish when you have enough data.",
+                "data": {"action": "Action", "ppfd_value": "PPFD reading"},
             },
             "manage_profile_delete": {
                 "title": "Delete profile",
                 "description": "Are you sure you want to delete {profile}? This cannot be undone.",
-                "data": {
-                    "confirm": "Yes, delete this profile"
-                }
+                "data": {"confirm": "Yes, delete this profile"},
             },
             "attach_sensors": {
                 "title": "Attach sensors",
@@ -269,8 +275,8 @@
                     "humidity": "Humidity sensor",
                     "illuminance": "Light sensor",
                     "moisture": "Moisture sensor",
-                    "skip_linking": "Finish without linking sensors"
-                }
+                    "skip_linking": "Finish without linking sensors",
+                },
             },
             "configure_ai": {
                 "title": "Configure AI",
@@ -279,8 +285,8 @@
                     "api_key": "API key",
                     "model": "Model",
                     "base_url": "Base URL",
-                    "update_interval": "Update interval (minutes)"
-                }
+                    "update_interval": "Update interval (minutes)",
+                },
             },
             "cloud_sync": {
                 "title": "Cloud sync",
@@ -290,28 +296,23 @@
                     "cloud_base_url": "Cloud base URL",
                     "cloud_tenant_id": "Tenant ID",
                     "cloud_device_token": "Device token",
-                    "cloud_sync_interval": "Sync interval (minutes)"
-                }
+                    "cloud_sync_interval": "Sync interval (minutes)",
+                },
             },
             "nutrient_schedule": {
                 "title": "Select profile",
                 "description": "Choose which profile's nutrient schedule to edit.",
-                "data": {
-                    "profile_id": "Profile"
-                }
+                "data": {"profile_id": "Profile"},
             },
             "nutrient_schedule_edit": {
                 "title": "Edit nutrient schedule",
                 "description": "Update the nutrient schedule for {profile}. Current stages: {current_count}. Auto-generate using plant type {plant_type}. Example:\n{example}",
-                "data": {
-                    "auto_generate": "Auto-generate from plant data",
-                    "schedule": "Schedule JSON"
-                }
-            }
+                "data": {"auto_generate": "Auto-generate from plant data", "schedule": "Schedule JSON"},
+            },
         },
         "abort": {
             "no_profiles": "No profiles are available yet. Use Add profile to create one.",
-            "unknown_profile": "The selected profile could not be found."
+            "unknown_profile": "The selected profile could not be found.",
         },
         "error": {
             "generation_failed": "Automatic schedule generation failed. Check the logs for details.",
@@ -323,36 +324,22 @@
             "invalid_float": "Enter a number",
             "threshold_field_error": "Adjust this value to stay within the supported range.",
             "threshold_out_of_bounds": "{issue_detail}",
-            "cannot_delete_primary": "You can't delete the primary profile. Pick another profile or change which plant is primary."
-        }
+            "cannot_delete_primary": "You can't delete the primary profile. Pick another profile or change which plant is primary.",
+        },
     },
     "entity": {
         "sensor": {
-            "vpd_7d_avg": {
-                "name": "VPD 7-day average"
-            },
-            "garden_summary": {
-                "name": "Garden health summary"
-            },
+            "vpd_7d_avg": {"name": "VPD 7-day average"},
+            "garden_summary": {"name": "Garden health summary"},
             "plant_status": {
                 "name": "Plant status",
-                "state": {
-                    "ok": "Healthy",
-                    "attention": "Needs attention",
-                    "problem": "Problem detected"
-                }
+                "state": {"ok": "Healthy", "attention": "Needs attention", "problem": "Problem detected"},
             },
-            "plant_last_sample": {
-                "name": "Last sensor sample"
-            },
+            "plant_last_sample": {"name": "Last sensor sample"},
             "feature_entitlements": {
                 "name": "Feature entitlements",
-                "state": {
-                    "local": "Local only",
-                    "cloud": "Cloud sync",
-                    "premium": "Premium"
-                }
-            }
+                "state": {"local": "Local only", "cloud": "Cloud sync", "premium": "Premium"},
+            },
         }
     },
     "device_automation": {
@@ -363,28 +350,28 @@
             "run_recorded": "New run event recorded",
             "harvest_recorded": "Harvest logged",
             "nutrient_recorded": "Nutrient application logged",
-            "cultivation_recorded": "Cultivation event logged"
+            "cultivation_recorded": "Cultivation event logged",
         },
         "condition_type": {
             "status_is": "Status is specific value",
             "status_ok": "Status is OK",
             "status_problem": "Status is warning or critical",
             "status_recovered": "Status recovered to OK",
-            "run_active": "Run is currently active"
-        }
+            "run_active": "Run is currently active",
+        },
     },
     "issues": {
         "missing_lineage_species": {
             "title": "Profile missing species reference",
-            "description": "{profile_name} ({profile_id}) points to species {species_id}, but that species profile was not found. Update the profile to use a valid species or create the missing species profile."
+            "description": "{profile_name} ({profile_id}) points to species {species_id}, but that species profile was not found. Update the profile to use a valid species or create the missing species profile.",
         },
         "missing_lineage_parent": {
             "title": "Profile missing parent reference",
-            "description": "{profile_name} ({profile_id}) lists {parent_id} as a parent profile, but it could not be loaded. Remove the invalid parent reference or create the missing profile to restore inheritance."
+            "description": "{profile_name} ({profile_id}) lists {parent_id} as a parent profile, but it could not be loaded. Remove the invalid parent reference or create the missing profile to restore inheritance.",
         },
         "onboarding_stage_failure": {
             "title": "Setup step failed",
-            "description": "The {stage} step failed while setting up Horticulture Assistant: {error}. Check the logs, fix the issue, then reload the integration."
-        }
-    }
+            "description": "The {stage} step failed while setting up Horticulture Assistant: {error}. Check the logs, fix the issue, then reload the integration.",
+        },
+    },
 }
