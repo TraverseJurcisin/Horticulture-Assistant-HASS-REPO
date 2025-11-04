@@ -5,6 +5,7 @@ import logging
 from collections.abc import Iterable, Mapping, Sequence
 from contextlib import suppress
 from copy import deepcopy
+from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
@@ -66,6 +67,14 @@ from .utils.nutrient_schedule import generate_nutrient_schedule
 from .utils.plant_registry import register_plant
 
 _LOGGER = logging.getLogger(__name__)
+
+_RECONFIGURE_REASON_SYNONYMS = {
+    "reauth",
+    "reauth_confirm",
+    "reauthentication",
+    "reconfigure",
+    "reconfigure_entry",
+}
 
 PROFILE_SCOPE_LABELS = {
     "individual": "Individual plant (single specimen)",
@@ -1311,6 +1320,23 @@ def _normalize_template_source(value: str | None) -> str:
     return str(value).split(":", 1)[0]
 
 
+def _normalize_reconfigure_reason(reason: Any) -> str | None:
+    """Return a canonical reconfigure reason when recognised."""
+
+    if not isinstance(reason, str):
+        return None
+
+    candidate = reason.strip()
+    if not candidate:
+        return None
+
+    candidate_cf = candidate.casefold()
+    if candidate_cf in _RECONFIGURE_REASON_SYNONYMS:
+        return candidate_cf
+
+    return None
+
+
 def _summarise_template_filters(
     search_terms: list[str],
     source_filters: set[str],
@@ -1358,19 +1384,134 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
     async def async_step_user(self, user_input=None):
         context = getattr(self, "context", {}) or {}
         source = context.get("source")
-        source_user = getattr(config_entries, "SOURCE_USER", "user")
-        if source not in (source_user, None):
-            entry_id = context.get("config_entry_id") or context.get("entry_id")
+        reconfigure_sources: set[str] = set()
+
+        reauth_source = getattr(config_entries, "SOURCE_REAUTH", None)
+        if isinstance(reauth_source, str):
+            reconfigure_sources.add(reauth_source)
+        else:
+            reconfigure_sources.add("reauth")
+
+        reconfigure_marker = getattr(config_entries, "SOURCE_RECONFIGURE", None)
+        has_explicit_reconfigure = isinstance(reconfigure_marker, str)
+        if has_explicit_reconfigure:
+            reconfigure_sources.add(reconfigure_marker)
+        else:
+            reconfigure_sources.add("reconfigure")
+
+        unique_id_hint: str | None = None
+        unique_id_value = context.get("unique_id")
+        if isinstance(unique_id_value, str) and unique_id_value:
+            unique_id_hint = unique_id_value
+
+        entry_id_hint: str | None = None
+        raw_entry_id_hint = context.get("config_entry_id") or context.get("entry_id")
+        if isinstance(raw_entry_id_hint, str) and raw_entry_id_hint:
+            entry_id_hint = raw_entry_id_hint
+
+        reason_hint = _normalize_reconfigure_reason(context.get("reason"))
+
+        placeholders_hint = _extract_placeholder_hints(context.get("title_placeholders"))
+
+        config_entry_source = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None)
+        if isinstance(config_entry_source, str) and not has_explicit_reconfigure:
+            placeholder_has_hints = False
+            if placeholders_hint is not None:
+                has_identifier_hints = bool(placeholders_hint.unique_ids)
+                if placeholders_hint.entry_ids and (
+                    reason_hint or entry_id_hint or unique_id_hint
+                ):
+                    has_identifier_hints = True
+                has_label_hints = bool(placeholders_hint.titles or placeholders_hint.slugs)
+                placeholder_has_hints = has_identifier_hints or has_label_hints
+
+                if (
+                    source == config_entry_source
+                    and not reason_hint
+                    and not unique_id_hint
+                    and not entry_id_hint
+                ):
+                    placeholder_has_hints = has_identifier_hints
+
+            has_reconfigure_hints = bool(
+                reason_hint or placeholder_has_hints or unique_id_hint or entry_id_hint
+            )
+            if has_reconfigure_hints:
+                reconfigure_sources.add(config_entry_source)
+        if source in reconfigure_sources:
+            entry_id = entry_id_hint
             entries = self._async_current_entries()
             target_entry = None
-            if entries:
-                if entry_id:
+            if entry_id and entries:
+                for entry in entries:
+                    if getattr(entry, "entry_id", None) == entry_id:
+                        target_entry = entry
+                        break
+            if target_entry is None and unique_id_hint and entries:
+                for entry in entries:
+                    if getattr(entry, "unique_id", None) == unique_id_hint:
+                        target_entry = entry
+                        break
+            if target_entry is None and placeholders_hint and entries:
+                if placeholders_hint.entry_ids:
                     for entry in entries:
-                        if getattr(entry, "entry_id", None) == entry_id:
+                        entry_id = getattr(entry, "entry_id", None)
+                        if entry_id and str(entry_id) in placeholders_hint.entry_ids:
                             target_entry = entry
                             break
-                if target_entry is None:
-                    target_entry = entries[0]
+
+                if target_entry is None and placeholders_hint.unique_ids:
+                    for entry in entries:
+                        unique_id = getattr(entry, "unique_id", None)
+                        if unique_id and unique_id in placeholders_hint.unique_ids:
+                            target_entry = entry
+                            break
+
+                if target_entry is None and placeholders_hint.titles:
+                    for entry in entries:
+                        title = getattr(entry, "title", None)
+                        if (
+                            isinstance(title, str)
+                            and title.strip().casefold() in placeholders_hint.titles
+                        ):
+                            target_entry = entry
+                            break
+
+                if target_entry is None and placeholders_hint.slugs:
+                    for entry in entries:
+                        slug_sources: list[str] = []
+                        title = getattr(entry, "title", None)
+                        if isinstance(title, str):
+                            slug_sources.append(title)
+
+                        data = getattr(entry, "data", None)
+                        if isinstance(data, Mapping):
+                            for key in (
+                                CONF_PLANT_ID,
+                                CONF_PLANT_NAME,
+                                CONF_PLANT_TYPE,
+                            ):
+                                value = data.get(key)
+                                if isinstance(value, str):
+                                    slug_sources.append(value)
+
+                        options = getattr(entry, "options", None)
+                        if isinstance(options, Mapping):
+                            for key in (
+                                CONF_PLANT_NAME,
+                                "species_display",
+                            ):
+                                value = options.get(key)
+                                if isinstance(value, str):
+                                    slug_sources.append(value)
+
+                        for candidate in slug_sources:
+                            slug = slugify(candidate)
+                            if slug and slug in placeholders_hint.slugs:
+                                target_entry = entry
+                                break
+                        if target_entry is not None:
+                            break
             if target_entry is not None:
                 self._existing_entry = target_entry
                 return await self.async_step_post_setup(user_input)
@@ -4656,3 +4797,138 @@ class HorticultureAssistantConfigFlow(ConfigFlow):
     """Retain legacy class name for tests and external references."""
 
     pass
+@dataclass(slots=True)
+class _PlaceholderHints:
+    """Container for legacy reconfigure hints derived from placeholders."""
+
+    entry_ids: set[str] = field(default_factory=set)
+    titles: set[str] = field(default_factory=set)
+    slugs: set[str] = field(default_factory=set)
+    unique_ids: set[str] = field(default_factory=set)
+
+    def has_any(self) -> bool:
+        """Return True when at least one hint is available."""
+
+        return bool(self.entry_ids or self.titles or self.slugs or self.unique_ids)
+
+
+_PLACEHOLDER_ENTRY_ID_KEYS = {
+    "entry_id",
+    "config_entry_id",
+    "entryid",
+    "configentryid",
+}
+_PLACEHOLDER_TITLE_KEYS = {
+    "name",
+    "title",
+    "entry_name",
+    "entry",
+}
+_PLACEHOLDER_SLUG_KEYS = {
+    "slug",
+    "profile_slug",
+    "plant_slug",
+    "plant_id",
+}
+_PLACEHOLDER_UNIQUE_ID_KEYS = {
+    "unique_id",
+    "uniqueid",
+}
+
+_KNOWN_PLACEHOLDER_KEYS = (
+    _PLACEHOLDER_ENTRY_ID_KEYS
+    | _PLACEHOLDER_UNIQUE_ID_KEYS
+    | _PLACEHOLDER_TITLE_KEYS
+    | _PLACEHOLDER_SLUG_KEYS
+)
+
+
+def _assign_placeholder_hint(hints: _PlaceholderHints, key: str, text: str) -> None:
+    """Store a scalar placeholder value against the appropriate hint sets."""
+
+    if key in _PLACEHOLDER_ENTRY_ID_KEYS:
+        hints.entry_ids.add(text)
+    elif key in _PLACEHOLDER_UNIQUE_ID_KEYS:
+        hints.unique_ids.add(text)
+    elif key in _PLACEHOLDER_TITLE_KEYS:
+        hints.titles.add(text.casefold())
+    elif key in _PLACEHOLDER_SLUG_KEYS:
+        slug = slugify(text)
+        if slug:
+            hints.slugs.add(slug)
+        else:
+            hints.titles.add(text.casefold())
+        return
+    else:
+        hints.titles.add(text.casefold())
+
+    slug = slugify(text)
+    if slug:
+        hints.slugs.add(slug)
+
+
+def _collect_placeholder_hints(hints: _PlaceholderHints, key: str, value: Any) -> None:
+    """Populate placeholder hint sets from arbitrary placeholder payloads."""
+
+    if value is None:
+        return
+
+    if isinstance(value, str):
+        text = value.strip()
+        if not text:
+            return
+        if text[0] in "[{":
+            with suppress(TypeError, ValueError, json.JSONDecodeError):
+                parsed = json.loads(text)
+                _collect_placeholder_hints(hints, key, parsed)
+                return
+        _assign_placeholder_hint(hints, key, text)
+        return
+
+    if isinstance(value, Mapping):
+        for nested_key, nested_value in value.items():
+            nested_key_cf = ""
+            if nested_key is not None:
+                nested_key_cf = str(nested_key).strip().casefold()
+            target_key = nested_key_cf if nested_key_cf in _KNOWN_PLACEHOLDER_KEYS else key
+            _collect_placeholder_hints(hints, target_key, nested_value)
+        return
+
+    if isinstance(value, Iterable):
+        for item in value:
+            _collect_placeholder_hints(hints, key, item)
+        return
+
+    text = str(value).strip()
+    if text:
+        _assign_placeholder_hint(hints, key, text)
+
+
+def _normalise_placeholder_hints(placeholders: Mapping[str, Any]) -> _PlaceholderHints:
+    """Return structured hints extracted from title placeholder payloads."""
+
+    hints = _PlaceholderHints()
+    for raw_key, raw_value in placeholders.items():
+        if raw_key is None:
+            continue
+        key = str(raw_key).strip().casefold()
+        if not key and not isinstance(raw_value, Mapping):
+            continue
+        _collect_placeholder_hints(hints, key or "entry", raw_value)
+    return hints
+
+
+def _extract_placeholder_hints(payload: Any) -> _PlaceholderHints | None:
+    """Return structured placeholder hints for arbitrary payload types."""
+
+    if payload is None:
+        return None
+
+    hints = _PlaceholderHints()
+
+    if isinstance(payload, Mapping):
+        hints = _normalise_placeholder_hints(payload)
+    else:
+        _collect_placeholder_hints(hints, "entry", payload)
+
+    return hints if hints.has_any() else None
