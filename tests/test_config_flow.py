@@ -277,10 +277,105 @@ async def test_config_flow_user_source_ignores_existing_entries(hass):
 
 
 @pytest.mark.asyncio
-async def test_config_flow_menu_source_without_entry_id_falls_back(hass):
+async def test_config_flow_menu_source_without_entry_id_starts_new_flow(hass):
     flow = ConfigFlow()
     flow.hass = hass
     flow.context = {"source": "menu"}
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    post_setup.assert_not_called()
+    assert flow._existing_entry is None
+
+
+@pytest.mark.asyncio
+async def test_config_flow_menu_source_ignores_entry_id(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {"source": "menu", "config_entry_id": "entry-2"}
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    post_setup.assert_not_called()
+    assert flow._existing_entry is None
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_without_constant_starts_new_flow(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None)
+    if source_value is None:
+        pytest.skip("SOURCE_CONFIG_ENTRY not provided by test environment")
+
+    monkeypatch.delattr(config_entries, "SOURCE_CONFIG_ENTRY", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {"source": source_value, "config_entry_id": "entry-1"}
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1")
+    flow._async_current_entries = MagicMock(return_value=[entry_one])
+
+    with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    post_setup.assert_not_called()
+    assert flow._existing_entry is None
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_ignored_with_reconfigure_support(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.setattr(config_entries, "SOURCE_RECONFIGURE", "reconfigure", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {"source": source_value, "config_entry_id": "entry-1"}
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1")
+    flow._async_current_entries = MagicMock(return_value=[entry_one])
+
+    with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    post_setup.assert_not_called()
+    assert flow._existing_entry is None
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_used_without_reconfigure_support(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "config_entry_id": "entry-2",
+        "title_placeholders": {"name": "Existing entry"},
+        "unique_id": "unique-entry-2",
+    }
 
     entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1")
     entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2")
@@ -292,14 +387,387 @@ async def test_config_flow_menu_source_without_entry_id_falls_back(hass):
 
     assert result == expected
     post_setup.assert_awaited_once()
-    assert flow._existing_entry is entry_one
+    assert flow._existing_entry is entry_two
 
 
 @pytest.mark.asyncio
-async def test_config_flow_menu_source_selects_matching_entry(hass):
+async def test_config_flow_config_entry_source_matches_unique_id_hint(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
     flow = ConfigFlow()
     flow.hass = hass
-    flow.context = {"source": "menu", "config_entry_id": "entry-2"}
+    flow.context = {"source": source_value, "unique_id": "unique-entry-2"}
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", unique_id="unique-entry-1")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", unique_id="unique-entry-2")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    expected = {"type": "form", "step_id": "post_setup"}
+    with patch.object(flow, "async_step_post_setup", AsyncMock(return_value=expected)) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result == expected
+    post_setup.assert_awaited_once()
+    assert flow._existing_entry is entry_two
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_matches_placeholder_hint(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "reason": "reconfigure",
+        "title_placeholders": {"name": "Entry Two"},
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    expected = {"type": "form", "step_id": "post_setup"}
+    with patch.object(flow, "async_step_post_setup", AsyncMock(return_value=expected)) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result == expected
+    post_setup.assert_awaited_once()
+    assert flow._existing_entry is entry_two
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_placeholder_label_without_reason_starts_new_flow(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "title_placeholders": {"name": "Entry Two"},
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    post_setup.assert_not_called()
+    assert flow._existing_entry is None
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_matches_placeholder_entry_id_hint(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "config_entry_id": "entry-2",
+        "title_placeholders": {"entry_id": "entry-2"},
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Different")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    expected = {"type": "form", "step_id": "post_setup"}
+    with patch.object(flow, "async_step_post_setup", AsyncMock(return_value=expected)) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result == expected
+    post_setup.assert_awaited_once()
+    assert flow._existing_entry is entry_two
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_placeholder_entry_id_with_create_reason_starts_new_flow(
+    hass, monkeypatch
+):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "reason": "create_entry",
+        "title_placeholders": {"entry_id": "entry-2"},
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Different")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    post_setup.assert_not_called()
+    assert flow._existing_entry is None
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_matches_placeholder_slug_hint(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "reason": "reconfigure",
+        "title_placeholders": {"slug": "existing-entry"},
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(
+        domain=DOMAIN,
+        data={
+            "plant_id": "existing-entry",
+            "plant_name": "Existing Entry",
+            "plant_type": "Existing entry",
+        },
+        options={"species_display": "Existing Entry"},
+        entry_id="entry-2",
+        title="Different",
+    )
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    expected = {"type": "form", "step_id": "post_setup"}
+    with patch.object(flow, "async_step_post_setup", AsyncMock(return_value=expected)) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result == expected
+    post_setup.assert_awaited_once()
+    assert flow._existing_entry is entry_two
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_matches_placeholder_unique_id_hint(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "title_placeholders": {"unique_id": "unique-entry-2"},
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", unique_id="unique-entry-1")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", unique_id="unique-entry-2")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    expected = {"type": "form", "step_id": "post_setup"}
+    with patch.object(flow, "async_step_post_setup", AsyncMock(return_value=expected)) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result == expected
+    post_setup.assert_awaited_once()
+    assert flow._existing_entry is entry_two
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_matches_nested_placeholder_values(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "config_entry_id": "entry-2",
+        "title_placeholders": {
+            "entry_id": [{"value": "entry-2"}],
+            "metadata": {"primary": "Entry Two"},
+        },
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    expected = {"type": "form", "step_id": "post_setup"}
+    with patch.object(flow, "async_step_post_setup", AsyncMock(return_value=expected)) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result == expected
+    post_setup.assert_awaited_once()
+    assert flow._existing_entry is entry_two
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_parses_json_placeholder_values(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "reason": "reconfigure",
+        "title_placeholders": {"payload": '{"entry_id": "entry-2", "unique_id": "unique-entry-2"}'},
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", unique_id="unique-entry-1")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", unique_id="unique-entry-2")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    expected = {"type": "form", "step_id": "post_setup"}
+    with patch.object(flow, "async_step_post_setup", AsyncMock(return_value=expected)) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result == expected
+    post_setup.assert_awaited_once()
+    assert flow._existing_entry is entry_two
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_json_placeholder_without_reason_starts_new_flow(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "title_placeholders": {"payload": '{"name": "Entry Two"}'},
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    post_setup.assert_not_called()
+    assert flow._existing_entry is None
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_string_placeholder_with_reason_targets_entry(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "reason": "reconfigure_entry",
+        "title_placeholders": "Entry Two",
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    expected = {"type": "form", "step_id": "post_setup"}
+    with patch.object(flow, "async_step_post_setup", AsyncMock(return_value=expected)) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result == expected
+    post_setup.assert_awaited_once()
+    assert flow._existing_entry is entry_two
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_string_placeholder_without_reason_starts_new_flow(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {
+        "source": source_value,
+        "title_placeholders": "Entry Two",
+    }
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    result = await flow.async_step_user()
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    assert flow._existing_entry is None
+
+
+@pytest.mark.asyncio
+async def test_config_flow_config_entry_source_uses_direct_entry_hint(hass, monkeypatch):
+    source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
+
+    monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
+    monkeypatch.delattr(config_entries, "SOURCE_RECONFIGURE", raising=False)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow.context = {"source": source_value, "config_entry_id": "entry-2"}
+
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2")
+    flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
+
+    expected = {"type": "form", "step_id": "post_setup"}
+    with patch.object(flow, "async_step_post_setup", AsyncMock(return_value=expected)) as post_setup:
+        result = await flow.async_step_user()
+
+    assert result == expected
+    post_setup.assert_awaited_once()
+    assert flow._existing_entry is entry_two
+
+
+@pytest.mark.asyncio
+async def test_config_flow_reconfigure_source_selects_matching_entry(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+    reconfigure_source = (
+        getattr(config_entries, "SOURCE_RECONFIGURE", None)
+        or getattr(config_entries, "SOURCE_CONFIG_ENTRY", None)
+        or "reconfigure"
+    )
+    flow.context = {
+        "source": reconfigure_source,
+        "config_entry_id": "entry-2",
+    }
 
     entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1")
     entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2")
