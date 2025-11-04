@@ -159,12 +159,12 @@ def _build_threshold_selector_metadata() -> dict[str, dict[str, Any]]:
     }
 
     metadata: dict[str, dict[str, Any]] = {}
-    for field in MANUAL_THRESHOLD_FIELDS:
-        canonical = _THRESHOLD_ALIAS_MAP.get(field, field)
+    for field_name in MANUAL_THRESHOLD_FIELDS:
+        canonical = _THRESHOLD_ALIAS_MAP.get(field_name, field_name)
         entry = spec_index.get(canonical)
-        if entry is None and field.startswith("illuminance"):
+        if entry is None and field_name.startswith("illuminance"):
             entry = dict(illuminance_defaults)
-        metadata[field] = entry or {}
+        metadata[field_name] = entry or {}
     return metadata
 
 
@@ -242,7 +242,7 @@ def _build_threshold_selectors() -> dict[str, Any]:
     mode_value = getattr(number_mode, "BOX", "box") if number_mode is not None else "box"
     config_cls = getattr(sel, "NumberSelectorConfig", None)
 
-    for field, meta in MANUAL_THRESHOLD_METADATA.items():
+    for field_name, meta in MANUAL_THRESHOLD_METADATA.items():
         candidates: list[Any] = []
         if config_cls is not None:
             with suppress(TypeError):
@@ -275,7 +275,7 @@ def _build_threshold_selectors() -> dict[str, Any]:
                 break
 
         if selector is not None:
-            selectors[field] = selector
+            selectors[field_name] = selector
 
     return selectors
 
@@ -1418,24 +1418,15 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             placeholder_has_hints = False
             if placeholders_hint is not None:
                 has_identifier_hints = bool(placeholders_hint.unique_ids)
-                if placeholders_hint.entry_ids and (
-                    reason_hint or entry_id_hint or unique_id_hint
-                ):
+                if placeholders_hint.entry_ids and (reason_hint or entry_id_hint or unique_id_hint):
                     has_identifier_hints = True
                 has_label_hints = bool(placeholders_hint.titles or placeholders_hint.slugs)
                 placeholder_has_hints = has_identifier_hints or has_label_hints
 
-                if (
-                    source == config_entry_source
-                    and not reason_hint
-                    and not unique_id_hint
-                    and not entry_id_hint
-                ):
+                if source == config_entry_source and not reason_hint and not unique_id_hint and not entry_id_hint:
                     placeholder_has_hints = has_identifier_hints
 
-            has_reconfigure_hints = bool(
-                reason_hint or placeholder_has_hints or unique_id_hint or entry_id_hint
-            )
+            has_reconfigure_hints = bool(reason_hint or placeholder_has_hints or unique_id_hint or entry_id_hint)
             if has_reconfigure_hints:
                 reconfigure_sources.add(config_entry_source)
         if source in reconfigure_sources:
@@ -1470,10 +1461,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 if target_entry is None and placeholders_hint.titles:
                     for entry in entries:
                         title = getattr(entry, "title", None)
-                        if (
-                            isinstance(title, str)
-                            and title.strip().casefold() in placeholders_hint.titles
-                        ):
+                        if isinstance(title, str) and title.strip().casefold() in placeholders_hint.titles:
                             target_entry = entry
                             break
 
@@ -4538,13 +4526,13 @@ class OptionsFlow(config_entries.OptionsFlow):
                     containers.append(general)
 
         for container in containers:
-            for field in ("plant_type", "species", "slug"):
-                candidate = _as_str(container.get(field))
+            for field_name in ("plant_type", "species", "slug"):
+                candidate = _as_str(container.get(field_name))
                 if candidate:
                     return candidate
 
-        for field in ("species", "plant_type", "species_display"):
-            candidate = _as_str(profile.get(field))
+        for field_name in ("species", "plant_type", "species_display"):
+            candidate = _as_str(profile.get(field_name))
             if candidate:
                 return candidate
 
@@ -4554,8 +4542,8 @@ class OptionsFlow(config_entries.OptionsFlow):
                 payload = library.get(key)
                 if not isinstance(payload, Mapping):
                     continue
-                for field in ("plant_type", "species", "binomial", "slug", "name"):
-                    candidate = _as_str(payload.get(field))
+                for field_name in ("plant_type", "species", "binomial", "slug", "name"):
+                    candidate = _as_str(payload.get(field_name))
                     if candidate:
                         return candidate
 
@@ -4566,8 +4554,8 @@ class OptionsFlow(config_entries.OptionsFlow):
                     payload = library_section.get(key)
                     if not isinstance(payload, Mapping):
                         continue
-                    for field in ("plant_type", "species", "binomial", "slug", "name"):
-                        candidate = _as_str(payload.get(field))
+                    for field_name in ("plant_type", "species", "binomial", "slug", "name"):
+                        candidate = _as_str(payload.get(field_name))
                         if candidate:
                             return candidate
 
@@ -4797,6 +4785,8 @@ class HorticultureAssistantConfigFlow(ConfigFlow):
     """Retain legacy class name for tests and external references."""
 
     pass
+
+
 @dataclass(slots=True)
 class _PlaceholderHints:
     """Container for legacy reconfigure hints derived from placeholders."""
@@ -4836,10 +4826,7 @@ _PLACEHOLDER_UNIQUE_ID_KEYS = {
 }
 
 _KNOWN_PLACEHOLDER_KEYS = (
-    _PLACEHOLDER_ENTRY_ID_KEYS
-    | _PLACEHOLDER_UNIQUE_ID_KEYS
-    | _PLACEHOLDER_TITLE_KEYS
-    | _PLACEHOLDER_SLUG_KEYS
+    _PLACEHOLDER_ENTRY_ID_KEYS | _PLACEHOLDER_UNIQUE_ID_KEYS | _PLACEHOLDER_TITLE_KEYS | _PLACEHOLDER_SLUG_KEYS
 )
 
 

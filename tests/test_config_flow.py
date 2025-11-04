@@ -401,12 +401,8 @@ async def test_config_flow_config_entry_source_matches_unique_id_hint(hass, monk
     flow.hass = hass
     flow.context = {"source": source_value, "unique_id": "unique-entry-2"}
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", unique_id="unique-entry-1"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", unique_id="unique-entry-2"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", unique_id="unique-entry-1")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", unique_id="unique-entry-2")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     expected = {"type": "form", "step_id": "post_setup"}
@@ -433,12 +429,8 @@ async def test_config_flow_config_entry_source_matches_placeholder_hint(hass, mo
         "title_placeholders": {"name": "Entry Two"},
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     expected = {"type": "form", "step_id": "post_setup"}
@@ -451,9 +443,7 @@ async def test_config_flow_config_entry_source_matches_placeholder_hint(hass, mo
 
 
 @pytest.mark.asyncio
-async def test_config_flow_config_entry_source_placeholder_label_without_reason_starts_new_flow(
-    hass, monkeypatch
-):
+async def test_config_flow_config_entry_source_placeholder_label_without_reason_starts_new_flow(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
     monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
@@ -466,12 +456,8 @@ async def test_config_flow_config_entry_source_placeholder_label_without_reason_
         "title_placeholders": {"name": "Entry Two"},
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
@@ -484,9 +470,7 @@ async def test_config_flow_config_entry_source_placeholder_label_without_reason_
 
 
 @pytest.mark.asyncio
-async def test_config_flow_config_entry_source_matches_placeholder_entry_id_hint(
-    hass, monkeypatch
-):
+async def test_config_flow_config_entry_source_matches_placeholder_entry_id_hint(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
     monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
@@ -500,12 +484,8 @@ async def test_config_flow_config_entry_source_matches_placeholder_entry_id_hint
         "title_placeholders": {"entry_id": "entry-2"},
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Different"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Different")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     expected = {"type": "form", "step_id": "post_setup"}
@@ -534,12 +514,8 @@ async def test_config_flow_config_entry_source_placeholder_entry_id_with_create_
         "title_placeholders": {"entry_id": "entry-2"},
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Different"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Different")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
@@ -552,9 +528,7 @@ async def test_config_flow_config_entry_source_placeholder_entry_id_with_create_
 
 
 @pytest.mark.asyncio
-async def test_config_flow_config_entry_source_matches_placeholder_slug_hint(
-    hass, monkeypatch
-):
+async def test_config_flow_config_entry_source_matches_placeholder_slug_hint(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
     monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
@@ -568,9 +542,7 @@ async def test_config_flow_config_entry_source_matches_placeholder_slug_hint(
         "title_placeholders": {"slug": "existing-entry"},
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
     entry_two = MockConfigEntry(
         domain=DOMAIN,
         data={
@@ -594,9 +566,7 @@ async def test_config_flow_config_entry_source_matches_placeholder_slug_hint(
 
 
 @pytest.mark.asyncio
-async def test_config_flow_config_entry_source_matches_placeholder_unique_id_hint(
-    hass, monkeypatch
-):
+async def test_config_flow_config_entry_source_matches_placeholder_unique_id_hint(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
     monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
@@ -609,12 +579,8 @@ async def test_config_flow_config_entry_source_matches_placeholder_unique_id_hin
         "title_placeholders": {"unique_id": "unique-entry-2"},
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", unique_id="unique-entry-1"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", unique_id="unique-entry-2"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", unique_id="unique-entry-1")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", unique_id="unique-entry-2")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     expected = {"type": "form", "step_id": "post_setup"}
@@ -627,9 +593,7 @@ async def test_config_flow_config_entry_source_matches_placeholder_unique_id_hin
 
 
 @pytest.mark.asyncio
-async def test_config_flow_config_entry_source_matches_nested_placeholder_values(
-    hass, monkeypatch
-):
+async def test_config_flow_config_entry_source_matches_nested_placeholder_values(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
     monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
@@ -646,12 +610,8 @@ async def test_config_flow_config_entry_source_matches_nested_placeholder_values
         },
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     expected = {"type": "form", "step_id": "post_setup"}
@@ -664,9 +624,7 @@ async def test_config_flow_config_entry_source_matches_nested_placeholder_values
 
 
 @pytest.mark.asyncio
-async def test_config_flow_config_entry_source_parses_json_placeholder_values(
-    hass, monkeypatch
-):
+async def test_config_flow_config_entry_source_parses_json_placeholder_values(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
     monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
@@ -677,17 +635,11 @@ async def test_config_flow_config_entry_source_parses_json_placeholder_values(
     flow.context = {
         "source": source_value,
         "reason": "reconfigure",
-        "title_placeholders": {
-            "payload": '{"entry_id": "entry-2", "unique_id": "unique-entry-2"}'
-        },
+        "title_placeholders": {"payload": '{"entry_id": "entry-2", "unique_id": "unique-entry-2"}'},
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", unique_id="unique-entry-1"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", unique_id="unique-entry-2"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", unique_id="unique-entry-1")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", unique_id="unique-entry-2")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     expected = {"type": "form", "step_id": "post_setup"}
@@ -700,9 +652,7 @@ async def test_config_flow_config_entry_source_parses_json_placeholder_values(
 
 
 @pytest.mark.asyncio
-async def test_config_flow_config_entry_source_json_placeholder_without_reason_starts_new_flow(
-    hass, monkeypatch
-):
+async def test_config_flow_config_entry_source_json_placeholder_without_reason_starts_new_flow(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
     monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
@@ -715,12 +665,8 @@ async def test_config_flow_config_entry_source_json_placeholder_without_reason_s
         "title_placeholders": {"payload": '{"name": "Entry Two"}'},
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     with patch.object(flow, "async_step_post_setup", AsyncMock()) as post_setup:
@@ -733,9 +679,7 @@ async def test_config_flow_config_entry_source_json_placeholder_without_reason_s
 
 
 @pytest.mark.asyncio
-async def test_config_flow_config_entry_source_string_placeholder_with_reason_targets_entry(
-    hass, monkeypatch
-):
+async def test_config_flow_config_entry_source_string_placeholder_with_reason_targets_entry(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
     monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
@@ -749,12 +693,8 @@ async def test_config_flow_config_entry_source_string_placeholder_with_reason_ta
         "title_placeholders": "Entry Two",
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     expected = {"type": "form", "step_id": "post_setup"}
@@ -767,9 +707,7 @@ async def test_config_flow_config_entry_source_string_placeholder_with_reason_ta
 
 
 @pytest.mark.asyncio
-async def test_config_flow_config_entry_source_string_placeholder_without_reason_starts_new_flow(
-    hass, monkeypatch
-):
+async def test_config_flow_config_entry_source_string_placeholder_without_reason_starts_new_flow(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
     monkeypatch.setattr(config_entries, "SOURCE_CONFIG_ENTRY", source_value, raising=False)
@@ -782,12 +720,8 @@ async def test_config_flow_config_entry_source_string_placeholder_without_reason
         "title_placeholders": "Entry Two",
     }
 
-    entry_one = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One"
-    )
-    entry_two = MockConfigEntry(
-        domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two"
-    )
+    entry_one = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-1", title="Entry One")
+    entry_two = MockConfigEntry(domain=DOMAIN, data={}, options={}, entry_id="entry-2", title="Entry Two")
     flow._async_current_entries = MagicMock(return_value=[entry_one, entry_two])
 
     result = await flow.async_step_user()
