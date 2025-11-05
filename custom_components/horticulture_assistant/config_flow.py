@@ -8,8 +8,8 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
 from types import MappingProxyType
+from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
 from homeassistant import config_entries
@@ -2783,9 +2783,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 await async_sync_entry_devices(self.hass, entry)
         else:
             profile_devices = (
-                refreshed_entry_data.get("profile_devices")
-                if isinstance(refreshed_entry_data, Mapping)
-                else None
+                refreshed_entry_data.get("profile_devices") if isinstance(refreshed_entry_data, Mapping) else None
             )
             if not isinstance(profile_devices, Mapping) or plant_id not in profile_devices:
                 snapshot = (

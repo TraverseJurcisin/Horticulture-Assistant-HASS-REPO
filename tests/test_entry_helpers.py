@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
+import asyncio
 import types
 from typing import Any
-
-import pytest
 from unittest.mock import patch
 
-import asyncio
+import pytest
 
 from custom_components.horticulture_assistant.const import (
     CONF_PLANT_ID,
@@ -20,13 +19,13 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     BY_PLANT_ID,
     ProfileContext,
     ProfileContextCollection,
+    async_sync_entry_devices,
     backfill_profile_devices_from_options,
     build_entry_snapshot,
     build_profile_device_info,
-    entry_device_identifier,
-    async_sync_entry_devices,
     ensure_all_profile_devices_registered,
     ensure_profile_device_registered,
+    entry_device_identifier,
     get_entry_data,
     get_entry_data_by_plant_id,
     get_entry_plant_info,
@@ -195,13 +194,10 @@ class _FakeDeviceRegistry:
     def _pairs(value):
         if value is None:
             return set()
-        if isinstance(value, (list, tuple, set)):
-            items = value
-        else:
-            items = [value]
+        items = value if isinstance(value, list | tuple | set) else [value]
         pairs: set[tuple[str, str]] = set()
         for item in items:
-            if isinstance(item, (list, tuple)) and len(item) == 2:
+            if isinstance(item, list | tuple) and len(item) == 2:
                 pairs.add((str(item[0]), str(item[1])))
         return pairs
 
@@ -525,15 +521,19 @@ async def test_ensure_profile_device_registered_appends_canonical_identifiers(ha
         "profiles": {"mint": {"name": "Mint"}},
     }
 
-    with patch(
-        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
-        return_value=fake_registry,
-    ), patch(
-        "custom_components.horticulture_assistant.utils.entry_helpers.build_entry_device_info",
-        return_value={"identifiers": {("other", "entry")}, "name": "Mint"},
-    ), patch(
-        "custom_components.horticulture_assistant.utils.entry_helpers.build_profile_device_info",
-        return_value={"identifiers": {("other", "profile")}, "name": "Mint"},
+    with (
+        patch(
+            "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+            return_value=fake_registry,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.utils.entry_helpers.build_entry_device_info",
+            return_value={"identifiers": {("other", "entry")}, "name": "Mint"},
+        ),
+        patch(
+            "custom_components.horticulture_assistant.utils.entry_helpers.build_profile_device_info",
+            return_value={"identifiers": {("other", "profile")}, "name": "Mint"},
+        ),
     ):
         await ensure_profile_device_registered(
             hass,
@@ -636,15 +636,19 @@ async def test_async_sync_entry_devices_adds_canonical_identifiers(hass, tmp_pat
         "profiles": {"mint": {"name": "Mint"}},
     }
 
-    with patch(
-        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
-        return_value=fake_registry,
-    ), patch(
-        "custom_components.horticulture_assistant.utils.entry_helpers.build_entry_device_info",
-        return_value={"identifiers": {("other", "entry")}, "name": "Mint"},
-    ), patch(
-        "custom_components.horticulture_assistant.utils.entry_helpers.build_profile_device_info",
-        return_value={"identifiers": {("other", "profile")}, "name": "Mint"},
+    with (
+        patch(
+            "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+            return_value=fake_registry,
+        ),
+        patch(
+            "custom_components.horticulture_assistant.utils.entry_helpers.build_entry_device_info",
+            return_value={"identifiers": {("other", "entry")}, "name": "Mint"},
+        ),
+        patch(
+            "custom_components.horticulture_assistant.utils.entry_helpers.build_profile_device_info",
+            return_value={"identifiers": {("other", "profile")}, "name": "Mint"},
+        ),
     ):
         await async_sync_entry_devices(hass, entry, snapshot=snapshot)
 

@@ -1320,10 +1320,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             if isinstance(latest_entry_data, Mapping):
                 refreshed_raw = latest_entry_data
 
-        if isinstance(refreshed_raw, Mapping):
-            refreshed = dict(refreshed_raw)
-        else:
-            refreshed = {"config_entry": updated_entry}
+        refreshed = dict(refreshed_raw) if isinstance(refreshed_raw, Mapping) else {"config_entry": updated_entry}
 
         refreshed.setdefault("config_entry", updated_entry)
         refreshed.setdefault("onboarding_errors", entry_data.get("onboarding_errors", {}))

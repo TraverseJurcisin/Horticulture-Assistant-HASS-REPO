@@ -22,8 +22,8 @@ from datetime import datetime, timezone
 from enum import Enum
 from math import isfinite
 from pathlib import Path
-from typing import Any
 from types import MappingProxyType
+from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -60,12 +60,6 @@ from .profile.schema import (
     RunEvent,
 )
 from .profile.statistics import recompute_statistics
-from .utils.entry_helpers import (
-    async_sync_entry_devices,
-    ensure_all_profile_devices_registered,
-    entry_device_identifier,
-    update_entry_data,
-)
 from .profile.store import CACHE_KEY as PROFILE_STORE_CACHE_KEY
 from .profile.store import STORE_KEY as PROFILE_STORE_KEY
 from .profile.store import STORE_VERSION as PROFILE_STORE_VERSION
@@ -82,9 +76,13 @@ from .sensor_validation import (
     validate_sensor_links,
 )
 from .utils.entry_helpers import (
+    async_sync_entry_devices,
+    ensure_all_profile_devices_registered,
+    entry_device_identifier,
     profile_device_identifier,
     resolve_profile_device_info,
     serialise_device_info,
+    update_entry_data,
 )
 from .validators import (
     validate_cultivation_event_dict,
@@ -1871,9 +1869,7 @@ class ProfileRegistry:
                 await async_sync_entry_devices(self.hass, self.entry)
         else:
             profile_devices = (
-                refreshed_entry_data.get("profile_devices")
-                if isinstance(refreshed_entry_data, Mapping)
-                else None
+                refreshed_entry_data.get("profile_devices") if isinstance(refreshed_entry_data, Mapping) else None
             )
             if not isinstance(profile_devices, Mapping) or candidate not in profile_devices:
                 snapshot = (

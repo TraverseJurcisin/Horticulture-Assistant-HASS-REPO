@@ -65,13 +65,10 @@ class FakeDeviceRegistry:
     def _coerce_identifiers(identifiers) -> set[tuple[str, str]]:
         if identifiers is None:
             return set()
-        if isinstance(identifiers, (list, tuple, set)):
-            items = identifiers
-        else:
-            items = [identifiers]
+        items = identifiers if isinstance(identifiers, list | tuple | set) else [identifiers]
         pairs: set[tuple[str, str]] = set()
         for item in items:
-            if isinstance(item, (list, tuple)) and len(item) == 2:
+            if isinstance(item, list | tuple) and len(item) == 2:
                 pairs.add((str(item[0]), str(item[1])))
             elif isinstance(item, dict):
                 domain = item.get("domain")

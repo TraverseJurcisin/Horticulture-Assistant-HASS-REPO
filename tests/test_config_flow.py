@@ -1344,9 +1344,7 @@ async def test_config_flow_existing_entry_refreshes_from_hass_on_store(hass, tmp
     assert update_called is True
 
     identifier = profile_device_identifier(entry.entry_id, "mint")
-    assert any(
-        identifier in identifiers for action, identifiers in fake_registry.calls if action == "create"
-    )
+    assert any(identifier in identifiers for action, identifiers in fake_registry.calls if action == "create")
     device = fake_registry.async_get_device({identifier})
     assert device is not None
     assert device.name == "Mint"
