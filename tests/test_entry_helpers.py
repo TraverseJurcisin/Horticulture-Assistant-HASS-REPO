@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import asyncio
 import types
-from typing import Any, Iterable
+from collections.abc import Iterable
+from typing import Any
 from unittest.mock import patch
 
 import pytest
 
 import custom_components.horticulture_assistant.utils.entry_helpers as helpers
-
 from custom_components.horticulture_assistant.const import (
     CONF_PLANT_ID,
     CONF_PLANT_NAME,
@@ -261,11 +261,7 @@ class _RejectingDeviceRegistry(_FakeDeviceRegistry):
         super().__init__()
         self._entry_device_id = entry_device_id
         self._reject = {str(arg) for arg in reject}
-        self._required_profile_args = (
-            tuple(str(arg) for arg in required_profile_args)
-            if required_profile_args
-            else tuple()
-        )
+        self._required_profile_args = tuple(str(arg) for arg in required_profile_args) if required_profile_args else ()
         self._lookup_entry_device_id = lookup_entry_device_id
 
     def async_get_device(self, identifiers, *_args, **_kwargs):
@@ -285,14 +281,10 @@ class _RejectingDeviceRegistry(_FakeDeviceRegistry):
         if is_profile:
             for arg in self._reject:
                 if arg in kwargs:
-                    raise TypeError(
-                        f"async_get_or_create() got an unexpected keyword argument '{arg}'"
-                    )
+                    raise TypeError(f"async_get_or_create() got an unexpected keyword argument '{arg}'")
             for required in self._required_profile_args:
                 if required not in kwargs:
-                    raise TypeError(
-                        f"async_get_or_create() missing required keyword argument '{required}'"
-                    )
+                    raise TypeError(f"async_get_or_create() missing required keyword argument '{required}'")
 
         device = super().async_get_or_create(
             identifiers=identifiers,
@@ -859,9 +851,7 @@ async def test_ensure_profile_device_registered_falls_back_to_legacy_via_device(
 
 
 @pytest.mark.asyncio
-async def test_ensure_profile_device_registered_links_parent_after_rejection(
-    hass, tmp_path
-):
+async def test_ensure_profile_device_registered_links_parent_after_rejection(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
 
     entry = MockConfigEntry(
@@ -913,9 +903,7 @@ async def test_ensure_profile_device_registered_links_parent_after_rejection(
 
 
 @pytest.mark.asyncio
-async def test_ensure_profile_device_registered_refreshes_after_boolean_update(
-    hass, tmp_path
-):
+async def test_ensure_profile_device_registered_refreshes_after_boolean_update(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
 
     entry = MockConfigEntry(

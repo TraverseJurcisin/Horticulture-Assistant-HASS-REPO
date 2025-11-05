@@ -2314,9 +2314,7 @@ class BioProfile:
         self.event_history = [CultivationEvent.from_json(event.to_json()) for event in section.event_history]
         self.run_history = [RunEvent.from_json(event.to_json()) for event in section.run_history]
         self.harvest_history = [HarvestEvent.from_json(event.to_json()) for event in section.harvest_history]
-        self.nutrient_history = [
-            NutrientApplication.from_json(event.to_json()) for event in section.nutrient_history
-        ]
+        self.nutrient_history = [NutrientApplication.from_json(event.to_json()) for event in section.nutrient_history]
         self.statistics = [YieldStatistic.from_json(stat.to_json()) for stat in section.statistics]
         self.local_metadata = dict(section.metadata)
         self.last_resolved = section.last_resolved

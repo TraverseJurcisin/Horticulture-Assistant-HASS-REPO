@@ -59,12 +59,12 @@ from .sensor_catalog import SensorSuggestion, collect_sensor_suggestions, format
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
 from .utils.entry_helpers import (
+    _async_resolve_device_registry,
     async_sync_entry_devices,
     ensure_all_profile_devices_registered,
     ensure_profile_device_registered,
     get_entry_data,
     get_primary_profile_id,
-    _async_resolve_device_registry,
     update_entry_data,
 )
 from .utils.json_io import load_json, save_json
@@ -3680,9 +3680,7 @@ class OptionsFlow(config_entries.OptionsFlow):
 
                     if not errors and pid is not None:
                         profile_obj = registry.get_profile(pid)
-                        profile_payload = (
-                            profile_obj.to_json() if profile_obj is not None else new_profile
-                        )
+                        profile_payload = profile_obj.to_json() if profile_obj is not None else new_profile
                         await async_sync_entry_devices(self.hass, self._entry)
                         device_registry = await _async_resolve_device_registry(self.hass)
                         await ensure_profile_device_registered(

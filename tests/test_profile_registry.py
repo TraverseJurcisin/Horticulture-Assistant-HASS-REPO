@@ -139,6 +139,7 @@ class StrictDeviceRegistry(FakeDeviceRegistry):
             **kwargs,
         )
 
+
 async def test_normalise_sensor_value_sequence_deduplicates():
     """Sequence inputs should be stripped and deduplicated preserving order."""
 
@@ -262,9 +263,7 @@ async def test_async_add_profile_registers_device_real_registry(hass, tmp_path):
 
     assert device is not None
     assert device.name == "Mint"
-    parent = device_registry.async_get_device(
-        identifiers={entry_device_identifier(entry.entry_id)}
-    )
+    parent = device_registry.async_get_device(identifiers={entry_device_identifier(entry.entry_id)})
     assert parent is not None
     assert device.via_device_id == parent.id
 

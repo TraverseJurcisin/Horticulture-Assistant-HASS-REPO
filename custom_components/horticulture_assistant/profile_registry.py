@@ -48,6 +48,7 @@ from .const import (
     PROFILE_SCOPE_DEFAULT,
 )
 from .history import HistoryExporter
+from .profile import store as profile_store
 from .profile.compat import sync_thresholds
 from .profile.options import options_profile_to_dataclass
 from .profile.schema import (
@@ -63,7 +64,6 @@ from .profile.statistics import recompute_statistics
 from .profile.store import CACHE_KEY as PROFILE_STORE_CACHE_KEY
 from .profile.store import STORE_KEY as PROFILE_STORE_KEY
 from .profile.store import STORE_VERSION as PROFILE_STORE_VERSION
-from .profile import store as profile_store
 from .profile.utils import (
     LineageLinkReport,
     ensure_sections,
@@ -79,6 +79,7 @@ from .sensor_validation import (
 from .utils.entry_helpers import (
     async_sync_entry_devices,
     ensure_all_profile_devices_registered,
+    ensure_profile_device_registered,
     entry_device_identifier,
     profile_device_identifier,
     resolve_profile_device_info,

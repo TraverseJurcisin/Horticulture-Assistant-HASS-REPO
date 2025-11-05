@@ -94,6 +94,8 @@ pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
+
+
 async def test_normalise_sensor_submission_deduplicates_sequences():
     values = ["sensor.one", "sensor.one", "sensor.two", "", None, "sensor.two"]
 
@@ -138,9 +140,7 @@ async def test_options_flow_add_profile_registers_device_under_entry(hass, tmp_p
             side_effect=_record_ensure,
         ),
     ):
-        result = await flow.async_step_add_profile(
-            {"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}
-        )
+        result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
         await hass.async_block_till_done()
 
     assert result["type"] == "form"

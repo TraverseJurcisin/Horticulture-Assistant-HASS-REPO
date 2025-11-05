@@ -16,7 +16,7 @@ else:  # pragma: no branch - executed when HA is available
         SensorDeviceClass.CONDUCTIVITY = SensorDeviceClass.MOISTURE  # type: ignore[attr-defined]
 
 try:  # pragma: no cover - provide script helper shim when missing
-    import homeassistant.helpers  # type: ignore[attr-defined]
+    _helpers = importlib.import_module("homeassistant.helpers")  # type: ignore[attr-defined, import-error]
 except Exception:  # pragma: no cover - homeassistant not available
     pass
 else:  # pragma: no branch - executed when helpers module imports
