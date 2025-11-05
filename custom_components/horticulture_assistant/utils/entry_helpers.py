@@ -8,6 +8,7 @@ from pathlib import Path
 from types import MappingProxyType
 from typing import Any, Iterator
 
+import inspect
 import types
 
 try:  # pragma: no cover - allow running tests without Home Assistant
@@ -270,6 +271,218 @@ def _clean_device_kwargs(info: Mapping[str, Any]) -> dict[str, Any]:
             continue
         clean[key] = value
     return clean
+
+
+def _coerce_device_registry_entry(result: Any) -> tuple[Any | None, str | None]:
+    """Return ``result`` normalised into ``(device, id)`` pair."""
+
+    def _candidate_from_mapping(payload: Mapping[str, Any]) -> Any | None:
+        for key in ("device", "entry", "result"):
+            if key in payload:
+                return payload[key]
+        return None
+
+    device = result
+
+    if isinstance(result, Mapping):
+        nested = _candidate_from_mapping(result)
+        if nested is not None and nested is not result:
+            nested_device, nested_id = _coerce_device_registry_entry(nested)
+            if nested_device is not None and nested_id:
+                return nested_device, nested_id
+        device = result
+
+    if isinstance(result, (list, tuple)):
+        for item in result:
+            candidate_device, candidate_id = _coerce_device_registry_entry(item)
+            if candidate_device is not None and candidate_id:
+                return candidate_device, candidate_id
+        device = result[0] if result else None
+
+    if device is None:
+        return None, None
+
+    device_id = getattr(device, "id", None)
+    if device_id is None and isinstance(device, Mapping):
+        device_id = device.get("id")
+
+    if isinstance(device_id, str):
+        text = device_id.strip()
+        device_id = text or None
+    elif device_id is not None:
+        try:
+            text = str(device_id).strip()
+        except Exception:  # pragma: no cover - defensive conversion
+            device_id = None
+        else:
+            device_id = text or None
+
+    return device, device_id
+
+
+async def _async_resolve_device_registry(
+    hass: HomeAssistant,
+    device_registry: Any | None = None,
+) -> Any | None:
+    """Return a loaded device registry instance if available."""
+
+    if device_registry is not None:
+        return device_registry
+
+    async def _try_getter(name: str) -> Any | None:
+        getter = getattr(dr, name, None)
+        if not callable(getter):
+            return None
+        try:
+            result = getter(hass)
+        except Exception:
+            return None
+        if inspect.isawaitable(result):
+            try:
+                result = await result
+            except Exception:
+                return None
+        return result
+
+    getter_names = (
+        "async_get",
+        "async_get_registry",
+        "async_get_device_registry",
+    )
+
+    for getter_name in getter_names:
+        registry = await _try_getter(getter_name)
+        if registry is not None:
+            return registry
+
+    async def _run_loader(name: str) -> Any | None:
+        loader = getattr(dr, name, None)
+        if not callable(loader):
+            return None
+        try:
+            result = loader(hass)
+        except Exception:
+            return None
+        if inspect.isawaitable(result):
+            try:
+                result = await result
+            except Exception:
+                return None
+        return result
+
+    loader_names = (
+        "async_load",
+        "async_load_registry",
+        "async_load_device_registry",
+    )
+
+    for loader_name in loader_names:
+        load_result = await _run_loader(loader_name)
+        if load_result is not None:
+            if hasattr(load_result, "async_get_or_create"):
+                return load_result
+        for getter_name in getter_names:
+            registry = await _try_getter(getter_name)
+            if registry is not None:
+                return registry
+
+    return None
+
+
+async def _async_device_registry_get_or_create(
+    device_registry: Any,
+    entry: ConfigEntry,
+    kwargs: Mapping[str, Any],
+    entry_identifier: tuple[str, str],
+    entry_device_id: str | None,
+):
+    """Call ``async_get_or_create`` with compatibility for via-device kwargs."""
+
+    base_payload = dict(kwargs)
+
+    def _coerce_device_id(value: Any) -> str | None:
+        if value is None:
+            return None
+        if isinstance(value, str):
+            text = value.strip()
+            return text or None
+        try:
+            text = str(value)
+        except Exception:  # pragma: no cover - defensive conversion
+            return None
+        text = text.strip()
+        return text or None
+
+    resolved_entry_device_id = _coerce_device_id(entry_device_id)
+
+    if not resolved_entry_device_id:
+        lookup = getattr(device_registry, "async_get_device", None)
+        if callable(lookup):
+            try:
+                maybe_device = lookup({entry_identifier})
+            except TypeError:  # pragma: no cover - mismatched signature
+                maybe_device = None
+            else:
+                if inspect.isawaitable(maybe_device):
+                    maybe_device = await maybe_device
+            if maybe_device is not None:
+                candidate = getattr(maybe_device, "id", None)
+                if candidate is None and isinstance(maybe_device, Mapping):
+                    candidate = maybe_device.get("id")
+                resolved_entry_device_id = _coerce_device_id(candidate)
+
+    attempts: list[dict[str, Any]] = []
+
+    def _queue(payload: dict[str, Any]) -> None:
+        for existing in attempts:
+            if existing == payload:
+                return
+        attempts.append(payload)
+
+    if resolved_entry_device_id:
+        payload = dict(base_payload)
+        payload["via_device_id"] = resolved_entry_device_id
+        if entry_identifier:
+            payload["via_device"] = entry_identifier
+        _queue(payload)
+
+        payload = dict(base_payload)
+        payload["via_device_id"] = resolved_entry_device_id
+        payload.pop("via_device", None)
+        _queue(payload)
+
+    _queue(dict(base_payload))
+
+    payload = dict(base_payload)
+    payload.pop("via_device_id", None)
+    payload.pop("via_device", None)
+    _queue(payload)
+
+    last_error: Exception | None = None
+
+    for payload in attempts:
+        try:
+            result = device_registry.async_get_or_create(
+                config_entry_id=entry.entry_id,
+                **payload,
+            )
+            if inspect.isawaitable(result):
+                result = await result
+            return result
+        except (TypeError, ValueError) as err:
+            last_error = err
+            continue
+
+    if last_error is not None:
+        raise last_error
+
+    result = device_registry.async_get_or_create(
+        config_entry_id=entry.entry_id,
+        **base_payload,
+    )
+    if inspect.isawaitable(result):
+        result = await result
+    return result
 
 
 def _serialise_identifier(value: Any) -> str | list[str]:
@@ -587,16 +800,31 @@ def _as_identifier_pair(item: Any) -> tuple[str, str] | None:
 
 def _coerce_device_identifiers(value: Any) -> set[tuple[str, str]]:
     identifiers: set[tuple[str, str]] = set()
-    pair = _as_identifier_pair(value)
-    if pair:
-        identifiers.add(pair)
-        return identifiers
+    direct_pair = _as_identifier_pair(value)
 
     if isinstance(value, Set):
         for item in value:
             if pair := _as_identifier_pair(item):
                 identifiers.add(pair)
+        if identifiers:
+            return identifiers
     elif isinstance(value, Mapping):
+        if direct_pair:
+            key_set = {str(key).lower() for key in value.keys()}
+            valid_keys = {
+                "domain",
+                "id",
+                "identifier",
+                "value",
+                "type",
+                "namespace",
+                "key",
+                "0",
+                "1",
+            }
+            if key_set and key_set <= valid_keys:
+                identifiers.add(direct_pair)
+                return identifiers
         for key, item in value.items():
             if pair := _as_identifier_pair(item):
                 identifiers.add(pair)
@@ -625,13 +853,17 @@ def _coerce_device_identifiers(value: Any) -> set[tuple[str, str]]:
             if not identifier:
                 continue
             identifiers.add((domain, identifier))
+        if identifiers:
+            return identifiers
     elif isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
         for item in value:
             if pair := _as_identifier_pair(item):
                 identifiers.add(pair)
-    else:
-        if pair := _as_identifier_pair(value):
-            identifiers.add(pair)
+        if identifiers:
+            return identifiers
+
+    if direct_pair:
+        identifiers.add(direct_pair)
     return identifiers
 
 
@@ -934,10 +1166,7 @@ async def async_sync_entry_devices(
 ) -> None:
     """Ensure device registry entries reflect the current profile layout."""
 
-    try:
-        device_registry = dr.async_get(hass)
-    except Exception:  # pragma: no cover - defensive fallback
-        return
+    device_registry = await _async_resolve_device_registry(hass)
 
     if device_registry is None:
         return
@@ -953,10 +1182,14 @@ async def async_sync_entry_devices(
     if entry_identifier not in identifiers:
         identifiers.add(entry_identifier)
     entry_kwargs["identifiers"] = identifiers
-    await device_registry.async_get_or_create(
+    entry_device_result = device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         **entry_kwargs,
     )
+    if inspect.isawaitable(entry_device_result):
+        entry_device_result = await entry_device_result
+
+    _entry_device, entry_device_id = _coerce_device_registry_entry(entry_device_result)
 
     desired_identifiers = set(identifiers)
     profile_prefix = f"{entry.entry_id}:profile:"
@@ -1004,9 +1237,12 @@ async def async_sync_entry_devices(
             identifiers.add(profile_identifier)
         kwargs["identifiers"] = identifiers
         desired_identifiers.update(identifiers)
-        await device_registry.async_get_or_create(
-            config_entry_id=entry.entry_id,
-            **kwargs,
+        await _async_device_registry_get_or_create(
+            device_registry,
+            entry,
+            kwargs,
+            entry_identifier,
+            entry_device_id,
         )
 
     devices = getattr(device_registry, "devices", {})
@@ -1038,11 +1274,7 @@ async def ensure_profile_device_registered(
 ) -> None:
     """Create the device for ``profile_id`` when it's missing from registry sync."""
 
-    if device_registry is None:
-        try:
-            device_registry = dr.async_get(hass)
-        except Exception:  # pragma: no cover - defensive guard
-            return
+    device_registry = await _async_resolve_device_registry(hass, device_registry)
 
     if device_registry is None:
         return
@@ -1164,10 +1396,14 @@ async def ensure_profile_device_registered(
         entry_identifiers.add(entry_identifier)
     entry_kwargs["identifiers"] = entry_identifiers
 
-    await device_registry.async_get_or_create(
+    entry_device_result = device_registry.async_get_or_create(
         config_entry_id=entry.entry_id,
         **entry_kwargs,
     )
+    if inspect.isawaitable(entry_device_result):
+        entry_device_result = await entry_device_result
+
+    _entry_device, entry_device_id = _coerce_device_registry_entry(entry_device_result)
 
     default_name = None
     if isinstance(plant_id, str) and plant_id == canonical_profile_id:
@@ -1192,12 +1428,117 @@ async def ensure_profile_device_registered(
     if profile_identifier not in identifiers:
         identifiers.add(profile_identifier)
     profile_kwargs["identifiers"] = identifiers
-    profile_kwargs.setdefault("via_device", entry_identifier)
-
-    await device_registry.async_get_or_create(
-        config_entry_id=entry.entry_id,
-        **profile_kwargs,
+    profile_device_result = await _async_device_registry_get_or_create(
+        device_registry,
+        entry,
+        profile_kwargs,
+        entry_identifier,
+        entry_device_id,
     )
+
+    profile_device, raw_profile_device_id = _coerce_device_registry_entry(
+        profile_device_result
+    )
+
+    def _coerce_device_id(value: Any) -> str | None:
+        if value is None:
+            return None
+        if isinstance(value, str):
+            text = value.strip()
+            return text or None
+        try:
+            text = str(value)
+        except Exception:  # pragma: no cover - defensive conversion
+            return None
+        text = text.strip()
+        return text or None
+
+    profile_device_id = _coerce_device_id(raw_profile_device_id)
+
+    def _is_device_object(candidate: Any) -> bool:
+        return isinstance(candidate, Mapping) or hasattr(candidate, "__dict__")
+
+    async def _async_lookup_device(
+        identifier: tuple[str, str]
+    ) -> tuple[Any | None, str | None]:
+        lookup = getattr(device_registry, "async_get_device", None)
+        if not callable(lookup):
+            return None, None
+        try:
+            result = lookup(identifiers={identifier})
+        except TypeError:
+            try:
+                result = lookup({identifier})
+            except TypeError:  # pragma: no cover - incompatible signature
+                return None, None
+        if inspect.isawaitable(result):
+            result = await result
+        device, device_id = _coerce_device_registry_entry(result)
+        return device, device_id
+
+    if profile_device is None or profile_device_id is None:
+        lookup_device, lookup_device_id = await _async_lookup_device(profile_identifier)
+        if lookup_device is not None:
+            profile_device = lookup_device
+            profile_device_id = _coerce_device_id(lookup_device_id)
+
+    if entry_device_id:
+        entry_device_id = _coerce_device_id(entry_device_id)
+
+    needs_refresh = False
+
+    if (
+        entry_device_id
+        and profile_device_id
+        and (_coerce_device_id(getattr(profile_device, "via_device_id", None)) != entry_device_id)
+    ):
+        updater = getattr(device_registry, "async_update_device", None)
+        if callable(updater):
+            try:
+                update_result = updater(
+                    profile_device_id,
+                    via_device_id=entry_device_id,
+                )
+            except TypeError:
+                try:
+                    update_result = updater(
+                        device_id=profile_device_id,
+                        via_device_id=entry_device_id,
+                    )
+                except TypeError:  # pragma: no cover - incompatible signature
+                    update_result = None
+            if inspect.isawaitable(update_result):
+                update_result = await update_result
+            updated_device, updated_device_id = _coerce_device_registry_entry(
+                update_result
+            )
+            updated_device_id = _coerce_device_id(updated_device_id)
+            if updated_device_id:
+                profile_device_id = updated_device_id
+            if _is_device_object(updated_device):
+                profile_device = updated_device
+            else:
+                needs_refresh = True
+        else:
+            needs_refresh = True
+    elif profile_device is None or not _is_device_object(profile_device):
+        needs_refresh = True
+
+    if entry_device_id and profile_device_id:
+        via_candidate = _coerce_device_id(
+            getattr(profile_device, "via_device_id", None)
+        ) if _is_device_object(profile_device) else None
+        if via_candidate != entry_device_id:
+            needs_refresh = True
+
+    if needs_refresh:
+        lookup_device, lookup_device_id = await _async_lookup_device(
+            profile_identifier
+        )
+        if lookup_device is not None:
+            profile_device = lookup_device
+        if lookup_device_id is not None:
+            profile_device_id = _coerce_device_id(lookup_device_id)
 
     domain_data = hass.data.setdefault(DOMAIN, {})
     entry_data = domain_data.get(entry.entry_id)
@@ -1289,10 +1630,7 @@ async def ensure_all_profile_devices_registered(
 ) -> None:
     """Ensure every profile in ``entry`` has a corresponding device."""
 
-    try:
-        device_registry = dr.async_get(hass)
-    except Exception:  # pragma: no cover - defensive guard
-        return
+    device_registry = await _async_resolve_device_registry(hass)
 
     if device_registry is None:
         return

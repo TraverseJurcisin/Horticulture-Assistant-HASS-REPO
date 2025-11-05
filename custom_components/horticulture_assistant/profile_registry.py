@@ -63,6 +63,7 @@ from .profile.statistics import recompute_statistics
 from .profile.store import CACHE_KEY as PROFILE_STORE_CACHE_KEY
 from .profile.store import STORE_KEY as PROFILE_STORE_KEY
 from .profile.store import STORE_VERSION as PROFILE_STORE_VERSION
+from .profile import store as profile_store
 from .profile.utils import (
     LineageLinkReport,
     ensure_sections,
@@ -1886,12 +1887,33 @@ class ProfileRegistry:
         if refreshed_entry_data is None:
             snapshot = None
 
+        registration_snapshot = snapshot
+        if registration_snapshot is None and isinstance(refreshed_entry_data, Mapping):
+            candidate_snapshot = refreshed_entry_data.get("snapshot")
+            if isinstance(candidate_snapshot, Mapping):
+                registration_snapshot = candidate_snapshot
+
         with contextlib.suppress(Exception):
             await ensure_all_profile_devices_registered(
                 self.hass,
                 self.entry,
-                snapshot=snapshot,
+                snapshot=registration_snapshot,
                 extra_profiles={candidate: new_profile},
+            )
+
+        try:
+            await ensure_profile_device_registered(
+                self.hass,
+                self.entry,
+                candidate,
+                new_profile,
+                snapshot=registration_snapshot,
+            )
+        except Exception as err:  # pragma: no cover - defensive logging
+            _LOGGER.debug(
+                "Unable to ensure device registration for profile '%s': %s",
+                candidate,
+                err,
             )
 
         prof_obj = options_profile_to_dataclass(
@@ -2570,12 +2592,23 @@ class ProfileRegistry:
         count = await async_import_profiles(self.hass, path)
         await self.async_load()
 
+        stored_payloads: dict[str, dict[str, Any]] = {}
+        if count:
+            with contextlib.suppress(Exception):
+                stored_payloads = await profile_store.async_load_all(self.hass)
+
         if count:
             updated_profiles = dict(existing_profiles)
             changed = False
             for pid, profile in self._profiles.items():
-                payload = profile.to_json()
-                payload.setdefault("name", profile.display_name)
+                stored_payload = stored_payloads.get(pid)
+                if isinstance(stored_payload, Mapping):
+                    payload = {str(key): deepcopy(value) for key, value in stored_payload.items()}
+                else:
+                    payload = profile.to_json()
+                display_name = payload.get("display_name") or profile.display_name
+                payload["display_name"] = display_name
+                payload.setdefault("name", display_name)
                 existing = updated_profiles.get(pid)
                 if not isinstance(existing, Mapping) or dict(existing) != payload:
                     updated_profiles[pid] = payload

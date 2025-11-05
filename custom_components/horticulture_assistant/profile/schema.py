@@ -2289,6 +2289,41 @@ class BioProfile:
     def _ensure_sections(self) -> ProfileSections:
         return self.refresh_sections()
 
+    @property
+    def local(self) -> ProfileLocalSection:
+        """Return the cached local section, refreshing when necessary."""
+
+        return self.refresh_sections().local
+
+    @local.setter
+    def local(self, value: ProfileLocalSection | Mapping[str, Any]) -> None:
+        """Replace the local section from a section object or raw mapping."""
+
+        if isinstance(value, ProfileLocalSection):
+            section = value
+        elif isinstance(value, Mapping):
+            section = ProfileLocalSection.from_json(value)
+        else:  # pragma: no cover - defensive type guard
+            raise TypeError("local section must be a ProfileLocalSection or mapping")
+
+        self.species = section.species
+        self.general = dict(section.general)
+        self.local_overrides = dict(section.local_overrides)
+        self.resolver_state = dict(section.resolver_state)
+        self.citations = [Citation(**asdict(cit)) for cit in section.citations]
+        self.event_history = [CultivationEvent.from_json(event.to_json()) for event in section.event_history]
+        self.run_history = [RunEvent.from_json(event.to_json()) for event in section.run_history]
+        self.harvest_history = [HarvestEvent.from_json(event.to_json()) for event in section.harvest_history]
+        self.nutrient_history = [
+            NutrientApplication.from_json(event.to_json()) for event in section.nutrient_history
+        ]
+        self.statistics = [YieldStatistic.from_json(stat.to_json()) for stat in section.statistics]
+        self.local_metadata = dict(section.metadata)
+        self.last_resolved = section.last_resolved
+        self.created_at = section.created_at
+        self.updated_at = section.updated_at
+        self.refresh_sections()
+
 
 @dataclass
 class SpeciesProfile(BioProfile):

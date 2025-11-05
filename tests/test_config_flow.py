@@ -94,14 +94,61 @@ pytestmark = [
     pytest.mark.asyncio,
     pytest.mark.usefixtures("enable_custom_integrations"),
 ]
-
-
 async def test_normalise_sensor_submission_deduplicates_sequences():
     values = ["sensor.one", "sensor.one", "sensor.two", "", None, "sensor.two"]
 
     result = _normalise_sensor_submission(values)
 
     assert result == ["sensor.one", "sensor.two"]
+
+
+async def test_options_flow_add_profile_registers_device_under_entry(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    ensure_calls: list[tuple[str, dict[str, Any], Any]] = []
+
+    async def _record_ensure(hass_arg, entry_arg, profile_id, payload, *, snapshot=None, device_registry=None):
+        ensure_calls.append((profile_id, payload, device_registry))
+        return None
+
+    with (
+        patch(
+            "custom_components.horticulture_assistant.config_flow.async_sync_entry_devices",
+            AsyncMock(),
+        ) as mock_sync,
+        patch(
+            "custom_components.horticulture_assistant.config_flow.ensure_profile_device_registered",
+            side_effect=_record_ensure,
+        ),
+    ):
+        result = await flow.async_step_add_profile(
+            {"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}
+        )
+        await hass.async_block_till_done()
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "attach_sensors"
+
+    mock_sync.assert_awaited()
+    assert ensure_calls
+    assert ensure_calls[0][0] == "basil"
 
 
 async def test_normalise_sensor_submission_collapses_mappings():

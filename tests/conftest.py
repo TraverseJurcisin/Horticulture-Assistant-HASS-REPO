@@ -1,6 +1,33 @@
 import asyncio
 import datetime
 import importlib
+import types
+
+try:  # pragma: no cover - defensive compatibility shim
+    from homeassistant.components.sensor import SensorDeviceClass
+except Exception:  # pragma: no cover - Home Assistant not installed
+    SensorDeviceClass = None  # type: ignore[assignment]
+else:  # pragma: no branch - executed when HA is available
+    if (
+        SensorDeviceClass is not None
+        and not hasattr(SensorDeviceClass, "CONDUCTIVITY")
+        and hasattr(SensorDeviceClass, "MOISTURE")
+    ):
+        SensorDeviceClass.CONDUCTIVITY = SensorDeviceClass.MOISTURE  # type: ignore[attr-defined]
+
+try:  # pragma: no cover - provide script helper shim when missing
+    import homeassistant.helpers  # type: ignore[attr-defined]
+except Exception:  # pragma: no cover - homeassistant not available
+    pass
+else:  # pragma: no branch - executed when helpers module imports
+    import sys
+
+    if "homeassistant.helpers.script" not in sys.modules:
+        script_module = types.ModuleType("homeassistant.helpers.script")
+        script_module._schedule_stop_scripts_after_shutdown = (  # type: ignore[attr-defined]
+            lambda *_args, **_kwargs: None
+        )
+        sys.modules["homeassistant.helpers.script"] = script_module
 import sys
 import types
 from collections.abc import Callable

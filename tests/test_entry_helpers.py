@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import asyncio
 import types
-from typing import Any
+from typing import Any, Iterable
 from unittest.mock import patch
 
 import pytest
+
+import custom_components.horticulture_assistant.utils.entry_helpers as helpers
 
 from custom_components.horticulture_assistant.const import (
     CONF_PLANT_ID,
@@ -189,6 +191,7 @@ def test_primary_thresholds_from_profile_resolved_targets():
 class _FakeDeviceRegistry:
     def __init__(self) -> None:
         self.devices: dict[str, Any] = {}
+        self.update_calls: list[tuple[str, dict[str, Any]]] = []
 
     @staticmethod
     def _pairs(value):
@@ -208,7 +211,7 @@ class _FakeDeviceRegistry:
                 return device
         return None
 
-    async def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
+    def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
         pairs = self._pairs(identifiers)
         existing = self.async_get_device(pairs)
         if existing is not None:
@@ -217,6 +220,9 @@ class _FakeDeviceRegistry:
             name = kwargs.get("name")
             if name:
                 existing.name = name
+            for field in ("via_device", "via_device_id"):
+                if field in kwargs:
+                    setattr(existing, field, kwargs[field])
             return existing
 
         device_id = f"device_{len(self.devices)}"
@@ -226,8 +232,116 @@ class _FakeDeviceRegistry:
             config_entries={config_entry_id} if config_entry_id else set(),
             name=kwargs.get("name"),
         )
+        for field in ("via_device", "via_device_id"):
+            setattr(device, field, kwargs.get(field))
         self.devices[device_id] = device
         return device
+
+    def async_update_device(self, device_id, **kwargs):
+        device = self.devices.get(device_id)
+        if device is None:
+            return None
+        updates = {}
+        for key, value in kwargs.items():
+            updates[str(key)] = value
+            setattr(device, key, value)
+        self.update_calls.append((device_id, updates))
+        return device
+
+
+class _RejectingDeviceRegistry(_FakeDeviceRegistry):
+    def __init__(
+        self,
+        *,
+        entry_device_id: str | None,
+        reject: tuple[str, ...] | list[str],
+        required_profile_args: Iterable[str] | None = None,
+        lookup_entry_device_id: str | None = None,
+    ):
+        super().__init__()
+        self._entry_device_id = entry_device_id
+        self._reject = {str(arg) for arg in reject}
+        self._required_profile_args = (
+            tuple(str(arg) for arg in required_profile_args)
+            if required_profile_args
+            else tuple()
+        )
+        self._lookup_entry_device_id = lookup_entry_device_id
+
+    def async_get_device(self, identifiers, *_args, **_kwargs):
+        device = super().async_get_device(identifiers)
+        if device is None:
+            return None
+        if self._lookup_entry_device_id:
+            pairs = self._pairs(identifiers)
+            if any(":profile:" not in ident for _, ident in pairs):
+                device.id = self._lookup_entry_device_id
+        return device
+
+    def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
+        pairs = self._pairs(identifiers)
+        is_profile = any(":profile:" in ident for _, ident in pairs)
+
+        if is_profile:
+            for arg in self._reject:
+                if arg in kwargs:
+                    raise TypeError(
+                        f"async_get_or_create() got an unexpected keyword argument '{arg}'"
+                    )
+            for required in self._required_profile_args:
+                if required not in kwargs:
+                    raise TypeError(
+                        f"async_get_or_create() missing required keyword argument '{required}'"
+                    )
+
+        device = super().async_get_or_create(
+            identifiers=identifiers,
+            config_entry_id=config_entry_id,
+            **kwargs,
+        )
+
+        if not is_profile:
+            device.id = self._entry_device_id
+
+        return device
+
+
+class _TupleReturningDeviceRegistry(_RejectingDeviceRegistry):
+    def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
+        device = super().async_get_or_create(
+            identifiers=identifiers,
+            config_entry_id=config_entry_id,
+            **kwargs,
+        )
+        return device, False
+
+
+class _MappingReturningDeviceRegistry(_RejectingDeviceRegistry):
+    def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
+        device = super().async_get_or_create(
+            identifiers=identifiers,
+            config_entry_id=config_entry_id,
+            **kwargs,
+        )
+        return {"device": device, "created": False}
+
+
+class _AsyncDeviceRegistry(_FakeDeviceRegistry):
+    async def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
+        return super().async_get_or_create(
+            identifiers=identifiers,
+            config_entry_id=config_entry_id,
+            **kwargs,
+        )
+
+    async def async_update_device(self, device_id, **kwargs):
+        return super().async_update_device(device_id, **kwargs)
+
+
+class _BooleanUpdatingDeviceRegistry(_RejectingDeviceRegistry):
+    def async_update_device(self, device_id, **kwargs):
+        device = super().async_update_device(device_id, **kwargs)
+        return bool(device)
 
 
 @pytest.mark.asyncio
@@ -298,6 +412,77 @@ async def test_store_entry_data_populates_device_info(hass, tmp_path):
     ctx = contexts["p2"]
     assert ctx["name"] == "Stored"
     assert ctx["sensors"] == {"moisture": ["sensor.moist"]}
+
+
+@pytest.mark.asyncio
+async def test_async_resolve_device_registry_supports_async_get_registry(hass):
+    registry = _FakeDeviceRegistry()
+
+    class _RegistryProvider:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def async_get_registry(self, hass_arg):
+            self.calls += 1
+            return registry
+
+    provider = _RegistryProvider()
+    original = helpers.dr
+    helpers.dr = types.SimpleNamespace(async_get_registry=provider.async_get_registry)
+    try:
+        resolved = await helpers._async_resolve_device_registry(hass)
+    finally:
+        helpers.dr = original
+
+    assert resolved is registry
+    assert provider.calls == 1
+
+
+@pytest.mark.asyncio
+async def test_async_resolve_device_registry_accepts_loader_result(hass):
+    registry = _FakeDeviceRegistry()
+    calls = {"count": 0}
+
+    def _load_registry(_hass):
+        calls["count"] += 1
+        return registry
+
+    original = helpers.dr
+    helpers.dr = types.SimpleNamespace(
+        async_get=lambda *_args, **_kwargs: None,
+        async_load_device_registry=_load_registry,
+    )
+    try:
+        resolved = await helpers._async_resolve_device_registry(hass)
+    finally:
+        helpers.dr = original
+
+    assert resolved is registry
+    assert calls["count"] == 1
+
+
+@pytest.mark.asyncio
+async def test_async_resolve_device_registry_retries_getter_after_loader(hass):
+    registry = _FakeDeviceRegistry()
+    state = {"loaded": False}
+
+    def _async_get(_hass):
+        if not state["loaded"]:
+            raise RuntimeError("not ready")
+        return registry
+
+    def _async_load(_hass):
+        state["loaded"] = True
+
+    original = helpers.dr
+    helpers.dr = types.SimpleNamespace(async_get=_async_get, async_load=_async_load)
+    try:
+        resolved = await helpers._async_resolve_device_registry(hass)
+    finally:
+        helpers.dr = original
+
+    assert resolved is registry
+    assert state["loaded"] is True
 
 
 def test_build_profile_device_info_handles_non_mapping_general():
@@ -388,6 +573,7 @@ async def test_ensure_profile_device_registered_populates_missing_device(hass, t
     profile_device = fake_registry.async_get_device({profile_identifier})
     assert profile_device is not None
     assert profile_device.name == "Mint"
+    assert profile_device.via_device_id == entry_device.id
 
     stored = get_entry_data(hass, entry)
     assert stored is not None
@@ -399,6 +585,383 @@ async def test_ensure_profile_device_registered_populates_missing_device(hass, t
     mapping = hass.data[DOMAIN][BY_PLANT_ID]
     assert mapping["mint"] is stored
     assert get_entry_data_by_plant_id(hass, "mint") is stored
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_supports_async_registry(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "sage", CONF_PLANT_NAME: "Sage"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-sage",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _AsyncDeviceRegistry()
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "sage",
+            {"name": "Sage"},
+        )
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "sage")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.name == "Sage"
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_recovers_without_via_device_support(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _RejectingDeviceRegistry(entry_device_id=None, reject=("via_device",))
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint",
+            {"name": "Mint"},
+            snapshot={
+                "plant_id": "mint",
+                "plant_name": "Mint",
+                "primary_profile_id": "mint",
+                "primary_profile_name": "Mint",
+                "profiles": {},
+            },
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_device.id is None
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.name == "Mint"
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_derives_missing_parent_id(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _RejectingDeviceRegistry(
+        entry_device_id=None,
+        reject=("via_device",),
+        required_profile_args=("via_device_id",),
+        lookup_entry_device_id="entry-device",
+    )
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint",
+            {"name": "Mint"},
+            snapshot={
+                "plant_id": "mint",
+                "plant_name": "Mint",
+                "primary_profile_id": "mint",
+                "primary_profile_name": "Mint",
+                "profiles": {},
+            },
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_device.id == "entry-device"
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.via_device_id == entry_device.id
+    assert profile_device.name == "Mint"
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_unwraps_tuple_entry_response(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _TupleReturningDeviceRegistry(
+        entry_device_id="entry-device",
+        reject=("via_device",),
+        required_profile_args=("via_device_id",),
+    )
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint",
+            {"name": "Mint"},
+            snapshot={
+                "plant_id": "mint",
+                "plant_name": "Mint",
+                "primary_profile_id": "mint",
+                "primary_profile_name": "Mint",
+                "profiles": {},
+            },
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_device.id == "entry-device"
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.via_device_id == entry_device.id
+    assert profile_device.name == "Mint"
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_unwraps_mapping_entry_response(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _MappingReturningDeviceRegistry(
+        entry_device_id="entry-device",
+        reject=("via_device",),
+        required_profile_args=("via_device_id",),
+    )
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint",
+            {"name": "Mint"},
+            snapshot={
+                "plant_id": "mint",
+                "plant_name": "Mint",
+                "primary_profile_id": "mint",
+                "primary_profile_name": "Mint",
+                "profiles": {},
+            },
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_device.id == "entry-device"
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.via_device_id == entry_device.id
+    assert profile_device.name == "Mint"
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_falls_back_to_legacy_via_device(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _RejectingDeviceRegistry(
+        entry_device_id="entry-device",
+        reject=("via_device_id",),
+    )
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint",
+            {"name": "Mint"},
+            snapshot={
+                "plant_id": "mint",
+                "plant_name": "Mint",
+                "primary_profile_id": "mint",
+                "primary_profile_name": "Mint",
+                "profiles": {},
+            },
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_device.id == "entry-device"
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.name == "Mint"
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_links_parent_after_rejection(
+    hass, tmp_path
+):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _RejectingDeviceRegistry(
+        entry_device_id="entry-device",
+        reject=("via_device", "via_device_id"),
+    )
+
+    snapshot = {
+        "plant_id": "mint",
+        "plant_name": "Mint",
+        "primary_profile_id": "mint",
+        "primary_profile_name": "Mint",
+        "profiles": {},
+    }
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint",
+            {"name": "Mint"},
+            snapshot=snapshot,
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_device.id == "entry-device"
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.via_device_id == entry_device.id
+    assert fake_registry.update_calls
+    last_update = fake_registry.update_calls[-1]
+    assert last_update[1].get("via_device_id") == entry_device.id
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_refreshes_after_boolean_update(
+    hass, tmp_path
+):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _BooleanUpdatingDeviceRegistry(
+        entry_device_id="entry-device",
+        reject=("via_device", "via_device_id"),
+    )
+
+    snapshot = {
+        "plant_id": "mint",
+        "plant_name": "Mint",
+        "primary_profile_id": "mint",
+        "primary_profile_name": "Mint",
+        "profiles": {},
+    }
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint",
+            {"name": "Mint"},
+            snapshot=snapshot,
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_device.id == "entry-device"
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.via_device_id == entry_device.id
+    assert fake_registry.update_calls
 
 
 @pytest.mark.asyncio
@@ -664,6 +1227,51 @@ async def test_async_sync_entry_devices_adds_canonical_identifiers(hass, tmp_pat
     assert profile_device is not None
     assert profile_identifier in profile_device.identifiers
     assert ("other", "profile") in profile_device.identifiers
+
+
+@pytest.mark.asyncio
+async def test_async_sync_entry_devices_unwraps_mapping_entry_response(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {"mint": {"name": "Mint"}}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _MappingReturningDeviceRegistry(
+        entry_device_id="entry-device",
+        reject=("via_device",),
+        required_profile_args=("via_device_id",),
+    )
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await async_sync_entry_devices(
+            hass,
+            entry,
+            snapshot={
+                "plant_id": "mint",
+                "plant_name": "Mint",
+                "profiles": {"mint": {"name": "Mint"}},
+            },
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_device.id == "entry-device"
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.via_device_id == entry_device.id
+    assert profile_device.name == "Mint"
 
 
 @pytest.mark.asyncio
