@@ -369,7 +369,8 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> LineageLinkRep
         if profile.profile_type == "species":
             continue
 
-        species_id = _normalise_identifier(profile.species_profile_id)
+        raw_species_id = profile.species_profile_id
+        species_id = _normalise_identifier(raw_species_id)
         if not species_id:
             for parent in profile.parents:
                 parent_id = _normalise_identifier(parent)
@@ -402,7 +403,7 @@ def link_species_and_cultivars(profiles: Iterable[BioProfile]) -> LineageLinkRep
         species = species_map.get(species_id) if species_id else None
 
         if species is None:
-            profile.species_profile_id = None
+            profile.species_profile_id = raw_species_id
             profile.parents = deduped_parents
             continue
 

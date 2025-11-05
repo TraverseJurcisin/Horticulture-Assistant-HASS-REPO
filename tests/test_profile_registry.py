@@ -41,6 +41,7 @@ from custom_components.horticulture_assistant.profile_registry import (
 )
 from custom_components.horticulture_assistant.utils import entry_helpers as helpers
 from custom_components.horticulture_assistant.utils.entry_helpers import (
+    entry_device_identifier,
     profile_device_identifier,
     store_entry_data,
 )
@@ -84,7 +85,7 @@ class FakeDeviceRegistry:
                 return device
         return None
 
-    async def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
+    def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
         pairs = self._coerce_identifiers(identifiers)
         existing = self.async_get_device(pairs)
         if existing is not None:
@@ -93,6 +94,9 @@ class FakeDeviceRegistry:
             name = kwargs.get("name")
             if name:
                 existing.name = name
+            for field in ("via_device", "via_device_id"):
+                if field in kwargs:
+                    setattr(existing, field, kwargs[field])
             return existing
 
         device_id = f"device_{len(self.devices)}"
@@ -102,11 +106,38 @@ class FakeDeviceRegistry:
             config_entries={config_entry_id} if config_entry_id else set(),
             name=kwargs.get("name"),
         )
+        for field in ("via_device", "via_device_id"):
+            setattr(device, field, kwargs.get(field))
         self.devices[device_id] = device
         return device
 
     def async_remove_device(self, device_id):  # pragma: no cover - helper parity
         self.devices.pop(device_id, None)
+
+
+class StrictDeviceRegistry(FakeDeviceRegistry):
+    """Device registry that requires via_device_id for profile devices."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.calls: list[tuple[str, dict[str, Any]]] = []
+
+    def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
+        pairs = self._coerce_identifiers(identifiers)
+        is_profile = any(":profile:" in ident for _, ident in pairs)
+        if is_profile and "via_device_id" not in kwargs:
+            raise TypeError("via_device_id required for profile devices")
+        self.calls.append(
+            (
+                "profile" if is_profile else "entry",
+                {"identifiers": pairs, **kwargs},
+            )
+        )
+        return super().async_get_or_create(
+            identifiers=identifiers,
+            config_entry_id=config_entry_id,
+            **kwargs,
+        )
 
 
 async def test_normalise_sensor_value_sequence_deduplicates():
@@ -198,6 +229,79 @@ async def test_async_add_profile_registers_device(hass, tmp_path):
     device = fake_registry.async_get_device({identifier})
     assert device is not None
     assert device.name == "Mint"
+    parent_identifier = entry_device_identifier(entry.entry_id)
+    parent_device = fake_registry.async_get_device({parent_identifier})
+    assert parent_device is not None
+    assert getattr(device, "via_device_id", None) == parent_device.id
+
+
+async def test_async_add_profile_registers_device_real_registry(hass, tmp_path):
+    """Adding a profile should register a device using the actual registry."""
+
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+
+    pid = await registry.async_add_profile("Mint")
+
+    identifier = profile_device_identifier(entry.entry_id, pid)
+    device_registry_module = pytest.importorskip(
+        "homeassistant.helpers.device_registry", reason="homeassistant not installed"
+    )
+    device_registry = device_registry_module.async_get(hass)
+    device = device_registry.async_get_device(identifiers={identifier})
+
+    assert device is not None
+    assert device.name == "Mint"
+    parent = device_registry.async_get_device(identifiers={entry_device_identifier(entry.entry_id)})
+    assert parent is not None
+    assert device.via_device_id == parent.id
+
+
+async def test_async_add_profile_requires_via_device_id(hass, tmp_path):
+    """Profile registration should send via_device_id when registry requires it."""
+
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    strict_registry = StrictDeviceRegistry()
+
+    with patch.object(helpers.dr, "async_get", return_value=strict_registry):
+        pid = await reg.async_add_profile("Mint")
+
+    identifier = profile_device_identifier(entry.entry_id, pid)
+    profile_device = strict_registry.async_get_device({identifier})
+    assert profile_device is not None
+
+    parent_identifier = entry_device_identifier(entry.entry_id)
+    parent_device = strict_registry.async_get_device({parent_identifier})
+    assert parent_device is not None
+    assert profile_device.via_device_id == parent_device.id
+
+    profile_calls = [call for call in strict_registry.calls if call[0] == "profile"]
+    assert profile_calls
+    assert all("via_device_id" in call[1] for call in profile_calls)
 
 
 async def test_async_load_registers_devices_for_existing_profiles(hass):
@@ -335,6 +439,50 @@ async def test_async_add_profile_registers_device_when_snapshot_missing(hass, tm
     device = fake_registry.async_get_device({identifier})
     assert device is not None
     assert device.name == "Mint"
+
+
+async def test_async_add_profile_registers_device_when_bulk_sync_fails(hass, tmp_path):
+    """Profiles should still register devices if bulk sync raises."""
+
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    fake_registry = StrictDeviceRegistry()
+
+    def _update_entry(updated_entry, *, options=None, data=None):
+        if options is not None:
+            updated_entry.options = options
+        if data is not None:
+            updated_entry.data = data
+
+    with (
+        patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry),
+        patch.object(helpers.dr, "async_get", return_value=fake_registry),
+        patch(
+            "custom_components.horticulture_assistant.profile_registry.ensure_all_profile_devices_registered",
+            side_effect=RuntimeError("boom"),
+        ),
+    ):
+        pid = await reg.async_add_profile("Mint")
+
+    identifier = profile_device_identifier(entry.entry_id, pid)
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    parent_identifier = entry_device_identifier(entry.entry_id)
+    parent_device = fake_registry.async_get_device({parent_identifier})
+    assert parent_device is not None
+    assert getattr(device, "via_device_id", None) == parent_device.id
 
 
 async def test_async_add_profile_sets_species_metadata(hass):

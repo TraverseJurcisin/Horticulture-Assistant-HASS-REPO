@@ -68,6 +68,7 @@ class CloudSyncPublisher:
         tenant_id = self.manager.config.tenant_id or "local"
         org_id = self.manager.config.organization_id
         vector = self.manager.store.next_vector(entity_type, entity_id, self.device_id)
+        event_metadata = _normalise_mapping(metadata) if metadata else {}
         event = SyncEvent(
             event_id=uuid4().hex,
             tenant_id=tenant_id,
@@ -79,13 +80,15 @@ class CloudSyncPublisher:
             patch=_normalise_mapping(patch) if patch else None,
             vector=vector,
             org_id=str(org_id) if org_id else None,
-            metadata=_normalise_mapping(metadata) if metadata else {},
+            metadata=event_metadata,
         )
-        self.manager.store.append_outbox(event)
         if not self.ready:
             self.manager.record_offline_enqueue(reason="not_ready")
-            if event.metadata is not None:
+            if event.metadata is None:
+                event.metadata = {"queued_offline": True}
+            else:
                 event.metadata.setdefault("queued_offline", True)
+        self.manager.store.append_outbox(event)
         return event
 
     # ------------------------------------------------------------------

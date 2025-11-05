@@ -51,6 +51,32 @@ def _resolve_cache(hass: HomeAssistant | None) -> dict[str, dict[str, Any]]:
     return _FALLBACK_CACHE
 
 
+def _coerce_profiles(payload: Any) -> dict[str, dict[str, Any]]:
+    """Normalise storage payloads into a mapping keyed by plant id."""
+
+    profiles: dict[str, dict[str, Any]] = {}
+
+    if isinstance(payload, Mapping):
+        candidate = payload.get("profiles") if "profiles" in payload else payload
+        if isinstance(candidate, Mapping):
+            for pid, data in candidate.items():
+                if not isinstance(pid, str) or not isinstance(data, Mapping):
+                    continue
+                profiles[pid] = {k: deepcopy(v) for k, v in data.items()}
+            return profiles
+
+    if isinstance(payload, list):
+        for item in payload:
+            if not isinstance(item, Mapping):
+                continue
+            pid = item.get("plant_id") or item.get("profile_id")
+            if not isinstance(pid, str) or not pid:
+                continue
+            profiles[pid] = {k: deepcopy(v) for k, v in item.items()}
+
+    return profiles
+
+
 def _normalise_metadata_value(value: Any) -> str | None:
     """Return a string representation for preserved metadata keys."""
 
@@ -73,16 +99,26 @@ def _normalise_metadata_value(value: Any) -> str | None:
 
 async def async_load_all(hass: HomeAssistant) -> dict[str, dict[str, Any]]:
     raw = await _store(hass).async_load()
-    data = dict(raw) if isinstance(raw, Mapping) else None
     cache = _resolve_cache(hass)
-    if data is not None:
-        if hass is None and not data and cache:
-            return {k: deepcopy(v) for k, v in cache.items()}
+
+    explicit_payload = isinstance(raw, Mapping)
+    profiles = _coerce_profiles(raw)
+
+    if profiles:
         cache.clear()
-        cache.update({k: deepcopy(v) for k, v in data.items()})
-        return data
+        cache.update({pid: deepcopy(payload) for pid, payload in profiles.items()})
+        return {pid: deepcopy(payload) for pid, payload in profiles.items()}
+
+    if explicit_payload:
+        cache.clear()
+        return {}
+
+    if hass is None and not profiles and cache:
+        return {pid: deepcopy(payload) for pid, payload in cache.items()}
+
     if cache:
-        return {k: deepcopy(v) for k, v in cache.items()}
+        return {pid: deepcopy(payload) for pid, payload in cache.items()}
+
     return {}
 
 
