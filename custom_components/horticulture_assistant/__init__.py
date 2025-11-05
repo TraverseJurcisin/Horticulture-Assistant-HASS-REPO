@@ -58,6 +58,9 @@ except ImportError:  # pragma: no cover - fallback for stubbed tests
 
     DEFAULT_DATA: dict[str, Any] = {}
 from .utils.entry_helpers import (
+    backfill_profile_devices_from_options,
+    ensure_all_profile_devices_registered,
+    get_entry_data,
     get_entry_plant_info,
     get_primary_profile_id,
     get_primary_profile_sensors,
@@ -910,7 +913,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         existing_timeline = []
     last_completed = entry_data.get("onboarding_last_completed")
 
-    entry_data = store_entry_data(hass, entry)
+    entry_data = await store_entry_data(hass, entry)
     entry_data["onboarding_stage_state"] = existing_state
     entry_data["onboarding_history"] = existing_history
     entry_data["onboarding_timeline"] = existing_timeline
@@ -921,6 +924,33 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry_data["onboarding_errors"] = existing_errors
     else:
         entry_data.setdefault("onboarding_errors", {})
+
+    ensure_snapshot: Mapping[str, Any] | None = None
+    snapshot_candidate = entry_data.get("snapshot")
+    if isinstance(snapshot_candidate, Mapping):
+        ensure_snapshot = snapshot_candidate
+
+    ensure_profiles: Mapping[str, Any] | None = None
+    raw_profiles = entry.options.get(CONF_PROFILES)
+    if isinstance(raw_profiles, Mapping) and raw_profiles:
+        ensure_profiles = raw_profiles
+
+    if ensure_snapshot or ensure_profiles:
+        try:
+            await ensure_all_profile_devices_registered(
+                hass,
+                entry,
+                snapshot=ensure_snapshot,
+                extra_profiles=ensure_profiles,
+            )
+        except Exception as err:  # pragma: no cover - defensive logging
+            _LOGGER.debug(
+                "Unable to pre-synchronise profile devices for '%s' during setup: %s",
+                getattr(entry, "entry_id", "unknown"),
+                err,
+            )
+        else:
+            manager.rebind(entry_data)
 
     base_url = entry.options.get(CONF_BASE_URL, entry.data.get(CONF_BASE_URL, DEFAULT_BASE_URL))
     api_key = entry.options.get(CONF_API_KEY, entry.data.get(CONF_API_KEY, ""))
@@ -1244,7 +1274,58 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def _async_entry_updated(hass: HomeAssistant, updated_entry: ConfigEntry) -> None:
         nonlocal entry_data
-        refreshed = update_entry_data(hass, updated_entry)
+
+        try:
+            refreshed_raw = await update_entry_data(hass, updated_entry)
+        except Exception as err:  # pragma: no cover - defensive fallback
+            _LOGGER.debug(
+                "Unable to refresh entry data for '%s' during update: %s",
+                getattr(updated_entry, "entry_id", "unknown"),
+                err,
+            )
+            refreshed_raw = get_entry_data(hass, updated_entry)
+            await backfill_profile_devices_from_options(hass, updated_entry, refreshed_raw)
+            refreshed_raw = get_entry_data(hass, updated_entry) or refreshed_raw
+        else:
+            if await backfill_profile_devices_from_options(hass, updated_entry, refreshed_raw):
+                refreshed_raw = get_entry_data(hass, updated_entry) or refreshed_raw
+
+        ensure_snapshot: Mapping[str, Any] | None = None
+        if isinstance(refreshed_raw, Mapping):
+            snapshot_candidate = refreshed_raw.get("snapshot")
+            if isinstance(snapshot_candidate, Mapping):
+                ensure_snapshot = snapshot_candidate
+
+        ensure_profiles: Mapping[str, Any] | None = None
+        raw_profiles = updated_entry.options.get(CONF_PROFILES)
+        if isinstance(raw_profiles, Mapping) and raw_profiles:
+            ensure_profiles = raw_profiles
+
+        refreshed_via_ensure = False
+        if ensure_snapshot or ensure_profiles:
+            try:
+                await ensure_all_profile_devices_registered(
+                    hass,
+                    updated_entry,
+                    snapshot=ensure_snapshot,
+                    extra_profiles=ensure_profiles,
+                )
+            except Exception:  # pragma: no cover - defensive safeguard
+                pass
+            else:
+                refreshed_via_ensure = True
+
+        if refreshed_via_ensure:
+            latest_entry_data = get_entry_data(hass, updated_entry)
+            if isinstance(latest_entry_data, Mapping):
+                refreshed_raw = latest_entry_data
+
+        if isinstance(refreshed_raw, Mapping):
+            refreshed = dict(refreshed_raw)
+        else:
+            refreshed = {"config_entry": updated_entry}
+
+        refreshed.setdefault("config_entry", updated_entry)
         refreshed.setdefault("onboarding_errors", entry_data.get("onboarding_errors", {}))
         refreshed["keep_stale"] = updated_entry.options.get(
             CONF_KEEP_STALE,

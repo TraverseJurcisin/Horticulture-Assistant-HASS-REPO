@@ -2,7 +2,13 @@
 
 from __future__ import annotations
 
+import types
+from typing import Any
+
 import pytest
+from unittest.mock import patch
+
+import asyncio
 
 from custom_components.horticulture_assistant.const import (
     CONF_PLANT_ID,
@@ -14,11 +20,18 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     BY_PLANT_ID,
     ProfileContext,
     ProfileContextCollection,
+    backfill_profile_devices_from_options,
     build_entry_snapshot,
     build_profile_device_info,
     entry_device_identifier,
+    async_sync_entry_devices,
+    ensure_all_profile_devices_registered,
+    ensure_profile_device_registered,
+    get_entry_data,
+    get_entry_data_by_plant_id,
     get_entry_plant_info,
     get_primary_profile_id,
+    get_primary_profile_options,
     get_primary_profile_sensors,
     get_primary_profile_thresholds,
     profile_device_identifier,
@@ -49,12 +62,38 @@ def test_primary_profile_id_falls_back_to_profile_map():
     assert get_primary_profile_id(entry) == "beta"
 
 
+def test_primary_profile_id_strips_whitespace():
+    entry = _make_entry(data={CONF_PLANT_ID: "  gamma  "})
+    assert get_primary_profile_id(entry) == "gamma"
+
+
+def test_primary_profile_options_follow_canonical_identifier():
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "  mint  "},
+        options={CONF_PROFILES: {"  mint  ": {"name": "Mint"}}},
+    )
+
+    options = get_primary_profile_options(entry)
+
+    assert options["name"] == "Mint"
+
+
 def test_entry_plant_info_prefers_profile_name():
     entry = _make_entry(
         options={CONF_PROFILES: {"p1": {"name": "Rose"}}},
         data={CONF_PLANT_ID: "p1", "plant_name": "Fallback"},
     )
     assert get_entry_plant_info(entry) == ("p1", "Rose")
+
+
+def test_entry_plant_info_trims_identifier():
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "  plant-01  "},
+        options={CONF_PROFILES: {"  plant-01  ": {"name": "Mint"}}},
+    )
+    plant_id, plant_name = get_entry_plant_info(entry)
+    assert plant_id == "plant-01"
+    assert plant_name == "Mint"
 
 
 def test_entry_snapshot_collects_sensors_and_thresholds():
@@ -73,6 +112,19 @@ def test_entry_snapshot_collects_sensors_and_thresholds():
     assert snap["plant_id"] == "p1"
     assert snap["sensors"]["temperature"] == "sensor.temp"
     assert snap["thresholds"]["temperature_min"] == 12
+
+
+def test_entry_snapshot_normalises_profile_identifiers():
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "  herb  ", CONF_PLANT_NAME: "Herb"},
+        options={CONF_PROFILES: {"  herb  ": {"name": "Herb"}}},
+    )
+
+    snap = build_entry_snapshot(entry)
+
+    assert snap["plant_id"] == "herb"
+    assert snap["primary_profile_id"] == "herb"
+    assert list(snap["profiles"].keys()) == ["herb"]
 
 
 def test_primary_sensors_use_top_level_mapping():
@@ -135,6 +187,53 @@ def test_primary_thresholds_from_profile_resolved_targets():
     assert get_primary_profile_thresholds(entry)["lux_to_ppfd"] == 0.5
 
 
+class _FakeDeviceRegistry:
+    def __init__(self) -> None:
+        self.devices: dict[str, Any] = {}
+
+    @staticmethod
+    def _pairs(value):
+        if value is None:
+            return set()
+        if isinstance(value, (list, tuple, set)):
+            items = value
+        else:
+            items = [value]
+        pairs: set[tuple[str, str]] = set()
+        for item in items:
+            if isinstance(item, (list, tuple)) and len(item) == 2:
+                pairs.add((str(item[0]), str(item[1])))
+        return pairs
+
+    def async_get_device(self, identifiers, *_args, **_kwargs):
+        pairs = self._pairs(identifiers)
+        for device in self.devices.values():
+            if device.identifiers & pairs:
+                return device
+        return None
+
+    async def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
+        pairs = self._pairs(identifiers)
+        existing = self.async_get_device(pairs)
+        if existing is not None:
+            if config_entry_id:
+                existing.config_entries.add(config_entry_id)
+            name = kwargs.get("name")
+            if name:
+                existing.name = name
+            return existing
+
+        device_id = f"device_{len(self.devices)}"
+        device = types.SimpleNamespace(
+            id=device_id,
+            identifiers=pairs,
+            config_entries={config_entry_id} if config_entry_id else set(),
+            name=kwargs.get("name"),
+        )
+        self.devices[device_id] = device
+        return device
+
+
 @pytest.mark.asyncio
 async def test_store_entry_data_tracks_snapshot(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
@@ -142,7 +241,7 @@ async def test_store_entry_data_tracks_snapshot(hass, tmp_path):
         data={CONF_PLANT_ID: "p2", "plant_name": "Stored"},
         options={CONF_PROFILES: {"p2": {"name": "Stored", "sensors": {"moisture": "sensor.moist"}}}},
     )
-    stored = store_entry_data(hass, entry)
+    stored = await store_entry_data(hass, entry)
     assert stored["plant_id"] == "p2"
     assert stored["snapshot"]["sensors"]["moisture"] == "sensor.moist"
     assert hass.data[DOMAIN][entry.entry_id] is stored
@@ -155,10 +254,10 @@ async def test_update_entry_data_refreshes_mapping(hass, tmp_path):
         data={CONF_PLANT_ID: "old", "plant_name": "Old"},
         options={CONF_PROFILES: {"old": {"name": "Old"}}},
     )
-    store_entry_data(hass, entry)
+    await store_entry_data(hass, entry)
     entry.options = {CONF_PROFILES: {"new": {"name": "New"}, "child": {"name": "Child"}}}
     entry.data = {CONF_PLANT_ID: "new", "plant_name": "New"}
-    refreshed = update_entry_data(hass, entry)
+    refreshed = await update_entry_data(hass, entry)
     assert refreshed["plant_id"] == "new"
     mapping = hass.data[DOMAIN][BY_PLANT_ID]
     assert mapping["new"] is refreshed
@@ -186,7 +285,7 @@ async def test_store_entry_data_populates_device_info(hass, tmp_path):
             CONF_PROFILES: {"p2": {"name": "Stored", "general": {"plant_type": "herb", "area": "Kitchen"}}},
         },
     )
-    stored = store_entry_data(hass, entry)
+    stored = await store_entry_data(hass, entry)
     entry_info = stored["entry_device_info"]
     assert entry_info["name"] == "Stored"
     assert entry_device_identifier(entry.entry_id) in entry_info["identifiers"]
@@ -222,12 +321,12 @@ async def test_resolve_profile_device_info_tracks_updates(hass, tmp_path):
         data={CONF_PLANT_ID: "alpha", CONF_PLANT_NAME: "Alpha"},
         options={CONF_PROFILES: {"alpha": {"name": "Alpha"}}},
     )
-    store_entry_data(hass, entry)
+    await store_entry_data(hass, entry)
     info = resolve_profile_device_info(hass, entry.entry_id, "alpha")
     assert info["name"] == "Alpha"
 
     entry.options = {CONF_PROFILES: {"alpha": {"name": "Renamed"}}}
-    update_entry_data(hass, entry)
+    await update_entry_data(hass, entry)
     updated = resolve_profile_device_info(hass, entry.entry_id, "alpha")
     assert updated["name"] == "Renamed"
 
@@ -239,11 +338,480 @@ async def test_resolve_entry_device_info_returns_metadata(hass, tmp_path):
         data={CONF_PLANT_ID: "beta", CONF_PLANT_NAME: "Beta"},
         options={CONF_PROFILES: {"beta": {"name": "Beta"}}},
     )
-    store_entry_data(hass, entry)
+    await store_entry_data(hass, entry)
     info = resolve_entry_device_info(hass, entry.entry_id)
     assert info is not None
     assert entry_device_identifier(entry.entry_id) in info["identifiers"]
     assert info["name"] == "Beta"
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_populates_missing_device(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _FakeDeviceRegistry()
+    profile_payload = {
+        "name": "Mint",
+        "general": {"display_name": "Mint", "plant_type": "herb"},
+    }
+
+    snapshot = {
+        "plant_id": "mint",
+        "plant_name": "Mint",
+        "primary_profile_id": "mint",
+        "primary_profile_name": "Mint",
+        "profiles": {},
+    }
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint",
+            profile_payload,
+            snapshot=snapshot,
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.name == "Mint"
+
+    stored = get_entry_data(hass, entry)
+    assert stored is not None
+    assert stored["profiles"]["mint"]["name"] == "Mint"
+    assert stored["profile_devices"]["mint"]["name"] == "Mint"
+    assert stored["profile_contexts"]["mint"]["name"] == "Mint"
+    assert stored["profile_dir"] == tmp_path / "plants" / "mint"
+
+    mapping = hass.data[DOMAIN][BY_PLANT_ID]
+    assert mapping["mint"] is stored
+    assert get_entry_data_by_plant_id(hass, "mint") is stored
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_indexes_profile_without_payload(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _FakeDeviceRegistry()
+    snapshot = {
+        "plant_id": "mint",
+        "plant_name": "Mint",
+        "primary_profile_id": "mint",
+        "primary_profile_name": "Mint",
+        "profiles": {},
+    }
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint-clone",
+            None,
+            snapshot=snapshot,
+        )
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint-clone")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+
+    stored = get_entry_data(hass, entry)
+    assert stored is not None
+    assert "mint-clone" in stored["profile_ids"]
+    assert stored["profiles"].get("mint-clone") == {}
+
+    mapping = hass.data[DOMAIN][BY_PLANT_ID]
+    assert mapping["mint-clone"] is stored
+    assert get_entry_data_by_plant_id(hass, "mint-clone") is stored
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_normalises_blank_identifier(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _FakeDeviceRegistry()
+    snapshot = {
+        "plant_id": "mint",
+        "plant_name": "Mint",
+        "primary_profile_id": "mint",
+        "primary_profile_name": "Mint",
+        "profiles": {},
+    }
+
+    profile_payload = {"name": "Mint Clone"}
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "   ",
+            profile_payload,
+            snapshot=snapshot,
+        )
+
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_device.name == "Mint Clone"
+
+    stored = get_entry_data(hass, entry)
+    assert stored is not None
+    assert "mint" in stored["profile_ids"]
+    assert stored["profiles"]["mint"]["name"] == "Mint Clone"
+    assert stored["profile_devices"]["mint"]["name"] == "Mint Clone"
+    assert stored["profile_contexts"]["mint"]["name"] == "Mint Clone"
+    assert "" not in stored["profiles"]
+
+
+@pytest.mark.asyncio
+async def test_ensure_profile_device_registered_appends_canonical_identifiers(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _FakeDeviceRegistry()
+    snapshot = {
+        "plant_id": "mint",
+        "plant_name": "Mint",
+        "primary_profile_id": "mint",
+        "primary_profile_name": "Mint",
+        "profiles": {"mint": {"name": "Mint"}},
+    }
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ), patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.build_entry_device_info",
+        return_value={"identifiers": {("other", "entry")}, "name": "Mint"},
+    ), patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.build_profile_device_info",
+        return_value={"identifiers": {("other", "profile")}, "name": "Mint"},
+    ):
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            "mint",
+            {"name": "Mint"},
+            snapshot=snapshot,
+        )
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_identifier in entry_device.identifiers
+    assert ("other", "entry") in entry_device.identifiers
+
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_identifier in profile_device.identifiers
+    assert ("other", "profile") in profile_device.identifiers
+
+    stored = get_entry_data(hass, entry)
+    assert stored is not None
+    assert stored["entry_device_identifier"] == entry_identifier
+    assert entry_identifier in stored["entry_device_info"]["identifiers"]
+    assert profile_identifier in stored["profile_devices"]["mint"]["identifiers"]
+
+
+@pytest.mark.asyncio
+async def test_ensure_all_profile_devices_registered_registers_all_profiles(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "garden", CONF_PLANT_NAME: "Garden"},
+        options={
+            CONF_PROFILES: {
+                "alpha": {"name": "Alpha", "general": {"display_name": "Alpha"}},
+                "beta": {"name": "Beta", "general": {"display_name": "Beta"}},
+            }
+        },
+        entry_id="entry-garden",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _FakeDeviceRegistry()
+    snapshot = {
+        "plant_id": "garden",
+        "plant_name": "Garden",
+        "primary_profile_id": "alpha",
+        "primary_profile_name": "Alpha",
+        "profiles": {
+            "alpha": {"name": "Alpha", "general": {"display_name": "Alpha"}},
+            "beta": {"name": "Beta", "general": {"display_name": "Beta"}},
+        },
+    }
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_all_profile_devices_registered(
+            hass,
+            entry,
+            snapshot=snapshot,
+        )
+
+    for profile_id, name in ("alpha", "Alpha"), ("beta", "Beta"):
+        identifier = profile_device_identifier(entry.entry_id, profile_id)
+        device = fake_registry.async_get_device({identifier})
+        assert device is not None
+        assert device.name == name
+
+    stored = get_entry_data(hass, entry)
+    assert stored is not None
+    assert set(stored["profiles"].keys()) == {"alpha", "beta"}
+    assert stored["profile_devices"]["beta"]["name"] == "Beta"
+
+
+@pytest.mark.asyncio
+async def test_async_sync_entry_devices_adds_canonical_identifiers(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {"mint": {"name": "Mint"}}},
+        entry_id="entry-sync",
+    )
+    entry.add_to_hass(hass)
+
+    fake_registry = _FakeDeviceRegistry()
+    snapshot = {
+        "plant_id": "mint",
+        "plant_name": "Mint",
+        "primary_profile_id": "mint",
+        "primary_profile_name": "Mint",
+        "profiles": {"mint": {"name": "Mint"}},
+    }
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ), patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.build_entry_device_info",
+        return_value={"identifiers": {("other", "entry")}, "name": "Mint"},
+    ), patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.build_profile_device_info",
+        return_value={"identifiers": {("other", "profile")}, "name": "Mint"},
+    ):
+        await async_sync_entry_devices(hass, entry, snapshot=snapshot)
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    profile_identifier = profile_device_identifier(entry.entry_id, "mint")
+
+    entry_device = fake_registry.async_get_device({entry_identifier})
+    assert entry_device is not None
+    assert entry_identifier in entry_device.identifiers
+    assert ("other", "entry") in entry_device.identifiers
+
+    profile_device = fake_registry.async_get_device({profile_identifier})
+    assert profile_device is not None
+    assert profile_identifier in profile_device.identifiers
+    assert ("other", "profile") in profile_device.identifiers
+
+
+@pytest.mark.asyncio
+async def test_ensure_all_profile_devices_registered_merges_extra_profiles(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    fake_registry = _FakeDeviceRegistry()
+    snapshot = {
+        "plant_id": "mint",
+        "plant_name": "Mint",
+        "primary_profile_id": "mint",
+        "primary_profile_name": "Mint",
+        "profiles": {},
+    }
+    profile_payload = {
+        "name": "Mint",
+        "general": {"display_name": "Mint", "plant_type": "herb"},
+    }
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await ensure_all_profile_devices_registered(
+            hass,
+            entry,
+            snapshot=snapshot,
+            extra_profiles={"mint": profile_payload},
+        )
+
+    identifier = profile_device_identifier(entry.entry_id, "mint")
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    assert device.name == "Mint"
+
+    stored = get_entry_data(hass, entry)
+    assert stored is not None
+    assert stored["profiles"]["mint"]["name"] == "Mint"
+    assert stored["profile_devices"]["mint"]["name"] == "Mint"
+
+
+@pytest.mark.asyncio
+async def test_async_sync_entry_devices_normalises_profile_ids(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+
+    snapshot = {
+        "plant_id": "  mint  ",
+        "plant_name": "Mint",
+        "primary_profile_id": "  mint  ",
+        "profiles": {
+            "  mint  ": {
+                "name": "Mint",
+                "general": {"display_name": "Mint"},
+            }
+        },
+    }
+
+    fake_registry = _FakeDeviceRegistry()
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await async_sync_entry_devices(hass, entry, snapshot=snapshot)
+
+    canonical_identifier = profile_device_identifier(entry.entry_id, "mint")
+    canonical_device = fake_registry.async_get_device({canonical_identifier})
+    assert canonical_device is not None
+    assert canonical_device.name == "Mint"
+
+    whitespace_identifier = profile_device_identifier(entry.entry_id, "  mint  ")
+    assert fake_registry.async_get_device({whitespace_identifier}) is None
+
+
+@pytest.mark.asyncio
+async def test_backfill_profile_devices_from_options_no_missing_devices(hass):
+    entry = _make_entry(
+        options={CONF_PROFILES: {"mint": {"name": "Mint", "general": {"display_name": "Mint"}}}},
+    )
+    entry_data = {
+        "profile_devices": {"mint": {"name": "Mint"}},
+        "snapshot": {"profiles": {"mint": {"name": "Mint"}}},
+    }
+
+    assert await backfill_profile_devices_from_options(hass, entry, entry_data) is False
+
+
+@pytest.mark.asyncio
+async def test_backfill_profile_devices_from_options_registers_missing(hass):
+    entry = _make_entry(
+        options={CONF_PROFILES: {"mint": {"name": "Mint", "general": {"display_name": "Mint"}}}},
+    )
+    entry.entry_id = "entry-mint"
+    entry_data = {
+        "profile_devices": {},
+        "snapshot": {"profiles": {}},
+    }
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.ensure_all_profile_devices_registered",
+    ) as ensure_mock:
+        ensure_mock.return_value = asyncio.Future()
+        ensure_mock.return_value.set_result(None)
+        result = await backfill_profile_devices_from_options(hass, entry, entry_data)
+
+    assert result is True
+    ensure_mock.assert_called_once()
+    kwargs = ensure_mock.call_args.kwargs
+    assert kwargs["extra_profiles"] == {"mint": {"name": "Mint", "general": {"display_name": "Mint"}}}
+    assert kwargs["snapshot"] is entry_data["snapshot"]
+
+
+@pytest.mark.asyncio
+async def test_backfill_profile_devices_from_options_uses_cached_entry_data(hass):
+    entry = _make_entry(
+        options={CONF_PROFILES: {"mint": {"name": "Mint"}}},
+    )
+    entry.entry_id = "entry-cache"
+    domain_data = hass.data.setdefault(DOMAIN, {})
+    stored = {
+        "config_entry": entry,
+        "profile_devices": {},
+        "snapshot": {"profiles": {}},
+    }
+    domain_data[entry.entry_id] = stored
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.ensure_all_profile_devices_registered",
+    ) as ensure_mock:
+        ensure_mock.return_value = asyncio.Future()
+        ensure_mock.return_value.set_result(None)
+        result = await backfill_profile_devices_from_options(hass, entry)
+
+    assert result is True
+    ensure_mock.assert_called_once()
 
 
 @pytest.mark.asyncio
@@ -260,7 +828,7 @@ async def test_resolve_profile_image_url_prefers_profile_metadata(hass, tmp_path
         },
     )
 
-    store_entry_data(hass, entry)
+    await store_entry_data(hass, entry)
 
     child_image = resolve_profile_image_url(hass, entry.entry_id, "child")
     assert child_image == "https://example.com/child.png"
@@ -351,7 +919,7 @@ async def test_resolve_profile_image_url_reads_general_section(hass, tmp_path):
         },
     )
 
-    store_entry_data(hass, entry)
+    await store_entry_data(hass, entry)
 
     image = resolve_profile_image_url(hass, entry.entry_id, "primary")
     assert image == "https://example.com/general.png"
@@ -377,7 +945,7 @@ async def test_resolve_profile_context_collection_aggregates_profiles(hass, tmp_
             "thresholds": {"humidity_max": 85},
         },
     )
-    store_entry_data(hass, entry)
+    await store_entry_data(hass, entry)
 
     collection = resolve_profile_context_collection(hass, entry)
     assert isinstance(collection, ProfileContextCollection)
@@ -413,7 +981,7 @@ async def test_profile_context_preserves_multiple_sensor_links(hass, tmp_path):
         },
     )
 
-    store_entry_data(hass, entry)
+    await store_entry_data(hass, entry)
     collection = resolve_profile_context_collection(hass, entry)
     primary = collection.primary
 
@@ -485,5 +1053,86 @@ def test_serialise_device_info_accepts_frozensets():
     assert serialised["connections"] == [["mac", "11:22:33:44:55:66"]]
 
 
+def test_serialise_device_info_injects_fallback_identifier():
+    info = {"name": "Fallback"}
+
+    identifier = (DOMAIN, "profile:identifier")
+    serialised = serialise_device_info(info, fallback_identifier=identifier)
+
+    assert serialised["identifiers"] == [[DOMAIN, "profile:identifier"]]
+    assert serialised["name"] == "Fallback"
+
+
+def test_serialise_device_info_uses_via_device_fallback():
+    info = {"identifiers": {(DOMAIN, "profile:via")}}
+
+    via_device = (DOMAIN, "entry:device")
+    serialised = serialise_device_info(info, fallback_via_device=via_device)
+
+    assert serialised["via_device"] == {"domain": DOMAIN, "id": "entry:device"}
+
+
+def test_serialise_device_info_preserves_mapping_via_device():
+    info = {
+        "identifiers": {(DOMAIN, "profile:mapped")},
+        "via_device": {"domain": "zha", "id": "0x1234"},
+    }
+
+    serialised = serialise_device_info(info)
+
+    assert serialised["via_device"] == {"domain": "zha", "id": "0x1234"}
+
+
+def test_serialise_device_info_accepts_mapping_identifiers():
+    info = {
+        "identifiers": {"domain": DOMAIN, "id": "profile:mapped"},
+    }
+
+    serialised = serialise_device_info(info)
+
+    assert serialised["identifiers"] == [[DOMAIN, "profile:mapped"]]
+
+
+def test_serialise_device_info_skips_blank_mapping_identifiers():
+    info = {
+        "identifiers": {
+            "mac": "  AA:BB:CC  ",
+            "zigbee": "   ",
+            "null": None,
+        }
+    }
+
+    serialised = serialise_device_info(info)
+
+    assert serialised["identifiers"] == [["mac", "AA:BB:CC"]]
+
+
+def test_serialise_device_info_supports_nested_mapping_identifiers():
+    info = {
+        "identifiers": {
+            "mac": {"value": "DD:EE"},
+            "serial": {"id": "SN-123"},
+        }
+    }
+
+    serialised = serialise_device_info(info)
+
+    assert serialised["identifiers"] == [["mac", "DD:EE"], ["serial", "SN-123"]]
+
+
 def test_serialise_device_info_handles_none():
     assert serialise_device_info(None) == {}
+
+
+def test_serialise_device_info_handles_none_with_fallbacks():
+    identifier = (DOMAIN, "profile:none")
+    via_device = (DOMAIN, "entry:none")
+
+    serialised = serialise_device_info(
+        None,
+        fallback_identifier=identifier,
+        fallback_via_device=via_device,
+    )
+
+    assert serialised["identifiers"] == [[DOMAIN, "profile:none"]]
+    assert serialised["via_device"] == {"domain": DOMAIN, "id": "entry:none"}

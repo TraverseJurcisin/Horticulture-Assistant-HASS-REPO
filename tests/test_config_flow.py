@@ -1095,7 +1095,7 @@ async def test_config_flow_existing_entry_profile_updates_registry(hass, tmp_pat
         options={},
     )
     entry.add_to_hass(hass)
-    store_entry_data(hass, entry)
+    await store_entry_data(hass, entry)
 
     flow = ConfigFlow()
     flow.hass = hass
@@ -1118,9 +1118,9 @@ async def test_config_flow_existing_entry_profile_updates_registry(hass, tmp_pat
 
     original_update_entry_data = helpers.update_entry_data
 
-    def _wrapped_update_entry_data(hass_arg, entry_arg):
+    async def _wrapped_update_entry_data(hass_arg, entry_arg):
         wrapper_state["called"] = True
-        return original_update_entry_data(hass_arg, entry_arg)
+        return await original_update_entry_data(hass_arg, entry_arg)
 
     with (
         patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry),
@@ -1140,6 +1140,213 @@ async def test_config_flow_existing_entry_profile_updates_registry(hass, tmp_pat
     assert wrapper_state["called"] is True
 
     identifier = profile_device_identifier(entry.entry_id, "mint")
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    assert device.name == "Mint"
+
+
+@pytest.mark.asyncio
+async def test_config_flow_existing_entry_device_fallback_on_update_failure(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._existing_entry = entry
+
+    profile_entry = {
+        "name": "Mint",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+        "general": {"display_name": "Mint", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+    }
+
+    def _update_entry(updated_entry, *, options=None, data=None):
+        if options is not None:
+            updated_entry.options = options
+        if data is not None:
+            updated_entry.data = data
+
+    fake_registry = FakeDeviceRegistry()
+    fallback_state: dict[str, Any] = {"called": False}
+
+    original_sync = helpers.async_sync_entry_devices
+
+    async def _wrapped_sync(hass_arg, entry_arg, *, snapshot=None):
+        fallback_state["called"] = True
+        return await original_sync(hass_arg, entry_arg, snapshot=snapshot)
+
+    with (
+        patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry),
+        patch.object(helpers.dr, "async_get", return_value=fake_registry),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.update_entry_data",
+            side_effect=RuntimeError("boom"),
+        ),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.async_sync_entry_devices",
+            side_effect=_wrapped_sync,
+        ),
+    ):
+        await flow._async_store_profile_for_existing_entry("mint", profile_entry)
+
+    assert fallback_state["called"] is True
+
+    identifier = profile_device_identifier(entry.entry_id, "mint")
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    assert device.name == "Mint"
+
+    stored = get_entry_data_helper(hass, entry)
+    assert stored is not None
+    assert stored["profiles"]["mint"]["name"] == "Mint"
+    assert stored["profile_devices"]["mint"]["name"] == "Mint"
+
+
+@pytest.mark.asyncio
+async def test_config_flow_existing_entry_device_helper_on_missing_profile(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._existing_entry = entry
+
+    profile_entry = {
+        "name": "Mint",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+        "general": {"display_name": "Mint", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+    }
+
+    def _update_entry(updated_entry, *, options=None, data=None):
+        if options is not None:
+            updated_entry.options = options
+        if data is not None:
+            updated_entry.data = data
+
+    fake_registry = FakeDeviceRegistry()
+
+    stub_entry_data = {
+        "profile_devices": {},
+        "snapshot": {
+            "plant_id": "mint",
+            "plant_name": "Mint",
+            "primary_profile_id": "mint",
+            "primary_profile_name": "Mint",
+            "profiles": {},
+        },
+    }
+
+    with (
+        patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.update_entry_data",
+            new=AsyncMock(return_value=stub_entry_data),
+        ),
+        patch(
+            "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+            return_value=fake_registry,
+        ),
+    ):
+        await flow._async_store_profile_for_existing_entry("mint", profile_entry)
+
+    identifier = profile_device_identifier(entry.entry_id, "mint")
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    assert device.name == "Mint"
+
+
+@pytest.mark.asyncio
+async def test_config_flow_existing_entry_refreshes_from_hass_on_store(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._existing_entry = entry
+
+    profile_entry = {
+        "name": "Mint",
+        CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+        "general": {"display_name": "Mint", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT},
+    }
+
+    fake_registry = FakeDeviceRegistry()
+    stored_entry: MockConfigEntry | None = None
+    update_called = False
+
+    def _update_entry(updated_entry, *, data=None, options=None):
+        nonlocal stored_entry
+        if options is None:
+            options = updated_entry.options
+        if data is None:
+            data = updated_entry.data
+        stored_entry = MockConfigEntry(
+            domain=updated_entry.domain,
+            data=data,
+            options=options,
+            entry_id=updated_entry.entry_id,
+            title=getattr(updated_entry, "title", ""),
+        )
+        stored_entry.add_to_hass(hass)
+        return stored_entry
+
+    def _get_entry(entry_id: str):
+        if stored_entry and stored_entry.entry_id == entry_id:
+            return stored_entry
+        return None
+
+    hass.config_entries.async_get_entry = _get_entry
+
+    original_update_entry_data = helpers.update_entry_data
+
+    async def _wrapped_update_entry_data(hass_arg, entry_arg):
+        nonlocal update_called
+        update_called = True
+        return await original_update_entry_data(hass_arg, entry_arg)
+
+    with (
+        patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry),
+        patch.object(helpers.dr, "async_get", return_value=fake_registry),
+        patch(
+            "custom_components.horticulture_assistant.config_flow.update_entry_data",
+            side_effect=_wrapped_update_entry_data,
+        ),
+    ):
+        await flow._async_store_profile_for_existing_entry("mint", profile_entry)
+
+    assert stored_entry is not None
+    assert flow._existing_entry is stored_entry
+    assert stored_entry.options[CONF_PROFILES]["mint"] == profile_entry
+    assert update_called is True
+
+    identifier = profile_device_identifier(entry.entry_id, "mint")
+    assert any(
+        identifier in identifiers for action, identifiers in fake_registry.calls if action == "create"
+    )
     device = fake_registry.async_get_device({identifier})
     assert device is not None
     assert device.name == "Mint"
@@ -1200,7 +1407,7 @@ async def test_config_flow_new_entry_registers_device_on_store(hass, tmp_path):
 
     fake_registry = FakeDeviceRegistry()
     with patch.object(helpers.dr, "async_get", return_value=fake_registry):
-        stored = store_entry_data(hass, entry)
+        stored = await store_entry_data(hass, entry)
 
     assert stored["profiles"]["mint"]["name"] == "Mint"
 
@@ -1265,7 +1472,7 @@ async def test_config_flow_new_entry_visible_via_manage_profiles(hass, tmp_path)
 
     fake_registry = FakeDeviceRegistry()
     with patch.object(helpers.dr, "async_get", return_value=fake_registry):
-        store_entry_data(hass, entry)
+        await store_entry_data(hass, entry)
 
     options_flow = OptionsFlow(entry)
     options_flow.hass = hass
@@ -2737,6 +2944,31 @@ async def test_config_flow_profile_fallback_creates_general_file_without_sensors
     assert general["plant_type"] == "herb"
     assert general[CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert "sensor_entities" not in general or general["sensor_entities"] == {}
+
+
+async def test_config_flow_unique_identifier_trims_known_ids(hass):
+    existing_profiles = {
+        "  pepper  ": {
+            "name": "Capsicum",
+        }
+    }
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "capsicum"},
+        options={
+            CONF_PLANT_ID: "capsicum",
+            CONF_PROFILES: existing_profiles,
+        },
+    )
+    entry.add_to_hass(hass)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._existing_entry = entry
+    flow._async_current_entries = MagicMock(return_value=[entry])
+
+    assert flow._ensure_unique_plant_id("pepper") == "pepper_2"
 
 
 async def test_config_flow_profile_fallback_avoids_duplicate_identifier(hass, tmp_path, monkeypatch):

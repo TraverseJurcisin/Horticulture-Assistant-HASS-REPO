@@ -11,6 +11,8 @@ from custom_components.horticulture_assistant.cloudsync.edge_store import EdgeSy
 from custom_components.horticulture_assistant.cloudsync.manager import CloudSyncConfig
 from custom_components.horticulture_assistant.cloudsync.publisher import CloudSyncPublisher
 from custom_components.horticulture_assistant.const import (
+    CONF_PLANT_ID,
+    CONF_PLANT_NAME,
     CONF_PROFILE_SCOPE,
     CONF_PROFILES,
     DOMAIN,
@@ -37,6 +39,11 @@ from custom_components.horticulture_assistant.profile_registry import (
     ProfileRegistry,
     _normalise_sensor_value,
 )
+from custom_components.horticulture_assistant.utils import entry_helpers as helpers
+from custom_components.horticulture_assistant.utils.entry_helpers import (
+    profile_device_identifier,
+    store_entry_data,
+)
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 pytestmark = pytest.mark.asyncio
@@ -48,6 +55,61 @@ async def _make_entry(hass, options=None):
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=options or {})
     entry.add_to_hass(hass)
     return entry
+
+
+class FakeDeviceRegistry:
+    def __init__(self) -> None:
+        self.devices: dict[str, SimpleNamespace] = {}
+
+    @staticmethod
+    def _coerce_identifiers(identifiers) -> set[tuple[str, str]]:
+        if identifiers is None:
+            return set()
+        if isinstance(identifiers, (list, tuple, set)):
+            items = identifiers
+        else:
+            items = [identifiers]
+        pairs: set[tuple[str, str]] = set()
+        for item in items:
+            if isinstance(item, (list, tuple)) and len(item) == 2:
+                pairs.add((str(item[0]), str(item[1])))
+            elif isinstance(item, dict):
+                domain = item.get("domain")
+                ident = item.get("id")
+                if domain is not None and ident is not None:
+                    pairs.add((str(domain), str(ident)))
+        return pairs
+
+    def async_get_device(self, identifiers):
+        pairs = self._coerce_identifiers(identifiers)
+        for device in self.devices.values():
+            if device.identifiers & pairs:
+                return device
+        return None
+
+    async def async_get_or_create(self, *, identifiers=None, config_entry_id=None, **kwargs):
+        pairs = self._coerce_identifiers(identifiers)
+        existing = self.async_get_device(pairs)
+        if existing is not None:
+            if config_entry_id:
+                existing.config_entries.add(config_entry_id)
+            name = kwargs.get("name")
+            if name:
+                existing.name = name
+            return existing
+
+        device_id = f"device_{len(self.devices)}"
+        device = SimpleNamespace(
+            id=device_id,
+            identifiers=pairs,
+            config_entries={config_entry_id} if config_entry_id else set(),
+            name=kwargs.get("name"),
+        )
+        self.devices[device_id] = device
+        return device
+
+    def async_remove_device(self, device_id):  # pragma: no cover - helper parity
+        self.devices.pop(device_id, None)
 
 
 async def test_normalise_sensor_value_sequence_deduplicates():
@@ -90,6 +152,192 @@ async def test_async_add_profile_handles_none_option_profiles(hass):
     pid = await reg.async_add_profile("Seedling")
 
     assert pid in entry.options[CONF_PROFILES]
+
+
+async def test_async_add_profile_registers_device(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    fake_registry = FakeDeviceRegistry()
+    update_called = {"flag": False}
+
+    original_update_entry_data = helpers.update_entry_data
+
+    async def _wrapped_update_entry_data(hass_arg, entry_arg):
+        update_called["flag"] = True
+        return await original_update_entry_data(hass_arg, entry_arg)
+
+    def _update_entry(updated_entry, *, options=None, data=None):
+        if options is not None:
+            updated_entry.options = options
+        if data is not None:
+            updated_entry.data = data
+
+    with (
+        patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry),
+        patch.object(helpers.dr, "async_get", return_value=fake_registry),
+        patch(
+            "custom_components.horticulture_assistant.profile_registry.update_entry_data",
+            side_effect=_wrapped_update_entry_data,
+        ),
+    ):
+        pid = await reg.async_add_profile("Mint")
+
+    assert update_called["flag"] is True
+    assert pid in entry.options[CONF_PROFILES]
+
+    identifier = profile_device_identifier(entry.entry_id, pid)
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    assert device.name == "Mint"
+
+
+async def test_async_load_registers_devices_for_existing_profiles(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "garden", CONF_PLANT_NAME: "Kitchen Garden"},
+        options={
+            CONF_PROFILES: {
+                "p1": {
+                    "name": "Herb Bed",
+                    "display_name": "Herb Bed",
+                    "profile_id": "p1",
+                    "plant_id": "p1",
+                    "general": {"display_name": "Herb Bed"},
+                }
+            }
+        },
+        entry_id="entry-garden",
+    )
+    entry.add_to_hass(hass)
+
+    registry = ProfileRegistry(hass, entry)
+    fake_registry = FakeDeviceRegistry()
+
+    with patch.object(helpers.dr, "async_get", return_value=fake_registry):
+        await registry.async_load()
+
+    identifier = profile_device_identifier(entry.entry_id, "p1")
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    assert device.name == "Herb Bed"
+
+
+async def test_async_add_profile_device_fallback_on_update_failure(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    fake_registry = FakeDeviceRegistry()
+    fallback_state = {"called": False}
+
+    original_sync = helpers.async_sync_entry_devices
+
+    async def _wrapped_sync(hass_arg, entry_arg, *, snapshot=None):
+        fallback_state["called"] = True
+        return await original_sync(hass_arg, entry_arg, snapshot=snapshot)
+
+    def _update_entry(updated_entry, *, options=None, data=None):
+        if options is not None:
+            updated_entry.options = options
+        if data is not None:
+            updated_entry.data = data
+
+    with (
+        patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry),
+        patch.object(helpers.dr, "async_get", return_value=fake_registry),
+        patch(
+            "custom_components.horticulture_assistant.profile_registry.update_entry_data",
+            side_effect=RuntimeError("boom"),
+        ),
+        patch(
+            "custom_components.horticulture_assistant.profile_registry.async_sync_entry_devices",
+            side_effect=_wrapped_sync,
+        ),
+    ):
+        pid = await reg.async_add_profile("Mint")
+
+    assert fallback_state["called"] is True
+    assert pid in entry.options[CONF_PROFILES]
+
+    identifier = profile_device_identifier(entry.entry_id, pid)
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    assert device.name == "Mint"
+
+
+async def test_async_add_profile_registers_device_when_snapshot_missing(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "mint", CONF_PLANT_NAME: "Mint"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-mint",
+    )
+    entry.add_to_hass(hass)
+    await store_entry_data(hass, entry)
+
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    fake_registry = FakeDeviceRegistry()
+
+    def _update_entry(updated_entry, *, options=None, data=None):
+        if options is not None:
+            updated_entry.options = options
+        if data is not None:
+            updated_entry.data = data
+
+    stub_entry_data = {
+        "profile_devices": {},
+        "snapshot": {
+            "plant_id": "mint",
+            "plant_name": "Mint",
+            "primary_profile_id": "mint",
+            "primary_profile_name": "Mint",
+            "profiles": {},
+        },
+    }
+
+    with (
+        patch.object(hass.config_entries, "async_update_entry", side_effect=_update_entry),
+        patch(
+            "custom_components.horticulture_assistant.profile_registry.update_entry_data",
+            new=AsyncMock(return_value=stub_entry_data),
+        ),
+        patch(
+            "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+            return_value=fake_registry,
+        ),
+    ):
+        pid = await reg.async_add_profile("Mint")
+
+    identifier = profile_device_identifier(entry.entry_id, pid)
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    assert device.name == "Mint"
 
 
 async def test_async_add_profile_sets_species_metadata(hass):
@@ -370,6 +618,38 @@ async def test_async_import_profiles_returns_count(hass, tmp_path):
     options_profiles = registry.entry.options.get(CONF_PROFILES, {})
     assert "p1" in options_profiles
     assert options_profiles["p1"]["display_name"] == "Plant 1"
+
+
+async def test_async_import_profiles_registers_devices(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_PLANT_ID: "import", CONF_PLANT_NAME: "Import"},
+        options={CONF_PROFILES: {}},
+        entry_id="entry-import",
+    )
+    entry.add_to_hass(hass)
+
+    registry = ProfileRegistry(hass, entry)
+    payload = {
+        "plant_id": "p1",
+        "profile_id": "p1",
+        "display_name": "Imported Plant",
+        "general": {"display_name": "Imported Plant"},
+    }
+    (tmp_path / "profiles.json").write_text(json.dumps({"p1": payload}))
+
+    fake_registry = FakeDeviceRegistry()
+
+    with patch.object(helpers.dr, "async_get", return_value=fake_registry):
+        await registry.async_load()
+        count = await registry.async_import_profiles("profiles.json")
+
+    assert count == 1
+    identifier = profile_device_identifier(entry.entry_id, "p1")
+    device = fake_registry.async_get_device({identifier})
+    assert device is not None
+    assert device.name == "Imported Plant"
 
 
 async def test_async_import_profiles_updates_existing_options(hass, tmp_path):
