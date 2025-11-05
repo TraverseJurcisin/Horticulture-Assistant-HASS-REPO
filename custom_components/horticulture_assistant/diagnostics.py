@@ -10,7 +10,11 @@ from homeassistant.core import HomeAssistant
 from .const import CONF_API_KEY, DOMAIN
 from .profile_monitor import ProfileMonitor
 from .profile_registry import ProfileRegistry
-from .utils.entry_helpers import serialise_device_info
+from .utils.entry_helpers import (
+    entry_device_identifier,
+    profile_device_identifier,
+    serialise_device_info,
+)
 
 TO_REDACT = {CONF_API_KEY}
 _ONBOARDING_TIMELINE_LIMIT = 50
@@ -144,13 +148,32 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
 
         devices: dict[str, Any] = {}
         entry_device = entry_data.get("entry_device_info")
+        stored_entry = entry_data.get("config_entry")
+        entry_id_value = getattr(stored_entry, "entry_id", entry.entry_id)
+        entry_identifier = entry_data.get("entry_device_identifier")
+        if entry_identifier is None and entry_id_value:
+            entry_identifier = entry_device_identifier(entry_id_value)
+
         if entry_device:
-            devices["entry"] = serialise_device_info(entry_device)
+            devices["entry"] = serialise_device_info(
+                entry_device,
+                fallback_identifier=entry_identifier,
+            )
+
         profile_devices = entry_data.get("profile_devices")
         if isinstance(profile_devices, dict):
-            devices["profiles"] = {
-                profile_id: serialise_device_info(info) for profile_id, info in profile_devices.items()
-            }
+            devices["profiles"] = {}
+            for profile_id, info in profile_devices.items():
+                canonical_profile_id = str(profile_id).strip()
+                fallback_identifier = profile_device_identifier(
+                    entry_id_value,
+                    canonical_profile_id or None,
+                )
+                devices["profiles"][profile_id] = serialise_device_info(
+                    info,
+                    fallback_identifier=fallback_identifier,
+                    fallback_via_device=entry_identifier,
+                )
         if devices:
             payload["devices"] = devices
 

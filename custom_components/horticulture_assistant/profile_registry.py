@@ -10,6 +10,7 @@ needing to parse config entry options or storage files individually.
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import hashlib
 import inspect
 import json
@@ -21,6 +22,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from math import isfinite
 from pathlib import Path
+from types import MappingProxyType
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
@@ -74,9 +76,13 @@ from .sensor_validation import (
     validate_sensor_links,
 )
 from .utils.entry_helpers import (
+    async_sync_entry_devices,
+    ensure_all_profile_devices_registered,
+    entry_device_identifier,
     profile_device_identifier,
     resolve_profile_device_info,
     serialise_device_info,
+    update_entry_data,
 )
 from .validators import (
     validate_cultivation_event_dict,
@@ -549,9 +555,15 @@ class ProfileRegistry:
         if not isinstance(model, str) or not model.strip():
             payload["model"] = "Plant Profile"
 
+        entry_identifier = entry_device_identifier(self.entry.entry_id)
+
         return {
             "identifier": {"domain": domain, "id": identifier},
-            "info": serialise_device_info(payload),
+            "info": serialise_device_info(
+                payload,
+                fallback_identifier=identifier_tuple,
+                fallback_via_device=entry_identifier,
+            ),
         }
 
     @staticmethod
@@ -1563,6 +1575,9 @@ class ProfileRegistry:
         await self._async_maybe_refresh_validation_notification()
         await self._async_maybe_refresh_sensor_notification()
 
+        with contextlib.suppress(Exception):
+            await ensure_all_profile_devices_registered(self.hass, self.entry)
+
     async def async_save(self) -> None:
         self._relink_profiles()
         recompute_statistics(self._profiles.values())
@@ -1828,7 +1843,56 @@ class ProfileRegistry:
         new_opts = dict(self.entry.options)
         new_opts[CONF_PROFILES] = profiles
         self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
-        self.entry.options = new_opts
+
+        refreshed_entry: ConfigEntry | None = None
+        if hasattr(self.hass.config_entries, "async_get_entry"):
+            refreshed_entry = self.hass.config_entries.async_get_entry(self.entry.entry_id)
+        if refreshed_entry is not None:
+            self.entry = refreshed_entry
+        else:
+            try:
+                self.entry.options = MappingProxyType(dict(new_opts))
+            except (AttributeError, TypeError):  # pragma: no cover - compatibility path
+                self.entry.options = dict(new_opts)
+
+        refreshed_entry_data: Mapping[str, Any] | None = None
+        snapshot: Mapping[str, Any] | None = None
+        try:
+            refreshed_entry_data = await update_entry_data(self.hass, self.entry)
+        except Exception as err:  # pragma: no cover - defensive fallback
+            _LOGGER.debug(
+                "Unable to refresh entry data after adding profile '%s': %s",
+                candidate,
+                err,
+            )
+            with contextlib.suppress(Exception):
+                await async_sync_entry_devices(self.hass, self.entry)
+        else:
+            profile_devices = (
+                refreshed_entry_data.get("profile_devices") if isinstance(refreshed_entry_data, Mapping) else None
+            )
+            if not isinstance(profile_devices, Mapping) or candidate not in profile_devices:
+                snapshot = (
+                    refreshed_entry_data.get("snapshot")
+                    if isinstance(refreshed_entry_data, Mapping)
+                    and isinstance(refreshed_entry_data.get("snapshot"), Mapping)
+                    else None
+                )
+            if snapshot is None and isinstance(refreshed_entry_data, Mapping):
+                candidate_snapshot = refreshed_entry_data.get("snapshot")
+                if isinstance(candidate_snapshot, Mapping):
+                    snapshot = candidate_snapshot
+
+        if refreshed_entry_data is None:
+            snapshot = None
+
+        with contextlib.suppress(Exception):
+            await ensure_all_profile_devices_registered(
+                self.hass,
+                self.entry,
+                snapshot=snapshot,
+                extra_profiles={candidate: new_profile},
+            )
 
         prof_obj = options_profile_to_dataclass(
             candidate,
@@ -2521,6 +2585,10 @@ class ProfileRegistry:
                 new_opts[CONF_PROFILES] = updated_profiles
                 self.hass.config_entries.async_update_entry(self.entry, options=new_opts)
                 self.entry.options = new_opts
+
+        if count:
+            with contextlib.suppress(Exception):
+                await ensure_all_profile_devices_registered(self.hass, self.entry)
 
         self.publish_full_snapshot()
         return count

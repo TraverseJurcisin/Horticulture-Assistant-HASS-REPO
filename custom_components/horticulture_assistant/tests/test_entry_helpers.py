@@ -1,6 +1,8 @@
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
+
 from custom_components.horticulture_assistant.utils.entry_helpers import (
     get_entry_data,
     get_entry_data_by_plant_id,
@@ -34,10 +36,11 @@ class DummyHass(SimpleNamespace):
         self.data = {}
 
 
-def test_store_and_remove_entry_data(tmp_path):
+@pytest.mark.asyncio
+async def test_store_and_remove_entry_data(tmp_path):
     hass = DummyHass(tmp_path)
     entry = DummyEntry(entry_id="e1", data={"plant_name": "Tomato"})
-    stored = store_entry_data(hass, entry)
+    stored = await store_entry_data(hass, entry)
     assert hass.data
     assert hass.data["horticulture_assistant"]["e1"] is stored
     assert stored["profile_dir"] == Path(tmp_path / "plants/e1")
@@ -50,8 +53,9 @@ def test_store_and_remove_entry_data(tmp_path):
     assert get_entry_data_by_plant_id(hass, "e1") is None
 
 
-def test_get_entry_data_by_plant_id(tmp_path):
+@pytest.mark.asyncio
+async def test_get_entry_data_by_plant_id(tmp_path):
     hass = DummyHass(tmp_path)
     entry = DummyEntry(entry_id="e99", data={"plant_id": "pid99", "plant_name": "Pepper"})
-    stored = store_entry_data(hass, entry)
+    stored = await store_entry_data(hass, entry)
     assert get_entry_data_by_plant_id(hass, "pid99") is stored

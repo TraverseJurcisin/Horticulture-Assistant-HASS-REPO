@@ -390,7 +390,7 @@ async def test_status_and_recommendation_device_info(hass):
         },
     )
     entry.entry_id = "entry1"
-    store_entry_data(hass, entry)
+    await store_entry_data(hass, entry)
 
     status = sensor_mod.HortiStatusSensor(ai, local, entry.entry_id, "Plant", "pid", True)
     rec = sensor_mod.HortiRecommendationSensor(ai, entry.entry_id, "Plant", "pid", True)

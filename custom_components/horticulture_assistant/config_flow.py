@@ -8,6 +8,7 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
+from types import MappingProxyType
 from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
@@ -58,6 +59,8 @@ from .sensor_catalog import SensorSuggestion, collect_sensor_suggestions, format
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import profile_generator
 from .utils.entry_helpers import (
+    async_sync_entry_devices,
+    ensure_all_profile_devices_registered,
     get_entry_data,
     get_primary_profile_id,
     update_entry_data,
@@ -1551,21 +1554,23 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 
         known: set[str] = set()
 
+        def _record(value: Any) -> None:
+            if not isinstance(value, str):
+                return
+            candidate = value.strip()
+            if candidate:
+                known.add(candidate)
+
         def _collect(entry) -> None:
             if entry is None:
                 return
-            data_pid = entry.data.get(CONF_PLANT_ID)
-            if isinstance(data_pid, str) and data_pid:
-                known.add(data_pid)
+            _record(entry.data.get(CONF_PLANT_ID))
             options = entry.options if isinstance(entry.options, Mapping) else {}
-            opt_pid = options.get(CONF_PLANT_ID)
-            if isinstance(opt_pid, str) and opt_pid:
-                known.add(opt_pid)
+            _record(options.get(CONF_PLANT_ID))
             profiles = options.get(CONF_PROFILES)
             if isinstance(profiles, Mapping):
                 for pid in profiles:
-                    if isinstance(pid, str) and pid:
-                        known.add(pid)
+                    _record(pid)
 
         for entry in self._async_current_entries() or []:
             _collect(entry)
@@ -2750,14 +2755,57 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         options[CONF_PROFILES] = profiles
 
         self.hass.config_entries.async_update_entry(entry, options=options)
+
+        refreshed_entry = None
+        if hasattr(self.hass.config_entries, "async_get_entry"):
+            refreshed_entry = self.hass.config_entries.async_get_entry(entry.entry_id)
+        if refreshed_entry is not None:
+            entry = refreshed_entry
+            self._existing_entry = refreshed_entry
+        else:
+            try:
+                entry.options = MappingProxyType(dict(options))
+            except (AttributeError, TypeError):  # pragma: no cover - legacy fallback
+                entry.options = dict(options)
+
+        refreshed_entry_data: Mapping[str, Any] | None = None
+        snapshot: Mapping[str, Any] | None = None
         try:
-            update_entry_data(self.hass, entry)
+            refreshed_entry_data = await update_entry_data(self.hass, entry)
         except Exception as err:  # pragma: no cover - defensive guard
             _LOGGER.debug(
                 "Unable to refresh entry data for '%s' after adding profile '%s': %s",
                 getattr(entry, "entry_id", "unknown"),
                 plant_id,
                 err,
+            )
+            with suppress(Exception):
+                await async_sync_entry_devices(self.hass, entry)
+        else:
+            profile_devices = (
+                refreshed_entry_data.get("profile_devices") if isinstance(refreshed_entry_data, Mapping) else None
+            )
+            if not isinstance(profile_devices, Mapping) or plant_id not in profile_devices:
+                snapshot = (
+                    refreshed_entry_data.get("snapshot")
+                    if isinstance(refreshed_entry_data, Mapping)
+                    and isinstance(refreshed_entry_data.get("snapshot"), Mapping)
+                    else None
+                )
+            if snapshot is None and isinstance(refreshed_entry_data, Mapping):
+                candidate_snapshot = refreshed_entry_data.get("snapshot")
+                if isinstance(candidate_snapshot, Mapping):
+                    snapshot = candidate_snapshot
+
+        if refreshed_entry_data is None:
+            snapshot = None
+
+        with suppress(Exception):
+            await ensure_all_profile_devices_registered(
+                self.hass,
+                entry,
+                snapshot=snapshot,
+                extra_profiles={plant_id: profile_entry},
             )
 
     @staticmethod
