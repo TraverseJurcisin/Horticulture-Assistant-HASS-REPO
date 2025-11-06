@@ -1,10 +1,12 @@
 from pathlib import Path
+from unittest.mock import AsyncMock, patch
 
 import pytest
 from aiohttp import ClientError
 from homeassistant.config_entries import OperationNotAllowed
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import issue_registry as ir
+from homeassistant.helpers.entity_registry import async_get as async_get_entity_registry
 from homeassistant.helpers.update_coordinator import UpdateFailed
 
 from custom_components.horticulture_assistant.api import ChatApi
@@ -12,6 +14,7 @@ from custom_components.horticulture_assistant.const import (
     CONF_API_KEY,
     CONF_MOISTURE_SENSOR,
     DOMAIN,
+    signal_profile_contexts_updated,
 )
 from custom_components.horticulture_assistant.diagnostics import (
     async_get_config_entry_diagnostics,
@@ -156,6 +159,194 @@ async def test_unload_calls_shutdown(hass: HomeAssistant, enable_custom_integrat
 
     assert ai_called
     assert local_called
+
+
+@pytest.mark.asyncio
+async def test_profile_update_dispatches_signal(
+    hass: HomeAssistant,
+    enable_custom_integrations: None,
+    monkeypatch,
+):
+    """Adding a profile triggers dispatcher notifications for entity platforms."""
+
+    async def dummy_chat(self, *args, **kwargs):
+        return {"choices": [{"message": {"content": "ok"}}]}
+
+    monkeypatch.setattr(ChatApi, "chat", dummy_chat)
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={CONF_API_KEY: "key"},
+        options={"profiles": {}},
+    )
+    entry.add_to_hass(hass)
+
+    with patch("custom_components.horticulture_assistant.async_dispatcher_send") as mock_send:
+        assert await hass.config_entries.async_setup(entry.entry_id)
+        await hass.async_block_till_done()
+
+        mock_send.reset_mock()
+
+        profiles = dict(entry.options.get("profiles", {}))
+        profiles["new_profile"] = {"name": "New Profile"}
+        new_options = dict(entry.options)
+        new_options["profiles"] = profiles
+        hass.config_entries.async_update_entry(entry, options=new_options)
+        await hass.async_block_till_done()
+
+        mock_send.assert_called_once()
+        _, signal, payload = mock_send.call_args[0]
+        assert signal == signal_profile_contexts_updated(entry.entry_id)
+        assert payload.get("added") == ("new_profile",)
+        assert payload.get("removed") == tuple()
+
+
+@pytest.mark.asyncio
+async def test_new_profile_creates_entities(
+    hass: HomeAssistant,
+    enable_custom_integrations: None,
+    monkeypatch,
+):
+    """Ensure a newly added profile provisions entities without a reload."""
+
+    async def dummy_chat(self, *args, **kwargs):
+        return {"choices": [{"message": {"content": "ok"}}]}
+
+    monkeypatch.setattr(ChatApi, "chat", dummy_chat)
+
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+
+    assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    profiles = dict(entry.options.get("profiles", {}))
+    profiles["new_growth"] = {
+        "name": "New Growth",
+        "sensors": {
+            "moisture": "sensor.mock_moisture",
+            "temperature": "sensor.mock_temperature",
+            "humidity": "sensor.mock_humidity",
+        },
+    }
+    new_options = dict(entry.options)
+    new_options["profiles"] = profiles
+
+    hass.config_entries.async_update_entry(entry, options=new_options)
+    await hass.async_block_till_done()
+
+    entity_registry = async_get_entity_registry(hass)
+
+    unique_prefix = f"{DOMAIN}_{entry.entry_id}_new_growth"
+
+    status_entity_id = entity_registry.async_get_entity_id(
+        "sensor",
+        DOMAIN,
+        f"{unique_prefix}_health",
+    )
+    assert status_entity_id is not None
+    assert hass.states.get(status_entity_id) is not None
+
+    moisture_number_id = entity_registry.async_get_entity_id(
+        "number",
+        DOMAIN,
+        f"{unique_prefix}_moisture_min",
+    )
+    assert moisture_number_id is not None
+
+    irrigation_binary_id = entity_registry.async_get_entity_id(
+        "binary_sensor",
+        DOMAIN,
+        f"{unique_prefix}_irrigation_readiness",
+    )
+    assert irrigation_binary_id is not None
+
+    irrigation_switch_id = entity_registry.async_get_entity_id(
+        "switch",
+        DOMAIN,
+        f"{unique_prefix}_irrigation_switch",
+    )
+    assert irrigation_switch_id is not None
+
+    ppfd_entity_id = entity_registry.async_get_entity_id(
+        "sensor",
+        DOMAIN,
+        f"{unique_prefix}_ppfd",
+    )
+    assert ppfd_entity_id is not None
+
+
+@pytest.mark.asyncio
+async def test_new_profile_requests_refresh(
+    hass: HomeAssistant,
+    enable_custom_integrations: None,
+    monkeypatch,
+):
+    """Ensure adding a profile schedules a refresh on the profile coordinator."""
+
+    async def dummy_chat(self, *args, **kwargs):
+        return {"choices": [{"message": {"content": "ok"}}]}
+
+    monkeypatch.setattr(ChatApi, "chat", dummy_chat)
+
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+
+    assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    coordinator = hass.data[DOMAIN][entry.entry_id]["coordinator"]
+    assert coordinator is not None
+    refresh_mock = AsyncMock()
+    monkeypatch.setattr(coordinator, "async_request_refresh", refresh_mock)
+
+    profiles = dict(entry.options.get("profiles", {}))
+    profiles["fresh_profile"] = {"name": "Fresh Profile"}
+    new_options = dict(entry.options)
+    new_options["profiles"] = profiles
+
+    hass.config_entries.async_update_entry(entry, options=new_options)
+    await hass.async_block_till_done()
+
+    assert refresh_mock.await_count == 1
+
+
+@pytest.mark.asyncio
+async def test_profile_metric_unique_ids_migrated(
+    hass: HomeAssistant,
+    enable_custom_integrations: None,
+    monkeypatch,
+):
+    """Legacy unique ids are migrated to include the config entry id."""
+
+    async def dummy_chat(self, *args, **kwargs):
+        return {"choices": [{"message": {"content": "ok"}}]}
+
+    monkeypatch.setattr(ChatApi, "chat", dummy_chat)
+
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "key"})
+    entry.add_to_hass(hass)
+
+    entity_registry = async_get_entity_registry(hass)
+    legacy = entity_registry.async_get_or_create(
+        "sensor",
+        DOMAIN,
+        "legacy_profile:ppfd",
+        suggested_object_id="legacy_profile_ppfd",
+        config_entry=entry,
+    )
+
+    assert legacy.unique_id == "legacy_profile:ppfd"
+
+    assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+
+    updated = entity_registry.async_get(legacy.entity_id)
+    assert updated is not None
+    assert (
+        updated.unique_id
+        == f"{DOMAIN}_{entry.entry_id}_legacy_profile_ppfd"
+    )
 
 
 @pytest.mark.asyncio

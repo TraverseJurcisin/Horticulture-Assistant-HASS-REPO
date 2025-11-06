@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from homeassistant.const import Platform
 from homeassistant.helpers.entity import EntityCategory
 
@@ -9,6 +11,8 @@ PLATFORMS: list[Platform] = [
     Platform.SWITCH,
     Platform.NUMBER,
 ]
+
+SIGNAL_PROFILE_CONTEXTS_UPDATED = "horticulture_profile_contexts_updated"
 
 # Home Assistant event types fired when profile history is updated.
 EVENT_PROFILE_RUN_RECORDED = "horticulture_assistant_profile_run_recorded"
@@ -137,3 +141,12 @@ PREMIUM_FEATURES: tuple[str, ...] = (
 # Entity categories
 CATEGORY_DIAGNOSTIC = EntityCategory.DIAGNOSTIC
 CATEGORY_CONTROL = EntityCategory.CONFIG
+
+
+def signal_profile_contexts_updated(entry_id: str | None) -> str:
+    """Return the dispatcher signal for profile context updates."""
+
+    base = SIGNAL_PROFILE_CONTEXTS_UPDATED
+    if not entry_id:
+        return base
+    return f"{base}_{entry_id}"

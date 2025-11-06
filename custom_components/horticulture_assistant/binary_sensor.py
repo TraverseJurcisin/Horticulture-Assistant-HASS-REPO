@@ -1,16 +1,26 @@
 """Binary sensor platform for Horticulture Assistant."""
 
+from __future__ import annotations
+
 import logging
+from collections.abc import Iterable
+from typing import Mapping
 
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
-from .const import CATEGORY_CONTROL, CATEGORY_DIAGNOSTIC, DOMAIN
+from .const import (
+    CATEGORY_CONTROL,
+    CATEGORY_DIAGNOSTIC,
+    DOMAIN,
+    signal_profile_contexts_updated,
+)
 from .entity_base import HorticultureBaseEntity, HorticultureEntryEntity
 from .entity_utils import ensure_entities_exist
 from .profile_monitor import ProfileMonitor
@@ -29,35 +39,47 @@ async def async_setup_entry(
     collection = resolve_profile_context_collection(hass, entry)
     stored = collection.stored
 
-    sensors: list[BinarySensorEntity] = []
-    for context in collection.values():
+    known_profiles: set[str] = set()
+
+    def _build_context_entities(context: ProfileContext) -> list[BinarySensorEntity]:
         profile_id = context.id
         plant_name = context.name
         ensure_entities_exist(
             hass,
             profile_id,
-            list(context.sensor_ids_for_roles("moisture", "temperature", "humidity", "ec", "co2")),
+            list(
+                context.sensor_ids_for_roles(
+                    "moisture",
+                    "temperature",
+                    "humidity",
+                    "ec",
+                    "co2",
+                )
+            ),
             placeholders={"plant_id": profile_id, "profile_name": plant_name},
         )
-        sensors.extend(
-            [
-                SensorHealthBinarySensor(
-                    hass,
-                    entry.entry_id,
-                    context,
-                ),
-                IrrigationReadinessBinarySensor(
-                    hass,
-                    entry.entry_id,
-                    context,
-                ),
-                FaultDetectionBinarySensor(
-                    hass,
-                    entry.entry_id,
-                    context,
-                ),
-            ]
-        )
+        return [
+            SensorHealthBinarySensor(
+                hass,
+                entry.entry_id,
+                context,
+            ),
+            IrrigationReadinessBinarySensor(
+                hass,
+                entry.entry_id,
+                context,
+            ),
+            FaultDetectionBinarySensor(
+                hass,
+                entry.entry_id,
+                context,
+            ),
+        ]
+
+    sensors: list[BinarySensorEntity] = []
+    for context in collection.values():
+        sensors.extend(_build_context_entities(context))
+        known_profiles.add(context.id)
 
     manager = stored.get("cloud_sync_manager")
     if manager:
@@ -65,7 +87,36 @@ async def async_setup_entry(
         sensors.append(CloudConnectionBinarySensor(manager, entry.entry_id, entry_name))
         sensors.append(LocalOnlyModeBinarySensor(manager, entry.entry_id, entry_name))
 
-    async_add_entities(sensors)
+    async_add_entities(sensors, True)
+
+    @callback
+    def _handle_profile_update(change: Mapping[str, Iterable[str]] | None) -> None:
+        if not isinstance(change, Mapping):
+            return
+        added = tuple(change.get("added", ()))
+        if not added:
+            return
+
+        updated_collection = resolve_profile_context_collection(hass, entry)
+        new_entities: list[BinarySensorEntity] = []
+        for profile_id in added:
+            if profile_id in known_profiles:
+                continue
+            context = updated_collection.contexts.get(profile_id)
+            if context is None:
+                continue
+            new_entities.extend(_build_context_entities(context))
+            known_profiles.add(profile_id)
+
+        if new_entities:
+            async_add_entities(new_entities, True)
+
+    remove = async_dispatcher_connect(
+        hass,
+        signal_profile_contexts_updated(entry.entry_id),
+        _handle_profile_update,
+    )
+    entry.async_on_unload(remove)
 
 
 class HorticultureBaseBinarySensor(HorticultureBaseEntity, BinarySensorEntity):

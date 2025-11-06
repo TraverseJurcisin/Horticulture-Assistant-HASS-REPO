@@ -1,14 +1,21 @@
 from __future__ import annotations
 
-from typing import Any
+from collections.abc import Iterable
+from typing import Any, Mapping
 
 from homeassistant.components.number import NumberEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import EVENT_CORE_CONFIG_UPDATE, UnitOfTemperature
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
 
-from .const import CATEGORY_CONTROL, CONF_PROFILES, DOMAIN
+from .const import (
+    CATEGORY_CONTROL,
+    CONF_PROFILES,
+    DOMAIN,
+    signal_profile_contexts_updated,
+)
 from .entity_base import HorticultureBaseEntity
 from .profile.citations import manual_note
 from .profile.compat import get_resolved_target, set_resolved_target
@@ -35,13 +42,13 @@ THRESHOLD_SPECS = [
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
     collection = resolve_profile_context_collection(hass, entry)
 
-    entities: list[ThresholdNumber] = []
-    for context in collection.values():
+    def _build_threshold_entities(context) -> list[ThresholdNumber]:
         profile_id = context.id
         thresholds = context.thresholds
         name = context.name
+        numbers: list[ThresholdNumber] = []
         for key, unit in THRESHOLD_SPECS:
-            entities.append(
+            numbers.append(
                 ThresholdNumber(
                     hass,
                     entry,
@@ -52,8 +59,44 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                     thresholds.get(key),
                 )
             )
+        return numbers
 
-    async_add_entities(entities)
+    known_profiles: set[str] = set()
+    entities: list[ThresholdNumber] = []
+    for context in collection.values():
+        entities.extend(_build_threshold_entities(context))
+        known_profiles.add(context.id)
+
+    async_add_entities(entities, True)
+
+    @callback
+    def _handle_profile_update(change: Mapping[str, Iterable[str]] | None) -> None:
+        if not isinstance(change, Mapping):
+            return
+        added = tuple(change.get("added", ()))
+        if not added:
+            return
+
+        updated_collection = resolve_profile_context_collection(hass, entry)
+        new_entities: list[ThresholdNumber] = []
+        for profile_id in added:
+            if profile_id in known_profiles:
+                continue
+            context = updated_collection.contexts.get(profile_id)
+            if context is None:
+                continue
+            new_entities.extend(_build_threshold_entities(context))
+            known_profiles.add(profile_id)
+
+        if new_entities:
+            async_add_entities(new_entities, True)
+
+    remove = async_dispatcher_connect(
+        hass,
+        signal_profile_contexts_updated(entry.entry_id),
+        _handle_profile_update,
+    )
+    entry.async_on_unload(remove)
 
 
 class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
