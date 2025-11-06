@@ -18,6 +18,14 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
+try:  # pragma: no cover - allow running tests without Home Assistant dispatcher
+    from homeassistant.helpers.dispatcher import async_dispatcher_send
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in stubbed env
+
+    def async_dispatcher_send(*_args, **_kwargs):
+        return None
+
+
 from . import services as ha_services
 from .api import ChatApi
 from .cloudsync import CloudSyncManager, CloudSyncPublisher
@@ -39,6 +47,7 @@ from .const import (
     DOMAIN,
     PLATFORMS,
     PROFILE_SCOPE_DEFAULT,
+    signal_profile_contexts_updated,
 )
 from .coordinator import HorticultureCoordinator
 from .coordinator_ai import HortiAICoordinator
@@ -1275,6 +1284,36 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     async def _async_entry_updated(hass: HomeAssistant, updated_entry: ConfigEntry) -> None:
         nonlocal entry_data
 
+        def _profile_id_set(value: Any) -> set[str]:
+            """Return a normalised set of profile identifiers from ``value``."""
+
+            items: set[str] = set()
+            if isinstance(value, Mapping):
+                iterator = value.keys()
+            elif isinstance(value, list | tuple | set):
+                iterator = value
+            elif value is None:
+                iterator = ()
+            else:
+                iterator = (value,)
+
+            for item in iterator:
+                if isinstance(item, str):
+                    text = item.strip()
+                else:
+                    if item is None:
+                        continue
+                    text = str(item).strip()
+                if text:
+                    items.add(text)
+
+            return items
+
+        previous_profile_ids: set[str] = set()
+        if isinstance(entry_data, Mapping):
+            previous_profile_ids = _profile_id_set(entry_data.get("profile_ids"))
+        previous_context_ids = previous_profile_ids.copy()
+
         try:
             refreshed_raw = await update_entry_data(hass, updated_entry)
         except Exception as err:  # pragma: no cover - defensive fallback
@@ -1332,8 +1371,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         refreshed["cloud_sync_status"] = cloud_sync_manager.status()
         validation_ready, _ = await manager.guard_call("entity_validation", _ensure_profile_entities, updated_entry)
         refreshed["entity_validation_ready"] = validation_ready
+
+        new_profile_ids = _profile_id_set(refreshed.get("profile_ids"))
         entry_data = refreshed
         manager.rebind(entry_data)
+
+        added_ids = tuple(sorted(new_profile_ids - previous_context_ids))
+        removed_ids = tuple(sorted(previous_context_ids - new_profile_ids))
+        if added_ids or removed_ids:
+            async_dispatcher_send(
+                hass,
+                signal_profile_contexts_updated(updated_entry.entry_id),
+                {"added": added_ids, "removed": removed_ids},
+            )
 
     unsubscribe = None
     listener_success = False

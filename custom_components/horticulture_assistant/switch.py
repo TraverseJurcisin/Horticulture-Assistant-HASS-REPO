@@ -3,15 +3,17 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Iterable, Mapping
 
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import CATEGORY_CONTROL, DOMAIN
+from .const import CATEGORY_CONTROL, DOMAIN, signal_profile_contexts_updated
 from .entity_base import HorticultureBaseEntity
-from .utils.entry_helpers import resolve_profile_context_collection
+from .utils.entry_helpers import ProfileContext, resolve_profile_context_collection
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -23,12 +25,49 @@ async def async_setup_entry(
 ) -> None:
     """Set up switch entities for irrigation and fertigation control."""
     collection = resolve_profile_context_collection(hass, entry)
-    entities = []
-    for context in collection.values():
-        entities.append(IrrigationSwitch(hass, entry.entry_id, context.name, context.id))
-        entities.append(FertigationSwitch(hass, entry.entry_id, context.name, context.id))
 
-    async_add_entities(entities)
+    def _build_context_switches(context: ProfileContext) -> list[SwitchEntity]:
+        return [
+            IrrigationSwitch(hass, entry.entry_id, context.name, context.id),
+            FertigationSwitch(hass, entry.entry_id, context.name, context.id),
+        ]
+
+    known_profiles: set[str] = set()
+    entities: list[SwitchEntity] = []
+    for context in collection.values():
+        entities.extend(_build_context_switches(context))
+        known_profiles.add(context.id)
+
+    async_add_entities(entities, True)
+
+    @callback
+    def _handle_profile_update(change: Mapping[str, Iterable[str]] | None) -> None:
+        if not isinstance(change, Mapping):
+            return
+        added = tuple(change.get("added", ()))
+        if not added:
+            return
+
+        updated_collection = resolve_profile_context_collection(hass, entry)
+        new_entities: list[SwitchEntity] = []
+        for profile_id in added:
+            if profile_id in known_profiles:
+                continue
+            context = updated_collection.contexts.get(profile_id)
+            if context is None:
+                continue
+            new_entities.extend(_build_context_switches(context))
+            known_profiles.add(profile_id)
+
+        if new_entities:
+            async_add_entities(new_entities, True)
+
+    remove = async_dispatcher_connect(
+        hass,
+        signal_profile_contexts_updated(entry.entry_id),
+        _handle_profile_update,
+    )
+    entry.async_on_unload(remove)
 
 
 class HorticultureBaseSwitch(HorticultureBaseEntity, SwitchEntity):
