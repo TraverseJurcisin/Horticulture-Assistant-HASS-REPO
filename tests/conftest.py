@@ -127,11 +127,61 @@ class _Bus:  # pragma: no cover - minimal event bus
 
 core.HomeAssistant = HomeAssistant
 core.CALLBACK_TYPE = Callable[[], None]
+core.callback = lambda func: func
 sys.modules["homeassistant.core"] = core
 
 helpers = types.ModuleType("homeassistant.helpers")
 helpers.__path__ = []
 sys.modules["homeassistant.helpers"] = helpers
+dispatcher = types.ModuleType("homeassistant.helpers.dispatcher")
+
+
+def _async_dispatcher_connect(_hass, _signal, callback):  # pragma: no cover - stub
+    return callback
+
+
+def _async_dispatcher_send(_hass, _signal, *_args, **_kwargs):  # pragma: no cover - stub
+    return None
+
+
+dispatcher.async_dispatcher_connect = _async_dispatcher_connect
+dispatcher.async_dispatcher_send = _async_dispatcher_send
+sys.modules["homeassistant.helpers.dispatcher"] = dispatcher
+helpers.dispatcher = dispatcher
+
+entity_registry = types.ModuleType("homeassistant.helpers.entity_registry")
+
+
+class _EntityRegistry:  # pragma: no cover - simple registry stub
+    def __init__(self) -> None:
+        self.entities: dict[str, object] = {}
+
+    def async_update_entity(self, entity_id, **changes):  # pragma: no cover - simple setter
+        entry = self.entities.setdefault(
+            entity_id,
+            types.SimpleNamespace(entity_id=entity_id),
+        )
+        for key, value in changes.items():
+            setattr(entry, key, value)
+        return entry
+
+
+def _async_get(_hass=None):  # pragma: no cover - return stub registry
+    return _EntityRegistry()
+
+
+def _async_entries_for_config_entry(registry, entry_id):
+    entries = []
+    for entry in getattr(registry, "entities", {}).values():
+        if getattr(entry, "config_entry_id", None) == entry_id:
+            entries.append(entry)
+    return entries
+
+
+entity_registry.async_get = _async_get
+entity_registry.async_entries_for_config_entry = _async_entries_for_config_entry
+sys.modules["homeassistant.helpers.entity_registry"] = entity_registry
+helpers.entity_registry = entity_registry
 
 config_validation = types.ModuleType("homeassistant.helpers.config_validation")
 
@@ -274,6 +324,8 @@ if "homeassistant.components.sensor" not in sys.modules:
         CO2 = _SensorClass("co2")
         PH = _SensorClass("ph")
         CONDUCTIVITY = _SensorClass("conductivity")
+        ENUM = _SensorClass("enum")
+        TIMESTAMP = _SensorClass("timestamp")
 
     class SensorEntity:  # pragma: no cover - simple HA stand-in
         """Minimal SensorEntity implementation for local tests."""
@@ -296,13 +348,33 @@ if "homeassistant.components.sensor" not in sys.modules:
         def async_write_ha_state(self):  # pragma: no cover - stub helper
             return None
 
+        @property
+        def unique_id(self):  # pragma: no cover - expose stored attribute
+            return getattr(self, "_attr_unique_id", None)
+
+        @property
+        def name(self):  # pragma: no cover - expose stored attribute
+            return getattr(self, "_attr_name", None)
+
+        @property
+        def native_unit_of_measurement(self):  # pragma: no cover - expose stored attribute
+            return getattr(self, "_attr_native_unit_of_measurement", None)
+
     class SensorStateClass:  # pragma: no cover - simple enum substitute
         MEASUREMENT = "measurement"
         TOTAL = "total"
 
+    class SensorEntityDescription:  # pragma: no cover - metadata container
+        def __init__(self, *, key: str, **kwargs) -> None:
+            self.key = key
+            self.name = kwargs.get("name")
+            for attr, value in kwargs.items():
+                setattr(self, attr, value)
+
     sensor_module.SensorDeviceClass = SensorDeviceClass
     sensor_module.SensorEntity = SensorEntity
     sensor_module.SensorStateClass = SensorStateClass
+    sensor_module.SensorEntityDescription = SensorEntityDescription
     sys.modules["homeassistant.components.sensor"] = sensor_module
     components_pkg.sensor = sensor_module
 
@@ -321,6 +393,8 @@ util.logging = util_logging
 const = types.ModuleType("homeassistant.const")
 const.Platform = types.SimpleNamespace(SENSOR="sensor", BINARY_SENSOR="binary_sensor", SWITCH="switch", NUMBER="number")
 const.UnitOfTemperature = types.SimpleNamespace(CELSIUS="°C", FAHRENHEIT="°F")
+const.UnitOfTime = types.SimpleNamespace(SECONDS="s", MINUTES="min", HOURS="h", DAYS="d")
+const.PERCENTAGE = "%"
 const.EVENT_HOMEASSISTANT_STARTED = "homeassistant_started"
 sys.modules["homeassistant.const"] = const
 
@@ -441,8 +515,22 @@ class UpdateFailed(Exception):
     pass
 
 
+class CoordinatorEntity:
+    def __class_getitem__(cls, _item):  # pragma: no cover - typing helper
+        return cls
+
+    def __init__(self, coordinator) -> None:
+        self.coordinator = coordinator
+        self.hass = getattr(coordinator, "hass", None)
+
+    @property
+    def available(self) -> bool:
+        return getattr(self.coordinator, "last_update_success", True)
+
+
 update_coordinator.DataUpdateCoordinator = DataUpdateCoordinator
 update_coordinator.UpdateFailed = UpdateFailed
+update_coordinator.CoordinatorEntity = CoordinatorEntity
 sys.modules["homeassistant.helpers.update_coordinator"] = update_coordinator
 
 storage = types.ModuleType("homeassistant.helpers.storage")
