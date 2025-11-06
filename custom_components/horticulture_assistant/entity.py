@@ -4,9 +4,9 @@ from typing import Any
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from .const import DOMAIN
 from .coordinator import HorticultureCoordinator
 from .entity_base import HorticultureBaseEntity
-from .const import DOMAIN
 from .utils.entry_helpers import resolve_profile_device_info, resolve_profile_image_url
 
 

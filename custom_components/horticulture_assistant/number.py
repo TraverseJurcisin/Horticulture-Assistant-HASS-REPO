@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from collections.abc import Iterable
-from typing import Any, Mapping
+from collections.abc import Iterable, Mapping
+from typing import Any
 
 from homeassistant.components.number import NumberEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import EVENT_CORE_CONFIG_UPDATE, UnitOfTemperature
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
     CATEGORY_CONTROL,

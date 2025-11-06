@@ -198,7 +198,7 @@ async def test_profile_update_dispatches_signal(
         _, signal, payload = mock_send.call_args[0]
         assert signal == signal_profile_contexts_updated(entry.entry_id)
         assert payload.get("added") == ("new_profile",)
-        assert payload.get("removed") == tuple()
+        assert payload.get("removed") == ()
 
 
 @pytest.mark.asyncio
@@ -343,10 +343,7 @@ async def test_profile_metric_unique_ids_migrated(
 
     updated = entity_registry.async_get(legacy.entity_id)
     assert updated is not None
-    assert (
-        updated.unique_id
-        == f"{DOMAIN}_{entry.entry_id}_legacy_profile_ppfd"
-    )
+    assert updated.unique_id == f"{DOMAIN}_{entry.entry_id}_legacy_profile_ppfd"
 
 
 @pytest.mark.asyncio

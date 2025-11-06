@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import inspect
+from collections.abc import Iterable, Mapping
 from contextlib import suppress
 from datetime import datetime, timedelta
-from typing import Any, Iterable, Mapping
+from typing import Any
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,

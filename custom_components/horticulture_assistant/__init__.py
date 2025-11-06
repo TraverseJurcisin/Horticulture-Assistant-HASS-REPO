@@ -25,6 +25,7 @@ except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in stu
     def async_dispatcher_send(*_args, **_kwargs):
         return None
 
+
 from . import services as ha_services
 from .api import ChatApi
 from .cloudsync import CloudSyncManager, CloudSyncPublisher
@@ -1289,7 +1290,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             items: set[str] = set()
             if isinstance(value, Mapping):
                 iterator = value.keys()
-            elif isinstance(value, (list, tuple, set)):
+            elif isinstance(value, list | tuple | set):
                 iterator = value
             elif value is None:
                 iterator = ()

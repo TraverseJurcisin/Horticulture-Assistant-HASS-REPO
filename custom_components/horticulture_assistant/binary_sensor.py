@@ -3,8 +3,7 @@
 from __future__ import annotations
 
 import logging
-from collections.abc import Iterable
-from typing import Mapping
+from collections.abc import Iterable, Mapping
 
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
@@ -12,8 +11,8 @@ from homeassistant.components.binary_sensor import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import (
     CATEGORY_CONTROL,
