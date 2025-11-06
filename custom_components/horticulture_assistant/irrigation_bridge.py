@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
+from typing import Any
+
 try:  # pragma: no cover - fallback for unit tests without Home Assistant
     from homeassistant.components.sensor import SensorEntity, SensorStateClass
 except ModuleNotFoundError:  # pragma: no cover - executed in local test stubs
@@ -19,9 +22,6 @@ from homeassistant.config_entries import ConfigEntry
 try:  # pragma: no cover - fallback for unit tests
     from homeassistant.core import HomeAssistant, callback
 except ImportError:  # pragma: no cover - executed in stubbed test env
-    from collections.abc import Callable
-    from typing import Any
-
     HomeAssistant = Any  # type: ignore[assignment]
 
     def callback(func: Callable[..., Any], /) -> Callable[..., Any]:
@@ -37,7 +37,7 @@ except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
 
 
 from .const import DOMAIN
-from .entity_base import HorticultureBaseEntity
+from .entity_base import HorticultureBaseEntity, ProfileContextEntityMixin
 from .utils.entry_helpers import ProfileContext
 
 
@@ -72,7 +72,7 @@ async def async_apply_irrigation(
     raise ValueError(f"unknown provider {provider}")
 
 
-class PlantIrrigationRecommendationSensor(HorticultureBaseEntity, SensorEntity):
+class PlantIrrigationRecommendationSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):
     """Expose Smart Irrigation runtime recommendation."""
 
     _attr_name = "Recommended Irrigation"
@@ -85,16 +85,12 @@ class PlantIrrigationRecommendationSensor(HorticultureBaseEntity, SensorEntity):
         entry: ConfigEntry,
         context: ProfileContext,
     ) -> None:
-        super().__init__(entry.entry_id, context.name, context.id)
-        self.hass = hass
-        self._entry = entry
-        self._context = context
+        ProfileContextEntityMixin.__init__(self, hass, entry, context)
+        HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.id)
         self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_irrigation_rec"
-        self._src = context.first_sensor("smart_irrigation")
-        if self._src is None:
-            fallback = entry.options.get("sensors", {})
-            self._src = fallback.get("smart_irrigation")
+        self._src = self._resolve_source(context)
         self._value: float | None = None
+        self._state_unsub: Callable[[], None] | None = None
 
     @property
     def native_value(self) -> float | None:
@@ -102,10 +98,10 @@ class PlantIrrigationRecommendationSensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        if self._src:
-            self.async_on_remove(async_track_state_change_event(self.hass, [self._src], self._on_state))
-            # prime value
-            self._on_state(None)
+        remove_cb = getattr(self, "async_on_remove", None)
+        if callable(remove_cb):
+            remove_cb(self._unsubscribe_state)
+        self._subscribe_source(self._context)
 
     @callback
     def _on_state(self, _event) -> None:
@@ -118,3 +114,46 @@ class PlantIrrigationRecommendationSensor(HorticultureBaseEntity, SensorEntity):
             except (TypeError, ValueError):
                 self._value = None
         self.async_write_ha_state()
+
+    def _unsubscribe_state(self) -> None:
+        if self._state_unsub:
+            self._state_unsub()
+            self._state_unsub = None
+
+    def _resolve_source(self, context: ProfileContext | None) -> str | None:
+        if context is not None:
+            source = context.first_sensor("smart_irrigation")
+            if isinstance(source, str) and source:
+                return source
+        options = getattr(self._entry, "options", {})
+        candidate = options.get("sensors") if isinstance(options, dict) else None
+        if isinstance(candidate, dict):
+            source = candidate.get("smart_irrigation")
+            if isinstance(source, str) and source:
+                return source
+        return None
+
+    def _subscribe_source(self, context: ProfileContext | None) -> None:
+        self._unsubscribe_state()
+        self._src = self._resolve_source(context)
+        if self._src:
+            self._state_unsub = async_track_state_change_event(
+                self.hass,
+                [self._src],
+                self._on_state,
+            )
+            self._on_state(None)
+        else:
+            self._value = None
+            if getattr(self, "hass", None):
+                self.async_write_ha_state()
+
+    def _handle_context_updated(self, context: ProfileContext) -> None:
+        super()._handle_context_updated(context)
+        self._subscribe_source(context)
+
+    def _handle_context_removed(self) -> None:
+        self._unsubscribe_state()
+        self._src = None
+        self._value = None
+        super()._handle_context_removed()

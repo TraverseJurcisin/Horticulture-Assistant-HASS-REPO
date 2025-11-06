@@ -38,7 +38,22 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover - executed in stu
 
     dr = types.SimpleNamespace(async_get=lambda _hass: _DeviceRegistryStub())  # type: ignore[assignment]
 
-from ..const import CONF_PLANT_ID, CONF_PLANT_NAME, CONF_PROFILES, DOMAIN
+try:  # pragma: no cover - allow running tests without Home Assistant
+    from homeassistant.helpers.dispatcher import async_dispatcher_send
+except (ModuleNotFoundError, ImportError):  # pragma: no cover - executed in stubbed env
+
+    def async_dispatcher_send(*_args, **_kwargs) -> None:
+        """Stubbed dispatcher used when Home Assistant is unavailable."""
+
+        return None
+
+from ..const import (
+    CONF_PLANT_ID,
+    CONF_PLANT_NAME,
+    CONF_PROFILES,
+    DOMAIN,
+    signal_profile_contexts_updated,
+)
 
 # Keys used under ``hass.data[DOMAIN]``
 BY_PLANT_ID = "by_plant_id"
@@ -96,6 +111,32 @@ def _normalise_sensor_sequences(
     return sensors
 
 
+def _normalise_metric_mappings(
+    value: Mapping[str, Any] | None,
+) -> dict[str, Mapping[str, Any]]:
+    """Return a read-only mapping for metric metadata buckets."""
+
+    metrics: dict[str, Mapping[str, Any]] = {}
+    if not isinstance(value, Mapping):
+        return metrics
+
+    for category, bucket in value.items():
+        if not isinstance(category, str) or not category:
+            continue
+        if not isinstance(bucket, Mapping):
+            continue
+        cleaned: dict[str, Mapping[str, Any]] = {}
+        for key, meta in bucket.items():
+            if not isinstance(key, str) or not key:
+                continue
+            if isinstance(meta, Mapping):
+                cleaned[key] = MappingProxyType(dict(meta))
+            else:
+                cleaned[key] = MappingProxyType({"value": meta})
+        metrics[category] = MappingProxyType(cleaned)
+    return metrics
+
+
 @dataclass(frozen=True, slots=True)
 class ProfileContext:
     """Runtime metadata describing a plant profile and its device."""
@@ -104,6 +145,7 @@ class ProfileContext:
     name: str
     sensors: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
     thresholds: Mapping[str, Any] = field(default_factory=dict)
+    metrics: Mapping[str, Mapping[str, Any]] = field(default_factory=dict)
     payload: Mapping[str, Any] = field(default_factory=dict)
     device_info: Mapping[str, Any] = field(default_factory=dict)
     image_url: str | None = None
@@ -111,10 +153,12 @@ class ProfileContext:
     def __post_init__(self) -> None:  # pragma: no cover - exercised indirectly
         sensors = _normalise_sensor_sequences(self.sensors)
         thresholds = _coerce_mapping(self.thresholds)
+        metrics = _normalise_metric_mappings(self.metrics)
         payload = _coerce_mapping(self.payload)
         device = _clean_device_kwargs(_normalise_device_info(self.device_info))
         object.__setattr__(self, "sensors", MappingProxyType(sensors))
         object.__setattr__(self, "thresholds", MappingProxyType(thresholds))
+        object.__setattr__(self, "metrics", MappingProxyType(metrics))
         object.__setattr__(self, "payload", MappingProxyType(payload))
         object.__setattr__(self, "device_info", MappingProxyType(dict(device)))
         image = self.image_url if isinstance(self.image_url, str) else None
@@ -154,6 +198,32 @@ class ProfileContext:
         """Return a stored threshold value for ``key`` if available."""
 
         return self.thresholds.get(key, default)
+
+    def metrics_for(self, category: str) -> Mapping[str, Any]:
+        """Return the metrics bucket stored for ``category``."""
+
+        bucket = self.metrics.get(category)
+        if isinstance(bucket, Mapping):
+            return bucket
+        return MappingProxyType({})
+
+    def metric(self, category: str, key: str) -> Mapping[str, Any] | None:
+        """Return metric metadata for ``category``/``key`` if present."""
+
+        bucket = self.metrics_for(category)
+        metric = bucket.get(key)
+        return metric if isinstance(metric, Mapping) else None
+
+    def metric_value(
+        self, category: str, key: str, default: Any | None = None
+    ) -> Any | None:
+        """Return the scalar value for ``category``/``key`` if present."""
+
+        metric = self.metric(category, key)
+        if isinstance(metric, Mapping):
+            value = metric.get("value")
+            return metric.get("value", default) if value is not None else default
+        return default
 
     def as_device_info(self) -> dict[str, Any]:
         """Return a copy of the Home Assistant device info payload."""
@@ -591,6 +661,21 @@ def _normalise_profile_sensors(payload: Mapping[str, Any] | None) -> dict[str, l
     return sensors
 
 
+def _extract_scalar_value(source: Any) -> Any | None:
+    """Return a scalar numeric/string value from nested payloads."""
+
+    if source is None:
+        return None
+    if isinstance(source, Mapping):
+        for key in ("value", "current", "current_value", "target"):
+            if key in source:
+                resolved = _extract_scalar_value(source[key])
+                if resolved is not None:
+                    return resolved
+        return None
+    return source
+
+
 def _resolve_profile_thresholds(payload: Mapping[str, Any] | None) -> dict[str, Any]:
     """Return threshold-style values for ``payload``."""
 
@@ -601,21 +686,141 @@ def _resolve_profile_thresholds(payload: Mapping[str, Any] | None) -> dict[str, 
     if isinstance(thresholds, Mapping) and thresholds:
         return _coerce_mapping(thresholds)
 
-    resolved = payload.get("resolved_targets")
     computed: dict[str, Any] = {}
+
+    resolved = payload.get("resolved_targets")
     if isinstance(resolved, Mapping):
         for key, value in resolved.items():
-            if isinstance(value, Mapping) and "value" in value:
-                computed[str(key)] = value["value"]
-    if computed:
-        return computed
+            scalar = _extract_scalar_value(value)
+            if scalar is not None:
+                computed[str(key)] = scalar
+
+    targets = payload.get("targets")
+    if isinstance(targets, Mapping):
+        for key, value in targets.items():
+            if str(key) in computed:
+                continue
+            scalar = _extract_scalar_value(value)
+            if scalar is not None:
+                computed[str(key)] = scalar
 
     variables = payload.get("variables")
     if isinstance(variables, Mapping):
         for key, value in variables.items():
-            if isinstance(value, Mapping) and "value" in value:
-                computed[str(key)] = value["value"]
+            if str(key) in computed:
+                continue
+            scalar = _extract_scalar_value(value)
+            if scalar is not None:
+                computed[str(key)] = scalar
+
     return computed
+
+
+def _extract_metric_unit(source: Any) -> str | None:
+    """Return a textual unit from ``source`` when present."""
+
+    if isinstance(source, Mapping):
+        for key in ("unit", "units", "unit_of_measurement", "uom"):
+            unit = source.get(key)
+            if isinstance(unit, str) and unit.strip():
+                return unit.strip()
+    return None
+
+
+_RANGE_SUFFIXES = {
+    "min": "min",
+    "minimum": "min",
+    "lower": "min",
+    "low": "min",
+    "max": "max",
+    "maximum": "max",
+    "upper": "max",
+    "high": "max",
+}
+
+
+def _populate_metric_range_entries(
+    bucket: dict[str, Any],
+    base_key: str,
+    value: Any,
+) -> None:
+    """Expand range-style mappings into discrete metric entries."""
+
+    if not isinstance(value, Mapping):
+        return
+
+    base_unit = _extract_metric_unit(value)
+
+    for raw_key, raw_value in value.items():
+        suffix = _RANGE_SUFFIXES.get(str(raw_key).lower())
+        if not suffix:
+            continue
+        scalar = _extract_scalar_value(raw_value)
+        if scalar is None:
+            continue
+        metric_key = f"{base_key}_{suffix}"
+        if not metric_key or metric_key in bucket:
+            continue
+        meta: dict[str, Any] = {"value": scalar}
+        unit = _extract_metric_unit(raw_value) or base_unit
+        if unit:
+            meta["unit"] = unit
+        if isinstance(raw_value, Mapping):
+            meta["raw"] = _coerce_mapping(raw_value)
+        elif isinstance(value, Mapping):
+            meta["raw"] = _coerce_mapping({raw_key: raw_value})
+        bucket[metric_key] = meta
+
+
+def _resolve_profile_metrics(
+    payload: Mapping[str, Any] | None,
+    *,
+    thresholds: Mapping[str, Any] | None = None,
+) -> dict[str, dict[str, Any]]:
+    """Return structured metric metadata for profile payloads."""
+
+    metrics: dict[str, dict[str, Any]] = {}
+
+    def _collect(
+        category: str,
+        mapping: Mapping[str, Any] | None,
+    ) -> None:
+        if not isinstance(mapping, Mapping):
+            return
+        bucket: dict[str, Any] = {}
+        for key, value in mapping.items():
+            if not isinstance(key, str) or not key:
+                continue
+            scalar = _extract_scalar_value(value)
+            if scalar is None:
+                _populate_metric_range_entries(bucket, str(key), value)
+                continue
+            meta: dict[str, Any] = {"value": scalar}
+            unit = _extract_metric_unit(value)
+            if unit:
+                meta["unit"] = unit
+            if isinstance(value, Mapping):
+                meta["raw"] = _coerce_mapping(value)
+            bucket[str(key)] = meta
+            _populate_metric_range_entries(bucket, str(key), value)
+        if bucket:
+            metrics[category] = bucket
+
+    if isinstance(thresholds, Mapping) and thresholds:
+        bucket: dict[str, Any] = {}
+        for key, value in thresholds.items():
+            if not isinstance(key, str) or not key:
+                continue
+            bucket[key] = {"value": value}
+        if bucket:
+            metrics["thresholds"] = bucket
+
+    if isinstance(payload, Mapping):
+        _collect("resolved_targets", payload.get("resolved_targets"))
+        _collect("targets", payload.get("targets"))
+        _collect("variables", payload.get("variables"))
+
+    return metrics
 
 
 def _build_profile_context(
@@ -643,12 +848,21 @@ def _build_profile_context(
     if not thresholds and profile_id == snapshot.get("plant_id"):
         thresholds = _coerce_mapping(snapshot.get("thresholds"))
 
+    metrics = _resolve_profile_metrics(resolved_payload, thresholds=thresholds)
+    if profile_id == snapshot.get("plant_id") and "thresholds" not in metrics:
+        snapshot_thresholds = _coerce_mapping(snapshot.get("thresholds"))
+        if snapshot_thresholds:
+            metrics.setdefault("thresholds", {})
+            for key, value in snapshot_thresholds.items():
+                metrics["thresholds"].setdefault(str(key), {"value": value})
+
     context = {
         "id": profile_id,
         "name": name,
         "payload": resolved_payload,
         "sensors": sensors,
         "thresholds": thresholds,
+        "metrics": metrics,
     }
 
     general = resolved_payload.get("general")
@@ -1546,6 +1760,14 @@ async def ensure_profile_device_registered(
         entry_data = {"config_entry": entry}
         domain_data[entry.entry_id] = entry_data
 
+    previous_profiles_raw = entry_data.get("profile_ids") if isinstance(entry_data, Mapping) else ()
+    previous_profiles: set[str] = set()
+    if isinstance(previous_profiles_raw, Iterable):
+        for pid in previous_profiles_raw:
+            canonical = _normalise_profile_identifier(pid)
+            if canonical:
+                previous_profiles.add(canonical)
+
     entry_data["config_entry"] = entry
     entry_data["snapshot"] = dict(snapshot_dict)
     entry_data["data"] = dict(entry.data)
@@ -1572,8 +1794,13 @@ async def ensure_profile_device_registered(
                 merged_profiles[canonical_pid] = _coerce_mapping(payload)
             else:
                 merged_profiles.setdefault(canonical_pid, {})
-    for pid, payload in profiles_map.items():
-        merged_profiles[pid] = _coerce_mapping(payload)
+
+    profile_payload = profiles_map.get(canonical_profile_id)
+    if isinstance(profile_payload, Mapping):
+        merged_profiles[canonical_profile_id] = _coerce_mapping(profile_payload)
+    else:
+        merged_profiles.setdefault(canonical_profile_id, {})
+
     entry_data["profiles"] = merged_profiles
 
     profile_ids = {pid for pid in merged_profiles.keys() if isinstance(pid, str) and pid}
@@ -1617,6 +1844,27 @@ async def ensure_profile_device_registered(
     for pid in profile_ids:
         if isinstance(pid, str) and pid:
             by_pid[pid] = entry_data
+
+    current_profiles = tuple(pid for pid in entry_data["profile_ids"] if pid)
+    current_profile_set = set(current_profiles)
+    added_profiles = tuple(pid for pid in current_profiles if pid not in previous_profiles)
+    removed_profiles = tuple(
+        pid for pid in previous_profiles if pid not in current_profile_set
+    )
+    updated_profiles: tuple[str, ...] = ()
+    if canonical_profile_id in previous_profiles and canonical_profile_id not in removed_profiles:
+        updated_profiles = (canonical_profile_id,)
+
+    if added_profiles or removed_profiles or updated_profiles:
+        async_dispatcher_send(
+            hass,
+            signal_profile_contexts_updated(entry.entry_id),
+            {
+                "added": added_profiles,
+                "removed": removed_profiles,
+                "updated": updated_profiles,
+            },
+        )
 
     return None
 
@@ -2041,11 +2289,16 @@ def _build_profile_context_from_payload(
     if not isinstance(thresholds, Mapping):
         thresholds = _resolve_profile_thresholds(payload)
 
+    metrics = context.get("metrics")
+    if not isinstance(metrics, Mapping):
+        metrics = _resolve_profile_metrics(payload, thresholds=thresholds)
+
     return ProfileContext(
         id=profile_id,
         name=name,
         sensors=sensors,
         thresholds=thresholds,
+        metrics=metrics,
         payload=payload,
         device_info=device_payload,
         image_url=image_url,
@@ -2066,6 +2319,8 @@ def _fallback_profile_contexts(
     sensors = get_primary_profile_sensors(entry)
     thresholds = get_primary_profile_thresholds(entry)
 
+    metrics = _resolve_profile_metrics(payload, thresholds=thresholds)
+
     image_url = resolve_profile_image_url(hass, entry.entry_id, plant_id)
 
     device_payload = build_profile_device_info(
@@ -2081,6 +2336,7 @@ def _fallback_profile_contexts(
         name=plant_name,
         sensors=sensors,
         thresholds=thresholds,
+        metrics=metrics,
         payload=payload,
         device_info=device_payload,
         image_url=image_url,

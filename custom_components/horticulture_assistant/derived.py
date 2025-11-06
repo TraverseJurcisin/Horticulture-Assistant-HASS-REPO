@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from datetime import date
 
 from homeassistant.components.sensor import (
@@ -29,7 +30,7 @@ from .engine.metrics import (
 from .engine.metrics import (
     lux_to_ppfd as metric_lux_to_ppfd,
 )
-from .entity_base import HorticultureBaseEntity
+from .entity_base import HorticultureBaseEntity, ProfileContextEntityMixin
 from .utils.entry_helpers import ProfileContext
 
 
@@ -69,7 +70,7 @@ def _current_temp_humidity(
     return t, h
 
 
-class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
+class PlantDLISensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):
     """Sensor calculating Daily Light Integral for a plant."""
 
     _attr_translation_key = "dli"
@@ -82,10 +83,8 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
         entry: ConfigEntry,
         context: ProfileContext,
     ) -> None:
-        super().__init__(entry.entry_id, context.name, context.id)
-        self.hass = hass
-        self._entry = entry
-        self._context = context
+        ProfileContextEntityMixin.__init__(self, hass, entry, context)
+        HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.id)
         self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_dli"
         self._value: float | None = None
         self._accum: float = 0.0
@@ -93,6 +92,7 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
         self._last_ts = None
         self._thresholds = context.thresholds
         self._light_sensor: str | None = None
+        self._light_unsub: Callable[[], None] | None = None
 
     @property
     def native_value(self) -> float | None:
@@ -100,11 +100,10 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        light_sensor = _first_sensor(self._context, "illuminance") or _first_sensor(self._context, "light")
-        if light_sensor:
-            self.async_on_remove(async_track_state_change_event(self.hass, [light_sensor], self._on_illuminance))
-
-        self._light_sensor = light_sensor
+        remove_cb = getattr(self, "async_on_remove", None)
+        if callable(remove_cb):
+            remove_cb(self._unsubscribe_light)
+        self._subscribe_light_sensor(self._context)
 
     @callback
     def _on_illuminance(self, event) -> None:
@@ -134,8 +133,43 @@ class PlantDLISensor(HorticultureBaseEntity, SensorEntity):
         self._last_ts = now
         self.async_write_ha_state()
 
+    def _unsubscribe_light(self) -> None:
+        if self._light_unsub:
+            self._light_unsub()
+            self._light_unsub = None
 
-class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
+    def _subscribe_light_sensor(self, context: ProfileContext | None) -> None:
+        self._unsubscribe_light()
+        if context is None:
+            self._light_sensor = None
+            self._thresholds = {}
+            return
+        self._thresholds = context.thresholds
+        light_sensor = _first_sensor(context, "illuminance") or _first_sensor(context, "light")
+        self._light_sensor = light_sensor
+        if light_sensor:
+            self._light_unsub = async_track_state_change_event(
+                self.hass,
+                [light_sensor],
+                self._on_illuminance,
+            )
+
+    def _handle_context_updated(self, context: ProfileContext) -> None:
+        super()._handle_context_updated(context)
+        self._subscribe_light_sensor(context)
+
+    def _handle_context_removed(self) -> None:
+        self._unsubscribe_light()
+        self._thresholds = {}
+        self._light_sensor = None
+        self._value = None
+        self._accum = 0.0
+        self._last_day = None
+        self._last_ts = None
+        super()._handle_context_removed()
+
+
+class PlantPPFDSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):
     """Sensor providing calibrated PPFD from Lux."""
 
     _attr_translation_key = "ppfd"
@@ -148,15 +182,14 @@ class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
         entry: ConfigEntry,
         context: ProfileContext,
     ) -> None:
-        super().__init__(entry.entry_id, context.name, context.id)
-        self.hass = hass
-        self._entry = entry
-        self._context = context
+        ProfileContextEntityMixin.__init__(self, hass, entry, context)
+        HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.id)
         self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_ppfd"
         self._value: float | None = None
         self._attrs: dict | None = None
         self._light_sensor: str | None = None
         self._thresholds = context.thresholds
+        self._light_unsub: Callable[[], None] | None = None
 
     @property
     def native_value(self) -> float | None:
@@ -168,9 +201,10 @@ class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        self._light_sensor = _first_sensor(self._context, "illuminance") or _first_sensor(self._context, "light")
-        if self._light_sensor:
-            self.async_on_remove(async_track_state_change_event(self.hass, [self._light_sensor], self._on_lux))
+        remove_cb = getattr(self, "async_on_remove", None)
+        if callable(remove_cb):
+            remove_cb(self._unsubscribe_light)
+        self._subscribe_light_sensor(self._context)
 
     @callback
     def _on_lux(self, event) -> None:
@@ -204,8 +238,41 @@ class PlantPPFDSensor(HorticultureBaseEntity, SensorEntity):
         self._value = round(ppfd, 2)
         self.async_write_ha_state()
 
+    def _unsubscribe_light(self) -> None:
+        if self._light_unsub:
+            self._light_unsub()
+            self._light_unsub = None
 
-class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
+    def _subscribe_light_sensor(self, context: ProfileContext | None) -> None:
+        self._unsubscribe_light()
+        if context is None:
+            self._light_sensor = None
+            self._thresholds = {}
+            return
+        self._thresholds = context.thresholds
+        light_sensor = _first_sensor(context, "illuminance") or _first_sensor(context, "light")
+        self._light_sensor = light_sensor
+        if light_sensor:
+            self._light_unsub = async_track_state_change_event(
+                self.hass,
+                [light_sensor],
+                self._on_lux,
+            )
+
+    def _handle_context_updated(self, context: ProfileContext) -> None:
+        super()._handle_context_updated(context)
+        self._subscribe_light_sensor(context)
+
+    def _handle_context_removed(self) -> None:
+        self._unsubscribe_light()
+        self._thresholds = {}
+        self._light_sensor = None
+        self._value = None
+        self._attrs = None
+        super()._handle_context_removed()
+
+
+class PlantVPDSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):
     """Sensor providing Vapor Pressure Deficit in kPa."""
 
     _attr_translation_key = "vpd"
@@ -218,12 +285,11 @@ class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
         entry: ConfigEntry,
         context: ProfileContext,
     ) -> None:
-        super().__init__(entry.entry_id, context.name, context.id)
-        self.hass = hass
-        self._entry = entry
-        self._context = context
+        ProfileContextEntityMixin.__init__(self, hass, entry, context)
+        HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.id)
         self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_vpd"
         self._value: float | None = None
+        self._state_unsub: Callable[[], None] | None = None
 
     @property
     def native_value(self) -> float | None:
@@ -231,28 +297,55 @@ class PlantVPDSensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        temp = _first_sensor(self._context, "temperature")
-        hum = _first_sensor(self._context, "humidity")
-        self.async_on_remove(
-            async_track_state_change_event(
-                self.hass,
-                [e for e in (temp, hum) if e],
-                self._on_state,
-            )
-        )
-        self.hass.loop.call_soon(self._on_state, None)
+        remove_cb = getattr(self, "async_on_remove", None)
+        if callable(remove_cb):
+            remove_cb(self._unsubscribe_state)
+        self._subscribe_state_sensors(self._context)
 
     @callback
     def _on_state(self, _event) -> None:
-        t, h = _current_temp_humidity(self.hass, self._context)
+        t, h = _current_temp_humidity(self.hass, self._context) if self._context else (None, None)
         if t is None or h is None:
             self._value = None
         else:
             self._value = vpd_kpa(t, h)
         self.async_write_ha_state()
 
+    def _unsubscribe_state(self) -> None:
+        if self._state_unsub:
+            self._state_unsub()
+            self._state_unsub = None
 
-class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
+    def _subscribe_state_sensors(self, context: ProfileContext | None) -> None:
+        self._unsubscribe_state()
+        if context is None:
+            return
+        temp = _first_sensor(context, "temperature")
+        hum = _first_sensor(context, "humidity")
+        entity_ids = [e for e in (temp, hum) if e]
+        if entity_ids:
+            self._state_unsub = async_track_state_change_event(
+                self.hass,
+                entity_ids,
+                self._on_state,
+            )
+        loop = getattr(self.hass, "loop", None)
+        if loop and hasattr(loop, "call_soon"):
+            loop.call_soon(self._on_state, None)
+        else:
+            self._on_state(None)
+
+    def _handle_context_updated(self, context: ProfileContext) -> None:
+        super()._handle_context_updated(context)
+        self._subscribe_state_sensors(context)
+
+    def _handle_context_removed(self) -> None:
+        self._unsubscribe_state()
+        self._value = None
+        super()._handle_context_removed()
+
+
+class PlantDewPointSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):
     """Sensor providing dew point temperature in Celsius."""
 
     _attr_translation_key = "dew_point"
@@ -266,12 +359,11 @@ class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
         entry: ConfigEntry,
         context: ProfileContext,
     ) -> None:
-        super().__init__(entry.entry_id, context.name, context.id)
-        self.hass = hass
-        self._entry = entry
-        self._context = context
+        ProfileContextEntityMixin.__init__(self, hass, entry, context)
+        HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.id)
         self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_dew_point"
         self._value: float | None = None
+        self._state_unsub: Callable[[], None] | None = None
 
     @property
     def native_value(self) -> float | None:
@@ -279,28 +371,55 @@ class PlantDewPointSensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        temp = _first_sensor(self._context, "temperature")
-        hum = _first_sensor(self._context, "humidity")
-        self.async_on_remove(
-            async_track_state_change_event(
-                self.hass,
-                [e for e in (temp, hum) if e],
-                self._on_state,
-            )
-        )
-        self.hass.loop.call_soon(self._on_state, None)
+        remove_cb = getattr(self, "async_on_remove", None)
+        if callable(remove_cb):
+            remove_cb(self._unsubscribe_state)
+        self._subscribe_state_sensors(self._context)
 
     @callback
     def _on_state(self, _event) -> None:
-        t, h = _current_temp_humidity(self.hass, self._context)
+        t, h = _current_temp_humidity(self.hass, self._context) if self._context else (None, None)
         if t is None or h is None:
             self._value = None
         else:
             self._value = round(dew_point_c(t, h), 1)
         self.async_write_ha_state()
 
+    def _unsubscribe_state(self) -> None:
+        if self._state_unsub:
+            self._state_unsub()
+            self._state_unsub = None
 
-class PlantMoldRiskSensor(HorticultureBaseEntity, SensorEntity):
+    def _subscribe_state_sensors(self, context: ProfileContext | None) -> None:
+        self._unsubscribe_state()
+        if context is None:
+            return
+        temp = _first_sensor(context, "temperature")
+        hum = _first_sensor(context, "humidity")
+        entity_ids = [e for e in (temp, hum) if e]
+        if entity_ids:
+            self._state_unsub = async_track_state_change_event(
+                self.hass,
+                entity_ids,
+                self._on_state,
+            )
+        loop = getattr(self.hass, "loop", None)
+        if loop and hasattr(loop, "call_soon"):
+            loop.call_soon(self._on_state, None)
+        else:
+            self._on_state(None)
+
+    def _handle_context_updated(self, context: ProfileContext) -> None:
+        super()._handle_context_updated(context)
+        self._subscribe_state_sensors(context)
+
+    def _handle_context_removed(self) -> None:
+        self._unsubscribe_state()
+        self._value = None
+        super()._handle_context_removed()
+
+
+class PlantMoldRiskSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):
     """Sensor estimating mold growth risk on a 0..6 scale."""
 
     _attr_translation_key = "mold_risk"
@@ -312,12 +431,11 @@ class PlantMoldRiskSensor(HorticultureBaseEntity, SensorEntity):
         entry: ConfigEntry,
         context: ProfileContext,
     ) -> None:
-        super().__init__(entry.entry_id, context.name, context.id)
-        self.hass = hass
-        self._entry = entry
-        self._context = context
+        ProfileContextEntityMixin.__init__(self, hass, entry, context)
+        HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.id)
         self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_mold_risk"
         self._value: float | None = None
+        self._state_unsub: Callable[[], None] | None = None
 
     @property
     def native_value(self) -> float | None:
@@ -325,22 +443,49 @@ class PlantMoldRiskSensor(HorticultureBaseEntity, SensorEntity):
 
     async def async_added_to_hass(self) -> None:
         await super().async_added_to_hass()
-        temp = _first_sensor(self._context, "temperature")
-        hum = _first_sensor(self._context, "humidity")
-        self.async_on_remove(
-            async_track_state_change_event(
-                self.hass,
-                [e for e in (temp, hum) if e],
-                self._on_state,
-            )
-        )
-        self.hass.loop.call_soon(self._on_state, None)
+        remove_cb = getattr(self, "async_on_remove", None)
+        if callable(remove_cb):
+            remove_cb(self._unsubscribe_state)
+        self._subscribe_state_sensors(self._context)
 
     @callback
     def _on_state(self, _event) -> None:
-        t, h = _current_temp_humidity(self.hass, self._context)
+        t, h = _current_temp_humidity(self.hass, self._context) if self._context else (None, None)
         if t is None or h is None:
             self._value = None
         else:
             self._value = mold_risk(t, h)
         self.async_write_ha_state()
+
+    def _unsubscribe_state(self) -> None:
+        if self._state_unsub:
+            self._state_unsub()
+            self._state_unsub = None
+
+    def _subscribe_state_sensors(self, context: ProfileContext | None) -> None:
+        self._unsubscribe_state()
+        if context is None:
+            return
+        temp = _first_sensor(context, "temperature")
+        hum = _first_sensor(context, "humidity")
+        entity_ids = [e for e in (temp, hum) if e]
+        if entity_ids:
+            self._state_unsub = async_track_state_change_event(
+                self.hass,
+                entity_ids,
+                self._on_state,
+            )
+        loop = getattr(self.hass, "loop", None)
+        if loop and hasattr(loop, "call_soon"):
+            loop.call_soon(self._on_state, None)
+        else:
+            self._on_state(None)
+
+    def _handle_context_updated(self, context: ProfileContext) -> None:
+        super()._handle_context_updated(context)
+        self._subscribe_state_sensors(context)
+
+    def _handle_context_removed(self) -> None:
+        self._unsubscribe_state()
+        self._value = None
+        super()._handle_context_removed()
