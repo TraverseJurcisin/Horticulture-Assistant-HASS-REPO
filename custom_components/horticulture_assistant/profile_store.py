@@ -193,6 +193,24 @@ class ProfileStore:
     async def async_list_profiles(self) -> list[str]:
         return await self.async_list()
 
+    async def async_list_profile_ids(self) -> list[str]:
+        """Return the set of profile slugs currently stored on disk."""
+
+        if not self._base.exists():
+            return []
+
+        try:
+            files = list(self._base.glob("*.json"))
+        except OSError as err:
+            message = f"Unable to enumerate profile library at {self._base}: {err}"
+            _LOGGER.error("%s", message)
+            raise ProfileStoreError(
+                message, user_message=str(err) or "unable to read profile library"
+            ) from err
+
+        identifiers = {path.stem for path in files if path.stem}
+        return sorted(identifiers, key=str.casefold)
+
     async def async_get(self, name: str) -> dict[str, Any] | None:
         path = self._path_for(name)
         if not path.exists():

@@ -47,6 +47,7 @@ CONF_CLOUD_TENANT_ID = const.CONF_CLOUD_TENANT_ID
 CONF_CLOUD_DEVICE_TOKEN = const.CONF_CLOUD_DEVICE_TOKEN
 CONF_CLOUD_SYNC_INTERVAL = const.CONF_CLOUD_SYNC_INTERVAL
 DEFAULT_CLOUD_SYNC_INTERVAL = const.DEFAULT_CLOUD_SYNC_INTERVAL
+PROFILE_ID_MAX_LENGTH = const.PROFILE_ID_MAX_LENGTH
 
 cfg_spec = importlib.util.spec_from_file_location(f"{PACKAGE}.config_flow", BASE_PATH / "config_flow.py")
 cfg = importlib.util.module_from_spec(cfg_spec)
@@ -4290,6 +4291,69 @@ async def test_options_flow_add_profile_invalid_name(hass):
     assert result["errors"] == {"name": "invalid_profile_id"}
 
 
+async def test_options_flow_add_profile_rejects_profile_store_duplicates(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    store = AsyncMock()
+    store.async_list_profile_ids = AsyncMock(return_value=["basil"])
+
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.get_entry_data",
+        return_value={"profile_store": store},
+    ):
+        result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    assert result["type"] == "form"
+    assert result["errors"] == {"name": "duplicate_profile_id"}
+
+
+async def test_options_flow_add_profile_slugifies_identifier(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    result = await flow.async_step_add_profile(
+        {"name": "Tomato Plant 1", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}
+    )
+
+    assert result["type"] == "form"
+    assert result["step_id"] == "attach_sensors"
+    assert flow._new_profile_id == "tomato_plant_1"
+    assert registry.get_profile("tomato_plant_1") is not None
+
+
+async def test_options_flow_add_profile_rejects_long_identifier(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    long_name = "a" * (PROFILE_ID_MAX_LENGTH + 1)
+    result = await flow.async_step_add_profile({"name": long_name, CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    assert result["type"] == "form"
+    assert result["errors"] == {"name": "profile_id_too_long"}
+
+
 async def test_options_flow_add_profile_persist_failure_rolls_back(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
     entry.add_to_hass(hass)
@@ -4304,6 +4368,7 @@ async def test_options_flow_add_profile_persist_failure_rolls_back(hass):
     from custom_components.horticulture_assistant.profile_store import ProfileStoreError
 
     store = AsyncMock()
+    store.async_list_profile_ids = AsyncMock(return_value=[])
     store.async_create_profile.side_effect = ProfileStoreError("write failed", user_message="disk full")
 
     with patch(
