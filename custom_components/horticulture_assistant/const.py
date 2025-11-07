@@ -59,6 +59,9 @@ CONF_PROFILES = "profiles"
 
 CONF_PROFILE_SCOPE = "profile_scope"
 
+PROFILE_ID_PATTERN = r"^[a-z0-9_]+$"
+PROFILE_ID_MAX_LENGTH = 32
+
 PROFILE_SCOPE_DEFAULT = "individual"
 PROFILE_SCOPE_CHOICES = (
     "individual",

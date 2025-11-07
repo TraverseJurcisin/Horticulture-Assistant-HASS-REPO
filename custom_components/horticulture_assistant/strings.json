@@ -296,6 +296,7 @@
             "threshold_field_error": "Adjust this value to stay within the supported range.",
             "threshold_out_of_bounds": "{issue_detail}",
             "invalid_profile_id": "Use letters, numbers, or underscores for the profile name.",
+            "profile_id_too_long": "Profile ID must be 32 characters or fewer.",
             "duplicate_profile_id": "A profile with this identifier already exists. Choose a different name.",
             "profile_error": "Creating the profile failed: {error}",
             "unknown_species": "Select a species from the list.",
