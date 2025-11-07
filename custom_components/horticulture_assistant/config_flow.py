@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import inspect
 import gc
+import inspect
 import json
 import logging
 import re
@@ -62,8 +62,8 @@ from .profile.validation import evaluate_threshold_bounds
 from .profile_store import ProfileStore, ProfileStoreError
 from .sensor_catalog import SensorSuggestion, collect_sensor_suggestions, format_sensor_hints
 from .sensor_validation import collate_issue_messages, validate_sensor_links
-from .utils import profile_generator
 from .utils import entry_helpers as entry_helpers_module
+from .utils import profile_generator
 from .utils.entry_helpers import (
     _async_resolve_device_registry,
     async_sync_entry_devices,
@@ -3572,11 +3572,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         profiles = {p.plant_id: p.display_name for p in registry.iter_profiles()}
         profile_ids = {p.plant_id for p in registry.iter_profiles()}
         entry_records = get_entry_data(self.hass, self._entry)
-        profile_store = (
-            entry_records.get("profile_store")
-            if isinstance(entry_records, Mapping)
-            else None
-        )
+        profile_store = entry_records.get("profile_store") if isinstance(entry_records, Mapping) else None
         errors: dict[str, str] = {}
         catalog, cultivar_index = await self._async_species_catalog()
         species_options = [
@@ -3641,11 +3637,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                     except Exception as err:  # pragma: no cover - defensive guard
                         _LOGGER.debug("Profile store inspection failed: %s", err, exc_info=True)
                     else:
-                        store_profile_ids = {
-                            str(pid)
-                            for pid in result
-                            if isinstance(pid, str) and pid.strip()
-                        }
+                        store_profile_ids = {str(pid) for pid in result if isinstance(pid, str) and pid.strip()}
 
             if not species_candidate and cultivar_candidate and cultivar_candidate in cultivar_index:
                 species_candidate = cultivar_index[cultivar_candidate][0]
@@ -3667,9 +3659,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 candidate = slugify(raw_name) or ""
 
                 sanitized = str(candidate).strip().replace("-", "_")
-                if not sanitized:
-                    errors["name"] = "invalid_profile_id"
-                elif not PROFILE_ID_REGEX.fullmatch(sanitized):
+                if not sanitized or not PROFILE_ID_REGEX.fullmatch(sanitized):
                     errors["name"] = "invalid_profile_id"
                 elif len(sanitized) > PROFILE_ID_MAX_LENGTH:
                     errors["name"] = "profile_id_too_long"

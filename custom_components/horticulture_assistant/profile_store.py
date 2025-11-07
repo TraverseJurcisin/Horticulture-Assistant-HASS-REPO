@@ -204,9 +204,7 @@ class ProfileStore:
         except OSError as err:
             message = f"Unable to enumerate profile library at {self._base}: {err}"
             _LOGGER.error("%s", message)
-            raise ProfileStoreError(
-                message, user_message=str(err) or "unable to read profile library"
-            ) from err
+            raise ProfileStoreError(message, user_message=str(err) or "unable to read profile library") from err
 
         identifiers = {path.stem for path in files if path.stem}
         return sorted(identifiers, key=str.casefold)

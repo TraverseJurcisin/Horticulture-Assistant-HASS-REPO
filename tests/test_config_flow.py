@@ -4326,9 +4326,7 @@ async def test_options_flow_add_profile_slugifies_identifier(hass):
     flow.hass = hass
     await flow.async_step_init()
 
-    result = await flow.async_step_add_profile(
-        {"name": "Tomato Plant 1", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT}
-    )
+    result = await flow.async_step_add_profile({"name": "Tomato Plant 1", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
 
     assert result["type"] == "form"
     assert result["step_id"] == "attach_sensors"
