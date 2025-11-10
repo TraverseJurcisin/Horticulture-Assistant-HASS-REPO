@@ -2,7 +2,6 @@ import importlib
 import json
 
 import plant_engine.yield_prediction as yp
-
 from plant_engine import yield_manager
 
 

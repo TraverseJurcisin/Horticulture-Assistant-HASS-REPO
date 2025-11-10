@@ -1,4 +1,5 @@
 import pytest
+
 from plant_engine.nutrient_planner import (
     NutrientManagementCostReport,
     NutrientManagementReport,

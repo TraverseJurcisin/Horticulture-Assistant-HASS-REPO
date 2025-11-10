@@ -1,4 +1,5 @@
 import pytest
+
 from plant_engine.irrigation_manager import generate_infiltration_bursts
 
 

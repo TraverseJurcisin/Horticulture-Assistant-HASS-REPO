@@ -1,4 +1,5 @@
 import pytest
+
 from plant_engine.energy_manager import (
     estimate_dli_from_power,
     estimate_hvac_cost,

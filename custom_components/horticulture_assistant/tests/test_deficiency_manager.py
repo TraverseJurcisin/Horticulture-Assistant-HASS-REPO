@@ -1,4 +1,7 @@
 import pytest
+
+from plant_engine import deficiency_manager as dm
+from plant_engine import utils
 from plant_engine.deficiency_manager import (
     assess_deficiency_severity,
     calculate_deficiency_index,
@@ -16,9 +19,6 @@ from plant_engine.deficiency_manager import (
     summarize_deficiencies_with_synergy,
 )
 from plant_engine.nutrient_manager import get_recommended_levels
-
-from plant_engine import deficiency_manager as dm
-from plant_engine import utils
 
 
 @pytest.fixture(autouse=True)
