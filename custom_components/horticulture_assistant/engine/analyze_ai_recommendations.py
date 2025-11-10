@@ -5,7 +5,6 @@ from contextlib import suppress
 from datetime import datetime
 
 import openai
-
 from plant_engine.utils import get_pending_dir
 
 from ..utils.json_io import load_json, save_json

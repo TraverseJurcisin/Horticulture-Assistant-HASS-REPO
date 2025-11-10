@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 
 import yaml
-
 from scripts.generate_plant_sensors import generate_from_directory, generate_template_yaml
 
 

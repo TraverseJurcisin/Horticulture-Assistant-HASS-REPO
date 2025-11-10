@@ -97,11 +97,13 @@ PROFILE_SCOPE_LABELS = {
 }
 SOURCE_FILTER_SYNONYMS = {
     "entry": {"entry", "local", "existing", "installed", "profile"},
-    "library": {"library", "lib", "template", "catalog", "store"},
+    "library": {"library", "lib", "catalog", "store"},
+    "template": {"template", "templates", "crop", "crops"},
 }
 SOURCE_FILTER_LABELS = {
     "entry": "Existing entries",
     "library": "Library templates",
+    "template": "Crop templates",
 }
 SCOPE_FILTER_SYNONYMS = {
     "individual": {"individual", "plant", "single"},
@@ -397,6 +399,79 @@ def _sensor_selection_signature(mapping: Mapping[str, Any]) -> tuple[tuple[str, 
 
 
 @lru_cache(maxsize=1)
+def _load_crop_template_index() -> dict[str, dict[str, Any]]:
+    """Return crop template metadata mapped by identifier."""
+
+    base = Path(__file__).parent / "data" / "templates"
+    templates: dict[str, dict[str, Any]] = {}
+
+    try:
+        paths = list(base.glob("*.json"))
+    except Exception as err:  # pragma: no cover - filesystem guard
+        _LOGGER.debug("Unable to enumerate crop templates: %s", err)
+        return templates
+
+    for path in paths:
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as err:
+            _LOGGER.debug("Skipping malformed crop template %s: %s", path.name, err)
+            continue
+
+        if not isinstance(payload, Mapping):
+            continue
+
+        species_id = _first_text(
+            payload.get("plant_id"),
+            payload.get("profile_id"),
+            payload.get("species"),
+            path.stem,
+        )
+        if species_id is None:
+            continue
+
+        species_label = _first_text(
+            payload.get("display_name"),
+            payload.get("name"),
+        )
+
+        entry = templates.setdefault(
+            species_id,
+            {
+                "label": species_label or species_id,
+                "payload": payload,
+                "cultivars": {},
+            },
+        )
+
+        if species_label and (not entry.get("label") or entry.get("label") == species_id):
+            entry["label"] = species_label
+        if entry.get("payload") is None:
+            entry["payload"] = payload
+
+        cultivar_entries = payload.get("cultivars")
+        if isinstance(cultivar_entries, Mapping):
+            cultivars = entry.setdefault("cultivars", {})
+            for cultivar_id, cultivar_payload in cultivar_entries.items():
+                if not isinstance(cultivar_payload, Mapping):
+                    continue
+                cultivar_label = _first_text(
+                    cultivar_payload.get("display_name"),
+                    cultivar_payload.get("name"),
+                    cultivar_payload.get("label"),
+                )
+                cultivars.setdefault(
+                    str(cultivar_id),
+                    {
+                        "label": cultivar_label or str(cultivar_id),
+                        "payload": cultivar_payload,
+                    },
+                )
+
+    return templates
+
+
+@lru_cache(maxsize=1)
 def _load_builtin_species_catalog() -> tuple[dict[str, Mapping[str, Any]], dict[str, str]]:
     """Return bundled species templates mapped by identifier and labels."""
 
@@ -596,7 +671,11 @@ def _format_catalog_label(label: str, sources: Iterable[str] | None) -> str:
     """Return a label annotated with its origin if applicable."""
 
     source_set = {str(item) for item in sources if isinstance(item, str)} if sources else set()
-    for source, prefix in (("library", "[Library] "), ("entry", "[Existing] ")):
+    for source, prefix in (
+        ("library", "[Library] "),
+        ("template", "[Template] "),
+        ("entry", "[Existing] "),
+    ):
         if source in source_set:
             return f"{prefix}{label}"
     return label
@@ -3010,6 +3089,36 @@ class OptionsFlow(config_entries.OptionsFlow):
 
                 cultivar_index[cultivar_id] = (species_id, cultivars[cultivar_id])
 
+        for species_id, entry in _load_crop_template_index().items():
+            species_label = entry.get("label") if isinstance(entry.get("label"), str) else None
+            payload = entry.get("payload") if isinstance(entry.get("payload"), Mapping) else None
+            _register(
+                species_id,
+                species_label=species_label or species_id,
+                source="template",
+                payload=payload,
+            )
+
+            cultivar_entries = entry.get("cultivars") if isinstance(entry.get("cultivars"), Mapping) else {}
+            for cultivar_id, cultivar_entry in cultivar_entries.items():
+                cultivar_label = None
+                cultivar_payload = None
+                if isinstance(cultivar_entry, Mapping):
+                    label_candidate = cultivar_entry.get("label")
+                    if isinstance(label_candidate, str) and label_candidate.strip():
+                        cultivar_label = label_candidate.strip()
+                    payload_candidate = cultivar_entry.get("payload")
+                    if isinstance(payload_candidate, Mapping):
+                        cultivar_payload = payload_candidate
+                _register(
+                    species_id,
+                    species_label=species_label or species_id,
+                    source="template",
+                    cultivar_id=str(cultivar_id),
+                    cultivar_label=cultivar_label,
+                    payload=cultivar_payload,
+                )
+
         builtin_payloads, builtin_labels = _load_builtin_species_catalog()
         for species_id, payload in builtin_payloads.items():
             label = builtin_labels.get(species_id, species_id)
@@ -3817,17 +3926,43 @@ class OptionsFlow(config_entries.OptionsFlow):
             vol.Optional("copy_from"): vol.In(profiles) if profiles else str,
         }
         if species_options:
-            species_selector = sel.SelectSelector(sel.SelectSelectorConfig(options=species_options))
-            if self._selected_species_id and self._selected_species_id in species_option_values:
-                schema_fields[vol.Optional("species_id", default=self._selected_species_id)] = species_selector
+            species_selector = _build_select_selector(species_options, custom_value=False)
+            if species_selector is None:
+                species_choices = {
+                    option["value"]: option["label"]
+                    for option in species_options
+                    if isinstance(option.get("value"), str)
+                }
+                if self._selected_species_id and self._selected_species_id in species_option_values:
+                    schema_fields[vol.Optional("species_id", default=self._selected_species_id)] = vol.In(
+                        species_choices
+                    )
+                else:
+                    schema_fields[vol.Optional("species_id")] = vol.In(species_choices)
             else:
-                schema_fields[vol.Optional("species_id")] = species_selector
+                if self._selected_species_id and self._selected_species_id in species_option_values:
+                    schema_fields[vol.Optional("species_id", default=self._selected_species_id)] = species_selector
+                else:
+                    schema_fields[vol.Optional("species_id")] = species_selector
         if cultivar_options:
-            cultivar_selector = sel.SelectSelector(sel.SelectSelectorConfig(options=cultivar_options))
-            if self._selected_cultivar_id and self._selected_cultivar_id in cultivar_option_values:
-                schema_fields[vol.Optional("cultivar_id", default=self._selected_cultivar_id)] = cultivar_selector
+            cultivar_selector = _build_select_selector(cultivar_options, custom_value=False)
+            if cultivar_selector is None:
+                cultivar_choices = {
+                    option["value"]: option["label"]
+                    for option in cultivar_options
+                    if isinstance(option.get("value"), str)
+                }
+                if self._selected_cultivar_id and self._selected_cultivar_id in cultivar_option_values:
+                    schema_fields[vol.Optional("cultivar_id", default=self._selected_cultivar_id)] = vol.In(
+                        cultivar_choices
+                    )
+                else:
+                    schema_fields[vol.Optional("cultivar_id")] = vol.In(cultivar_choices)
             else:
-                schema_fields[vol.Optional("cultivar_id")] = cultivar_selector
+                if self._selected_cultivar_id and self._selected_cultivar_id in cultivar_option_values:
+                    schema_fields[vol.Optional("cultivar_id", default=self._selected_cultivar_id)] = cultivar_selector
+                else:
+                    schema_fields[vol.Optional("cultivar_id")] = cultivar_selector
         schema = vol.Schema(schema_fields)
         return self.async_show_form(
             step_id="add_profile",

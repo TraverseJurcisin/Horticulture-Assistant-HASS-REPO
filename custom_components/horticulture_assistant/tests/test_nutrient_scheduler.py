@@ -5,9 +5,8 @@ import sys
 import types
 from pathlib import Path
 
-import pytest
-
 import plant_engine.utils as utils
+import pytest
 
 MODULE_PATH = (
     Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/utils/nutrient_scheduler.py"

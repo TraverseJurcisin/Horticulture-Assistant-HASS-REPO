@@ -1,7 +1,6 @@
 from datetime import date
 
 import pytest
-
 from plant_engine.growth_stage import (
     cycle_progress,
     cycle_progress_from_dates,

@@ -1,5 +1,4 @@
 import pytest
-
 from plant_engine.fertigation import (
     apply_fertigation_recipe,
     get_fertigation_recipe,

@@ -1,5 +1,4 @@
 import pytest
-
 from plant_engine.nutrient_runoff import (
     compensate_for_runoff,
     estimate_cumulative_runoff_loss,

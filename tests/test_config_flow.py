@@ -4026,6 +4026,38 @@ async def test_options_flow_add_profile_persists_species_selection(hass):
     assert local_meta.get("requested_species_id") == "global_basil"
 
 
+async def test_options_flow_add_profile_accepts_template_species(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    result = await flow.async_step_add_profile(
+        {
+            "name": "Avocado Plant",
+            "species_id": "avocado",
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+        }
+    )
+
+    assert result["type"] == "form" and result["step_id"] == "attach_sensors"
+
+    outcome = await flow.async_step_attach_sensors({})
+    assert outcome["type"] == "create_entry"
+
+    profile = registry.get_profile("avocado_plant")
+    assert profile is not None
+    stored = registry.entry.options[CONF_PROFILES]["avocado_plant"]
+    metadata = stored.get("local", {}).get("metadata", {})
+    assert metadata.get("requested_species_id") == "avocado"
+    assert stored.get("species_display") == "Avocado"
+
+
 async def test_options_flow_add_profile_accepts_existing_profile_species(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
     entry.add_to_hass(hass)

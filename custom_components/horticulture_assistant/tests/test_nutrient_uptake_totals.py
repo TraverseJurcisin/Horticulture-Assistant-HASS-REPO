@@ -1,5 +1,4 @@
 import pytest
-
 from plant_engine.nutrient_uptake import (
     estimate_area_cumulative_uptake,
     estimate_area_total_uptake,

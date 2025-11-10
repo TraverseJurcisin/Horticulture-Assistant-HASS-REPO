@@ -1,7 +1,8 @@
 import json
 
-from plant_engine import approval_queue
 from plant_engine.utils import load_json
+
+from plant_engine import approval_queue
 
 
 def test_queue_and_apply(tmp_path, monkeypatch):

@@ -1,7 +1,6 @@
 import json
 
 import pytest
-
 from plant_engine.nutrient_manager import (
     calculate_all_deficiencies,
     calculate_all_nutrient_balance,
