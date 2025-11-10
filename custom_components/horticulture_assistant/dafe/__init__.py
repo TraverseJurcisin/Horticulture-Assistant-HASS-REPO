@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib
+from typing import TYPE_CHECKING
 
 __all__ = [
     "SpeciesProfile",
@@ -40,6 +41,23 @@ _MODULE_MAP = {
     "parse_args": "main",
     "main": "main",
 }
+
+
+if TYPE_CHECKING:
+    from .diffusion_model import (
+        calculate_diffusion_flux,
+        calculate_effective_diffusion,
+        estimate_diffusion_mass,
+    )
+    from .ec_model import calculate_ec_drift
+    from .ec_tracker import get_current_ec
+    from .fertigation import recommend_fertigation_schedule
+    from .main import main, parse_args
+    from .media_models import MediaProfile, get_media_profile
+    from .pulse_scheduler import generate_pulse_schedule
+    from .species_profiles import SpeciesProfile, get_species_profile
+    from .utils import load_config
+    from .wc_monitor import get_current_wc
 
 
 def __getattr__(name: str):

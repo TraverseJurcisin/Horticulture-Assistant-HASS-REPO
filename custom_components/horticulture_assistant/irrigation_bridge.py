@@ -8,12 +8,12 @@ from typing import Any
 try:  # pragma: no cover - fallback for unit tests without Home Assistant
     from homeassistant.components.sensor import SensorEntity, SensorStateClass
 except ModuleNotFoundError:  # pragma: no cover - executed in local test stubs
-    from enum import Enum
+    from enum import StrEnum
 
     class SensorEntity:  # type: ignore[too-few-public-methods]
         """Minimal stand-in used in unit tests."""
 
-    class SensorStateClass(str, Enum):
+    class SensorStateClass(StrEnum):
         MEASUREMENT = "measurement"
 
 

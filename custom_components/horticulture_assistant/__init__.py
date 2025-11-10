@@ -10,7 +10,7 @@ import time
 from collections.abc import Mapping
 from copy import deepcopy
 from datetime import datetime, timezone
-from enum import Enum
+from enum import StrEnum
 from types import SimpleNamespace
 from typing import Any
 
@@ -88,7 +88,7 @@ try:
     from homeassistant.helpers import issue_registry as ir
 except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in tests
 
-    class IssueSeverity(str, Enum):
+    class IssueSeverity(StrEnum):
         ERROR = "error"
         WARNING = "warning"
 

@@ -6,6 +6,7 @@ import shutil
 import sys
 import types
 from collections.abc import Mapping
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -1591,12 +1592,12 @@ async def test_config_flow_sensor_suggestions_with_unexpected_shapes(hass):
 
     await begin_profile_flow(flow)
 
+    @dataclass
     class SuggestionStub:
-        def __init__(self, entity_id: str, name: str, score: int = 0, reason: str = "") -> None:
-            self.entity_id = entity_id
-            self.name = name
-            self.score = score
-            self.reason = reason
+        entity_id: str
+        name: str
+        score: int = 0
+        reason: str = ""
 
     class WeirdSuggestion:
         def __init__(self) -> None:

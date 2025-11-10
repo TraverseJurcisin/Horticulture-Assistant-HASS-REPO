@@ -422,7 +422,7 @@ def _candidate_threshold_keys(role: str) -> Iterable[str]:
     seen: set[str] = set()
     normalised = str(role or "").strip().lower()
     if not normalised:
-        return ()
+        return
     to_visit = [normalised]
     to_visit.extend(alias for alias in ROLE_ALIASES.get(normalised, ()) if alias not in to_visit)
     for candidate in to_visit:

@@ -16,7 +16,7 @@ import inspect
 import logging
 import types
 from collections.abc import Mapping
-from enum import Enum
+from enum import Enum, StrEnum
 from typing import Any, Final
 
 import homeassistant.core as ha_core
@@ -26,7 +26,7 @@ try:
     from homeassistant.components.sensor import SensorDeviceClass
 except ModuleNotFoundError:  # pragma: no cover - fallback for unit tests without HA
 
-    class SensorDeviceClass(str, Enum):
+    class SensorDeviceClass(StrEnum):
         """Minimal stand-in for Home Assistant's ``SensorDeviceClass``."""
 
         TEMPERATURE = "temperature"

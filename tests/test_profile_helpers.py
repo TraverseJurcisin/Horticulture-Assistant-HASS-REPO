@@ -4,6 +4,7 @@ import importlib.util
 import logging
 import sys
 import types
+from dataclasses import dataclass
 from pathlib import Path
 
 import custom_components  # noqa: F401  # ensure base package is registered
@@ -17,9 +18,9 @@ if "homeassistant.components" not in sys.modules:
 if "homeassistant.components.sensor" not in sys.modules:
     sensor_module = types.ModuleType("homeassistant.components.sensor")
 
+    @dataclass(frozen=True)
     class _SensorClass:
-        def __init__(self, value: str) -> None:
-            self.value = value
+        value: str
 
     class SensorDeviceClass:
         TEMPERATURE = _SensorClass("temperature")
