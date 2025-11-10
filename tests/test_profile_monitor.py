@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any
 
@@ -9,31 +10,32 @@ from custom_components.horticulture_assistant.profile_monitor import ProfileMoni
 from custom_components.horticulture_assistant.utils.entry_helpers import ProfileContext
 
 
+@dataclass
 class DummyState:
-    def __init__(
-        self,
-        state: Any,
-        *,
-        unit: str | None = None,
-        changed: datetime | None = None,
-    ) -> None:
-        self.state = state
-        self.attributes = {"unit_of_measurement": unit} if unit else {}
-        self.last_changed = changed
-        self.last_updated = changed
+    state: Any
+    unit: str | None = None
+    changed: datetime | None = None
+    attributes: dict[str, Any] = field(init=False)
+    last_changed: datetime | None = field(init=False)
+    last_updated: datetime | None = field(init=False)
+
+    def __post_init__(self) -> None:
+        self.attributes = {"unit_of_measurement": self.unit} if self.unit else {}
+        self.last_changed = self.changed
+        self.last_updated = self.changed
 
 
+@dataclass
 class DummyStates:
-    def __init__(self, mapping: dict[str, DummyState]) -> None:
-        self._mapping = mapping
+    _mapping: dict[str, DummyState]
 
     def get(self, entity_id: str) -> DummyState | None:
         return self._mapping.get(entity_id)
 
 
+@dataclass
 class DummyHass:
-    def __init__(self, states: DummyStates) -> None:
-        self.states = states
+    states: DummyStates
 
 
 def _context(**kwargs) -> ProfileContext:

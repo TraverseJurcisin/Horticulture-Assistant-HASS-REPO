@@ -98,9 +98,9 @@ try:  # pragma: no cover - Home Assistant not available in tests
     from homeassistant.helpers import issue_registry as ir
 except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in CI tests
     import types
-    from enum import Enum
+    from enum import StrEnum
 
-    class IssueSeverity(str, Enum):
+    class IssueSeverity(StrEnum):
         WARNING = "warning"
 
     ir = types.SimpleNamespace(  # type: ignore[assignment]

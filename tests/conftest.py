@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import importlib
 import types
+from dataclasses import dataclass
 
 try:  # pragma: no cover - defensive compatibility shim
     from homeassistant.components.sensor import SensorDeviceClass
@@ -312,9 +313,9 @@ components_pkg = sys.modules.setdefault("homeassistant.components", types.Module
 if "homeassistant.components.sensor" not in sys.modules:
     sensor_module = types.ModuleType("homeassistant.components.sensor")
 
+    @dataclass(frozen=True)
     class _SensorClass:
-        def __init__(self, value: str) -> None:
-            self.value = value
+        value: str
 
     class SensorDeviceClass:
         TEMPERATURE = _SensorClass("temperature")

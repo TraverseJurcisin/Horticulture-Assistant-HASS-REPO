@@ -6,6 +6,7 @@ import shutil
 import sys
 import types
 from collections.abc import Mapping
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -1591,12 +1592,12 @@ async def test_config_flow_sensor_suggestions_with_unexpected_shapes(hass):
 
     await begin_profile_flow(flow)
 
+    @dataclass
     class SuggestionStub:
-        def __init__(self, entity_id: str, name: str, score: int = 0, reason: str = "") -> None:
-            self.entity_id = entity_id
-            self.name = name
-            self.score = score
-            self.reason = reason
+        entity_id: str
+        name: str
+        score: int = 0
+        reason: str = ""
 
     class WeirdSuggestion:
         def __init__(self) -> None:
@@ -4024,6 +4025,38 @@ async def test_options_flow_add_profile_persists_species_selection(hass):
     assert stored.get("species_display")
     local_meta = stored.get("local", {}).get("metadata", {})
     assert local_meta.get("requested_species_id") == "global_basil"
+
+
+async def test_options_flow_add_profile_accepts_template_species(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    result = await flow.async_step_add_profile(
+        {
+            "name": "Avocado Plant",
+            "species_id": "avocado",
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+        }
+    )
+
+    assert result["type"] == "form" and result["step_id"] == "attach_sensors"
+
+    outcome = await flow.async_step_attach_sensors({})
+    assert outcome["type"] == "create_entry"
+
+    profile = registry.get_profile("avocado_plant")
+    assert profile is not None
+    stored = registry.entry.options[CONF_PROFILES]["avocado_plant"]
+    metadata = stored.get("local", {}).get("metadata", {})
+    assert metadata.get("requested_species_id") == "avocado"
+    assert stored.get("species_display") == "Avocado"
 
 
 async def test_options_flow_add_profile_accepts_existing_profile_species(hass):

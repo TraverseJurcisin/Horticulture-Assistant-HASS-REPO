@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
-from enum import Enum
+from enum import Enum, StrEnum
 from typing import TYPE_CHECKING, Any
 
 try:  # pragma: no cover - fallback for tests without Home Assistant
@@ -22,9 +22,8 @@ except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
 try:  # pragma: no cover - fallback for tests
     from homeassistant.components.sensor import SensorDeviceClass
 except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
-    from enum import Enum
 
-    class SensorDeviceClass(str, Enum):
+    class SensorDeviceClass(StrEnum):
         TEMPERATURE = "temperature"
         HUMIDITY = "humidity"
         ILLUMINANCE = "illuminance"

@@ -33,9 +33,9 @@ try:  # pragma: no cover - Home Assistant available at runtime, not during tests
     from homeassistant.helpers import issue_registry as ir
 except (ImportError, ModuleNotFoundError):  # pragma: no cover - exercised in tests
     import types
-    from enum import Enum
+    from enum import StrEnum
 
-    class IssueSeverity(str, Enum):
+    class IssueSeverity(StrEnum):
         WARNING = "warning"
         ERROR = "error"
 

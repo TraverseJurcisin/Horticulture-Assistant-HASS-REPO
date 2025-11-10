@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import sys
 import types
+from dataclasses import dataclass
 from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1] / "custom_components" / "horticulture_assistant"
@@ -22,9 +23,9 @@ if "homeassistant.components" not in sys.modules:
 if "homeassistant.components.sensor" not in sys.modules:
     sensor_module = types.ModuleType("homeassistant.components.sensor")
 
+    @dataclass(frozen=True)
     class _SensorClass:
-        def __init__(self, value: str) -> None:
-            self.value = value
+        value: str
 
     class SensorDeviceClass:
         TEMPERATURE = _SensorClass("temperature")

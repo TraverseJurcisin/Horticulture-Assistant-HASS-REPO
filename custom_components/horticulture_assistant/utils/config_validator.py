@@ -10,12 +10,12 @@ try:  # pragma: no cover - executed when Home Assistant is installed
     from homeassistant.core import HomeAssistant
     from homeassistant.helpers import issue_registry as ir
 except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in tests
-    from enum import Enum
+    from enum import StrEnum
     from types import SimpleNamespace
 
     HomeAssistant = object  # type: ignore[misc,assignment]
 
-    class _IssueSeverity(str, Enum):
+    class _IssueSeverity(StrEnum):
         WARNING = "warning"
 
     ir = SimpleNamespace(  # type: ignore[assignment]

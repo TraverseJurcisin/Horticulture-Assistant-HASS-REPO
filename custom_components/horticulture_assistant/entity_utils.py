@@ -12,9 +12,9 @@ try:  # pragma: no cover - fallback for tests
     from homeassistant.helpers import issue_registry as ir
 except (ModuleNotFoundError, ImportError):  # pragma: no cover - executed in stubbed env
     import types
-    from enum import Enum
+    from enum import StrEnum
 
-    class IssueSeverity(str, Enum):
+    class IssueSeverity(StrEnum):
         WARNING = "warning"
 
     ir = types.SimpleNamespace(  # type: ignore[assignment]

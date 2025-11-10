@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from datetime import datetime
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from .events import SyncEvent, VectorClock
@@ -12,7 +12,7 @@ META_KEY = "__meta__"
 OP_KEY = "__op__"
 
 
-class ConflictPolicy(str, Enum):
+class ConflictPolicy(StrEnum):
     """Supported conflict resolution strategies."""
 
     LWW = "lww"
