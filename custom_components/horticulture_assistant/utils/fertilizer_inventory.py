@@ -60,9 +60,7 @@ class FertilizerProduct:
         size: str,
         date: datetime | None = None,
     ) -> None:
-        entry = PriceEntry(
-            vendor=vendor, unit_price=round(unit_price, 2), size=size, date=date or datetime.now()
-        )
+        entry = PriceEntry(vendor=vendor, unit_price=round(unit_price, 2), size=size, date=date or datetime.now())
         self.price_history.append(entry)
 
     def log_usage(self, amount_used: float, unit: str, zone: str) -> None:
@@ -118,11 +116,7 @@ class FertilizerInventory:
 
     def find_expiring_products(self, days_before_expiry: int = 30) -> list[FertilizerProduct]:
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-        return [
-            p
-            for p in self.products.values()
-            if p.expiration and (p.expiration - today).days <= days_before_expiry
-        ]
+        return [p for p in self.products.values() if p.expiration and (p.expiration - today).days <= days_before_expiry]
 
 
 __all__ = [

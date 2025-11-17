@@ -226,9 +226,7 @@ def _latest_log_value(entries: Iterable[Mapping[str, object]], key: str) -> floa
     return None
 
 
-def _latest_sensor_value(
-    entries: Iterable[Mapping[str, object]], names: Iterable[str]
-) -> float | None:
+def _latest_sensor_value(entries: Iterable[Mapping[str, object]], names: Iterable[str]) -> float | None:
     names_l = [n.lower() for n in names]
     for entry in reversed(list(entries)):
         stype = str(entry.get("sensor_type", "")).lower()
@@ -276,16 +274,14 @@ def estimate_ec(
 
     profile = load_profile_by_id(plant_id, base_dir=base_path or plants_path(hass))
     general = profile.get("general", {}) if profile else {}
-    latest_env = (
-        general.get("latest_env", {}) if isinstance(general.get("latest_env"), Mapping) else {}
-    )
+    latest_env = general.get("latest_env", {}) if isinstance(general.get("latest_env"), Mapping) else {}
 
     moisture = _latest_sensor_value(sensor_log, ["soil_moisture", "moisture"]) or _env_value(
         latest_env, ["soil_moisture", "moisture"]
     )
-    temperature = _latest_sensor_value(
-        sensor_log, ["soil_temperature", "root_temperature"]
-    ) or _env_value(latest_env, ["soil_temperature", "root_temperature"])
+    temperature = _latest_sensor_value(sensor_log, ["soil_temperature", "root_temperature"]) or _env_value(
+        latest_env, ["soil_temperature", "root_temperature"]
+    )
     irrigation_ml = _latest_log_value(irrigation_log, "volume_applied_ml") or 0.0
     ambient_temp = _latest_sensor_value(
         sensor_log, ["air_temperature", "ambient_temperature", "temperature"]

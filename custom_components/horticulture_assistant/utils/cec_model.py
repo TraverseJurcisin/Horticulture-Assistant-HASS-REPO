@@ -56,9 +56,7 @@ def _write_cec_record(output_path: str, plant_id: str | None, result_data: dict)
         _LOGGER.error("Failed to write CEC record to %s: %s", output_path, err)
 
 
-def log_measured_cec(
-    plant_id: str, cec_value: float, include_warnings: bool = False
-) -> dict | None:
+def log_measured_cec(plant_id: str, cec_value: float, include_warnings: bool = False) -> dict | None:
     """Log an observed/measured CEC value for a plant's growth media.
 
     Parameters:
@@ -85,9 +83,7 @@ def log_measured_cec(
         if category == "Low":
             result_data["warning"] = "Low nutrient retention (CEC is low for most crops)"
         elif category == "High":
-            result_data["warning"] = (
-                "High nutrient retention (CEC is high; monitor nutrient buildup)"
-            )
+            result_data["warning"] = "High nutrient retention (CEC is high; monitor nutrient buildup)"
         # Include category label for reference
         result_data["category"] = category
     # Write to JSON records
@@ -121,9 +117,7 @@ def estimate_cec_from_media(
     is unknown, returns None.
     """
     # Use media_inference to get likely media type
-    media_result = media_inference.infer_media_type(
-        moisture_retention, ec_behavior, dryback_rate, plant_id=plant_id
-    )
+    media_result = media_inference.infer_media_type(moisture_retention, ec_behavior, dryback_rate, plant_id=plant_id)
     if not media_result:
         _LOGGER.error("Media type inference failed; cannot estimate CEC for plant %s.", plant_id)
         return None
@@ -149,9 +143,7 @@ def estimate_cec_from_media(
         if category == "Low":
             result_data["warning"] = "Low nutrient retention (CEC is low for most crops)"
         elif category == "High":
-            result_data["warning"] = (
-                "High nutrient retention (CEC is high; monitor nutrient buildup)"
-            )
+            result_data["warning"] = "High nutrient retention (CEC is high; monitor nutrient buildup)"
         result_data["category"] = category
     # Write to JSON records
     output_path = data_path(None, "cec_records.json")

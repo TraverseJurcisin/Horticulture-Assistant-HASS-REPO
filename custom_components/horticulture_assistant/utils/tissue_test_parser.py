@@ -1,9 +1,7 @@
 class TissueTestParser:
     def __init__(self):
         self.test_log: dict[str, dict] = {}
-        self.thresholds: dict[
-            str, dict[str, dict[str, float]]
-        ] = {}  # plant_id → nutrient → range type
+        self.thresholds: dict[str, dict[str, dict[str, float]]] = {}  # plant_id → nutrient → range type
 
     def log_tissue_test(self, plant_id: str, raw_data: dict[str, str]):
         """

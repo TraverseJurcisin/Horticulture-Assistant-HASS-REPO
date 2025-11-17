@@ -84,18 +84,14 @@ class NutrientTracker:
 
     product_profiles: dict[str, ProductNutrientProfile] = field(default_factory=dict)
     delivery_log: list[NutrientDeliveryRecord] = field(default_factory=list)
-    _log_by_plant: dict[str, list[NutrientDeliveryRecord]] = field(
-        default_factory=lambda: defaultdict(list)
-    )
+    _log_by_plant: dict[str, list[NutrientDeliveryRecord]] = field(default_factory=lambda: defaultdict(list))
 
     def register_product(self, profile: ProductNutrientProfile) -> None:
         """Register a nutrient profile so it can be referenced by ``log_delivery``."""
 
         self.product_profiles[profile.product_id] = profile
 
-    def log_delivery(
-        self, plant_id: str, batch_id: str, product_id: str, dose_g: float, volume_l: float
-    ) -> None:
+    def log_delivery(self, plant_id: str, batch_id: str, product_id: str, dose_g: float, volume_l: float) -> None:
         """Log a nutrient application for ``plant_id``."""
 
         if product_id not in self.product_profiles:
@@ -154,9 +150,7 @@ class NutrientTracker:
                 summary[element] += ppm
         return dict(summary)
 
-    def summarize_mg_for_day(
-        self, date: datetime, plant_id: str | None = None
-    ) -> dict[str, float]:
+    def summarize_mg_for_day(self, date: datetime, plant_id: str | None = None) -> dict[str, float]:
         """Return total milligrams delivered on ``date``."""
 
         summary: dict[str, float] = defaultdict(float)
@@ -167,9 +161,7 @@ class NutrientTracker:
                 summary[element] += ppm * record.volume_l
         return dict(summary)
 
-    def summarize_mg_for_period(
-        self, start: datetime, end: datetime, plant_id: str | None = None
-    ) -> dict[str, float]:
+    def summarize_mg_for_period(self, start: datetime, end: datetime, plant_id: str | None = None) -> dict[str, float]:
         """Return milligrams delivered between ``start`` and ``end`` (inclusive)."""
 
         if start > end:

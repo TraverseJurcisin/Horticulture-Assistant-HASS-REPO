@@ -51,9 +51,7 @@ class Schedule:
         pulses = data.get("pulses")
         if isinstance(pulses, Mapping):
             parsed: dict[str, list[str]] = {
-                phase: [str(t) for t in times]
-                for phase, times in pulses.items()
-                if isinstance(times, Iterable)
+                phase: [str(t) for t in times] for phase, times in pulses.items() if isinstance(times, Iterable)
             }
             sched.pulses = parsed or None
 

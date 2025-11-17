@@ -86,15 +86,9 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
         return {}
 
     # Determine current lifecycle stage from profile (if available)
-    stage = (
-        profile.get("general", {}).get("lifecycle_stage")
-        or profile.get("general", {}).get("stage")
-        or "unknown"
-    )
+    stage = profile.get("general", {}).get("lifecycle_stage") or profile.get("general", {}).get("stage") or "unknown"
     plant_type = _resolve_plant_type(hass, plant_id, profile)
-    env_targets = (
-        environment_manager.get_environmental_targets(plant_type, stage) if plant_type else {}
-    )
+    env_targets = environment_manager.get_environmental_targets(plant_type, stage) if plant_type else {}
 
     # Static thresholds and nutrient targets from profile
     thresholds = profile.get("thresholds", {})  # environmental or nutrient thresholds
@@ -105,9 +99,7 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
         tags = []
 
     # Collect current sensor readings (moisture, EC, temperature, humidity, light)
-    sensor_map = (
-        profile.get("sensor_entities") or profile.get("general", {}).get("sensor_entities") or {}
-    )
+    sensor_map = profile.get("sensor_entities") or profile.get("general", {}).get("sensor_entities") or {}
 
     def _aggregate(key: str, default_id: str) -> float | None:
         val = sensor_map.get(key, default_id)

@@ -60,9 +60,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
     # Optional: ensure the report is for the correct plant
     report_plant = daily_report.get("plant_id")
     if report_plant and report_plant != plant_id:
-        _LOGGER.warning(
-            "Plant ID mismatch: got report for '%s' but expected '%s'", report_plant, plant_id
-        )
+        _LOGGER.warning("Plant ID mismatch: got report for '%s' but expected '%s'", report_plant, plant_id)
     # Ensure thresholds key exists in report
     if "thresholds" not in daily_report:
         _LOGGER.warning("Daily report for plant %s is missing 'thresholds' data", plant_id)
@@ -96,9 +94,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
         _LOGGER.error("Unexpected AI model output for plant %s: %s", plant_id, result)
         return ""
     if not isinstance(new_thresholds, dict):
-        _LOGGER.error(
-            "AI model returned invalid thresholds for plant %s: %s", plant_id, new_thresholds
-        )
+        _LOGGER.error("AI model returned invalid thresholds for plant %s: %s", plant_id, new_thresholds)
         return ""
     _LOGGER.info("AI threshold recommendations generated for plant %s", plant_id)
     _LOGGER.debug("Recommended thresholds: %s", new_thresholds)
@@ -140,9 +136,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
         # Auto-approve: apply changes directly to the plant's profile
         profile_path = _profile_json_path(plant_id)
         if not os.path.exists(profile_path):
-            _LOGGER.error(
-                "Plant profile not found at %s; cannot auto-apply thresholds", profile_path
-            )
+            _LOGGER.error("Plant profile not found at %s; cannot auto-apply thresholds", profile_path)
         else:
             try:
                 with open(profile_path, encoding="utf-8") as pf:
@@ -183,9 +177,7 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
                 else:
                     pending_data = {}
             except Exception as err:
-                _LOGGER.error(
-                    "Could not read existing pending approvals file: %s. Resetting it.", err
-                )
+                _LOGGER.error("Could not read existing pending approvals file: %s. Resetting it.", err)
                 pending_data = {}
             # Update pending approvals with this plant's record
             if isinstance(pending_data, dict):
@@ -211,15 +203,11 @@ def process_ai_feedback(plant_id: str, daily_report: dict) -> str:
                     k, v = next(iter(changes.items()))
                     prev = v["previous_value"]
                     new = v["proposed_value"]
-                    advice = (
-                        f"Threshold '{k}' change proposed: {prev} -> {new} (awaiting approval)."
-                    )
+                    advice = f"Threshold '{k}' change proposed: {prev} -> {new} (awaiting approval)."
                 else:
                     advice = f"{len(changes)} threshold changes proposed (awaiting approval)."
         else:
-            _LOGGER.info(
-                "No threshold changes for plant %s; nothing to queue for approval", plant_id
-            )
+            _LOGGER.info("No threshold changes for plant %s; nothing to queue for approval", plant_id)
             if not advice:
                 advice = "No threshold changes recommended."
     # Log the advice and return it

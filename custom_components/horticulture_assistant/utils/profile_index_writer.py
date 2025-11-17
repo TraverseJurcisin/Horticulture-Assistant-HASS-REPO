@@ -10,22 +10,30 @@ def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool
     """
     Generate or update a profile index file for a given plant.
 
-    This function creates/updates `plants/<plant_id>/profile_index.json`, which contains an index of all JSON
-    profile files in the plant's directory. Each entry in the index is a dictionary of metadata (with keys
-    "exists", "last_updated", and "size") for a profile file (e.g., "nutrition.json") present in the directory.
-    The output index dictionary is sorted by file name alphabetically.
+    This function creates/updates `plants/<plant_id>/profile_index.json`, which
+    contains an index of all JSON profile files in the plant's directory. Each
+    entry in the index is a dictionary of metadata (with keys "exists",
+    "last_updated", and "size") for a profile file (e.g., "nutrition.json")
+    present in the directory. The output index dictionary is sorted by file name
+    alphabetically.
 
-    If `profile_index.json` already exists and `overwrite` is False, the index generation is skipped.
-    If `overwrite` is True or the index file is missing, a new index file is written (or an existing one
-    overwritten) with the collected metadata.
+    If `profile_index.json` already exists and `overwrite` is False, the index
+    generation is skipped. If `overwrite` is True or the index file is missing, a
+    new index file is written (or an existing one overwritten) with the collected
+    metadata.
 
-    All actions (skipping, file creation, overwriting) are logged, including an entry for each profile file indexed
-    and a summary log with the total count and timestamp.
+    All actions (skipping, file creation, overwriting) are logged, including an
+    entry for each profile file indexed and a summary log with the total count
+    and timestamp.
 
-    :param plant_id: Identifier for the plant (used as directory name under the base path).
-    :param base_path: Optional base directory path for plant profiles (defaults to "plants/" in the current working directory).
-    :param overwrite: If True, overwrite the existing index file; if False, do not write if an index file already exists.
-    :return: The plant_id if the index was successfully generated (or skipped due to existing file), or an empty string on error.
+    :param plant_id: Identifier for the plant (used as directory name under the
+        base path).
+    :param base_path: Optional base directory path for plant profiles (defaults
+        to "plants/" in the current working directory).
+    :param overwrite: If True, overwrite the existing index file; if False, do
+        not write if an index file already exists.
+    :return: The plant_id if the index was successfully generated (or skipped
+        due to existing file), or an empty string on error.
     """
     # Determine base directory for plant profiles
     base_dir = Path(base_path) if base_path else Path("plants")
@@ -91,8 +99,6 @@ def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool
     from datetime import datetime
 
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    _LOGGER.info(
-        "Profile index generated for '%s' with %d profiles at %s", plant_id, total_profiles, now_str
-    )
+    _LOGGER.info("Profile index generated for '%s' with %d profiles at %s", plant_id, total_profiles, now_str)
 
     return plant_id

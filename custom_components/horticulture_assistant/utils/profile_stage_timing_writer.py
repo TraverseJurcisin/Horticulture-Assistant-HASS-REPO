@@ -5,24 +5,27 @@ from .profile_helpers import write_profile_sections
 _LOGGER = logging.getLogger(__name__)
 
 
-def generate_stage_timing_profiles(
-    plant_id: str, base_path: str = None, overwrite: bool = False
-) -> str:
+def generate_stage_timing_profiles(plant_id: str, base_path: str = None, overwrite: bool = False) -> str:
     """Generate or update stage progress and calendar timing profile files.
 
-    This scaffolds `stage_progress.json` and `calendar_timing.json` under `plants/<plant_id>/`, populating predefined keys for
-    life-stage progress and per-zone calendar timing guidance with ``None`` defaults.
+    This scaffolds `stage_progress.json` and `calendar_timing.json` under
+    `plants/<plant_id>/`, populating predefined keys for life-stage progress and
+    per-zone calendar timing guidance with ``None`` defaults.
 
-    If a file already exists and ``overwrite`` is False, the file is left unchanged. If ``overwrite`` is True or the file is
-    missing, a new file is created (or an existing file is overwritten) with the default structure. All actions (creation,
-    skipping, overwriting) are logged for clarity.
+    If a file already exists and ``overwrite`` is False, the file is left
+    unchanged. If ``overwrite`` is True or the file is missing, a new file is
+    created (or an existing file is overwritten) with the default structure. All
+    actions (creation, skipping, overwriting) are logged for clarity.
 
-    :param plant_id: Identifier for the plant (used as directory name under the base path).
-    :param base_path: Optional base directory path for plant profiles (defaults to "plants/" in the current working
-        directory).
-    :param overwrite: If True, overwrite existing files; if False, skip writing if files already exist.
-    :return: The plant_id if profiles were successfully generated (or already present without changes), or an empty string
-        on error (for example, if directory creation fails).
+    :param plant_id: Identifier for the plant (used as directory name under the
+        base path).
+    :param base_path: Optional base directory path for plant profiles (defaults
+        to "plants/" in the current working directory).
+    :param overwrite: If True, overwrite existing files; if False, skip writing
+        if files already exist.
+    :return: The plant_id if profiles were successfully generated (or already
+        present without changes), or an empty string on error (for example, if
+        directory creation fails).
     """
 
     # Define default content for stage_progress.json

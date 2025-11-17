@@ -73,9 +73,7 @@ def _serialize_pending(pending: dict[str, Any], original: Any) -> Any:
 
     if isinstance(original, list):
         return list(pending.values())
-    if isinstance(original, dict) and any(
-        k in original for k in ("plant_id", "changes", "timestamp")
-    ):
+    if isinstance(original, dict) and any(k in original for k in ("plant_id", "changes", "timestamp")):
         return next(iter(pending.values()), {})
     return pending
 
@@ -121,22 +119,16 @@ def apply_threshold_approvals(hass: HomeAssistant | None = None) -> int:
         if thresholds is None:
             thresholds = {}
         elif not isinstance(thresholds, dict):
-            _LOGGER.warning(
-                "Unexpected thresholds format in profile %s; resetting to empty dict.", plant_id
-            )
+            _LOGGER.warning("Unexpected thresholds format in profile %s; resetting to empty dict.", plant_id)
             thresholds = {}
 
         # Apply all approved changes for this plant
-        approved_nutrients = [
-            nut for nut, info in changes.items() if info.get("status") == "approved"
-        ]
+        approved_nutrients = [nut for nut, info in changes.items() if info.get("status") == "approved"]
         if not approved_nutrients:
             # No approved changes for this plant; log and skip (leave pending data unchanged)
             for nut, info in changes.items():
                 status = info.get("status", "pending")
-                _LOGGER.info(
-                    "Skipping threshold change for plant %s: %s (status: %s)", plant_id, nut, status
-                )
+                _LOGGER.info("Skipping threshold change for plant %s: %s (status: %s)", plant_id, nut, status)
             continue
 
         applied_this_plant = 0

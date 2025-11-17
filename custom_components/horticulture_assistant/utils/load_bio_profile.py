@@ -98,9 +98,7 @@ def load_bio_profile(
             # Skip the profile index file and any validation-only JSON files
             if filename == "profile_index.json":
                 continue
-            if not include_validation_files and (
-                "validation" in filename.lower() or "validate" in filename.lower()
-            ):
+            if not include_validation_files and ("validation" in filename.lower() or "validate" in filename.lower()):
                 _LOGGER.debug("Skipping validation-only file: %s", file_path)
                 continue
             # Attempt to load and parse the JSON file

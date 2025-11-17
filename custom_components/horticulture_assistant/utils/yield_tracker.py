@@ -41,18 +41,14 @@ class YieldTracker:
                     if isinstance(entries, list):
                         self._logs[pid] = entries
                     else:
-                        _LOGGER.warning(
-                            "Yield log for plant %s is not a list; resetting to empty list.", pid
-                        )
+                        _LOGGER.warning("Yield log for plant %s is not a list; resetting to empty list.", pid)
                         self._logs[pid] = []
             else:
                 _LOGGER.warning(
                     "Yield logs file format invalid (expected dict at top level); starting with empty logs."
                 )
         except FileNotFoundError:
-            _LOGGER.info(
-                "Yield logs file not found at %s; starting new yield log.", self._data_file
-            )
+            _LOGGER.info("Yield logs file not found at %s; starting new yield log.", self._data_file)
         except json.JSONDecodeError as e:
             _LOGGER.error(
                 "JSON decode error reading yield logs from %s: %s; initializing empty log.",
@@ -60,9 +56,7 @@ class YieldTracker:
                 e,
             )
         except Exception as e:
-            _LOGGER.error(
-                "Error loading yield logs from %s: %s; initializing empty log.", self._data_file, e
-            )
+            _LOGGER.error("Error loading yield logs from %s: %s; initializing empty log.", self._data_file, e)
 
     def add_entry(
         self,
@@ -194,9 +188,7 @@ class YieldTracker:
                 _LOGGER.error("Invalid end_date '%s': %s", end_date, e)
                 return []
         if end_dt < start_dt:
-            _LOGGER.warning(
-                "End date %s is earlier than start date %s; returning empty list.", end_dt, start_dt
-            )
+            _LOGGER.warning("End date %s is earlier than start date %s; returning empty list.", end_dt, start_dt)
             return []
         results: list[dict] = []
         if plant_id:

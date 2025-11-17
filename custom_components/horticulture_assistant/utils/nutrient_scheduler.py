@@ -15,6 +15,7 @@ except ImportError:
     HomeAssistant = None
 
 from plant_engine.constants import get_stage_multiplier
+from plant_engine.nutrient_absorption import apply_absorption_rates
 from plant_engine.nutrient_manager import (
     get_all_recommended_levels,
     get_recommended_levels,
@@ -57,8 +58,6 @@ def normalize_tag(tag: str) -> str:
 # or override this mapping by providing ``nutrient_tag_modifiers.json`` in
 # the dataset overlay directory.
 TAG_MODIFIER_FILE = "nutrients/nutrient_tag_modifiers.json"
-
-from plant_engine.nutrient_absorption import apply_absorption_rates
 
 
 @lru_cache(maxsize=1)
@@ -173,9 +172,7 @@ def _apply_absorption_rates(targets: dict[str, float], stage_key: str) -> None:
     targets.update(adjusted)
 
 
-def _compute_nutrient_targets(
-    plant_id: str, hass: HomeAssistant | None, include_micro: bool
-) -> dict[str, float]:
+def _compute_nutrient_targets(plant_id: str, hass: HomeAssistant | None, include_micro: bool) -> dict[str, float]:
     """Return nutrient targets for ``plant_id`` without persisting them.
 
     This helper consolidates profile data and guideline defaults to produce
@@ -229,10 +226,7 @@ def _compute_nutrient_targets(
         except (ValueError, TypeError):
             _LOGGER.warning("Invalid base nutrient value for %s: %s", nut, val)
 
-    tags = [
-        str(t).lower()
-        for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])
-    ]
+    tags = [str(t).lower() for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])]
     _apply_tag_modifiers(adjusted, tags)
     _apply_absorption_rates(adjusted, stage_key)
 

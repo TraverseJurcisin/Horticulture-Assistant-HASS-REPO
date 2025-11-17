@@ -1,6 +1,5 @@
 """Estimate fertilizer ingredients from a guaranteed analysis."""
 
-
 # Simplified molecular weight fractions of common fertilizer ingredients.
 MOLECULAR_WEIGHTS: dict[str, dict[str, float]] = {
     "Ammonium Nitrate": {"N": 0.33},

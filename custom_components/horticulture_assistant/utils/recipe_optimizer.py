@@ -3,7 +3,6 @@ Core module for optimizing fertilizer recipes to meet plant nutrient targets.
 """
 
 
-
 def optimize_recipe(plant_profile: dict[str, float], products: list[dict]) -> dict:
     """
     Generate a fertilizer recipe to meet nutrient targets specified in a plant profile.
@@ -41,14 +40,9 @@ def optimize_recipe(plant_profile: dict[str, float], products: list[dict]) -> di
     for nutrient, target in targets.items():
         if target is None or target <= 0:
             continue
-        found = any(
-            (nutrient in prod.get("analysis", {}) and prod["analysis"][nutrient] > 0)
-            for prod in products
-        )
+        found = any((nutrient in prod.get("analysis", {}) and prod["analysis"][nutrient] > 0) for prod in products)
         if not found:
-            raise ValueError(
-                f"No available product contains nutrient '{nutrient}' to meet target {target} mg/L"
-            )
+            raise ValueError(f"No available product contains nutrient '{nutrient}' to meet target {target} mg/L")
 
     # Initialize remaining targets (mg)
     remaining = {nut: val for nut, val in targets.items() if val > 0}
@@ -122,9 +116,7 @@ def optimize_recipe(plant_profile: dict[str, float], products: list[dict]) -> di
         unit = "g" if prod.get("form") == "solid" else "mL"
         price = prod.get("price_per_unit", 0.0)
         cost = dose * price
-        recipe_ingredients.append(
-            {"product": prod_name, "dose": dose, "unit": unit, "cost": round(cost, 2)}
-        )
+        recipe_ingredients.append({"product": prod_name, "dose": dose, "unit": unit, "cost": round(cost, 2)})
         total_cost += cost
 
     total_volume_liters = (1000.0 + liquid_volume_ml) / 1000.0  # base 1L plus liquids
@@ -138,9 +130,7 @@ def optimize_recipe(plant_profile: dict[str, float], products: list[dict]) -> di
 
 # Example usage (mock data for demonstration)
 if __name__ == "__main__":
-    example_profile = {
-        "nutrient_targets": {"N": 150.0, "P": 50.0, "K": 150.0, "Fe": 2.0, "Mg": 20.0}
-    }
+    example_profile = {"nutrient_targets": {"N": 150.0, "P": 50.0, "K": 150.0, "Fe": 2.0, "Mg": 20.0}}
     example_products = [
         {
             "name": "CalNitrate",

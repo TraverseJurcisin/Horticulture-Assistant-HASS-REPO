@@ -46,6 +46,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover - executed in stu
 
         return None
 
+
 from ..const import (
     CONF_PLANT_ID,
     CONF_PLANT_NAME,
@@ -213,9 +214,7 @@ class ProfileContext:
         metric = bucket.get(key)
         return metric if isinstance(metric, Mapping) else None
 
-    def metric_value(
-        self, category: str, key: str, default: Any | None = None
-    ) -> Any | None:
+    def metric_value(self, category: str, key: str, default: Any | None = None) -> Any | None:
         """Return the scalar value for ``category``/``key`` if present."""
 
         metric = self.metric(category, key)
@@ -1584,9 +1583,10 @@ async def ensure_profile_device_registered(
     else:
         snapshot_dict["primary_profile_id"] = plant_id
         primary_profile_id = plant_id
-    if not isinstance(snapshot_dict.get("primary_profile_name"), str) or not str(
-        snapshot_dict.get("primary_profile_name")
-    ).strip():
+    if (
+        not isinstance(snapshot_dict.get("primary_profile_name"), str)
+        or not str(snapshot_dict.get("primary_profile_name")).strip()
+    ):
         snapshot_dict["primary_profile_name"] = plant_name
 
     entry_info = _normalise_device_info(build_entry_device_info(entry, snapshot_dict))
@@ -1641,9 +1641,7 @@ async def ensure_profile_device_registered(
         entry_device_id,
     )
 
-    profile_device, raw_profile_device_id = _coerce_device_registry_entry(
-        profile_device_result
-    )
+    profile_device, raw_profile_device_id = _coerce_device_registry_entry(profile_device_result)
 
     def _coerce_device_id(value: Any) -> str | None:
         if value is None:
@@ -1663,9 +1661,7 @@ async def ensure_profile_device_registered(
     def _is_device_object(candidate: Any) -> bool:
         return isinstance(candidate, Mapping) or hasattr(candidate, "__dict__")
 
-    async def _async_lookup_device(
-        identifier: tuple[str, str]
-    ) -> tuple[Any | None, str | None]:
+    async def _async_lookup_device(identifier: tuple[str, str]) -> tuple[Any | None, str | None]:
         lookup = getattr(device_registry, "async_get_device", None)
         if not callable(lookup):
             return None, None
@@ -1714,9 +1710,7 @@ async def ensure_profile_device_registered(
                     update_result = None
             if inspect.isawaitable(update_result):
                 update_result = await update_result
-            updated_device, updated_device_id = _coerce_device_registry_entry(
-                update_result
-            )
+            updated_device, updated_device_id = _coerce_device_registry_entry(update_result)
             updated_device_id = _coerce_device_id(updated_device_id)
             if updated_device_id:
                 profile_device_id = updated_device_id
@@ -1730,16 +1724,16 @@ async def ensure_profile_device_registered(
         needs_refresh = True
 
     if entry_device_id and profile_device_id:
-        via_candidate = _coerce_device_id(
-            getattr(profile_device, "via_device_id", None)
-        ) if _is_device_object(profile_device) else None
+        via_candidate = (
+            _coerce_device_id(getattr(profile_device, "via_device_id", None))
+            if _is_device_object(profile_device)
+            else None
+        )
         if via_candidate != entry_device_id:
             needs_refresh = True
 
     if needs_refresh:
-        lookup_device, lookup_device_id = await _async_lookup_device(
-            profile_identifier
-        )
+        lookup_device, lookup_device_id = await _async_lookup_device(profile_identifier)
         if lookup_device is not None:
             profile_device = lookup_device
         if lookup_device_id is not None:
@@ -1839,9 +1833,7 @@ async def ensure_profile_device_registered(
     current_profiles = tuple(pid for pid in entry_data["profile_ids"] if pid)
     current_profile_set = set(current_profiles)
     added_profiles = tuple(pid for pid in current_profiles if pid not in previous_profiles)
-    removed_profiles = tuple(
-        pid for pid in previous_profiles if pid not in current_profile_set
-    )
+    removed_profiles = tuple(pid for pid in previous_profiles if pid not in current_profile_set)
     updated_profiles: tuple[str, ...] = ()
     if canonical_profile_id in previous_profiles and canonical_profile_id not in removed_profiles:
         updated_profiles = (canonical_profile_id,)
@@ -1904,9 +1896,7 @@ async def ensure_all_profile_devices_registered(
 
     if canonical_profiles:
         snapshot_dict["profiles"] = {
-            pid: _coerce_mapping(payload)
-            for pid, payload in canonical_profiles.items()
-            if isinstance(payload, Mapping)
+            pid: _coerce_mapping(payload) for pid, payload in canonical_profiles.items() if isinstance(payload, Mapping)
         }
         for pid, payload in canonical_profiles.items():
             await ensure_profile_device_registered(
@@ -1922,11 +1912,7 @@ async def ensure_all_profile_devices_registered(
     fallback_id = _normalise_profile_identifier(snapshot_dict.get("plant_id"))
     if not fallback_id:
         candidate = entry.data.get(CONF_PLANT_ID)
-        fallback_id = (
-            _normalise_profile_identifier(candidate)
-            if candidate is not None
-            else ""
-        )
+        fallback_id = _normalise_profile_identifier(candidate) if candidate is not None else ""
         if not fallback_id:
             fallback_id = str(entry.entry_id)
 
@@ -1938,6 +1924,7 @@ async def ensure_all_profile_devices_registered(
         snapshot=snapshot_dict,
         device_registry=device_registry,
     )
+
 
 async def backfill_profile_devices_from_options(
     hass: HomeAssistant,

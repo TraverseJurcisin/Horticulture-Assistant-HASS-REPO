@@ -63,8 +63,11 @@ def _normalise_numeric_string(value: str) -> str:
         if collapsed.count(".") > 1:
             segments = collapsed.split(".")
             head, *tail = segments
-            if head and all(segment.isdigit() for segment in segments) and tail and all(
-                len(segment) == 3 for segment in tail
+            if (
+                head
+                and all(segment.isdigit() for segment in segments)
+                and tail
+                and all(len(segment) == 3 for segment in tail)
             ):
                 return f"{sign}{head}{''.join(tail)}"
         return f"{sign}{collapsed}"

@@ -96,9 +96,7 @@ class InventoryTracker:
                 amount_needed -= lot.quantity_remaining
                 lot.quantity_remaining = 0.0
         # Remove depleted lots
-        self.inventory[product_name] = [
-            lot for lot in self.inventory[product_name] if lot.quantity_remaining > 0
-        ]
+        self.inventory[product_name] = [lot for lot in self.inventory[product_name] if lot.quantity_remaining > 0]
         if amount_needed > 1e-9:
             return False
         usage_event = {
@@ -135,8 +133,11 @@ class InventoryTracker:
         return expiring
 
     def get_inventory_summary(self) -> list[dict]:
-        """Get a summary of the current inventory for each product.
-        Returns a list of dicts containing product name, total remaining quantity, unit, number of lots, and nearest expiration date."""
+        """Return a summary of the current inventory for each product.
+
+        The summary is a list of dictionaries containing the product name, total
+        remaining quantity, unit, number of lots, and nearest expiration date.
+        """
         summary_list = []
         for product_name, lots in self.inventory.items():
             if not lots:
