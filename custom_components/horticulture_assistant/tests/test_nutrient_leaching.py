@@ -1,5 +1,4 @@
 import pytest
-
 from plant_engine.nutrient_leaching import (
     compensate_for_leaching,
     estimate_cumulative_leaching_loss,

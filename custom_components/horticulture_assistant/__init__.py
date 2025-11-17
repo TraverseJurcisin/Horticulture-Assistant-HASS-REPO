@@ -1272,13 +1272,33 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         reason="service registration incomplete" if not services_ready else None,
     )
     if platform_dependencies_ready and services_ready:
-        if hasattr(hass.config_entries, "async_setup_platforms"):
+        forward_setups = getattr(hass.config_entries, "async_forward_entry_setups", None)
+        legacy_forward = getattr(hass.config_entries, "async_forward_entry_setup", None)
+
+        if callable(forward_setups):
             platform_ready, _ = await manager.guard_async(
                 "platform_setup",
-                hass.config_entries.async_setup_platforms(entry, PLATFORMS),
+                forward_setups(entry, PLATFORMS),
+            )
+        elif callable(legacy_forward):
+
+            async def _forward_all_platforms() -> bool:
+                results = await asyncio.gather(
+                    *(legacy_forward(entry, platform) for platform in PLATFORMS),
+                    return_exceptions=True,
+                )
+                for result in results:
+                    if isinstance(result, Exception):
+                        raise result
+                return all(bool(result) for result in results)
+
+            platform_ready, _ = await manager.guard_async(
+                "platform_setup",
+                _forward_all_platforms(),
             )
         else:
             platform_ready, _ = manager.skip("platform_setup", "platform loader unavailable")
+
     entry_data["platform_setup_ready"] = platform_ready
 
     async def _async_entry_updated(hass: HomeAssistant, updated_entry: ConfigEntry) -> None:

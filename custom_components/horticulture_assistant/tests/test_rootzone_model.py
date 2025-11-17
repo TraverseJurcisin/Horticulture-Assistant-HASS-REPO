@@ -1,5 +1,4 @@
 import pytest
-
 from plant_engine.rootzone_model import (
     RootZone,
     calculate_infiltration_volume,
