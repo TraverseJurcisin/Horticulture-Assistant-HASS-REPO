@@ -177,7 +177,7 @@ def generate_profile(metadata: dict, hass: HomeAssistant = None, overwrite: bool
     tags = []
     if "tags" in metadata:
         raw_tags = metadata["tags"]
-        if isinstance(raw_tags, (list, tuple, set)):
+        if isinstance(raw_tags, list | tuple | set):
             tags = list(raw_tags)
         elif raw_tags is not None:
             tags = [raw_tags]

@@ -367,7 +367,7 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
                         elif isinstance(subval, str):
                             if subval.strip() == "" or subval.strip().lower() == "tbd":
                                 empty_fields.append(f"{key}.{subkey}")
-                        elif isinstance(subval, (list, tuple, set, dict)) and len(subval) == 0:
+                        elif isinstance(subval, list | tuple | set | dict) and len(subval) == 0:
                             empty_fields.append(f"{key}.{subkey}")
         empty_fields = sorted(set(empty_fields))
         # Log and record issues for this file

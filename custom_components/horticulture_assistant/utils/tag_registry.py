@@ -24,7 +24,7 @@ def _normalise_plants(value: object) -> list[str]:
     if isinstance(value, str):
         plant = value.strip()
         return [plant] if plant else []
-    if isinstance(value, Sequence) and not isinstance(value, (str, bytes, bytearray)):
+    if isinstance(value, Sequence) and not isinstance(value, str | bytes | bytearray):
         plants: list[str] = []
         for item in value:
             if item is None:

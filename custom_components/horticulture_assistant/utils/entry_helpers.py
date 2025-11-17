@@ -360,7 +360,7 @@ def _coerce_device_registry_entry(result: Any) -> tuple[Any | None, str | None]:
                 return nested_device, nested_id
         device = result
 
-    if isinstance(result, (list, tuple)):
+    if isinstance(result, list | tuple):
         for item in result:
             candidate_device, candidate_id = _coerce_device_registry_entry(item)
             if candidate_device is not None and candidate_id:
@@ -1001,7 +1001,7 @@ def _as_identifier_pair(item: Any) -> tuple[str, str] | None:
             return str(domain), str(identifier)
         return None
 
-    if isinstance(item, Sequence) and not isinstance(item, (str, bytes)):
+    if isinstance(item, Sequence) and not isinstance(item, str | bytes):
         if len(item) != 2:
             return None
         first, second = item[0], item[1]
@@ -1060,7 +1060,7 @@ def _coerce_device_identifiers(value: Any) -> set[tuple[str, str]]:
             identifiers.add((domain, identifier))
         if identifiers:
             return identifiers
-    elif isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+    elif isinstance(value, Sequence) and not isinstance(value, str | bytes):
         for item in value:
             if pair := _as_identifier_pair(item):
                 identifiers.add(pair)
@@ -1107,7 +1107,7 @@ def _normalise_sensor_map(value: Any) -> dict[str, str]:
         items: Sequence[str]
         if isinstance(item, str):
             items = [item]
-        elif isinstance(item, Sequence) and not isinstance(item, (str, bytes)):
+        elif isinstance(item, Sequence) and not isinstance(item, str | bytes):
             items = [cand for cand in item if isinstance(cand, str)]
         else:
             continue

@@ -34,7 +34,7 @@ def get_requirements(plant_type: str) -> dict[str, float]:
 
     parsed: dict[str, float] = {}
     for nutrient, value in raw.items():
-        if not isinstance(value, (int, float, str)):
+        if not isinstance(value, int | float | str):
             continue
 
         try:
