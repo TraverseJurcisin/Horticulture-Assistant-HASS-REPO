@@ -1,14 +1,11 @@
-from __future__ import annotations
-
-"""Utilities for estimating root zone electrical conductivity."""
-
 """Utilities for estimating root zone electrical conductivity (EC).
 
-This module provides a lightweight linear estimator that can be trained
-on historical data and later used to infer EC values from recent sensor
-logs.  The functions are intentionally dependency free so they can be
-executed during unit tests without a Home Assistant install.
+This module provides a lightweight linear estimator that can be trained on historical data and later used to infer EC
+values from recent sensor logs. The functions are intentionally dependency free so they can be executed during unit
+tests without a Home Assistant install.
 """
+
+from __future__ import annotations
 
 import logging
 from collections.abc import Iterable, Mapping, MutableMapping
@@ -24,13 +21,14 @@ try:
 except Exception:  # pragma: no cover - Home Assistant not installed in tests
     HomeAssistant = None  # type: ignore
 
-from plant_engine import ec_manager
 from plant_engine.fertigation import estimate_solution_ec
 from plant_engine.utils import load_dataset
 
+from plant_engine import ec_manager
+
+from .bio_profile_loader import load_profile_by_id
 from .json_io import load_json, save_json
 from .path_utils import data_path, plants_path
-from .bio_profile_loader import load_profile_by_id
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -351,7 +349,7 @@ def train_ec_model(
 
     feature_names: set[str] = set()
     for row in samples:
-        feature_names.update(k for k in row.keys() if k != "observed_ec")
+        feature_names.update(k for k in row if k != "observed_ec")
     if not feature_names:
         raise ValueError("No valid features for training")
     names = sorted(feature_names)

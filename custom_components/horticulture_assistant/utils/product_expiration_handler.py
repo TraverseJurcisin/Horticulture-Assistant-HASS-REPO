@@ -52,8 +52,7 @@ def should_warn_about_expiration(
         # Warn if biological with no expiration
         return True
 
-    if temperature_sensitive and storage_temp_c is not None:
-        if storage_temp_c > 35 or storage_temp_c < 0:
-            return True  # too hot or frozen
+    if temperature_sensitive and storage_temp_c is not None and (storage_temp_c > 35 or storage_temp_c < 0):
+        return True  # too hot or frozen
 
     return False

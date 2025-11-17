@@ -147,9 +147,8 @@ class InventoryTracker:
             lot_count = len(lots)
             nearest_exp = None
             for lot in lots:
-                if lot.expiration_date:
-                    if nearest_exp is None or lot.expiration_date < nearest_exp:
-                        nearest_exp = lot.expiration_date
+                if lot.expiration_date and (nearest_exp is None or lot.expiration_date < nearest_exp):
+                    nearest_exp = lot.expiration_date
             summary_list.append(
                 {
                     "product": product_name,

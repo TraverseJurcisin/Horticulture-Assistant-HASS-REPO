@@ -7,17 +7,18 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bool = False):
-    """
-    Validate the structure and content of a plant profile (set of JSON files) for a given plant_id.
-    Checks each JSON file under plants/<plant_id>/ for expected keys and empty/null values.
-    Logs any deviations from the expected profile template and returns a dictionary of issues.
-    If run as a standalone script, outputs the summary to the console.
+    """Validate the structure and content of a plant profile (set of JSON files).
 
-    :param plant_id: Identifier for the plant (name of the profile directory under base_path).
-    :param base_path: Optional base directory for plant profiles (defaults to "plants" in current directory).
-    :param verbose: If True, include more detailed output (e.g., log files that have no issues as "OK", list unexpected keys).
-    :return: Dictionary of issues found. The keys are filenames and values are dictionaries describing issues:
-             {"missing_keys": [...], "empty_fields": [...], "error": "..." (if any format errors), "extra_keys": [...]}.
+    Checks each JSON file under ``plants/<plant_id>/`` for expected keys and empty/null values, logs any deviations from
+    the expected template, and returns a dictionary of issues. When executed as a script, it prints the summary to the
+    console.
+
+    :param plant_id: Identifier for the plant (name of the profile directory under ``base_path``).
+    :param base_path: Optional base directory for plant profiles (defaults to "plants" in the current directory).
+    :param verbose: If True, include more detailed output (for example, log files that have no issues as "OK" or list
+        unexpected keys).
+    :return: Dictionary of issues found. The keys are filenames and values are dictionaries describing issues such as
+        missing keys, empty fields, parsing errors, or unexpected keys.
     """
     # Determine base directory for plant profiles
     base_dir = Path(base_path) if base_path else Path(os.getcwd()) / "plants"
@@ -290,9 +291,9 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
             if file_name == "general.json" and "start_date" not in content:
                 expected = expected.copy()
                 expected.discard("start_date")
-            missing_keys = sorted(list(expected - set(content.keys())))
+            missing_keys = sorted(expected - set(content.keys()))
             extra = set(content.keys()) - expected
-            extra_keys = sorted(list(extra)) if extra else []
+            extra_keys = sorted(extra) if extra else []
         else:
             missing_keys = []
             extra_keys = []
@@ -374,12 +375,8 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
                         elif isinstance(subval, str):
                             if subval.strip() == "" or subval.strip().lower() == "tbd":
                                 empty_fields.append(f"{key}.{subkey}")
-                        elif isinstance(subval, list | tuple | set):
-                            if len(subval) == 0:
-                                empty_fields.append(f"{key}.{subkey}")
-                        elif isinstance(subval, dict):
-                            if len(subval) == 0:
-                                empty_fields.append(f"{key}.{subkey}")
+                        elif isinstance(subval, (list, tuple, set, dict)) and len(subval) == 0:
+                            empty_fields.append(f"{key}.{subkey}")
         empty_fields = sorted(set(empty_fields))
         # Log and record issues for this file
         file_issues = {}

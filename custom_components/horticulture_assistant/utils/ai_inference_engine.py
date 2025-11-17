@@ -93,18 +93,16 @@ class AIInferenceEngine:
     def _check_growth(self, data: Mapping[str, Any], issues: list[str], recs: list[str]) -> None:
         growth = data.get("growth_rate")
         expected = data.get("expected_growth")
-        if growth is not None and expected is not None:
-            if growth < 0.75 * expected:
-                issues.append("Low growth rate detected")
-                recs.append("Evaluate nutrient delivery and light levels")
+        if growth is not None and expected is not None and growth < 0.75 * expected:
+            issues.append("Low growth rate detected")
+            recs.append("Evaluate nutrient delivery and light levels")
 
     def _check_yield(self, data: Mapping[str, Any], issues: list[str], recs: list[str]) -> None:
         observed = data.get("yield")
         expected = data.get("expected_yield")
-        if observed is not None and expected is not None:
-            if observed < 0.8 * expected:
-                issues.append("Yield below expected threshold")
-                recs.append("Check fertigation accuracy and media saturation")
+        if observed is not None and expected is not None and observed < 0.8 * expected:
+            issues.append("Yield below expected threshold")
+            recs.append("Check fertigation accuracy and media saturation")
 
     def _check_ec(self, data: Mapping[str, Any], issues: list[str], recs: list[str]) -> None:
         ec = data.get("ec")

@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Mapping, Sequence, Set
+import inspect
+import types
+from collections.abc import Iterable, Iterator, Mapping, Sequence, Set
 from dataclasses import dataclass, field
 from pathlib import Path
 from types import MappingProxyType
-from typing import Any, Iterator
-
-import inspect
-import types
+from typing import Any
 
 try:  # pragma: no cover - allow running tests without Home Assistant
     from homeassistant.config_entries import ConfigEntry
@@ -83,7 +82,7 @@ def _normalise_sensor_sequences(
             continue
         if isinstance(raw, str):
             cleaned = raw.strip()
-            items = (cleaned,) if cleaned else tuple()
+            items = (cleaned,) if cleaned else ()
         elif isinstance(raw, Set):
             cleaned: list[str] = []
             for item in raw:
@@ -105,7 +104,7 @@ def _normalise_sensor_sequences(
                     seen.add(trimmed)
             items = tuple(cleaned)
         else:
-            items = tuple()
+            items = ()
         if items:
             sensors[key] = items
     return sensors
@@ -448,9 +447,8 @@ async def _async_resolve_device_registry(
 
     for loader_name in loader_names:
         load_result = await _run_loader(loader_name)
-        if load_result is not None:
-            if hasattr(load_result, "async_get_or_create"):
-                return load_result
+        if load_result is not None and hasattr(load_result, "async_get_or_create"):
+            return load_result
         for getter_name in getter_names:
             registry = await _try_getter(getter_name)
             if registry is not None:
@@ -1024,7 +1022,7 @@ def _coerce_device_identifiers(value: Any) -> set[tuple[str, str]]:
             return identifiers
     elif isinstance(value, Mapping):
         if direct_pair:
-            key_set = {str(key).lower() for key in value.keys()}
+            key_set = {str(key).lower() for key in value}
             valid_keys = {
                 "domain",
                 "id",
@@ -1054,16 +1052,10 @@ def _coerce_device_identifiers(value: Any) -> set[tuple[str, str]]:
                 item = candidate
             if item is None:
                 continue
-            if isinstance(key, str):
-                domain = key.strip()
-            else:
-                domain = str(key).strip()
+            domain = key.strip() if isinstance(key, str) else str(key).strip()
             if not domain:
                 continue
-            if isinstance(item, str):
-                identifier = item.strip()
-            else:
-                identifier = str(item).strip()
+            identifier = item.strip() if isinstance(item, str) else str(item).strip()
             if not identifier:
                 continue
             identifiers.add((domain, identifier))
@@ -1284,7 +1276,7 @@ async def update_entry_data(
 
     snapshot = build_entry_snapshot(entry)
 
-    previous_id = entry_data.get("plant_id")
+    entry_data.get("plant_id")
     entry_data.update(
         {
             "config_entry": entry,
@@ -1494,10 +1486,7 @@ async def ensure_profile_device_registered(
         return
 
     snapshot_dict: dict[str, Any]
-    if isinstance(snapshot, Mapping):
-        snapshot_dict = dict(snapshot)
-    else:
-        snapshot_dict = dict(build_entry_snapshot(entry))
+    snapshot_dict = dict(snapshot) if isinstance(snapshot, Mapping) else dict(build_entry_snapshot(entry))
 
     raw_profiles = snapshot_dict.get("profiles")
     profiles_map: dict[str, dict[str, Any]] = {}
@@ -1595,7 +1584,9 @@ async def ensure_profile_device_registered(
     else:
         snapshot_dict["primary_profile_id"] = plant_id
         primary_profile_id = plant_id
-    if not isinstance(snapshot_dict.get("primary_profile_name"), str) or not str(snapshot_dict.get("primary_profile_name")).strip():
+    if not isinstance(snapshot_dict.get("primary_profile_name"), str) or not str(
+        snapshot_dict.get("primary_profile_name")
+    ).strip():
         snapshot_dict["primary_profile_name"] = plant_name
 
     entry_info = _normalise_device_info(build_entry_device_info(entry, snapshot_dict))
@@ -1803,7 +1794,7 @@ async def ensure_profile_device_registered(
 
     entry_data["profiles"] = merged_profiles
 
-    profile_ids = {pid for pid in merged_profiles.keys() if isinstance(pid, str) and pid}
+    profile_ids = {pid for pid in merged_profiles if isinstance(pid, str) and pid}
     if isinstance(plant_id, str) and plant_id:
         profile_ids.add(plant_id)
     if isinstance(primary_profile_id, str) and primary_profile_id:
@@ -1964,10 +1955,7 @@ async def backfill_profile_devices_from_options(
     """
 
     stored: Mapping[str, Any] | None
-    if isinstance(entry_data, Mapping):
-        stored = entry_data
-    else:
-        stored = get_entry_data(hass, entry)
+    stored = entry_data if isinstance(entry_data, Mapping) else get_entry_data(hass, entry)
 
     if not isinstance(stored, Mapping):
         return False
@@ -1979,7 +1967,7 @@ async def backfill_profile_devices_from_options(
     recorded_devices = stored.get("profile_devices")
     existing_ids: set[str] = set()
     if isinstance(recorded_devices, Mapping):
-        for pid in recorded_devices.keys():
+        for pid in recorded_devices:
             canonical_pid = _normalise_profile_identifier(pid)
             if canonical_pid:
                 existing_ids.add(canonical_pid)
@@ -2352,10 +2340,7 @@ def resolve_profile_context_collection(
 
     stored_raw = get_entry_data(hass, entry)
     stored: Mapping[str, Any]
-    if isinstance(stored_raw, Mapping):
-        stored = dict(stored_raw)
-    else:
-        stored = {}
+    stored = dict(stored_raw) if isinstance(stored_raw, Mapping) else {}
 
     snapshot = stored.get("snapshot") if isinstance(stored.get("snapshot"), Mapping) else None
     if snapshot is None:

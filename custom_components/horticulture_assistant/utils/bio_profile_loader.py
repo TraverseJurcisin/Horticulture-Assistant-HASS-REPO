@@ -427,10 +427,7 @@ def _normalize_sensor_values(sensors: Mapping[str, Any]) -> dict[str, list]:
 
     normalized: dict[str, list[str]] = {}
     for key, val in sensors.items():
-        if isinstance(val, str) or not isinstance(val, Iterable):
-            values = [val]
-        else:
-            values = list(val)
+        values = [val] if isinstance(val, str) or not isinstance(val, Iterable) else list(val)
 
         items: list[str] = []
         for item in values:

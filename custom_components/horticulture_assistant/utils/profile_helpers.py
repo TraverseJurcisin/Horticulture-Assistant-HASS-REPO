@@ -74,10 +74,7 @@ def _safe_component(value: Any) -> str:
                     safe_value = f"{safe_value}_{cleaned_suffix}"
         else:
             trailing = "_".join(part for part in suffix if part)
-            if trailing:
-                safe_value = f"{stem}_{trailing}".replace(".", "_")
-            else:
-                safe_value = stem
+            safe_value = f"{stem}_{trailing}".replace(".", "_") if trailing else stem
 
         safe_value = safe_value.strip("_")
         if safe_value:

@@ -1,6 +1,6 @@
-from __future__ import annotations
-
 """Lightweight access to the fertilizer products index."""
+
+from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass

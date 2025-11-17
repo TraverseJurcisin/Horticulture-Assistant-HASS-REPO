@@ -4,12 +4,11 @@ import os
 from datetime import datetime
 from pathlib import PurePath
 
-from plant_engine import ai_model
-
 from custom_components.horticulture_assistant.utils.path_utils import (
     data_path,
     plants_path,
 )
+from plant_engine import ai_model
 
 from ..const import (
     CONF_OPENAI_API_KEY,

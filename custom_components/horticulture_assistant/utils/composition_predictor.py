@@ -32,7 +32,7 @@ def predict_ingredient_ratios(
         Dict of {ingredient name: estimated % of formulation}
     """
 
-    result = {ingredient: 0.0 for ingredient in derived_from_list}
+    result = dict.fromkeys(derived_from_list, 0.0)
     remaining = target_composition.copy()
 
     # Priority: fulfill most deficient elements first

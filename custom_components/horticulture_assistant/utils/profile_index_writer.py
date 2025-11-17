@@ -28,10 +28,7 @@ def generate_profile_index(plant_id: str, base_path: str = None, overwrite: bool
     :return: The plant_id if the index was successfully generated (or skipped due to existing file), or an empty string on error.
     """
     # Determine base directory for plant profiles
-    if base_path:
-        base_dir = Path(base_path)
-    else:
-        base_dir = Path("plants")
+    base_dir = Path(base_path) if base_path else Path("plants")
     plant_dir = base_dir / str(plant_id)
 
     # Ensure the plant directory exists

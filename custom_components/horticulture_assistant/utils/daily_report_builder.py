@@ -9,19 +9,19 @@ from datetime import datetime
 from pathlib import Path
 
 from homeassistant.core import HomeAssistant
-from plant_engine import environment_manager
 
+from custom_components.horticulture_assistant.utils.bio_profile_loader import (
+    load_profile,
+)
 from custom_components.horticulture_assistant.utils.path_utils import (
     config_path,
     data_path,
     plants_path,
 )
-from custom_components.horticulture_assistant.utils.bio_profile_loader import (
-    load_profile,
-)
 from custom_components.horticulture_assistant.utils.plant_registry import (
     PLANT_REGISTRY_FILE,
 )
+from plant_engine import environment_manager
 
 from .json_io import load_json, save_json
 from .state_helpers import (

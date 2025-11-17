@@ -11,6 +11,15 @@ from plant_engine.environment_manager import (
 from plant_engine.irrigation_manager import get_daily_irrigation_target
 
 
+@cache
+def _cached_irrigation_target(plant_type: str, stage: str) -> float:
+    """Return cached daily irrigation target for a plant stage."""
+
+    if not plant_type or not stage:
+        return 0.0
+    return get_daily_irrigation_target(plant_type, stage)
+
+
 @dataclass
 class FertilizerRecommendation:
     """Recommended fertilizer application for a nutrient deficit."""
@@ -112,7 +121,7 @@ class RecommendationEngine:
 
     def recommend_all(self) -> dict[str, RecommendationBundle]:
         """Return recommendations for every known plant."""
-        return {pid: self.recommend(pid) for pid in self.plant_profiles.keys()}
+        return {pid: self.recommend(pid) for pid in self.plant_profiles}
 
     def update_ai_feedback(self, plant_id: str, ai_feedback: dict) -> None:
         """Cache AI feedback notes for ``plant_id``."""
@@ -126,12 +135,9 @@ class RecommendationEngine:
     # Recommendation logic
     # ------------------------------------------------------------------
 
-    @cache
     def _get_irrigation_target(self, plant_type: str, stage: str) -> float:
         """Return daily irrigation volume (mL) for a plant stage."""
-        if not plant_type or not stage:
-            return 0.0
-        return get_daily_irrigation_target(plant_type, stage)
+        return _cached_irrigation_target(plant_type, stage)
 
     def _calculate_nutrient_deficits(self, plant_id: str) -> dict[str, float]:
         """Return ppm deficits using dataset guidelines."""

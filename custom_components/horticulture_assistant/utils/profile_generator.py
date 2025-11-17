@@ -65,7 +65,7 @@ def _normalise_plant_id(value: Any) -> str:
 
 
 def generate_profile(
-    metadata: dict, hass: 'HomeAssistant' = None, overwrite: bool = False, base_dir: str = None
+    metadata: dict, hass: HomeAssistant = None, overwrite: bool = False, base_dir: str = None
 ) -> str:
     """
     Generate a new plant profile directory with template JSON files.

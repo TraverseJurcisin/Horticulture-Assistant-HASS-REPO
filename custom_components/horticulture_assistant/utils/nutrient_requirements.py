@@ -80,7 +80,7 @@ def get_temperature_adjusted_requirements(plant_type: str, root_temp_c: float) -
 
     factor = get_uptake_factor(root_temp_c, plant_type)
     if factor <= 0:
-        return {nutrient: 0.0 for nutrient in base}
+        return dict.fromkeys(base, 0.0)
 
     return {nutrient: round(value / factor, 2) for nutrient, value in base.items()}
 
