@@ -10,8 +10,15 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from pathlib import Path
+
+try:
+    from datetime import UTC
+except ImportError:  # pragma: no cover - fallback for older Python
+    from datetime import timezone
+
+    UTC = timezone.utc  # noqa: UP017
 
 import plant_engine.pest_monitor as pest_monitor
 from plant_engine.compute_transpiration import compute_transpiration
@@ -69,8 +76,6 @@ from .cycle_helpers import (
 from .cycle_helpers import (
     summarize_irrigation as _summarize_irrigation,
 )
-
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 
 @dataclass(slots=True)
