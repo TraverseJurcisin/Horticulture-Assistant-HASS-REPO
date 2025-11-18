@@ -12,12 +12,12 @@ Any detected alerts are logged and recorded in a JSON file (`data/ec_alerts.json
 import json
 import logging
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Optional
 
 from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
 
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
+UTC = UTC
 
 # Attempt to import HomeAssistant for type hints and runtime (if running inside HA)
 try:

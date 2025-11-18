@@ -18,7 +18,7 @@ import logging
 import re
 from collections.abc import Callable, Iterable, Mapping, Sequence, Set
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import Enum
 from math import isfinite
 from pathlib import Path
@@ -389,7 +389,7 @@ def _load_profile_schema() -> dict[str, Any] | None:
 STORAGE_VERSION = PROFILE_STORE_VERSION
 STORAGE_KEY = PROFILE_STORE_KEY
 
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
+UTC = UTC
 
 
 class ProfileRegistry:

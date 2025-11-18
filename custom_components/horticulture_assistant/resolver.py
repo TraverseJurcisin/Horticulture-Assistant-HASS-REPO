@@ -4,7 +4,7 @@ import logging
 import math
 from collections.abc import Mapping
 from contextlib import suppress
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 from homeassistant.core import HomeAssistant
@@ -16,7 +16,7 @@ from .profile.resolution import annotate_inherited_target, build_profiles_index,
 from .profile.schema import BioProfile, FieldAnnotation, ResolvedTarget
 from .profile.utils import citations_map_to_list, determine_species_slug, ensure_sections
 
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
+UTC = UTC
 
 _LOGGER = logging.getLogger(__name__)
 

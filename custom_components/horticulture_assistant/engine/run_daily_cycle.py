@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import plant_engine.pest_monitor as pest_monitor
@@ -47,7 +47,7 @@ from .cycle_helpers import load_logs as _load_logs
 from .cycle_helpers import load_recent_entries as _load_recent_entries
 from .cycle_helpers import summarize_irrigation as _summarize_irrigation
 
-UTC = getattr(datetime, "UTC", timezone.utc)  # noqa: UP017
+UTC = UTC
 
 
 @dataclass(slots=True)

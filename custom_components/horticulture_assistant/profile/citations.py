@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from .schema import Citation
 
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
+UTC = UTC
 
 
 def utcnow_iso() -> str:

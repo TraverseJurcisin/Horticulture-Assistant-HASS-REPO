@@ -9,7 +9,7 @@ import sys
 import time
 from collections.abc import Mapping
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import StrEnum
 from types import SimpleNamespace
 from typing import Any
@@ -108,7 +108,7 @@ __all__ = [
 _LOGGER = logging.getLogger(__name__)
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
+UTC = UTC
 
 
 def _utcnow() -> str:
