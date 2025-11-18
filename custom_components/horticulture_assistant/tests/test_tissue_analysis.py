@@ -1,8 +1,4 @@
-from plant_engine.tissue_analysis import (
-    evaluate_tissue_levels,
-    get_target_ranges,
-    score_tissue_levels,
-)
+from plant_engine.tissue_analysis import evaluate_tissue_levels, get_target_ranges, score_tissue_levels
 
 
 def test_get_target_ranges_known():

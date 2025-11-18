@@ -4,10 +4,7 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from functools import cache
 
-from plant_engine.environment_manager import (
-    generate_environment_alerts,
-    optimize_environment,
-)
+from plant_engine.environment_manager import generate_environment_alerts, optimize_environment
 from plant_engine.irrigation_manager import get_daily_irrigation_target
 
 

@@ -18,13 +18,8 @@ from typing import Optional
 
 from plant_engine.utils import load_dataset
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    config_path,
-    data_path,
-)
-from custom_components.horticulture_assistant.utils.plant_registry import (
-    PLANT_REGISTRY_FILE,
-)
+from custom_components.horticulture_assistant.utils.path_utils import config_path, data_path
+from custom_components.horticulture_assistant.utils.plant_registry import PLANT_REGISTRY_FILE
 
 try:
     from homeassistant.core import HomeAssistant

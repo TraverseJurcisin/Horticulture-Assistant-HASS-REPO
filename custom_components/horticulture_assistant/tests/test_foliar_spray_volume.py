@@ -1,7 +1,4 @@
-from plant_engine.fertigation import (
-    estimate_spray_solution_volume,
-    get_foliar_spray_volume,
-)
+from plant_engine.fertigation import estimate_spray_solution_volume, get_foliar_spray_volume
 
 
 def test_get_foliar_spray_volume():

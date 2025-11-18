@@ -1,9 +1,7 @@
 import json
 from pathlib import Path
 
-from custom_components.horticulture_assistant.analytics.export_all_growth_yield import (
-    export_all_growth_yield,
-)
+from custom_components.horticulture_assistant.analytics.export_all_growth_yield import export_all_growth_yield
 
 
 def test_export_all_growth_yield(tmp_path: Path):

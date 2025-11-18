@@ -10,9 +10,7 @@ from typing import Any
 
 from plant_engine.utils import load_dataset
 
-from custom_components.horticulture_assistant.fertilizer_formulator import (
-    convert_guaranteed_analysis,
-)
+from custom_components.horticulture_assistant.fertilizer_formulator import convert_guaranteed_analysis
 
 from .nutrient_requirements import get_requirements
 

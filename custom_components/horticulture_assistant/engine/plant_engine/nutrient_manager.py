@@ -6,12 +6,8 @@ from collections.abc import Iterable, Mapping
 
 from .constants import get_stage_multiplier
 from .nutrient_availability import availability_for_all
-from .utils import (
-    clear_dataset_cache,
-    list_dataset_entries,
-    load_dataset,
-    normalize_key,
-)
+from .utils import (clear_dataset_cache, list_dataset_entries, load_dataset,
+                    normalize_key)
 
 DATA_FILE = "nutrients/nutrient_guidelines.json"
 RATIO_DATA_FILE = "nutrients/nutrient_ratio_guidelines.json"

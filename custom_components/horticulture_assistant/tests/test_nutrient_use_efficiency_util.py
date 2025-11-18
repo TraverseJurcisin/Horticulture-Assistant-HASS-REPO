@@ -1,8 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.utils.nutrient_use_efficiency import (
-    NutrientUseEfficiency,
-)
+from custom_components.horticulture_assistant.utils.nutrient_use_efficiency import NutrientUseEfficiency
 
 
 def test_nutrient_efficiency_basic(tmp_path, monkeypatch):

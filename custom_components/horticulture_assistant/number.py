@@ -10,12 +10,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import (
-    CATEGORY_CONTROL,
-    CONF_PROFILES,
-    DOMAIN,
-    signal_profile_contexts_updated,
-)
+from .const import CATEGORY_CONTROL, CONF_PROFILES, DOMAIN, signal_profile_contexts_updated
 from .entity_base import HorticultureBaseEntity
 from .profile.citations import manual_note
 from .profile.compat import get_resolved_target, set_resolved_target

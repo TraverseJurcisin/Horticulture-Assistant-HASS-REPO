@@ -10,11 +10,7 @@ from homeassistant.core import HomeAssistant
 from .const import CONF_API_KEY, DOMAIN
 from .profile_monitor import ProfileMonitor
 from .profile_registry import ProfileRegistry
-from .utils.entry_helpers import (
-    entry_device_identifier,
-    profile_device_identifier,
-    serialise_device_info,
-)
+from .utils.entry_helpers import entry_device_identifier, profile_device_identifier, serialise_device_info
 
 TO_REDACT = {CONF_API_KEY}
 _ONBOARDING_TIMELINE_LIMIT = 50

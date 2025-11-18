@@ -15,7 +15,9 @@ from scripts import ensure_repo_root_on_path
 ROOT = ensure_repo_root_on_path()
 
 import yaml
-from plant_engine.fertigation import recommend_precise_fertigation_with_injection
+
+from plant_engine.fertigation import \
+    recommend_precise_fertigation_with_injection
 
 
 def load_water_profile(path: str) -> dict:

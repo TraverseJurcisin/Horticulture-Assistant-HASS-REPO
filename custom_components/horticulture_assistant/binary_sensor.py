@@ -5,21 +5,13 @@ from __future__ import annotations
 import logging
 from collections.abc import Iterable, Mapping
 
-from homeassistant.components.binary_sensor import (
-    BinarySensorDeviceClass,
-    BinarySensorEntity,
-)
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass, BinarySensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import (
-    CATEGORY_CONTROL,
-    CATEGORY_DIAGNOSTIC,
-    DOMAIN,
-    signal_profile_contexts_updated,
-)
+from .const import CATEGORY_CONTROL, CATEGORY_DIAGNOSTIC, DOMAIN, signal_profile_contexts_updated
 from .entity_base import HorticultureBaseEntity, HorticultureEntryEntity
 from .entity_utils import ensure_entities_exist
 from .profile_monitor import ProfileMonitor

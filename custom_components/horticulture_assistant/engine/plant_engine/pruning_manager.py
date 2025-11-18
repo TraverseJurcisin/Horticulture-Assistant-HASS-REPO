@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from datetime import date, timedelta
 
-from .utils import list_dataset_entries, load_dataset, normalize_key, stage_value
+from .utils import (list_dataset_entries, load_dataset, normalize_key,
+                    stage_value)
 
 DATA_FILE = "pruning/pruning_guidelines.json"
 INTERVAL_FILE = "pruning/pruning_intervals.json"

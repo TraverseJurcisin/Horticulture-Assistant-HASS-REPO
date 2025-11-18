@@ -12,10 +12,7 @@ try:
 except Exception:  # pragma: no cover - Home Assistant not available during tests
     HomeAssistant = None  # type: ignore
 
-from plant_engine.fertigation import (
-    get_fertigation_volume,
-    recommend_precise_fertigation,
-)
+from plant_engine.fertigation import get_fertigation_volume, recommend_precise_fertigation
 
 from .bio_profile_loader import load_profile_by_id
 from .path_utils import plants_path

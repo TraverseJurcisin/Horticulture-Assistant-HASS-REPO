@@ -161,9 +161,7 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
                 reason_str = f"{thresh_name_str} below threshold"
                 # Trigger the fertilizer actuator for this plant
                 try:
-                    from custom_components.horticulture_assistant.automation import (
-                        fertilizer_actuator,
-                    )
+                    from custom_components.horticulture_assistant.automation import fertilizer_actuator
 
                     fertilizer_actuator.trigger_fertilizer_actuator(
                         plant_id=plant_id, trigger=True, base_path=base_path

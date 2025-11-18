@@ -1,7 +1,4 @@
-from plant_engine.precipitation_risk import (
-    estimate_precipitation_risk,
-    list_supported_plants,
-)
+from plant_engine.precipitation_risk import estimate_precipitation_risk, list_supported_plants
 
 
 def test_list_supported_plants():

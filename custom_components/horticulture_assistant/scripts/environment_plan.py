@@ -15,10 +15,8 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.environment_manager import (
-    generate_stage_environment_plan,
-    generate_zone_environment_plan,
-)
+from plant_engine.environment_manager import (generate_stage_environment_plan,
+                                              generate_zone_environment_plan)
 
 
 def main(argv: list[str] | None = None) -> None:

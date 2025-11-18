@@ -64,18 +64,9 @@ from .profile.statistics import recompute_statistics
 from .profile.store import CACHE_KEY as PROFILE_STORE_CACHE_KEY
 from .profile.store import STORE_KEY as PROFILE_STORE_KEY
 from .profile.store import STORE_VERSION as PROFILE_STORE_VERSION
-from .profile.utils import (
-    LineageLinkReport,
-    ensure_sections,
-    link_species_and_cultivars,
-    sync_general_section,
-)
+from .profile.utils import LineageLinkReport, ensure_sections, link_species_and_cultivars, sync_general_section
 from .profile.validation import evaluate_threshold_bounds
-from .sensor_validation import (
-    SensorValidationResult,
-    collate_issue_messages,
-    validate_sensor_links,
-)
+from .sensor_validation import SensorValidationResult, collate_issue_messages, validate_sensor_links
 from .utils.entry_helpers import (
     async_sync_entry_devices,
     ensure_all_profile_devices_registered,

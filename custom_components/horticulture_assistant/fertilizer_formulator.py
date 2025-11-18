@@ -13,9 +13,7 @@ from collections.abc import Mapping
 
 from .catalog import CATALOG, Fertilizer
 from .engine.plant_engine import fertilizer_limits, nutrient_manager
-from .engine.plant_engine.fertilizer_dataset_lookup import (
-    recommend_products_for_nutrient as _recommend_products,
-)
+from .engine.plant_engine.fertilizer_dataset_lookup import recommend_products_for_nutrient as _recommend_products
 
 MOLAR_MASS_CONVERSIONS = {
     "P2O5": ("P", 0.436),

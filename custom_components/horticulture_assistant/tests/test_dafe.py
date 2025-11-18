@@ -2,8 +2,8 @@ import pytest
 
 pytest.importorskip("dafe.main")
 
-from dafe import (  # noqa: E402
-    calculate_effective_diffusion,
+from dafe import (
+    calculate_effective_diffusion,  # noqa: E402
     generate_pulse_schedule,
     get_current_ec,
     get_media_profile,

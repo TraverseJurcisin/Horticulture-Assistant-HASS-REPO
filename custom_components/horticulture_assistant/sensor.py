@@ -7,12 +7,7 @@ from contextlib import suppress
 from datetime import datetime, timedelta
 from typing import Any
 
-from homeassistant.components.sensor import (
-    SensorDeviceClass,
-    SensorEntity,
-    SensorEntityDescription,
-    SensorStateClass,
-)
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorEntityDescription, SensorStateClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import PERCENTAGE, UnitOfTemperature, UnitOfTime
 from homeassistant.core import HomeAssistant, callback
@@ -32,27 +27,12 @@ from .const import (
 from .coordinator import HorticultureCoordinator
 from .coordinator_ai import HortiAICoordinator
 from .coordinator_local import HortiLocalCoordinator
-from .derived import (
-    PlantDewPointSensor,
-    PlantDLISensor,
-    PlantMoldRiskSensor,
-    PlantPPFDSensor,
-    PlantVPDSensor,
-)
+from .derived import PlantDewPointSensor, PlantDLISensor, PlantMoldRiskSensor, PlantPPFDSensor, PlantVPDSensor
 from .entitlements import derive_entitlements
 from .entity import HorticultureEntity
-from .entity_base import (
-    HorticultureBaseEntity,
-    HorticultureEntryEntity,
-    ProfileContextEntityMixin,
-)
+from .entity_base import HorticultureBaseEntity, HorticultureEntryEntity, ProfileContextEntityMixin
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
-from .profile.statistics import (
-    EVENT_STATS_VERSION,
-    NUTRIENT_STATS_VERSION,
-    SUCCESS_STATS_VERSION,
-    YIELD_STATS_VERSION,
-)
+from .profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION, SUCCESS_STATS_VERSION, YIELD_STATS_VERSION
 from .profile_monitor import ProfileMonitor
 from .utils.entry_helpers import ProfileContext, resolve_profile_context_collection
 

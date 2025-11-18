@@ -4,10 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from .fertigation import (
-    get_fertigation_interval,
-    recommend_loss_adjusted_fertigation,
-)
+from .fertigation import (get_fertigation_interval,
+                          recommend_loss_adjusted_fertigation)
 
 __all__ = ["generate_fertigation_plan"]
 

@@ -10,10 +10,8 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from .deficiency_manager import (
-    calculate_deficiencies,
-    classify_deficiency_levels,
-)
+from .deficiency_manager import (calculate_deficiencies,
+                                 classify_deficiency_levels)
 from .nutrient_manager import get_all_recommended_levels
 from .toxicity_manager import check_toxicities
 

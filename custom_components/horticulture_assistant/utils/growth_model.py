@@ -8,10 +8,7 @@ from datetime import datetime
 # Reuse the central evapotranspiration formulas from plant_engine
 from plant_engine.et_model import calculate_et0, calculate_eta
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    data_path,
-    plants_path,
-)
+from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
 
 try:
     from homeassistant.core import HomeAssistant

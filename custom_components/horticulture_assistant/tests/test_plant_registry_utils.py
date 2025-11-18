@@ -1,10 +1,7 @@
 import json
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.plant_registry import (
-    get_plant_metadata,
-    get_plant_type,
-)
+from custom_components.horticulture_assistant.utils.plant_registry import get_plant_metadata, get_plant_type
 
 
 class DummyConfig:

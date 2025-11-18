@@ -16,19 +16,14 @@ from pathlib import Path
 import plant_engine.pest_monitor as pest_monitor
 from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.deficiency_manager import diagnose_deficiency_actions
-from plant_engine.disease_manager import (
-    recommend_treatments as recommend_disease_treatments,
-)
+from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
 from plant_engine.environment_manager import (
     classify_environment_quality,
     compare_environment,
     optimize_environment,
     score_environment,
 )
-from plant_engine.fertigation import (
-    recommend_nutrient_mix,
-    recommend_nutrient_mix_with_cost,
-)
+from plant_engine.fertigation import recommend_nutrient_mix, recommend_nutrient_mix_with_cost
 from plant_engine.growth_stage import predict_harvest_date, stage_progress
 from plant_engine.nutrient_analysis import analyze_nutrient_profile
 from plant_engine.pest_manager import recommend_beneficials, recommend_treatments
@@ -40,35 +35,17 @@ from plant_engine.yield_prediction import estimate_remaining_yield
 
 from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile_by_id
 from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
-from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
-    calculate_stage_deficit,
-)
+from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import calculate_stage_deficit
 from plant_engine import water_quality
 
-from .cycle_helpers import (
-    aggregate_nutrients as _aggregate_nutrients,
-)
-from .cycle_helpers import (
-    average_sensor_data as _average_sensor_data,
-)
-from .cycle_helpers import (
-    build_root_zone_info as _build_root_zone_info,
-)
-from .cycle_helpers import (
-    compute_expected_uptake as _compute_expected_uptake,
-)
-from .cycle_helpers import (
-    load_last_entry,
-)
-from .cycle_helpers import (
-    load_logs as _load_logs,
-)
-from .cycle_helpers import (
-    load_recent_entries as _load_recent_entries,
-)
-from .cycle_helpers import (
-    summarize_irrigation as _summarize_irrigation,
-)
+from .cycle_helpers import aggregate_nutrients as _aggregate_nutrients
+from .cycle_helpers import average_sensor_data as _average_sensor_data
+from .cycle_helpers import build_root_zone_info as _build_root_zone_info
+from .cycle_helpers import compute_expected_uptake as _compute_expected_uptake
+from .cycle_helpers import load_last_entry
+from .cycle_helpers import load_logs as _load_logs
+from .cycle_helpers import load_recent_entries as _load_recent_entries
+from .cycle_helpers import summarize_irrigation as _summarize_irrigation
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # noqa: UP017
 

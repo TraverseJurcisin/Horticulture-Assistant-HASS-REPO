@@ -1,8 +1,4 @@
-from dafe.diffusion_model import (
-    calculate_diffusion_flux,
-    calculate_effective_diffusion,
-    estimate_diffusion_mass,
-)
+from dafe.diffusion_model import calculate_diffusion_flux, calculate_effective_diffusion, estimate_diffusion_mass
 
 
 def test_calculate_effective_diffusion():

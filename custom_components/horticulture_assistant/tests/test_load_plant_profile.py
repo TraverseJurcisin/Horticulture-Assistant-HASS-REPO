@@ -1,9 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.utils.load_bio_profile import (
-    clear_profile_cache,
-    load_bio_profile,
-)
+from custom_components.horticulture_assistant.utils.load_bio_profile import clear_profile_cache, load_bio_profile
 
 
 def test_load_profile_basic(tmp_path):

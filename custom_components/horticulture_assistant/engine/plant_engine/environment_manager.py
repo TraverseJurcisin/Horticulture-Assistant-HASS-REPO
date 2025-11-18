@@ -23,13 +23,8 @@ from . import ph_manager, water_quality
 from .compute_transpiration import compute_transpiration
 from .growth_stage import list_growth_stages
 from .light_spectrum import get_red_blue_ratio
-from .utils import (
-    clean_float_map,
-    list_dataset_entries,
-    load_dataset,
-    normalize_key,
-    parse_range,
-)
+from .utils import (clean_float_map, list_dataset_entries, load_dataset,
+                    normalize_key, parse_range)
 
 DATA_FILE = "environment/environment_guidelines.json"
 DLI_DATA_FILE = "light/light_dli_guidelines.json"
@@ -1343,9 +1338,8 @@ def generate_zone_environment_plan(plant_type: str, zone: str) -> dict[str, dict
 def generate_stage_growth_plan(plant_type: str) -> dict[str, dict[str, Any]]:
     """Return environment setpoints, nutrient needs and tasks per stage."""
 
-    from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
-        get_stage_requirements,
-    )
+    from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import \
+        get_stage_requirements
 
     from .stage_tasks import get_stage_tasks
 

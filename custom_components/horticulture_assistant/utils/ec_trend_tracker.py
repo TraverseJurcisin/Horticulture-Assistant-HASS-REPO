@@ -15,10 +15,7 @@ import os
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    data_path,
-    plants_path,
-)
+from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 

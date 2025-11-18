@@ -5,12 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping
 from typing import Any
 
-from . import (
-    disease_manager,
-    disease_monitor,
-    pest_manager,
-    pest_monitor,
-)
+from . import disease_manager, disease_monitor, pest_manager, pest_monitor
 
 __all__ = ["generate_management_plan"]
 

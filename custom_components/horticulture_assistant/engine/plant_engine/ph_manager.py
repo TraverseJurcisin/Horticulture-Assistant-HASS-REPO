@@ -4,7 +4,8 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 
-from .utils import list_dataset_entries, load_dataset, normalize_key, stage_value
+from .utils import (list_dataset_entries, load_dataset, normalize_key,
+                    stage_value)
 
 DATA_FILE = "ph/ph_guidelines.json"
 ADJUST_FILE = "ph/ph_adjustment_factors.json"

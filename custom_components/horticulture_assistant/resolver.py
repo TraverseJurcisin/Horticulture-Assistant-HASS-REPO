@@ -12,17 +12,9 @@ from homeassistant.core import HomeAssistant
 from .cloudsync import EdgeResolverService
 from .const import CONF_PROFILES, DOMAIN, OPB_FIELD_MAP, VARIABLE_SPECS
 from .profile.options import options_profile_to_dataclass
-from .profile.resolution import (
-    annotate_inherited_target,
-    build_profiles_index,
-    resolve_inheritance_target,
-)
+from .profile.resolution import annotate_inherited_target, build_profiles_index, resolve_inheritance_target
 from .profile.schema import BioProfile, FieldAnnotation, ResolvedTarget
-from .profile.utils import (
-    citations_map_to_list,
-    determine_species_slug,
-    ensure_sections,
-)
+from .profile.utils import citations_map_to_list, determine_species_slug, ensure_sections
 
 UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 

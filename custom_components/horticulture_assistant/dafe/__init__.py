@@ -44,11 +44,7 @@ _MODULE_MAP = {
 
 
 if TYPE_CHECKING:
-    from .diffusion_model import (
-        calculate_diffusion_flux,
-        calculate_effective_diffusion,
-        estimate_diffusion_mass,
-    )
+    from .diffusion_model import calculate_diffusion_flux, calculate_effective_diffusion, estimate_diffusion_mass
     from .ec_model import calculate_ec_drift
     from .ec_tracker import get_current_ec
     from .fertigation import recommend_fertigation_schedule

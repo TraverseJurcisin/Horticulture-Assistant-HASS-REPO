@@ -47,13 +47,7 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover - executed in stu
         return None
 
 
-from ..const import (
-    CONF_PLANT_ID,
-    CONF_PLANT_NAME,
-    CONF_PROFILES,
-    DOMAIN,
-    signal_profile_contexts_updated,
-)
+from ..const import CONF_PLANT_ID, CONF_PLANT_NAME, CONF_PROFILES, DOMAIN, signal_profile_contexts_updated
 
 # Keys used under ``hass.data[DOMAIN]``
 BY_PLANT_ID = "by_plant_id"

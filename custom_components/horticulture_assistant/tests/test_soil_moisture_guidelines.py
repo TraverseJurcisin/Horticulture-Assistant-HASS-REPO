@@ -1,7 +1,4 @@
-from plant_engine.environment_manager import (
-    evaluate_moisture_stress,
-    get_target_soil_moisture,
-)
+from plant_engine.environment_manager import evaluate_moisture_stress, get_target_soil_moisture
 
 
 def test_get_target_soil_moisture():

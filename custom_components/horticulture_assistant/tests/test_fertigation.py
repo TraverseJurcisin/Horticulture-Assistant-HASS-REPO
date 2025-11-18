@@ -294,10 +294,7 @@ def test_estimate_solution_ec():
 
 
 def test_generate_cycle_fertigation_plan_with_cost():
-    from plant_engine.fertigation import (
-        generate_cycle_fertigation_plan,
-        generate_cycle_fertigation_plan_with_cost,
-    )
+    from plant_engine.fertigation import generate_cycle_fertigation_plan, generate_cycle_fertigation_plan_with_cost
 
     basic_plan = generate_cycle_fertigation_plan("lettuce")
     plan, cost = generate_cycle_fertigation_plan_with_cost("lettuce")
@@ -362,10 +359,7 @@ def test_recommend_stock_solution_injection():
 
 
 def test_stock_solution_recipes():
-    from plant_engine.fertigation import (
-        apply_stock_solution_recipe,
-        get_stock_solution_recipe,
-    )
+    from plant_engine.fertigation import apply_stock_solution_recipe, get_stock_solution_recipe
 
     recipe = get_stock_solution_recipe("tomato", "vegetative")
     assert recipe == {"stock_a": 2.0, "stock_b": 1.0}
@@ -434,10 +428,7 @@ def test_summarize_fertigation_schedule():
 
 
 def test_recommend_loss_compensated_mix():
-    from plant_engine.fertigation import (
-        recommend_loss_compensated_mix,
-        recommend_nutrient_mix,
-    )
+    from plant_engine.fertigation import recommend_loss_compensated_mix, recommend_nutrient_mix
 
     base = recommend_nutrient_mix("citrus", "vegetative", 1.0)
     adjusted = recommend_loss_compensated_mix("citrus", "vegetative", 1.0)
@@ -495,9 +486,7 @@ def test_estimate_weekly_fertigation_cost():
 
 
 def test_cost_optimized_fertigation_injection():
-    from plant_engine.fertigation import (
-        recommend_cost_optimized_fertigation_with_injection,
-    )
+    from plant_engine.fertigation import recommend_cost_optimized_fertigation_with_injection
 
     schedule, cost, injection = recommend_cost_optimized_fertigation_with_injection(
         "tomato",

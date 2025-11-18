@@ -15,32 +15,26 @@ except ImportError:  # pragma: no cover - fallback when run as standalone
     from custom_components.horticulture_assistant.utils.bio_profile_loader import (
         load_profile_by_id,
     )
-from custom_components.horticulture_assistant.profile.compat import sync_thresholds
+
+from custom_components.horticulture_assistant.profile.compat import \
+    sync_thresholds
 
 from .ai_model import analyze
 from .approval_queue import queue_threshold_updates
 from .compute_transpiration import compute_transpiration
 from .constants import DEFAULT_ENV, get_stage_multiplier
-from .disease_manager import (
-    recommend_treatments as recommend_disease_treatments,
-)
-from .environment_manager import (
-    normalize_environment_readings,
-    optimize_environment,
-    recommend_environment_adjustments,
-)
+from .disease_manager import \
+    recommend_treatments as recommend_disease_treatments
+from .environment_manager import (normalize_environment_readings,
+                                  optimize_environment,
+                                  recommend_environment_adjustments)
 from .growth_model import update_growth_index
 from .growth_stage import get_stage_info
 from .nutrient_efficiency import calculate_nue
 from .nutrient_manager import get_recommended_levels
-from .pest_manager import (
-    recommend_treatments as recommend_pest_treatments,
-)
+from .pest_manager import recommend_treatments as recommend_pest_treatments
 from .report import DailyReport
-from .rootzone_model import (
-    estimate_rootzone_depth,
-    estimate_water_capacity,
-)
+from .rootzone_model import estimate_rootzone_depth, estimate_water_capacity
 from .water_deficit_tracker import update_water_balance
 
 PLANTS_DIR = "plants"

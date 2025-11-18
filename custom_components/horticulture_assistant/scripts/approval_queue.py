@@ -4,10 +4,8 @@ from __future__ import annotations
 
 import argparse
 
-from plant_engine.approval_queue import (
-    apply_approved_thresholds,
-    queue_threshold_updates,
-)
+from plant_engine.approval_queue import (apply_approved_thresholds,
+                                         queue_threshold_updates)
 from plant_engine.utils import load_json
 
 

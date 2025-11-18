@@ -1,8 +1,6 @@
 import pytest
 
-from custom_components.horticulture_assistant.utils.recipe_cost_estimator import (
-    estimate_recipe_cost,
-)
+from custom_components.horticulture_assistant.utils.recipe_cost_estimator import estimate_recipe_cost
 
 
 def test_estimate_recipe_cost_basic():

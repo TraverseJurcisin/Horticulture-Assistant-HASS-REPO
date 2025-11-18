@@ -1,8 +1,5 @@
 import pytest
-from plant_engine.fertigation import (
-    estimate_fertigation_solution_volume,
-    get_fertigation_volume,
-)
+from plant_engine.fertigation import estimate_fertigation_solution_volume, get_fertigation_volume
 
 
 def test_get_fertigation_volume():
