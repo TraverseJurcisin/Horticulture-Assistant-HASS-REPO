@@ -18,6 +18,7 @@ try:
 except ImportError:  # pragma: no cover - fallback for older Python
     from datetime import timezone
 
+    # Python <3.11 lacks ``datetime.UTC``; fall back to the legacy constant.
     UTC = timezone.utc  # noqa: UP017
 
 import plant_engine.pest_monitor as pest_monitor
