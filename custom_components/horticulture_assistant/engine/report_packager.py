@@ -8,8 +8,6 @@ from custom_components.horticulture_assistant.utils.path_utils import data_path,
 
 from ..utils.json_io import load_json, save_json
 
-UTC = UTC
-
 _LOGGER = logging.getLogger(__name__)
 
 

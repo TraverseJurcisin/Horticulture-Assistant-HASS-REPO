@@ -17,8 +17,6 @@ from typing import Optional
 
 from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
 
-UTC = UTC
-
 # Attempt to import HomeAssistant for type hints and runtime (if running inside HA)
 try:
     from homeassistant.core import HomeAssistant

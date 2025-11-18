@@ -15,8 +15,6 @@ from yarl import URL
 
 from .ai_utils import extract_numbers
 
-UTC = UTC
-
 CacheKey = tuple[str, str, tuple[tuple[str, Hashable], ...]]
 
 _AI_CACHE: dict[CacheKey, tuple[dict[str, Any], datetime]] = {}

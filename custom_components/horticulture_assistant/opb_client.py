@@ -7,8 +7,6 @@ from typing import Any
 
 import aiohttp
 
-UTC = UTC
-
 BASE_URL = "https://api.openplantbook.org"
 _SPECIES_CACHE: dict[str, tuple[dict[str, Any], datetime]] = {}
 _SEARCH_CACHE: dict[str, tuple[list[dict[str, Any]], datetime]] = {}

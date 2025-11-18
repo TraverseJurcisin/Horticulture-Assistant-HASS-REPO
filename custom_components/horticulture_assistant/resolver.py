@@ -16,8 +16,6 @@ from .profile.resolution import annotate_inherited_target, build_profiles_index,
 from .profile.schema import BioProfile, FieldAnnotation, ResolvedTarget
 from .profile.utils import citations_map_to_list, determine_species_slug, ensure_sections
 
-UTC = UTC
-
 _LOGGER = logging.getLogger(__name__)
 
 

@@ -389,8 +389,6 @@ def _load_profile_schema() -> dict[str, Any] | None:
 STORAGE_VERSION = PROFILE_STORE_VERSION
 STORAGE_KEY = PROFILE_STORE_KEY
 
-UTC = UTC
-
 
 class ProfileRegistry:
     """Maintain a collection of plant profiles for the integration."""

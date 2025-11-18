@@ -3,8 +3,6 @@ from datetime import UTC, datetime, timedelta
 
 from custom_components.horticulture_assistant.engine.run_daily_cycle import _load_recent_entries
 
-UTC = UTC
-
 
 def test_load_recent_entries(tmp_path):
     log = tmp_path / "log.json"

@@ -108,8 +108,6 @@ __all__ = [
 _LOGGER = logging.getLogger(__name__)
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
-UTC = UTC
-
 
 def _utcnow() -> str:
     """Return an ISO-8601 timestamp in UTC."""

@@ -47,8 +47,6 @@ from .cycle_helpers import load_logs as _load_logs
 from .cycle_helpers import load_recent_entries as _load_recent_entries
 from .cycle_helpers import summarize_irrigation as _summarize_irrigation
 
-UTC = UTC
-
 
 @dataclass(slots=True)
 class DailyReport:

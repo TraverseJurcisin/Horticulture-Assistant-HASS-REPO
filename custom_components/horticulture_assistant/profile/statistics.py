@@ -21,7 +21,6 @@ from .schema import (
     YieldStatistic,
 )
 
-UTC = UTC
 YIELD_STATS_VERSION = "yield/v1"
 ENVIRONMENT_STATS_VERSION = "environment/v1"
 SUCCESS_STATS_VERSION = "success/v1"

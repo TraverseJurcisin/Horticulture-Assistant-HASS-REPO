@@ -4,8 +4,6 @@ from pathlib import Path
 
 from ..utils.json_io import load_json, save_json
 
-UTC = UTC
-
 _LOGGER = logging.getLogger(__name__)
 
 
