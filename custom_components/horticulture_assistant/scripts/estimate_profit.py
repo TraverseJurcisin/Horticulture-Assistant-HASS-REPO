@@ -13,7 +13,8 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.profit_estimator import estimate_expected_profit, estimate_profit
+from plant_engine.profit_estimator import (estimate_expected_profit,
+                                           estimate_profit)
 
 
 def main(argv: list[str] | None = None) -> None:

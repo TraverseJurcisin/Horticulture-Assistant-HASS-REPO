@@ -5,12 +5,8 @@ from __future__ import annotations
 from collections.abc import Mapping
 from functools import lru_cache
 
-from .utils import (
-    clean_float_map,
-    list_dataset_entries,
-    load_dataset,
-    normalize_key,
-)
+from .utils import (clean_float_map, list_dataset_entries, load_dataset,
+                    normalize_key)
 
 DATA_FILE = "nutrients/nutrient_absorption_rates.json"
 

@@ -26,9 +26,7 @@ class ProductCostAnalyzer:
     """Convenience methods for normalizing product pricing."""
 
     @staticmethod
-    def cost_per_unit(
-        price: float, size: float, unit: Literal["L", "mL", "gal", "kg", "g", "oz"]
-    ) -> float:
+    def cost_per_unit(price: float, size: float, unit: Literal["L", "mL", "gal", "kg", "g", "oz"]) -> float:
         """Return cost per liter or kilogram for a packaged product."""
 
         if unit not in UNIT_CONVERSIONS:
@@ -49,9 +47,7 @@ class ProductCostAnalyzer:
         per_unit_prices = []
         for entry in price_data:
             try:
-                cost = ProductCostAnalyzer.cost_per_unit(
-                    entry["price"], entry["size"], entry["unit"]
-                )
+                cost = ProductCostAnalyzer.cost_per_unit(entry["price"], entry["size"], entry["unit"])
             except (KeyError, ValueError):
                 continue
             per_unit_prices.append(cost)
@@ -66,9 +62,7 @@ class ProductCostAnalyzer:
         }
 
     @staticmethod
-    def cost_of_dose(
-        cost_per_unit: float, dose_amount: float, dose_unit: Literal["L", "kg", "mL", "g", "oz"]
-    ) -> float:
+    def cost_of_dose(cost_per_unit: float, dose_amount: float, dose_unit: Literal["L", "kg", "mL", "g", "oz"]) -> float:
         """Return cost for a single application amount."""
 
         if dose_unit not in UNIT_CONVERSIONS:

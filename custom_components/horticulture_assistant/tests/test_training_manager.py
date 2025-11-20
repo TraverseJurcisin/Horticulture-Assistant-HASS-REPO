@@ -1,8 +1,4 @@
-from plant_engine.training_manager import (
-    get_training_guideline,
-    list_supported_plants,
-    list_training_stages,
-)
+from plant_engine.training_manager import get_training_guideline, list_supported_plants, list_training_stages
 
 
 def test_list_supported_plants_contains_known():

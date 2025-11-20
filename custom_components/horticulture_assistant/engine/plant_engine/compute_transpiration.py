@@ -17,11 +17,7 @@ MODIFIER_FILE = "coefficients/crop_coefficient_modifiers.json"
 # cached via load_dataset
 _MODIFIERS: dict[str, dict[str, float]] = load_dataset(MODIFIER_FILE)
 
-from .et_model import (
-    calculate_et0,
-    calculate_et0_series,
-    calculate_eta,
-)
+from .et_model import calculate_et0, calculate_et0_series, calculate_eta
 
 DATA_FILE = "coefficients/crop_coefficients.json"
 # cached via load_dataset

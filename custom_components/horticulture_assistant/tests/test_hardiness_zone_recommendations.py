@@ -1,8 +1,4 @@
-from plant_engine.hardiness_zone import (
-    get_hardiness_range,
-    is_plant_suitable_for_zone,
-    plants_for_zone,
-)
+from plant_engine.hardiness_zone import get_hardiness_range, is_plant_suitable_for_zone, plants_for_zone
 
 
 def test_get_hardiness_range():

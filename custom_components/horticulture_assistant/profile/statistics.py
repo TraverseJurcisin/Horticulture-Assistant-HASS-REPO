@@ -5,7 +5,7 @@ from collections import Counter, defaultdict
 from collections.abc import Iterable, Mapping
 from contextlib import suppress
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from math import isfinite
 from statistics import mean, median
 from typing import Any
@@ -21,7 +21,6 @@ from .schema import (
     YieldStatistic,
 )
 
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 YIELD_STATS_VERSION = "yield/v1"
 ENVIRONMENT_STATS_VERSION = "environment/v1"
 SUCCESS_STATS_VERSION = "success/v1"

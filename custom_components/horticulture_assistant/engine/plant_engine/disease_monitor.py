@@ -8,18 +8,10 @@ from datetime import date, timedelta
 
 from . import disease_manager
 from .disease_manager import recommend_prevention, recommend_treatments
-from .monitor_utils import (
-    calculate_risk_score,
-)
-from .monitor_utils import (
-    generate_schedule as _generate_schedule,
-)
-from .monitor_utils import (
-    get_interval as _get_interval,
-)
-from .monitor_utils import (
-    next_date as _next_date,
-)
+from .monitor_utils import calculate_risk_score
+from .monitor_utils import generate_schedule as _generate_schedule
+from .monitor_utils import get_interval as _get_interval
+from .monitor_utils import next_date as _next_date
 from .utils import list_dataset_entries, load_dataset, normalize_key
 
 DATA_FILE = "diseases/disease_thresholds.json"

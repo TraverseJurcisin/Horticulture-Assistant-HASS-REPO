@@ -1,6 +1,4 @@
-from custom_components.horticulture_assistant.utils.labor_tracker import (
-    LaborLog,
-)
+from custom_components.horticulture_assistant.utils.labor_tracker import LaborLog
 
 
 def test_log_and_summary(tmp_path):

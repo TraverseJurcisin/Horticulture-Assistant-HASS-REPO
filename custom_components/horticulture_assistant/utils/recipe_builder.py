@@ -1,7 +1,4 @@
-from custom_components.horticulture_assistant.utils.fertilizer_inventory import (
-    FertilizerListing,
-    FertilizerProduct,
-)
+from custom_components.horticulture_assistant.utils.fertilizer_inventory import FertilizerListing, FertilizerProduct
 
 
 class FertilizerDose:
@@ -51,9 +48,7 @@ class FertilizerRecipe:
 
         return {k: round(v, 2) for k, v in ppm_totals.items()}
 
-    def compute_ingredient_breakdown(
-        self, product_lookup: dict[str, FertilizerProduct]
-    ) -> dict[str, dict[str, float]]:
+    def compute_ingredient_breakdown(self, product_lookup: dict[str, FertilizerProduct]) -> dict[str, dict[str, float]]:
         result = {}
         for dose in self.doses:
             product = product_lookup[dose.listing.product_id]

@@ -6,7 +6,7 @@ import math
 import re
 from collections.abc import Hashable, Mapping
 from copy import deepcopy
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from numbers import Real
 from typing import Any
 
@@ -14,8 +14,6 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from yarl import URL
 
 from .ai_utils import extract_numbers
-
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 CacheKey = tuple[str, str, tuple[tuple[str, Hashable], ...]]
 

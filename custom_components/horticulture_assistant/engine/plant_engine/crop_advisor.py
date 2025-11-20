@@ -5,7 +5,8 @@ from dataclasses import dataclass
 from typing import Any
 
 from .environment_manager import recommend_environment_adjustments
-from .nutrient_planner import NutrientManagementReport, generate_nutrient_management_report
+from .nutrient_planner import (NutrientManagementReport,
+                               generate_nutrient_management_report)
 from .pest_manager import build_pest_management_plan
 
 __all__ = ["CropAdvice", "generate_crop_advice"]

@@ -1,8 +1,6 @@
-"""Helpers for cost-optimized nutrient mix generation."""
+"""Helpers for computing cost optimised fertigation mixes."""
 
 from __future__ import annotations
-
-"""Helpers for computing cost optimised fertigation mixes."""
 
 from collections.abc import Mapping
 from dataclasses import dataclass

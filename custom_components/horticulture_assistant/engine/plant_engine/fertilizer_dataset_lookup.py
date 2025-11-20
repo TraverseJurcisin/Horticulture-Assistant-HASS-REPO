@@ -10,7 +10,8 @@ from typing import Any
 try:
     from . import fertilizer_dataset_loader as dataset_loader
 except ImportError:  # pragma: no cover - fallback when run as script
-    from plant_engine import fertilizer_dataset_loader as dataset_loader  # type: ignore
+    from plant_engine import \
+        fertilizer_dataset_loader as dataset_loader  # type: ignore
 
 __all__ = [
     "get_product_npk_by_name",

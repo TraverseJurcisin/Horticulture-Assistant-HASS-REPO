@@ -1,8 +1,4 @@
-from plant_engine.plant_density import (
-    get_spacing_cm,
-    list_supported_plants,
-    plants_per_area,
-)
+from plant_engine.plant_density import get_spacing_cm, list_supported_plants, plants_per_area
 
 
 def test_get_spacing_cm():

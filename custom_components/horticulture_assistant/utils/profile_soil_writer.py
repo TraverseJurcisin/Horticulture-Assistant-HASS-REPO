@@ -9,20 +9,26 @@ def generate_soil_profiles(plant_id: str, base_dir: str = None, overwrite: bool 
     """
     Generate or update soil and microbiome profile files for a given plant.
 
-    This function scaffolds two JSON files (`soil_relationships.json` and `microbiome.json`)
-    in the `plants/<plant_id>/` directory. It populates these files with predefined keys related
-    to the plant's soil relationships and soil microbiome information, with all values defaulting to null.
+    This function scaffolds two JSON files (`soil_relationships.json` and
+    `microbiome.json`) in the `plants/<plant_id>/` directory. It populates these
+    files with predefined keys related to the plant's soil relationships and
+    soil microbiome information, with all values defaulting to null.
 
-    If a file already exists and `overwrite` is False, the file is left unchanged.
-    If `overwrite` is True or the file is missing, a new file is created (or an existing file is overwritten) with the default structure.
+    If a file already exists and `overwrite` is False, the file is left
+    unchanged. If `overwrite` is True or the file is missing, a new file is
+    created (or an existing file is overwritten) with the default structure.
 
     All actions (creation, skipping, overwriting) are logged for clarity.
 
-    :param plant_id: Identifier for the plant (used as directory name under the base path).
-    :param base_dir: Optional base directory path for plant profiles (defaults to "plants/" in the current working directory).
-    :param overwrite: If True, overwrite existing files; if False, skip writing if files already exist.
-    :return: The plant_id if profiles were successfully generated (or already present without changes),
-             or an empty string on error (e.g., if directory creation fails).
+    :param plant_id: Identifier for the plant (used as directory name under the
+        base path).
+    :param base_dir: Optional base directory path for plant profiles (defaults
+        to "plants/" in the current working directory).
+    :param overwrite: If True, overwrite existing files; if False, skip writing
+        if files already exist.
+    :return: The plant_id if profiles were successfully generated (or already
+        present without changes), or an empty string on error (e.g., if
+        directory creation fails).
     """
 
     # Define default content for soil_relationships.json

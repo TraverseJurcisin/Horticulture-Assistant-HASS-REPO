@@ -1,7 +1,4 @@
-from plant_engine.leaf_area_index import (
-    estimate_leaf_area_index,
-    get_leaf_area_index,
-)
+from plant_engine.leaf_area_index import estimate_leaf_area_index, get_leaf_area_index
 
 
 def test_get_leaf_area_index():

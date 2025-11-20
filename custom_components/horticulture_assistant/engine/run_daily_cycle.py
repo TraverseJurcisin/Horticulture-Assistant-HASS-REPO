@@ -14,27 +14,16 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import plant_engine.pest_monitor as pest_monitor
-from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile_by_id
-from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
-from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
-    calculate_stage_deficit,
-)
-from plant_engine import water_quality
 from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.deficiency_manager import diagnose_deficiency_actions
-from plant_engine.disease_manager import (
-    recommend_treatments as recommend_disease_treatments,
-)
+from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
 from plant_engine.environment_manager import (
     classify_environment_quality,
     compare_environment,
     optimize_environment,
     score_environment,
 )
-from plant_engine.fertigation import (
-    recommend_nutrient_mix,
-    recommend_nutrient_mix_with_cost,
-)
+from plant_engine.fertigation import recommend_nutrient_mix, recommend_nutrient_mix_with_cost
 from plant_engine.growth_stage import predict_harvest_date, stage_progress
 from plant_engine.nutrient_analysis import analyze_nutrient_profile
 from plant_engine.pest_manager import recommend_beneficials, recommend_treatments
@@ -44,32 +33,21 @@ from plant_engine.stage_tasks import get_stage_tasks
 from plant_engine.utils import load_dataset
 from plant_engine.yield_prediction import estimate_remaining_yield
 
-from .cycle_helpers import (
-    aggregate_nutrients as _aggregate_nutrients,
+from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile_by_id
+from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
+from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
+    calculate_stage_deficit,
 )
-from .cycle_helpers import (
-    average_sensor_data as _average_sensor_data,
-)
-from .cycle_helpers import (
-    build_root_zone_info as _build_root_zone_info,
-)
-from .cycle_helpers import (
-    compute_expected_uptake as _compute_expected_uptake,
-)
-from .cycle_helpers import (
-    load_last_entry,
-)
-from .cycle_helpers import (
-    load_logs as _load_logs,
-)
-from .cycle_helpers import (
-    load_recent_entries as _load_recent_entries,
-)
-from .cycle_helpers import (
-    summarize_irrigation as _summarize_irrigation,
-)
+from plant_engine import water_quality
 
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
+from .cycle_helpers import aggregate_nutrients as _aggregate_nutrients
+from .cycle_helpers import average_sensor_data as _average_sensor_data
+from .cycle_helpers import build_root_zone_info as _build_root_zone_info
+from .cycle_helpers import compute_expected_uptake as _compute_expected_uptake
+from .cycle_helpers import load_last_entry
+from .cycle_helpers import load_logs as _load_logs
+from .cycle_helpers import load_recent_entries as _load_recent_entries
+from .cycle_helpers import summarize_irrigation as _summarize_irrigation
 
 
 @dataclass(slots=True)
@@ -108,7 +86,7 @@ class DailyReport:
     predicted_harvest_date: str | None = None
     yield_: float | None = None
     remaining_yield_g: float | None = None
-    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+    timestamp: str = field(default_factory=lambda: datetime.now(tz=timezone.utc).isoformat())  # noqa: UP017
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -218,7 +196,10 @@ def run_daily_cycle(
     last_scout = load_last_entry(plant_dir / "pest_scouting_log.json")
     if last_scout and "timestamp" in last_scout:
         try:
-            last_date = datetime.fromisoformat(last_scout["timestamp"]).date()
+            last_scout_dt = datetime.fromisoformat(last_scout["timestamp"])
+            if last_scout_dt.tzinfo is None:
+                last_scout_dt = last_scout_dt.replace(tzinfo=timezone.utc)  # noqa: UP017
+            last_date = last_scout_dt.date()
             interval = pest_monitor.risk_adjusted_monitor_interval(plant_type, stage_name, current_env)
             if interval is not None:
                 next_date = last_date + timedelta(days=interval)
@@ -292,7 +273,7 @@ def run_daily_cycle(
         if start_date_str:
             try:
                 start_date = datetime.fromisoformat(start_date_str).date()
-                days = (datetime.now(UTC).date() - start_date).days
+                days = (datetime.now(tz=timezone.utc).date() - start_date).days  # noqa: UP017
                 progress = stage_progress(plant_type, stage_name, days)
                 if progress is not None:
                     report.stage_progress_pct = progress
@@ -309,7 +290,7 @@ def run_daily_cycle(
     # Save the report to a JSON file with today's date
     output_dir = Path(output_path)
     output_dir.mkdir(parents=True, exist_ok=True)
-    out_file = output_dir / f"{plant_id}_{datetime.now(UTC).date()}.json"
+    out_file = output_dir / f"{plant_id}_{datetime.now(tz=timezone.utc).date()}.json"  # noqa: UP017
     try:
         with open(out_file, "w", encoding="utf-8") as f:
             json.dump(report.as_dict(), f, indent=2)

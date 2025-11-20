@@ -1,15 +1,16 @@
 import pytest
 
-pytest.importorskip("dafe.main")
-
-from dafe import (  # noqa: E402
-    calculate_effective_diffusion,
-    generate_pulse_schedule,
-    get_current_ec,
-    get_media_profile,
-    get_species_profile,
-    load_config,
-)
+try:  # pragma: no cover - guard optional dependency
+    from dafe import (
+        calculate_effective_diffusion,
+        generate_pulse_schedule,
+        get_current_ec,
+        get_media_profile,
+        get_species_profile,
+        load_config,
+    )
+except ImportError:
+    pytest.skip("dafe not installed", allow_module_level=True)
 
 
 def test_generate_pulse_schedule():

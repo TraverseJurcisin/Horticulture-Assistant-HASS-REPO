@@ -1,19 +1,9 @@
 import datetime
 
-from custom_components.horticulture_assistant.utils.product_inventory import (
-    InventoryRecord,
-    ProductInventory,
-)
-from custom_components.horticulture_assistant.utils.product_storage_monitor import (
-    ProductStorageMonitor,
-)
-from custom_components.horticulture_assistant.utils.product_tracker import (
-    ProductInstance,
-    ProductTracker,
-)
-from custom_components.horticulture_assistant.utils.product_usage_logger import (
-    log_product_usage,
-)
+from custom_components.horticulture_assistant.utils.product_inventory import InventoryRecord, ProductInventory
+from custom_components.horticulture_assistant.utils.product_storage_monitor import ProductStorageMonitor
+from custom_components.horticulture_assistant.utils.product_tracker import ProductInstance, ProductTracker
+from custom_components.horticulture_assistant.utils.product_usage_logger import log_product_usage
 
 
 def test_inventory_basic_consumption():

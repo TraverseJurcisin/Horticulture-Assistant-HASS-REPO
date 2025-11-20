@@ -203,7 +203,7 @@ def _load_profile_from_path_cached(path_key: str) -> dict:
     if profile["thresholds"]:
         for key in REQUIRED_THRESHOLD_KEYS:
             if key not in profile["thresholds"]:
-                    _LOGGER.debug("Profile missing threshold '%s' in file %s", key, path_obj)
+                _LOGGER.debug("Profile missing threshold '%s' in file %s", key, path_obj)
     else:
         _LOGGER.debug("No thresholds section defined in profile %s", path_obj)
 
@@ -213,9 +213,7 @@ def _load_profile_from_path_cached(path_key: str) -> dict:
                 _LOGGER.debug("Stage '%s' in %s is not a dict", stage_name, path_obj)
                 continue
             if REQUIRED_STAGE_KEY not in stage_data:
-                _LOGGER.debug(
-                    "Stage '%s' missing '%s' in profile %s", stage_name, REQUIRED_STAGE_KEY, path_obj
-                )
+                _LOGGER.debug("Stage '%s' missing '%s' in profile %s", stage_name, REQUIRED_STAGE_KEY, path_obj)
     else:
         _LOGGER.debug("No stages defined in profile %s", path_obj)
 
@@ -427,10 +425,7 @@ def _normalize_sensor_values(sensors: Mapping[str, Any]) -> dict[str, list]:
 
     normalized: dict[str, list[str]] = {}
     for key, val in sensors.items():
-        if isinstance(val, str) or not isinstance(val, Iterable):
-            values = [val]
-        else:
-            values = list(val)
+        values = [val] if isinstance(val, str) or not isinstance(val, Iterable) else list(val)
 
         items: list[str] = []
         for item in values:

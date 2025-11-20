@@ -13,11 +13,7 @@ from functools import cache
 from pathlib import Path
 
 from . import utils
-from .utils import (
-    get_data_dir,
-    get_extra_dirs,
-    get_overlay_dir,
-)
+from .utils import get_data_dir, get_extra_dirs, get_overlay_dir
 
 DATA_DIR = get_data_dir()
 CATALOG_FILE = DATA_DIR / "dataset_catalog.json"

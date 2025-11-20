@@ -4,16 +4,9 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
 
-from . import (
-    deficiency_manager,
-    disease_manager,
-    environment_manager,
-    growth_stage,
-    nutrient_interactions,
-    nutrient_manager,
-    pest_manager,
-    stage_tasks,
-)
+from . import (deficiency_manager, disease_manager, environment_manager,
+               growth_stage, nutrient_interactions, nutrient_manager,
+               pest_manager, stage_tasks)
 
 
 def generate_health_report(

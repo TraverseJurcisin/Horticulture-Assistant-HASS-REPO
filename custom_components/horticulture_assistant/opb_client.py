@@ -1,13 +1,11 @@
 from __future__ import annotations
 
 import asyncio
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
 import aiohttp
-
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 BASE_URL = "https://api.openplantbook.org"
 _SPECIES_CACHE: dict[str, tuple[dict[str, Any], datetime]] = {}

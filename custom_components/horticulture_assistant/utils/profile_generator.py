@@ -25,6 +25,7 @@ _WINDOWS_RESERVED_NAMES = {
     *{f"lpt{idx}" for idx in range(1, 10)},
 }
 
+
 def _slugify(text: str) -> str:
     """Helper to slugify a string (lowercase, underscores for non-alphanumeric)."""
     text = text.lower()
@@ -64,15 +65,14 @@ def _normalise_plant_id(value: Any) -> str:
     return slug
 
 
-def generate_profile(
-    metadata: dict, hass: 'HomeAssistant' = None, overwrite: bool = False, base_dir: str = None
-) -> str:
+def generate_profile(metadata: dict, hass: HomeAssistant = None, overwrite: bool = False, base_dir: str = None) -> str:
     """
     Generate a new plant profile directory with template JSON files.
 
-    Accepts input metadata for a plant (e.g. name, cultivar, crop type, tags, zone, stage length, etc.)
-    and scaffolds a set of JSON profile files (general.json, environment.json, nutrition.json, irrigation.json, stages.json)
-    into plants/<plant_id>/.
+    Accepts input metadata for a plant (e.g. name, cultivar, crop type, tags,
+    zone, stage length, etc.) and scaffolds a set of JSON profile files
+    (general.json, environment.json, nutrition.json, irrigation.json,
+    stages.json) into plants/<plant_id>/.
 
     Unknown or unspecified values are filled with placeholders (null or "TBD").
     Existing files are skipped by default unless overwrite is True.
@@ -80,15 +80,15 @@ def generate_profile(
     :param metadata: Dictionary of plant metadata (name/display_name/plant_name,
         cultivar, plant_type, tags, zone, stage_length, etc.)
     :param hass: HomeAssistant instance for path resolution (optional).
-    :param overwrite: If True, overwrite existing files; if False, skip writing files that already exist.
-    :param base_dir: Base directory for plant profiles (defaults to "plants/" in current working directory or Home Assistant config).
+    :param overwrite: If True, overwrite existing files; if False, skip writing
+        files that already exist.
+    :param base_dir: Base directory for plant profiles (defaults to "plants/" in
+        current working directory or Home Assistant config).
     :return: The plant_id of the generated profile (string), or an empty string on error.
     """
     # Determine the plant identifier (plant_id)
     plant_id = _normalise_plant_id(metadata.get("plant_id") or metadata.get("id"))
-    display_name = (
-        metadata.get("display_name") or metadata.get("name") or metadata.get("plant_name")
-    )
+    display_name = metadata.get("display_name") or metadata.get("name") or metadata.get("plant_name")
     if not plant_id and display_name:
         plant_id = _normalise_plant_id(display_name)
         if plant_id:
@@ -177,7 +177,7 @@ def generate_profile(
     tags = []
     if "tags" in metadata:
         raw_tags = metadata["tags"]
-        if isinstance(raw_tags, (list, tuple, set)):
+        if isinstance(raw_tags, list | tuple | set):
             tags = list(raw_tags)
         elif raw_tags is not None:
             tags = [raw_tags]

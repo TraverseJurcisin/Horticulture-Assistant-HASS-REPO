@@ -11,11 +11,7 @@ from homeassistant.core import CALLBACK_TYPE, HomeAssistant
 from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.util import slugify
 
-from .const import (
-    DOMAIN,
-    ISSUE_DATASET_HEALTH_PREFIX,
-    NOTIFICATION_DATASET_HEALTH,
-)
+from .const import DOMAIN, ISSUE_DATASET_HEALTH_PREFIX, NOTIFICATION_DATASET_HEALTH
 from .engine.plant_engine.utils import load_dataset
 
 DATASET_CHECK_INTERVAL = timedelta(hours=6)

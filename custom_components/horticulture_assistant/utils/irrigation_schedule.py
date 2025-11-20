@@ -1,11 +1,11 @@
-from __future__ import annotations
-
 """Utilities for parsing irrigation schedule preferences.
 
 The module exposes a small :class:`Schedule` dataclass used to represent an
-irrigation schedule.  ``Schedule.from_dict`` converts the loosely-typed mapping
+irrigation schedule. ``Schedule.from_dict`` converts the loosely-typed mapping
 stored in plant profiles into a structured object.
 """
+
+from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
 from dataclasses import asdict, dataclass
@@ -51,9 +51,7 @@ class Schedule:
         pulses = data.get("pulses")
         if isinstance(pulses, Mapping):
             parsed: dict[str, list[str]] = {
-                phase: [str(t) for t in times]
-                for phase, times in pulses.items()
-                if isinstance(times, Iterable)
+                phase: [str(t) for t in times] for phase, times in pulses.items() if isinstance(times, Iterable)
             }
             sched.pulses = parsed or None
 

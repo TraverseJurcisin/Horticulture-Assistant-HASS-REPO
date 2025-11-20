@@ -5,16 +5,11 @@ import sqlite3
 from collections.abc import Iterable, Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 from .events import SyncEvent, VectorClock, decode_ndjson, encode_ndjson
-
-try:
-    UTC = datetime.UTC
-except AttributeError:  # pragma: no cover - Py<3.11 fallback
-    UTC = timezone.utc  # noqa: UP017
 
 
 @dataclass(slots=True)

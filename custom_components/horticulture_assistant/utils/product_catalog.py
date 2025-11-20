@@ -43,11 +43,7 @@ class FertilizerProduct:
 
     def get_best_price_per_unit(self, unit_preference: str = "kg") -> float | None:
         """Return the lowest unit price for the preferred unit if available."""
-        prices = [
-            pkg.cost_per_unit()
-            for pkg in self.packaging_options
-            if pkg.unit.lower() == unit_preference.lower()
-        ]
+        prices = [pkg.cost_per_unit() for pkg in self.packaging_options if pkg.unit.lower() == unit_preference.lower()]
         return min(prices) if prices else None
 
     def describe(self) -> dict:

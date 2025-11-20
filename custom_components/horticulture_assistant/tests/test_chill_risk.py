@@ -1,8 +1,4 @@
-from plant_engine.chill_risk import (
-    forecast_chilling_risk,
-    get_chill_buffer,
-    list_supported_plants,
-)
+from plant_engine.chill_risk import forecast_chilling_risk, get_chill_buffer, list_supported_plants
 
 
 def test_list_supported_plants():

@@ -12,15 +12,10 @@ Any detected alerts are logged and recorded in a JSON file (`data/ec_alerts.json
 import json
 import logging
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Optional
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    data_path,
-    plants_path,
-)
-
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
+from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
 
 # Attempt to import HomeAssistant for type hints and runtime (if running inside HA)
 try:
@@ -74,18 +69,12 @@ class ECTrendTracker:
                     if isinstance(entries, list):
                         self._alerts[pid] = entries
                     else:
-                        _LOGGER.warning(
-                            "EC alert log for plant %s is not a list; resetting to empty list.", pid
-                        )
+                        _LOGGER.warning("EC alert log for plant %s is not a list; resetting to empty list.", pid)
                         self._alerts[pid] = []
             else:
-                _LOGGER.warning(
-                    "EC alerts file format invalid (expected dict); starting with empty alerts log."
-                )
+                _LOGGER.warning("EC alerts file format invalid (expected dict); starting with empty alerts log.")
         except FileNotFoundError:
-            _LOGGER.info(
-                "EC alerts file not found at %s; starting new EC alerts log.", self._data_file
-            )
+            _LOGGER.info("EC alerts file not found at %s; starting new EC alerts log.", self._data_file)
         except json.JSONDecodeError as e:
             _LOGGER.error(
                 "JSON decode error reading EC alerts from %s: %s; initializing empty alert log.",
@@ -108,9 +97,7 @@ class ECTrendTracker:
         Logs any detected alerts and records them in the EC alerts log.
         """
         if self._hass is None:
-            _LOGGER.error(
-                "HomeAssistant instance not provided; cannot retrieve sensor data for trend analysis."
-            )
+            _LOGGER.error("HomeAssistant instance not provided; cannot retrieve sensor data for trend analysis.")
             return
         if state_changes_during_period is None:
             _LOGGER.warning(
@@ -141,9 +128,7 @@ class ECTrendTracker:
                     try:
                         plant_threshold = float(value)
                     except (ValueError, TypeError):
-                        _LOGGER.error(
-                            "Invalid EC threshold value for plant %s: %s", plant_id, value
-                        )
+                        _LOGGER.error("Invalid EC threshold value for plant %s: %s", plant_id, value)
                         plant_threshold = None
                     break
 
@@ -184,14 +169,8 @@ class ECTrendTracker:
             _LOGGER.error("Failed to retrieve history for %s: %s", ec_entity, e)
             return
 
-        states_sudden = (
-            history_sudden.get(ec_entity.lower(), []) if isinstance(history_sudden, dict) else []
-        )
-        states_sustained = (
-            history_sustained.get(ec_entity.lower(), [])
-            if isinstance(history_sustained, dict)
-            else []
-        )
+        states_sudden = history_sudden.get(ec_entity.lower(), []) if isinstance(history_sudden, dict) else []
+        states_sustained = history_sustained.get(ec_entity.lower(), []) if isinstance(history_sustained, dict) else []
 
         # Extract numeric EC values from history, filtering out invalid states
         ec_values_sudden: list[float] = []

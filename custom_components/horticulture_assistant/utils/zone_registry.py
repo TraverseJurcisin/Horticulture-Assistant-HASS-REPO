@@ -100,9 +100,7 @@ def save_zones(zones: dict[str, ZoneConfig], hass=None) -> bool:
     return True
 
 
-def add_zone(
-    zone_id: str, solenoids: list[str] | None = None, plant_ids: list[str] | None = None, hass=None
-) -> bool:
+def add_zone(zone_id: str, solenoids: list[str] | None = None, plant_ids: list[str] | None = None, hass=None) -> bool:
     """Add a new irrigation zone and persist it.
 
     Returns ``False`` if the zone already exists.

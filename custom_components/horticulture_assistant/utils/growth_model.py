@@ -8,10 +8,7 @@ from datetime import datetime
 # Reuse the central evapotranspiration formulas from plant_engine
 from plant_engine.et_model import calculate_et0, calculate_eta
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    data_path,
-    plants_path,
-)
+from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
 
 try:
     from homeassistant.core import HomeAssistant
@@ -61,22 +58,14 @@ def update_growth_index(
         _LOGGER.error("Could not load profile for plant %s: %s", plant_id, e)
         profile = {}
     if not profile:
-        _LOGGER.error(
-            "Plant profile for '%s' is missing or empty. Cannot update growth index.", plant_id
-        )
+        _LOGGER.error("Plant profile for '%s' is missing or empty. Cannot update growth index.", plant_id)
         return {}
 
     # Determine current lifecycle stage
-    stage = (
-        profile.get("general", {}).get("lifecycle_stage")
-        or profile.get("general", {}).get("stage")
-        or "unknown"
-    )
+    stage = profile.get("general", {}).get("lifecycle_stage") or profile.get("general", {}).get("stage") or "unknown"
     stage_lower = str(stage).lower()
     # Get stage details (duration, optional growth modifiers)
-    stage_data = profile.get("stages", {}).get(stage, {}) or profile.get("stages", {}).get(
-        stage_lower, {}
-    )
+    stage_data = profile.get("stages", {}).get(stage, {}) or profile.get("stages", {}).get(stage_lower, {})
     stage_duration_days = stage_data.get("stage_duration") if isinstance(stage_data, dict) else None
 
     # Base temperature for GDD (threshold below which no growth accrues)
@@ -148,9 +137,7 @@ def update_growth_index(
             # No light data available for this day
             par_mj = 0.0
             dli_mol = 0.0
-            _LOGGER.warning(
-                "No light/DLI data for plant %s; setting growth index to 0 for today.", plant_id
-            )
+            _LOGGER.warning("No light/DLI data for plant %s; setting growth index to 0 for today.", plant_id)
 
     # Determine transpiration factor (daily water use) in liters
     if transpiration_ml is not None:
@@ -200,9 +187,7 @@ def update_growth_index(
         except (ValueError, TypeError):
             canopy_m2 = 0.25
         # Compute ET₀ and ETₐ (mm/day)
-        et0_mm = calculate_et0(
-            temp_for_et, rh_for_et, solar_for_et, wind_m_s=wind_for_et, elevation_m=elev_for_et
-        )
+        et0_mm = calculate_et0(temp_for_et, rh_for_et, solar_for_et, wind_m_s=wind_for_et, elevation_m=elev_for_et)
         eta_mm = calculate_eta(et0_mm, kc)
         # Convert ETa (mm) over the plant's canopy area to liters of water transpired
         et_liters = max(eta_mm * canopy_m2, 0.0)
@@ -327,23 +312,17 @@ def update_growth_index(
             canopy_m2 = float(canopy_m2)
         except Exception:
             canopy_m2 = 0.25
-        et0_ideal = calculate_et0(
-            ideal_temp, ideal_rh, ideal_par_w, wind_m_s=ideal_wind, elevation_m=ideal_elev
-        )
+        et0_ideal = calculate_et0(ideal_temp, ideal_rh, ideal_par_w, wind_m_s=ideal_wind, elevation_m=ideal_elev)
         eta_ideal = calculate_eta(et0_ideal, kc)
         transp_l_ideal = max(eta_ideal * canopy_m2, 0.0)
-        base_vgi_ideal_day = (
-            ideal_gdd * (ideal_par_w * 0.0864) * transp_l_ideal
-        )  # use ideal PAR (W to MJ)
+        base_vgi_ideal_day = ideal_gdd * (ideal_par_w * 0.0864) * transp_l_ideal  # use ideal PAR (W to MJ)
         base_vgi_ideal_day = max(base_vgi_ideal_day, 0.0)
         # Use same stage growth factor for ideal scenario
         ideal_growth_factor = growth_factor
         vgi_ideal_day = base_vgi_ideal_day * ideal_growth_factor
         expected_stage_vgi_total = vgi_ideal_day * float(stage_duration_days)
         if expected_stage_vgi_total > 0:
-            stage_progress_vgi_pct = round(
-                min((stage_vgi_total / expected_stage_vgi_total) * 100.0, 100.0), 1
-            )
+            stage_progress_vgi_pct = round(min((stage_vgi_total / expected_stage_vgi_total) * 100.0, 100.0), 1)
         else:
             stage_progress_vgi_pct = 0.0
 
@@ -361,7 +340,10 @@ def update_growth_index(
         summary["stage_progress_vgi_pct"] = stage_progress_vgi_pct
 
     _LOGGER.info(
-        "Updated growth index for %s: VGI today=%.2f, total=%.2f, stage=%s (Stage progress: %.1f%% time, %.1f%% growth)",
+        (
+            "Updated growth index for %s: VGI today=%.2f, total=%.2f, stage=%s "
+            "(Stage progress: %.1f%% time, %.1f%% growth)"
+        ),
         plant_id,
         vgi_today,
         total_vgi,

@@ -1,12 +1,7 @@
 from datetime import datetime, timedelta
 
-from custom_components.horticulture_assistant.utils.inventory_usage_forecast import (
-    UsageForecaster,
-)
-from custom_components.horticulture_assistant.utils.product_inventory import (
-    InventoryRecord,
-    ProductInventory,
-)
+from custom_components.horticulture_assistant.utils.inventory_usage_forecast import UsageForecaster
+from custom_components.horticulture_assistant.utils.product_inventory import InventoryRecord, ProductInventory
 
 
 def test_usage_logging_and_forecast():

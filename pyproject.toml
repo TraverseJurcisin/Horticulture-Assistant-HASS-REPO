@@ -4,7 +4,6 @@ target-version = "py312"
 extend-exclude = [
   "custom_components/horticulture_assistant/data",
   "custom_components/horticulture_assistant/engine/plant_engine",
-  "custom_components/horticulture_assistant/utils",
   "custom_components/horticulture_assistant/scripts",
   "tests/fixtures",
 ]

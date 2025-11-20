@@ -121,10 +121,7 @@ def test_get_pest_resistance():
 
 
 def test_get_organic_controls():
-    from plant_engine.pest_manager import (
-        get_organic_controls,
-        recommend_organic_controls,
-    )
+    from plant_engine.pest_manager import get_organic_controls, recommend_organic_controls
 
     controls = get_organic_controls("aphids")
     assert "neem oil" in controls
@@ -195,10 +192,7 @@ def test_build_monitoring_plan():
 def test_plan_beneficial_releases():
     from datetime import date, timedelta
 
-    from plant_engine.pest_manager import (
-        get_beneficial_effective_days,
-        plan_beneficial_releases,
-    )
+    from plant_engine.pest_manager import get_beneficial_effective_days, plan_beneficial_releases
 
     start = date(2024, 1, 1)
     schedule = plan_beneficial_releases(["aphids"], start, cycles=2)

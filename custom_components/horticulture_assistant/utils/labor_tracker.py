@@ -107,9 +107,7 @@ class LaborLog:
             roi[zid] = yield_g / hours if hours > 0 else 0.0
         return roi
 
-    def high_effort_low_return(
-        self, yield_by_zone: dict[str, float], threshold: float
-    ) -> list[str]:
+    def high_effort_low_return(self, yield_by_zone: dict[str, float], threshold: float) -> list[str]:
         roi = self.compute_roi(yield_by_zone)
         return [z for z, value in roi.items() if value < threshold]
 
@@ -122,9 +120,7 @@ class LaborLog:
             totals[e.task] = totals.get(e.task, 0.0) + e.minutes
         return totals
 
-    def high_effort_tasks(
-        self, threshold_minutes: float, *, zone_id: str | None = None
-    ) -> list[str]:
+    def high_effort_tasks(self, threshold_minutes: float, *, zone_id: str | None = None) -> list[str]:
         """Return tasks whose logged minutes exceed the threshold."""
         totals = self.minutes_by_task(zone_id=zone_id)
         return [task for task, minutes in totals.items() if minutes > threshold_minutes]

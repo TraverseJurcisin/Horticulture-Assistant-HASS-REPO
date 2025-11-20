@@ -7,7 +7,7 @@ import logging
 from collections.abc import Awaitable, Callable, Mapping
 from contextlib import suppress
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -35,12 +35,6 @@ from .auth import CloudAuthClient, CloudAuthError, CloudAuthTokens
 from .edge_store import EdgeSyncStore
 from .edge_worker import EdgeSyncWorker
 from .options import merge_cloud_tokens
-
-try:
-    UTC = datetime.UTC
-except AttributeError:  # pragma: no cover - Py<3.11 fallback
-    UTC = timezone.utc  # noqa: UP017
-
 
 _LOGGER = logging.getLogger(__name__)
 

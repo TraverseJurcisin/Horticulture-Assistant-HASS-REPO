@@ -18,13 +18,8 @@ from typing import Optional
 
 from plant_engine.utils import load_dataset
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    config_path,
-    data_path,
-)
-from custom_components.horticulture_assistant.utils.plant_registry import (
-    PLANT_REGISTRY_FILE,
-)
+from custom_components.horticulture_assistant.utils.path_utils import config_path, data_path
+from custom_components.horticulture_assistant.utils.plant_registry import PLANT_REGISTRY_FILE
 
 try:
     from homeassistant.core import HomeAssistant
@@ -115,9 +110,7 @@ def score_efficiency(efficiency: Mapping[str, float], plant_type: str) -> float:
     return round((total / count) * 100, 1) if count else 0.0
 
 
-def efficiency_report(
-    efficiency: Mapping[str, float], plant_type: str
-) -> dict[str, dict[str, float]]:
+def efficiency_report(efficiency: Mapping[str, float], plant_type: str) -> dict[str, dict[str, float]]:
     """Return comparison of ``efficiency`` against reference targets.
 
     Parameters
@@ -157,9 +150,7 @@ def efficiency_report(
 class NutrientUseEfficiency:
     """Track fertilizer usage and calculate nutrient use efficiency."""
 
-    def __init__(
-        self, data_file: str | None = None, hass: Optional['HomeAssistant'] = None
-    ) -> None:
+    def __init__(self, data_file: str | None = None, hass: Optional['HomeAssistant'] = None) -> None:
         """Load existing logs or initialize empty structures.
 
         Parameters
@@ -258,9 +249,7 @@ class NutrientUseEfficiency:
                             pid,
                         )
             else:
-                _LOGGER.warning(
-                    "Yield logs file format invalid (expected dict at top level); yield data not loaded."
-                )
+                _LOGGER.warning("Yield logs file format invalid (expected dict at top level); yield data not loaded.")
         except FileNotFoundError:
             _LOGGER.info(
                 "Yield logs file not found at %s; proceeding without initial yield data.",
@@ -273,9 +262,7 @@ class NutrientUseEfficiency:
                 e,
             )
         except Exception as e:
-            _LOGGER.error(
-                "Error loading yield logs from %s: %s; yield data not loaded.", yield_file, e
-            )
+            _LOGGER.error("Error loading yield logs from %s: %s; yield data not loaded.", yield_file, e)
 
     @staticmethod
     def _format_date(value: str | date | datetime | None) -> str:
@@ -307,18 +294,14 @@ class NutrientUseEfficiency:
         stage_name = stage
         if stage_name is None:
             # Try to retrieve current stage from plant registry if available
-            reg_path = (
-                config_path(self._hass, PLANT_REGISTRY_FILE)
-                if self._hass is not None
-                else PLANT_REGISTRY_FILE
-            )
+            reg_path = config_path(self._hass, PLANT_REGISTRY_FILE) if self._hass is not None else PLANT_REGISTRY_FILE
             try:
                 with open(reg_path, encoding="utf-8") as rf:
                     reg_data = json.load(rf)
                 if plant_id in reg_data:
-                    stage_name = reg_data[plant_id].get("current_lifecycle_stage") or reg_data[
-                        plant_id
-                    ].get("lifecycle_stage")
+                    stage_name = reg_data[plant_id].get("current_lifecycle_stage") or reg_data[plant_id].get(
+                        "lifecycle_stage"
+                    )
             except Exception:
                 stage_name = None
         if stage_name is None:
@@ -346,9 +329,7 @@ class NutrientUseEfficiency:
         if plant_id not in self.application_log:
             self.application_log[plant_id] = {}
         for nut, amt_val in nutrient_mass_clean.items():
-            self.application_log[plant_id][nut] = (
-                self.application_log[plant_id].get(nut, 0.0) + amt_val
-            )
+            self.application_log[plant_id][nut] = self.application_log[plant_id].get(nut, 0.0) + amt_val
         # Persist to file
         self._save_to_file()
         _LOGGER.info(
@@ -406,9 +387,7 @@ class NutrientUseEfficiency:
             return None
         total_yield_g = self.yield_log.get(plant_id, 0.0)
         if total_yield_g <= 0:
-            _LOGGER.warning(
-                "No yield recorded for plant %s; efficiency cannot be computed.", plant_id
-            )
+            _LOGGER.warning("No yield recorded for plant %s; efficiency cannot be computed.", plant_id)
             return None
         applied_totals = self.application_log.get(plant_id, {})
         results: dict[str, float] = {}
@@ -475,9 +454,7 @@ class NutrientUseEfficiency:
             try:
                 entry_date = datetime.strptime(date_str, "%Y-%m-%d").date()
             except Exception as e:
-                _LOGGER.warning(
-                    "Invalid date format '%s' in logs for plant %s: %s", date_str, plant_id, e
-                )
+                _LOGGER.warning("Invalid date format '%s' in logs for plant %s: %s", date_str, plant_id, e)
                 continue
             if group_by == "week":
                 year, week_num, _ = entry_date.isocalendar()
@@ -487,9 +464,7 @@ class NutrientUseEfficiency:
             elif group_by == "stage":
                 key = entry.get("stage", "unknown")
             else:
-                raise ValueError(
-                    f"Invalid summary grouping: {by}. Use 'week', 'month', or 'stage'."
-                )
+                raise ValueError(f"Invalid summary grouping: {by}. Use 'week', 'month', or 'stage'.")
             # Aggregate nutrient amounts
             if key not in summary:
                 summary[key] = {}

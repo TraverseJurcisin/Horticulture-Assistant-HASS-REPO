@@ -15,21 +15,13 @@ except ImportError:
     HomeAssistant = None
 
 from plant_engine.constants import get_stage_multiplier
-from plant_engine.nutrient_manager import (
-    get_all_recommended_levels,
-    get_recommended_levels,
-)
+from plant_engine.nutrient_absorption import apply_absorption_rates
+from plant_engine.nutrient_manager import get_all_recommended_levels, get_recommended_levels
 from plant_engine.utils import load_dataset, load_json, normalize_key, save_json
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    config_path,
-    ensure_data_dir,
-    plants_path,
-)
 from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile
-from custom_components.horticulture_assistant.utils.plant_registry import (
-    PLANT_REGISTRY_FILE,
-)
+from custom_components.horticulture_assistant.utils.path_utils import config_path, ensure_data_dir, plants_path
+from custom_components.horticulture_assistant.utils.plant_registry import PLANT_REGISTRY_FILE
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -57,8 +49,6 @@ def normalize_tag(tag: str) -> str:
 # or override this mapping by providing ``nutrient_tag_modifiers.json`` in
 # the dataset overlay directory.
 TAG_MODIFIER_FILE = "nutrients/nutrient_tag_modifiers.json"
-
-from plant_engine.nutrient_absorption import apply_absorption_rates
 
 
 @lru_cache(maxsize=1)
@@ -173,9 +163,7 @@ def _apply_absorption_rates(targets: dict[str, float], stage_key: str) -> None:
     targets.update(adjusted)
 
 
-def _compute_nutrient_targets(
-    plant_id: str, hass: HomeAssistant | None, include_micro: bool
-) -> dict[str, float]:
+def _compute_nutrient_targets(plant_id: str, hass: HomeAssistant | None, include_micro: bool) -> dict[str, float]:
     """Return nutrient targets for ``plant_id`` without persisting them.
 
     This helper consolidates profile data and guideline defaults to produce
@@ -229,10 +217,7 @@ def _compute_nutrient_targets(
         except (ValueError, TypeError):
             _LOGGER.warning("Invalid base nutrient value for %s: %s", nut, val)
 
-    tags = [
-        str(t).lower()
-        for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])
-    ]
+    tags = [str(t).lower() for t in (profile.get("general", {}).get("tags") or profile.get("tags") or [])]
     _apply_tag_modifiers(adjusted, tags)
     _apply_absorption_rates(adjusted, stage_key)
 
@@ -317,9 +302,7 @@ def schedule_nutrient_corrections(
         return NutrientAdjustments({})
 
     if use_synergy:
-        from plant_engine.nutrient_manager import (
-            calculate_all_deficiencies_with_synergy as _calc,
-        )
+        from plant_engine.nutrient_manager import calculate_all_deficiencies_with_synergy as _calc
     else:
         from plant_engine.nutrient_manager import calculate_nutrient_adjustments as _calc
 

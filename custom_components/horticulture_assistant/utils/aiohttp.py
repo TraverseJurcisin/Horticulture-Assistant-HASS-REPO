@@ -13,6 +13,7 @@ __all__ = [
 
 try:  # pragma: no cover - exercised in Home Assistant runtime
     from aiohttp import ClientError, ClientResponseError, ClientSession
+
     AIOHTTP_AVAILABLE = True
 except ImportError:  # pragma: no cover - executed in tests/CLI
     AIOHTTP_AVAILABLE = False
@@ -26,6 +27,7 @@ except ImportError:  # pragma: no cover - executed in tests/CLI
     try:
         from aiohttp import ClientResponseError as _ClientResponseError  # type: ignore
     except Exception:  # pragma: no cover - no stub available
+
         class ClientResponseError(ClientError):  # type: ignore[override]
             """Fallback error used when :mod:`aiohttp` is unavailable."""
 
@@ -36,6 +38,7 @@ except ImportError:  # pragma: no cover - executed in tests/CLI
         if hasattr(_ClientResponseError, "status"):
             ClientResponseError = _ClientResponseError  # type: ignore[assignment]
         else:
+
             class ClientResponseError(_ClientResponseError):  # type: ignore[misc]
                 """Wrap stubbed errors with a ``status`` attribute for compatibility."""
 

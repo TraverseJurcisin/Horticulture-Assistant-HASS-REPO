@@ -5,11 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from datetime import date
 
-from homeassistant.components.sensor import (
-    SensorDeviceClass,
-    SensorEntity,
-    SensorStateClass,
-)
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorStateClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant, callback
@@ -20,16 +16,8 @@ from homeassistant.util.unit_conversion import TemperatureConverter
 from .calibration.apply import lux_to_ppfd
 from .calibration.store import async_get_for_entity
 from .const import DOMAIN
-from .engine.metrics import (
-    accumulate_dli,
-    dew_point_c,
-    lux_model_ppfd,
-    mold_risk,
-    vpd_kpa,
-)
-from .engine.metrics import (
-    lux_to_ppfd as metric_lux_to_ppfd,
-)
+from .engine.metrics import accumulate_dli, dew_point_c, lux_model_ppfd, mold_risk, vpd_kpa
+from .engine.metrics import lux_to_ppfd as metric_lux_to_ppfd
 from .entity_base import HorticultureBaseEntity, ProfileContextEntityMixin
 from .utils.entry_helpers import ProfileContext
 

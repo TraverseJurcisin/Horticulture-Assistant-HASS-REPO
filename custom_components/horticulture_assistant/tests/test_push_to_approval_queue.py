@@ -1,9 +1,8 @@
 import json
 
-from custom_components.horticulture_assistant.engine.push_to_approval_queue import (
-    push_to_approval_queue,
-)
 from plant_engine.utils import load_json
+
+from custom_components.horticulture_assistant.engine.push_to_approval_queue import push_to_approval_queue
 
 
 def test_push_to_approval_queue(tmp_path):

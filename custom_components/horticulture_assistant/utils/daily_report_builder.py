@@ -9,25 +9,14 @@ from datetime import datetime
 from pathlib import Path
 
 from homeassistant.core import HomeAssistant
+
+from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile
+from custom_components.horticulture_assistant.utils.path_utils import config_path, data_path, plants_path
+from custom_components.horticulture_assistant.utils.plant_registry import PLANT_REGISTRY_FILE
 from plant_engine import environment_manager
 
-from custom_components.horticulture_assistant.utils.path_utils import (
-    config_path,
-    data_path,
-    plants_path,
-)
-from custom_components.horticulture_assistant.utils.bio_profile_loader import (
-    load_profile,
-)
-from custom_components.horticulture_assistant.utils.plant_registry import (
-    PLANT_REGISTRY_FILE,
-)
-
 from .json_io import load_json, save_json
-from .state_helpers import (
-    aggregate_sensor_values,
-    get_numeric_state,
-)
+from .state_helpers import aggregate_sensor_values, get_numeric_state
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -86,15 +75,9 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
         return {}
 
     # Determine current lifecycle stage from profile (if available)
-    stage = (
-        profile.get("general", {}).get("lifecycle_stage")
-        or profile.get("general", {}).get("stage")
-        or "unknown"
-    )
+    stage = profile.get("general", {}).get("lifecycle_stage") or profile.get("general", {}).get("stage") or "unknown"
     plant_type = _resolve_plant_type(hass, plant_id, profile)
-    env_targets = (
-        environment_manager.get_environmental_targets(plant_type, stage) if plant_type else {}
-    )
+    env_targets = environment_manager.get_environmental_targets(plant_type, stage) if plant_type else {}
 
     # Static thresholds and nutrient targets from profile
     thresholds = profile.get("thresholds", {})  # environmental or nutrient thresholds
@@ -105,9 +88,7 @@ def build_daily_report(hass: HomeAssistant, plant_id: str) -> dict:
         tags = []
 
     # Collect current sensor readings (moisture, EC, temperature, humidity, light)
-    sensor_map = (
-        profile.get("sensor_entities") or profile.get("general", {}).get("sensor_entities") or {}
-    )
+    sensor_map = profile.get("sensor_entities") or profile.get("general", {}).get("sensor_entities") or {}
 
     def _aggregate(key: str, default_id: str) -> float | None:
         val = sensor_map.get(key, default_id)

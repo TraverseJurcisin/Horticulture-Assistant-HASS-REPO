@@ -1,6 +1,4 @@
-from custom_components.horticulture_assistant.utils.nutrient_schedule import (
-    generate_nutrient_schedule,
-)
+from custom_components.horticulture_assistant.utils.nutrient_schedule import generate_nutrient_schedule
 
 
 def test_generate_nutrient_schedule():

@@ -6,13 +6,10 @@ from collections.abc import Mapping
 from dataclasses import asdict, dataclass
 
 from .nutrient_interactions import check_imbalances
-from .nutrient_manager import (
-    calculate_all_deficiencies,
-    calculate_all_surplus,
-    calculate_nutrient_balance,
-    get_all_recommended_levels,
-    get_stage_ratio,
-)
+from .nutrient_manager import (calculate_all_deficiencies,
+                               calculate_all_surplus,
+                               calculate_nutrient_balance,
+                               get_all_recommended_levels, get_stage_ratio)
 from .toxicity_manager import check_toxicities
 
 __all__ = ["NutrientAnalysis", "analyze_nutrient_profile"]

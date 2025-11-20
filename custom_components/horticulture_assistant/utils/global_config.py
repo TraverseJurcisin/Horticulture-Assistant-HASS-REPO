@@ -1,6 +1,6 @@
-from __future__ import annotations
-
 """Helpers for loading and saving global integration settings."""
+
+from __future__ import annotations
 
 from typing import Any
 

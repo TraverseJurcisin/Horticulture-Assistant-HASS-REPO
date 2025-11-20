@@ -1,9 +1,6 @@
 import pytest
 
-from custom_components.horticulture_assistant.utils.nutrient_analyzer import (
-    ppm_to_mg,
-    recommend_adjustments,
-)
+from custom_components.horticulture_assistant.utils.nutrient_analyzer import ppm_to_mg, recommend_adjustments
 
 
 @pytest.mark.parametrize(

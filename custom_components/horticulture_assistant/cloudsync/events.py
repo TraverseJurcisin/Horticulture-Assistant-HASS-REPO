@@ -3,13 +3,8 @@ from __future__ import annotations
 import json
 from collections.abc import Iterable
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
-
-try:
-    UTC = datetime.UTC  # type: ignore[attr-defined]
-except AttributeError:  # pragma: no cover - Py<3.11 fallback
-    UTC = timezone.utc  # noqa: UP017
 
 
 @dataclass(slots=True)

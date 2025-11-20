@@ -10,9 +10,7 @@ try:  # Home Assistant add-on bundle ships a vendored plant_engine package.
 except ImportError:  # pragma: no cover - fallback for test/dev environments
     from ..engine.plant_engine import growth_stage
 
-from custom_components.horticulture_assistant.utils import (
-    stage_nutrient_requirements,
-)
+from custom_components.horticulture_assistant.utils import stage_nutrient_requirements
 
 
 @dataclass(slots=True)

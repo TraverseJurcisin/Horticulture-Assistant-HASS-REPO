@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone, tzinfo
+from datetime import UTC, datetime, timedelta, tzinfo
 
 from .product_inventory import ProductInventory
 
@@ -11,7 +11,7 @@ from .product_inventory import ProductInventory
 def _utcnow() -> datetime:
     """Return a timezone-aware ``datetime`` in UTC."""
 
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 def _local_timezone() -> tzinfo:
@@ -25,7 +25,7 @@ def _local_timezone() -> tzinfo:
     """
 
     tzinfo = datetime.now().astimezone().tzinfo
-    return tzinfo or timezone.utc
+    return tzinfo or UTC
 
 
 def _ensure_utc(dt: datetime | None) -> datetime:
@@ -42,8 +42,8 @@ def _ensure_utc(dt: datetime | None) -> datetime:
     if dt is None:
         return _utcnow()
     if dt.tzinfo is None:
-        return dt.replace(tzinfo=_local_timezone()).astimezone(timezone.utc)
-    return dt.astimezone(timezone.utc)
+        return dt.replace(tzinfo=_local_timezone()).astimezone(UTC)
+    return dt.astimezone(UTC)
 
 
 @dataclass

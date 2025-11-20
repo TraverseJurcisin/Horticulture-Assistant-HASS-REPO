@@ -5,9 +5,8 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass
 
-from custom_components.horticulture_assistant.fertilizer_formulator import (
-    get_cheapest_product,
-)
+from custom_components.horticulture_assistant.fertilizer_formulator import \
+    get_cheapest_product
 
 from .fertigation import recommend_correction_schedule
 from .nutrient_analysis import NutrientAnalysis, analyze_nutrient_profile

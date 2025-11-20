@@ -1,10 +1,5 @@
 import plant_engine.datasets as datasets
-from plant_engine.datasets import (
-    get_dataset_description,
-    list_datasets,
-    list_datasets_by_category,
-    search_datasets,
-)
+from plant_engine.datasets import get_dataset_description, list_datasets, list_datasets_by_category, search_datasets
 
 
 def test_list_datasets_contains_known():

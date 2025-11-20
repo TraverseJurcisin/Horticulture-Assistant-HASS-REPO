@@ -1,7 +1,4 @@
-from custom_components.horticulture_assistant.utils.irrigation_schedule import (
-    Schedule,
-    parse_schedule,
-)
+from custom_components.horticulture_assistant.utils.irrigation_schedule import Schedule, parse_schedule
 
 
 def test_parse_schedule_basic():

@@ -40,9 +40,7 @@ def get_plant_type(plant_id: str, hass: HomeAssistant | None = None) -> str | No
     return str(ptype) if ptype else None
 
 
-def register_plant(
-    plant_id: str, metadata: dict[str, Any], hass: HomeAssistant | None = None
-) -> None:
+def register_plant(plant_id: str, metadata: dict[str, Any], hass: HomeAssistant | None = None) -> None:
     """Add or update ``plant_id`` in the plant registry."""
     path = config_path(hass, PLANT_REGISTRY_FILE)
     try:

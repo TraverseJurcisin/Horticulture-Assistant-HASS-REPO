@@ -1,7 +1,4 @@
-from custom_components.horticulture_assistant.utils.product_catalog import (
-    FertilizerProduct,
-    ProductPackaging,
-)
+from custom_components.horticulture_assistant.utils.product_catalog import FertilizerProduct, ProductPackaging
 
 
 def test_product_catalog_basic():

@@ -1,7 +1,6 @@
 """Helpers for estimating fertigation recipe costs."""
 
 
-
 def estimate_recipe_cost(
     product_dose_rates: dict[str, float],
     product_costs_per_unit: dict[str, float],

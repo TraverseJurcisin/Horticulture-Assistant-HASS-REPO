@@ -4,12 +4,8 @@ from __future__ import annotations
 
 from functools import cache
 
-from .utils import (
-    clear_dataset_cache,
-    lazy_dataset,
-    list_dataset_entries,
-    normalize_key,
-)
+from .utils import (clear_dataset_cache, lazy_dataset, list_dataset_entries,
+                    normalize_key)
 
 DATA_FILE = "environment/environment_tips.yaml"
 

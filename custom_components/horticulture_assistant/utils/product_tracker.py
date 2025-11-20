@@ -36,9 +36,7 @@ class ProductTracker:
 
         self.inventory.append(instance)
 
-    def get_valid_products(
-        self, product_name: str, as_of_date: str | None = None
-    ) -> list[ProductInstance]:
+    def get_valid_products(self, product_name: str, as_of_date: str | None = None) -> list[ProductInstance]:
         if as_of_date is None:
             as_of_date = datetime.date.today().isoformat()
 

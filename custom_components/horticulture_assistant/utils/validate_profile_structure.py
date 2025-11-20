@@ -7,17 +7,18 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bool = False):
-    """
-    Validate the structure and content of a plant profile (set of JSON files) for a given plant_id.
-    Checks each JSON file under plants/<plant_id>/ for expected keys and empty/null values.
-    Logs any deviations from the expected profile template and returns a dictionary of issues.
-    If run as a standalone script, outputs the summary to the console.
+    """Validate the structure and content of a plant profile (set of JSON files).
 
-    :param plant_id: Identifier for the plant (name of the profile directory under base_path).
-    :param base_path: Optional base directory for plant profiles (defaults to "plants" in current directory).
-    :param verbose: If True, include more detailed output (e.g., log files that have no issues as "OK", list unexpected keys).
-    :return: Dictionary of issues found. The keys are filenames and values are dictionaries describing issues:
-             {"missing_keys": [...], "empty_fields": [...], "error": "..." (if any format errors), "extra_keys": [...]}.
+    Checks each JSON file under ``plants/<plant_id>/`` for expected keys and empty/null values, logs any deviations from
+    the expected template, and returns a dictionary of issues. When executed as a script, it prints the summary to the
+    console.
+
+    :param plant_id: Identifier for the plant (name of the profile directory under ``base_path``).
+    :param base_path: Optional base directory for plant profiles (defaults to "plants" in the current directory).
+    :param verbose: If True, include more detailed output (for example, log files that have no issues as "OK" or list
+        unexpected keys).
+    :return: Dictionary of issues found. The keys are filenames and values are dictionaries describing issues such as
+        missing keys, empty fields, parsing errors, or unexpected keys.
     """
     # Determine base directory for plant profiles
     base_dir = Path(base_path) if base_path else Path(os.getcwd()) / "plants"
@@ -262,9 +263,7 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
     # Define expected nested subkeys for specific fields within files
     expected_nested_keys = {
         "reproductive.json": {"flowering_triggers": {"temperature", "photoperiod", "nutrient"}},
-        "storage.json": {
-            "storage_environment": {"temperature", "relative_humidity", "airflow", "darkness"}
-        },
+        "storage.json": {"storage_environment": {"temperature", "relative_humidity", "airflow", "darkness"}},
         "yield.json": {"per_area_volume_metrics": {"per_acre", "per_cubic_ft", "per_gallon_media"}},
     }
     # List all JSON files in the plant directory
@@ -290,9 +289,9 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
             if file_name == "general.json" and "start_date" not in content:
                 expected = expected.copy()
                 expected.discard("start_date")
-            missing_keys = sorted(list(expected - set(content.keys())))
+            missing_keys = sorted(expected - set(content.keys()))
             extra = set(content.keys()) - expected
-            extra_keys = sorted(list(extra)) if extra else []
+            extra_keys = sorted(extra) if extra else []
         else:
             missing_keys = []
             extra_keys = []
@@ -307,9 +306,7 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
                 else:
                     if "stage_duration" not in stage_data:
                         nested_issues.append(f"Stage {stage_name}: missing 'stage_duration'")
-                        _LOGGER.info(
-                            "Stage '%s' in %s missing key 'stage_duration'.", stage_name, file_path
-                        )
+                        _LOGGER.info("Stage '%s' in %s missing key 'stage_duration'.", stage_name, file_path)
                     if "notes" not in stage_data:
                         nested_issues.append(f"Stage {stage_name}: missing 'notes'")
                         _LOGGER.info("Stage '%s' in %s missing key 'notes'.", stage_name, file_path)
@@ -317,17 +314,13 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
             # Validate each zone entry in calendar timing file
             for zone, timing in content.items():
                 if not isinstance(timing, dict):
-                    _LOGGER.warning(
-                        "Calendar timing entry '%s' in %s is not a dictionary.", zone, file_path
-                    )
+                    _LOGGER.warning("Calendar timing entry '%s' in %s is not a dictionary.", zone, file_path)
                     nested_issues.append(f"Zone {zone}: not a dict")
                 else:
                     for required_stage in ["seedling", "veg", "flower"]:
                         if required_stage not in timing:
                             nested_issues.append(f"Zone {zone}: missing '{required_stage}'")
-                            _LOGGER.info(
-                                "Zone '%s' in %s missing key '%s'.", zone, file_path, required_stage
-                            )
+                            _LOGGER.info("Zone '%s' in %s missing key '%s'.", zone, file_path, required_stage)
         else:
             if file_name in expected_nested_keys:
                 for parent_key, subkeys in expected_nested_keys[file_name].items():
@@ -374,12 +367,8 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
                         elif isinstance(subval, str):
                             if subval.strip() == "" or subval.strip().lower() == "tbd":
                                 empty_fields.append(f"{key}.{subkey}")
-                        elif isinstance(subval, list | tuple | set):
-                            if len(subval) == 0:
-                                empty_fields.append(f"{key}.{subkey}")
-                        elif isinstance(subval, dict):
-                            if len(subval) == 0:
-                                empty_fields.append(f"{key}.{subkey}")
+                        elif isinstance(subval, list | tuple | set | dict) and len(subval) == 0:
+                            empty_fields.append(f"{key}.{subkey}")
         empty_fields = sorted(set(empty_fields))
         # Log and record issues for this file
         file_issues = {}
@@ -403,9 +392,7 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
             issues[file_name] = file_issues
     # Summary log per profile
     if issues:
-        _LOGGER.info(
-            "Summary of profile issues for '%s': %d file(s) with problems.", plant_id, len(issues)
-        )
+        _LOGGER.info("Summary of profile issues for '%s': %d file(s) with problems.", plant_id, len(issues))
     else:
         _LOGGER.info("All profile files for '%s' passed validation with no issues.", plant_id)
     return issues
@@ -414,18 +401,14 @@ def validate_profile_structure(plant_id: str, base_path: str = None, verbose: bo
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Validate the structure of plant profile JSON files."
-    )
+    parser = argparse.ArgumentParser(description="Validate the structure of plant profile JSON files.")
     parser.add_argument("plant_id", help="Plant ID (profile directory name) to validate")
     parser.add_argument(
         "--base-path",
         dest="base_path",
         help="Base directory containing plant profiles (defaults to ./plants)",
     )
-    parser.add_argument(
-        "-v", "--verbose", action="store_true", dest="verbose", help="Verbose output"
-    )
+    parser.add_argument("-v", "--verbose", action="store_true", dest="verbose", help="Verbose output")
     args = parser.parse_args()
     # Configure basic logging to console
     logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -435,9 +418,7 @@ if __name__ == "__main__":
     if not plant_dir.is_dir():
         print(f"Error: Plant directory not found at {plant_dir}")
     else:
-        result = validate_profile_structure(
-            args.plant_id, base_path=args.base_path, verbose=args.verbose
-        )
+        result = validate_profile_structure(args.plant_id, base_path=args.base_path, verbose=args.verbose)
         # Print summary to console
         if not result:
             print(f"No issues found for plant profile '{args.plant_id}'.")
@@ -450,9 +431,7 @@ if __name__ == "__main__":
                 if "missing_keys" in issue_data:
                     issue_list.append(f"Missing keys: {', '.join(issue_data['missing_keys'])}")
                 if "nested_issues" in issue_data:
-                    issue_list.append(
-                        f"Nested structure issues: {'; '.join(issue_data['nested_issues'])}"
-                    )
+                    issue_list.append(f"Nested structure issues: {'; '.join(issue_data['nested_issues'])}")
                 if "empty_fields" in issue_data:
                     issue_list.append(f"Empty/null fields: {', '.join(issue_data['empty_fields'])}")
                 if "extra_keys" in issue_data:

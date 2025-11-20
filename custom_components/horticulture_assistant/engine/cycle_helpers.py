@@ -4,14 +4,12 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from statistics import mean
 
 from plant_engine.nutrient_uptake import get_daily_uptake
 from plant_engine.rootzone_model import estimate_water_capacity
-
-UTC = getattr(datetime, "UTC", timezone.utc)  # type: ignore[attr-defined]  # noqa: UP017
 
 # Default depth used when profiles omit ``max_root_depth_cm``.
 DEFAULT_ROOT_DEPTH_CM = 30.0

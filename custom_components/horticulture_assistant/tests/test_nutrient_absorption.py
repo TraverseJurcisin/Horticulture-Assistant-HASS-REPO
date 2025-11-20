@@ -1,8 +1,4 @@
-from plant_engine.nutrient_absorption import (
-    apply_absorption_rates,
-    get_absorption_rates,
-    list_stages,
-)
+from plant_engine.nutrient_absorption import apply_absorption_rates, get_absorption_rates, list_stages
 
 
 def test_get_absorption_rates():

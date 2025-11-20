@@ -1,7 +1,6 @@
 import json
 
 import pytest
-
 from plant_engine.nutrient_manager import (
     calculate_all_deficiencies,
     calculate_all_nutrient_balance,
@@ -279,9 +278,7 @@ def test_calculate_all_deficiencies_with_synergy():
 
 
 def test_calculate_all_deficiencies_with_ph_and_synergy():
-    from plant_engine.nutrient_manager import (
-        calculate_all_deficiencies_with_ph_and_synergy,
-    )
+    from plant_engine.nutrient_manager import calculate_all_deficiencies_with_ph_and_synergy
 
     current = {
         "N": 80,
@@ -308,10 +305,7 @@ def test_get_ph_synergy_adjusted_levels():
 
 
 def test_calculate_deficiency_index_with_synergy():
-    from plant_engine.nutrient_manager import (
-        calculate_deficiency_index_with_synergy,
-        get_synergy_adjusted_levels,
-    )
+    from plant_engine.nutrient_manager import calculate_deficiency_index_with_synergy, get_synergy_adjusted_levels
 
     guidelines = get_synergy_adjusted_levels("tomato", "fruiting")
     current = dict.fromkeys(guidelines, 0)
@@ -323,10 +317,7 @@ def test_calculate_deficiency_index_with_synergy():
 
 
 def test_calculate_deficiency_index_with_ph():
-    from plant_engine.nutrient_manager import (
-        calculate_deficiency_index_with_ph,
-        get_all_ph_adjusted_levels,
-    )
+    from plant_engine.nutrient_manager import calculate_deficiency_index_with_ph, get_all_ph_adjusted_levels
 
     guidelines = get_all_ph_adjusted_levels("tomato", "fruiting", 6.0)
     current = dict.fromkeys(guidelines, 0)

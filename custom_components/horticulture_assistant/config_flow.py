@@ -2686,7 +2686,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 profile_entry["general"] = fallback_general
                 profile_entry.setdefault("display_name", profile_name)
 
-            data = {**(self._config or {}), **self._profile}
+            data = dict(self._config or {})
             if self._existing_entry is not None:
                 await self._async_store_profile_for_existing_entry(
                     plant_id,
@@ -2806,7 +2806,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if self._opb_credentials:
             profile_entry["opb_credentials"] = self._opb_credentials
 
-        data = {**(self._config or {}), **self._profile}
+        data = dict(self._config or {})
         if self._existing_entry is not None:
             await self._async_store_profile_for_existing_entry(plant_id, profile_entry)
             return self.async_abort(

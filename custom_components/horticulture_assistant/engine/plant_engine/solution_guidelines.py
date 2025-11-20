@@ -3,7 +3,8 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping
 from dataclasses import asdict, dataclass
 
-from .utils import list_dataset_entries, load_dataset, normalize_key, parse_range
+from .utils import (list_dataset_entries, load_dataset, normalize_key,
+                    parse_range)
 
 DATA_FILE = "solution/solution_guidelines.json"
 

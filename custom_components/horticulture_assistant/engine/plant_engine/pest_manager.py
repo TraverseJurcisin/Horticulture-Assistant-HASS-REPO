@@ -7,12 +7,8 @@ from datetime import date, timedelta
 from typing import Any
 
 from .growth_stage import generate_stage_schedule
-from .utils import (
-    list_dataset_entries,
-    load_dataset,
-    normalize_key,
-    stage_value,
-)
+from .utils import (list_dataset_entries, load_dataset, normalize_key,
+                    stage_value)
 
 DATA_FILE = "pests/pest_guidelines.json"
 BENEFICIAL_FILE = "pests/beneficial_insects.json"

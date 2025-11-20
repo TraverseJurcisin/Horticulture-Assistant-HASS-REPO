@@ -1,7 +1,6 @@
 import datetime
 
 import pytest
-
 from plant_engine.pesticide_manager import (
     adjust_harvest_date,
     calculate_harvest_window,
@@ -181,10 +180,7 @@ def test_get_pesticide_price_and_cost():
 
 
 def test_active_ingredient_info():
-    from plant_engine.pesticide_manager import (
-        get_active_ingredient_info,
-        list_active_ingredients,
-    )
+    from plant_engine.pesticide_manager import get_active_ingredient_info, list_active_ingredients
 
     info = get_active_ingredient_info("spinosad")
     assert info["class"] == "spinosyn"
@@ -195,10 +191,7 @@ def test_active_ingredient_info():
 
 
 def test_pesticide_efficacy_helpers():
-    from plant_engine.pesticide_manager import (
-        get_pesticide_efficacy,
-        list_effective_pesticides,
-    )
+    from plant_engine.pesticide_manager import get_pesticide_efficacy, list_effective_pesticides
 
     assert get_pesticide_efficacy("imidacloprid", "aphids") == 5
     assert get_pesticide_efficacy("pyrethrin", "spider mites") == 2
@@ -213,6 +206,7 @@ def test_estimate_rotation_plan_cost():
     import importlib
 
     import plant_engine.utils as utils
+
     from plant_engine import nutrient_manager as nm
 
     utils.clear_dataset_cache()
