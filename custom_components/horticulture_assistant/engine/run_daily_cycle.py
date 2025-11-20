@@ -196,7 +196,10 @@ def run_daily_cycle(
     last_scout = load_last_entry(plant_dir / "pest_scouting_log.json")
     if last_scout and "timestamp" in last_scout:
         try:
-            last_date = datetime.fromisoformat(last_scout["timestamp"]).date()
+            last_scout_dt = datetime.fromisoformat(last_scout["timestamp"])
+            if last_scout_dt.tzinfo is None:
+                last_scout_dt = last_scout_dt.replace(tzinfo=datetime.UTC)
+            last_date = last_scout_dt.date()
             interval = pest_monitor.risk_adjusted_monitor_interval(plant_type, stage_name, current_env)
             if interval is not None:
                 next_date = last_date + timedelta(days=interval)
