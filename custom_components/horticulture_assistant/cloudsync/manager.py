@@ -37,8 +37,8 @@ from .edge_worker import EdgeSyncWorker
 from .options import merge_cloud_tokens
 
 try:
-    UTC = datetime.UTC
-except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    from datetime import UTC
+except ImportError:  # pragma: no cover - Py<3.11 fallback
     UTC = timezone.utc  # noqa: UP017
 
 

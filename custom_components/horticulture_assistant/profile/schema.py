@@ -7,8 +7,8 @@ from datetime import datetime, timezone
 from typing import Any, Literal
 
 try:
-    UTC = datetime.UTC  # type: ignore[attr-defined]
-except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    from datetime import UTC
+except ImportError:  # pragma: no cover - Py<3.11 fallback
     UTC = timezone.utc  # noqa: UP017
 
 

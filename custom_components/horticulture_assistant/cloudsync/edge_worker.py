@@ -13,8 +13,8 @@ from .edge_store import EdgeSyncStore
 from .events import SyncEvent, encode_ndjson
 
 try:
-    UTC = datetime.UTC  # type: ignore[attr-defined]
-except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    from datetime import UTC
+except ImportError:  # pragma: no cover - Py<3.11 fallback
     UTC = timezone.utc  # noqa: UP017
 LOGGER = logging.getLogger(__name__)
 

@@ -11,8 +11,8 @@ from uuid import uuid4
 from .events import SyncEvent
 
 try:
-    UTC = datetime.UTC  # type: ignore[attr-defined]
-except AttributeError:  # pragma: no cover - Py<3.11 fallback
+    from datetime import UTC
+except ImportError:  # pragma: no cover - Py<3.11 fallback
     UTC = timezone.utc  # noqa: UP017
 
 if TYPE_CHECKING:  # pragma: no cover - type checking only
