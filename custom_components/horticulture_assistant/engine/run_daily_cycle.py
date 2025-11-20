@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import plant_engine.pest_monitor as pest_monitor
@@ -86,7 +86,7 @@ class DailyReport:
     predicted_harvest_date: str | None = None
     yield_: float | None = None
     remaining_yield_g: float | None = None
-    timestamp: str = field(default_factory=lambda: datetime.now(tz=datetime.UTC).isoformat())
+    timestamp: str = field(default_factory=lambda: datetime.now(tz=timezone.utc).isoformat())  # noqa: UP017
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -198,7 +198,7 @@ def run_daily_cycle(
         try:
             last_scout_dt = datetime.fromisoformat(last_scout["timestamp"])
             if last_scout_dt.tzinfo is None:
-                last_scout_dt = last_scout_dt.replace(tzinfo=datetime.UTC)
+                last_scout_dt = last_scout_dt.replace(tzinfo=timezone.utc)  # noqa: UP017
             last_date = last_scout_dt.date()
             interval = pest_monitor.risk_adjusted_monitor_interval(plant_type, stage_name, current_env)
             if interval is not None:
@@ -273,7 +273,7 @@ def run_daily_cycle(
         if start_date_str:
             try:
                 start_date = datetime.fromisoformat(start_date_str).date()
-                days = (datetime.now(tz=datetime.UTC).date() - start_date).days
+                days = (datetime.now(tz=timezone.utc).date() - start_date).days  # noqa: UP017
                 progress = stage_progress(plant_type, stage_name, days)
                 if progress is not None:
                     report.stage_progress_pct = progress
@@ -290,7 +290,7 @@ def run_daily_cycle(
     # Save the report to a JSON file with today's date
     output_dir = Path(output_path)
     output_dir.mkdir(parents=True, exist_ok=True)
-    out_file = output_dir / f"{plant_id}_{datetime.now(tz=datetime.UTC).date()}.json"
+    out_file = output_dir / f"{plant_id}_{datetime.now(tz=timezone.utc).date()}.json"  # noqa: UP017
     try:
         with open(out_file, "w", encoding="utf-8") as f:
             json.dump(report.as_dict(), f, indent=2)
