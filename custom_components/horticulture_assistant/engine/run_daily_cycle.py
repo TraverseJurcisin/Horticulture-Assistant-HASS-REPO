@@ -35,7 +35,9 @@ from plant_engine.yield_prediction import estimate_remaining_yield
 
 from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile_by_id
 from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
-from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import calculate_stage_deficit
+from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
+    calculate_stage_deficit,
+)
 from plant_engine import water_quality
 
 from .cycle_helpers import aggregate_nutrients as _aggregate_nutrients
