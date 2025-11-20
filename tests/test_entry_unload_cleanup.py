@@ -2,9 +2,9 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant import DOMAIN, async_unload_entry
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 class _LegacyUnload(SimpleNamespace):
