@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import asdict, dataclass, field
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import plant_engine.pest_monitor as pest_monitor
@@ -86,7 +86,7 @@ class DailyReport:
     predicted_harvest_date: str | None = None
     yield_: float | None = None
     remaining_yield_g: float | None = None
-    timestamp: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
+    timestamp: str = field(default_factory=lambda: datetime.now(tz=datetime.UTC).isoformat())
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -270,7 +270,7 @@ def run_daily_cycle(
         if start_date_str:
             try:
                 start_date = datetime.fromisoformat(start_date_str).date()
-                days = (datetime.now(UTC).date() - start_date).days
+                days = (datetime.now(tz=datetime.UTC).date() - start_date).days
                 progress = stage_progress(plant_type, stage_name, days)
                 if progress is not None:
                     report.stage_progress_pct = progress
@@ -287,7 +287,7 @@ def run_daily_cycle(
     # Save the report to a JSON file with today's date
     output_dir = Path(output_path)
     output_dir.mkdir(parents=True, exist_ok=True)
-    out_file = output_dir / f"{plant_id}_{datetime.now(UTC).date()}.json"
+    out_file = output_dir / f"{plant_id}_{datetime.now(tz=datetime.UTC).date()}.json"
     try:
         with open(out_file, "w", encoding="utf-8") as f:
             json.dump(report.as_dict(), f, indent=2)
