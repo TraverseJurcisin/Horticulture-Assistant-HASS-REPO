@@ -6,6 +6,21 @@ coordinators, analytics, and cloud features can evolve independently.
 
 ---
 
+## Configuration & Options
+
+- The integration is set up through the Home Assistant UI (config entries).
+  The `config_flow.py` module exposes `ConfigFlow`/`OptionsFlow` so the
+  integration can be added from **Settings → Devices & Services** without
+  YAML. Duplicate entries are guarded via the config entry unique ID.
+- Plant profiles created or edited in the options flow are stored on the config
+  entry (see `entry.options["profiles"]`) and mirrored to the profile store for
+  persistence across reloads and restarts.
+- Devices are created per plant profile using `DeviceInfo` identifiers derived
+  from the config entry ID and the plant profile ID, ensuring entities stay
+  grouped under their corresponding plant.
+
+---
+
 ## Platform Matrix
 
 | Platform | Module | Highlights |
