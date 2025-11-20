@@ -4,7 +4,7 @@ import asyncio
 import json
 import logging
 from collections.abc import Mapping, Sequence
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from ..utils.aiohttp import ClientError, ClientSession
@@ -12,10 +12,6 @@ from .conflict import ConflictPolicy, ConflictResolver
 from .edge_store import EdgeSyncStore
 from .events import SyncEvent, encode_ndjson
 
-try:
-    from datetime import UTC
-except ImportError:  # pragma: no cover - Py<3.11 fallback
-    UTC = timezone.utc  # noqa: UP017
 LOGGER = logging.getLogger(__name__)
 
 

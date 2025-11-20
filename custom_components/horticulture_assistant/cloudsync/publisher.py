@@ -4,16 +4,11 @@ from __future__ import annotations
 
 from collections.abc import Mapping, MutableMapping
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any
 from uuid import uuid4
 
 from .events import SyncEvent
-
-try:
-    from datetime import UTC
-except ImportError:  # pragma: no cover - Py<3.11 fallback
-    UTC = timezone.utc  # noqa: UP017
 
 if TYPE_CHECKING:  # pragma: no cover - type checking only
     from ..profile.schema import (

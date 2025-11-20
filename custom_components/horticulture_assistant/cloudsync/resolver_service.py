@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
 from ..profile.schema import (
@@ -25,6 +25,8 @@ from .edge_store import CloudCacheRecord, EdgeSyncStore
 try:
     from datetime import UTC
 except ImportError:  # pragma: no cover - Python <3.11 fallback
+    from datetime import timezone
+
     UTC = timezone.utc  # noqa: UP017
 
 
