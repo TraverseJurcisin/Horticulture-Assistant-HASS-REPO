@@ -19,6 +19,20 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 
+try:
+    from homeassistant.helpers import issue_registry as ir
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in tests
+
+    class IssueSeverity(StrEnum):
+        ERROR = "error"
+        WARNING = "warning"
+
+    ir = SimpleNamespace(  # type: ignore[assignment]
+        IssueSeverity=IssueSeverity,
+        async_create_issue=lambda *_args, **_kwargs: None,
+        async_delete_issue=lambda *_args, **_kwargs: None,
+    )
+
 try:  # pragma: no cover - allow running tests without Home Assistant dispatcher
     from homeassistant.helpers.dispatcher import async_dispatcher_send
 except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in stubbed env
@@ -84,20 +98,6 @@ _CALIBRATION_SPEC = importlib.util.find_spec("custom_components.horticulture_ass
 calibration_services = None
 if _CALIBRATION_SPEC is not None:
     calibration_services = importlib.import_module("custom_components.horticulture_assistant.calibration.services")
-
-try:
-    from homeassistant.helpers import issue_registry as ir
-except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in tests
-
-    class IssueSeverity(StrEnum):
-        ERROR = "error"
-        WARNING = "warning"
-
-    ir = SimpleNamespace(  # type: ignore[assignment]
-        IssueSeverity=IssueSeverity,
-        async_create_issue=lambda *_args, **_kwargs: None,
-        async_delete_issue=lambda *_args, **_kwargs: None,
-    )
 
 __all__ = [
     "async_setup",

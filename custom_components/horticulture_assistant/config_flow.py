@@ -23,12 +23,6 @@ from homeassistant.util import slugify
 if TYPE_CHECKING:
     from homeassistant.data_entry_flow import FlowResult
 
-__all__ = [
-    "ConfigFlow",
-    "HorticultureAssistantConfigFlow",
-    "OptionsFlow",
-]
-
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
@@ -66,7 +60,11 @@ from .profile.compat import sync_thresholds
 from .profile.utils import determine_species_slug, ensure_sections
 from .profile.validation import evaluate_threshold_bounds
 from .profile_store import ProfileStore, ProfileStoreError
-from .sensor_catalog import SensorSuggestion, collect_sensor_suggestions, format_sensor_hints
+from .sensor_catalog import (
+    SensorSuggestion,
+    collect_sensor_suggestions,
+    format_sensor_hints,
+)
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .utils import entry_helpers as entry_helpers_module
 from .utils import profile_generator
@@ -84,6 +82,12 @@ from .utils.entry_helpers import (
 from .utils.json_io import load_json, save_json
 from .utils.nutrient_schedule import generate_nutrient_schedule
 from .utils.plant_registry import register_plant
+
+__all__ = [
+    "ConfigFlow",
+    "HorticultureAssistantConfigFlow",
+    "OptionsFlow",
+]
 
 _LOGGER = logging.getLogger(__name__)
 
