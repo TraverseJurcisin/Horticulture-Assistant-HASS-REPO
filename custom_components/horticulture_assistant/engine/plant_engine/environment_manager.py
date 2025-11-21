@@ -10,21 +10,20 @@ from functools import cache
 from statistics import pvariance
 from typing import Any
 
-from ..metrics import dew_point_c, humidity_from_dew_point, svp_kpa, vpd_kpa
-
 try:  # Optional numpy for faster variance calculations
     import numpy as _np  # type: ignore
 except Exception:  # pragma: no cover - numpy missing
     _np = None
 
-RangeTuple = tuple[float, float]
+from ..metrics import dew_point_c, humidity_from_dew_point, svp_kpa, vpd_kpa
 
 from . import ph_manager, water_quality
 from .compute_transpiration import compute_transpiration
 from .growth_stage import list_growth_stages
 from .light_spectrum import get_red_blue_ratio
-from .utils import (clean_float_map, list_dataset_entries, load_dataset,
-                    normalize_key, parse_range)
+from .utils import clean_float_map, list_dataset_entries, load_dataset, normalize_key, parse_range
+
+RangeTuple = tuple[float, float]
 
 DATA_FILE = "environment/environment_guidelines.json"
 DLI_DATA_FILE = "light/light_dli_guidelines.json"

@@ -10,8 +10,12 @@ from .monitor_utils import calculate_risk_score
 from .monitor_utils import generate_schedule as _generate_schedule
 from .monitor_utils import get_interval as _get_interval
 from .monitor_utils import next_date as _next_date
-from .pest_manager import (get_pest_resistance, list_known_pests,
-                           recommend_beneficials, recommend_treatments)
+from .pest_manager import (
+    get_pest_resistance,
+    list_known_pests,
+    recommend_beneficials,
+    recommend_treatments,
+)
 from .utils import lazy_dataset, list_dataset_entries, normalize_key
 
 DATA_FILE = "pests/pest_thresholds.json"
