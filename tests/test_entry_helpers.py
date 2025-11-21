@@ -11,12 +11,7 @@ from unittest.mock import patch
 import pytest
 
 import custom_components.horticulture_assistant.utils.entry_helpers as helpers
-from custom_components.horticulture_assistant.const import (
-    CONF_PLANT_ID,
-    CONF_PLANT_NAME,
-    CONF_PROFILES,
-    DOMAIN,
-)
+from custom_components.horticulture_assistant.const import CONF_PLANT_ID, CONF_PLANT_NAME, CONF_PROFILES, DOMAIN
 from custom_components.horticulture_assistant.utils.entry_helpers import (
     BY_PLANT_ID,
     ProfileContext,

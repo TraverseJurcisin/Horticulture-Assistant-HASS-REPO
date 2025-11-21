@@ -27,10 +27,7 @@ from custom_components.horticulture_assistant.const import (
     DOMAIN,
 )
 from custom_components.horticulture_assistant.profile.schema import FieldAnnotation, ResolvedTarget
-from custom_components.horticulture_assistant.profile.statistics import (
-    EVENT_STATS_VERSION,
-    NUTRIENT_STATS_VERSION,
-)
+from custom_components.horticulture_assistant.profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION
 from custom_components.horticulture_assistant.services import er
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 

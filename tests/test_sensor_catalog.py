@@ -4,10 +4,7 @@ from enum import Enum
 import pytest
 
 from custom_components.horticulture_assistant import sensor_catalog
-from custom_components.horticulture_assistant.sensor_catalog import (
-    collect_sensor_suggestions,
-    format_sensor_hints,
-)
+from custom_components.horticulture_assistant.sensor_catalog import collect_sensor_suggestions, format_sensor_hints
 
 pytestmark = pytest.mark.asyncio
 

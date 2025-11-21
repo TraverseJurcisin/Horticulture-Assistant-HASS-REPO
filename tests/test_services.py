@@ -522,10 +522,7 @@ async def test_delete_profile_service(hass):
     )
     entry.add_to_hass(hass)
     import custom_components.horticulture_assistant as hca
-    from custom_components.horticulture_assistant.profile.store import (
-        async_get_profile,
-        async_save_profile,
-    )
+    from custom_components.horticulture_assistant.profile.store import async_get_profile, async_save_profile
 
     hca.PLATFORMS = []
     with (
@@ -777,14 +774,8 @@ async def test_clear_caches_service(hass):
         await hca.async_setup_entry(hass, entry)
     await hass.async_block_till_done()
 
-    from custom_components.horticulture_assistant.ai_client import (
-        _AI_CACHE,
-        async_recommend_variable,
-    )
-    from custom_components.horticulture_assistant.opb_client import (
-        _SPECIES_CACHE,
-        async_fetch_field,
-    )
+    from custom_components.horticulture_assistant.ai_client import _AI_CACHE, async_recommend_variable
+    from custom_components.horticulture_assistant.opb_client import _SPECIES_CACHE, async_fetch_field
 
     _AI_CACHE.clear()
     _SPECIES_CACHE.clear()
@@ -837,9 +828,7 @@ async def test_resolve_profile_persists_to_store(hass):
     await hass.async_block_till_done()
 
     await hass.services.async_call(DOMAIN, "resolve_profile", {"profile_id": "p1"}, blocking=True)
-    from custom_components.horticulture_assistant.profile.store import (
-        async_get_profile,
-    )
+    from custom_components.horticulture_assistant.profile.store import async_get_profile
 
     prof = await async_get_profile(hass, "p1")
     target = prof["resolved_targets"]["temp_c_min"]
@@ -882,9 +871,7 @@ async def test_resolve_all_persists_every_profile(hass):
     await hass.async_block_till_done()
 
     await hass.services.async_call(DOMAIN, "resolve_all", {}, blocking=True)
-    from custom_components.horticulture_assistant.profile.store import (
-        async_get_profile,
-    )
+    from custom_components.horticulture_assistant.profile.store import async_get_profile
 
     prof1 = await async_get_profile(hass, "p1")
     prof2 = await async_get_profile(hass, "p2")

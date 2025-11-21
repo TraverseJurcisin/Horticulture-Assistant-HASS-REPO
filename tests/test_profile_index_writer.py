@@ -1,9 +1,7 @@
 import json
 import logging
 
-from custom_components.horticulture_assistant.utils.profile_index_writer import (
-    generate_profile_index,
-)
+from custom_components.horticulture_assistant.utils.profile_index_writer import generate_profile_index
 
 
 def test_generate_profile_index_logging(tmp_path, caplog) -> None:

@@ -2,11 +2,7 @@ import logging
 
 import pytest
 
-from custom_components.horticulture_assistant.utils.logging import (
-    _LAST,
-    _MAX_CODES,
-    warn_once,
-)
+from custom_components.horticulture_assistant.utils.logging import _LAST, _MAX_CODES, warn_once
 
 
 @pytest.mark.asyncio

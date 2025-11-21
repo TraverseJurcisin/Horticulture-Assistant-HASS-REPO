@@ -6,9 +6,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from custom_components.horticulture_assistant.utils.config_validator import (
-    ConfigValidator,
-)
+from custom_components.horticulture_assistant.utils.config_validator import ConfigValidator
 
 
 class DummyHass(SimpleNamespace):

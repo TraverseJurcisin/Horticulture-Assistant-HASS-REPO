@@ -6,13 +6,8 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from custom_components.horticulture_assistant.utils.inventory_usage_forecast import (
-    UsageForecaster,
-)
-from custom_components.horticulture_assistant.utils.product_inventory import (
-    InventoryRecord,
-    ProductInventory,
-)
+from custom_components.horticulture_assistant.utils.inventory_usage_forecast import UsageForecaster
+from custom_components.horticulture_assistant.utils.product_inventory import InventoryRecord, ProductInventory
 
 
 def _inventory_with_product(quantity: float = 20.0) -> ProductInventory:

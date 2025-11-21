@@ -51,13 +51,8 @@ from custom_components.horticulture_assistant.profile.schema import (  # noqa: E
     FieldAnnotation,
     ResolvedTarget,
 )
-from custom_components.horticulture_assistant.profile.utils import (  # noqa: E402
-    link_species_and_cultivars,
-)
-from custom_components.horticulture_assistant.resolver import (  # noqa: E402
-    PreferenceResolver,
-    generate_profile,
-)
+from custom_components.horticulture_assistant.profile.utils import link_species_and_cultivars  # noqa: E402
+from custom_components.horticulture_assistant.resolver import PreferenceResolver, generate_profile  # noqa: E402
 
 try:
     UTC = datetime.UTC  # type: ignore[attr-defined]

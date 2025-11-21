@@ -4,10 +4,7 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from custom_components.horticulture_assistant.utils.product_inventory import (
-    InventoryRecord,
-    ProductInventory,
-)
+from custom_components.horticulture_assistant.utils.product_inventory import InventoryRecord, ProductInventory
 
 
 def test_check_expiring_products_handles_timezone_aware_dates() -> None:
