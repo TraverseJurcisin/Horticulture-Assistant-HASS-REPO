@@ -9,8 +9,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
-from .utils.entry_helpers import ProfileContext
-
 try:  # pragma: no cover - Home Assistant runtime provides real classes
     from homeassistant.core import HomeAssistant, State
 except (ModuleNotFoundError, ImportError):  # pragma: no cover - tests provide stubs
@@ -30,6 +28,8 @@ except (ModuleNotFoundError, ImportError):  # pragma: no cover - tests provide s
         def __init__(self) -> None:
             self.states = {}
 
+
+from .utils.entry_helpers import ProfileContext
 
 _NUMERIC_PATTERN = re.compile(r"[-+]?(?:\d+(?:[.,]\d+)*|\.\d+)(?:[eE][-+]?\d+)?")
 

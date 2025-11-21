@@ -11,20 +11,6 @@ from homeassistant.core import CALLBACK_TYPE, HomeAssistant
 from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.util import slugify
 
-from .const import DOMAIN, ISSUE_DATASET_HEALTH_PREFIX, NOTIFICATION_DATASET_HEALTH
-from .engine.plant_engine.utils import load_dataset
-
-DATASET_CHECK_INTERVAL = timedelta(hours=6)
-
-# Representative datasets that confirm the bundled catalogues were loaded.
-CRITICAL_DATASETS: tuple[tuple[str, str], ...] = (
-    ("Fertilizer catalogue", "fertilizers/fertilizer_products.json"),
-    ("Crop targets", "crops/targets.json"),
-    ("Irrigation schedules", "irrigation/intervals.json"),
-    ("Deficiency symptoms", "diagnostics/deficiency_symptoms.json"),
-)
-
-
 try:  # pragma: no cover - Home Assistant available at runtime, not during tests
     from homeassistant.helpers import issue_registry as ir
 except (ImportError, ModuleNotFoundError):  # pragma: no cover - exercised in tests
@@ -40,6 +26,19 @@ except (ImportError, ModuleNotFoundError):  # pragma: no cover - exercised in te
         async_create_issue=lambda *_args, **_kwargs: None,
         async_delete_issue=lambda *_args, **_kwargs: None,
     )
+
+from .const import DOMAIN, ISSUE_DATASET_HEALTH_PREFIX, NOTIFICATION_DATASET_HEALTH
+from .engine.plant_engine.utils import load_dataset
+
+DATASET_CHECK_INTERVAL = timedelta(hours=6)
+
+# Representative datasets that confirm the bundled catalogues were loaded.
+CRITICAL_DATASETS: tuple[tuple[str, str], ...] = (
+    ("Fertilizer catalogue", "fertilizers/fertilizer_products.json"),
+    ("Crop targets", "crops/targets.json"),
+    ("Irrigation schedules", "irrigation/intervals.json"),
+    ("Deficiency symptoms", "diagnostics/deficiency_symptoms.json"),
+)
 
 
 async def async_setup_dataset_health(hass: HomeAssistant) -> CALLBACK_TYPE | None:

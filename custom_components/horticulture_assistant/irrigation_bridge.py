@@ -16,7 +16,6 @@ except ModuleNotFoundError:  # pragma: no cover - executed in local test stubs
     class SensorStateClass(StrEnum):
         MEASUREMENT = "measurement"
 
-
 from homeassistant.config_entries import ConfigEntry
 
 try:  # pragma: no cover - fallback for unit tests
@@ -27,14 +26,12 @@ except ImportError:  # pragma: no cover - executed in stubbed test env
     def callback(func: Callable[..., Any], /) -> Callable[..., Any]:
         return func
 
-
 try:  # pragma: no cover - fallback for tests without HA
     from homeassistant.helpers.event import async_track_state_change_event
 except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
 
     async def async_track_state_change_event(*_args, **_kwargs):
         return None
-
 
 from .const import DOMAIN
 from .entity_base import HorticultureBaseEntity, ProfileContextEntityMixin
