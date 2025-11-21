@@ -4,6 +4,7 @@ import asyncio
 import contextlib
 import importlib
 import importlib.util
+import inspect
 import logging
 import sys
 import time
@@ -162,6 +163,34 @@ _ONBOARDING_STAGE_META: dict[str, dict[str, Any]] = {
 }
 _STAGE_READY_STATUSES = {"success", "warning"}
 _STAGE_SATISFIED_STATUSES = {"success", "skipped", "warning"}
+
+
+async def _async_forward_entry_platforms(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Forward a config entry to all platforms with legacy fallbacks."""
+
+    forward_setups = getattr(hass.config_entries, "async_forward_entry_setups", None)
+    legacy_forward = getattr(hass.config_entries, "async_forward_entry_setup", None)
+
+    if callable(forward_setups):
+        return bool(await forward_setups(entry, PLATFORMS))
+
+    if not callable(legacy_forward):
+        return False
+
+    async def _forward(platform: str) -> Any:
+        result = legacy_forward(entry, platform)
+        if inspect.isawaitable(result):
+            return await result
+        return result
+
+    results = await asyncio.gather(
+        *(_forward(platform) for platform in PLATFORMS),
+        return_exceptions=True,
+    )
+    for result in results:
+        if isinstance(result, Exception):
+            raise result
+    return all(bool(result) for result in results)
 
 
 def _stage_ready(status: str | None) -> bool:
@@ -1273,26 +1302,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         forward_setups = getattr(hass.config_entries, "async_forward_entry_setups", None)
         legacy_forward = getattr(hass.config_entries, "async_forward_entry_setup", None)
 
-        if callable(forward_setups):
+        if callable(forward_setups) or callable(legacy_forward):
             platform_ready, _ = await manager.guard_async(
                 "platform_setup",
-                forward_setups(entry, PLATFORMS),
-            )
-        elif callable(legacy_forward):
-
-            async def _forward_all_platforms() -> bool:
-                results = await asyncio.gather(
-                    *(legacy_forward(entry, platform) for platform in PLATFORMS),
-                    return_exceptions=True,
-                )
-                for result in results:
-                    if isinstance(result, Exception):
-                        raise result
-                return all(bool(result) for result in results)
-
-            platform_ready, _ = await manager.guard_async(
-                "platform_setup",
-                _forward_all_platforms(),
+                _async_forward_entry_platforms(hass, entry),
             )
         else:
             platform_ready, _ = manager.skip("platform_setup", "platform loader unavailable")
@@ -1437,7 +1450,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a ConfigEntry."""
 
-    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    unload_platforms = getattr(hass.config_entries, "async_unload_platforms", None)
+    legacy_unload = getattr(hass.config_entries, "async_forward_entry_unload", None)
+
+    if callable(unload_platforms):
+        unload_ok = await unload_platforms(entry, PLATFORMS)
+    elif callable(legacy_unload):
+        results = await asyncio.gather(
+            *(legacy_unload(entry, platform) for platform in PLATFORMS),
+            return_exceptions=True,
+        )
+        unload_ok = all(result is True for result in results)
+    else:
+        unload_ok = False
+
     if unload_ok:
         data = hass.data.get(DOMAIN, {})
         info = data.pop(entry.entry_id, None)
@@ -1453,6 +1479,14 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             if profiles and hasattr(profiles, "async_unload"):
                 with contextlib.suppress(Exception):
                     await profiles.async_unload()
+
+        registry = data.get("registry")
+        profile_registry = info.get("profile_registry") if info else None
+        if registry is not None and registry is profile_registry:
+            data.pop("registry", None)
+
+        if not data:
+            hass.data.pop(DOMAIN, None)
         remove_entry_data(hass, entry.entry_id)
     return unload_ok
 

@@ -29,6 +29,17 @@ except (ModuleNotFoundError, ImportError, AttributeError):  # pragma: no cover -
 
 
 try:  # pragma: no cover - fallback for unit tests
+    from homeassistant.helpers.device_registry import DeviceInfo
+except (ModuleNotFoundError, ImportError, AttributeError):  # pragma: no cover - executed in stubbed env
+
+    class DeviceInfo(dict):  # type: ignore[misc,too-many-ancestors]
+        """Minimal stand-in for Home Assistant's DeviceInfo in tests."""
+
+        def __init__(self, **kwargs):
+            super().__init__(**kwargs)
+
+
+try:  # pragma: no cover - fallback for unit tests
     from homeassistant.helpers.entity import Entity
 except (ModuleNotFoundError, ImportError, AttributeError):  # pragma: no cover - executed in stubbed env
 
@@ -62,6 +73,14 @@ class HorticultureEntryEntity(Entity):
     def __init__(self, entry_id: str | None, *, default_device_name: str | None = None) -> None:
         self._entry_id = entry_id
         self._entry_device_name = default_device_name
+        identifier = entry_device_identifier(entry_id)
+        name = self._entry_device_name or f"Horticulture Assistant {entry_id or 'entry'}"
+        self._attr_device_info = DeviceInfo(
+            identifiers={identifier},
+            manufacturer="Horticulture Assistant",
+            model="Horticulture Assistant",
+            name=name,
+        )
 
     @property
     def device_info(self) -> dict:
@@ -76,16 +95,9 @@ class HorticultureEntryEntity(Entity):
                     current_name = payload.get("name")
                     if not isinstance(current_name, str) or not current_name.strip():
                         payload["name"] = self._entry_device_name
-                return payload
+                return DeviceInfo(**payload)
 
-        identifier = entry_device_identifier(self._entry_id)
-        name = self._entry_device_name or f"Horticulture Assistant {self._entry_id or 'entry'}"
-        return {
-            "identifiers": {identifier},
-            "manufacturer": "Horticulture Assistant",
-            "model": "Horticulture Assistant",
-            "name": name,
-        }
+        return self._attr_device_info
 
 
 class HorticultureBaseEntity(Entity):
@@ -104,6 +116,16 @@ class HorticultureBaseEntity(Entity):
         self._plant_id = plant_id
         self._model = model
         self._attr_has_entity_name = True
+        identifiers = {profile_device_identifier(entry_id, plant_id)}
+        device_kwargs = {
+            "identifiers": identifiers,
+            "name": plant_name,
+            "manufacturer": "Horticulture Assistant",
+            "model": model,
+        }
+        if entry_id:
+            device_kwargs["via_device"] = entry_device_identifier(entry_id)
+        self._attr_device_info = DeviceInfo(**device_kwargs)
 
     @property
     def device_info(self) -> dict:
@@ -111,18 +133,9 @@ class HorticultureBaseEntity(Entity):
         if getattr(self, "hass", None):
             info = resolve_profile_device_info(self.hass, self._entry_id, self._plant_id)
             if info:
-                return dict(info)
+                return DeviceInfo(**info)
 
-        profile_identifier = profile_device_identifier(self._entry_id, self._plant_id)
-        info = {
-            "identifiers": {profile_identifier},
-            "name": self._plant_name,
-            "manufacturer": "Horticulture Assistant",
-            "model": self._model,
-        }
-        if self._entry_id:
-            info["via_device"] = entry_device_identifier(self._entry_id)
-        return info
+        return self._attr_device_info
 
     @property
     def entity_picture(self) -> str | None:

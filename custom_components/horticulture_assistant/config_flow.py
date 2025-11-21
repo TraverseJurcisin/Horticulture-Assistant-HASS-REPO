@@ -23,6 +23,12 @@ from homeassistant.util import slugify
 if TYPE_CHECKING:
     from homeassistant.data_entry_flow import FlowResult
 
+__all__ = [
+    "ConfigFlow",
+    "HorticultureAssistantConfigFlow",
+    "OptionsFlow",
+]
+
 from .const import (
     CONF_API_KEY,
     CONF_BASE_URL,
@@ -1475,6 +1481,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         self._profile_store: ProfileStore | None = None
         self._template_filter: str | None = None
 
+    async def async_step_import(self, user_input=None):
+        """Handle YAML-imported configuration through the user step."""
+
+        return await self.async_step_user(user_input)
+
     async def async_step_user(self, user_input=None):
         context = getattr(self, "context", {}) or {}
         source = context.get("source")
@@ -1497,6 +1508,32 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         unique_id_value = context.get("unique_id")
         if isinstance(unique_id_value, str) and unique_id_value:
             unique_id_hint = unique_id_value
+
+        try:
+            await self.async_set_unique_id(unique_id_hint or DOMAIN, raise_on_progress=False)
+        except TypeError:
+            # Older Home Assistant versions do not support ``raise_on_progress``.
+            await self.async_set_unique_id(unique_id_hint or DOMAIN)
+
+        if source not in reconfigure_sources:
+            abort_result = self._abort_if_unique_id_configured()
+            if abort_result is not None:
+                return abort_result
+
+        if source == "import" and user_input is not None:
+            import_data: dict[str, Any] = {}
+            if isinstance(user_input, Mapping):
+                import_data = dict(user_input)
+
+            title_hint = None
+            raw_title = import_data.pop("title", None)
+            if isinstance(raw_title, str):
+                title_hint = raw_title.strip()
+
+            import_data.pop("setup_mode", None)
+
+            title = title_hint or self.hass.config.location_name or "Horticulture Assistant"
+            return self.async_create_entry(title=title, data=import_data, options={})
 
         entry_id_hint: str | None = None
         raw_entry_id_hint = context.get("config_entry_id") or context.get("entry_id")
