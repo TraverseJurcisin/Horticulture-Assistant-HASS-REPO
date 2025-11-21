@@ -30,15 +30,9 @@ from custom_components.horticulture_assistant.profile.schema import (
     ResolvedTarget,
     SpeciesProfile,
 )
-from custom_components.horticulture_assistant.profile.statistics import (
-    EVENT_STATS_VERSION,
-    NUTRIENT_STATS_VERSION,
-)
+from custom_components.horticulture_assistant.profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION
 from custom_components.horticulture_assistant.profile.utils import LineageLinkReport
-from custom_components.horticulture_assistant.profile_registry import (
-    ProfileRegistry,
-    _normalise_sensor_value,
-)
+from custom_components.horticulture_assistant.profile_registry import ProfileRegistry, _normalise_sensor_value
 from custom_components.horticulture_assistant.utils import entry_helpers as helpers
 from custom_components.horticulture_assistant.utils.entry_helpers import (
     entry_device_identifier,

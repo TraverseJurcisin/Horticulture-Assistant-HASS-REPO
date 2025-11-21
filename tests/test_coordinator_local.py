@@ -1,8 +1,6 @@
 import pytest
 
-from custom_components.horticulture_assistant.coordinator_local import (
-    HortiLocalCoordinator,
-)
+from custom_components.horticulture_assistant.coordinator_local import HortiLocalCoordinator
 from custom_components.horticulture_assistant.storage import LocalStore
 
 pytestmark = [

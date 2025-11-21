@@ -5,14 +5,8 @@ import pytest
 
 from custom_components.horticulture_assistant.calibration import services as calib_services
 from custom_components.horticulture_assistant.calibration.apply import lux_to_ppfd
-from custom_components.horticulture_assistant.calibration.fit import (
-    fit_linear,
-    fit_power,
-)
-from custom_components.horticulture_assistant.calibration.store import (
-    async_get_for_entity,
-    async_save_for_entity,
-)
+from custom_components.horticulture_assistant.calibration.fit import fit_linear, fit_power
+from custom_components.horticulture_assistant.calibration.store import async_get_for_entity, async_save_for_entity
 
 
 @pytest.mark.asyncio

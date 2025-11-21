@@ -111,9 +111,7 @@ async def test_async_load_profile_returns_dataclass(monkeypatch):
         fake_get,
     )
 
-    from custom_components.horticulture_assistant.profile.store import (
-        async_load_profile,
-    )
+    from custom_components.horticulture_assistant.profile.store import async_load_profile
 
     profile = await async_load_profile(None, "p1")
     assert profile.plant_id == "p1"
@@ -173,9 +171,7 @@ async def test_async_load_profiles_returns_dataclasses(monkeypatch):
         fake_load_all,
     )
 
-    from custom_components.horticulture_assistant.profile.store import (
-        async_load_profiles,
-    )
+    from custom_components.horticulture_assistant.profile.store import async_load_profiles
 
     profiles = await async_load_profiles(None)
     assert set(profiles) == {"p1", "p2"}
@@ -202,14 +198,8 @@ async def test_async_save_profile_accepts_dataclass(monkeypatch):
         fake_load_all,
     )
 
-    from custom_components.horticulture_assistant.profile.schema import (
-        BioProfile,
-        FieldAnnotation,
-        ResolvedTarget,
-    )
-    from custom_components.horticulture_assistant.profile.store import (
-        async_save_profile,
-    )
+    from custom_components.horticulture_assistant.profile.schema import BioProfile, FieldAnnotation, ResolvedTarget
+    from custom_components.horticulture_assistant.profile.store import async_save_profile
 
     profile = BioProfile(
         profile_id="p1",
@@ -244,9 +234,7 @@ async def test_async_save_profile_preserves_metadata(monkeypatch):
         fake_load_all,
     )
 
-    from custom_components.horticulture_assistant.profile.store import (
-        async_save_profile,
-    )
+    from custom_components.horticulture_assistant.profile.store import async_save_profile
 
     payload = {
         "plant_id": "p1",
@@ -324,9 +312,7 @@ async def test_async_save_profile_accepts_mapping_proxy_credentials(monkeypatch)
         fake_load_all,
     )
 
-    from custom_components.horticulture_assistant.profile.store import (
-        async_save_profile,
-    )
+    from custom_components.horticulture_assistant.profile.store import async_save_profile
 
     payload = {
         "plant_id": "p1",

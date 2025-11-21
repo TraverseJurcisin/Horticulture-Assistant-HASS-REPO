@@ -1,9 +1,7 @@
 import json
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.profile_upload_cache import (
-    cache_profile_for_upload,
-)
+from custom_components.horticulture_assistant.utils.profile_upload_cache import cache_profile_for_upload
 
 
 class _DummyConfig:

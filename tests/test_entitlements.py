@@ -9,10 +9,7 @@ from custom_components.horticulture_assistant.const import (
     FEATURE_CLOUD_SYNC,
     FEATURE_IRRIGATION_AUTOMATION,
 )
-from custom_components.horticulture_assistant.entitlements import (
-    FeatureUnavailableError,
-    derive_entitlements,
-)
+from custom_components.horticulture_assistant.entitlements import FeatureUnavailableError, derive_entitlements
 
 
 @pytest.mark.parametrize(

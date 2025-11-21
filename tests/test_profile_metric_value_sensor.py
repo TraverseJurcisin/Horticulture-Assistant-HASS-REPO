@@ -11,13 +11,8 @@ from custom_components.horticulture_assistant.const import (
     DOMAIN,
     signal_profile_contexts_updated,
 )
-from custom_components.horticulture_assistant.derived import (
-    PlantPPFDSensor,
-    PlantVPDSensor,
-)
-from custom_components.horticulture_assistant.irrigation_bridge import (
-    PlantIrrigationRecommendationSensor,
-)
+from custom_components.horticulture_assistant.derived import PlantPPFDSensor, PlantVPDSensor
+from custom_components.horticulture_assistant.irrigation_bridge import PlantIrrigationRecommendationSensor
 from custom_components.horticulture_assistant.sensor import (
     PlantStatusSensor,
     ProfileMetricValueSensor,

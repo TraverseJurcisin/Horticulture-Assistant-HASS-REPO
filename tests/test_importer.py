@@ -2,9 +2,7 @@ import json
 
 import pytest
 
-from custom_components.horticulture_assistant.profile.importer import (
-    async_import_profiles,
-)
+from custom_components.horticulture_assistant.profile.importer import async_import_profiles
 from custom_components.horticulture_assistant.profile.schema import BioProfile
 
 

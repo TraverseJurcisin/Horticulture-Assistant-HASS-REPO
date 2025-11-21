@@ -16,9 +16,7 @@ from custom_components.horticulture_assistant.const import (
     DOMAIN,
     signal_profile_contexts_updated,
 )
-from custom_components.horticulture_assistant.diagnostics import (
-    async_get_config_entry_diagnostics,
-)
+from custom_components.horticulture_assistant.diagnostics import async_get_config_entry_diagnostics
 from custom_components.horticulture_assistant.storage import LocalStore
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
