@@ -15,7 +15,6 @@ import pytest
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.helpers import selector as sel
-
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 DOMAIN = "horticulture_assistant"

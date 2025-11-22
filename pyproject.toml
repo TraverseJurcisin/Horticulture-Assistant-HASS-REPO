@@ -1,6 +1,7 @@
 [tool.ruff]
 line-length = 120
 target-version = "py312"
+src = ["custom_components", "tests"]
 extend-exclude = [
   "custom_components/horticulture_assistant/data",
   "custom_components/horticulture_assistant/engine/plant_engine",
@@ -14,6 +15,11 @@ select = ["E", "F", "I", "UP", "B", "C4", "SIM"]
 [tool.ruff.format]
 quote-style = "preserve"
 indent-style = "space"
+
+[tool.ruff.lint.isort]
+# Ruff requires isort options under the lint section to avoid deprecation warnings.
+# Treat the integration package as first-party to keep import grouping consistent.
+known-first-party = ["custom_components.horticulture_assistant"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

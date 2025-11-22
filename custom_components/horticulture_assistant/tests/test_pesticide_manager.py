@@ -206,7 +206,6 @@ def test_estimate_rotation_plan_cost():
     import importlib
 
     import plant_engine.utils as utils
-
     from plant_engine import nutrient_manager as nm
 
     utils.clear_dataset_cache()

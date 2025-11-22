@@ -100,9 +100,8 @@ def test_classify_pest_severity_custom_thresholds(tmp_path, monkeypatch):
     path.write_text('{"aphids": {"moderate": 4, "severe": 8}}')
 
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(override))
-    from plant_engine.utils import clear_dataset_cache, load_dataset
-
     from plant_engine import pest_monitor
+    from plant_engine.utils import clear_dataset_cache, load_dataset
 
     clear_dataset_cache()
     pest_monitor._SEVERITY_THRESHOLDS = lambda: load_dataset(pest_monitor.SEVERITY_THRESHOLD_FILE)

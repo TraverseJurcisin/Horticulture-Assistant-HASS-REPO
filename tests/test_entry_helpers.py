@@ -9,6 +9,7 @@ from typing import Any
 from unittest.mock import patch
 
 import pytest
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 import custom_components.horticulture_assistant.utils.entry_helpers as helpers
 from custom_components.horticulture_assistant.const import CONF_PLANT_ID, CONF_PLANT_NAME, CONF_PROFILES, DOMAIN
@@ -39,7 +40,6 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     store_entry_data,
     update_entry_data,
 )
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 def _make_entry(*, data=None, options=None) -> MockConfigEntry:

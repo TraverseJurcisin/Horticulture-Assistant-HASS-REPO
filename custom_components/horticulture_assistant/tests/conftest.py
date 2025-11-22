@@ -4,7 +4,6 @@ import types
 from pathlib import Path
 
 import pytest
-
 from tests import conftest as _shared_conftest  # ensure shared stubs are registered  # noqa: F401
 
 # Stub aiohttp and minimal Home Assistant modules used during CLI tests.

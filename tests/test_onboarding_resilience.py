@@ -2,11 +2,11 @@ import types
 from unittest.mock import AsyncMock
 
 import pytest
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant import async_setup_entry
 from custom_components.horticulture_assistant.const import DOMAIN
 from custom_components.horticulture_assistant.diagnostics import async_get_config_entry_diagnostics
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 @pytest.mark.asyncio

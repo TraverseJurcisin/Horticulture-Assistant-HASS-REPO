@@ -6,6 +6,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 import voluptuous as vol
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 import custom_components.horticulture_assistant as hca_module
 from custom_components.horticulture_assistant import async_setup_entry
@@ -23,7 +24,6 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     entry_device_identifier,
     profile_device_identifier,
 )
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 sys.modules["custom_components.horticulture_assistant.__init__"] = hca_module
 

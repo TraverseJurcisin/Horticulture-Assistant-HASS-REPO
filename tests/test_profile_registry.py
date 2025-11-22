@@ -6,6 +6,7 @@ from typing import Any
 from unittest.mock import AsyncMock, patch
 
 import pytest
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.cloudsync.edge_store import EdgeSyncStore
 from custom_components.horticulture_assistant.cloudsync.manager import CloudSyncConfig
@@ -39,7 +40,6 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     profile_device_identifier,
     store_entry_data,
 )
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 pytestmark = pytest.mark.asyncio
 
