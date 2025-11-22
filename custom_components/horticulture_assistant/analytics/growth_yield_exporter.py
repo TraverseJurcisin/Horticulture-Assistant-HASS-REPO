@@ -1,6 +1,6 @@
 import contextlib
+import datetime
 import logging
-from datetime import datetime, timedelta
 from pathlib import Path
 
 from plant_engine.utils import load_json, save_json
@@ -8,6 +8,8 @@ from plant_engine.utils import load_json, save_json
 from custom_components.horticulture_assistant.utils.path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
+
+UTC = datetime.UTC
 
 
 def export_growth_yield(
@@ -63,10 +65,15 @@ def export_growth_yield(
         try:
             # Parse date (ignore time)
             ts_str = str(ts)
-            if ts_str.endswith("Z"):
+            use_utc = ts_str.endswith("Z")
+            if use_utc:
                 # Remove trailing Z (UTC designator) if present for compatibility
                 ts_str = ts_str[:-1]
-            date_obj = datetime.fromisoformat(ts_str)
+            date_obj = datetime.datetime.fromisoformat(ts_str)
+            if use_utc and date_obj.tzinfo is None:
+                date_obj = date_obj.replace(tzinfo=UTC)
+            elif date_obj.tzinfo is not None:
+                date_obj = date_obj.astimezone(UTC)
         except Exception as err:
             _LOGGER.warning("Unrecognized timestamp format in yield log (%s): %s", ts, err)
             continue
@@ -130,13 +137,13 @@ def export_growth_yield(
         min_date_str = min(dates_with_data)
         max_date_str = max(dates_with_data)
         try:
-            min_date = datetime.fromisoformat(min_date_str).date()
+            min_date = datetime.datetime.fromisoformat(min_date_str).date()
         except Exception:
-            min_date = datetime.strptime(min_date_str, "%Y-%m-%d").date() if min_date_str else None
+            min_date = datetime.datetime.strptime(min_date_str, "%Y-%m-%d").date() if min_date_str else None
         try:
-            max_date = datetime.fromisoformat(max_date_str).date()
+            max_date = datetime.datetime.fromisoformat(max_date_str).date()
         except Exception:
-            max_date = datetime.strptime(max_date_str, "%Y-%m-%d").date() if max_date_str else None
+            max_date = datetime.datetime.strptime(max_date_str, "%Y-%m-%d").date() if max_date_str else None
 
         series = []
         current_cumulative = 0.0
@@ -174,7 +181,7 @@ def export_growth_yield(
                 )
                 series.append(entry)
             # Move to the next day
-            date_iter += timedelta(days=1)
+            date_iter += datetime.timedelta(days=1)
 
     # Ensure output directory exists
     output_dir = Path(output_path)
