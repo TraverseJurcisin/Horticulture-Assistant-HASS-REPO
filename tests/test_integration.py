@@ -8,6 +8,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.entity_registry import async_get as async_get_entity_registry
 from homeassistant.helpers.update_coordinator import UpdateFailed
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.api import ChatApi
 from custom_components.horticulture_assistant.const import (
@@ -18,7 +19,6 @@ from custom_components.horticulture_assistant.const import (
 )
 from custom_components.horticulture_assistant.diagnostics import async_get_config_entry_diagnostics
 from custom_components.horticulture_assistant.storage import LocalStore
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 async def setup_integration(hass: HomeAssistant, enable_custom_integrations: None, monkeypatch):

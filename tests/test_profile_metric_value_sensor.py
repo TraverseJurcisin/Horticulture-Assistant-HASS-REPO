@@ -3,6 +3,7 @@ import inspect
 from collections import defaultdict
 
 import pytest
+from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.const import (
     CONF_PLANT_ID,
@@ -24,7 +25,6 @@ from custom_components.horticulture_assistant.utils.entry_helpers import (
     resolve_profile_context_collection,
     store_entry_data,
 )
-from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 
 class _DummyCoordinator:

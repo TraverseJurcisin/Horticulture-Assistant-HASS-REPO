@@ -1,7 +1,8 @@
 """Ensure the options flow factory is exposed for UI configuration."""
 
-from custom_components.horticulture_assistant import config_flow as cfg
 from pytest_homeassistant_custom_component.common import MockConfigEntry
+
+from custom_components.horticulture_assistant import config_flow as cfg
 
 DOMAIN = "horticulture_assistant"
 

@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 import pytest
-from fastapi import HTTPException, status
-
 from cloud.api.auth import principal_dependency
+from fastapi import HTTPException, status
 
 
 @pytest.mark.asyncio

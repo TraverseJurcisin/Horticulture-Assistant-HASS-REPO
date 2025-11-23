@@ -14,6 +14,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import plant_engine.pest_monitor as pest_monitor
+from plant_engine import water_quality
 from plant_engine.compute_transpiration import compute_transpiration
 from plant_engine.deficiency_manager import diagnose_deficiency_actions
 from plant_engine.disease_manager import recommend_treatments as recommend_disease_treatments
@@ -38,7 +39,6 @@ from custom_components.horticulture_assistant.utils.path_utils import data_path,
 from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import (
     calculate_stage_deficit,
 )
-from plant_engine import water_quality
 
 from .cycle_helpers import aggregate_nutrients as _aggregate_nutrients
 from .cycle_helpers import average_sensor_data as _average_sensor_data
