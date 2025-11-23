@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from plant_engine.nutrient_manager import calculate_nutrient_adjustments
+from ..engine.plant_engine.nutrient_manager import calculate_nutrient_adjustments
 
 __all__ = ["recommend_adjustments", "ppm_to_mg"]
 

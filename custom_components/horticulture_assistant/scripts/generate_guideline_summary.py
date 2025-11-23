@@ -14,7 +14,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine import guidelines
+from ..engine.plant_engine import guidelines
 
 
 def generate_summary(plant_type: str, stage: str | None = None) -> dict:

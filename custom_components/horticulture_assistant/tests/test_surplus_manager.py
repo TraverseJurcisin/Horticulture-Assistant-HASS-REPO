@@ -1,5 +1,5 @@
-from plant_engine.nutrient_manager import get_recommended_levels
-from plant_engine.surplus_manager import get_surplus_action, list_known_nutrients, recommend_surplus_actions
+from ..engine.plant_engine.nutrient_manager import get_recommended_levels
+from ..engine.plant_engine.surplus_manager import get_surplus_action, list_known_nutrients, recommend_surplus_actions
 
 
 def test_list_known_nutrients():

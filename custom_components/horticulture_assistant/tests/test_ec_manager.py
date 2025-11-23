@@ -1,4 +1,4 @@
-from plant_engine import ec_manager
+from ..engine.plant_engine import ec_manager
 
 
 def test_list_supported_plants():

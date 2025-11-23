@@ -1,6 +1,6 @@
 import datetime
 
-from plant_engine import thermal_time
+from ..engine.plant_engine import thermal_time
 
 
 def test_calculate_gdd_basic():

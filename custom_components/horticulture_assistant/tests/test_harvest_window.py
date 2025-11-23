@@ -1,6 +1,6 @@
 from datetime import date
 
-from plant_engine.harvest_window import get_harvest_window, is_harvest_time
+from ..engine.plant_engine.harvest_window import get_harvest_window, is_harvest_time
 
 
 def test_get_harvest_window():

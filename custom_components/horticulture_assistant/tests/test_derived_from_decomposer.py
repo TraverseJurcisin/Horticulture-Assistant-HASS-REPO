@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.utils.derived_from_decomposer import decompose_derived_from
+from ..utils.derived_from_decomposer import decompose_derived_from
 
 
 def test_single_ingredient_exact_match():

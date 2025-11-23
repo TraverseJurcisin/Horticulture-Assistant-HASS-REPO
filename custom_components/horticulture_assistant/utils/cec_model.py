@@ -10,9 +10,8 @@ import json
 import logging
 import os
 
-from custom_components.horticulture_assistant.utils.path_utils import data_path
-
 from . import media_inference  # use media_inference.infer_media_type for media-based CEC estimation
+from .path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
 

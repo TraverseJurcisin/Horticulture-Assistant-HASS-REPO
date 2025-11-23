@@ -1,4 +1,4 @@
-from plant_engine.propagation_manager import (
+from ..engine.plant_engine.propagation_manager import (
     get_propagation_guidelines,
     list_propagation_methods,
     list_supported_plants,

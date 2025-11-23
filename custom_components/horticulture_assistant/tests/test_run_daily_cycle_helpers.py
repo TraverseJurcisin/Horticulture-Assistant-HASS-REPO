@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.engine.run_daily_cycle import (
+from ..engine.run_daily_cycle import (
     _aggregate_nutrients,
     _average_sensor_data,
     _build_root_zone_info,

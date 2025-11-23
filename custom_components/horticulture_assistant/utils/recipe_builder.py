@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.utils.fertilizer_inventory import FertilizerListing, FertilizerProduct
+from .fertilizer_inventory import FertilizerListing, FertilizerProduct
 
 
 class FertilizerDose:

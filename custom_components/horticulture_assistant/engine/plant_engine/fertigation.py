@@ -208,7 +208,7 @@ def calculate_injection_volumes(
     if ratio is None or ratio <= 0:
         raise KeyError(f"Unknown injector '{injector}'")
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         CATALOG
 
     inventory = CATALOG.inventory()
@@ -528,7 +528,7 @@ def grams_to_ppm(grams: float, volume_l: float, purity: float) -> float:
 def check_solubility_limits(schedule: Mapping[str, float], volume_l: float) -> dict[str, float]:
     """Delegate to :func:`fertilizer_formulator.check_solubility_limits`."""
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         check_solubility_limits as _check
 
     return _check(schedule, volume_l)
@@ -868,7 +868,7 @@ def recommend_nutrient_mix_with_cost(
         use_synergy=use_synergy,
     )
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         estimate_mix_cost
 
     cost = estimate_mix_cost(schedule)
@@ -901,7 +901,7 @@ def recommend_nutrient_mix_with_cost_breakdown(
         use_synergy=use_synergy,
     )
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         estimate_cost_breakdown
 
     breakdown = estimate_cost_breakdown(schedule)
@@ -992,7 +992,7 @@ def recommend_precise_fertigation(
         )
         warnings = {}
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import (
+    from ...fertilizer_formulator import (
         estimate_cost_breakdown, estimate_mix_cost)
 
     try:
@@ -1032,7 +1032,7 @@ def recommend_precise_fertigation_with_injection(
         use_synergy=use_synergy,
     )
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         calculate_mix_ppm
 
     ppm_levels = calculate_mix_ppm(schedule, volume_l)
@@ -1183,7 +1183,7 @@ def recommend_recovery_adjusted_schedule(
 def calculate_mix_nutrients(schedule: Mapping[str, float]) -> dict[str, float]:
     """Return elemental nutrient totals for a fertilizer mix."""
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         calculate_mix_nutrients as _calc
 
     return _calc(schedule)
@@ -1216,7 +1216,7 @@ def _schedule_from_totals(
         purity = get_fertilizer_purity(fert).get(nutrient, 0.0)
         if purity <= 0:
             try:
-                from custom_components.horticulture_assistant.fertilizer_formulator import (
+                from ...fertilizer_formulator import (
                     convert_guaranteed_analysis, get_product_info)
 
                 info = get_product_info(fert)
@@ -1244,7 +1244,7 @@ def estimate_stage_cost(
 ) -> float:
     """Return estimated fertilizer cost for a growth stage."""
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         estimate_mix_cost
 
     from .nutrient_uptake import estimate_stage_totals
@@ -1273,7 +1273,7 @@ def estimate_cycle_cost(
 ) -> float:
     """Return estimated fertilizer cost for the entire crop cycle."""
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         estimate_mix_cost
 
     from .nutrient_uptake import estimate_total_uptake
@@ -1334,7 +1334,7 @@ def optimize_fertigation_schedule(
     if volume_l <= 0:
         raise ValueError("volume_l must be positive")
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import (
+    from ...fertilizer_formulator import (
         estimate_mix_cost, get_cheapest_product)
 
     if include_micro:
@@ -1377,7 +1377,7 @@ def recommend_cost_optimized_fertigation_with_injection(
     if not schedule:
         return {}, 0.0, {}
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         calculate_mix_ppm
 
     ppm_levels = calculate_mix_ppm(schedule, volume_l)
@@ -1421,7 +1421,7 @@ def generate_cycle_fertigation_plan_with_cost(
 
     plan = generate_cycle_fertigation_plan(plant_type, purity, product=product)
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         estimate_mix_cost
 
     fert_map = {
@@ -1488,7 +1488,7 @@ def validate_fertigation_schedule(
     if volume_l <= 0:
         raise ValueError("volume_l must be positive")
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         calculate_mix_ppm
 
     ppm_levels = calculate_mix_ppm(schedule, volume_l)

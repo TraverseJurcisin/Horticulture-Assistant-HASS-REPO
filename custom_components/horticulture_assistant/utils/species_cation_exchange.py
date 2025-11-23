@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 from dataclasses import dataclass
 
-from plant_engine.utils import load_dataset
+from ..engine.plant_engine.utils import load_dataset
 
 # Relative cation extraction multipliers for select species
 SPECIES_CATION_FILE = "species/species_cation_profiles.json"

@@ -14,8 +14,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from custom_components.horticulture_assistant.utils.nutrient_requirements import \
-    calculate_deficit
+from ..utils.nutrient_requirements import calculate_deficit
 
 
 def _load_totals(arg: str) -> dict:

@@ -5,8 +5,9 @@ import sys
 import types
 from pathlib import Path
 
-import plant_engine.utils as utils
 import pytest
+
+from ..engine.plant_engine import utils as utils
 
 MODULE_PATH = (
     Path(__file__).resolve().parents[3] / "custom_components/horticulture_assistant/utils/nutrient_scheduler.py"
@@ -144,7 +145,7 @@ def test_schedule_nutrient_corrections(tmp_path):
     plant_dir.mkdir()
     (plant_dir / "corr.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
     hass = _hass_for(tmp_path)
-    from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
+    from ..utils import nutrient_scheduler as ns
 
     adjustments = ns.schedule_nutrient_corrections("corr", {"N": 0.0, "P": 0.0, "K": 0.0}, hass=hass).as_dict()
     assert adjustments["N"] > 0
@@ -155,7 +156,7 @@ def test_schedule_nutrient_corrections_synergy(tmp_path):
     plant_dir.mkdir()
     (plant_dir / "syn.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
     hass = _hass_for(tmp_path)
-    from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
+    from ..utils import nutrient_scheduler as ns
 
     base = ns.schedule_nutrient_corrections("syn", {"N": 0, "P": 0, "K": 0, "Ca": 0, "B": 0}, hass=hass).as_dict()
     syn = ns.schedule_nutrient_corrections(
@@ -171,7 +172,7 @@ def test_schedule_nutrients_bulk(tmp_path):
     (plant_dir / "p1.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
     (plant_dir / "p2.json").write_text('{"general": {"plant_type": "lettuce", "stage": "harvest"}}')
     hass = _hass_for(tmp_path)
-    from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
+    from ..utils import nutrient_scheduler as ns
 
     result = ns.schedule_nutrients_bulk(["p1", "p2"], hass=hass)
     assert result["p1"]["N"] > 0
@@ -195,7 +196,7 @@ def test_profile_load_caching(tmp_path, monkeypatch):
     (plant_dir / "cache.json").write_text('{"general": {"plant_type": "lettuce", "stage": "seedling"}}')
 
     hass = _hass_for(tmp_path)
-    from custom_components.horticulture_assistant.utils import nutrient_scheduler as ns
+    from ..utils import nutrient_scheduler as ns
 
     calls = 0
 

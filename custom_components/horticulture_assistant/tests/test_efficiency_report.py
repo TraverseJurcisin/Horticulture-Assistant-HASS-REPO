@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.utils.nutrient_use_efficiency import efficiency_report
+from ..utils.nutrient_use_efficiency import efficiency_report
 
 
 def test_efficiency_report_basic():

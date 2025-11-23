@@ -1,5 +1,6 @@
 import pytest
-from plant_engine.rootzone_model import (
+
+from ..engine.plant_engine.rootzone_model import (
     RootZone,
     calculate_infiltration_volume,
     calculate_remaining_water,
@@ -21,7 +22,7 @@ def test_estimate_rootzone_depth():
 
 
 def test_estimate_rootzone_depth_custom_params(monkeypatch):
-    import plant_engine.rootzone_model as rz
+    from ..engine.plant_engine import rootzone_model as rz
 
     monkeypatch.setattr(
         rz,

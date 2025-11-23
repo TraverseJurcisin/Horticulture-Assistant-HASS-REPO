@@ -136,7 +136,7 @@ class ProfileMonitorResult:
         """Return a diagnostics payload summarising the evaluation."""
 
         payload = self.as_attributes()
-        payload["profile_id"] = self.context.id
+        payload["profile_id"] = self.context.profile_id
         payload["profile_name"] = self.context.name
         return payload
 

@@ -8,7 +8,7 @@ ha.core.HomeAssistant = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.core", ha.core)
 
-from custom_components.horticulture_assistant.utils.state_helpers import (  # noqa: E402
+from ..utils.state_helpers import (  # noqa: E402
     aggregate_sensor_values,
     get_numeric_state,
     normalize_entities,

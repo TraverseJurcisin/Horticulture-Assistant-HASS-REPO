@@ -1,4 +1,4 @@
-from plant_engine.nutrient_analysis import NutrientAnalysis, analyze_nutrient_profile
+from ..engine.plant_engine.nutrient_analysis import NutrientAnalysis, analyze_nutrient_profile
 
 
 def test_analyze_nutrient_profile():

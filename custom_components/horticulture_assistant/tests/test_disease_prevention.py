@@ -1,4 +1,4 @@
-from plant_engine.disease_manager import get_disease_prevention, recommend_prevention
+from ..engine.plant_engine.disease_manager import get_disease_prevention, recommend_prevention
 
 
 def test_get_disease_prevention():

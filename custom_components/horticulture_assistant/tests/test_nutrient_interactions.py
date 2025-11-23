@@ -1,4 +1,4 @@
-from plant_engine.nutrient_interactions import (
+from ..engine.plant_engine.nutrient_interactions import (
     analyze_interactions,
     check_imbalances,
     get_balance_action,

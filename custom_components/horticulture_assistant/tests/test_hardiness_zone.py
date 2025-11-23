@@ -1,4 +1,4 @@
-from plant_engine.hardiness_zone import get_min_temperature, suitable_zones
+from ..engine.plant_engine.hardiness_zone import get_min_temperature, suitable_zones
 
 
 def test_get_min_temperature():

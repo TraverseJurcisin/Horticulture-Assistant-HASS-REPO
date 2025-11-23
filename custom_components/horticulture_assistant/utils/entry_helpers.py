@@ -135,7 +135,7 @@ def _normalise_metric_mappings(
 class ProfileContext:
     """Runtime metadata describing a plant profile and its device."""
 
-    id: str
+    profile_id: str
     name: str
     sensors: Mapping[str, tuple[str, ...]] = field(default_factory=dict)
     thresholds: Mapping[str, Any] = field(default_factory=dict)
@@ -2263,7 +2263,7 @@ def _build_profile_context_from_payload(
         metrics = _resolve_profile_metrics(payload, thresholds=thresholds)
 
     return ProfileContext(
-        id=profile_id,
+        profile_id=profile_id,
         name=name,
         sensors=sensors,
         thresholds=thresholds,
@@ -2301,7 +2301,7 @@ def _fallback_profile_contexts(
     )
 
     context = ProfileContext(
-        id=plant_id,
+        profile_id=plant_id,
         name=plant_name,
         sensors=sensors,
         thresholds=thresholds,
@@ -2364,7 +2364,7 @@ def resolve_profile_context_collection(
     primary = contexts.get(primary_id) if primary_id else None
     if primary is not None:
         plant_name = plant_name or primary.name
-        plant_id = plant_id or primary.id
+        plant_id = plant_id or primary.profile_id
 
     if not isinstance(plant_id, str) or not plant_id:
         plant_id, fallback_name = get_entry_plant_info(entry)

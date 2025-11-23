@@ -4,12 +4,10 @@ import os
 from datetime import datetime
 from pathlib import PurePath
 
-from plant_engine import ai_model
-
-from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
-
 from ..const import CONF_OPENAI_API_KEY, CONF_OPENAI_MODEL, CONF_OPENAI_TEMPERATURE, CONF_USE_OPENAI
+from ..engine.plant_engine import ai_model
 from . import global_config
+from .path_utils import data_path, plants_path
 
 _LOGGER = logging.getLogger(__name__)
 

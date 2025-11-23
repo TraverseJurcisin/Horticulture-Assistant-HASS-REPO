@@ -16,7 +16,7 @@ ROOT = ensure_repo_root_on_path()
 
 import yaml
 
-from plant_engine.fertigation import \
+from ..engine.plant_engine.fertigation import \
     recommend_precise_fertigation_with_injection
 
 
@@ -79,7 +79,7 @@ def main(argv: list[str] | None = None) -> None:
 
     recipe_injection = None
     if args.use_stock_recipe:
-        from plant_engine.fertigation import apply_stock_solution_recipe
+        from ..engine.plant_engine.fertigation import apply_stock_solution_recipe
 
         recipe_injection = apply_stock_solution_recipe(
             args.plant_type,

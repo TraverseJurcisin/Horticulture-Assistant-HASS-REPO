@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from custom_components.horticulture_assistant.utils.growth_model import \
+from ...utils.growth_model import \
     update_growth_index as _advanced_update
 
 # Compatibility constants preserved for tests

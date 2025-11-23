@@ -10,9 +10,8 @@ try:
 except ModuleNotFoundError:  # pragma: no cover - tests run without HA
     HomeAssistant = None  # type: ignore
 
-from custom_components.horticulture_assistant.utils.path_utils import config_path
-
 from .json_io import load_json, save_json
+from .path_utils import config_path
 
 PLANT_REGISTRY_FILE = "data/local/plants/plant_registry.json"
 

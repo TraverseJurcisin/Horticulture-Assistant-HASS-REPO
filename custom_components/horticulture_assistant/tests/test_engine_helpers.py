@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from plant_engine import engine
+from ..engine.plant_engine import engine
 
 
 def test_generate_environment_actions(tmp_path, monkeypatch):

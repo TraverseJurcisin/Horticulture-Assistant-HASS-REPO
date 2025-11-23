@@ -1,4 +1,4 @@
-from plant_engine.environment_manager import generate_stage_environment_plan
+from ..engine.plant_engine.environment_manager import generate_stage_environment_plan
 
 
 def test_generate_stage_environment_plan_citrus_seedling():

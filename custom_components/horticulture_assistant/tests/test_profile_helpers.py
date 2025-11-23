@@ -1,6 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.utils.profile_helpers import write_profile_sections
+from ..utils.profile_helpers import write_profile_sections
 
 
 def test_write_profile_sections_creates_files(tmp_path):

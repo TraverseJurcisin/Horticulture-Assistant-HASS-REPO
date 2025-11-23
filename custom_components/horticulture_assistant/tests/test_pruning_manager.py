@@ -1,6 +1,6 @@
 from datetime import date
 
-from plant_engine.pruning_manager import (
+from ..engine.plant_engine.pruning_manager import (
     get_pruning_instructions,
     get_pruning_interval,
     list_stages,

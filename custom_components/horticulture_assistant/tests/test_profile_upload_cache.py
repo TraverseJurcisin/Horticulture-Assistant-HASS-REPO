@@ -1,7 +1,7 @@
 import json
 import types
 
-from custom_components.horticulture_assistant.utils.profile_upload_cache import cache_profile_for_upload
+from ..utils.profile_upload_cache import cache_profile_for_upload
 
 
 def _make_hass(tmp_path):

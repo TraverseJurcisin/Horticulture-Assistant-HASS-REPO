@@ -1,6 +1,6 @@
 import json
 
-import plant_engine.nutrient_efficiency as ne
+from ..engine.plant_engine import nutrient_efficiency as ne
 
 
 def setup_data(tmp_path):

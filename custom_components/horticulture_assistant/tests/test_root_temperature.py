@@ -1,5 +1,5 @@
-from plant_engine.nutrient_manager import get_temperature_adjusted_levels
-from plant_engine.root_temperature import (
+from ..engine.plant_engine.nutrient_manager import get_temperature_adjusted_levels
+from ..engine.plant_engine.root_temperature import (
     adjust_uptake,
     clear_cache,
     get_optimal_root_temperature,
@@ -48,7 +48,7 @@ def test_cache_clear():
     """get_uptake_factor results should update after clearing the cache."""
     first = get_uptake_factor(21)
     # change cached result by altering private data then clearing cache
-    from plant_engine import root_temperature as rt
+    from ..engine.plant_engine import root_temperature as rt
 
     rt._OPTIMA["test"] = 30
     clear_cache()

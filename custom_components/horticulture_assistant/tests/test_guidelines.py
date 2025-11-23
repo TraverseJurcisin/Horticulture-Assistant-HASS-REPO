@@ -1,4 +1,4 @@
-from plant_engine.guidelines import get_guideline_summary
+from ..engine.plant_engine.guidelines import get_guideline_summary
 
 
 def test_get_guideline_summary():

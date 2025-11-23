@@ -1,6 +1,6 @@
 from datetime import date
 
-from plant_engine.harvest_planner import build_stage_schedule, estimate_harvest_date
+from ..engine.plant_engine.harvest_planner import build_stage_schedule, estimate_harvest_date
 
 
 def test_build_stage_schedule():

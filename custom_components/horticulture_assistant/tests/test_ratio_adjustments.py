@@ -1,4 +1,4 @@
-from plant_engine.nutrient_manager import recommend_ratio_adjustments
+from ..engine.plant_engine.nutrient_manager import recommend_ratio_adjustments
 
 
 def test_recommend_ratio_adjustments():

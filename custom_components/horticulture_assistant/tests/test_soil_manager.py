@@ -1,4 +1,4 @@
-from plant_engine.soil_manager import (
+from ..engine.plant_engine.soil_manager import (
     calculate_soil_balance,
     calculate_soil_deficiencies,
     calculate_soil_surplus,

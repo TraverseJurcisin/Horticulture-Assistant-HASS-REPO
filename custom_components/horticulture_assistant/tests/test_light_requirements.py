@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.utils.light_requirements import generate_light_schedule, get_stage_light
+from ..utils.light_requirements import generate_light_schedule, get_stage_light
 
 
 def test_get_stage_light():

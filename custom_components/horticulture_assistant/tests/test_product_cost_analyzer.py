@@ -1,6 +1,6 @@
 import pytest
 
-from custom_components.horticulture_assistant.utils.product_cost_analyzer import ProductCostAnalyzer
+from ..utils.product_cost_analyzer import ProductCostAnalyzer
 
 
 def test_cost_per_unit_basic():

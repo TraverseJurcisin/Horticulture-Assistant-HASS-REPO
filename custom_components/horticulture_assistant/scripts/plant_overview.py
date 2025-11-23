@@ -14,7 +14,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.reference_data import get_plant_overview
+from ..engine.plant_engine.reference_data import get_plant_overview
 
 
 def main(argv: list[str] | None = None) -> None:

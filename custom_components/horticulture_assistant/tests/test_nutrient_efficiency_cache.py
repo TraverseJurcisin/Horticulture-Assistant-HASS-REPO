@@ -1,4 +1,4 @@
-import plant_engine.nutrient_efficiency as ne
+from ..engine.plant_engine import nutrient_efficiency as ne
 
 
 def test_load_targets_cached(monkeypatch):

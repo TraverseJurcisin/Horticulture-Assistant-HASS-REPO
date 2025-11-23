@@ -1,4 +1,4 @@
-from plant_engine.toxicity_manager import (
+from ..engine.plant_engine.toxicity_manager import (
     check_toxicities,
     diagnose_toxicities,
     get_toxicity_symptom,
@@ -8,7 +8,7 @@ from plant_engine.toxicity_manager import (
     list_supported_plants,
     recommend_toxicity_treatments,
 )
-from plant_engine.utils import clear_dataset_cache
+from ..engine.plant_engine.utils import clear_dataset_cache
 
 
 def test_list_supported_plants():
@@ -54,10 +54,10 @@ def test_calculate_toxicity_index():
     clear_dataset_cache()
     import importlib
 
-    import plant_engine.nutrient_manager as nm
+    from ..engine.plant_engine import nutrient_manager as nm
 
     importlib.reload(nm)
-    import plant_engine.toxicity_manager as tm
+    from ..engine.plant_engine import toxicity_manager as tm
 
     importlib.reload(tm)
     levels = {"N": 300, "K": 400}

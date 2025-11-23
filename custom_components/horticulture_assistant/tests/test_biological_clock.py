@@ -1,4 +1,4 @@
-from plant_engine.biological_clock import (
+from ..engine.plant_engine.biological_clock import (
     check_clock_reset,
     format_reset_message,
     get_clock_reset_info,

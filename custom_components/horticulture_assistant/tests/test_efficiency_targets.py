@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.utils.nutrient_use_efficiency import (
+from ..utils.nutrient_use_efficiency import (
     get_efficiency_targets,
     score_efficiency,
 )

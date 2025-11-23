@@ -1,8 +1,8 @@
 import os
 from datetime import datetime
 
-from plant_engine.approval_queue import queue_threshold_updates
-from plant_engine.utils import load_json, save_json
+from ..engine.plant_engine.approval_queue import queue_threshold_updates
+from ..engine.plant_engine.utils import load_json, save_json
 
 LAB_DATA_DIR = "data/lab_tests"
 

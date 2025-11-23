@@ -1,4 +1,11 @@
-from plant_engine import disease_manager, environment_manager, fertigation, growth_stage, nutrient_manager, pest_manager
+from ..engine.plant_engine import (
+    disease_manager,
+    environment_manager,
+    fertigation,
+    growth_stage,
+    nutrient_manager,
+    pest_manager,
+)
 
 
 def test_list_supported_plants():

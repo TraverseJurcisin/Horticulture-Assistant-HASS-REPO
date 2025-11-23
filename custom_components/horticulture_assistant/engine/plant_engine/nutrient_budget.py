@@ -163,7 +163,7 @@ def estimate_fertilizer_cost(
     formulator utilities.
     """
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import \
+    from ...fertilizer_formulator import \
         estimate_cost_per_nutrient
 
     total = 0.0

@@ -8,7 +8,7 @@ ha.core.HomeAssistant = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.core", ha.core)
 
-from custom_components.horticulture_assistant.utils.sensor_map import (  # noqa: E402
+from ..utils.sensor_map import (  # noqa: E402
     DEFAULT_SENSORS,
     build_sensor_map,
     merge_sensor_maps,

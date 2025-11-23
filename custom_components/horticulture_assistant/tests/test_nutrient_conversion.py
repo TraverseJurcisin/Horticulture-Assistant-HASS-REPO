@@ -1,4 +1,4 @@
-from plant_engine.nutrient_conversion import get_conversion_factors, oxide_to_elemental
+from ..engine.plant_engine.nutrient_conversion import get_conversion_factors, oxide_to_elemental
 
 
 def test_conversion_factors_loaded():

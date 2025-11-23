@@ -8,7 +8,7 @@ from functools import cache
 from typing import Any
 
 try:
-    from plant_engine import fertilizer_dataset_loader as dataset_loader
+    from ..engine.plant_engine import fertilizer_dataset_loader as dataset_loader
 except ImportError:  # pragma: no cover - fallback when run as script
     from ..engine.plant_engine import fertilizer_dataset_loader as dataset_loader  # type: ignore
 

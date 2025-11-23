@@ -5,8 +5,8 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from plant_engine.approval_queue import queue_threshold_updates
-from plant_engine.utils import get_pending_dir, load_json
+from .plant_engine.approval_queue import queue_threshold_updates
+from .plant_engine.utils import get_pending_dir, load_json
 
 _LOGGER = logging.getLogger(__name__)
 

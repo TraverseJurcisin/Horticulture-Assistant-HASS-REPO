@@ -1,5 +1,6 @@
 import pytest
-from plant_engine import ai_model
+
+from ..engine.plant_engine import ai_model
 
 
 def test_get_model_defaults_to_mock():

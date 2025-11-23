@@ -1,4 +1,4 @@
-import plant_engine.micro_manager as micro
+from ..engine.plant_engine import micro_manager as micro
 
 
 def test_micro_guidelines():

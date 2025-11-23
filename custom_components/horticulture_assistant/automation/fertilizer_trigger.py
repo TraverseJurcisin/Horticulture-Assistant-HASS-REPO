@@ -2,7 +2,7 @@ import json
 import logging
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.path_utils import plants_path
+from ..utils.path_utils import plants_path
 
 _LOGGER = logging.getLogger(__name__)
 

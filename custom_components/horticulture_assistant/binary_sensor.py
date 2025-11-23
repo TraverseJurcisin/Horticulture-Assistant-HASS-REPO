@@ -33,7 +33,7 @@ async def async_setup_entry(
     known_profiles: set[str] = set()
 
     def _build_context_entities(context: ProfileContext) -> list[BinarySensorEntity]:
-        profile_id = context.id
+        profile_id = context.profile_id
         plant_name = context.name
         ensure_entities_exist(
             hass,
@@ -70,7 +70,7 @@ async def async_setup_entry(
     sensors: list[BinarySensorEntity] = []
     for context in collection.values():
         sensors.extend(_build_context_entities(context))
-        known_profiles.add(context.id)
+        known_profiles.add(context.profile_id)
 
     manager = stored.get("cloud_sync_manager")
     if manager:
@@ -119,7 +119,7 @@ class HorticultureBaseBinarySensor(HorticultureBaseEntity, BinarySensorEntity):
         entry_id: str,
         context: ProfileContext,
     ) -> None:
-        super().__init__(entry_id, context.name, context.id, model="AI Monitored Plant")
+        super().__init__(entry_id, context.name, context.profile_id, model="AI Monitored Plant")
         self.hass = hass
         self._entry_id = entry_id
         self._context = context
@@ -138,7 +138,7 @@ class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
     ):
         super().__init__(hass, entry_id, context)
         self._attr_name = "Sensor Health"
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.id}_sensor_health"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.profile_id}_sensor_health"
         self._attr_device_class = BinarySensorDeviceClass.PROBLEM
         self._attr_icon = "mdi:heart-pulse"
         self._attr_entity_category = CATEGORY_DIAGNOSTIC
@@ -164,7 +164,7 @@ class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
     ):
         super().__init__(hass, entry_id, context)
         self._attr_name = "Irrigation Readiness"
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.id}_irrigation_readiness"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.profile_id}_irrigation_readiness"
         self._attr_device_class = BinarySensorDeviceClass.MOISTURE
         self._attr_icon = "mdi:water-alert"
         self._attr_entity_category = CATEGORY_CONTROL
@@ -235,7 +235,7 @@ class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
     ):
         super().__init__(hass, entry_id, context)
         self._attr_name = "Fault Detection"
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.id}_fault_detection"
+        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.profile_id}_fault_detection"
         self._attr_device_class = BinarySensorDeviceClass.SAFETY
         self._attr_icon = "mdi:alert"
         self._attr_entity_category = CATEGORY_DIAGNOSTIC

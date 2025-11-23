@@ -1,8 +1,8 @@
 import importlib
 import json
 
-import plant_engine.yield_prediction as yp
-from plant_engine import yield_manager
+from ..engine.plant_engine import yield_manager
+from ..engine.plant_engine import yield_prediction as yp
 
 
 def test_get_estimated_yield(tmp_path, monkeypatch):

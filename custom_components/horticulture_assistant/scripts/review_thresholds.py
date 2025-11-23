@@ -2,7 +2,7 @@ import os
 
 from approval_queue import apply_approved_thresholds
 
-from plant_engine.utils import get_pending_dir, load_json, save_json
+from ..engine.plant_engine.utils import get_pending_dir, load_json, save_json
 
 PENDING_DIR = str(get_pending_dir())
 PLANT_DIR = "plants"

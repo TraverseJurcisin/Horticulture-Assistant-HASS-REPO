@@ -20,7 +20,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.environment_manager import optimize_environment
+from ..engine.plant_engine.environment_manager import optimize_environment
 
 
 def _load_env(arg: str) -> dict:

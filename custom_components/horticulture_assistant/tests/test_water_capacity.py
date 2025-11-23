@@ -1,5 +1,6 @@
 import pytest
-from plant_engine import water_capacity
+
+from ..engine.plant_engine import water_capacity
 
 
 def test_get_capacity():

@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.utils.ec_estimator import ECFeatures
+from ..utils.ec_estimator import ECFeatures
 
 
 def test_asdict_filters_none():

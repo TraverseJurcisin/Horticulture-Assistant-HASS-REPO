@@ -1,6 +1,6 @@
 import datetime
 
-from plant_engine import phenology
+from ..engine.plant_engine import phenology
 
 
 def test_get_milestone_gdd_requirement():

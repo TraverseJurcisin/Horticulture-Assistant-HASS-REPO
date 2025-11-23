@@ -1,6 +1,7 @@
 import pytest
-from plant_engine.compute_transpiration import compute_transpiration
-from plant_engine.irrigation_manager import (
+
+from ..engine.plant_engine.compute_transpiration import compute_transpiration
+from ..engine.plant_engine.irrigation_manager import (
     IrrigationRecommendation,
     adjust_irrigation_for_efficiency,
     adjust_irrigation_for_zone,
@@ -25,8 +26,8 @@ from plant_engine.irrigation_manager import (
     recommend_irrigation_with_rainfall,
     summarize_irrigation_schedule,
 )
-from plant_engine.rootzone_model import RootZone, calculate_remaining_water
-from plant_engine.utils import clear_dataset_cache
+from ..engine.plant_engine.rootzone_model import RootZone, calculate_remaining_water
+from ..engine.plant_engine.utils import clear_dataset_cache
 
 
 def test_recommend_irrigation_volume_basic():

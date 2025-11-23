@@ -1,4 +1,4 @@
-from plant_engine import bioinoculant_info as info
+from ..engine.plant_engine import bioinoculant_info as info
 
 
 def test_list_inoculants():

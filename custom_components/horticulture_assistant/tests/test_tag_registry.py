@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils import tag_registry
+from ..utils import tag_registry
 
 
 def test_default_tags_file_location():

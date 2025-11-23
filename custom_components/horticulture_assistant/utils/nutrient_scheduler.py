@@ -14,14 +14,13 @@ try:
 except ImportError:
     HomeAssistant = None
 
-from plant_engine.constants import get_stage_multiplier
-from plant_engine.nutrient_absorption import apply_absorption_rates
-from plant_engine.nutrient_manager import get_all_recommended_levels, get_recommended_levels
-from plant_engine.utils import load_dataset, load_json, normalize_key, save_json
-
-from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile
-from custom_components.horticulture_assistant.utils.path_utils import config_path, ensure_data_dir, plants_path
-from custom_components.horticulture_assistant.utils.plant_registry import PLANT_REGISTRY_FILE
+from ..engine.plant_engine.constants import get_stage_multiplier
+from ..engine.plant_engine.nutrient_absorption import apply_absorption_rates
+from ..engine.plant_engine.nutrient_manager import get_all_recommended_levels, get_recommended_levels
+from ..engine.plant_engine.utils import load_dataset, load_json, normalize_key, save_json
+from .bio_profile_loader import load_profile
+from .path_utils import config_path, ensure_data_dir, plants_path
+from .plant_registry import PLANT_REGISTRY_FILE
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -302,9 +301,9 @@ def schedule_nutrient_corrections(
         return NutrientAdjustments({})
 
     if use_synergy:
-        from plant_engine.nutrient_manager import calculate_all_deficiencies_with_synergy as _calc
+        from ..engine.plant_engine.nutrient_manager import calculate_all_deficiencies_with_synergy as _calc
     else:
-        from plant_engine.nutrient_manager import calculate_nutrient_adjustments as _calc
+        from ..engine.plant_engine.nutrient_manager import calculate_nutrient_adjustments as _calc
 
     adjustments = _calc(current_levels, plant_type, stage_key)
     return NutrientAdjustments(adjustments)

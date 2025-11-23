@@ -1,4 +1,4 @@
-from plant_engine import nutrient_budget
+from ..engine.plant_engine import nutrient_budget
 
 
 def test_get_removal_rates():

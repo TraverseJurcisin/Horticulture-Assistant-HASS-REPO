@@ -1,5 +1,6 @@
 import pytest
-from plant_engine import yield_manager
+
+from ..engine.plant_engine import yield_manager
 
 
 def test_record_and_total_yield(tmp_path):

@@ -15,8 +15,8 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.health_report import generate_health_report
-from plant_engine.utils import load_data
+from ..engine.plant_engine.health_report import generate_health_report
+from ..engine.plant_engine.utils import load_data
 
 
 def main(argv: list[str] | None = None) -> None:

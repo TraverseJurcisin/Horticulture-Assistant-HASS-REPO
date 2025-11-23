@@ -1,4 +1,4 @@
-from plant_engine.environment_manager import generate_zone_environment_plan, suggest_environment_setpoints_zone
+from ..engine.plant_engine.environment_manager import generate_zone_environment_plan, suggest_environment_setpoints_zone
 
 
 def test_suggest_environment_setpoints_zone():

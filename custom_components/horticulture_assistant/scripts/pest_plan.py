@@ -15,7 +15,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.pest_manager import build_pest_management_plan
+from ..engine.plant_engine.pest_manager import build_pest_management_plan
 
 
 def main(argv: list[str] | None = None) -> None:

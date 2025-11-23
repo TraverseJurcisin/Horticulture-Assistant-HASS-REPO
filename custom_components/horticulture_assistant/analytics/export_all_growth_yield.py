@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from plant_engine.utils import load_json, save_json
+from ..engine.plant_engine.utils import load_json, save_json
 
 _LOGGER = logging.getLogger(__name__)
 

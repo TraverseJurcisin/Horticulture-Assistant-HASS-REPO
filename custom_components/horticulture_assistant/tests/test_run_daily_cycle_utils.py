@@ -1,7 +1,7 @@
 import json
 from datetime import UTC, datetime, timedelta
 
-from custom_components.horticulture_assistant.engine.run_daily_cycle import _load_recent_entries
+from ..engine.run_daily_cycle import _load_recent_entries
 
 
 def test_load_recent_entries(tmp_path):

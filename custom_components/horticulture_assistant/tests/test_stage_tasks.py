@@ -1,6 +1,6 @@
 from datetime import date
 
-from plant_engine.stage_tasks import (
+from ..engine.plant_engine.stage_tasks import (
     generate_cycle_task_plan,
     generate_task_schedule,
     get_stage_tasks,

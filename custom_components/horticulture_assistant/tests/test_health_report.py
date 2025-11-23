@@ -1,4 +1,4 @@
-from plant_engine.health_report import generate_health_report
+from ..engine.plant_engine.health_report import generate_health_report
 
 
 def test_generate_health_report():

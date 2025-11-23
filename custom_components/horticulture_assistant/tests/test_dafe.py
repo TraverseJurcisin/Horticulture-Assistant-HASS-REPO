@@ -130,7 +130,7 @@ def test_profile_data_files(tmp_path, monkeypatch):
 
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(tmp_path))
 
-    from plant_engine.utils import clear_dataset_cache
+    from ..engine.plant_engine.utils import clear_dataset_cache
 
     clear_dataset_cache()
     get_species_profile.cache_clear()

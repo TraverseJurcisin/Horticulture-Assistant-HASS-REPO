@@ -1,4 +1,4 @@
-from plant_engine.rotation_manager import get_rotation_info, list_supported_plants, recommended_rotation_years
+from ..engine.plant_engine.rotation_manager import get_rotation_info, list_supported_plants, recommended_rotation_years
 
 
 def test_list_supported_plants():

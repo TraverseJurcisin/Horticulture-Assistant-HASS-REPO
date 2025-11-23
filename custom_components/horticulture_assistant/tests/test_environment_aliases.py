@@ -1,4 +1,4 @@
-import plant_engine.environment_manager as em
+from ..engine.plant_engine import environment_manager as em
 
 
 def test_get_environment_aliases_contains_temperature():

@@ -1,6 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.automation import (
+from ..automation import (
     fertilizer_actuator,
     irrigation_actuator,
     run_automation_cycle,

@@ -1,4 +1,4 @@
-from plant_engine import bioinoculant_manager as bio
+from ..engine.plant_engine import bioinoculant_manager as bio
 
 
 def test_list_supported_plants():

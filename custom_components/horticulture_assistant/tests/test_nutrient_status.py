@@ -1,4 +1,4 @@
-from plant_engine.nutrient_status import classify_nutrient_status
+from ..engine.plant_engine.nutrient_status import classify_nutrient_status
 
 
 def test_classify_nutrient_status():

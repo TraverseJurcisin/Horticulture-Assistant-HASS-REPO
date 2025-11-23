@@ -1,4 +1,4 @@
-from plant_engine.nutrient_availability import (
+from ..engine.plant_engine.nutrient_availability import (
     availability_factor,
     availability_for_all,
     get_optimal_ph,

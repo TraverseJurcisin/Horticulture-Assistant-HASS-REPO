@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils import bio_profile_loader as loader
+from ..utils import bio_profile_loader as loader
 
 
 def _write_profile(path: Path, name: str = "Demo") -> None:

@@ -7,11 +7,7 @@ from dataclasses import dataclass
 from functools import cache
 from typing import Any
 
-try:
-    from . import fertilizer_dataset_loader as dataset_loader
-except ImportError:  # pragma: no cover - fallback when run as script
-    from plant_engine import \
-        fertilizer_dataset_loader as dataset_loader  # type: ignore
+from . import fertilizer_dataset_loader as dataset_loader
 
 __all__ = [
     "get_product_npk_by_name",

@@ -1,6 +1,6 @@
 import json
 
-import plant_engine.water_efficiency as we
+from ..engine.plant_engine import water_efficiency as we
 
 
 def setup_yield(tmp_path):

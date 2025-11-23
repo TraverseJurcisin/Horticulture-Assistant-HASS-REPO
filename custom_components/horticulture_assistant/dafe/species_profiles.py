@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import cache
 
-from plant_engine.utils import load_dataset
+from ..engine.plant_engine.utils import load_dataset
 
 # Dataset file residing under ``data/`` used to populate known species profiles.
 DATA_FILE = "media/dafe_species_profiles.json"

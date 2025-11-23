@@ -4,8 +4,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from custom_components.horticulture_assistant.const import signal_profile_contexts_updated
-from custom_components.horticulture_assistant.utils.entry_helpers import (
+from ..const import signal_profile_contexts_updated
+from ..utils.entry_helpers import (
     ProfileContext,
     _resolve_profile_metrics,
     ensure_all_profile_devices_registered,
@@ -26,7 +26,7 @@ class DummyEntry(SimpleNamespace):
 
 def test_profile_context_metric_helpers():
     context = ProfileContext(
-        id="plant-1",
+        profile_id="plant-1",
         name="Plant",
         metrics={
             "variables": {

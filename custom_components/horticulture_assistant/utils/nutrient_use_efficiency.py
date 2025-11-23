@@ -16,10 +16,9 @@ from dataclasses import asdict, dataclass
 from datetime import date, datetime
 from typing import Optional
 
-from plant_engine.utils import load_dataset
-
-from custom_components.horticulture_assistant.utils.path_utils import config_path, data_path
-from custom_components.horticulture_assistant.utils.plant_registry import PLANT_REGISTRY_FILE
+from ..engine.plant_engine.utils import load_dataset
+from .path_utils import config_path, data_path
+from .plant_registry import PLANT_REGISTRY_FILE
 
 try:
     from homeassistant.core import HomeAssistant
@@ -422,7 +421,7 @@ class NutrientUseEfficiency:
     def compare_to_expected(self, plant_id: str, plant_type: str, stage: str) -> dict[str, float]:
         """Return applied minus expected nutrient totals for a stage."""
 
-        from plant_engine.nutrient_uptake import estimate_stage_totals
+        from ..engine.plant_engine.nutrient_uptake import estimate_stage_totals
 
         expected = estimate_stage_totals(plant_type, stage)
         if not expected:

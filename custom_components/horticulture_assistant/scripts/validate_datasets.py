@@ -13,7 +13,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.datasets import validate_all_datasets
+from ..engine.plant_engine.datasets import validate_all_datasets
 
 
 def main(argv: list[str] | None = None) -> None:

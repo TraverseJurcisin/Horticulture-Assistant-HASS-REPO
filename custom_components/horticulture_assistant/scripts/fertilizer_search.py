@@ -15,7 +15,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.fertilizer_dataset_lookup import (
+from ..engine.plant_engine.fertilizer_dataset_lookup import (
     get_product_analysis_by_number, search_products)
 
 

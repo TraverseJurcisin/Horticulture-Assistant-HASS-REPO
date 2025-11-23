@@ -1,4 +1,4 @@
-from plant_engine import water_quality
+from ..engine.plant_engine import water_quality
 
 
 def test_list_analytes():
@@ -53,7 +53,7 @@ def test_summarize_water_profile():
 
 
 def test_blend_water_profiles():
-    from plant_engine import water_quality
+    from ..engine.plant_engine import water_quality
 
     a = {"Na": 80, "Cl": 80}
     b = {"Na": 20, "Cl": 20}
@@ -63,7 +63,7 @@ def test_blend_water_profiles():
 
 
 def test_max_safe_blend_ratio():
-    from plant_engine import water_quality
+    from ..engine.plant_engine import water_quality
 
     a = {"Na": 80, "Cl": 80}
     b = {"Na": 20, "Cl": 20}

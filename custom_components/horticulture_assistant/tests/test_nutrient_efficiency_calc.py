@@ -1,6 +1,6 @@
 import json
 
-from plant_engine import nutrient_efficiency
+from ..engine.plant_engine import nutrient_efficiency
 
 
 def test_calculate_nue(tmp_path, monkeypatch):

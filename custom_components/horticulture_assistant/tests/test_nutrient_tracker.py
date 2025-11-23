@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from custom_components.horticulture_assistant.utils.nutrient_tracker import (
+from ..utils.nutrient_tracker import (
     NutrientDeliveryRecord,
     NutrientTracker,
     register_fertilizers_from_dataset,

@@ -1,4 +1,4 @@
-from plant_engine.utils import deep_update
+from ..engine.plant_engine.utils import deep_update
 
 
 def test_deep_update_nested_dict():

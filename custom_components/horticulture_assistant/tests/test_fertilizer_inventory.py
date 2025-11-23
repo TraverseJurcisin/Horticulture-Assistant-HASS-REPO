@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from custom_components.horticulture_assistant.utils.fertilizer_inventory import FertilizerInventory, FertilizerProduct
+from ..utils.fertilizer_inventory import FertilizerInventory, FertilizerProduct
 
 
 def test_inventory_basic_operations():

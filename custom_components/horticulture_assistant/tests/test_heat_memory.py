@@ -1,4 +1,4 @@
-from plant_engine.heat_memory import (
+from ..engine.plant_engine.heat_memory import (
     calculate_heat_memory_index,
     get_heat_memory_info,
     list_supported_plants,

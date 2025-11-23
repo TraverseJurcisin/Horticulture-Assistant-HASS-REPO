@@ -1,4 +1,4 @@
-import plant_engine.reference_data as ref
+from ..engine.plant_engine import reference_data as ref
 
 
 def test_load_reference_data_keys():

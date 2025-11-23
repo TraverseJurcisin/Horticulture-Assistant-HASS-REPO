@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.utils import recommendation_engine as re
+from ..utils import recommendation_engine as re
 
 
 def _setup_engine(auto: bool = False, *, alerts: object | None = None):

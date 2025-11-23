@@ -9,13 +9,12 @@ from datetime import datetime
 from pathlib import Path
 
 from homeassistant.core import HomeAssistant
-from plant_engine import environment_manager
 
-from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile
-from custom_components.horticulture_assistant.utils.path_utils import config_path, data_path, plants_path
-from custom_components.horticulture_assistant.utils.plant_registry import PLANT_REGISTRY_FILE
-
+from ..engine.plant_engine import environment_manager
+from .bio_profile_loader import load_profile
 from .json_io import load_json, save_json
+from .path_utils import config_path, data_path, plants_path
+from .plant_registry import PLANT_REGISTRY_FILE
 from .state_helpers import aggregate_sensor_values, get_numeric_state
 
 _LOGGER = logging.getLogger(__name__)

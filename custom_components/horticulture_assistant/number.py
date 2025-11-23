@@ -38,7 +38,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     collection = resolve_profile_context_collection(hass, entry)
 
     def _build_threshold_entities(context) -> list[ThresholdNumber]:
-        profile_id = context.id
+        profile_id = context.profile_id
         thresholds = context.thresholds
         name = context.name
         numbers: list[ThresholdNumber] = []
@@ -60,7 +60,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     entities: list[ThresholdNumber] = []
     for context in collection.values():
         entities.extend(_build_threshold_entities(context))
-        known_profiles.add(context.id)
+        known_profiles.add(context.profile_id)
 
     async_add_entities(entities, True)
 

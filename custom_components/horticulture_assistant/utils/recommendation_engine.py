@@ -4,8 +4,8 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from functools import cache
 
-from plant_engine.environment_manager import generate_environment_alerts, optimize_environment
-from plant_engine.irrigation_manager import get_daily_irrigation_target
+from ..engine.plant_engine.environment_manager import generate_environment_alerts, optimize_environment
+from ..engine.plant_engine.irrigation_manager import get_daily_irrigation_target
 
 
 @cache
@@ -150,7 +150,7 @@ class RecommendationEngine:
             "K": sensors.get("potassium_ppm"),
         }
         try:
-            from plant_engine.nutrient_manager import calculate_all_deficiencies
+            from ..engine.plant_engine.nutrient_manager import calculate_all_deficiencies
         except Exception:
             return {}
         return calculate_all_deficiencies(current, plant_type, stage)
@@ -183,7 +183,7 @@ class RecommendationEngine:
 
         # Assess deficiency severity for additional context in recommendations
         try:
-            from plant_engine.deficiency_manager import assess_deficiency_severity
+            from ..engine.plant_engine.deficiency_manager import assess_deficiency_severity
 
             severity_map = assess_deficiency_severity(
                 self.sensor_data.get(plant_id, {}),
