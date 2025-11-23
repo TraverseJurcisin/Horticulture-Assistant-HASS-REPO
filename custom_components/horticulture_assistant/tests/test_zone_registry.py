@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.utils.zone_registry import (
+from ..utils.zone_registry import (
     ZoneConfig,
     add_zone,
     attach_plants,

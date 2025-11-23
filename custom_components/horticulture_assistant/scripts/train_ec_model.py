@@ -14,8 +14,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from custom_components.horticulture_assistant.utils.ec_estimator import \
-    train_ec_model
+from ..utils.ec_estimator import train_ec_model
 
 
 def main(argv: list[str] | None = None) -> None:

@@ -1,4 +1,4 @@
-from plant_engine.environment_tips import get_environment_tips, list_supported_plants
+from ..engine.plant_engine.environment_tips import get_environment_tips, list_supported_plants
 
 
 def test_environment_tips_basic():

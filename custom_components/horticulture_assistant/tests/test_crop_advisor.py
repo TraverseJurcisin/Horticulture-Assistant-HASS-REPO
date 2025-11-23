@@ -1,4 +1,4 @@
-from plant_engine.crop_advisor import CropAdvice, generate_crop_advice
+from ..engine.plant_engine.crop_advisor import CropAdvice, generate_crop_advice
 
 
 def test_generate_crop_advice():

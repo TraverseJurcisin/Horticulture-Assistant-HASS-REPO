@@ -17,10 +17,9 @@ try:
 except ImportError:
     HomeAssistant = None  # if Home Assistant not available, ignore for standalone use
 
-from plant_engine.utils import get_pending_dir
-
 from ..utils.json_io import load_json, save_json
 from ..utils.path_utils import data_path, plants_path
+from .plant_engine.utils import get_pending_dir
 
 _LOGGER = logging.getLogger(__name__)
 

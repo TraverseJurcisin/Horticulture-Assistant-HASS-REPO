@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from plant_engine.fertigation import recommend_fertigation_schedule as _recommend
+from ..engine.plant_engine.fertigation import recommend_fertigation_schedule as _recommend
 
 __all__ = ["recommend_fertigation_schedule"]
 

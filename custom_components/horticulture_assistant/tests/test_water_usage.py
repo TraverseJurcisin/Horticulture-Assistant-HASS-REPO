@@ -1,5 +1,6 @@
 import pytest
-from plant_engine import water_usage
+
+from ..engine.plant_engine import water_usage
 
 
 def test_get_daily_use():
@@ -32,7 +33,7 @@ def test_estimate_area_use():
 def test_estimate_daily_plant_cost():
     per = water_usage.get_daily_use("lettuce", "vegetative")
     expected = per * 10 / 1000
-    from plant_engine.water_costs import estimate_water_cost
+    from ..engine.plant_engine.water_costs import estimate_water_cost
 
     cost = water_usage.estimate_daily_plant_cost(
         "lettuce",

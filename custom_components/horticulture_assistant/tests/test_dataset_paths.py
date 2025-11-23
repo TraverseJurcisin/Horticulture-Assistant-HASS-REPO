@@ -1,6 +1,6 @@
 import importlib
 
-import plant_engine.utils as utils
+from ..engine.plant_engine import utils as utils
 
 
 def test_dataset_paths_env(monkeypatch, tmp_path):

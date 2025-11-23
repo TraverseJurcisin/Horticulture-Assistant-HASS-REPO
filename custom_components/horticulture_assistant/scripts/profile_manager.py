@@ -11,9 +11,8 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from custom_components.horticulture_assistant.utils import \
-    bio_profile_loader as loader
-from custom_components.horticulture_assistant.utils.json_io import load_json
+from ..utils import bio_profile_loader as loader
+from ..utils.json_io import load_json
 
 DEFAULT_PLANTS_DIR = ROOT / "plants"
 DEFAULT_GLOBAL_DIR = ROOT / "data" / "global_profiles"

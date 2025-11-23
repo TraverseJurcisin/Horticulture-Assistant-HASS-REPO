@@ -1,6 +1,6 @@
 import importlib
 
-from plant_engine import profit_estimator, utils, yield_manager
+from ..engine.plant_engine import profit_estimator, utils, yield_manager
 
 
 def test_get_crop_price():

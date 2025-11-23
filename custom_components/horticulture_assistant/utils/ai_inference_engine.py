@@ -122,7 +122,7 @@ class AIInferenceEngine:
         if not env:
             return
         try:
-            from plant_engine.environment_manager import evaluate_cold_stress, evaluate_heat_stress
+            from ..engine.plant_engine.environment_manager import evaluate_cold_stress, evaluate_heat_stress
         except Exception:
             return
 
@@ -147,7 +147,7 @@ class AIInferenceEngine:
         if not env or not plant_type:
             return
         try:
-            from plant_engine.environment_manager import compare_environment, get_environmental_targets
+            from ..engine.plant_engine.environment_manager import compare_environment, get_environmental_targets
         except Exception:  # pragma: no cover - optional dependency
             return
 
@@ -175,7 +175,7 @@ class AIInferenceEngine:
         if not env or not plant_type:
             return
         try:
-            from plant_engine.pest_monitor import estimate_adjusted_pest_risk
+            from ..engine.plant_engine.pest_monitor import estimate_adjusted_pest_risk
         except Exception:  # pragma: no cover - optional dependency
             return
 
@@ -201,7 +201,7 @@ class AIInferenceEngine:
         if not current or not plant_type or not stage:
             return
         try:
-            from plant_engine.nutrient_manager import calculate_deficiencies
+            from ..engine.plant_engine.nutrient_manager import calculate_deficiencies
         except Exception:  # pragma: no cover - optional dependency
             return
 

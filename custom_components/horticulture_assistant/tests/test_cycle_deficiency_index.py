@@ -1,5 +1,6 @@
 import pytest
-from plant_engine.nutrient_manager import calculate_cycle_deficiency_index
+
+from ..engine.plant_engine.nutrient_manager import calculate_cycle_deficiency_index
 
 
 def test_calculate_cycle_deficiency_index():

@@ -187,7 +187,7 @@ class DoseCalculator:
 
         # Import lazily so the calculator can be used without the full plant
         # engine installed.
-        from plant_engine.fertigation import get_fertilizer_purity
+        from ..engine.plant_engine.fertigation import get_fertilizer_purity
 
         purity = get_fertilizer_purity(product).get(nutrient)
         if purity is None or purity <= 0:

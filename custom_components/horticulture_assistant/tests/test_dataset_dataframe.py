@@ -1,7 +1,7 @@
 import importlib
 import json
 
-import plant_engine.utils as utils
+from ..engine.plant_engine import utils as utils
 
 
 def test_load_dataset_df_dict(tmp_path, monkeypatch):

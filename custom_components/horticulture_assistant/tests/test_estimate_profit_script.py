@@ -26,7 +26,7 @@ def test_expected_profit_cli(tmp_path, monkeypatch):
 
 
 def test_actual_profit_cli(tmp_path):
-    from plant_engine import yield_manager
+    from ..engine.plant_engine import yield_manager
 
     yield_manager.YIELD_DIR = str(tmp_path)
     yield_manager.record_harvest("profitplant", grams=1000)

@@ -1,4 +1,4 @@
-from plant_engine.pest_manager import (
+from ..engine.plant_engine.pest_manager import (
     build_pest_management_plan,
     get_beneficial_insects,
     get_ipm_guidelines,
@@ -43,14 +43,14 @@ def test_recommend_beneficials():
 
 
 def test_get_beneficial_release_rate():
-    from plant_engine.pest_manager import get_beneficial_release_rate
+    from ..engine.plant_engine.pest_manager import get_beneficial_release_rate
 
     assert get_beneficial_release_rate("ladybugs") == 5.0
     assert get_beneficial_release_rate("unknown") is None
 
 
 def test_recommend_release_rates():
-    from plant_engine.pest_manager import recommend_release_rates
+    from ..engine.plant_engine.pest_manager import recommend_release_rates
 
     rates = recommend_release_rates(["aphids"])
     assert rates["aphids"]["ladybugs"] == 5.0
@@ -68,14 +68,14 @@ def test_list_supported_pests():
 
 
 def test_get_scientific_name():
-    from plant_engine.pest_manager import get_scientific_name
+    from ..engine.plant_engine.pest_manager import get_scientific_name
 
     assert get_scientific_name("aphids") == "Aphidoidea"
     assert get_scientific_name("unknown") is None
 
 
 def test_get_common_name():
-    from plant_engine.pest_manager import get_common_name
+    from ..engine.plant_engine.pest_manager import get_common_name
 
     assert get_common_name("Aphidoidea") == "aphids"
     assert get_common_name("Unknown") is None
@@ -114,14 +114,14 @@ def test_build_pest_management_plan():
 
 
 def test_get_pest_resistance():
-    from plant_engine.pest_manager import get_pest_resistance
+    from ..engine.plant_engine.pest_manager import get_pest_resistance
 
     assert get_pest_resistance("citrus", "aphids") == 3.0
     assert get_pest_resistance("citrus", "unknown") is None
 
 
 def test_get_organic_controls():
-    from plant_engine.pest_manager import get_organic_controls, recommend_organic_controls
+    from ..engine.plant_engine.pest_manager import get_organic_controls, recommend_organic_controls
 
     controls = get_organic_controls("aphids")
     assert "neem oil" in controls
@@ -145,7 +145,7 @@ def test_build_pest_management_plan_includes_scientific_name():
 
 
 def test_get_pest_lifecycle():
-    from plant_engine.pest_manager import get_pest_lifecycle
+    from ..engine.plant_engine.pest_manager import get_pest_lifecycle
 
     data = get_pest_lifecycle("aphids")
     assert data["egg"] == 3
@@ -159,7 +159,7 @@ def test_build_pest_management_plan_includes_lifecycle():
 
 
 def test_get_monitoring_interval():
-    from plant_engine.pest_manager import get_monitoring_interval
+    from ..engine.plant_engine.pest_manager import get_monitoring_interval
 
     assert get_monitoring_interval("citrus", "vegetative") == 5
     # Unknown stage falls back to the optimal value
@@ -167,7 +167,7 @@ def test_get_monitoring_interval():
 
 
 def test_get_pest_threshold():
-    from plant_engine.pest_manager import get_pest_threshold
+    from ..engine.plant_engine.pest_manager import get_pest_threshold
 
     assert get_pest_threshold("tomato", "aphids", "vegetative") == 10
     assert get_pest_threshold("citrus", "aphids") == 5
@@ -175,13 +175,13 @@ def test_get_pest_threshold():
 
 
 def test_recommend_monitoring_interval():
-    from plant_engine.pest_manager import recommend_monitoring_interval
+    from ..engine.plant_engine.pest_manager import recommend_monitoring_interval
 
     assert recommend_monitoring_interval("citrus", "fruiting", "high") == 2
 
 
 def test_build_monitoring_plan():
-    from plant_engine.pest_manager import build_monitoring_plan
+    from ..engine.plant_engine.pest_manager import build_monitoring_plan
 
     plan = build_monitoring_plan("citrus", ["aphids"], "fruiting", "moderate")
     assert plan["interval_days"] == 2
@@ -192,7 +192,7 @@ def test_build_monitoring_plan():
 def test_plan_beneficial_releases():
     from datetime import date, timedelta
 
-    from plant_engine.pest_manager import get_beneficial_effective_days, plan_beneficial_releases
+    from ..engine.plant_engine.pest_manager import get_beneficial_effective_days, plan_beneficial_releases
 
     start = date(2024, 1, 1)
     schedule = plan_beneficial_releases(["aphids"], start, cycles=2)
@@ -205,7 +205,7 @@ def test_plan_beneficial_releases():
 
 
 def test_pest_severity_tools():
-    from plant_engine.pest_manager import (
+    from ..engine.plant_engine.pest_manager import (
         assess_pest_severity,
         calculate_severity_index,
         classify_pest_severity,

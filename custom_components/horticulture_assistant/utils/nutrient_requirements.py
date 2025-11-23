@@ -10,8 +10,8 @@ from collections.abc import Mapping
 from functools import cache
 
 try:  # pragma: no cover - prefer system plant_engine
-    from plant_engine.root_temperature import get_uptake_factor
-    from plant_engine.utils import load_dataset, normalize_key
+    from ..engine.plant_engine.root_temperature import get_uptake_factor
+    from ..engine.plant_engine.utils import load_dataset, normalize_key
 except ModuleNotFoundError:  # pragma: no cover - fallback to bundled copy
     from ..engine.plant_engine.root_temperature import get_uptake_factor
     from ..engine.plant_engine.utils import load_dataset, normalize_key

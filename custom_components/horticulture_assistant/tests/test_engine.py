@@ -1,6 +1,6 @@
 import json
 
-from plant_engine import engine, growth_model
+from ..engine.plant_engine import engine, growth_model
 
 
 def test_run_daily_cycle_with_rootzone(tmp_path, monkeypatch):
@@ -85,7 +85,7 @@ def test_load_profile_cached(tmp_path, monkeypatch):
 
 
 def test_daily_report_as_dict():
-    from plant_engine.report import DailyReport
+    from ..engine.plant_engine.report import DailyReport
 
     report = DailyReport(
         plant_id="x",

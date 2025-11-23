@@ -1,6 +1,7 @@
 import pytest
-from plant_engine.et_model import get_reference_et0
-from plant_engine.irrigation_manager import estimate_irrigation_from_month
+
+from ..engine.plant_engine.et_model import get_reference_et0
+from ..engine.plant_engine.irrigation_manager import estimate_irrigation_from_month
 
 
 def test_get_reference_et0():

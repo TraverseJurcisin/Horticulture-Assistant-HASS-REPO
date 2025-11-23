@@ -2,7 +2,7 @@ import asyncio
 import json
 from pathlib import Path
 
-from custom_components.horticulture_assistant.__init__ import update_sensors_service
+from ..__init__ import update_sensors_service
 
 
 class DummyConfig:

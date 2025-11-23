@@ -1,7 +1,8 @@
 import pytest
-from plant_engine import deficiency_manager as dm
-from plant_engine import utils
-from plant_engine.deficiency_manager import (
+
+from ..engine.plant_engine import deficiency_manager as dm
+from ..engine.plant_engine import utils
+from ..engine.plant_engine.deficiency_manager import (
     assess_deficiency_severity,
     calculate_deficiency_index,
     diagnose_deficiencies,
@@ -17,13 +18,13 @@ from plant_engine.deficiency_manager import (
     summarize_deficiencies_with_ph_and_synergy,
     summarize_deficiencies_with_synergy,
 )
-from plant_engine.nutrient_manager import get_recommended_levels
+from ..engine.plant_engine.nutrient_manager import get_recommended_levels
 
 
 @pytest.fixture(autouse=True)
 def _reset_cache():
     utils.clear_dataset_cache()
-    from plant_engine import deficiency_manager as dm
+    from ..engine.plant_engine import deficiency_manager as dm
 
     dm._symptoms.cache_clear()
     dm._treatments.cache_clear()

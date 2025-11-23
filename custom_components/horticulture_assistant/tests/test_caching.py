@@ -1,11 +1,11 @@
-from plant_engine.compute_transpiration import lookup_crop_coefficient
-from plant_engine.environment_manager import (
+from ..engine.plant_engine.compute_transpiration import lookup_crop_coefficient
+from ..engine.plant_engine.environment_manager import (
     EnvironmentGuidelines,
     EnvironmentMetrics,
     EnvironmentOptimization,
     get_co2_price,
 )
-from plant_engine.irrigation_manager import (
+from ..engine.plant_engine.irrigation_manager import (
     get_crop_coefficient,
     get_irrigation_zone_modifier,
     get_rain_capture_efficiency,

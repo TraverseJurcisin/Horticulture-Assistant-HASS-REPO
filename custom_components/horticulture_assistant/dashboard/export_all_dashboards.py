@@ -5,7 +5,7 @@ import logging
 import os
 from pathlib import Path
 
-from custom_components.horticulture_assistant.dashboard import grafana_exporter
+from . import grafana_exporter
 
 _LOGGER = logging.getLogger(__name__)
 

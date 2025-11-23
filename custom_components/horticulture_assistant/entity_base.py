@@ -166,7 +166,7 @@ class ProfileContextEntityMixin:
         self.hass = hass
         self._entry = entry
         self._context = context
-        self._context_id = context.id
+        self._context_id = context.profile_id
         self._context_available = True
         self._context_remove = None
 

@@ -23,8 +23,8 @@ def test_run_daily_cycle_remaining_yield(tmp_path, monkeypatch):
     (yield_dir / "p.json").write_text(json.dumps({"harvests": [{"date": "2024-01-01", "yield_grams": 300}]}))
 
     monkeypatch.setenv("HORTICULTURE_YIELD_DIR", str(yield_dir))
-    import plant_engine.yield_manager as ym
-    import plant_engine.yield_prediction as yp
+    from ..engine.plant_engine import yield_manager as ym
+    from ..engine.plant_engine import yield_prediction as yp
 
     importlib.reload(ym)
     importlib.reload(yp)
@@ -33,6 +33,6 @@ def test_run_daily_cycle_remaining_yield(tmp_path, monkeypatch):
 
     assert report["remaining_yield_g"] == 3200.0
     # Reset cached datasets for subsequent tests
-    import plant_engine.utils as utils
+    from ..engine.plant_engine import utils as utils
 
     importlib.reload(utils)

@@ -1,6 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.utils import bio_profile_loader as loader
+from ..utils import bio_profile_loader as loader
 
 
 def test_load_profile_from_json(tmp_path):

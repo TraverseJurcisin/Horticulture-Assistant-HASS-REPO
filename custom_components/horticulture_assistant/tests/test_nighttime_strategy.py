@@ -1,4 +1,8 @@
-from plant_engine.nighttime_strategy import get_nighttime_strategy, list_supported_plants, recommend_nighttime_actions
+from ..engine.plant_engine.nighttime_strategy import (
+    get_nighttime_strategy,
+    list_supported_plants,
+    recommend_nighttime_actions,
+)
 
 
 def test_list_supported_plants_contains_known():

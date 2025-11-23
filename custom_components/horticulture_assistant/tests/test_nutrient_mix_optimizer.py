@@ -1,6 +1,6 @@
 import pytest
 
-from custom_components.horticulture_assistant.utils.nutrient_mix_optimizer import optimize_mix
+from ..utils.nutrient_mix_optimizer import optimize_mix
 
 
 def test_optimize_mix_basic():

@@ -16,7 +16,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.integrated_monitor import \
+from ..engine.plant_engine.integrated_monitor import \
     generate_integrated_monitoring_schedule
 
 

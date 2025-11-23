@@ -1,4 +1,4 @@
-import plant_engine.media_manager as media
+from ..engine.plant_engine import media_manager as media
 
 
 def test_list_supported_media():

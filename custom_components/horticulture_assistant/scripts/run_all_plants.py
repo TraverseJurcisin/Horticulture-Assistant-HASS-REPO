@@ -1,8 +1,8 @@
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from plant_engine import run_daily_cycle
-from plant_engine.utils import save_json
+from ..engine.plant_engine import run_daily_cycle
+from ..engine.plant_engine.utils import save_json
 
 PLANT_DIR = "plants"
 SUMMARY_PATH = "data/reports/summary.json"

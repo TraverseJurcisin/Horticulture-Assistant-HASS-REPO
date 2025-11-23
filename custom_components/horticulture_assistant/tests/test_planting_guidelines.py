@@ -1,4 +1,4 @@
-from plant_engine import planting_guidelines as pg
+from ..engine.plant_engine import planting_guidelines as pg
 
 
 def test_get_planting_depth():

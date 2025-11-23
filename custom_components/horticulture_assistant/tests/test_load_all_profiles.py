@@ -1,7 +1,7 @@
 import json
 import os
 
-from custom_components.horticulture_assistant.utils.load_all_profiles import ProfileLoadResult, load_all_profiles
+from ..utils.load_all_profiles import ProfileLoadResult, load_all_profiles
 
 
 def _make_profile(base: str, pid: str, extra: dict | None = None) -> None:

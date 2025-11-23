@@ -1,9 +1,8 @@
 import logging
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
-
 from ..utils.json_io import load_json
+from ..utils.path_utils import data_path, plants_path
 
 _LOGGER = logging.getLogger(__name__)
 

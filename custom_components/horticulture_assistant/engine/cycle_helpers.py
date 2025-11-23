@@ -8,8 +8,8 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from statistics import mean
 
-from plant_engine.nutrient_uptake import get_daily_uptake
-from plant_engine.rootzone_model import estimate_water_capacity
+from .plant_engine.nutrient_uptake import get_daily_uptake
+from .plant_engine.rootzone_model import estimate_water_capacity
 
 # Default depth used when profiles omit ``max_root_depth_cm``.
 DEFAULT_ROOT_DEPTH_CM = 30.0

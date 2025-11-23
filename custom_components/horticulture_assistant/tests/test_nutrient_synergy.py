@@ -1,4 +1,4 @@
-from plant_engine.nutrient_synergy import (
+from ..engine.plant_engine.nutrient_synergy import (
     apply_synergy_adjustments,
     apply_synergy_adjustments_verbose,
     get_synergy_factor,

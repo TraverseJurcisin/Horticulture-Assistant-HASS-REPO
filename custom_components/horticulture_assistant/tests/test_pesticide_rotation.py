@@ -1,4 +1,4 @@
-from plant_engine.pesticide_manager import recommend_rotation_products
+from ..engine.plant_engine.pesticide_manager import recommend_rotation_products
 
 
 def test_rotation_for_known_pest():

@@ -1,4 +1,4 @@
-from plant_engine.solution_guidelines import evaluate_solution, get_solution_guidelines, list_supported_plants
+from ..engine.plant_engine.solution_guidelines import evaluate_solution, get_solution_guidelines, list_supported_plants
 
 
 def test_list_supported_plants():

@@ -28,15 +28,15 @@ async def async_setup_entry(
 
     def _build_context_switches(context: ProfileContext) -> list[SwitchEntity]:
         return [
-            IrrigationSwitch(hass, entry.entry_id, context.name, context.id),
-            FertigationSwitch(hass, entry.entry_id, context.name, context.id),
+            IrrigationSwitch(hass, entry.entry_id, context.name, context.profile_id),
+            FertigationSwitch(hass, entry.entry_id, context.name, context.profile_id),
         ]
 
     known_profiles: set[str] = set()
     entities: list[SwitchEntity] = []
     for context in collection.values():
         entities.extend(_build_context_switches(context))
-        known_profiles.add(context.id)
+        known_profiles.add(context.profile_id)
 
     async_add_entities(entities, True)
 

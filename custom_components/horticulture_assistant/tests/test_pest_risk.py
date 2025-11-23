@@ -1,4 +1,4 @@
-from plant_engine import pest_monitor
+from ..engine.plant_engine import pest_monitor
 
 
 def test_estimate_pest_risk_high():

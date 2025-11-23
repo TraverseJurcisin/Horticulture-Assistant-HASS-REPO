@@ -4,8 +4,7 @@ import logging
 from datetime import datetime
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.path_utils import plants_path
-
+from ..utils.path_utils import plants_path
 from .helpers import append_json_log, iter_profiles, latest_env
 
 # Global override: disable automation if False
@@ -161,7 +160,7 @@ def run_fertilizer_cycle(base_path: str | None = None) -> None:
                 reason_str = f"{thresh_name_str} below threshold"
                 # Trigger the fertilizer actuator for this plant
                 try:
-                    from custom_components.horticulture_assistant.automation import fertilizer_actuator
+                    from . import fertilizer_actuator
 
                     fertilizer_actuator.trigger_fertilizer_actuator(
                         plant_id=plant_id, trigger=True, base_path=base_path

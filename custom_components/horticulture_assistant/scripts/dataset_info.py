@@ -14,7 +14,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.datasets import (get_dataset_description, list_dataset_info,
+from ..engine.plant_engine.datasets import (get_dataset_description, list_dataset_info,
                                    list_dataset_info_by_category,
                                    list_datasets, list_datasets_by_category,
                                    search_datasets)

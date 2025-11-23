@@ -1,4 +1,4 @@
-from plant_engine.light_spectrum import get_red_blue_ratio, get_spectrum, list_supported_plants
+from ..engine.plant_engine.light_spectrum import get_red_blue_ratio, get_spectrum, list_supported_plants
 
 
 def test_list_supported_plants():

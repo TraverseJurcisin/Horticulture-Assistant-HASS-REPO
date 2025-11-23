@@ -10,7 +10,7 @@ ha.core.HomeAssistant = object
 sys.modules.setdefault("homeassistant", ha)
 sys.modules.setdefault("homeassistant.core", ha.core)
 
-from custom_components.horticulture_assistant.utils import threshold_approval_manager as tam  # noqa: E402
+from ..utils import threshold_approval_manager as tam  # noqa: E402
 
 
 class DummyConfig:

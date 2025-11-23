@@ -21,10 +21,9 @@ try:
 except Exception:  # pragma: no cover - Home Assistant not installed in tests
     HomeAssistant = None  # type: ignore
 
-from plant_engine import ec_manager
-from plant_engine.fertigation import estimate_solution_ec
-from plant_engine.utils import load_dataset
-
+from ..engine.plant_engine import ec_manager
+from ..engine.plant_engine.fertigation import estimate_solution_ec
+from ..engine.plant_engine.utils import load_dataset
 from .bio_profile_loader import load_profile_by_id
 from .json_io import load_json, save_json
 from .path_utils import data_path, plants_path

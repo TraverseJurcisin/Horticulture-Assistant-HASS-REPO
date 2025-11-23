@@ -14,7 +14,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.fertigation import generate_fertigation_plan
+from ..engine.plant_engine.fertigation import generate_fertigation_plan
 
 
 def main(argv: list[str] | None = None) -> None:

@@ -1,8 +1,8 @@
 import importlib
 import json
 
-import plant_engine.constants as const
-import plant_engine.utils as utils
+from ..engine.plant_engine import constants as const
+from ..engine.plant_engine import utils as utils
 
 
 def test_default_environment_loaded(tmp_path, monkeypatch):

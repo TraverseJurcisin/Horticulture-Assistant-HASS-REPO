@@ -1,6 +1,6 @@
 from datetime import date
 
-from plant_engine.monitor_utils import calculate_risk_score, generate_schedule, get_interval, next_date
+from ..engine.plant_engine.monitor_utils import calculate_risk_score, generate_schedule, get_interval, next_date
 
 DATA = {"citrus": {"fruiting": 4, "optimal": 5}, "tomato": {"seedling": 2}}
 

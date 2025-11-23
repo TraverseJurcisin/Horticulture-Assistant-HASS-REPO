@@ -7,7 +7,7 @@ import os
 from datetime import date, datetime
 from typing import Optional
 
-from custom_components.horticulture_assistant.utils.path_utils import data_path
+from .path_utils import data_path
 
 try:
     from homeassistant.core import HomeAssistant
@@ -109,7 +109,7 @@ class YieldTracker:
         # Fire an event to update sensors, if HomeAssistant is available
         if self._hass:
             try:
-                from custom_components.horticulture_assistant.const import EVENT_YIELD_UPDATE
+                from ..const import EVENT_YIELD_UPDATE
 
                 total = self.get_total_yield(plant_id)
                 self._hass.bus.fire(EVENT_YIELD_UPDATE, {"plant_id": plant_id, "yield": total})

@@ -1,6 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.utils.nutrient_use_efficiency import NutrientUseEfficiency
+from ..utils.nutrient_use_efficiency import NutrientUseEfficiency
 
 
 def test_average_weekly_usage(tmp_path, monkeypatch):

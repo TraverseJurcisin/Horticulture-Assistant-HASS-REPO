@@ -1,4 +1,4 @@
-from plant_engine import fertigation_optimizer
+from ..engine.plant_engine import fertigation_optimizer
 
 
 def test_generate_fertigation_plan_basic(monkeypatch):

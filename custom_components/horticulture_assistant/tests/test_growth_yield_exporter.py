@@ -1,6 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.analytics import growth_yield_exporter as gy
+from ..analytics import growth_yield_exporter as gy
 
 
 def test_export_growth_yield(tmp_path, monkeypatch):

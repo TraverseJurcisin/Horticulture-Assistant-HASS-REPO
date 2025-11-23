@@ -1,4 +1,4 @@
-from plant_engine.canopy import estimate_canopy_area, get_canopy_area
+from ..engine.plant_engine.canopy import estimate_canopy_area, get_canopy_area
 
 
 def test_get_canopy_area_known():

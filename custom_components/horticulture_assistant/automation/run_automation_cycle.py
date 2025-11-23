@@ -13,8 +13,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.path_utils import plants_path
-
+from ..utils.path_utils import plants_path
 from .helpers import append_json_log, iter_profiles, latest_env
 
 # Global override: disable automation if False
@@ -120,7 +119,7 @@ def run_automation_cycle(base_path: str | None = None) -> None:
                 info.threshold,
             )
             try:
-                import custom_components.horticulture_assistant.automation.irrigation_actuator as irrigation_actuator
+                from . import irrigation_actuator
 
                 irrigation_actuator.trigger_irrigation_actuator(
                     plant_id=plant_id,

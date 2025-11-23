@@ -1,4 +1,4 @@
-from plant_engine.datasets import list_dataset_info
+from ..engine.plant_engine.datasets import list_dataset_info
 
 
 def test_list_dataset_info_contains_descriptions():

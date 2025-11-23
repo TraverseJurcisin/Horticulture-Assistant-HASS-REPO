@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from custom_components.horticulture_assistant.utils.cost_analyzer import CostAnalyzer, ProductPriceEntry
+from ..utils.cost_analyzer import CostAnalyzer, ProductPriceEntry
 
 
 def test_cost_analyzer_basic():

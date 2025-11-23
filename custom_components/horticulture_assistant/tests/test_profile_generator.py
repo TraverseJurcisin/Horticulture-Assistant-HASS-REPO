@@ -1,6 +1,6 @@
 import types
 
-from custom_components.horticulture_assistant.utils import profile_generator, profile_upload_cache
+from ..utils import profile_generator, profile_upload_cache
 
 
 def _make_hass(tmp_path):

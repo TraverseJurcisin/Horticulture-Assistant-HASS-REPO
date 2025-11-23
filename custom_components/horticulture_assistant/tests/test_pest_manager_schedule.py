@@ -1,6 +1,6 @@
 from datetime import date
 
-from plant_engine.pest_manager import generate_cycle_monitoring_schedule
+from ..engine.plant_engine.pest_manager import generate_cycle_monitoring_schedule
 
 
 def test_generate_cycle_monitoring_schedule():

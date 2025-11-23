@@ -1,7 +1,7 @@
 import importlib
 import json
 
-from plant_engine import constants
+from ..engine.plant_engine import constants
 
 
 def test_get_stage_multiplier_default():

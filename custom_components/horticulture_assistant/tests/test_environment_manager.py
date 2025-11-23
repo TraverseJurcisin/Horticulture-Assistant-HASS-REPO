@@ -2,7 +2,8 @@ import datetime
 import math
 
 import pytest
-from plant_engine.environment_manager import (
+
+from ..engine.plant_engine.environment_manager import (
     _check_range,
     actual_vapor_pressure,
     average_environment_readings,
@@ -163,7 +164,7 @@ def test_suggest_environment_setpoints():
 
 
 def test_suggest_environment_setpoints_advanced_vpd_fallback(monkeypatch):
-    import plant_engine.environment_manager as em
+    from ..engine.plant_engine import environment_manager as em
 
     monkeypatch.setattr(
         em,
@@ -778,7 +779,7 @@ def test_calculate_environment_variance_no_numpy(monkeypatch):
         {"temperature": 22, "humidity": 72},
         {"temp_c": 21, "humidity_pct": 74},
     ]
-    from plant_engine import environment_manager as em
+    from ..engine.plant_engine import environment_manager as em
 
     monkeypatch.setattr(em, "_np", None)
     var = em.calculate_environment_variance(series)
@@ -877,7 +878,7 @@ def test_evaluate_humidity_stress():
 
 
 def test_humidity_actions():
-    from plant_engine import environment_manager as em
+    from ..engine.plant_engine import environment_manager as em
 
     assert em.get_humidity_action("low").startswith("Increase")
     assert em.get_humidity_action("HIGH").startswith("Ventilate")
@@ -886,7 +887,7 @@ def test_humidity_actions():
 
 
 def test_temperature_actions():
-    from plant_engine import environment_manager as em
+    from ..engine.plant_engine import environment_manager as em
 
     assert em.get_temperature_action("cold").startswith("Increase")
     assert em.get_temperature_action("HOT").startswith("Provide")
@@ -896,7 +897,7 @@ def test_temperature_actions():
 
 
 def test_wind_actions():
-    from plant_engine import environment_manager as em
+    from ..engine.plant_engine import environment_manager as em
 
     assert em.get_wind_action("HIGH").startswith("Install")
     assert em.recommend_wind_action(20, "citrus").startswith("Install")
@@ -904,7 +905,7 @@ def test_wind_actions():
 
 
 def test_environment_strategies():
-    from plant_engine import environment_manager as em
+    from ..engine.plant_engine import environment_manager as em
 
     assert "ventilation" in em.get_environment_strategy("temperature", "high")
     status = {"temperature": "high", "humidity": "low"}
@@ -1181,7 +1182,7 @@ def test_score_environment_dataframe():
 
 
 def test_add_environment_alias():
-    from plant_engine import environment_manager as em
+    from ..engine.plant_engine import environment_manager as em
 
     em.add_environment_alias("temp_c", "air_temp")
     try:

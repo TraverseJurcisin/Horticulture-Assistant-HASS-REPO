@@ -5,10 +5,9 @@ import logging
 import os
 from datetime import datetime
 
-# Reuse the central evapotranspiration formulas from plant_engine
-from plant_engine.et_model import calculate_et0, calculate_eta
-
-from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
+# Reuse the central evapotranspiration formulas from ..engine.plant_engine
+from ..engine.plant_engine.et_model import calculate_et0, calculate_eta
+from .path_utils import data_path, plants_path
 
 try:
     from homeassistant.core import HomeAssistant
@@ -50,7 +49,7 @@ def update_growth_index(
     # Load plant profile to get current stage and any relevant parameters
     profile = {}
     try:
-        from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile
+        from .bio_profile_loader import load_profile
 
         base_dir = plants_path(hass)
         profile = load_profile(plant_id=plant_id, base_dir=base_dir)

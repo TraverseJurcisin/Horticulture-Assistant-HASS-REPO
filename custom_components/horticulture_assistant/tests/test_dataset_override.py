@@ -1,7 +1,7 @@
 import importlib
 import json
 
-import plant_engine.utils as utils
+from ..engine.plant_engine import utils as utils
 
 
 def test_dataset_env_override(tmp_path, monkeypatch):

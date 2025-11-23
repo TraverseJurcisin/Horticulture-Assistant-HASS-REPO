@@ -1,7 +1,7 @@
 import importlib
 import json
 
-import plant_engine.utils as utils
+from ..engine.plant_engine import utils as utils
 
 
 def test_dataset_file_resolves_paths(tmp_path, monkeypatch):

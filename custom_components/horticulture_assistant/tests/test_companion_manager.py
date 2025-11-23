@@ -1,4 +1,4 @@
-from plant_engine.companion_manager import (
+from ..engine.plant_engine.companion_manager import (
     get_companion_info,
     list_supported_plants,
     recommend_antagonists,

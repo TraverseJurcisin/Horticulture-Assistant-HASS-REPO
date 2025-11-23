@@ -3,10 +3,9 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from statistics import mean
 
-from custom_components.horticulture_assistant.utils.load_bio_profile import load_bio_profile
-from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
-
 from ..utils.json_io import load_json, save_json
+from ..utils.load_bio_profile import load_bio_profile
+from ..utils.path_utils import data_path, plants_path
 
 _LOGGER = logging.getLogger(__name__)
 

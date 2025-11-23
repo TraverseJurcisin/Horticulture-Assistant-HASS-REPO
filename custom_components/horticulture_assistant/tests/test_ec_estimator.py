@@ -1,6 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.utils import ec_estimator
+from ..utils import ec_estimator
 
 
 def test_train_and_estimate(tmp_path):

@@ -6,8 +6,8 @@ from dataclasses import asdict, dataclass
 from fnmatch import fnmatch
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils.load_bio_profile import load_bio_profile
-from custom_components.horticulture_assistant.utils.validate_profile_structure import validate_profile_structure
+from .load_bio_profile import load_bio_profile
+from .validate_profile_structure import validate_profile_structure
 
 _LOGGER = logging.getLogger(__name__)
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from custom_components.horticulture_assistant.utils import global_config
+from ..utils import global_config
 
 
 class DummyConfig:

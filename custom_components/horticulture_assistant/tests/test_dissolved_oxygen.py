@@ -1,4 +1,4 @@
-from plant_engine.dissolved_oxygen import (
+from ..engine.plant_engine.dissolved_oxygen import (
     evaluate_dissolved_oxygen,
     get_oxygen_range,
     list_supported_plants,

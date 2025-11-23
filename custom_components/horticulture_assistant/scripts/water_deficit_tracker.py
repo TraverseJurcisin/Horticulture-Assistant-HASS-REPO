@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 
-from plant_engine.water_deficit_tracker import update_water_balance
+from ..engine.plant_engine.water_deficit_tracker import update_water_balance
 
 
 def main() -> None:

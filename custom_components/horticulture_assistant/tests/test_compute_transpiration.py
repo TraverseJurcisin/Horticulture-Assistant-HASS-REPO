@@ -1,5 +1,6 @@
 import pandas as pd
-from plant_engine.compute_transpiration import (
+
+from ..engine.plant_engine.compute_transpiration import (
     TranspirationMetrics,
     compute_transpiration,
     compute_transpiration_dataframe,
@@ -81,7 +82,7 @@ def test_compute_transpiration_auto_canopy():
 
 
 def test_adjust_crop_coefficient():
-    from plant_engine.compute_transpiration import adjust_crop_coefficient
+    from ..engine.plant_engine.compute_transpiration import adjust_crop_coefficient
 
     base_kc = 1.0
     # low humidity should increase kc

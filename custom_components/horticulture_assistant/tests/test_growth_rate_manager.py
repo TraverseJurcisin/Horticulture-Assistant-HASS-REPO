@@ -1,4 +1,4 @@
-from plant_engine.growth_rate_manager import estimate_growth, get_daily_growth_rate, list_supported_plants
+from ..engine.plant_engine.growth_rate_manager import estimate_growth, get_daily_growth_rate, list_supported_plants
 
 
 def test_list_supported_plants():

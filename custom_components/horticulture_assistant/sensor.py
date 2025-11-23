@@ -136,12 +136,12 @@ class PlantStatusSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Senso
             self,
             entry.entry_id,
             context.name,
-            context.id,
+            context.profile_id,
             model="Plant Profile",
         )
         self._entry_id = entry.entry_id
         self._monitor: ProfileMonitor | None = ProfileMonitor(hass, context)
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_health"
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_health"
         self._attr_icon = "mdi:sprout"
 
     async def async_update(self) -> None:
@@ -188,11 +188,11 @@ class PlantLastSampleSensor(ProfileContextEntityMixin, HorticultureBaseEntity, S
             self,
             entry.entry_id,
             context.name,
-            context.id,
+            context.profile_id,
             model="Plant Profile",
         )
         self._monitor: ProfileMonitor | None = ProfileMonitor(hass, context)
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_last_sample"
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_last_sample"
 
     async def async_update(self) -> None:
         if self._monitor is None:
@@ -437,7 +437,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     contexts = collection.contexts
     primary_context = collection.primary
-    plant_id = primary_context.id
+    plant_id = primary_context.profile_id
     plant_name = primary_context.name
 
     known_metric_keys: dict[str, set[tuple[str, str]]] = defaultdict(set)
@@ -566,11 +566,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         sensors.extend(context_sensors)
         sensors.extend(sensor for sensor, _ in metric_pairs)
         if context_sensors:
-            signatures = known_context_signatures[context.id]
+            signatures = known_context_signatures[context.profile_id]
             signatures.update(_sensor_signature(sensor) for sensor in context_sensors)
         if metric_pairs:
-            known_metric_keys[context.id].update(signature for _, signature in metric_pairs)
-        known_profiles.add(context.id)
+            known_metric_keys[context.profile_id].update(signature for _, signature in metric_pairs)
+        known_profiles.add(context.profile_id)
 
     profile_registry = stored.get("profile_registry")
     profiles_map = _profiles_map()
@@ -893,7 +893,7 @@ class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity
         meta: Mapping[str, Any],
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
-        HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.id, model="Plant Profile")
+        HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id, model="Plant Profile")
         self.hass = hass
         self._entry = entry
         self._category = category
@@ -901,7 +901,7 @@ class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity
         self._meta: Mapping[str, Any] = meta
         self._value = meta.get("value") if isinstance(meta, Mapping) else None
         self._attr_available = self._value is not None
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.id}_{category}_{key}"
+        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_{category}_{key}"
         label = key.replace("_", " ").title()
         prefix_map = {
             "resolved_targets": "Resolved Target",

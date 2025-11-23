@@ -1,5 +1,6 @@
 import pytest
-from plant_engine.utils import load_data
+
+from ..engine.plant_engine.utils import load_data
 
 
 def test_load_yaml(tmp_path):

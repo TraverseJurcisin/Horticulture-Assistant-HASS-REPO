@@ -7,7 +7,7 @@ import re
 from pathlib import Path, PurePath
 from typing import Any
 
-from custom_components.horticulture_assistant.utils.path_utils import plants_path
+from .path_utils import plants_path
 
 try:
     from homeassistant.core import HomeAssistant

@@ -10,11 +10,10 @@ from typing import Any
 
 from homeassistant.core import HomeAssistant
 
-from custom_components.horticulture_assistant.profile.compat import sync_thresholds
-from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
-
+from ..profile.compat import sync_thresholds
 from .json_io import load_json as _strict_load_json
 from .json_io import save_json as _strict_save_json
+from .path_utils import data_path, plants_path
 
 _LOGGER = logging.getLogger(__name__)
 

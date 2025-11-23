@@ -1,4 +1,4 @@
-from plant_engine.environment_manager import (
+from ..engine.plant_engine.environment_manager import (
     get_climate_guidelines,
     get_combined_environment_guidelines,
     get_combined_environmental_targets,

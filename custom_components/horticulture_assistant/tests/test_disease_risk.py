@@ -1,4 +1,4 @@
-from plant_engine import disease_monitor
+from ..engine.plant_engine import disease_monitor
 
 
 def test_estimate_disease_risk_high():

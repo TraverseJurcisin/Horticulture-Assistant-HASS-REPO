@@ -1,4 +1,4 @@
-import plant_engine.silicon_manager as si
+from ..engine.plant_engine import silicon_manager as si
 
 
 def test_silicon_guidelines():

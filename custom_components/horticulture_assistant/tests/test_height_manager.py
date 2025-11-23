@@ -1,4 +1,4 @@
-from plant_engine.height_manager import estimate_height, get_height_range, list_supported_plants
+from ..engine.plant_engine.height_manager import estimate_height, get_height_range, list_supported_plants
 
 
 def test_get_height_range():

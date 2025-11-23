@@ -15,7 +15,7 @@ import os
 from datetime import UTC, datetime, timedelta
 from typing import Optional
 
-from custom_components.horticulture_assistant.utils.path_utils import data_path, plants_path
+from .path_utils import data_path, plants_path
 
 # Attempt to import HomeAssistant for type hints and runtime (if running inside HA)
 try:
@@ -31,7 +31,7 @@ except ImportError:
 
 # Import plant profile loader to retrieve sensor mapping and thresholds
 try:
-    from custom_components.horticulture_assistant.utils.bio_profile_loader import load_profile
+    from .bio_profile_loader import load_profile
 except ImportError:
     load_profile = None
 

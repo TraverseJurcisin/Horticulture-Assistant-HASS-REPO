@@ -15,7 +15,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from plant_engine.growth_stage import growth_stage_summary
+from ..engine.plant_engine.growth_stage import growth_stage_summary
 
 
 def main(argv: list[str] | None = None) -> None:

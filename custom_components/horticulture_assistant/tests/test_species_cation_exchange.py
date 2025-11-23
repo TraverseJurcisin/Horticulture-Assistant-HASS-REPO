@@ -1,4 +1,4 @@
-from custom_components.horticulture_assistant.utils.species_cation_exchange import (
+from ..utils.species_cation_exchange import (
     MediaBuffer,
     apply_species_demand,
     recommend_amendments,

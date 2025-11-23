@@ -1,8 +1,9 @@
 import importlib
 
-import plant_engine.utils as utils
 import pytest
-from plant_engine.utils import (
+
+from ..engine.plant_engine import utils as utils
+from ..engine.plant_engine.utils import (
     clean_float_map,
     clear_dataset_cache,
     load_json,
@@ -102,7 +103,7 @@ def test_load_datasets(monkeypatch, tmp_path):
     clear_dataset_cache()
     import importlib
 
-    import plant_engine.utils as utils
+    from ..engine.plant_engine import utils as utils
 
     importlib.reload(utils)
     data = utils.load_datasets("one.json", "two.json")

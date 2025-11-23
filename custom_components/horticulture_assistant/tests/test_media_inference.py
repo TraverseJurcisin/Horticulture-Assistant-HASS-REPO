@@ -1,6 +1,6 @@
 import os
 
-from custom_components.horticulture_assistant.utils.media_inference import infer_media_type
+from ..utils.media_inference import infer_media_type
 
 
 def test_infer_media_type_basic(tmp_path, monkeypatch):

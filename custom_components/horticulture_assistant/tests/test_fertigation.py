@@ -1,7 +1,8 @@
 from datetime import date
 
 import pytest
-from plant_engine.fertigation import (
+
+from ..engine.plant_engine.fertigation import (
     calculate_mix_nutrients,
     estimate_daily_nutrient_uptake,
     generate_fertigation_plan,
@@ -195,14 +196,14 @@ def test_estimate_daily_nutrient_uptake_invalid():
 
 
 def test_recommend_uptake_fertigation_invalid():
-    from plant_engine.fertigation import recommend_uptake_fertigation
+    from ..engine.plant_engine.fertigation import recommend_uptake_fertigation
 
     with pytest.raises(ValueError):
         recommend_uptake_fertigation("lettuce", "vegetative", num_plants=0)
 
 
 def test_estimate_stage_and_cycle_cost():
-    from plant_engine.fertigation import estimate_cycle_cost, estimate_stage_cost
+    from ..engine.plant_engine.fertigation import estimate_cycle_cost, estimate_stage_cost
 
     stage_cost = estimate_stage_cost(
         "lettuce",
@@ -226,7 +227,7 @@ def test_estimate_stage_and_cycle_cost():
 
 
 def test_recommend_precise_fertigation():
-    from plant_engine.fertigation import recommend_precise_fertigation
+    from ..engine.plant_engine.fertigation import recommend_precise_fertigation
 
     schedule, total, breakdown, warnings, diag = recommend_precise_fertigation(
         "tomato",
@@ -249,7 +250,7 @@ def test_recommend_precise_fertigation():
 
 
 def test_recommend_precise_fertigation_with_injection():
-    from plant_engine.fertigation import recommend_precise_fertigation_with_injection
+    from ..engine.plant_engine.fertigation import recommend_precise_fertigation_with_injection
 
     fert_map = {
         "N": "foxfarm_grow_big",
@@ -274,7 +275,7 @@ def test_recommend_precise_fertigation_with_injection():
 
 
 def test_generate_cycle_fertigation_plan():
-    from plant_engine.fertigation import generate_cycle_fertigation_plan
+    from ..engine.plant_engine.fertigation import generate_cycle_fertigation_plan
 
     plan = generate_cycle_fertigation_plan("lettuce")
     assert set(plan.keys()) == {"seedling", "vegetative", "harvest"}
@@ -286,7 +287,7 @@ def test_generate_cycle_fertigation_plan():
 
 
 def test_estimate_solution_ec():
-    from plant_engine.fertigation import estimate_solution_ec
+    from ..engine.plant_engine.fertigation import estimate_solution_ec
 
     schedule = {"N": 100, "K": 150}
     ec = estimate_solution_ec(schedule)
@@ -294,7 +295,10 @@ def test_estimate_solution_ec():
 
 
 def test_generate_cycle_fertigation_plan_with_cost():
-    from plant_engine.fertigation import generate_cycle_fertigation_plan, generate_cycle_fertigation_plan_with_cost
+    from ..engine.plant_engine.fertigation import (
+        generate_cycle_fertigation_plan,
+        generate_cycle_fertigation_plan_with_cost,
+    )
 
     basic_plan = generate_cycle_fertigation_plan("lettuce")
     plan, cost = generate_cycle_fertigation_plan_with_cost("lettuce")
@@ -304,7 +308,7 @@ def test_generate_cycle_fertigation_plan_with_cost():
 
 
 def test_optimize_fertigation_schedule():
-    from plant_engine.fertigation import optimize_fertigation_schedule
+    from ..engine.plant_engine.fertigation import optimize_fertigation_schedule
 
     schedule, cost = optimize_fertigation_schedule("citrus", "vegetative", volume_l=1.0)
 
@@ -314,7 +318,7 @@ def test_optimize_fertigation_schedule():
 
 
 def test_grams_to_ppm_roundtrip():
-    from plant_engine.fertigation import grams_to_ppm
+    from ..engine.plant_engine.fertigation import grams_to_ppm
 
     schedule = recommend_fertigation_schedule(
         "tomato",
@@ -328,7 +332,7 @@ def test_grams_to_ppm_roundtrip():
 
 
 def test_grams_to_ppm_invalid():
-    from plant_engine.fertigation import grams_to_ppm
+    from ..engine.plant_engine.fertigation import grams_to_ppm
 
     with pytest.raises(ValueError):
         grams_to_ppm(1.0, 0.0, 1.0)
@@ -350,7 +354,7 @@ def test_next_fertigation_date():
 
 
 def test_recommend_stock_solution_injection():
-    from plant_engine.fertigation import recommend_stock_solution_injection
+    from ..engine.plant_engine.fertigation import recommend_stock_solution_injection
 
     targets = {"N": 150, "P": 50, "K": 120}
     result = recommend_stock_solution_injection(targets, 10.0)
@@ -359,7 +363,7 @@ def test_recommend_stock_solution_injection():
 
 
 def test_stock_solution_recipes():
-    from plant_engine.fertigation import apply_stock_solution_recipe, get_stock_solution_recipe
+    from ..engine.plant_engine.fertigation import apply_stock_solution_recipe, get_stock_solution_recipe
 
     recipe = get_stock_solution_recipe("tomato", "vegetative")
     assert recipe == {"stock_a": 2.0, "stock_b": 1.0}
@@ -369,7 +373,7 @@ def test_stock_solution_recipes():
 
 
 def test_check_solubility_limits():
-    from plant_engine.fertigation import check_solubility_limits
+    from ..engine.plant_engine.fertigation import check_solubility_limits
 
     schedule = {
         "foxfarm_grow_big": 400.0,  # 300 g/L limit in dataset
@@ -381,7 +385,7 @@ def test_check_solubility_limits():
 
 
 def test_validate_fertigation_schedule():
-    from plant_engine.fertigation import validate_fertigation_schedule
+    from ..engine.plant_engine.fertigation import validate_fertigation_schedule
 
     schedule = {"foxfarm_grow_big": 300.0}
     diag = validate_fertigation_schedule(schedule, 1.0, "tomato")
@@ -390,8 +394,8 @@ def test_validate_fertigation_schedule():
 
 
 def test_recommend_rootzone_fertigation():
-    from plant_engine.fertigation import recommend_rootzone_fertigation
-    from plant_engine.rootzone_model import RootZone
+    from ..engine.plant_engine.fertigation import recommend_rootzone_fertigation
+    from ..engine.plant_engine.rootzone_model import RootZone
 
     zone = RootZone(
         root_depth_cm=10,
@@ -413,7 +417,7 @@ def test_recommend_rootzone_fertigation():
 
 
 def test_summarize_fertigation_schedule():
-    from plant_engine.fertigation import summarize_fertigation_schedule
+    from ..engine.plant_engine.fertigation import summarize_fertigation_schedule
 
     fert_map = {
         "N": "foxfarm_grow_big",
@@ -428,7 +432,7 @@ def test_summarize_fertigation_schedule():
 
 
 def test_recommend_loss_compensated_mix():
-    from plant_engine.fertigation import recommend_loss_compensated_mix, recommend_nutrient_mix
+    from ..engine.plant_engine.fertigation import recommend_loss_compensated_mix, recommend_nutrient_mix
 
     base = recommend_nutrient_mix("citrus", "vegetative", 1.0)
     adjusted = recommend_loss_compensated_mix("citrus", "vegetative", 1.0)
@@ -439,7 +443,7 @@ def test_recommend_loss_compensated_mix():
 
 
 def test_recommend_recovery_adjusted_schedule():
-    from plant_engine.fertigation import recommend_recovery_adjusted_schedule
+    from ..engine.plant_engine.fertigation import recommend_recovery_adjusted_schedule
 
     schedule = recommend_recovery_adjusted_schedule("tomato", "vegetative", 10.0)
 
@@ -449,7 +453,7 @@ def test_recommend_recovery_adjusted_schedule():
 
 
 def test_apply_loss_factors():
-    from plant_engine.fertigation import apply_loss_factors
+    from ..engine.plant_engine.fertigation import apply_loss_factors
 
     schedule = {"urea": 1.0, "map": 0.5}
     adjusted = apply_loss_factors(schedule, "citrus")
@@ -459,7 +463,7 @@ def test_apply_loss_factors():
 
 
 def test_recommend_loss_adjusted_fertigation():
-    from plant_engine.fertigation import recommend_loss_adjusted_fertigation
+    from ..engine.plant_engine.fertigation import recommend_loss_adjusted_fertigation
 
     fert_map = {
         "N": "foxfarm_grow_big",
@@ -474,7 +478,7 @@ def test_recommend_loss_adjusted_fertigation():
 
 
 def test_estimate_weekly_fertigation_cost():
-    from plant_engine.fertigation import estimate_weekly_fertigation_cost
+    from ..engine.plant_engine.fertigation import estimate_weekly_fertigation_cost
 
     fert_map = {
         "N": "foxfarm_grow_big",
@@ -486,7 +490,7 @@ def test_estimate_weekly_fertigation_cost():
 
 
 def test_cost_optimized_fertigation_injection():
-    from plant_engine.fertigation import recommend_cost_optimized_fertigation_with_injection
+    from ..engine.plant_engine.fertigation import recommend_cost_optimized_fertigation_with_injection
 
     schedule, cost, injection = recommend_cost_optimized_fertigation_with_injection(
         "tomato",
@@ -500,14 +504,14 @@ def test_cost_optimized_fertigation_injection():
 
 
 def test_get_injection_ratio():
-    from plant_engine.fertigation import get_injection_ratio
+    from ..engine.plant_engine.fertigation import get_injection_ratio
 
     assert get_injection_ratio("dosatron_1pct") == 100
     assert get_injection_ratio("unknown") is None
 
 
 def test_calculate_injection_volumes():
-    from plant_engine.fertigation import calculate_injection_volumes
+    from ..engine.plant_engine.fertigation import calculate_injection_volumes
 
     schedule = {"foxfarm_grow_big": 20.0}
     volumes = calculate_injection_volumes(schedule, 10.0, "dosatron_1pct")
@@ -521,14 +525,14 @@ def test_calculate_injection_volumes():
 
 
 def test_get_injector_flow_rate():
-    from plant_engine.fertigation import get_injector_flow_rate
+    from ..engine.plant_engine.fertigation import get_injector_flow_rate
 
     assert get_injector_flow_rate("dosatron_1pct") == 1.0
     assert get_injector_flow_rate("unknown") is None
 
 
 def test_estimate_injection_duration():
-    from plant_engine.fertigation import estimate_injection_duration
+    from ..engine.plant_engine.fertigation import estimate_injection_duration
 
     schedule = {"foxfarm_grow_big": 20.0}
     expected_volume = round(20.0 / (0.96 * 1000) * 1000 / 100, 3)

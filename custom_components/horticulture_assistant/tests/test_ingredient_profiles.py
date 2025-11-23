@@ -1,4 +1,4 @@
-from plant_engine.ingredients import get_ingredient_profile, list_ingredients
+from ..engine.plant_engine.ingredients import get_ingredient_profile, list_ingredients
 
 
 def test_get_ingredient_profile():

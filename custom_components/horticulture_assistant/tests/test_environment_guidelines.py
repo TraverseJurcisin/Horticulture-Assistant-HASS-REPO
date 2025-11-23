@@ -1,4 +1,4 @@
-from plant_engine.environment_manager import get_environment_guidelines, get_environmental_targets
+from ..engine.plant_engine.environment_manager import get_environment_guidelines, get_environmental_targets
 
 
 def test_get_environment_guidelines_dataclass():

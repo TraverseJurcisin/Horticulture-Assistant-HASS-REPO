@@ -1,6 +1,6 @@
 from datetime import date
 
-from plant_engine.disease_monitor import (
+from ..engine.plant_engine.disease_monitor import (
     adjust_risk_with_resistance,
     assess_disease_pressure,
     classify_disease_severity,

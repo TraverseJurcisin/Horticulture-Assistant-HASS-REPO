@@ -1,6 +1,9 @@
 from datetime import date
 
-from plant_engine.integrated_monitor import generate_integrated_monitoring_schedule, summarize_integrated_management
+from ..engine.plant_engine.integrated_monitor import (
+    generate_integrated_monitoring_schedule,
+    summarize_integrated_management,
+)
 
 
 def test_generate_integrated_monitoring_schedule():

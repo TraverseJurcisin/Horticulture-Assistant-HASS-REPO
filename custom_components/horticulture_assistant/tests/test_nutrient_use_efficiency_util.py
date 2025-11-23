@@ -1,6 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.utils.nutrient_use_efficiency import NutrientUseEfficiency
+from ..utils.nutrient_use_efficiency import NutrientUseEfficiency
 
 
 def test_nutrient_efficiency_basic(tmp_path, monkeypatch):
@@ -48,8 +48,8 @@ def test_compare_to_expected(tmp_path, monkeypatch):
     monkeypatch.setenv("HORTICULTURE_DATA_DIR", str(data_dir))
     import importlib
 
-    import plant_engine.growth_stage as gs
-    import plant_engine.nutrient_uptake as nu
+    from ..engine.plant_engine import growth_stage as gs
+    from ..engine.plant_engine import nutrient_uptake as nu
 
     importlib.reload(nu)
     importlib.reload(gs)
@@ -60,7 +60,7 @@ def test_compare_to_expected(tmp_path, monkeypatch):
     assert diff["N"] == 50
     assert diff["P"] == 20
     # restore default datasets for subsequent tests
-    from plant_engine.utils import clear_dataset_cache
+    from ..engine.plant_engine.utils import clear_dataset_cache
 
     monkeypatch.delenv("HORTICULTURE_DATA_DIR", raising=False)
     clear_dataset_cache()

@@ -1,6 +1,6 @@
 import json
 
-from custom_components.horticulture_assistant.utils import ai_feedback_handler
+from ..utils import ai_feedback_handler
 
 
 def test_process_ai_feedback_uses_global_settings(tmp_path, monkeypatch):

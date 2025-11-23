@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from functools import cache
 
-from plant_engine.utils import load_dataset, normalize_key
+from ..engine.plant_engine.utils import load_dataset, normalize_key
 
 DATA_FILE = "stages/stage_light_requirements.json"
 

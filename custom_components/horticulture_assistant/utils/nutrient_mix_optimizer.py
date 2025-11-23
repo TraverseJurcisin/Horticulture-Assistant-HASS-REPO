@@ -6,8 +6,8 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Any
 
-from plant_engine.fertigation import _schedule_from_totals
-from plant_engine.nutrient_manager import get_environment_adjusted_levels
+from ..engine.plant_engine.fertigation import _schedule_from_totals
+from ..engine.plant_engine.nutrient_manager import get_environment_adjusted_levels
 
 
 @dataclass(slots=True)
@@ -97,7 +97,7 @@ def optimize_mix(
     ferts = fertilizers or DEFAULT_FERTILIZERS
     schedule = _schedule_from_totals(totals, num_plants, ferts, purity_overrides)
 
-    from custom_components.horticulture_assistant.fertilizer_formulator import estimate_mix_cost
+    from ..fertilizer_formulator import estimate_mix_cost
 
     cost = estimate_mix_cost(schedule)
     diagnostics = {

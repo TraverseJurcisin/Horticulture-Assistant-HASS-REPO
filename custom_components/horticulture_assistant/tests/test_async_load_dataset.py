@@ -1,6 +1,6 @@
 import asyncio
 
-from plant_engine.utils import async_load_dataset, clear_dataset_cache
+from ..engine.plant_engine.utils import async_load_dataset, clear_dataset_cache
 
 
 def test_async_load_dataset(tmp_path, monkeypatch):

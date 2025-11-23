@@ -1,7 +1,8 @@
 import datetime
 
 import pytest
-from plant_engine.pesticide_manager import (
+
+from ..engine.plant_engine.pesticide_manager import (
     adjust_harvest_date,
     calculate_harvest_window,
     calculate_reentry_window,
@@ -124,7 +125,7 @@ def test_suggest_rotation_plan():
 
 
 def test_get_phytotoxicity_risk():
-    from plant_engine.pesticide_manager import get_phytotoxicity_risk
+    from ..engine.plant_engine.pesticide_manager import get_phytotoxicity_risk
 
     assert get_phytotoxicity_risk("tomato", "copper_sulfate") == "high"
     assert get_phytotoxicity_risk("lettuce", "neem_oil") == "low"
@@ -132,21 +133,21 @@ def test_get_phytotoxicity_risk():
 
 
 def test_is_safe_for_crop():
-    from plant_engine.pesticide_manager import is_safe_for_crop
+    from ..engine.plant_engine.pesticide_manager import is_safe_for_crop
 
     assert not is_safe_for_crop("tomato", "copper_sulfate")
     assert is_safe_for_crop("tomato", "neem_oil")
 
 
 def test_get_application_rate():
-    from plant_engine.pesticide_manager import get_application_rate
+    from ..engine.plant_engine.pesticide_manager import get_application_rate
 
     assert get_application_rate("neem_oil") == 5.0
     assert get_application_rate("unknown") is None
 
 
 def test_calculate_application_amount():
-    from plant_engine.pesticide_manager import calculate_application_amount
+    from ..engine.plant_engine.pesticide_manager import calculate_application_amount
 
     amount = calculate_application_amount("neem_oil", 2.0)
     assert amount == 10.0
@@ -158,7 +159,7 @@ def test_calculate_application_amount():
 
 
 def test_summarize_pesticide_restrictions():
-    from plant_engine.pesticide_manager import (
+    from ..engine.plant_engine.pesticide_manager import (
         earliest_harvest_date,
         earliest_reentry_time,
         summarize_pesticide_restrictions,
@@ -180,7 +181,7 @@ def test_get_pesticide_price_and_cost():
 
 
 def test_active_ingredient_info():
-    from plant_engine.pesticide_manager import get_active_ingredient_info, list_active_ingredients
+    from ..engine.plant_engine.pesticide_manager import get_active_ingredient_info, list_active_ingredients
 
     info = get_active_ingredient_info("spinosad")
     assert info["class"] == "spinosyn"
@@ -191,7 +192,7 @@ def test_active_ingredient_info():
 
 
 def test_pesticide_efficacy_helpers():
-    from plant_engine.pesticide_manager import get_pesticide_efficacy, list_effective_pesticides
+    from ..engine.plant_engine.pesticide_manager import get_pesticide_efficacy, list_effective_pesticides
 
     assert get_pesticide_efficacy("imidacloprid", "aphids") == 5
     assert get_pesticide_efficacy("pyrethrin", "spider mites") == 2
@@ -205,8 +206,8 @@ def test_pesticide_efficacy_helpers():
 def test_estimate_rotation_plan_cost():
     import importlib
 
-    import plant_engine.utils as utils
-    from plant_engine import nutrient_manager as nm
+    from ..engine.plant_engine import nutrient_manager as nm
+    from ..engine.plant_engine import utils as utils
 
     utils.clear_dataset_cache()
     importlib.reload(nm)

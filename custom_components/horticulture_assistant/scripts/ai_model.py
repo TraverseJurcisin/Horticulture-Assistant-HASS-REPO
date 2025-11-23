@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import argparse
 
-from plant_engine.ai_model import analyze
-from plant_engine.utils import load_json
+from ..engine.plant_engine.ai_model import analyze
+from ..engine.plant_engine.utils import load_json
 
 
 def main() -> None:

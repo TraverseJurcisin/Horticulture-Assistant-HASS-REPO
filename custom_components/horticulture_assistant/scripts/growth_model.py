@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import argparse
 
-from plant_engine.growth_model import update_growth_index
-from plant_engine.utils import load_json
+from ..engine.plant_engine.growth_model import update_growth_index
+from ..engine.plant_engine.utils import load_json
 
 
 def main() -> None:

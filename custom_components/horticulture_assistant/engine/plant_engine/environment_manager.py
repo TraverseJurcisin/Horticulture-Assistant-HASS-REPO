@@ -1337,7 +1337,7 @@ def generate_zone_environment_plan(plant_type: str, zone: str) -> dict[str, dict
 def generate_stage_growth_plan(plant_type: str) -> dict[str, dict[str, Any]]:
     """Return environment setpoints, nutrient needs and tasks per stage."""
 
-    from custom_components.horticulture_assistant.utils.stage_nutrient_requirements import \
+    from ...utils.stage_nutrient_requirements import \
         get_stage_requirements
 
     from .stage_tasks import get_stage_tasks

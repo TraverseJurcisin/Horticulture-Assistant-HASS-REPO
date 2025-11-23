@@ -1,4 +1,4 @@
-import plant_engine.water_usage as water_usage
+from ..engine.plant_engine import water_usage as water_usage
 
 
 def test_estimate_stage_water_cost():

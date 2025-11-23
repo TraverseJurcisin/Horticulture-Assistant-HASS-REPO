@@ -14,8 +14,7 @@ from scripts import ensure_repo_root_on_path
 
 ROOT = ensure_repo_root_on_path()
 
-from custom_components.horticulture_assistant.utils.ec_estimator import \
-    log_runoff_ec
+from ..utils.ec_estimator import log_runoff_ec
 
 
 def main(argv: list[str] | None = None) -> None:

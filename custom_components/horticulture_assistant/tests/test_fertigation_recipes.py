@@ -1,5 +1,6 @@
 import pytest
-from plant_engine.fertigation import apply_fertigation_recipe, get_fertigation_recipe
+
+from ..engine.plant_engine.fertigation import apply_fertigation_recipe, get_fertigation_recipe
 
 
 def test_get_fertigation_recipe():

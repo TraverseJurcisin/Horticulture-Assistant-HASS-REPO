@@ -1,4 +1,4 @@
-from plant_engine.health_management import generate_management_plan
+from ..engine.plant_engine.health_management import generate_management_plan
 
 
 def test_generate_management_plan():

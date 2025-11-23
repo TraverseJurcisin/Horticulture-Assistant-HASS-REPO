@@ -1,7 +1,8 @@
 import json
 
 import pytest
-from plant_engine.nutrient_manager import (
+
+from ..engine.plant_engine.nutrient_manager import (
     calculate_all_deficiencies,
     calculate_all_nutrient_balance,
     calculate_all_surplus,
@@ -98,7 +99,7 @@ def test_score_nutrient_levels_weighted(tmp_path, monkeypatch):
     monkeypatch.setenv("HORTICULTURE_OVERLAY_DIR", str(overlay))
     import importlib
 
-    import plant_engine.nutrient_manager as nm
+    from ..engine.plant_engine import nutrient_manager as nm
 
     importlib.reload(nm)
     current = {"N": 80, "P": 30, "K": 60}
@@ -144,7 +145,7 @@ def test_score_nutrient_series():
 
 
 def test_calculate_deficiency_index_series():
-    from plant_engine.nutrient_manager import (
+    from ..engine.plant_engine.nutrient_manager import (
         calculate_deficiency_index,
         calculate_deficiency_index_series,
         get_all_recommended_levels,
@@ -159,7 +160,7 @@ def test_calculate_deficiency_index_series():
 
 
 def test_apply_tag_modifiers():
-    from plant_engine import nutrient_manager as nm
+    from ..engine.plant_engine import nutrient_manager as nm
 
     base = {"N": 100, "K": 100}
     adjusted = nm.apply_tag_modifiers(base, ["high-nitrogen", "potassium-sensitive"])
@@ -171,14 +172,14 @@ def test_apply_tag_modifiers():
 
 
 def test_get_ph_adjusted_levels():
-    from plant_engine.nutrient_manager import get_ph_adjusted_levels
+    from ..engine.plant_engine.nutrient_manager import get_ph_adjusted_levels
 
     adjusted = get_ph_adjusted_levels("tomato", "fruiting", 5.0)
     assert adjusted["P"] > 60  # higher target at low pH
 
 
 def test_get_ph_adjusted_levels_invalid():
-    from plant_engine.nutrient_manager import get_ph_adjusted_levels
+    from ..engine.plant_engine.nutrient_manager import get_ph_adjusted_levels
 
     with pytest.raises(ValueError):
         get_ph_adjusted_levels("tomato", "fruiting", -1)
@@ -188,7 +189,7 @@ def test_get_ph_adjusted_levels_invalid():
 
 
 def test_calculate_deficiencies_with_ph():
-    from plant_engine.nutrient_manager import calculate_deficiencies_with_ph
+    from ..engine.plant_engine.nutrient_manager import calculate_deficiencies_with_ph
 
     current = {"N": 80, "P": 60, "K": 120}
     deficits = calculate_deficiencies_with_ph(current, "tomato", "fruiting", 5.0)
@@ -196,7 +197,7 @@ def test_calculate_deficiencies_with_ph():
 
 
 def test_get_all_ph_adjusted_levels():
-    from plant_engine.nutrient_manager import get_all_ph_adjusted_levels
+    from ..engine.plant_engine.nutrient_manager import get_all_ph_adjusted_levels
 
     adjusted = get_all_ph_adjusted_levels("tomato", "fruiting", 5.0)
     assert "Fe" in adjusted
@@ -204,7 +205,7 @@ def test_get_all_ph_adjusted_levels():
 
 
 def test_calculate_all_deficiencies_with_ph():
-    from plant_engine.nutrient_manager import calculate_all_deficiencies_with_ph
+    from ..engine.plant_engine.nutrient_manager import calculate_all_deficiencies_with_ph
 
     current = {"N": 80, "Fe": 1.0}
     deficits = calculate_all_deficiencies_with_ph(current, "tomato", "fruiting", 5.0)
@@ -223,7 +224,7 @@ def test_calculate_deficiency_index():
 
 
 def test_calculate_nutrient_adjustments():
-    from plant_engine.nutrient_manager import calculate_nutrient_adjustments
+    from ..engine.plant_engine.nutrient_manager import calculate_nutrient_adjustments
 
     current = {"N": 60, "P": 55, "K": 110}
     adj = calculate_nutrient_adjustments(current, "tomato", "fruiting")
@@ -233,7 +234,7 @@ def test_calculate_nutrient_adjustments():
 
 
 def test_get_stage_adjusted_levels():
-    from plant_engine.nutrient_manager import get_stage_adjusted_levels
+    from ..engine.plant_engine.nutrient_manager import get_stage_adjusted_levels
 
     levels = get_stage_adjusted_levels("tomato", "fruiting")
     assert levels["N"] == 88.0
@@ -241,7 +242,7 @@ def test_get_stage_adjusted_levels():
 
 
 def test_get_all_stage_adjusted_levels():
-    from plant_engine.nutrient_manager import get_all_stage_adjusted_levels
+    from ..engine.plant_engine.nutrient_manager import get_all_stage_adjusted_levels
 
     levels = get_all_stage_adjusted_levels("tomato", "fruiting")
     assert levels["Ca"] == 66.0
@@ -249,7 +250,7 @@ def test_get_all_stage_adjusted_levels():
 
 
 def test_get_synergy_adjusted_levels():
-    from plant_engine.nutrient_manager import get_synergy_adjusted_levels
+    from ..engine.plant_engine.nutrient_manager import get_synergy_adjusted_levels
 
     levels = get_synergy_adjusted_levels("tomato", "fruiting")
     assert levels["P"] == 66.0
@@ -257,7 +258,7 @@ def test_get_synergy_adjusted_levels():
 
 
 def test_calculate_all_deficiencies_with_synergy():
-    from plant_engine.nutrient_manager import calculate_all_deficiencies_with_synergy
+    from ..engine.plant_engine.nutrient_manager import calculate_all_deficiencies_with_synergy
 
     current = {
         "N": 80,
@@ -278,7 +279,7 @@ def test_calculate_all_deficiencies_with_synergy():
 
 
 def test_calculate_all_deficiencies_with_ph_and_synergy():
-    from plant_engine.nutrient_manager import calculate_all_deficiencies_with_ph_and_synergy
+    from ..engine.plant_engine.nutrient_manager import calculate_all_deficiencies_with_ph_and_synergy
 
     current = {
         "N": 80,
@@ -295,7 +296,7 @@ def test_calculate_all_deficiencies_with_ph_and_synergy():
 
 
 def test_get_ph_synergy_adjusted_levels():
-    from plant_engine.nutrient_manager import get_ph_synergy_adjusted_levels
+    from ..engine.plant_engine.nutrient_manager import get_ph_synergy_adjusted_levels
 
     levels = get_ph_synergy_adjusted_levels("tomato", "fruiting", 5.0)
     # synergy increases P to 66 then pH adjustment (>90)
@@ -305,7 +306,10 @@ def test_get_ph_synergy_adjusted_levels():
 
 
 def test_calculate_deficiency_index_with_synergy():
-    from plant_engine.nutrient_manager import calculate_deficiency_index_with_synergy, get_synergy_adjusted_levels
+    from ..engine.plant_engine.nutrient_manager import (
+        calculate_deficiency_index_with_synergy,
+        get_synergy_adjusted_levels,
+    )
 
     guidelines = get_synergy_adjusted_levels("tomato", "fruiting")
     current = dict.fromkeys(guidelines, 0)
@@ -317,7 +321,7 @@ def test_calculate_deficiency_index_with_synergy():
 
 
 def test_calculate_deficiency_index_with_ph():
-    from plant_engine.nutrient_manager import calculate_deficiency_index_with_ph, get_all_ph_adjusted_levels
+    from ..engine.plant_engine.nutrient_manager import calculate_deficiency_index_with_ph, get_all_ph_adjusted_levels
 
     guidelines = get_all_ph_adjusted_levels("tomato", "fruiting", 6.0)
     current = dict.fromkeys(guidelines, 0)
@@ -329,7 +333,7 @@ def test_calculate_deficiency_index_with_ph():
 
 
 def test_calculate_deficiency_index_with_ph_and_synergy():
-    from plant_engine.nutrient_manager import (
+    from ..engine.plant_engine.nutrient_manager import (
         calculate_deficiency_index_with_ph_and_synergy,
         get_ph_synergy_adjusted_levels,
     )
@@ -344,7 +348,7 @@ def test_calculate_deficiency_index_with_ph_and_synergy():
 
 
 def test_calculate_deficiency_index_environment_adjusted():
-    from plant_engine.nutrient_manager import (
+    from ..engine.plant_engine.nutrient_manager import (
         calculate_deficiency_index_environment_adjusted,
         get_environment_adjusted_levels,
     )
@@ -373,7 +377,7 @@ def test_calculate_deficiency_index_environment_adjusted():
 
 
 def test_calculate_deficiency_index_with_temperature():
-    from plant_engine.nutrient_manager import (
+    from ..engine.plant_engine.nutrient_manager import (
         calculate_deficiency_index_with_temperature,
         get_temperature_adjusted_levels,
     )
