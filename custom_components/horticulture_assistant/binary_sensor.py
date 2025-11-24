@@ -138,7 +138,7 @@ class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
     ):
         super().__init__(hass, entry_id, context)
         self._attr_name = "Sensor Health"
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.profile_id}_sensor_health"
+        self._attr_unique_id = f"{context.profile_id}_sensor_health"
         self._attr_device_class = BinarySensorDeviceClass.PROBLEM
         self._attr_icon = "mdi:heart-pulse"
         self._attr_entity_category = CATEGORY_DIAGNOSTIC
@@ -164,7 +164,7 @@ class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
     ):
         super().__init__(hass, entry_id, context)
         self._attr_name = "Irrigation Readiness"
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.profile_id}_irrigation_readiness"
+        self._attr_unique_id = f"{context.profile_id}_irrigation_readiness"
         self._attr_device_class = BinarySensorDeviceClass.MOISTURE
         self._attr_icon = "mdi:water-alert"
         self._attr_entity_category = CATEGORY_CONTROL
@@ -235,7 +235,7 @@ class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
     ):
         super().__init__(hass, entry_id, context)
         self._attr_name = "Fault Detection"
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{context.profile_id}_fault_detection"
+        self._attr_unique_id = f"{context.profile_id}_fault_detection"
         self._attr_device_class = BinarySensorDeviceClass.SAFETY
         self._attr_icon = "mdi:alert"
         self._attr_entity_category = CATEGORY_DIAGNOSTIC

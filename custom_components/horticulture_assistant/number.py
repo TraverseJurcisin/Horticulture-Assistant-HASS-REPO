@@ -10,7 +10,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import CATEGORY_CONTROL, CONF_PROFILES, DOMAIN, signal_profile_contexts_updated
+from .const import CATEGORY_CONTROL, CONF_PROFILES, signal_profile_contexts_updated
 from .entity_base import HorticultureBaseEntity
 from .profile.citations import manual_note
 from .profile.compat import get_resolved_target, set_resolved_target
@@ -114,7 +114,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
         self._entry = entry
         self._key = key
         self._attr_name = key.replace("_", " ").title()
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{plant_id}_{key}"
+        self._attr_unique_id = f"{plant_id}_{key}"
         self._unit = unit
         self._attr_native_unit_of_measurement = None
         self._value = float(value) if value is not None else None

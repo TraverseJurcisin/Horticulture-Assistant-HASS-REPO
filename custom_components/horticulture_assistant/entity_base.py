@@ -49,11 +49,10 @@ except (ModuleNotFoundError, ImportError, AttributeError):  # pragma: no cover -
         hass = None
 
 
-from .const import signal_profile_contexts_updated
+from .const import DOMAIN, signal_profile_contexts_updated
 from .utils.entry_helpers import (
     ProfileContext,
     entry_device_identifier,
-    profile_device_identifier,
     resolve_entry_device_info,
     resolve_profile_context_collection,
     resolve_profile_device_info,
@@ -116,26 +115,38 @@ class HorticultureBaseEntity(Entity):
         self._plant_id = plant_id
         self._model = model
         self._attr_has_entity_name = True
-        identifiers = {profile_device_identifier(entry_id, plant_id)}
-        device_kwargs = {
-            "identifiers": identifiers,
-            "name": plant_name,
-            "manufacturer": "Horticulture Assistant",
-            "model": model,
-        }
-        if entry_id:
-            device_kwargs["via_device"] = entry_device_identifier(entry_id)
-        self._attr_device_info = DeviceInfo(**device_kwargs)
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, self._plant_id)},
+            name=self._plant_name,
+            manufacturer="Horticulture Assistant",
+        )
+
+    @property
+    def profile_id(self) -> str:
+        """Return the unique profile identifier associated with this entity."""
+
+        return self._plant_id
+
+    @property
+    def profile_name(self) -> str:
+        """Return the current profile display name for this entity."""
+
+        return self._plant_name
 
     @property
     def device_info(self) -> dict:
         """Return device information shared across entity types."""
+        name = self.profile_name
         if getattr(self, "hass", None):
             info = resolve_profile_device_info(self.hass, self._entry_id, self._plant_id)
             if info:
-                return DeviceInfo(**info)
+                name = info.get("name") or name
 
-        return self._attr_device_info
+        return {
+            "identifiers": {(DOMAIN, self.profile_id)},
+            "name": name,
+            "manufacturer": "Horticulture Assistant",
+        }
 
     @property
     def entity_picture(self) -> str | None:
@@ -217,6 +228,8 @@ class ProfileContextEntityMixin:
 
         self._context = context
         self._context_available = True
+        if hasattr(self, "_plant_name"):
+            self._plant_name = context.name
 
     def _handle_context_removed(self) -> None:
         """Mark the entity unavailable when the context disappears."""
