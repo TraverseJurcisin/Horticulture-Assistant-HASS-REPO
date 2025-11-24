@@ -7,6 +7,7 @@ from typing import Any
 from unittest.mock import patch
 
 import pytest
+from homeassistant.util import slugify
 
 from custom_components.horticulture_assistant.const import CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT
 from custom_components.horticulture_assistant.profile.schema import (
@@ -154,19 +155,58 @@ async def test_async_create_profile_avoids_overwriting_existing_names(hass, tmp_
     assert first["sensors"]["moisture"] == "sensor.one"
     assert first["plant_id"] == "duplicate"
 
-    await store.async_create_profile("Duplicate", sensors={"moisture": "sensor.two"})
+    duplicate_result = await store.async_create_profile("Duplicate", sensors={"moisture": "sensor.two"})
+
+    assert duplicate_result == {"base": "profile_exists"}
 
     files = sorted(path.name for path in store._base.glob("*.json"))
-    assert files == ["duplicate.json", "duplicate_2.json"]
+    assert files == ["duplicate.json"]
 
     first_after = await store.async_get("Duplicate")
     assert first_after is not None
     assert first_after["sensors"]["moisture"] == "sensor.one"
 
-    second = await store.async_get("duplicate_2")
-    assert second is not None
-    assert second["sensors"]["moisture"] == "sensor.two"
-    assert second["plant_id"] == "duplicate_2"
+
+@pytest.mark.asyncio
+async def test_async_create_profile_slugifies_display_name(hass, tmp_path, monkeypatch) -> None:
+    """Profile IDs should be derived from the slugified display name."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    name = "Fancy Plant!!"
+    expected_id = slugify(name)
+
+    await store.async_create_profile(name)
+
+    stored = await store.async_get(name)
+    assert stored is not None
+    assert stored["plant_id"] == expected_id
+
+    files = sorted(path.name for path in store._base.glob("*.json"))
+    assert files == [f"{expected_id}.json"]
+
+
+@pytest.mark.asyncio
+async def test_async_create_profile_uses_safe_slug(hass, tmp_path, monkeypatch) -> None:
+    """Profile IDs should avoid reserved or unsafe filenames."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    name = "COM1"
+    expected_id = store._safe_slug(name)
+
+    await store.async_create_profile(name)
+
+    stored = await store.async_get(name)
+    assert stored is not None
+    assert stored["plant_id"] == expected_id
+
+    files = sorted(path.name for path in store._base.glob("*.json"))
+    assert files == [f"{expected_id}.json"]
 
 
 @pytest.mark.asyncio
@@ -558,6 +598,27 @@ async def test_async_save_prefers_profile_id_for_storage_name(hass, tmp_path, mo
     fallback_path = store._path_for("profile")
     if fallback_path != expected_path:
         assert not fallback_path.exists(), "Default fallback file should not be created"
+
+
+@pytest.mark.asyncio
+async def test_async_save_uses_safe_slug_for_reserved_names(hass, tmp_path, monkeypatch) -> None:
+    """Saving profiles with reserved names should normalise ids to safe slugs."""
+
+    monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
+    store = ProfileStore(hass)
+    await store.async_init()
+
+    await store.async_save({"display_name": "COM1"}, name="COM1")
+
+    expected_id = store._safe_slug("COM1")
+
+    stored = await store.async_get("COM1")
+    assert stored is not None
+    assert stored["plant_id"] == expected_id
+    assert stored["profile_id"] == expected_id
+
+    files = sorted(path.name for path in store._base.glob("*.json"))
+    assert files == [f"{expected_id}.json"]
 
 
 @pytest.mark.asyncio

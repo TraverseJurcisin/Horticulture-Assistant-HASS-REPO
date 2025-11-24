@@ -270,7 +270,7 @@ class ProfileStore:
         sensors: dict[str, str] | None = None,
         clone_from: dict[str, Any] | None = None,
         scope: str | None = None,
-    ) -> None:
+    ) -> dict[str, str] | None:
         clone_profile: BioProfile | None = None
         clone_payload: Mapping[str, Any] | None = None
         if isinstance(clone_from, str) and clone_from:
@@ -312,7 +312,10 @@ class ProfileStore:
         if resolved_scope is None:
             resolved_scope = PROFILE_SCOPE_DEFAULT
 
-        slug = self._unique_slug(name)
+        path = self._path_for(name)
+        slug = path.stem
+        if path.exists():
+            return {"base": "profile_exists"}
 
         if clone_profile is not None:
             profile_cls: type[BioProfile] = type(clone_profile)
@@ -390,7 +393,8 @@ class ProfileStore:
         if preserved:
             payload.update(preserved)
 
-        await self.async_save(payload, name=slug)
+        await self._exclusive_write(path, payload)
+        return None
 
     async def _atomic_write(self, path: Path, payload: dict[str, Any]) -> None:
         tmp = path.with_suffix(".tmp")
@@ -441,11 +445,12 @@ class ProfileStore:
             suffix += 1
         return candidate
 
-    def _safe_slug(self, base: str) -> str:
+    @staticmethod
+    def _safe_slug(base: str) -> str:
         """Return a filesystem-safe slug limited to a single path component."""
 
         for candidate in (slugify(base), base):
-            safe = self._normalise_slug_component(candidate)
+            safe = ProfileStore._normalise_slug_component(candidate)
             if safe:
                 return safe
         return "profile"
@@ -506,9 +511,33 @@ class ProfileStore:
             return None
         return part
 
+    async def _exclusive_write(self, path: Path, payload: dict[str, Any]) -> None:
+        try:
+            txt = json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+        except (TypeError, ValueError) as err:
+            message = f"Unable to serialise profile '{path.stem}': {err}"
+            _LOGGER.error("%s", message)
+            raise ProfileStoreError(message, user_message=str(err) or "unable to encode profile") from err
+
+        async with self._lock:
+            try:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                with path.open("x", encoding="utf-8") as handle:
+                    handle.write(txt)
+            except asyncio.CancelledError:  # pragma: no cover - propagate cancellation
+                raise
+            except FileExistsError as err:
+                message = f"Profile '{path.stem}' already exists: {err}"
+                _LOGGER.error("%s", message)
+                raise ProfileStoreError(message, user_message="profile_exists") from err
+            except OSError as err:
+                message = f"Unable to write profile file {path.name}: {err}"
+                _LOGGER.error("%s", message)
+                raise ProfileStoreError(message, user_message=str(err) or "unable to save profile") from err
+
     def _normalise_payload(self, payload: dict[str, Any], *, fallback_name: Any) -> dict[str, Any]:
         base = _slug_source(fallback_name)
-        slug = slugify(base) or (base if base else "profile")
+        slug = self._safe_slug(base)
         preserved: dict[str, Any] = {}
         for key in ("species_display", "species_pid", "image_url"):
             normalised = _normalise_metadata_value(payload.get(key))
@@ -532,8 +561,8 @@ class ProfileStore:
         slug = (
             data.get("profile_id")
             or data.get("plant_id")
-            or slugify(display_base)
-            or slugify(fallback_base)
+            or self._safe_slug(display_base)
+            or self._safe_slug(fallback_base)
             or "profile"
         )
         normalised = normalise_profile_payload(data, fallback_id=str(slug), display_name=display_name)

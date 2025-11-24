@@ -4459,6 +4459,32 @@ async def test_options_flow_add_profile_persist_failure_rolls_back(hass):
     assert registry.get_profile("basil") is None
 
 
+async def test_options_flow_add_profile_duplicate_skips_persist(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
+    entry.add_to_hass(hass)
+    registry = ProfileRegistry(hass, entry)
+    await registry.async_load()
+    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+
+    flow = OptionsFlow(entry)
+    flow.hass = hass
+    await flow.async_step_init()
+
+    store = AsyncMock()
+    store.async_list_profile_ids = AsyncMock(return_value=[])
+    store.async_create_profile = AsyncMock(return_value={"base": "profile_exists"})
+
+    with patch(
+        "custom_components.horticulture_assistant.config_flow.get_entry_data",
+        return_value={"profile_store": store},
+    ):
+        result = await flow.async_step_add_profile({"name": "Basil", CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT})
+
+    assert result["type"] == "form"
+    assert result["errors"] == {"base": "profile_exists"}
+    assert registry.get_profile("basil") is None
+
+
 async def test_options_flow_add_profile_registry_save_error(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "k"})
     entry.add_to_hass(hass)

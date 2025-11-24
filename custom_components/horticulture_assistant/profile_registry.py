@@ -66,6 +66,7 @@ from .profile.store import STORE_KEY as PROFILE_STORE_KEY
 from .profile.store import STORE_VERSION as PROFILE_STORE_VERSION
 from .profile.utils import LineageLinkReport, ensure_sections, link_species_and_cultivars, sync_general_section
 from .profile.validation import evaluate_threshold_bounds
+from .profile_store import ProfileStore
 from .sensor_validation import SensorValidationResult, collate_issue_messages, validate_sensor_links
 from .utils.entry_helpers import (
     async_sync_entry_devices,
@@ -1692,12 +1693,9 @@ class ProfileRegistry:
         profiles = self._options_profiles_copy()
         previous_profiles = dict(profiles)
         previous_options = dict(self.entry.options)
-        base = slugify(name) or "profile"
-        candidate = base
-        idx = 1
-        while candidate in profiles or candidate in self._profiles:
-            candidate = f"{base}_{idx}"
-            idx += 1
+        candidate = ProfileStore._safe_slug(name)
+        if candidate in profiles or candidate in self._profiles:
+            raise ValueError("profile_exists")
 
         new_profile: dict[str, Any] = {"name": name}
         base_profile_obj: BioProfile | None = None

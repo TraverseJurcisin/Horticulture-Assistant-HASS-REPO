@@ -34,6 +34,7 @@ from custom_components.horticulture_assistant.profile.schema import (
 from custom_components.horticulture_assistant.profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION
 from custom_components.horticulture_assistant.profile.utils import LineageLinkReport
 from custom_components.horticulture_assistant.profile_registry import ProfileRegistry, _normalise_sensor_value
+from custom_components.horticulture_assistant.profile_store import ProfileStore
 from custom_components.horticulture_assistant.utils import entry_helpers as helpers
 from custom_components.horticulture_assistant.utils.entry_helpers import (
     entry_device_identifier,
@@ -2696,20 +2697,29 @@ async def test_add_profile_sets_plant_id_for_new_entries(hass):
     assert reg.get(pid).refresh_sections().local.general.get("sensors", {}) == {}
 
 
-async def test_add_profile_generates_sequential_suffixes(hass):
-    """New profiles receive sequentially numbered identifiers."""
+async def test_add_profile_rejects_duplicate_ids(hass):
+    """Profile IDs derived from names must be unique."""
 
     entry = await _make_entry(hass, {CONF_PROFILES: {"tomato": {"name": "Tomato"}}})
     reg = ProfileRegistry(hass, entry)
     await reg.async_load()
 
-    first = await reg.async_add_profile("Tomato")
-    assert first == "tomato_1"
+    with pytest.raises(ValueError, match="profile_exists"):
+        await reg.async_add_profile("Tomato")
 
-    entry.options[CONF_PROFILES]["tomato_1"] = {"name": "Tomato #1"}
 
-    second = await reg.async_add_profile("Tomato")
-    assert second == "tomato_2"
+async def test_add_profile_uses_safe_slug(hass):
+    """Profile IDs should respect the safe slug helper used by the store."""
+
+    entry = await _make_entry(hass)
+    reg = ProfileRegistry(hass, entry)
+    await reg.async_load()
+
+    pid = await reg.async_add_profile("COM1")
+
+    assert pid == ProfileStore._safe_slug("COM1")
+    assert pid in entry.options[CONF_PROFILES]
+    assert entry.options[CONF_PROFILES][pid]["plant_id"] == pid
 
 
 async def test_add_profile_custom_scope(hass):
