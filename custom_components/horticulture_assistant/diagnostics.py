@@ -184,7 +184,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
             if monitors:
                 payload["profile_monitors"] = monitors
 
-    payload["log_tail"] = _read_log_tail(hass, entry)
+    payload["log_tail"] = await hass.async_add_executor_job(_read_log_tail, hass, entry)
     return async_redact_data(payload, TO_REDACT)
 
 

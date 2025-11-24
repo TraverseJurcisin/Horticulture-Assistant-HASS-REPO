@@ -1,14 +1,24 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import json
 import logging
 import time
+from contextlib import suppress
 from datetime import datetime, timedelta
 from typing import Any
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from homeassistant.util import dt as dt_util
+
+try:
+    from homeassistant.util.dt import utcnow
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - tests without HA
+    from datetime import UTC, datetime
+
+    def utcnow() -> datetime:
+        return datetime.now(UTC)
+
 
 from .api import ChatApi
 from .engine import guidelines  # type: ignore[import]
@@ -53,7 +63,7 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
         await self._async_refresh()
 
     async def _async_update_data(self) -> dict[str, Any]:
-        now = dt_util.utcnow()
+        now = utcnow()
         if self.breaker_open and self._breaker_until and now < self._breaker_until:
             warn_once(
                 _LOGGER,
@@ -115,7 +125,7 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
             if self.retry_count > 3:
                 self.breaker_open = True
-                self._breaker_until = dt_util.utcnow() + timedelta(minutes=5)
+                self._breaker_until = utcnow() + timedelta(minutes=5)
                 _LOGGER.error("AI update failed; breaker opened (%s): %s", code, err)
             else:
                 warn_once(_LOGGER, code, f"AI update failed ({code}): {err}")
@@ -129,11 +139,31 @@ class HortiAICoordinator(DataUpdateCoordinator[dict[str, Any]]):
             _LOGGER.exception("AI update failed unexpectedly: %s", err)
             if self.retry_count > 3:
                 self.breaker_open = True
-                self._breaker_until = dt_util.utcnow() + timedelta(minutes=5)
+                self._breaker_until = utcnow() + timedelta(minutes=5)
             self.last_exception_msg = str(err)
             self.async_set_updated_data({"ok": False, "error": str(err)})
             raise UpdateFailed(f"AI update failed (UNEXPECTED): {err}") from err
 
     async def async_shutdown(self) -> None:
-        """Shut down the coordinator (placeholder for future cleanup)."""
-        return
+        """Cancel scheduled refreshes and drop listeners."""
+
+        if hasattr(self, "async_stop"):
+            with suppress(Exception):
+                await self.async_stop()
+
+        debounced = getattr(self, "_debounced_refresh", None)
+        if debounced is not None:
+            with suppress(Exception):
+                await debounced.async_cancel()
+
+        unsub = getattr(self, "_unsub_refresh", None)
+        if unsub is not None:
+            with suppress(Exception):
+                result = unsub()
+                if inspect.isawaitable(result):
+                    await result
+            self._unsub_refresh = None
+
+        listeners = getattr(self, "_listeners", None)
+        if isinstance(listeners, dict):
+            listeners.clear()
