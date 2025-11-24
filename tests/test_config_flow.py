@@ -439,6 +439,25 @@ async def test_config_flow_config_entry_source_used_without_reconfigure_support(
 
 
 @pytest.mark.asyncio
+async def test_config_flow_user_step_aborts_when_already_configured(hass):
+    entry = MockConfigEntry(domain=DOMAIN, data={}, options={}, unique_id=DOMAIN)
+    entry.add_to_hass(hass)
+
+    flow = ConfigFlow()
+    flow.hass = hass
+    flow._async_current_entries = MagicMock(return_value=[entry])
+
+    result = None
+    try:
+        result = await flow.async_step_user()
+    except cfg.AbortFlow as err:
+        result = {"type": "abort", "reason": getattr(err, "reason", None) or str(err)}
+
+    assert result["type"] == "abort"
+    assert result.get("reason") == "already_configured"
+
+
+@pytest.mark.asyncio
 async def test_config_flow_config_entry_source_matches_unique_id_hint(hass, monkeypatch):
     source_value = getattr(config_entries, "SOURCE_CONFIG_ENTRY", None) or "config_entry"
 
@@ -882,9 +901,9 @@ async def test_config_flow_user(hass):
         assert "sensor.good" in result4["description_placeholders"]["sensor_hints"]
         result5 = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
     assert result5["type"] == "create_entry"
-    assert result5["data"][CONF_PLANT_NAME] == "Mint"
-    assert result5["data"][CONF_PLANT_ID] == "mint"
     options = result5["options"]
+    assert options[CONF_PLANT_NAME] == "Mint"
+    assert options[CONF_PLANT_ID] == "mint"
     assert options["moisture_sensor"] == "sensor.good"
     assert options["sensors"] == {"moisture": "sensor.good"}
     assert options["thresholds"] == {}
@@ -1730,7 +1749,7 @@ async def test_config_flow_profile_sections_failure_does_not_abort(hass):
         result = await flow.async_step_sensors({})
 
     assert result["type"] == "create_entry"
-    assert result["title"] == "Mint"
+    assert result["title"] == "Horticulture Assistant"
     options = result["options"]
     profiles = options.get(CONF_PROFILES, {})
     assert "mint" in profiles
@@ -1759,7 +1778,7 @@ async def test_config_flow_skip_initial_profile(hass):
     assert result["step_id"] == "user"
     outcome = await flow.async_step_user({"setup_mode": "skip"})
     assert outcome["type"] == "create_entry"
-    assert outcome["title"] == "Greenhouse"
+    assert outcome["title"] == "Horticulture Assistant"
     assert outcome["data"] == {}
     assert outcome["options"] == {}
 
@@ -1850,7 +1869,7 @@ async def test_config_flow_copy_profile_from_existing_entry(hass):
         sensors_result = await flow.async_step_sensors({CONF_MOISTURE_SENSOR: "sensor.copy_moisture"})
 
     assert sensors_result["type"] == "create_entry"
-    assert sensors_result["title"] == "Mint Clone"
+    assert sensors_result["title"] == "Horticulture Assistant"
     stored_profiles = sensors_result["options"][CONF_PROFILES]
     assert set(stored_profiles) == {"mint_clone"}
     new_profile = stored_profiles["mint_clone"]
@@ -2178,6 +2197,33 @@ async def test_config_flow_threshold_copy_sync_failure_falls_back_to_manual(hass
     assert sync_mock.call_count >= 1
 
 
+@pytest.mark.asyncio
+async def test_config_flow_threshold_copy_surfaces_template_load_failure(hass):
+    flow = ConfigFlow()
+    flow.hass = hass
+
+    await begin_profile_flow(flow)
+
+    profile_result = await flow.async_step_profile(
+        {
+            CONF_PLANT_NAME: "Template Failure",
+            CONF_PLANT_TYPE: "",
+            CONF_PROFILE_SCOPE: PROFILE_SCOPE_DEFAULT,
+        }
+    )
+    assert profile_result["step_id"] == "threshold_source"
+
+    flow._profile_templates = {}
+    flow._profile_template_sources = {}
+    flow._template_load_failed = True
+
+    copy_form = await flow.async_step_threshold_copy()
+
+    assert copy_form["type"] == "form"
+    assert copy_form["step_id"] == "threshold_copy"
+    assert copy_form["errors"]["base"] == "read_failure"
+
+
 async def test_config_flow_copy_profile_filtering(hass, tmp_path, monkeypatch):
     monkeypatch.setattr(hass.config, "path", lambda *parts: str(tmp_path.joinpath(*parts)))
 
@@ -2499,7 +2545,7 @@ async def test_config_flow_existing_entry_adds_profile_via_new_entry(hass):
         result5 = await flow.async_step_sensors({"moisture_sensor": "sensor.good"})
     await hass.async_block_till_done()
     assert result5["type"] == "create_entry"
-    assert result5["title"] == "Mint"
+    assert result5["title"] == "Horticulture Assistant"
     placeholders = result5.get("description_placeholders")
     assert placeholders is None
     options = result5["options"]
@@ -3239,9 +3285,9 @@ async def test_config_flow_without_sensors(hass):
         assert result_th["type"] == "form" and result_th["step_id"] == "sensors"
         result = await flow.async_step_sensors({})
     assert result["type"] == "create_entry"
-    assert result["data"][CONF_PLANT_NAME] == "Rose"
-    assert result["data"][CONF_PLANT_ID] == "rose"
     options = result["options"]
+    assert options[CONF_PLANT_NAME] == "Rose"
+    assert options[CONF_PLANT_ID] == "rose"
     assert options["sensors"] == {}
     assert options["thresholds"] == {}
     assert options["resolved_targets"] == {}

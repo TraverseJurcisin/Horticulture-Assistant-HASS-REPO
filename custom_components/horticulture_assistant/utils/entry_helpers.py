@@ -1070,7 +1070,7 @@ def get_entry_plant_info(entry: ConfigEntry) -> tuple[str, str]:
     """Return ``(plant_id, plant_name)`` for a config entry."""
 
     primary_id = get_primary_profile_id(entry)
-    raw_identifier = primary_id or entry.data.get(CONF_PLANT_ID) or entry.entry_id
+    raw_identifier = primary_id or entry.options.get(CONF_PLANT_ID) or entry.data.get(CONF_PLANT_ID) or entry.entry_id
     plant_id = _normalise_profile_identifier(raw_identifier) or str(entry.entry_id)
 
     profile = get_primary_profile_options(entry)
@@ -1079,7 +1079,7 @@ def get_entry_plant_info(entry: ConfigEntry) -> tuple[str, str]:
         if isinstance(name, str) and name.strip():
             return plant_id, name.strip()
 
-    data_name = entry.data.get(CONF_PLANT_NAME)
+    data_name = entry.options.get(CONF_PLANT_NAME) or entry.data.get(CONF_PLANT_NAME)
     if isinstance(data_name, str) and data_name.strip():
         return plant_id, data_name.strip()
 
@@ -1117,7 +1117,7 @@ def get_primary_profile_id(entry: ConfigEntry) -> str | None:
     """Return the profile id most closely associated with ``entry``."""
 
     candidates: tuple[Any, ...] = (
-        entry.data.get(CONF_PLANT_ID),
+        entry.options.get(CONF_PLANT_ID) or entry.data.get(CONF_PLANT_ID),
         entry.options.get(CONF_PLANT_ID) if isinstance(entry.options, Mapping) else None,
     )
 
@@ -1505,7 +1505,7 @@ async def ensure_profile_device_registered(
             snapshot_dict.get("primary_profile_id"),
             snapshot_dict.get("plant_id"),
             entry.options.get(CONF_PLANT_ID),
-            entry.data.get(CONF_PLANT_ID),
+            entry.options.get(CONF_PLANT_ID) or entry.data.get(CONF_PLANT_ID),
             entry.entry_id,
         )
         for fallback in fallbacks:
@@ -1565,7 +1565,7 @@ async def ensure_profile_device_registered(
                 if isinstance(raw_name, str) and raw_name.strip():
                     name = raw_name.strip()
         if not name:
-            name = entry.data.get(CONF_PLANT_NAME)
+            name = entry.options.get(CONF_PLANT_NAME) or entry.data.get(CONF_PLANT_NAME)
             if isinstance(name, str):
                 name = name.strip()
         snapshot_dict["plant_name"] = name or canonical_profile_id
@@ -1905,7 +1905,7 @@ async def ensure_all_profile_devices_registered(
 
     fallback_id = _normalise_profile_identifier(snapshot_dict.get("plant_id"))
     if not fallback_id:
-        candidate = entry.data.get(CONF_PLANT_ID)
+        candidate = entry.options.get(CONF_PLANT_ID) or entry.data.get(CONF_PLANT_ID)
         fallback_id = _normalise_profile_identifier(candidate) if candidate is not None else ""
         if not fallback_id:
             fallback_id = str(entry.entry_id)

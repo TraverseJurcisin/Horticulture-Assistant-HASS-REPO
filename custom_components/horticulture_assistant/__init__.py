@@ -1171,7 +1171,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             if sensor_ids:
                 ensure_entities_exist(
                     hass,
-                    config_entry.data.get(CONF_PLANT_ID, config_entry.entry_id),
+                    config_entry.options.get(CONF_PLANT_ID)
+                    or config_entry.data.get(CONF_PLANT_ID)
+                    or config_entry.entry_id,
                     sensor_ids,
                 )
 
