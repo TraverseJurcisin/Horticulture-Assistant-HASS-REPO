@@ -3982,8 +3982,11 @@ class OptionsFlow(config_entries.OptionsFlow):
                         cultivar_display=selected_cultivar_label,
                     )
                 except ValueError as err:
-                    errors["base"] = "profile_error"
-                    description_placeholders["error"] = str(err)
+                    if str(err) == "profile_exists":
+                        errors["base"] = "profile_exists"
+                    else:
+                        errors["base"] = "profile_error"
+                        description_placeholders["error"] = str(err)
                 else:
                     entry_records = get_entry_data(self.hass, self._entry) or {}
                     store = entry_records.get("profile_store") if isinstance(entry_records, Mapping) else None
@@ -4018,20 +4021,28 @@ class OptionsFlow(config_entries.OptionsFlow):
                             profile_label = profile_json.get("display_name", raw_name)
                             clone_payload["name"] = profile_label
                             try:
-                                await store.async_create_profile(
+                                create_result = await store.async_create_profile(
                                     name=profile_label,
                                     sensors=sensors,
                                     clone_from=clone_payload,
                                     scope=scope,
                                 )
+                                if isinstance(create_result, Mapping) and create_result:
+                                    errors.update(create_result)
+                                    await registry.async_delete_profile(pid)
+                                    pid = None
                             except ProfileStoreError as err:
                                 _LOGGER.error(
                                     "Failed to persist profile '%s' via profile store: %s",
                                     pid,
                                     err,
                                 )
-                                errors["base"] = "profile_error"
-                                description_placeholders["error"] = getattr(err, "user_message", str(err))
+                                user_error = getattr(err, "user_message", "")
+                                if user_error == "profile_exists":
+                                    errors["base"] = "profile_exists"
+                                else:
+                                    errors["base"] = "profile_error"
+                                    description_placeholders["error"] = user_error or str(err)
                                 await registry.async_delete_profile(pid)
                                 pid = None
                             except Exception as err:  # pragma: no cover - persistence guard
