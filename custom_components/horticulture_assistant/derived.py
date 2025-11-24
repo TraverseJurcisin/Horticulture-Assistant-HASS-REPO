@@ -15,7 +15,6 @@ from homeassistant.util.unit_conversion import TemperatureConverter
 
 from .calibration.apply import lux_to_ppfd
 from .calibration.store import async_get_for_entity
-from .const import DOMAIN
 from .engine.metrics import accumulate_dli, dew_point_c, lux_model_ppfd, mold_risk, vpd_kpa
 from .engine.metrics import lux_to_ppfd as metric_lux_to_ppfd
 from .entity_base import HorticultureBaseEntity, ProfileContextEntityMixin
@@ -73,7 +72,7 @@ class PlantDLISensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEn
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_dli"
+        self._attr_unique_id = f"{context.profile_id}_dli"
         self._value: float | None = None
         self._accum: float = 0.0
         self._last_day: date | None = None
@@ -172,7 +171,7 @@ class PlantPPFDSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorE
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_ppfd"
+        self._attr_unique_id = f"{context.profile_id}_ppfd"
         self._value: float | None = None
         self._attrs: dict | None = None
         self._light_sensor: str | None = None
@@ -275,7 +274,7 @@ class PlantVPDSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEn
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_vpd"
+        self._attr_unique_id = f"{context.profile_id}_vpd"
         self._value: float | None = None
         self._state_unsub: Callable[[], None] | None = None
 
@@ -349,7 +348,7 @@ class PlantDewPointSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Sen
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_dew_point"
+        self._attr_unique_id = f"{context.profile_id}_dew_point"
         self._value: float | None = None
         self._state_unsub: Callable[[], None] | None = None
 
@@ -421,7 +420,7 @@ class PlantMoldRiskSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Sen
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_mold_risk"
+        self._attr_unique_id = f"{context.profile_id}_mold_risk"
         self._value: float | None = None
         self._state_unsub: Callable[[], None] | None = None
 

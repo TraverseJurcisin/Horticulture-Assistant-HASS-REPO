@@ -181,9 +181,13 @@ async def async_get_triggers(hass: HomeAssistant, device_id: str) -> list[dict[s
     for entry in entries:
         if entry.domain != "sensor" or not entry.unique_id or not entry.entity_id:
             continue
-        if ":" not in entry.unique_id:
+        suffix = None
+        if ":" in entry.unique_id:
+            suffix = entry.unique_id.split(":", 1)[1]
+        elif "_" in entry.unique_id:
+            suffix = entry.unique_id.rsplit("_", 1)[1]
+        if not suffix:
             continue
-        suffix = entry.unique_id.split(":", 1)[1]
         base: dict[str, Any] = {
             "platform": "device",
             "domain": DOMAIN,
@@ -244,9 +248,9 @@ async def async_attach_trigger(
 
     registry = er.async_get(hass)
     entry = registry.async_get(entity_id)
-    if entry is None or not entry.unique_id or ":" not in entry.unique_id:
+    if entry is None or not entry.unique_id:
         raise InvalidDeviceAutomationConfig("unable to resolve profile for device trigger")
-    profile_id = entry.unique_id.split(":", 1)[0]
+    profile_id = entry.unique_id.split(":", 1)[0] if ":" in entry.unique_id else entry.unique_id.rsplit("_", 1)[0]
 
     if trigger_type in EVENT_TRIGGER_TYPES:
         event_type = EVENT_MAP[trigger_type]

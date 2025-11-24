@@ -1007,7 +1007,7 @@ async def async_register_all(
         provider = call.data.get("provider", "auto")
         zone = call.data.get("zone")
         reg = er.async_get(hass)
-        unique_id = f"{DOMAIN}_{entry.entry_id}_{profile_id}_irrigation_rec"
+        unique_id = f"{profile_id}_irrigation_rec"
         rec_entity = reg.async_get_entity_id("sensor", DOMAIN, unique_id)
         seconds: float | None = None
         if rec_entity:

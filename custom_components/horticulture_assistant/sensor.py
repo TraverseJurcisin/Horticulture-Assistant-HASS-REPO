@@ -141,7 +141,7 @@ class PlantStatusSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Senso
         )
         self._entry_id = entry.entry_id
         self._monitor: ProfileMonitor | None = ProfileMonitor(hass, context)
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_health"
+        self._attr_unique_id = f"{context.profile_id}_health"
         self._attr_icon = "mdi:sprout"
 
     async def async_update(self) -> None:
@@ -192,7 +192,7 @@ class PlantLastSampleSensor(ProfileContextEntityMixin, HorticultureBaseEntity, S
             model="Plant Profile",
         )
         self._monitor: ProfileMonitor | None = ProfileMonitor(hass, context)
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_last_sample"
+        self._attr_unique_id = f"{context.profile_id}_last_sample"
 
     async def async_update(self) -> None:
         if self._monitor is None:
@@ -417,6 +417,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     coord_local: HortiLocalCoordinator = stored["coordinator_local"]
     profile_coord: HorticultureCoordinator | None = stored.get("coordinator")
     keep_stale: bool = stored.get("keep_stale", True)
+    contexts = collection.contexts
 
     entity_registry = er.async_get(hass)
     for entity_entry in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
@@ -430,12 +431,24 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         profile_id, suffix = unique_id.rsplit(":", 1)
         if suffix not in PROFILE_SENSOR_SUFFIXES | PROFILE_AGGREGATE_SUFFIXES:
             continue
-        new_unique_id = f"{DOMAIN}_{entry.entry_id}_{profile_id}_{suffix}"
+        new_unique_id = f"{profile_id}_{suffix}"
         if new_unique_id == unique_id:
             continue
         entity_registry.async_update_entity(entity_entry.entity_id, new_unique_id=new_unique_id)
 
-    contexts = collection.contexts
+    profile_ids = set(contexts)
+    prefix = f"{DOMAIN}_{entry.entry_id}_"
+    for entity_entry in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
+        unique_id = entity_entry.unique_id
+        if not isinstance(unique_id, str) or not unique_id.startswith(prefix):
+            continue
+        remainder = unique_id.removeprefix(prefix)
+        if not any(remainder.startswith(f"{pid}_") for pid in profile_ids):
+            continue
+        if remainder == unique_id:
+            continue
+        entity_registry.async_update_entity(entity_entry.entity_id, new_unique_id=remainder)
+
     primary_context = collection.primary
     plant_id = primary_context.profile_id
     plant_name = primary_context.name
@@ -723,7 +736,7 @@ class HortiStatusSensor(
             plant_id,
             model="Plant Profile",
         )
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{self.entity_description.key}"
+        self._attr_unique_id = f"{plant_id}_{self.entity_description.key}"
         self._local = local
         self._keep_stale = keep_stale
         self._citations: dict | None = None
@@ -862,7 +875,7 @@ class HortiRecommendationSensor(
             plant_id,
             model="Plant Profile",
         )
-        self._attr_unique_id = f"{DOMAIN}_{entry_id}_{self.entity_description.key}"
+        self._attr_unique_id = f"{plant_id}_{self.entity_description.key}"
         self._keep_stale = keep_stale
 
     @property
@@ -901,7 +914,7 @@ class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity
         self._meta: Mapping[str, Any] = meta
         self._value = meta.get("value") if isinstance(meta, Mapping) else None
         self._attr_available = self._value is not None
-        self._attr_unique_id = f"{DOMAIN}_{entry.entry_id}_{context.profile_id}_{category}_{key}"
+        self._attr_unique_id = f"{context.profile_id}_{category}_{key}"
         label = key.replace("_", " ").title()
         prefix_map = {
             "resolved_targets": "Resolved Target",

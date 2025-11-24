@@ -90,9 +90,13 @@ async def async_get_conditions(hass: HomeAssistant, device_id: str) -> list[dict
     for entry in entries:
         if entry.domain != "sensor" or not entry.unique_id or not entry.entity_id:
             continue
-        if ":" not in entry.unique_id:
+        suffix = None
+        if ":" in entry.unique_id:
+            suffix = entry.unique_id.split(":", 1)[1]
+        elif "_" in entry.unique_id:
+            suffix = entry.unique_id.rsplit("_", 1)[1]
+        if not suffix:
             continue
-        suffix = entry.unique_id.split(":", 1)[1]
         base: dict[str, Any] = {
             "platform": "device",
             "domain": DOMAIN,
