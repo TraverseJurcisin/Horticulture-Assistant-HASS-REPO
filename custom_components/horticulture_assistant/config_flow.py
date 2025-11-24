@@ -16,6 +16,15 @@ from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
 from homeassistant import config_entries
+
+try:  # pragma: no cover - compatibility for test harness
+    from homeassistant.data_entry_flow import AbortFlow
+except Exception:  # pragma: no cover - fallback for missing dependency
+
+    class AbortFlow(Exception):
+        """Fallback abort exception for environments without Home Assistant helpers."""
+
+
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import selector as sel
 from homeassistant.util import slugify
@@ -1483,7 +1492,63 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         self._profile_templates: dict[str, Mapping[str, Any]] | None = None
         self._profile_template_sources: dict[str, str] = {}
         self._profile_store: ProfileStore | None = None
+        self._template_load_failed: bool = False
         self._template_filter: str | None = None
+
+    async def async_set_unique_id(self, unique_id: str, *, raise_on_progress: bool | None = None) -> None:
+        """Ensure a unique ID setter is always available.
+
+        The Home Assistant test harness may provide a stub config flow base class
+        without ``async_set_unique_id``. This override preserves the expected
+        behaviour when available while keeping unit tests resilient.
+        """
+
+        setter = getattr(super(), "async_set_unique_id", None)
+        if callable(setter):
+            await setter(unique_id, raise_on_progress=raise_on_progress)
+            return
+
+        self._unique_id = unique_id
+
+    def _abort_if_unique_id_configured(self, updates: Mapping[str, Any] | None = None) -> None:
+        """Abort when a duplicate unique ID is detected.
+
+        Provides a fallback for test harnesses that do not implement the
+        standard helper on the base ``ConfigFlow`` class.
+        """
+
+        aborter = getattr(super(), "_abort_if_unique_id_configured", None)
+        if callable(aborter):
+            return aborter(updates)
+
+        unique_id = getattr(self, "_unique_id", None)
+        if not unique_id:
+            return
+
+        for entry in self._async_current_entries() or ():
+            if getattr(entry, "unique_id", None) == unique_id:
+                aborter = getattr(self, "async_abort", None)
+                if callable(aborter):
+                    try:
+                        return aborter(reason="already_configured", updates=updates)
+                    except TypeError:
+                        return aborter(reason="already_configured")
+
+                raise AbortFlow("already_configured")
+
+    def async_create_entry(self, *, title: str, data: Mapping[str, Any] | None = None, **kwargs):
+        """Create an entry while guaranteeing a mapping for data.
+
+        The stock helper may be missing in the test harness, so fall back to a
+        lightweight return structure when unavailable.
+        """
+
+        creator = getattr(super(), "async_create_entry", None)
+        payload = dict(data or {})
+        if callable(creator):
+            return creator(title=title, data=payload, **kwargs)
+
+        return {"type": "create_entry", "title": title, "data": payload, **kwargs}
 
     async def async_step_import(self, user_input=None):
         """Handle YAML-imported configuration through the user step."""
@@ -1491,8 +1556,18 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         return await self.async_step_user(user_input)
 
     async def async_step_user(self, user_input=None):
+        await self.async_set_unique_id(DOMAIN)
+
+        abort_result = self._abort_if_unique_id_configured()
+        if abort_result is not None:
+            return abort_result
+
         context = getattr(self, "context", {}) or {}
         source = context.get("source")
+        unique_id_hint: str | None = None
+        unique_id_value = context.get("unique_id")
+        if isinstance(unique_id_value, str) and unique_id_value:
+            unique_id_hint = unique_id_value
         reconfigure_sources: set[str] = set()
 
         reauth_source = getattr(config_entries, "SOURCE_REAUTH", None)
@@ -1508,36 +1583,16 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         else:
             reconfigure_sources.add("reconfigure")
 
-        unique_id_hint: str | None = None
-        unique_id_value = context.get("unique_id")
-        if isinstance(unique_id_value, str) and unique_id_value:
-            unique_id_hint = unique_id_value
-
-        try:
-            await self.async_set_unique_id(unique_id_hint or DOMAIN, raise_on_progress=False)
-        except TypeError:
-            # Older Home Assistant versions do not support ``raise_on_progress``.
-            await self.async_set_unique_id(unique_id_hint or DOMAIN)
-
-        if source not in reconfigure_sources:
-            abort_result = self._abort_if_unique_id_configured()
-            if abort_result is not None:
-                return abort_result
-
         if source == "import" and user_input is not None:
             import_data: dict[str, Any] = {}
             if isinstance(user_input, Mapping):
                 import_data = dict(user_input)
 
-            title_hint = None
-            raw_title = import_data.pop("title", None)
-            if isinstance(raw_title, str):
-                title_hint = raw_title.strip()
+            import_data.pop("title", None)
 
             import_data.pop("setup_mode", None)
 
-            title = title_hint or self.hass.config.location_name or "Horticulture Assistant"
-            return self.async_create_entry(title=title, data=import_data, options={})
+            return self.async_create_entry(title="Horticulture Assistant", data={}, options=import_data)
 
         entry_id_hint: str | None = None
         raw_entry_id_hint = context.get("config_entry_id") or context.get("entry_id")
@@ -1662,8 +1717,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
 
         setup_mode = user_input.get("setup_mode", "profile")
         if setup_mode == "skip":
-            title = self.hass.config.location_name or "Horticulture Assistant"
-            return self.async_create_entry(title=title, data={}, options={})
+            return self.async_create_entry(title="Horticulture Assistant", data={}, options={})
 
         self._config = {}
         self._reset_profile_context()
@@ -1760,10 +1814,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             await store.async_init()
         except ProfileStoreError as err:
             _LOGGER.warning("Profile store unavailable: %s", err)
+            self._template_load_failed = True
             self._profile_store = None
             return None
         except Exception as err:  # pragma: no cover - defensive guard
             _LOGGER.debug("Profile store unavailable: %s", err)
+            self._template_load_failed = True
             self._profile_store = None
             return None
         self._profile_store = store
@@ -1773,6 +1829,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if self._profile_templates is not None:
             return self._profile_templates
 
+        self._template_load_failed = False
         templates = self._entry_profile_templates()
         sources: dict[str, str] = dict.fromkeys(templates, "entry")
 
@@ -1782,6 +1839,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 names = await store.async_list()
             except Exception as err:  # pragma: no cover - defensive guard
                 _LOGGER.debug("Unable to list profile library templates: %s", err)
+                self._template_load_failed = True
             else:
                 try:
                     iterable_names = list(names) if names is not None else []
@@ -1789,6 +1847,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                     iterable_names = []
                 except Exception as err:  # pragma: no cover - defensive guard
                     _LOGGER.warning("Unable to iterate profile library templates: %s", err)
+                    self._template_load_failed = True
                     iterable_names = []
 
                 for name in iterable_names:
@@ -1796,6 +1855,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                         payload = await store.async_get(name)
                     except Exception as err:  # pragma: no cover - defensive guard
                         _LOGGER.warning("Unable to load profile template '%s' from library: %s", name, err)
+                        self._template_load_failed = True
                         continue
                     if not isinstance(payload, Mapping):
                         continue
@@ -2120,6 +2180,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             if self._config is None:
                 self._config = {}
             return await self.async_step_profile()
+        errors: dict[str, str] = {}
+
         if user_input is not None:
             method = _coerce_threshold_source_method(user_input.get("method")) or "manual"
             if method == "openplantbook":
@@ -2140,7 +2202,15 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             self._sensor_defaults = None
             return await self.async_step_thresholds()
 
-        templates_available = bool(await self._async_available_profile_templates())
+        try:
+            templates_available = bool(await self._async_available_profile_templates())
+        except Exception as err:  # pragma: no cover - defensive guard
+            _LOGGER.warning("Unable to load profile templates: %s", err)
+            templates_available = False
+            errors["base"] = "read_failure"
+        else:
+            if self._template_load_failed:
+                errors["base"] = "read_failure"
 
         options = [
             {"value": "openplantbook", "label": "From OpenPlantbook"},
@@ -2165,7 +2235,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
             schema = vol.Schema({field: vol.In(valid_values or ("manual",))})
         else:
             schema = vol.Schema({field: selector})
-        return self.async_show_form(step_id="threshold_source", data_schema=schema)
+        return self.async_show_form(step_id="threshold_source", data_schema=schema, errors=errors)
 
     async def async_step_threshold_copy(self, user_input=None):
         if self._profile is None:
@@ -2174,8 +2244,32 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 self._config = {}
             return await self.async_step_profile()
 
-        templates = await self._async_available_profile_templates()
+        errors: dict[str, str] = {}
+        schema = vol.Schema({vol.Optional("filter", default=self._template_filter or ""): str})
+        try:
+            templates = await self._async_available_profile_templates()
+        except Exception as err:  # pragma: no cover - defensive guard
+            _LOGGER.warning("Unable to load profile templates: %s", err)
+            errors["base"] = "read_failure"
+            return self.async_show_form(
+                step_id="threshold_copy",
+                data_schema=schema,
+                errors=errors,
+                description_placeholders={"filter_summary": ""},
+            )
+
+        if self._template_load_failed:
+            errors["base"] = "read_failure"
+
         if not templates:
+            if errors:
+                return self.async_show_form(
+                    step_id="threshold_copy",
+                    data_schema=schema,
+                    errors=errors,
+                    description_placeholders={"filter_summary": ""},
+                )
+
             self._threshold_snapshot = None
             self._sensor_defaults = None
             return await self.async_step_thresholds()
@@ -2602,157 +2696,179 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
                 cleaned_input[option_key] = value
                 return value
 
-            sensor_map: dict[str, list[str]] = {}
-            if moisture := _sensor_entry(CONF_MOISTURE_SENSOR):
-                sensor_map["moisture_sensors"] = [moisture]
-            if temperature := _sensor_entry(CONF_TEMPERATURE_SENSOR):
-                sensor_map["temperature_sensors"] = [temperature]
-            if ec := _sensor_entry(CONF_EC_SENSOR):
-                sensor_map["ec_sensors"] = [ec]
-            if co2 := _sensor_entry(CONF_CO2_SENSOR):
-                sensor_map["co2_sensors"] = [co2]
-
             try:
-                await self.hass.async_add_executor_job(
-                    _ensure_general_profile_file,
-                    general_path,
+                sensor_map: dict[str, list[str]] = {}
+                if moisture := _sensor_entry(CONF_MOISTURE_SENSOR):
+                    sensor_map["moisture_sensors"] = [moisture]
+                if temperature := _sensor_entry(CONF_TEMPERATURE_SENSOR):
+                    sensor_map["temperature_sensors"] = [temperature]
+                if ec := _sensor_entry(CONF_EC_SENSOR):
+                    sensor_map["ec_sensors"] = [ec]
+                if co2 := _sensor_entry(CONF_CO2_SENSOR):
+                    sensor_map["co2_sensors"] = [co2]
+
+                try:
+                    await self.hass.async_add_executor_job(
+                        _ensure_general_profile_file,
+                        general_path,
+                        plant_id,
+                        profile_name,
+                        plant_type,
+                        profile_scope,
+                        sensor_map if sensor_map else None,
+                    )
+                except Exception as err:  # pragma: no cover - defensive guard
+                    _LOGGER.warning("Unable to persist profile metadata for '%s': %s", plant_id, err)
+                try:
+                    await self.hass.async_add_executor_job(
+                        register_plant,
+                        plant_id,
+                        {
+                            "display_name": profile_name,
+                            "profile_path": f"plants/{plant_id}/general.json",
+                            **({"plant_type": plant_type} if plant_type else {}),
+                        },
+                        self.hass,
+                    )
+                except Exception as err:  # pragma: no cover - defensive guard
+                    _LOGGER.warning("Unable to register plant '%s': %s", plant_id, err)
+                mapped: dict[str, str] = {}
+                if moisture:
+                    mapped["moisture"] = moisture
+                if temperature := cleaned_input.get(CONF_TEMPERATURE_SENSOR):
+                    mapped["temperature"] = temperature
+                if ec := cleaned_input.get(CONF_EC_SENSOR):
+                    mapped["conductivity"] = ec
+                if co2 := cleaned_input.get(CONF_CO2_SENSOR):
+                    mapped["co2"] = co2
+
+                if not mapped and self._sensor_defaults:
+                    for option_key, role in SENSOR_OPTION_ROLES.items():
+                        default_value = self._sensor_defaults.get(option_key) if self._sensor_defaults else None
+                        if isinstance(default_value, str) and default_value:
+                            mapped[role] = default_value
+
+                general_section: dict[str, Any] = {"display_name": profile_name}
+                if mapped:
+                    general_section["sensors"] = dict(mapped)
+                if plant_type:
+                    general_section.setdefault("plant_type", plant_type)
+                general_section.setdefault(CONF_PROFILE_SCOPE, profile_scope)
+
+                sync_kwargs: dict[str, Any] = {"default_source": "manual"}
+                if self._threshold_snapshot is not None:
+                    thresholds_payload = deepcopy(self._threshold_snapshot)
+                    thresholds_section = thresholds_payload.setdefault("thresholds", {})
+                    thresholds_section.update(self._thresholds)
+                    touched_keys = list(self._thresholds)
+                    if touched_keys:
+                        sync_kwargs["touched_keys"] = touched_keys
+                    sync_kwargs["prune"] = False
+                else:
+                    thresholds_payload = {"thresholds": dict(self._thresholds)}
+
+                fallback_thresholds = dict(thresholds_payload.get("thresholds", {}))
+
+                try:
+                    sync_thresholds(thresholds_payload, **sync_kwargs)
+                except Exception as err:  # pragma: no cover - defensive guard
+                    _LOGGER.warning("Unable to synchronise profile thresholds for '%s': %s", plant_id, err)
+                    thresholds_payload = _build_manual_threshold_payload(fallback_thresholds)
+
+                thresholds_payload.setdefault("thresholds", fallback_thresholds)
+                thresholds_payload.setdefault("resolved_targets", {})
+                thresholds_payload.setdefault("variables", {})
+
+                profile_entry: dict[str, Any] = {
+                    "name": profile_name,
+                    "plant_id": plant_id,
+                    "sensors": dict(mapped),
+                    "thresholds": thresholds_payload["thresholds"],
+                    "resolved_targets": thresholds_payload["resolved_targets"],
+                    "variables": thresholds_payload["variables"],
+                }
+                profile_entry[CONF_PROFILE_SCOPE] = profile_scope
+                if general_section:
+                    profile_entry["general"] = general_section
+                if sections := thresholds_payload.get("sections"):
+                    profile_entry["sections"] = sections
+                if self._species_display:
+                    profile_entry["species_display"] = self._species_display
+                if self._species_pid:
+                    profile_entry["species_pid"] = self._species_pid
+                if self._image_url:
+                    profile_entry["image_url"] = self._image_url
+                if self._opb_credentials:
+                    profile_entry["opb_credentials"] = self._opb_credentials
+
+                try:
+                    ensure_sections(profile_entry, plant_id=plant_id, display_name=profile_name)
+                except Exception as err:
+                    _LOGGER.warning("Unable to normalise profile sections for '%s': %s", plant_id, err)
+                    fallback_sections = dict(profile_entry.get("sections") or {})
+                    fallback_sections.setdefault("library", {})
+                    fallback_sections.setdefault("local", {})
+                    profile_entry["sections"] = fallback_sections
+                    profile_entry.setdefault("library", {})
+                    profile_entry.setdefault("local", {})
+
+                    fallback_general = dict(profile_entry.get("general") or {})
+                    if mapped:
+                        fallback_general.setdefault("sensors", dict(mapped))
+                    if plant_type:
+                        fallback_general.setdefault(CONF_PLANT_TYPE, plant_type)
+                    fallback_general.setdefault(CONF_PROFILE_SCOPE, profile_scope)
+                    fallback_general.setdefault("display_name", profile_name)
+                    profile_entry["general"] = fallback_general
+                    profile_entry.setdefault("display_name", profile_name)
+
+                if self._existing_entry is not None:
+                    await self._async_store_profile_for_existing_entry(
+                        plant_id,
+                        profile_entry,
+                    )
+                    return self.async_abort(
+                        reason="profile_added",
+                        description_placeholders={"profile": profile_name},
+                    )
+
+                options = dict(cleaned_input)
+                options["sensors"] = dict(mapped)
+                options["thresholds"] = thresholds_payload["thresholds"]
+                options["resolved_targets"] = thresholds_payload["resolved_targets"]
+                options["variables"] = thresholds_payload["variables"]
+                options[CONF_PROFILES] = {plant_id: profile_entry}
+                options[CONF_PLANT_ID] = plant_id
+                options[CONF_PLANT_NAME] = profile_name
+                options[CONF_PROFILE_SCOPE] = profile_scope
+                if plant_type:
+                    options[CONF_PLANT_TYPE] = plant_type
+                if self._species_display:
+                    options["species_display"] = self._species_display
+                if self._species_pid:
+                    options["species_pid"] = self._species_pid
+                if self._image_url:
+                    options["image_url"] = self._image_url
+                if self._opb_credentials:
+                    options["opb_credentials"] = self._opb_credentials
+                return self.async_create_entry(
+                    title="Horticulture Assistant",
+                    data={},
+                    options=options,
+                )
+            except Exception:  # pragma: no cover - defensive guard
+                _LOGGER.exception(
+                    "Profile completion for '%s' failed; storing manual fallback.",
+                    plant_id,
+                )
+                return await self._async_profile_completion_fallback(
                     plant_id,
                     profile_name,
-                    plant_type,
                     profile_scope,
-                    sensor_map if sensor_map else None,
+                    plant_type,
+                    general_path,
+                    cleaned_input,
                 )
-            except Exception as err:  # pragma: no cover - defensive guard
-                _LOGGER.warning("Unable to persist profile metadata for '%s': %s", plant_id, err)
-            try:
-                await self.hass.async_add_executor_job(
-                    register_plant,
-                    plant_id,
-                    {
-                        "display_name": profile_name,
-                        "profile_path": f"plants/{plant_id}/general.json",
-                        **({"plant_type": plant_type} if plant_type else {}),
-                    },
-                    self.hass,
-                )
-            except Exception as err:  # pragma: no cover - defensive guard
-                _LOGGER.warning("Unable to register plant '%s': %s", plant_id, err)
-            mapped: dict[str, str] = {}
-            if moisture:
-                mapped["moisture"] = moisture
-            if temperature := cleaned_input.get(CONF_TEMPERATURE_SENSOR):
-                mapped["temperature"] = temperature
-            if ec := cleaned_input.get(CONF_EC_SENSOR):
-                mapped["conductivity"] = ec
-            if co2 := cleaned_input.get(CONF_CO2_SENSOR):
-                mapped["co2"] = co2
-
-            if not mapped and self._sensor_defaults:
-                for option_key, role in SENSOR_OPTION_ROLES.items():
-                    default_value = self._sensor_defaults.get(option_key) if self._sensor_defaults else None
-                    if isinstance(default_value, str) and default_value:
-                        mapped[role] = default_value
-
-            general_section: dict[str, Any] = {"display_name": profile_name}
-            if mapped:
-                general_section["sensors"] = dict(mapped)
-            if plant_type:
-                general_section.setdefault("plant_type", plant_type)
-            general_section.setdefault(CONF_PROFILE_SCOPE, profile_scope)
-
-            sync_kwargs: dict[str, Any] = {"default_source": "manual"}
-            if self._threshold_snapshot is not None:
-                thresholds_payload = deepcopy(self._threshold_snapshot)
-                thresholds_section = thresholds_payload.setdefault("thresholds", {})
-                thresholds_section.update(self._thresholds)
-                touched_keys = list(self._thresholds)
-                if touched_keys:
-                    sync_kwargs["touched_keys"] = touched_keys
-                sync_kwargs["prune"] = False
-            else:
-                thresholds_payload = {"thresholds": dict(self._thresholds)}
-
-            fallback_thresholds = dict(thresholds_payload.get("thresholds", {}))
-
-            try:
-                sync_thresholds(thresholds_payload, **sync_kwargs)
-            except Exception as err:  # pragma: no cover - defensive guard
-                _LOGGER.warning("Unable to synchronise profile thresholds for '%s': %s", plant_id, err)
-                thresholds_payload = _build_manual_threshold_payload(fallback_thresholds)
-
-            thresholds_payload.setdefault("thresholds", fallback_thresholds)
-            thresholds_payload.setdefault("resolved_targets", {})
-            thresholds_payload.setdefault("variables", {})
-
-            profile_entry: dict[str, Any] = {
-                "name": profile_name,
-                "plant_id": plant_id,
-                "sensors": dict(mapped),
-                "thresholds": thresholds_payload["thresholds"],
-                "resolved_targets": thresholds_payload["resolved_targets"],
-                "variables": thresholds_payload["variables"],
-            }
-            profile_entry[CONF_PROFILE_SCOPE] = profile_scope
-            if general_section:
-                profile_entry["general"] = general_section
-            if sections := thresholds_payload.get("sections"):
-                profile_entry["sections"] = sections
-            if self._species_display:
-                profile_entry["species_display"] = self._species_display
-            if self._species_pid:
-                profile_entry["species_pid"] = self._species_pid
-            if self._image_url:
-                profile_entry["image_url"] = self._image_url
-            if self._opb_credentials:
-                profile_entry["opb_credentials"] = self._opb_credentials
-
-            try:
-                ensure_sections(profile_entry, plant_id=plant_id, display_name=profile_name)
-            except Exception as err:
-                _LOGGER.warning("Unable to normalise profile sections for '%s': %s", plant_id, err)
-                fallback_sections = dict(profile_entry.get("sections") or {})
-                fallback_sections.setdefault("library", {})
-                fallback_sections.setdefault("local", {})
-                profile_entry["sections"] = fallback_sections
-                profile_entry.setdefault("library", {})
-                profile_entry.setdefault("local", {})
-
-                fallback_general = dict(profile_entry.get("general") or {})
-                if mapped:
-                    fallback_general.setdefault("sensors", dict(mapped))
-                if plant_type:
-                    fallback_general.setdefault(CONF_PLANT_TYPE, plant_type)
-                fallback_general.setdefault(CONF_PROFILE_SCOPE, profile_scope)
-                fallback_general.setdefault("display_name", profile_name)
-                profile_entry["general"] = fallback_general
-                profile_entry.setdefault("display_name", profile_name)
-
-            data = dict(self._config or {})
-            if self._existing_entry is not None:
-                await self._async_store_profile_for_existing_entry(
-                    plant_id,
-                    profile_entry,
-                )
-                return self.async_abort(
-                    reason="profile_added",
-                    description_placeholders={"profile": profile_name},
-                )
-
-            options = dict(cleaned_input)
-            options["sensors"] = dict(mapped)
-            options["thresholds"] = thresholds_payload["thresholds"]
-            options["resolved_targets"] = thresholds_payload["resolved_targets"]
-            options["variables"] = thresholds_payload["variables"]
-            options[CONF_PROFILES] = {plant_id: profile_entry}
-            if self._species_display:
-                options["species_display"] = self._species_display
-            if self._species_pid:
-                options["species_pid"] = self._species_pid
-            if self._image_url:
-                options["image_url"] = self._image_url
-            if self._opb_credentials:
-                options["opb_credentials"] = self._opb_credentials
-            return self.async_create_entry(title=profile_name, data=data, options=options)
         except Exception:  # pragma: no cover - defensive guard
             _LOGGER.exception(
                 "Profile completion for '%s' failed; storing manual fallback.",
@@ -2847,7 +2963,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if self._opb_credentials:
             profile_entry["opb_credentials"] = self._opb_credentials
 
-        data = dict(self._config or {})
         if self._existing_entry is not None:
             await self._async_store_profile_for_existing_entry(plant_id, profile_entry)
             return self.async_abort(
@@ -2870,7 +2985,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         if self._opb_credentials:
             options["opb_credentials"] = self._opb_credentials
 
-        return self.async_create_entry(title=profile_name, data=data, options=options)
+        return self.async_create_entry(title="Horticulture Assistant", data={}, options=options)
 
     async def _async_store_profile_for_existing_entry(
         self,
@@ -3396,7 +3511,11 @@ class OptionsFlow(config_entries.OptionsFlow):
             }
             if sensor_map:
                 identifier = (
-                    self._entry.data.get(CONF_PLANT_ID) or self._entry.title or self._entry.entry_id or "<unknown>"
+                    self._entry.options.get(CONF_PLANT_ID)
+                    or self._entry.data.get(CONF_PLANT_ID)
+                    or self._entry.title
+                    or self._entry.entry_id
+                    or "<unknown>"
                 )
                 try:
                     validation = validate_sensor_links(self.hass, sensor_map)
@@ -3434,7 +3553,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             if co2 := user_input.get(CONF_CO2_SENSOR):
                 sensor_map["co2_sensors"] = [co2]
 
-            plant_id = self._entry.data.get(CONF_PLANT_ID)
+            plant_id = self._entry.options.get(CONF_PLANT_ID) or self._entry.data.get(CONF_PLANT_ID)
             if plant_id:
 
                 def _save_sensors():
@@ -3479,7 +3598,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                     opts.pop(key, None)
             opts["sensors"] = mapped
             profiles = dict(opts.get(CONF_PROFILES, {}))
-            plant_id = self._entry.data.get(CONF_PLANT_ID)
+            plant_id = self._entry.options.get(CONF_PLANT_ID) or self._entry.data.get(CONF_PLANT_ID)
             if plant_id:
                 primary = dict(profiles.get(plant_id, {}))
                 name = primary.get("name") or self._entry.title or opts.get(CONF_PLANT_NAME) or plant_id
@@ -3531,8 +3650,8 @@ class OptionsFlow(config_entries.OptionsFlow):
                 }
             )
             if user_input.get("force_refresh"):
-                plant_id = self._entry.data.get(CONF_PLANT_ID)
-                plant_name = self._entry.data.get(CONF_PLANT_NAME)
+                plant_id = self._entry.options.get(CONF_PLANT_ID) or self._entry.data.get(CONF_PLANT_ID)
+                plant_name = self._entry.options.get(CONF_PLANT_NAME) or self._entry.data.get(CONF_PLANT_NAME)
                 if plant_id and plant_name:
                     metadata = {
                         CONF_PLANT_ID: plant_id,
