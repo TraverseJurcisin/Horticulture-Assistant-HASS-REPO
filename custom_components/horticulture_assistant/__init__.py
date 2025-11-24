@@ -124,6 +124,8 @@ _ONBOARDING_STAGE_LABELS: dict[str, str] = {
     "profile_store": "profile library",
     "profile_registry": "profile registry",
     "coordinator_refresh": "initial data refresh",
+    "coordinator_ai_refresh": "initial AI refresh",
+    "coordinator_local_refresh": "initial local refresh",
     "cloud_sync": "cloud sync startup",
     "service_registration": "service registration",
     "service_setup": "service setup",
@@ -140,6 +142,8 @@ _ONBOARDING_STAGE_META: dict[str, dict[str, Any]] = {
     "profile_store": {"required": True, "depends_on": ("local_store",)},
     "profile_registry": {"required": True, "depends_on": ("profile_store",)},
     "coordinator_refresh": {"required": True, "depends_on": ("local_store",)},
+    "coordinator_ai_refresh": {"required": False, "depends_on": ("local_store",)},
+    "coordinator_local_refresh": {"required": False, "depends_on": ("local_store",)},
     "cloud_sync": {"required": False, "depends_on": ("profile_registry",)},
     "service_registration": {
         "required": True,
@@ -1095,11 +1099,25 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         update_minutes,
         (local_store.data or {}).get("recommendation") if local_store.data else None,
     )
+    ai_ready = False
+    ai_dependencies = ("local_store",) if not local_store_ready else None
+    ai_reason = "local store unavailable" if not local_store_ready else None
+    if manager.ensure_dependencies("coordinator_ai_refresh", reason=ai_reason, dependencies=ai_dependencies):
+        ai_ready, _ = await manager.guard_async(
+            "coordinator_ai_refresh", ai_coordinator.async_config_entry_first_refresh()
+        )
     local_coordinator = HortiLocalCoordinator(
         hass,
         local_store,
         update_minutes,
     )
+    local_ready = False
+    local_dependencies = ("local_store",) if not local_store_ready else None
+    local_reason = "local store unavailable" if not local_store_ready else None
+    if manager.ensure_dependencies("coordinator_local_refresh", reason=local_reason, dependencies=local_dependencies):
+        local_ready, _ = await manager.guard_async(
+            "coordinator_local_refresh", local_coordinator.async_config_entry_first_refresh()
+        )
 
     entry_data["dataset_monitor_attached"] = dataset_ready
     entry_data.update(
@@ -1117,7 +1135,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "coordinator": coordinator,
             "coordinator_ready": coordinator_ready,
             "coordinator_ai": ai_coordinator,
+            "coordinator_ai_ready": ai_ready,
             "coordinator_local": local_coordinator,
+            "coordinator_local_ready": local_ready,
             "keep_stale": keep_stale,
             "cloud_sync_manager": cloud_sync_manager,
             "cloud_publisher": cloud_publisher,
@@ -1477,6 +1497,14 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             if manager and hasattr(manager, "async_stop"):
                 with contextlib.suppress(Exception):
                     await manager.async_stop()
+            for coord in (
+                info.get("coordinator"),
+                info.get("coordinator_ai"),
+                info.get("coordinator_local"),
+            ):
+                if coord and hasattr(coord, "async_shutdown"):
+                    with contextlib.suppress(Exception):
+                        await coord.async_shutdown()
             profiles = info.get("profiles")
             if profiles and hasattr(profiles, "async_unload"):
                 with contextlib.suppress(Exception):

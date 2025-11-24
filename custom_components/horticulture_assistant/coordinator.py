@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 import logging
 from collections import Counter, deque
 from collections.abc import Mapping, Sequence
@@ -12,8 +13,26 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from homeassistant.util import dt as dt_util
 from homeassistant.util.unit_conversion import TemperatureConverter
+
+try:
+    from homeassistant.util import dt as dt_util
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - tests without HA
+    from datetime import date
+
+    class _DtUtilModule:  # type: ignore[too-many-instance-attributes]
+        date = date
+
+    dt_util = _DtUtilModule()  # type: ignore[assignment]
+
+try:
+    from homeassistant.util.dt import utcnow
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - tests without HA
+    from datetime import UTC, datetime
+
+    def utcnow() -> datetime:
+        return datetime.now(UTC)
+
 
 from .const import CONF_PROFILES, CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES, DOMAIN
 from .engine.metrics import accumulate_dli, dew_point_c, lux_to_ppfd, mold_risk, profile_status, vpd_kpa
@@ -143,12 +162,12 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             else:
                 profiles = {}
             data: dict[str, Any] = {"profiles": {}}
-            today = dt_util.utcnow().date()
+            today = utcnow().date()
             if self._last_reset != today:
                 self._last_reset = today
                 self._dli_totals = {}
             for pid, profile in profiles.items():
-                metrics = await self._compute_metrics(pid, profile, now=dt_util.utcnow())
+                metrics = await self._compute_metrics(pid, profile, now=utcnow())
                 data["profiles"][pid] = {
                     "name": profile.get("name"),
                     "metrics": metrics,
@@ -172,7 +191,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         scientifically accurate but provides deterministic behaviour for testing.
         """
 
-        now = now or dt_util.utcnow()
+        now = now or utcnow()
         sensors: dict[str, Any] = profile.get("sensors", {})
         illuminance = _resolve_primary_entity_id(sensors.get("illuminance"))
         temperature = _resolve_primary_entity_id(sensors.get("temperature"))
@@ -241,6 +260,30 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             "status": status,
         }
 
+    async def async_shutdown(self) -> None:
+        """Cancel scheduled refreshes and drop listeners."""
+
+        if hasattr(self, "async_stop"):
+            with suppress(Exception):
+                await self.async_stop()
+
+        debounced = getattr(self, "_debounced_refresh", None)
+        if debounced is not None:
+            with suppress(Exception):
+                await debounced.async_cancel()
+
+        unsub = getattr(self, "_unsub_refresh", None)
+        if unsub is not None:
+            with suppress(Exception):
+                result = unsub()
+                if inspect.isawaitable(result):
+                    await result
+            self._unsub_refresh = None
+
+        listeners = getattr(self, "_listeners", None)
+        if isinstance(listeners, dict):
+            listeners.clear()
+
     def _update_vpd_history(
         self,
         profile_id: str,
@@ -276,7 +319,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 "average_moisture": None,
                 "average_mold_risk": None,
                 "average_dli": None,
-                "last_updated": dt_util.utcnow().isoformat(),
+                "last_updated": utcnow().isoformat(),
             }
 
         statuses: list[str] = []
@@ -321,5 +364,5 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             "average_moisture": _avg(moisture_values),
             "average_mold_risk": _avg(mold_values),
             "average_dli": _avg(dli_values),
-            "last_updated": dt_util.utcnow().isoformat(),
+            "last_updated": utcnow().isoformat(),
         }
