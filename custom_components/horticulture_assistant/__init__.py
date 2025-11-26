@@ -968,7 +968,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     ensure_snapshot: Mapping[str, Any] | None = None
     snapshot_candidate = entry_data.get("snapshot")
     if isinstance(snapshot_candidate, Mapping):
-        ensure_snapshot = snapshot_candidate
+        profiles_snapshot = snapshot_candidate.get("profiles")
+        primary_profile_id = snapshot_candidate.get("primary_profile_id")
+        if (isinstance(profiles_snapshot, Mapping) and profiles_snapshot) or primary_profile_id:
+            ensure_snapshot = snapshot_candidate
 
     ensure_profiles: Mapping[str, Any] | None = None
     raw_profiles = entry.options.get(CONF_PROFILES)

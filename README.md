@@ -36,7 +36,7 @@
 1. Head to **Settings → Devices & Services → Add Integration** and pick **Horticulture Assistant**.
 2. Complete the guided setup—no spreadsheets, API keys, or cloud accounts required.
 3. Add a plant profile or link sensors from **Configure → Options** to unlock tailored insights.
-4. Visit the generated device to watch climate, light, nutrient, and workflow entities come alive.
+4. After you create a profile, open its device to watch climate, light, nutrient, and workflow entities come alive.
 
 Curious what else is under the hood? The [component guide](custom_components/horticulture_assistant/README.md) walks through every entity, service, and automation hook when you’re ready for more.
 

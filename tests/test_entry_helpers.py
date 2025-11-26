@@ -1162,6 +1162,40 @@ async def test_ensure_all_profile_devices_registered_registers_all_profiles(hass
 
 
 @pytest.mark.asyncio
+async def test_async_sync_entry_devices_skips_when_profiles_empty(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={},
+        options={},
+        entry_id="entry-empty",
+    )
+    entry.add_to_hass(hass)
+
+    snapshot = {
+        "plant_id": "entry-empty",
+        "plant_name": "Empty Entry",
+        "primary_profile_id": None,
+        "profiles": {},
+    }
+
+    fake_registry = _FakeDeviceRegistry()
+
+    with patch(
+        "custom_components.horticulture_assistant.utils.entry_helpers.dr.async_get",
+        return_value=fake_registry,
+    ):
+        await async_sync_entry_devices(hass, entry, snapshot=snapshot)
+
+    entry_identifier = entry_device_identifier(entry.entry_id)
+    profile_identifier = profile_device_identifier(entry.entry_id, "entry-empty")
+
+    assert fake_registry.async_get_device({entry_identifier}) is not None
+    assert fake_registry.async_get_device({profile_identifier}) is None
+
+
+@pytest.mark.asyncio
 async def test_async_sync_entry_devices_adds_canonical_identifiers(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
 
@@ -1590,7 +1624,7 @@ async def test_profile_context_preserves_multiple_sensor_links(hass, tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_resolve_profile_context_collection_fallbacks_to_primary(hass, tmp_path):
+async def test_resolve_profile_context_collection_returns_empty_when_no_profiles(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
     entry = _make_entry(
         data={CONF_PLANT_ID: "gamma", CONF_PLANT_NAME: "Gamma"},
@@ -1599,12 +1633,7 @@ async def test_resolve_profile_context_collection_fallbacks_to_primary(hass, tmp
 
     collection = resolve_profile_context_collection(hass, entry)
     assert isinstance(collection, ProfileContextCollection)
-    assert collection.primary_id == "gamma"
-
-    primary = collection.primary
-    assert primary.id == "gamma"
-    assert primary.name == "Gamma"
-    assert primary.first_sensor("temperature") == "sensor.temp"
+    assert collection.contexts == {}
 
 
 def test_serialise_device_info_converts_sets():
