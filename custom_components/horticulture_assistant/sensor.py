@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import inspect
+import logging
 from collections import defaultdict
 from collections.abc import Iterable, Mapping
 from contextlib import suppress
@@ -35,6 +36,8 @@ from .irrigation_bridge import PlantIrrigationRecommendationSensor
 from .profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION, SUCCESS_STATS_VERSION, YIELD_STATS_VERSION
 from .profile_monitor import ProfileMonitor
 from .utils.entry_helpers import ProfileContext, resolve_profile_context_collection
+
+_LOGGER = logging.getLogger(__name__)
 
 HORTI_STATUS_DESCRIPTION = SensorEntityDescription(
     key="status",
@@ -413,11 +416,16 @@ class EntitlementSummarySensor(HorticultureEntryEntity, SensorEntity):
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
     collection = resolve_profile_context_collection(hass, entry)
     stored = collection.stored
+    contexts = collection.contexts
+
+    if not contexts:
+        _LOGGER.debug("No plant profiles configured; skipping horticulture_assistant sensors")
+        return
+
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
     coord_local: HortiLocalCoordinator = stored["coordinator_local"]
     profile_coord: HorticultureCoordinator | None = stored.get("coordinator")
     keep_stale: bool = stored.get("keep_stale", True)
-    contexts = collection.contexts
 
     entity_registry = er.async_get(hass)
     for entity_entry in er.async_entries_for_config_entry(entity_registry, entry.entry_id):

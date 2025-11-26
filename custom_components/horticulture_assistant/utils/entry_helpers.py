@@ -1227,13 +1227,14 @@ def build_entry_snapshot(entry: ConfigEntry) -> dict[str, Any]:
             else:
                 profiles.setdefault(canonical_pid, {})
 
-    canonical_primary = _normalise_profile_identifier(primary_id) or plant_id
+    canonical_primary = _normalise_profile_identifier(primary_id)
+    primary_profile_name = plant_name if canonical_primary else None
 
     return {
         "plant_id": plant_id,
         "plant_name": plant_name,
         "primary_profile_id": canonical_primary,
-        "primary_profile_name": plant_name,
+        "primary_profile_name": primary_profile_name,
         "primary_profile": primary_profile,
         "profiles": profiles,
         "sensors": sensors,
@@ -1303,7 +1304,7 @@ async def update_entry_data(
         new_profile_ids.add(primary_id)
 
     plant_identifier = _normalise_profile_identifier(snapshot["plant_id"])
-    if plant_identifier:
+    if plant_identifier and (profile_payloads or primary_id):
         new_profile_ids.add(plant_identifier)
 
     previous_profiles = set(entry_data.get("profile_ids", []))
@@ -1408,10 +1409,13 @@ async def async_sync_entry_devices(
     snapshot_plant_id = _normalise_profile_identifier(snapshot.get("plant_id"))
 
     profile_ids: set[str] = set(canonical_profiles.keys())
-    for candidate in (snapshot_primary_id, snapshot_plant_id):
-        if candidate:
-            profile_ids.add(candidate)
-            canonical_profiles.setdefault(candidate, {})
+    if snapshot_primary_id:
+        profile_ids.add(snapshot_primary_id)
+        canonical_profiles.setdefault(snapshot_primary_id, {})
+
+    if snapshot_plant_id and (canonical_profiles or snapshot_primary_id):
+        profile_ids.add(snapshot_plant_id)
+        canonical_profiles.setdefault(snapshot_plant_id, {})
 
     for pid in sorted(profile_ids):
         payload = canonical_profiles.get(pid)
@@ -1494,7 +1498,7 @@ async def ensure_profile_device_registered(
             else:
                 profiles_map.setdefault(canonical_pid, {})
 
-    def _resolve_profile_id() -> str:
+    def _resolve_profile_id() -> str | None:
         candidate = _normalise_profile_identifier(profile_id)
         if candidate:
             return candidate
@@ -1503,16 +1507,18 @@ async def ensure_profile_device_registered(
             snapshot_dict.get("primary_profile_id"),
             snapshot_dict.get("plant_id"),
             entry.options.get(CONF_PLANT_ID),
-            entry.options.get(CONF_PLANT_ID) or entry.data.get(CONF_PLANT_ID),
-            entry.entry_id,
+            entry.data.get(CONF_PLANT_ID),
         )
         for fallback in fallbacks:
             resolved = _normalise_profile_identifier(fallback)
             if resolved:
                 return resolved
-        return "profile"
+        return None
 
     canonical_profile_id = _resolve_profile_id()
+
+    if not canonical_profile_id:
+        return
 
     if orphan_profiles:
         merged_orphan_payload: dict[str, Any] = {}
@@ -1886,36 +1892,21 @@ async def ensure_all_profile_devices_registered(
             elif canonical_pid not in canonical_profiles:
                 canonical_profiles[canonical_pid] = None
 
-    if canonical_profiles:
-        snapshot_dict["profiles"] = {
-            pid: _coerce_mapping(payload) for pid, payload in canonical_profiles.items() if isinstance(payload, Mapping)
-        }
-        for pid, payload in canonical_profiles.items():
-            await ensure_profile_device_registered(
-                hass,
-                entry,
-                pid,
-                payload if isinstance(payload, Mapping) else None,
-                snapshot=snapshot_dict,
-                device_registry=device_registry,
-            )
+    if not canonical_profiles:
         return
 
-    fallback_id = _normalise_profile_identifier(snapshot_dict.get("plant_id"))
-    if not fallback_id:
-        candidate = entry.options.get(CONF_PLANT_ID) or entry.data.get(CONF_PLANT_ID)
-        fallback_id = _normalise_profile_identifier(candidate) if candidate is not None else ""
-        if not fallback_id:
-            fallback_id = str(entry.entry_id)
-
-    await ensure_profile_device_registered(
-        hass,
-        entry,
-        fallback_id,
-        None,
-        snapshot=snapshot_dict,
-        device_registry=device_registry,
-    )
+    snapshot_dict["profiles"] = {
+        pid: _coerce_mapping(payload) for pid, payload in canonical_profiles.items() if isinstance(payload, Mapping)
+    }
+    for pid, payload in canonical_profiles.items():
+        await ensure_profile_device_registered(
+            hass,
+            entry,
+            pid,
+            payload if isinstance(payload, Mapping) else None,
+            snapshot=snapshot_dict,
+            device_registry=device_registry,
+        )
 
 
 async def backfill_profile_devices_from_options(
@@ -2272,45 +2263,6 @@ def _build_profile_context_from_payload(
     )
 
 
-def _fallback_profile_contexts(
-    hass: HomeAssistant,
-    entry: ConfigEntry,
-    stored: Mapping[str, Any],
-) -> dict[str, ProfileContext]:
-    """Return a minimal context mapping when no stored metadata exists."""
-
-    plant_id, plant_name = get_entry_plant_info(entry)
-    snapshot = stored.get("snapshot") if isinstance(stored.get("snapshot"), Mapping) else None
-    payload = _profile_payload_from_snapshot(snapshot, plant_id)
-
-    sensors = get_primary_profile_sensors(entry)
-    thresholds = get_primary_profile_thresholds(entry)
-
-    metrics = _resolve_profile_metrics(payload, thresholds=thresholds)
-
-    image_url = resolve_profile_image_url(hass, entry.entry_id, plant_id)
-
-    device_payload = build_profile_device_info(
-        entry.entry_id,
-        plant_id,
-        payload,
-        snapshot,
-        default_name=plant_name,
-    )
-
-    context = ProfileContext(
-        profile_id=plant_id,
-        name=plant_name,
-        sensors=sensors,
-        thresholds=thresholds,
-        metrics=metrics,
-        payload=payload,
-        device_info=device_payload,
-        image_url=image_url,
-    )
-    return {plant_id: context}
-
-
 def resolve_profile_context_collection(
     hass: HomeAssistant,
     entry: ConfigEntry,
@@ -2347,17 +2299,17 @@ def resolve_profile_context_collection(
                 payload if isinstance(payload, Mapping) else {},
             )
 
-    if not contexts:
-        contexts = _fallback_profile_contexts(hass, entry, stored)
-
     plant_id = stored.get("plant_id") if isinstance(stored, Mapping) else None
     plant_name = stored.get("plant_name") if isinstance(stored, Mapping) else None
     primary_id = stored.get("primary_profile_id") if isinstance(stored, Mapping) else None
 
-    if not isinstance(primary_id, str) or not primary_id:
-        primary_id = plant_id
-    if (not isinstance(primary_id, str) or primary_id not in contexts) and contexts:
-        primary_id = next(iter(contexts))
+    if contexts:
+        if not isinstance(primary_id, str) or not primary_id:
+            primary_id = plant_id
+        if (not isinstance(primary_id, str) or primary_id not in contexts) and contexts:
+            primary_id = next(iter(contexts))
+    else:
+        primary_id = primary_id or plant_id or ""
 
     primary = contexts.get(primary_id) if primary_id else None
     if primary is not None:
@@ -2370,9 +2322,6 @@ def resolve_profile_context_collection(
 
     if not isinstance(plant_name, str) or not plant_name:
         plant_name = entry.title or plant_id or entry.entry_id
-
-    if not isinstance(primary_id, str) or not primary_id:
-        primary_id = plant_id
 
     return ProfileContextCollection(
         entry=entry,
