@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping
 from typing import Any
 
-from homeassistant.components.number import NumberEntity
+from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import EVENT_CORE_CONFIG_UPDATE, UnitOfTemperature
 from homeassistant.core import HomeAssistant, callback
@@ -98,6 +98,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
     """Configurable threshold number for a plant."""
 
     _attr_entity_category = CATEGORY_CONTROL
+    _attr_mode = NumberMode.BOX
 
     def __init__(
         self,
