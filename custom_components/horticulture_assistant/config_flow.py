@@ -4809,7 +4809,7 @@ class OptionsFlow(config_entries.OptionsFlow):
             return await self.async_step_apply()
         return self.async_show_form(
             step_id="src_manual",
-            data_schema=vol.Schema({vol.Required("value"): float}),
+            data_schema=vol.Schema({vol.Required("value"): vol.Coerce(float)}),
         )
 
     async def async_step_src_clone(self, user_input=None):
