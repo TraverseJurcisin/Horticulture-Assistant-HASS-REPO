@@ -4066,9 +4066,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                                 device_registry=device_registry,
                             )
                         except Exception as err:  # pragma: no cover - defensive guard
-                            _LOGGER.debug(
-                                "Unable to register device for profile %s: %s", pid, err, exc_info=True
-                            )
+                            _LOGGER.debug("Unable to register device for profile %s: %s", pid, err, exc_info=True)
                         self._new_profile_id = pid
                         self._new_profile_label = profile_label or raw_name
                         return await self.async_step_attach_sensors()
