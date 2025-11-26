@@ -352,6 +352,9 @@
             "status_problem": "Status is warning or critical",
             "status_recovered": "Status recovered to OK",
             "run_active": "Run is currently active"
+        },
+        "action_type": {
+            "replace_sensors": "Replace attached sensors"
         }
     },
     "issues": {
