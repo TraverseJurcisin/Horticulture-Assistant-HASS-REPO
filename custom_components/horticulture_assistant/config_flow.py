@@ -4057,13 +4057,18 @@ class OptionsFlow(config_entries.OptionsFlow):
                         profile_payload = profile_obj.to_json() if profile_obj is not None else new_profile
                         await async_sync_entry_devices(self.hass, self._entry)
                         device_registry = await _async_resolve_device_registry(self.hass)
-                        await ensure_profile_device_registered(
-                            self.hass,
-                            self._entry,
-                            pid,
-                            profile_payload,
-                            device_registry=device_registry,
-                        )
+                        try:
+                            await ensure_profile_device_registered(
+                                self.hass,
+                                self._entry,
+                                pid,
+                                profile_payload,
+                                device_registry=device_registry,
+                            )
+                        except Exception as err:  # pragma: no cover - defensive guard
+                            _LOGGER.debug(
+                                "Unable to register device for profile %s: %s", pid, err, exc_info=True
+                            )
                         self._new_profile_id = pid
                         self._new_profile_label = profile_label or raw_name
                         return await self.async_step_attach_sensors()
