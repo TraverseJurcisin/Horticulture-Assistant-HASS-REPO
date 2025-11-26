@@ -336,24 +336,27 @@
             }
         }
     },
-    "device_automation": {
-        "trigger_type": {
-            "status_problem": "Status becomes warning or critical",
-            "status_recovered": "Status returns to OK",
-            "status_changed": "Status changes",
-            "run_recorded": "New run event recorded",
-            "harvest_recorded": "Harvest logged",
-            "nutrient_recorded": "Nutrient application logged",
-            "cultivation_recorded": "Cultivation event logged"
+        "device_automation": {
+            "trigger_type": {
+                "status_problem": "Status becomes warning or critical",
+                "status_recovered": "Status returns to OK",
+                "status_changed": "Status changes",
+                "run_recorded": "New run event recorded",
+                "harvest_recorded": "Harvest logged",
+                "nutrient_recorded": "Nutrient application logged",
+                "cultivation_recorded": "Cultivation event logged"
+            },
+            "condition_type": {
+                "status_is": "Status is specific value",
+                "status_ok": "Status is OK",
+                "status_problem": "Status is warning or critical",
+                "status_recovered": "Status recovered to OK",
+                "run_active": "Run is currently active"
+            },
+            "action_type": {
+                "replace_sensors": "Replace attached sensors"
+            }
         },
-        "condition_type": {
-            "status_is": "Status is specific value",
-            "status_ok": "Status is OK",
-            "status_problem": "Status is warning or critical",
-            "status_recovered": "Status recovered to OK",
-            "run_active": "Run is currently active"
-        }
-    },
     "issues": {
         "missing_lineage_species": {
             "title": "Profile missing species reference",
