@@ -137,7 +137,8 @@
                     "opb_auto_download_images": "Auto-download OpenPlantbook images",
                     "opb_download_dir": "Image download directory",
                     "opb_location_share": "Share location accuracy with OpenPlantbook",
-                    "opb_enable_upload": "Allow contributing data back to OpenPlantbook"
+                    "opb_enable_upload": "Allow contributing data back to OpenPlantbook",
+                    "navigation": "Navigation"
                 }
             },
             "add_profile": {
@@ -148,7 +149,8 @@
                     "profile_scope": "What does this profile represent?",
                     "copy_from": "Clone thresholds from (optional)",
                     "species_id": "Base species template (optional)",
-                    "cultivar_id": "Cultivar profile (optional)"
+                    "cultivar_id": "Cultivar profile (optional)",
+                    "navigation": "Navigation"
                 },
                 "data_description": {
                     "name": "Displayed in the UI and converted into a filesystem-safe identifier.",
@@ -163,7 +165,8 @@
                 "description": "Choose a profile to edit or remove.",
                 "data": {
                     "profile_id": "Profile",
-                    "action": "Action"
+                    "action": "Action",
+                    "navigation": "Navigation"
                 }
             },
             "manage_profile_general": {
@@ -173,7 +176,8 @@
                     "name": "Profile name",
                     "plant_type": "Plant type",
                     "profile_scope": "Scope",
-                    "species_display": "Display species name"
+                    "species_display": "Display species name",
+                    "navigation": "Navigation"
                 },
                 "data_description": {
                     "name": "Visible label and base for the internal identifier.",
@@ -191,7 +195,8 @@
                     "illuminance": "Light sensor",
                     "moisture": "Moisture sensor",
                     "conductivity": "Conductivity sensor",
-                    "co2": "CO₂ sensor"
+                    "co2": "CO₂ sensor",
+                    "navigation": "Navigation"
                 },
                 "data_description": {
                     "temperature": "Ambient or canopy temperature entity.",
@@ -213,7 +218,8 @@
                     "illuminance_min": "Illuminance minimum",
                     "illuminance_max": "Illuminance maximum",
                     "conductivity_min": "Conductivity minimum",
-                    "conductivity_max": "Conductivity maximum"
+                    "conductivity_max": "Conductivity maximum",
+                    "navigation": "Navigation"
                 },
                 "data_description": {
                     "temperature_min": "Lowest temperature before alerts trigger (-20 to 60 °C).",
@@ -230,7 +236,8 @@
                 "title": "Delete profile",
                 "description": "Are you sure you want to delete {profile}? This cannot be undone.",
                 "data": {
-                    "confirm": "Yes, delete this profile"
+                    "confirm": "Yes, delete this profile",
+                    "navigation": "Navigation"
                 }
             },
             "attach_sensors": {
@@ -241,7 +248,8 @@
                     "humidity": "Humidity sensor",
                     "illuminance": "Light sensor",
                     "moisture": "Moisture sensor",
-                    "skip_linking": "Finish without linking sensors"
+                    "skip_linking": "Finish without linking sensors",
+                    "navigation": "Navigation"
                 },
                 "data_description": {
                     "temperature": "Pick the entity that measures air or canopy temperature.",
@@ -258,7 +266,8 @@
                     "api_key": "API key",
                     "model": "Model",
                     "base_url": "Base URL",
-                    "update_interval": "Update interval (minutes)"
+                    "update_interval": "Update interval (minutes)",
+                    "navigation": "Navigation"
                 }
             },
             "cloud_sync": {
@@ -269,14 +278,16 @@
                     "cloud_base_url": "Cloud base URL",
                     "cloud_tenant_id": "Tenant ID",
                     "cloud_device_token": "Device token",
-                    "cloud_sync_interval": "Sync interval (minutes)"
+                    "cloud_sync_interval": "Sync interval (minutes)",
+                    "navigation": "Navigation"
                 }
             },
             "nutrient_schedule": {
                 "title": "Select profile",
                 "description": "Choose which profile's nutrient schedule to edit.",
                 "data": {
-                    "profile_id": "Profile"
+                    "profile_id": "Profile",
+                    "navigation": "Navigation"
                 }
             },
             "nutrient_schedule_edit": {
@@ -284,7 +295,8 @@
                 "description": "Update the nutrient schedule for {profile}. Current stages: {current_count}. Auto-generate using plant type {plant_type}. Example:\n{example}",
                 "data": {
                     "auto_generate": "Auto-generate from plant data",
-                    "schedule": "Schedule JSON"
+                    "schedule": "Schedule JSON",
+                    "navigation": "Navigation"
                 }
             }
         },
@@ -381,6 +393,14 @@
         "onboarding_stage_failure": {
             "title": "Setup step failed",
             "description": "The {stage} step failed while setting up Horticulture Assistant: {error}. Check the logs, fix the issue, then reload the integration."
+        }
+    },
+    "selector": {
+        "navigation_action": {
+            "options": {
+                "save": "Save changes",
+                "menu": "Back to menu"
+            }
         }
     }
 }

@@ -3143,6 +3143,26 @@ class OptionsFlow(config_entries.OptionsFlow):
         self._attach_sensor_defaults: dict[str, Any] | None = None
         self._manage_sensor_defaults: dict[str, Any] | None = None
 
+    @staticmethod
+    def _with_navigation(schema: vol.Schema) -> vol.Schema:
+        """Append a Back to menu control to the given schema."""
+
+        fields = dict(schema.schema)
+        navigation_selector = _build_select_selector(
+            [
+                {"value": "save", "label": "Save changes"},
+                {"value": "menu", "label": "Back to menu"},
+            ],
+            translation_key="navigation_action",
+        )
+
+        if navigation_selector is None:
+            fields[vol.Optional("navigation", default="save")] = vol.In(("save", "menu"))
+        else:
+            fields[vol.Optional("navigation", default="save")] = navigation_selector
+
+        return vol.Schema(fields)
+
     async def async_step_init(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         profiles_available = bool(self._profiles())
         menu_plan = [
@@ -3475,10 +3495,13 @@ class OptionsFlow(config_entries.OptionsFlow):
             vol.Optional("force_refresh", default=False): bool,
         }
         schema_fields.update(sensor_schema.schema)
-        schema = vol.Schema(schema_fields)
+        schema = self._with_navigation(vol.Schema(schema_fields))
 
         errors = {}
         if user_input is not None:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             interval_candidate = user_input.get(CONF_UPDATE_INTERVAL)
             if interval_candidate is not None:
                 try:
@@ -3683,14 +3706,18 @@ class OptionsFlow(config_entries.OptionsFlow):
         if not profiles:
             return self.async_abort(reason="no_profiles")
         if user_input is None or "profile_id" not in user_input:
+            schema = vol.Schema(
+                {
+                    vol.Required("profile_id"): vol.In({pid: data["name"] for pid, data in profiles.items()}),
+                }
+            )
             return self.async_show_form(
                 step_id="nutrient_schedule",
-                data_schema=vol.Schema(
-                    {
-                        vol.Required("profile_id"): vol.In({pid: data["name"] for pid, data in profiles.items()}),
-                    }
-                ),
+                data_schema=self._with_navigation(schema),
             )
+        navigation = user_input.pop("navigation", "save")
+        if navigation == "menu":
+            return await self.async_step_init()
         self._pid = user_input["profile_id"]
         return await self.async_step_nutrient_schedule_edit()
 
@@ -3705,14 +3732,16 @@ class OptionsFlow(config_entries.OptionsFlow):
         existing = self._extract_nutrient_schedule(profile)
         schedule_text = json.dumps(existing, indent=2, ensure_ascii=False) if existing else ""
 
-        schema = vol.Schema(
-            {
-                vol.Optional("auto_generate", default=False): bool,
-                vol.Optional(
-                    "schedule",
-                    default=schedule_text,
-                ): sel.TextSelector(sel.TextSelectorConfig(type="text", multiline=True)),
-            }
+        schema = self._with_navigation(
+            vol.Schema(
+                {
+                    vol.Optional("auto_generate", default=False): bool,
+                    vol.Optional(
+                        "schedule",
+                        default=schedule_text,
+                    ): sel.TextSelector(sel.TextSelectorConfig(type="text", multiline=True)),
+                }
+            )
         )
 
         errors: dict[str, str] = {}
@@ -3743,6 +3772,9 @@ class OptionsFlow(config_entries.OptionsFlow):
         description_placeholders["plant_type"] = plant_type or "unknown"
 
         if user_input is not None:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             schedule_payload: list[dict[str, Any]] | None = None
             if user_input.get("auto_generate"):
                 try:
@@ -3786,17 +3818,22 @@ class OptionsFlow(config_entries.OptionsFlow):
             CONF_CLOUD_SYNC_INTERVAL: self._entry.options.get(CONF_CLOUD_SYNC_INTERVAL, DEFAULT_CLOUD_SYNC_INTERVAL),
         }
 
-        schema = vol.Schema(
-            {
-                vol.Required(CONF_CLOUD_SYNC_ENABLED, default=defaults[CONF_CLOUD_SYNC_ENABLED]): bool,
-                vol.Optional(CONF_CLOUD_BASE_URL, default=defaults[CONF_CLOUD_BASE_URL]): str,
-                vol.Optional(CONF_CLOUD_TENANT_ID, default=defaults[CONF_CLOUD_TENANT_ID]): str,
-                vol.Optional(CONF_CLOUD_DEVICE_TOKEN, default=defaults[CONF_CLOUD_DEVICE_TOKEN]): str,
-                vol.Optional(CONF_CLOUD_SYNC_INTERVAL, default=defaults[CONF_CLOUD_SYNC_INTERVAL]): int,
-            }
+        schema = self._with_navigation(
+            vol.Schema(
+                {
+                    vol.Required(CONF_CLOUD_SYNC_ENABLED, default=defaults[CONF_CLOUD_SYNC_ENABLED]): bool,
+                    vol.Optional(CONF_CLOUD_BASE_URL, default=defaults[CONF_CLOUD_BASE_URL]): str,
+                    vol.Optional(CONF_CLOUD_TENANT_ID, default=defaults[CONF_CLOUD_TENANT_ID]): str,
+                    vol.Optional(CONF_CLOUD_DEVICE_TOKEN, default=defaults[CONF_CLOUD_DEVICE_TOKEN]): str,
+                    vol.Optional(CONF_CLOUD_SYNC_INTERVAL, default=defaults[CONF_CLOUD_SYNC_INTERVAL]): int,
+                }
+            )
         )
 
         if user_input is not None:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             opts = dict(self._entry.options)
             enabled = bool(user_input.get(CONF_CLOUD_SYNC_ENABLED, False))
             opts[CONF_CLOUD_SYNC_ENABLED] = enabled
@@ -3887,6 +3924,9 @@ class OptionsFlow(config_entries.OptionsFlow):
         profile_label: str | None = None
 
         if user_input is not None:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             raw_name = str(user_input.get("name", "")).strip()
             scope = user_input.get(CONF_PROFILE_SCOPE, PROFILE_SCOPE_DEFAULT)
             copy_from = user_input.get("copy_from")
@@ -4137,7 +4177,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                     schema_fields[vol.Optional("cultivar_id", default=self._selected_cultivar_id)] = cultivar_selector
                 else:
                     schema_fields[vol.Optional("cultivar_id")] = cultivar_selector
-        schema = vol.Schema(schema_fields)
+        schema = self._with_navigation(vol.Schema(schema_fields))
         return self.async_show_form(
             step_id="add_profile",
             data_schema=schema,
@@ -4158,15 +4198,22 @@ class OptionsFlow(config_entries.OptionsFlow):
                 "edit_thresholds": "Edit targets",
                 "delete": "Delete profile",
             }
-            return self.async_show_form(
-                step_id="manage_profiles",
-                data_schema=vol.Schema(
+            schema = self._with_navigation(
+                vol.Schema(
                     {
                         vol.Required("profile_id"): vol.In(options),
                         vol.Required("action", default="edit_general"): vol.In(actions),
                     }
-                ),
+                )
             )
+            return self.async_show_form(
+                step_id="manage_profiles",
+                data_schema=schema,
+            )
+
+        navigation = user_input.pop("navigation", "save")
+        if navigation == "menu":
+            return await self.async_step_init()
 
         self._pid = user_input["profile_id"]
         action = user_input["action"]
@@ -4195,18 +4242,23 @@ class OptionsFlow(config_entries.OptionsFlow):
             "species_display": profile.get("species_display", general.get("plant_type", "")),
         }
         scope_selector = sel.SelectSelector(sel.SelectSelectorConfig(options=PROFILE_SCOPE_SELECTOR_OPTIONS))
-        schema = vol.Schema(
-            {
-                vol.Required("name", default=defaults["name"]): str,
-                vol.Optional("plant_type", default=defaults["plant_type"]): str,
-                vol.Required(CONF_PROFILE_SCOPE, default=defaults[CONF_PROFILE_SCOPE]): scope_selector,
-                vol.Optional("species_display", default=defaults["species_display"]): str,
-            }
+        schema = self._with_navigation(
+            vol.Schema(
+                {
+                    vol.Required("name", default=defaults["name"]): str,
+                    vol.Optional("plant_type", default=defaults["plant_type"]): str,
+                    vol.Required(CONF_PROFILE_SCOPE, default=defaults[CONF_PROFILE_SCOPE]): scope_selector,
+                    vol.Optional("species_display", default=defaults["species_display"]): str,
+                }
+            )
         )
 
         errors: dict[str, str] = {}
         placeholders: dict[str, str] = {"profile": defaults["name"]}
         if user_input is not None:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             new_name = user_input["name"].strip()
             if not new_name:
                 errors["name"] = "required"
@@ -4284,10 +4336,13 @@ class OptionsFlow(config_entries.OptionsFlow):
             else:
                 selector_schema = selector
             schema_fields[optional] = vol.Any(selector_schema, cv.string, vol.All([cv.string]))
-        schema = vol.Schema(schema_fields)
+        schema = self._with_navigation(vol.Schema(schema_fields))
 
         errors: dict[str, str] = {}
         if user_input is not None:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             sensors: dict[str, str | list[str]] = {}
             updated_defaults = dict(self._manage_sensor_defaults or {})
             for measurement in PROFILE_SENSOR_FIELDS:
@@ -4335,7 +4390,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                             else:
                                 selector_schema = selector
                             conflict_schema_fields[optional] = vol.Any(selector_schema, cv.string, vol.All([cv.string]))
-                        conflict_schema = vol.Schema(conflict_schema_fields)
+                        conflict_schema = self._with_navigation(vol.Schema(conflict_schema_fields))
                         description_placeholders["conflict_warning"] = (
                             f"{conflict_message}\n" if conflict_message else ""
                         )
@@ -4413,12 +4468,15 @@ class OptionsFlow(config_entries.OptionsFlow):
                 schema_fields[option] = vol.Any(str, int, float)
             else:
                 schema_fields[option] = vol.Any(selector, str, int, float)
-        schema = vol.Schema(schema_fields)
+        schema = self._with_navigation(vol.Schema(schema_fields))
 
         errors: dict[str, str] = {}
         placeholders = {"profile": profile.get("name") or self._pid, "issue_detail": ""}
 
         if user_input is not None:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             cleaned: dict[str, float] = {}
             removed: set[str] = set()
             candidate = dict(thresholds_payload) if isinstance(thresholds_payload, Mapping) else {}
@@ -4494,10 +4552,13 @@ class OptionsFlow(config_entries.OptionsFlow):
             return self.async_abort(reason="unknown_profile")
 
         profile_name = profiles[self._pid].get("name") or self._pid
-        schema = vol.Schema({vol.Required("confirm", default=False): bool})
+        schema = self._with_navigation(vol.Schema({vol.Required("confirm", default=False): bool}))
         placeholders = {"profile": profile_name}
 
         if user_input is not None:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             if user_input.get("confirm"):
                 try:
                     await registry.async_delete_profile(self._pid)
@@ -4523,20 +4584,25 @@ class OptionsFlow(config_entries.OptionsFlow):
             ),
         }
 
-        schema = vol.Schema(
-            {
-                vol.Optional(CONF_API_KEY, default=defaults[CONF_API_KEY]): sel.TextSelector(
-                    sel.TextSelectorConfig(type="password")
-                ),
-                vol.Optional(CONF_MODEL, default=defaults[CONF_MODEL]): str,
-                vol.Optional(CONF_BASE_URL, default=defaults[CONF_BASE_URL]): str,
-                vol.Optional(CONF_UPDATE_INTERVAL, default=defaults[CONF_UPDATE_INTERVAL]): vol.All(
-                    int, vol.Range(min=1, max=60)
-                ),
-            }
+        schema = self._with_navigation(
+            vol.Schema(
+                {
+                    vol.Optional(CONF_API_KEY, default=defaults[CONF_API_KEY]): sel.TextSelector(
+                        sel.TextSelectorConfig(type="password")
+                    ),
+                    vol.Optional(CONF_MODEL, default=defaults[CONF_MODEL]): str,
+                    vol.Optional(CONF_BASE_URL, default=defaults[CONF_BASE_URL]): str,
+                    vol.Optional(CONF_UPDATE_INTERVAL, default=defaults[CONF_UPDATE_INTERVAL]): vol.All(
+                        int, vol.Range(min=1, max=60)
+                    ),
+                }
+            )
         )
 
         if user_input is not None:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             new_options = {**opts}
             for key, value in user_input.items():
                 if value in (None, ""):
@@ -4567,6 +4633,9 @@ class OptionsFlow(config_entries.OptionsFlow):
 
         errors: dict[str, str] = {}
         if user_input is not None and pid:
+            navigation = user_input.pop("navigation", "save")
+            if navigation == "menu":
+                return await self.async_step_init()
             sensors: dict[str, str] = {}
             for role in ("temperature", "humidity", "illuminance", "moisture"):
                 if ent := user_input.get(role):
@@ -4615,7 +4684,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                         )
                         conflict_fields[optional] = vol.Any(selector, cv.string, vol.All([cv.string]))
                     conflict_fields[vol.Optional("skip_linking", default=False)] = bool
-                    conflict_schema = vol.Schema(conflict_fields)
+                    conflict_schema = self._with_navigation(vol.Schema(conflict_fields))
                     description_placeholders = {
                         "profile": self._new_profile_label or "",
                         "sensor_hints": format_sensor_hints(hint_map),
@@ -4672,7 +4741,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                     vol.All([cv.string]),
                 )
         schema_fields[vol.Optional("skip_linking", default=False)] = bool
-        schema = vol.Schema(schema_fields)
+        schema = self._with_navigation(vol.Schema(schema_fields))
         description_placeholders = {
             "profile": self._new_profile_label or "",
             "sensor_hints": format_sensor_hints(hint_map),
