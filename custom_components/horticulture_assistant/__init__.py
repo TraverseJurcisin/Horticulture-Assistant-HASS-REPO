@@ -920,6 +920,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Horticulture Assistant from a ConfigEntry."""
 
     domain_data = hass.data.setdefault(DOMAIN, {})
+    service_lock: asyncio.Lock = domain_data.setdefault("service_registration_lock", asyncio.Lock())
+    services_registered = bool(domain_data.get("services_registered"))
+    if not services_registered:
+        services_registered = all(hass.services.has_service(DOMAIN, service) for service in ha_services.SERVICE_NAMES)
+        if services_registered:
+            domain_data["services_registered"] = True
     entry_data = domain_data.setdefault(entry.entry_id, {"config_entry": entry})
     entry_data.setdefault("onboarding_errors", {})
     manager = _OnboardingManager(hass, entry, entry_data)
@@ -1262,7 +1268,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         service_reasons.append("coordinator refresh not ready")
 
     services_ready = False
-    if (
+    if services_registered:
+        manager.skip("service_registration", "services already registered")
+        services_ready = True
+    elif (
         manager.ensure_dependencies(
             "service_registration",
             reason=", ".join(service_reasons) if service_reasons else None,
@@ -1272,18 +1281,31 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         and profile_registry_ready
         and coordinator_ready
     ):
+
+        async def _register_services_guard() -> bool:
+            async with service_lock:
+                if domain_data.get("services_registered"):
+                    return True
+                if all(hass.services.has_service(DOMAIN, service) for service in ha_services.SERVICE_NAMES):
+                    domain_data["services_registered"] = True
+                    return True
+
+                await ha_services.async_register_all(
+                    hass,
+                    entry,
+                    ai_coordinator,
+                    local_coordinator,
+                    coordinator,
+                    profile_registry,
+                    local_store,
+                    cloud_manager=cloud_sync_manager,
+                )
+                domain_data["services_registered"] = True
+                return True
+
         services_ready, _ = await manager.guard_async(
             "service_registration",
-            ha_services.async_register_all(
-                hass,
-                entry,
-                ai_coordinator,
-                local_coordinator,
-                coordinator,
-                profile_registry,
-                local_store,
-                cloud_manager=cloud_sync_manager,
-            ),
+            _register_services_guard(),
         )
     entry_data["service_registration_ready"] = services_ready
 
