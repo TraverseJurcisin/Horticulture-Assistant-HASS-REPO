@@ -1511,30 +1511,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         self._unique_id = unique_id
 
     def _abort_if_unique_id_configured(self, updates: Mapping[str, Any] | None = None) -> None:
-        """Abort when a duplicate unique ID is detected.
+        """Permit multiple entries even when a unique ID is present."""
 
-        Provides a fallback for test harnesses that do not implement the
-        standard helper on the base ``ConfigFlow`` class.
-        """
-
-        aborter = getattr(super(), "_abort_if_unique_id_configured", None)
-        if callable(aborter):
-            return aborter(updates)
-
-        unique_id = getattr(self, "_unique_id", None)
-        if not unique_id:
-            return
-
-        for entry in self._async_current_entries() or ():
-            if getattr(entry, "unique_id", None) == unique_id:
-                aborter = getattr(self, "async_abort", None)
-                if callable(aborter):
-                    try:
-                        return aborter(reason="already_configured", updates=updates)
-                    except TypeError:
-                        return aborter(reason="already_configured")
-
-                raise AbortFlow("already_configured")
+        return None
 
     def async_create_entry(self, *, title: str, data: Mapping[str, Any] | None = None, **kwargs):
         """Create an entry while guaranteeing a mapping for data.
@@ -1556,12 +1535,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: ignore[misc
         return await self.async_step_user(user_input)
 
     async def async_step_user(self, user_input=None):
-        await self.async_set_unique_id(DOMAIN)
-
-        abort_result = self._abort_if_unique_id_configured()
-        if abort_result is not None:
-            return abort_result
-
         context = getattr(self, "context", {}) or {}
         source = context.get("source")
         unique_id_hint: str | None = None

@@ -439,7 +439,7 @@ async def test_config_flow_config_entry_source_used_without_reconfigure_support(
 
 
 @pytest.mark.asyncio
-async def test_config_flow_user_step_aborts_when_already_configured(hass):
+async def test_config_flow_user_step_allows_multiple_entries(hass):
     entry = MockConfigEntry(domain=DOMAIN, data={}, options={}, unique_id=DOMAIN)
     entry.add_to_hass(hass)
 
@@ -447,14 +447,10 @@ async def test_config_flow_user_step_aborts_when_already_configured(hass):
     flow.hass = hass
     flow._async_current_entries = MagicMock(return_value=[entry])
 
-    result = None
-    try:
-        result = await flow.async_step_user()
-    except cfg.AbortFlow as err:
-        result = {"type": "abort", "reason": getattr(err, "reason", None) or str(err)}
+    result = await flow.async_step_user()
 
-    assert result["type"] == "abort"
-    assert result.get("reason") == "already_configured"
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
 
 
 @pytest.mark.asyncio

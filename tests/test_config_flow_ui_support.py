@@ -72,8 +72,8 @@ async def test_user_step_skip_creates_entry(hass):
 
 
 @pytest.mark.asyncio
-async def test_duplicate_flow_marks_abort(hass):
-    """Ensure duplicate config flows trigger the unique ID guard."""
+async def test_duplicate_flow_does_not_abort(hass):
+    """Ensure duplicate config flows are permitted without unique ID aborts."""
 
     entry = MockConfigEntry(domain=DOMAIN, unique_id=DOMAIN)
     entry.add_to_hass(hass)
@@ -82,10 +82,13 @@ async def test_duplicate_flow_marks_abort(hass):
     flow.hass = hass
     state = _prepare_flow(flow, hass, abort_on_unique_ids={DOMAIN})
 
-    await flow.async_step_user()
+    result = await flow.async_step_user()
 
-    assert state["abort_called"] is True
-    assert state["aborted"] is True
+    assert result["type"] == "form"
+    assert result["step_id"] == "user"
+    assert state["abort_called"] is False
+    assert state["aborted"] is False
+    flow.async_set_unique_id.assert_not_awaited()
 
 
 @pytest.mark.asyncio
@@ -117,6 +120,6 @@ async def test_import_flow_preserves_payload(hass):
     result = await flow.async_step_import(payload)
 
     assert result["type"] == "create_entry"
-    assert result["title"] == "My Garden"
-    assert result["data"] == {"base_url": "http://example"}
-    assert result["options"] == {}
+    assert result["title"] == "Horticulture Assistant"
+    assert result["data"] == {}
+    assert result["options"] == {"base_url": "http://example"}
