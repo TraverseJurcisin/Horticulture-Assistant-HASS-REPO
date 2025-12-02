@@ -1552,6 +1552,7 @@ async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     data: dict[str, Any] = dict(entry.data)
     options: dict[str, Any] = dict(entry.options)
+    options.setdefault(CONF_PROFILES, {})
     migrated = False
 
     if entry.version < 2:
@@ -1640,18 +1641,18 @@ async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ):
             sync_thresholds(thresholds_payload, default_source="imported")
 
-    if thresholds_payload["thresholds"]:
-        base_profile["thresholds"] = thresholds_payload["thresholds"]
-    else:
-        base_profile.pop("thresholds", None)
-        if thresholds_payload["resolved_targets"]:
-            base_profile["resolved_targets"] = thresholds_payload["resolved_targets"]
+        if thresholds_payload["thresholds"]:
+            base_profile["thresholds"] = thresholds_payload["thresholds"]
         else:
-            base_profile.pop("resolved_targets", None)
-        if thresholds_payload["variables"]:
-            base_profile["variables"] = thresholds_payload["variables"]
-        else:
-            base_profile.pop("variables", None)
+            base_profile.pop("thresholds", None)
+            if thresholds_payload["resolved_targets"]:
+                base_profile["resolved_targets"] = thresholds_payload["resolved_targets"]
+            else:
+                base_profile.pop("resolved_targets", None)
+            if thresholds_payload["variables"]:
+                base_profile["variables"] = thresholds_payload["variables"]
+            else:
+                base_profile.pop("variables", None)
 
         existing_sources = _coerce_dict(base_profile.get("sources"))
         if sources_map:
