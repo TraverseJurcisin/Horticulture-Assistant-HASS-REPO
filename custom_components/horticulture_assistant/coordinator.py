@@ -36,6 +36,7 @@ except (ImportError, ModuleNotFoundError):  # pragma: no cover - tests without H
 
 from .const import CONF_PROFILES, CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES, DOMAIN
 from .engine.metrics import accumulate_dli, dew_point_c, lux_to_ppfd, mold_risk, profile_status, vpd_kpa
+from .utils.intervals import _normalise_update_minutes
 from .utils.state_helpers import get_numeric_state, parse_entities
 
 _LOGGER = logging.getLogger(__name__)
@@ -122,11 +123,7 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             or data.get("update_interval")
             or DEFAULT_UPDATE_MINUTES
         )
-        try:
-            minutes = int(candidate)
-        except (TypeError, ValueError):  # pragma: no cover - defensive fallback
-            minutes = DEFAULT_UPDATE_MINUTES
-        return max(1, minutes)
+        return _normalise_update_minutes(candidate)
 
     def update_from_entry(self, entry: ConfigEntry) -> None:
         """Update coordinator options and polling interval from ``entry``."""

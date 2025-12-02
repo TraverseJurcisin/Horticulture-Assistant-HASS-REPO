@@ -3509,7 +3509,7 @@ class OptionsFlow(config_entries.OptionsFlow):
                 except (TypeError, ValueError):
                     errors[CONF_UPDATE_INTERVAL] = "invalid_interval"
                 else:
-                    if interval_value < 1:
+                    if interval_value < 1 or interval_value > 60:
                         errors[CONF_UPDATE_INTERVAL] = "invalid_interval"
                     else:
                         user_input[CONF_UPDATE_INTERVAL] = interval_value

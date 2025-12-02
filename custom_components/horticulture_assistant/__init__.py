@@ -92,6 +92,7 @@ from .utils.entry_helpers import (
     store_entry_data,
     update_entry_data,
 )
+from .utils.intervals import _normalise_update_minutes
 from .utils.paths import ensure_local_data_paths
 
 _CALIBRATION_SPEC = importlib.util.find_spec("custom_components.horticulture_assistant.calibration.services")
@@ -999,10 +1000,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     api_key = entry.options.get(CONF_API_KEY, entry.data.get(CONF_API_KEY, ""))
     model = entry.options.get(CONF_MODEL, entry.data.get(CONF_MODEL, DEFAULT_MODEL))
     keep_stale = entry.options.get(CONF_KEEP_STALE, entry.data.get(CONF_KEEP_STALE, DEFAULT_KEEP_STALE))
-    update_minutes = entry.options.get(
+    update_minutes_raw = entry.options.get(
         CONF_UPDATE_INTERVAL,
         entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_MINUTES),
     )
+    update_minutes = _normalise_update_minutes(update_minutes_raw)
 
     api = ChatApi(hass, api_key, base_url, model)
 
