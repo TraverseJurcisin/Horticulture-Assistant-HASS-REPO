@@ -51,7 +51,7 @@ async def test_migrate_entry_materialises_profile_payload(hass):
 
     await async_migrate_entry(hass, entry)
 
-    assert entry.version == 3
+    assert entry.version == 4
     assert entry.options[CONF_KEEP_STALE] == DEFAULT_KEEP_STALE
     assert entry.options["thresholds"]["moisture_min"] == 10
     profile_map = entry.options[CONF_PROFILES]
@@ -89,7 +89,7 @@ async def test_migrate_entry_preserves_existing_profiles(hass):
 
     await async_migrate_entry(hass, entry)
 
-    assert entry.version == 3
+    assert entry.version == 4
     profile = entry.options[CONF_PROFILES]["beta"]
     assert profile["general"]["sensors"]["temperature"] == "sensor.temp"
     assert profile["general"][CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
