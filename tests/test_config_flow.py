@@ -119,7 +119,7 @@ async def test_options_flow_add_profile_registers_device_under_entry(hass, tmp_p
 
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -3902,7 +3902,7 @@ async def test_options_flow_add_profile_attach_sensors(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -3938,7 +3938,7 @@ async def test_options_flow_attach_sensors_allows_skip(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -3990,7 +3990,7 @@ async def test_options_flow_attach_sensors_conflict_requires_confirmation(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4023,7 +4023,7 @@ async def test_options_flow_add_profile_requires_known_species(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4042,7 +4042,7 @@ async def test_options_flow_add_profile_persists_species_selection(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4073,7 +4073,7 @@ async def test_options_flow_add_profile_accepts_template_species(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4105,7 +4105,7 @@ async def test_options_flow_add_profile_accepts_existing_profile_species(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     await registry.async_add_profile(
         "Existing Plant",
@@ -4135,7 +4135,7 @@ async def test_options_flow_add_profile_accepts_profile_store_species(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4173,7 +4173,7 @@ async def test_options_flow_add_profile_rejects_unknown_cultivar(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4206,7 +4206,7 @@ async def test_options_flow_add_profile_infers_species_from_cultivar(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4250,7 +4250,7 @@ async def test_options_flow_add_profile_species_hint_guidance(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4293,7 +4293,7 @@ async def test_options_flow_add_profile_species_hint_defaults(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4317,7 +4317,7 @@ async def test_options_flow_attach_sensors_validation_errors(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4334,7 +4334,7 @@ async def test_options_flow_add_profile_rejects_duplicate_name(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     await registry.async_add_profile("Basil")
 
@@ -4353,7 +4353,7 @@ async def test_options_flow_add_profile_invalid_name(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4370,7 +4370,7 @@ async def test_options_flow_add_profile_rejects_profile_store_duplicates(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4394,7 +4394,7 @@ async def test_options_flow_add_profile_slugifies_identifier(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4413,7 +4413,7 @@ async def test_options_flow_add_profile_rejects_long_identifier(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4431,7 +4431,7 @@ async def test_options_flow_add_profile_persist_failure_rolls_back(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4460,7 +4460,7 @@ async def test_options_flow_add_profile_duplicate_skips_persist(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4486,7 +4486,7 @@ async def test_options_flow_add_profile_registry_save_error(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4579,7 +4579,7 @@ async def test_options_flow_manage_profile_general_updates_profile(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4620,7 +4620,7 @@ async def test_options_flow_manage_profile_sensors_validates_and_updates(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4656,7 +4656,7 @@ async def test_options_flow_manage_profile_sensors_preserves_multi_assignments(h
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4690,7 +4690,7 @@ async def test_options_flow_manage_profile_sensors_includes_hints(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4733,7 +4733,7 @@ async def test_options_flow_manage_profile_sensors_conflict_requires_confirmatio
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4767,7 +4767,7 @@ async def test_options_flow_manage_profile_sensors_handles_validation_errors(has
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4821,7 +4821,7 @@ async def test_options_flow_manage_profile_sensors_notifies_warnings(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4882,7 +4882,7 @@ async def test_options_flow_manage_profile_thresholds_updates_targets(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4924,7 +4924,7 @@ async def test_options_flow_manage_profile_delete_blocks_primary(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass
@@ -4945,7 +4945,7 @@ async def test_options_flow_manage_profile_delete_secondary(hass):
     entry.add_to_hass(hass)
     registry = ProfileRegistry(hass, entry)
     await registry.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = registry
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = registry
 
     flow = OptionsFlow(entry)
     flow.hass = hass

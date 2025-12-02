@@ -3158,11 +3158,12 @@ class OptionsFlow(config_entries.OptionsFlow):
         from .profile_registry import ProfileRegistry
 
         domain_data = self.hass.data.setdefault(DOMAIN, {})
-        registry: ProfileRegistry | None = domain_data.get("registry")
+        entry_data = domain_data.setdefault(self._entry.entry_id, {"config_entry": self._entry})
+        registry: ProfileRegistry | None = entry_data.get("profile_registry")
         if registry is None:
             registry = ProfileRegistry(self.hass, self._entry)
             await registry.async_initialize()
-            domain_data["registry"] = registry
+            entry_data["profile_registry"] = registry
         return registry
 
     async def _async_profile_store(self) -> ProfileStore | None:
@@ -4589,7 +4590,7 @@ class OptionsFlow(config_entries.OptionsFlow):
     async def async_step_attach_sensors(self, user_input: dict[str, Any] | None = None) -> FlowResult:
         from .profile_registry import ProfileRegistry
 
-        registry: ProfileRegistry = self.hass.data[DOMAIN]["registry"]
+        registry: ProfileRegistry = await self._async_get_registry()
         pid = self._new_profile_id
         if user_input is None:
             self._last_sensor_conflict_signature = None

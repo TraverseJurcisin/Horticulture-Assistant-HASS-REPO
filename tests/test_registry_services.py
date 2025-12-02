@@ -79,7 +79,7 @@ async def test_replace_sensor_updates_registry(hass, tmp_path):
         blocking=True,
     )
     await hass.async_block_till_done()
-    registry = hass.data[DOMAIN]["registry"]
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
     prof = registry.get("p1")
     assert prof.general["sensors"]["moisture"] == "sensor.good"
     assert entry.options["profiles"]["p1"]["sensors"]["moisture"] == "sensor.good"
@@ -188,7 +188,7 @@ async def test_refresh_species_persists_storage(hass, tmp_path):
 
 
 async def test_record_run_event_service_updates_history(hass, tmp_path):
-    await _setup_entry_with_profile(hass, tmp_path)
+    entry = await _setup_entry_with_profile(hass, tmp_path)
     response = await hass.services.async_call(
         DOMAIN,
         "record_run_event",
@@ -211,13 +211,13 @@ async def test_record_run_event_service_updates_history(hass, tmp_path):
     assert payload["targets_total"] == pytest.approx(10.0)
     assert payload["targets_met"] == pytest.approx(8.0)
     assert payload["weighted_success_percent"] == pytest.approx(80.0)
-    registry = hass.data[DOMAIN]["registry"]
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
     profile = registry.get("p1")
     assert profile is not None and len(profile.run_history) == 1
 
 
 async def test_record_harvest_event_service_updates_statistics(hass, tmp_path):
-    await _setup_entry_with_profile(hass, tmp_path)
+    entry = await _setup_entry_with_profile(hass, tmp_path)
     await hass.services.async_call(
         DOMAIN,
         "record_run_event",
@@ -242,7 +242,7 @@ async def test_record_harvest_event_service_updates_statistics(hass, tmp_path):
         return_response=True,
     )
     assert response["harvest_event"]["yield_grams"] == 42.5
-    registry = hass.data[DOMAIN]["registry"]
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
     profile = registry.get("p1")
     assert profile and profile.statistics
     metrics = profile.statistics[0].metrics
@@ -269,7 +269,7 @@ async def test_record_harvest_event_service_rejects_invalid_payload(hass, tmp_pa
 
 
 async def test_record_nutrient_event_service_updates_statistics(hass, tmp_path):
-    await _setup_entry_with_profile(hass, tmp_path)
+    entry = await _setup_entry_with_profile(hass, tmp_path)
     response = await hass.services.async_call(
         DOMAIN,
         "record_nutrient_event",
@@ -294,7 +294,7 @@ async def test_record_nutrient_event_service_updates_statistics(hass, tmp_path):
     assert metrics["total_events"] == pytest.approx(1.0)
     assert metrics["total_volume_liters"] == pytest.approx(9.5)
 
-    registry = hass.data[DOMAIN]["registry"]
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
     profile = registry.get("p1")
     assert profile is not None and len(profile.nutrient_history) == 1
 
@@ -319,7 +319,7 @@ async def test_record_nutrient_event_service_rejects_invalid_payload(hass, tmp_p
 
 
 async def test_record_cultivation_event_service_returns_statistics(hass, tmp_path):
-    await _setup_entry_with_profile(hass, tmp_path)
+    entry = await _setup_entry_with_profile(hass, tmp_path)
     response = await hass.services.async_call(
         DOMAIN,
         "record_cultivation_event",
@@ -342,7 +342,7 @@ async def test_record_cultivation_event_service_returns_statistics(hass, tmp_pat
     metrics = stats["payload"]["metrics"]
     assert metrics["total_events"] == pytest.approx(1.0)
 
-    registry = hass.data[DOMAIN]["registry"]
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
     profile = registry.get("p1")
     assert profile is not None and len(profile.event_history) == 1
 
@@ -391,8 +391,8 @@ async def test_profile_runs_service_returns_runs(hass, tmp_path):
 
 
 async def test_profile_provenance_service_returns_counts(hass, tmp_path):
-    await _setup_entry_with_profile(hass, tmp_path)
-    registry = hass.data[DOMAIN]["registry"]
+    entry = await _setup_entry_with_profile(hass, tmp_path)
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
     profile = registry.get("p1")
     assert profile is not None
 
