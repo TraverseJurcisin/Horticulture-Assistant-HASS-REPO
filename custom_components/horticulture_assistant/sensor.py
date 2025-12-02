@@ -144,7 +144,7 @@ class PlantStatusSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Senso
         )
         self._entry_id = entry.entry_id
         self._monitor: ProfileMonitor | None = ProfileMonitor(hass, context)
-        self._attr_unique_id = f"{context.profile_id}_health"
+        self._attr_unique_id = self.profile_unique_id("health")
         self._attr_icon = "mdi:sprout"
 
     async def async_update(self) -> None:
@@ -195,7 +195,7 @@ class PlantLastSampleSensor(ProfileContextEntityMixin, HorticultureBaseEntity, S
             model="Plant Profile",
         )
         self._monitor: ProfileMonitor | None = ProfileMonitor(hass, context)
-        self._attr_unique_id = f"{context.profile_id}_last_sample"
+        self._attr_unique_id = self.profile_unique_id("last_sample")
 
     async def async_update(self) -> None:
         if self._monitor is None:
@@ -744,7 +744,7 @@ class HortiStatusSensor(
             plant_id,
             model="Plant Profile",
         )
-        self._attr_unique_id = f"{plant_id}_{self.entity_description.key}"
+        self._attr_unique_id = self.profile_unique_id(self.entity_description.key)
         self._local = local
         self._keep_stale = keep_stale
         self._citations: dict | None = None
@@ -883,7 +883,7 @@ class HortiRecommendationSensor(
             plant_id,
             model="Plant Profile",
         )
-        self._attr_unique_id = f"{plant_id}_{self.entity_description.key}"
+        self._attr_unique_id = self.profile_unique_id(self.entity_description.key)
         self._keep_stale = keep_stale
 
     @property
@@ -922,7 +922,7 @@ class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity
         self._meta: Mapping[str, Any] = meta
         self._value = meta.get("value") if isinstance(meta, Mapping) else None
         self._attr_available = self._value is not None
-        self._attr_unique_id = f"{context.profile_id}_{category}_{key}"
+        self._attr_unique_id = self.profile_unique_id(f"{category}_{key}")
         label = key.replace("_", " ").title()
         prefix_map = {
             "resolved_targets": "Resolved Target",

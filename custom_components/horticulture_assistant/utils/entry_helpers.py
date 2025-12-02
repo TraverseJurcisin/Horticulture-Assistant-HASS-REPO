@@ -287,7 +287,7 @@ def profile_device_key(entry_id: str | None, profile_id: str | None) -> str:
     """Return the device identifier key for a profile bound to ``entry_id``."""
 
     profile = str(profile_id or "profile")
-    return f"profile:{profile}"
+    return f"{entry_device_key(entry_id)}:{profile}"
 
 
 def entry_device_identifier(entry_id: str | None) -> tuple[str, str]:
@@ -299,7 +299,7 @@ def entry_device_identifier(entry_id: str | None) -> tuple[str, str]:
 def profile_device_identifier(entry_id: str | None, profile_id: str | None) -> tuple[str, str]:
     """Return the tuple identifier for a profile device."""
 
-    return (DOMAIN, str(profile_id or "profile"))
+    return (DOMAIN, profile_device_key(entry_id, profile_id))
 
 
 def _normalise_device_info(info: Mapping[str, Any] | None) -> dict[str, Any]:

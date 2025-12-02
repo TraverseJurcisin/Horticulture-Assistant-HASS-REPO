@@ -115,7 +115,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
         self._entry = entry
         self._key = key
         self._attr_name = key.replace("_", " ").title()
-        self._attr_unique_id = f"{plant_id}_{key}"
+        self._attr_unique_id = self.profile_unique_id(key)
         self._unit = unit
         self._attr_native_unit_of_measurement = None
         self._value = float(value) if value is not None else None
