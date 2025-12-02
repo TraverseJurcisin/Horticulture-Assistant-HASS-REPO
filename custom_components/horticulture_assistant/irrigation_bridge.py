@@ -86,7 +86,7 @@ class PlantIrrigationRecommendationSensor(ProfileContextEntityMixin, Horticultur
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{context.profile_id}_irrigation_rec"
+        self._attr_unique_id = self.profile_unique_id("irrigation_rec")
         self._src = self._resolve_source(context)
         self._value: float | None = None
         self._state_unsub: Callable[[], None] | None = None

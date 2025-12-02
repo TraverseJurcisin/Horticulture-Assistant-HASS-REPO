@@ -26,7 +26,4 @@ class HorticultureEntity(HorticultureBaseEntity, CoordinatorEntity[HorticultureC
     def profile_unique_id(self, key: str | None = None) -> str:
         """Return a stable unique id for profile entities."""
 
-        profile_part = self._profile_id or "profile"
-        if key:
-            return f"{profile_part}_{key}"
-        return profile_part
+        return super().profile_unique_id(key)

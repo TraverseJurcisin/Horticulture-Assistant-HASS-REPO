@@ -49,10 +49,11 @@ except (ModuleNotFoundError, ImportError, AttributeError):  # pragma: no cover -
         hass = None
 
 
-from .const import DOMAIN, signal_profile_contexts_updated
+from .const import signal_profile_contexts_updated
 from .utils.entry_helpers import (
     ProfileContext,
     entry_device_identifier,
+    profile_device_identifier,
     resolve_entry_device_info,
     resolve_profile_context_collection,
     resolve_profile_device_info,
@@ -115,8 +116,9 @@ class HorticultureBaseEntity(Entity):
         self._plant_id = plant_id
         self._model = model
         self._attr_has_entity_name = True
+        identifier = profile_device_identifier(entry_id, plant_id)
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, self._plant_id)},
+            identifiers={identifier},
             name=self._plant_name,
             manufacturer="Horticulture Assistant",
         )
@@ -143,7 +145,7 @@ class HorticultureBaseEntity(Entity):
                 name = info.get("name") or name
 
         return {
-            "identifiers": {(DOMAIN, self.profile_id)},
+            "identifiers": {profile_device_identifier(self._entry_id, self.profile_id)},
             "name": name,
             "manufacturer": "Horticulture Assistant",
         }
@@ -154,6 +156,15 @@ class HorticultureBaseEntity(Entity):
         if not self.hass:
             return None
         return resolve_profile_image_url(self.hass, self._entry_id, self._plant_id)
+
+    def profile_unique_id(self, key: str | None = None) -> str:
+        """Return a stable unique id for profile entities scoped to the entry."""
+
+        entry_part = str(self._entry_id) if self._entry_id is not None else "entry"
+        profile_part = self.profile_id or "profile"
+        if key:
+            return f"{entry_part}_{profile_part}_{key}"
+        return f"{entry_part}_{profile_part}"
 
 
 class ProfileContextEntityMixin:

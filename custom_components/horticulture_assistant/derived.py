@@ -72,7 +72,7 @@ class PlantDLISensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEn
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{context.profile_id}_dli"
+        self._attr_unique_id = self.profile_unique_id("dli")
         self._value: float | None = None
         self._accum: float = 0.0
         self._last_day: date | None = None
@@ -171,7 +171,7 @@ class PlantPPFDSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorE
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{context.profile_id}_ppfd"
+        self._attr_unique_id = self.profile_unique_id("ppfd")
         self._value: float | None = None
         self._attrs: dict | None = None
         self._light_sensor: str | None = None
@@ -274,7 +274,7 @@ class PlantVPDSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEn
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{context.profile_id}_vpd"
+        self._attr_unique_id = self.profile_unique_id("vpd")
         self._value: float | None = None
         self._state_unsub: Callable[[], None] | None = None
 
@@ -348,7 +348,7 @@ class PlantDewPointSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Sen
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{context.profile_id}_dew_point"
+        self._attr_unique_id = self.profile_unique_id("dew_point")
         self._value: float | None = None
         self._state_unsub: Callable[[], None] | None = None
 
@@ -420,7 +420,7 @@ class PlantMoldRiskSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Sen
     ) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
         HorticultureBaseEntity.__init__(self, entry.entry_id, context.name, context.profile_id)
-        self._attr_unique_id = f"{context.profile_id}_mold_risk"
+        self._attr_unique_id = self.profile_unique_id("mold_risk")
         self._value: float | None = None
         self._state_unsub: Callable[[], None] | None = None
 

@@ -164,8 +164,11 @@ class _EntityRegistry:  # pragma: no cover - simple registry stub
         return entry
 
 
+_ENTITY_REGISTRY = _EntityRegistry()
+
+
 def _async_get(_hass=None):  # pragma: no cover - return stub registry
-    return _EntityRegistry()
+    return _ENTITY_REGISTRY
 
 
 def _async_entries_for_config_entry(registry, entry_id):

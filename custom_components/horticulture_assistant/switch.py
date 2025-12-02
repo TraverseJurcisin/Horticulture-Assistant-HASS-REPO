@@ -106,7 +106,7 @@ class IrrigationSwitch(HorticultureBaseSwitch):
     def __init__(self, hass, entry_id, plant_name, plant_id):
         super().__init__(hass, entry_id, plant_name, plant_id)
         self._attr_name = "Irrigation Control"
-        self._attr_unique_id = f"{plant_id}_irrigation_switch"
+        self._attr_unique_id = self.profile_unique_id("irrigation_switch")
         self._attr_icon = "mdi:sprinkler"
         self._attr_entity_category = CATEGORY_CONTROL
 
@@ -117,6 +117,6 @@ class FertigationSwitch(HorticultureBaseSwitch):
     def __init__(self, hass, entry_id, plant_name, plant_id):
         super().__init__(hass, entry_id, plant_name, plant_id)
         self._attr_name = "Fertigation Control"
-        self._attr_unique_id = f"{plant_id}_fertigation_switch"
+        self._attr_unique_id = self.profile_unique_id("fertigation_switch")
         self._attr_icon = "mdi:beaker-plus"
         self._attr_entity_category = CATEGORY_CONTROL
