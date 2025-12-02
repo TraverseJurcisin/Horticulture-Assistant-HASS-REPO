@@ -18,6 +18,7 @@ from typing import Any
 import homeassistant.helpers.config_validation as cv
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
 
 try:
     from homeassistant.helpers import issue_registry as ir
@@ -1638,10 +1639,11 @@ async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             not thresholds_payload["resolved_targets"] or not thresholds_payload["variables"]
         ):
             sync_thresholds(thresholds_payload, default_source="imported")
-        if thresholds_payload["thresholds"]:
-            base_profile["thresholds"] = thresholds_payload["thresholds"]
-        else:
-            base_profile.pop("thresholds", None)
+
+    if thresholds_payload["thresholds"]:
+        base_profile["thresholds"] = thresholds_payload["thresholds"]
+    else:
+        base_profile.pop("thresholds", None)
         if thresholds_payload["resolved_targets"]:
             base_profile["resolved_targets"] = thresholds_payload["resolved_targets"]
         else:
@@ -1715,6 +1717,20 @@ async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         data.setdefault(CONF_PLANT_ID, plant_id)
         if isinstance(plant_name, str) and plant_name:
             data.setdefault(CONF_PLANT_NAME, plant_name)
+
+    if entry.version < 4:
+        migrated = True
+        entry.version = 4
+
+        entry_prefix = f"{entry.entry_id}_"
+        entity_registry = er.async_get(hass)
+        for item in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
+            unique_id = getattr(item, "unique_id", None)
+            if not unique_id or not isinstance(unique_id, str):
+                continue
+            if unique_id.startswith(entry_prefix):
+                continue
+            entity_registry.async_update_entity(item.entity_id, unique_id=f"{entry_prefix}{unique_id}")
 
     if migrated:
         hass.config_entries.async_update_entry(entry, data=data, options=options)

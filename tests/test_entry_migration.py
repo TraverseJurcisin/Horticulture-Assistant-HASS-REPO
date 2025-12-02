@@ -1,6 +1,7 @@
 import importlib
 
 import pytest
+from homeassistant.helpers import entity_registry as er
 
 import tests.conftest  # noqa: F401 - ensure HA stubs are registered
 from custom_components.horticulture_assistant.const import (
@@ -94,3 +95,24 @@ async def test_migrate_entry_preserves_existing_profiles(hass):
     assert profile["general"][CONF_PROFILE_SCOPE] == PROFILE_SCOPE_DEFAULT
     assert profile["citations"]["temperature"]["mode"] == "manual"
     assert "sections" in profile and "library" in profile and "local" in profile
+
+
+@pytest.mark.asyncio
+async def test_migrate_entry_prefixes_profile_unique_ids(hass):
+    module = importlib.import_module("custom_components.horticulture_assistant.__init__")
+    async_migrate_entry = module.async_migrate_entry
+    entry = DummyConfigEntry(version=3)
+    hass.config_entries._entries[entry.entry_id] = entry
+
+    registry = er.async_get(hass)
+    registry.entities.clear()
+    registry.async_update_entity("sensor.alpha_moisture", unique_id="alpha_moisture", config_entry_id=entry.entry_id)
+    registry.async_update_entity("sensor.beta", unique_id="entry_beta_temp", config_entry_id=entry.entry_id)
+
+    await async_migrate_entry(hass, entry)
+
+    assert entry.version == 4
+    migrated = registry.entities["sensor.alpha_moisture"].unique_id
+    untouched = registry.entities["sensor.beta"].unique_id
+    assert migrated == "entry_alpha_moisture"
+    assert untouched == "entry_beta_temp"
