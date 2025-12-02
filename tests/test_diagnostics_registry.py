@@ -19,7 +19,7 @@ async def test_diagnostics_uses_registry(hass):
     entry.add_to_hass(hass)
     reg = ProfileRegistry(hass, entry)
     await reg.async_load()
-    hass.data.setdefault(DOMAIN, {})["registry"] = reg
+    hass.data.setdefault(DOMAIN, {}).setdefault(entry.entry_id, {})["profile_registry"] = reg
 
     result = await async_get_config_entry_diagnostics(hass, entry)
 

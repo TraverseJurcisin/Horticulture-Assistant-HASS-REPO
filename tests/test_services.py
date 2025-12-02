@@ -636,7 +636,7 @@ async def test_update_sensors_service_merges_existing(hass):
     sensors = entry.options["profiles"]["p1"]["sensors"]
     assert sensors == {"temperature": "sensor.new_temp", "humidity": "sensor.humidity"}
 
-    registry = hass.data[DOMAIN]["registry"]
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
     profile = registry.get_profile("p1")
     assert profile is not None
     assert profile.general.get("sensors", {}) == sensors
@@ -662,7 +662,7 @@ async def test_export_profiles_service(hass, tmp_path):
         await hca.async_setup_entry(hass, entry)
     await hass.async_block_till_done()
 
-    registry = hass.data[DOMAIN]["registry"]
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
     registry._profiles["p2"] = BioProfile(profile_id="p2", display_name="Plant 2")
 
     out = tmp_path / "profiles.json"
@@ -740,7 +740,7 @@ async def test_import_profiles_service(hass, tmp_path):
         await hca.async_setup_entry(hass, entry)
     await hass.async_block_till_done()
 
-    registry = hass.data[DOMAIN]["registry"]
+    registry = hass.data[DOMAIN][entry.entry_id]["profile_registry"]
     assert registry.get("p1") is None
 
     profiles = {

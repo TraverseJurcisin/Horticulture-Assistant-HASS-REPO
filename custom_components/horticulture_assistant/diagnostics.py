@@ -20,7 +20,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
     """Return diagnostics for a config entry."""
     data = hass.data.get(DOMAIN, {})
     entry_data = data.get(entry.entry_id)
-    reg: ProfileRegistry | None = data.get("registry")
+    reg: ProfileRegistry | None = None
     payload: dict[str, Any] = {
         "entry": {
             "title": entry.title,
@@ -32,6 +32,9 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry) -> dict
         "coordinators": {},
         "schema_version": 10,
     }
+    if isinstance(entry_data, dict) and not reg:
+        reg = entry_data.get("profile_registry")
+
     if reg:
         if hasattr(reg, "diagnostics_snapshot"):
             profiles = reg.diagnostics_snapshot()

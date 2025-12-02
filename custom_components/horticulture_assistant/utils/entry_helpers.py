@@ -1983,7 +1983,14 @@ def remove_entry_data(hass: HomeAssistant, entry_id: str) -> None:
                         continue
                     if by_pid.get(pid) is entry_data:
                         by_pid.pop(pid, None)
-        if not domain_data or (set(domain_data.keys()) <= {BY_PLANT_ID} and not domain_data.get(BY_PLANT_ID)):
+
+        active_entries = (
+            value
+            for key, value in domain_data.items()
+            if key != BY_PLANT_ID and isinstance(value, Mapping) and "config_entry" in value
+        )
+
+        if not any(active_entries):
             hass.data.pop(DOMAIN, None)
 
 

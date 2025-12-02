@@ -1184,11 +1184,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             summary = " and ".join(reason_parts)
             manager.record_warning("cloud_sync", f"Cloud sync {summary}")
 
-    if profile_registry is not None:
-        domain_data["registry"] = profile_registry
-    else:
-        domain_data.pop("registry", None)
-
     def _ensure_profile_entities(config_entry: ConfigEntry) -> None:
         primary_sensors = get_primary_profile_sensors(config_entry)
         if primary_sensors:
@@ -1493,7 +1488,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     if unload_ok:
         data = hass.data.get(DOMAIN, {})
-        info = data.pop(entry.entry_id, None)
+        info = data.get(entry.entry_id)
         if info:
             _clear_all_onboarding_errors(hass, entry, info)
             if info.get("dataset_monitor_attached"):
@@ -1515,13 +1510,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 with contextlib.suppress(Exception):
                     await profiles.async_unload()
 
-        registry = data.get("registry")
-        profile_registry = info.get("profile_registry") if info else None
-        if registry is not None and registry is profile_registry:
-            data.pop("registry", None)
-
-        if not data:
-            hass.data.pop(DOMAIN, None)
         remove_entry_data(hass, entry.entry_id)
     return unload_ok
 
