@@ -103,7 +103,6 @@ ServiceResponse = getattr(ha_core, "ServiceResponse", Any)
 
 _LOGGER = logging.getLogger(__name__)
 _MISSING: Final = object()
-_REGISTERED = False
 
 ENTITY_ID_SCHEMA = getattr(cv, "entity_id", vol.All(str, vol.Length(min=1)))
 
@@ -204,19 +203,56 @@ async def async_register_all(
 ) -> None:
     """Register high level profile services."""
 
-    global _REGISTERED
-    if getattr(hass, "_horti_services_registered", False):
-        return
-    _REGISTERED = True
-    hass._horti_services_registered = True
+    domain_data = hass.data.setdefault(DOMAIN, {})
+    service_state = domain_data.setdefault("service_state", {})
+    service_handlers = service_state.setdefault("handlers", {})
+    dispatch_registered: set[str] = service_state.setdefault("dispatch_registered", set())
+
+    def _resolve_handler(service: str, entry_id: str | None):
+        handlers = service_handlers.get(service, {})
+        if entry_id is not None:
+            return handlers.get(entry_id)
+        if len(handlers) == 1:
+            return next(iter(handlers.values()))
+        return None
+
+    def _ensure_dispatch_registered(
+        service: str, schema: vol.Schema | None, *, supports_response: bool = False
+    ) -> None:
+        if service in dispatch_registered:
+            return
+        if hass.services.has_service(DOMAIN, service):
+            dispatch_registered.add(service)
+            return
+
+        dispatch_registered.add(service)
+
+        if schema is None:
+            schema = vol.Schema({}, extra=vol.PREVENT_EXTRA)
+        if not isinstance(schema, vol.Schema):
+            schema = vol.Schema(schema)
+
+        schema = schema.extend({vol.Optional("entry_id"): str})
+
+        async def _dispatch(call: ServiceCall) -> ServiceResponse | None:
+            handler = _resolve_handler(service, call.data.get("entry_id"))
+            if handler is None:
+                raise HomeAssistantError("No registered horticulture handler for this service")
+            return await handler(call)
+
+        hass.services.async_register(
+            DOMAIN,
+            service,
+            _dispatch,
+            schema=schema,
+            supports_response=supports_response,
+        )
 
     entitlements = derive_entitlements(entry.options)
 
     def _update_entitlements(opts: Mapping[str, Any]) -> None:
         nonlocal entitlements
         entitlements = derive_entitlements(opts)
-
-    register_service = hass.services.async_register
 
     def _register_service(
         service: str,
@@ -225,22 +261,10 @@ async def async_register_all(
         schema: vol.Schema | None = None,
         supports_response: bool = False,
     ) -> None:
-        kwargs: dict[str, Any] = {}
-        if schema is not None:
-            kwargs["schema"] = schema
-        if supports_response:
-            try:
-                register_service(
-                    DOMAIN,
-                    service,
-                    handler,
-                    supports_response=True,
-                    **kwargs,
-                )
-            except TypeError:
-                register_service(DOMAIN, service, handler, **kwargs)
-        else:
-            register_service(DOMAIN, service, handler, **kwargs)
+        handlers = service_handlers.setdefault(service, {})
+        handlers[entry.entry_id] = handler
+
+        _ensure_dispatch_registered(service, schema, supports_response=supports_response)
 
     async def _maybe_request_refresh(coordinator) -> None:
         refresh = getattr(coordinator, "async_request_refresh", None)
@@ -1399,3 +1423,40 @@ async def async_unload_services(hass: HomeAssistant) -> None:
 def async_setup_services(_hass: HomeAssistant) -> None:  # pragma: no cover - legacy shim
     """Maintain compatibility with older entry setup code."""
     return None
+
+
+async def async_unregister_entry(hass: HomeAssistant, entry_id: str) -> None:
+    """Remove handlers for a config entry and unregister idle services."""
+
+    domain_data = hass.data.get(DOMAIN)
+    if not isinstance(domain_data, dict):
+        return
+
+    service_state = domain_data.get("service_state")
+    if not isinstance(service_state, dict):
+        return
+
+    handlers: dict[str, dict[str, Any]] = service_state.get("handlers", {})
+    dispatch_registered: set[str] = service_state.get("dispatch_registered", set())
+    services_to_remove: set[str] = set()
+
+    for service, mapping in list(handlers.items()):
+        if not isinstance(mapping, dict):
+            continue
+        mapping.pop(entry_id, None)
+        if not mapping:
+            services_to_remove.add(service)
+            handlers.pop(service, None)
+            if isinstance(dispatch_registered, set):
+                dispatch_registered.discard(service)
+
+    for service in services_to_remove:
+        if hass.services.has_service(DOMAIN, service):
+            hass.services.async_remove(DOMAIN, service)
+
+    if not handlers:
+        service_state.pop("handlers", None)
+    if not handlers and (not isinstance(dispatch_registered, set) or not dispatch_registered):
+        domain_data.pop("service_state", None)
+    if not domain_data:
+        hass.data.pop(DOMAIN, None)

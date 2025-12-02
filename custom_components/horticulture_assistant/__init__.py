@@ -1520,6 +1520,8 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         if registry is not None and registry is profile_registry:
             data.pop("registry", None)
 
+        await ha_services.async_unregister_entry(hass, entry.entry_id)
+
         if not data:
             hass.data.pop(DOMAIN, None)
         remove_entry_data(hass, entry.entry_id)
