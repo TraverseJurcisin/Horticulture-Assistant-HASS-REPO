@@ -1509,6 +1509,14 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     else:
         unload_ok = False
 
+    async def _invoke_callback(callback: Any) -> None:
+        if not callable(callback):
+            return
+        with contextlib.suppress(Exception):
+            result = callback()
+            if inspect.isawaitable(result):
+                await result
+
     if unload_ok:
         data = hass.data.get(DOMAIN, {})
         info = data.get(entry.entry_id)
@@ -1516,22 +1524,22 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             _clear_all_onboarding_errors(hass, entry, info)
             if info.get("dataset_monitor_attached"):
                 await async_release_dataset_health(hass)
-            manager = info.get("cloud_sync_manager")
-            if manager and hasattr(manager, "async_stop"):
-                with contextlib.suppress(Exception):
-                    await manager.async_stop()
+
+            await _invoke_callback(getattr(info.get("cloud_sync_manager"), "async_stop", None))
+            await _invoke_callback(info.get("update_listener_unsub"))
+
             for coord in (
                 info.get("coordinator"),
                 info.get("coordinator_ai"),
                 info.get("coordinator_local"),
             ):
-                if coord and hasattr(coord, "async_shutdown"):
-                    with contextlib.suppress(Exception):
-                        await coord.async_shutdown()
+                if coord is None:
+                    continue
+                await _invoke_callback(getattr(coord, "async_cancel", None))
+                await _invoke_callback(getattr(coord, "async_shutdown", None))
+
             profiles = info.get("profiles")
-            if profiles and hasattr(profiles, "async_unload"):
-                with contextlib.suppress(Exception):
-                    await profiles.async_unload()
+            await _invoke_callback(getattr(profiles, "async_unload", None))
 
         remove_entry_data(hass, entry.entry_id)
     return unload_ok
