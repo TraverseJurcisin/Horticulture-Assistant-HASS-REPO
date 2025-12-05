@@ -3,13 +3,7 @@ from __future__ import annotations
 from typing import TypedDict
 
 from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.const import (
-    CONCENTRATION_PARTS_PER_MILLION,
-    PERCENTAGE,
-    Platform,
-    UnitOfIlluminance,
-    UnitOfTemperature,
-)
+from homeassistant.const import PERCENTAGE, Platform, UnitOfTemperature
 from homeassistant.helpers.entity import EntityCategory
 
 DOMAIN = "horticulture_assistant"
@@ -51,25 +45,7 @@ PLANT_SENSOR_TYPES: dict[str, PlantSensorMetadata] = {
         "unit": PERCENTAGE,
         "icon": "mdi:water-percent",
     },
-    "soil_temperature": {
-        "name": "Soil Temperature",
-        "device_class": SensorDeviceClass.TEMPERATURE,
-        "unit": UnitOfTemperature.CELSIUS,
-        "icon": "mdi:thermometer",
-    },
-    "light_intensity": {
-        "name": "Light Intensity",
-        "device_class": SensorDeviceClass.ILLUMINANCE,
-        "unit": UnitOfIlluminance.LUX,
-        "icon": "mdi:brightness-5",
-    },
-    "co2": {
-        "name": "CO2",  # carbon dioxide concentration
-        "device_class": SensorDeviceClass.CO2,
-        "unit": CONCENTRATION_PARTS_PER_MILLION,
-        "icon": "mdi:molecule-co2",
-    },
-    # ... add other sensor types if needed (e.g., light dli, vpd, etc.) ...
+    # ... add other sensor types if needed (e.g., soil_temperature, light, etc.) ...
 }
 
 SIGNAL_PROFILE_CONTEXTS_UPDATED = "horticulture_profile_contexts_updated"
