@@ -72,6 +72,7 @@ from .profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION, SUC
 from .profile_registry import ProfileRegistry
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .storage import LocalStore
+from .utils.entry_helpers import get_entry_data, get_primary_profile_id
 
 try:
     _ER_SPEC = importlib.util.find_spec("homeassistant.helpers.entity_registry")
@@ -117,6 +118,12 @@ MEASUREMENT_CLASSES: Final = {
     "co2": SensorDeviceClass.CO2,
     "ph": SensorDeviceClass.PH,
     "conductivity": SensorDeviceClass.CONDUCTIVITY,
+}
+
+SENSOR_TYPE_TO_MEASUREMENT: Final = {
+    "air_temperature": "temperature",
+    "air_humidity": "humidity",
+    "soil_moisture": "moisture",
 }
 
 # Service name constants for profile management.
@@ -382,6 +389,82 @@ async def async_register_all(
         await _refresh_profile()
 
     async def _srv_link_sensor(call) -> None:
+        if "meter_entity" in call.data or "new_sensor" in call.data:
+            meter_entity_id: str | None = call.data.get("meter_entity")
+            new_sensor_id: str | None = call.data.get("new_sensor")
+
+            if not meter_entity_id or not new_sensor_id:
+                raise vol.Invalid("meter_entity and new_sensor are required")
+
+            if hass.states.get(new_sensor_id) is None:
+                raise vol.Invalid(f"missing entity {new_sensor_id}")
+
+            reg = er.async_get(hass)
+            ent_reg_entry = reg.async_get(meter_entity_id)
+            if ent_reg_entry is None:
+                raise vol.Invalid(f"entity {meter_entity_id} not found")
+
+            new_sensor_registry_entry = reg.async_get(new_sensor_id)
+
+            unique_id = ent_reg_entry.unique_id
+            entity_obj = hass.data.get(DOMAIN, {}).get("entities", {}).get(unique_id)
+
+            if entity_obj is None:
+                raise vol.Invalid(f"entity object for {meter_entity_id} not available")
+
+            expected_device_class = _expected_device_class_name(getattr(entity_obj, "device_class", None))
+            actual_device_class = _normalise_registry_device_class(new_sensor_registry_entry)
+            if expected_device_class and actual_device_class and expected_device_class != actual_device_class:
+                raise vol.Invalid("device class mismatch")
+
+            sensor_type = getattr(entity_obj, "sensor_type", None)
+            if not sensor_type:
+                raise vol.Invalid("plant profile sensor missing sensor_type")
+
+            measurement = SENSOR_TYPE_TO_MEASUREMENT.get(sensor_type)
+            if measurement:
+                validation = validate_sensor_links(hass, {measurement: new_sensor_id})
+                if validation.errors:
+                    raise vol.Invalid(collate_issue_messages(validation.errors))
+                if validation.warnings:
+                    _notify_sensor_warnings(validation.warnings)
+                else:
+                    _clear_sensor_warning()
+
+            target_entry_id = ent_reg_entry.config_entry_id or getattr(entity_obj, "_entry_id", None)
+            target_entry = hass.config_entries.async_get_entry(target_entry_id)
+            if target_entry is None:
+                raise vol.Invalid("linked config entry missing")
+
+            await entity_obj.set_linked_sensor(new_sensor_id)
+
+            linked_options: dict[str, Any] = {}
+            raw_links = target_entry.options.get("linked_sensors")
+            if isinstance(raw_links, Mapping):
+                linked_options = dict(raw_links)
+            linked_options[sensor_type] = new_sensor_id
+
+            hass.config_entries.async_update_entry(
+                target_entry,
+                options={**target_entry.options, "linked_sensors": linked_options},
+            )
+
+            target_registry: ProfileRegistry | None = registry if target_entry.entry_id == entry.entry_id else None
+            if target_registry is None:
+                target_data = get_entry_data(hass, target_entry_id) or {}
+                target_registry = target_data.get("profile_registry")
+
+            if measurement and target_registry:
+                profile_id = get_primary_profile_id(target_entry)
+                if profile_id:
+                    try:
+                        await target_registry.async_link_sensors(profile_id, {measurement: new_sensor_id})
+                    except ValueError as err:
+                        raise vol.Invalid(str(err)) from err
+
+            _LOGGER.info("Linked %s to plant sensor %s", new_sensor_id, meter_entity_id)
+            return
+
         profile_id: str = call.data["profile_id"]
         role: str = call.data["role"]
         entity_id: str = call.data["entity_id"]
@@ -1075,24 +1158,54 @@ async def async_register_all(
             }
         ),
     )
+
+    def _validate_link_payload(data: Mapping[str, Any]) -> dict[str, Any]:
+        meter_entity = data.get("meter_entity")
+        new_sensor = data.get("new_sensor")
+        profile_id = data.get("profile_id")
+        role = data.get("role")
+        entity_id = data.get("entity_id")
+
+        if meter_entity or new_sensor:
+            if not meter_entity or not new_sensor:
+                raise vol.Invalid("Both meter_entity and new_sensor must be provided")
+            return {
+                "meter_entity": meter_entity,
+                "new_sensor": new_sensor,
+            }
+
+        if not (profile_id and role and entity_id):
+            raise vol.Invalid("Provide meter_entity/new_sensor or profile_id/entity_id/role")
+
+        return {
+            "profile_id": profile_id,
+            "role": role,
+            "entity_id": entity_id,
+        }
+
     _register_service(
         SERVICE_LINK_SENSOR,
         _srv_link_sensor,
-        schema=vol.Schema(
-            {
-                vol.Required("profile_id"): str,
-                vol.Required("entity_id"): ENTITY_ID_SCHEMA,
-                vol.Required("role"): vol.In(
-                    [
-                        "temperature",
-                        "humidity",
-                        "soil_moisture",
-                        "illuminance",
-                        "co2",
-                        "ph",
-                    ]
-                ),
-            }
+        schema=vol.All(
+            vol.Schema(
+                {
+                    vol.Optional("profile_id"): str,
+                    vol.Optional("entity_id"): ENTITY_ID_SCHEMA,
+                    vol.Optional("role"): vol.In(
+                        [
+                            "temperature",
+                            "humidity",
+                            "soil_moisture",
+                            "illuminance",
+                            "co2",
+                            "ph",
+                        ]
+                    ),
+                    vol.Optional("meter_entity"): ENTITY_ID_SCHEMA,
+                    vol.Optional("new_sensor"): ENTITY_ID_SCHEMA,
+                }
+            ),
+            _validate_link_payload,
         ),
     )
     _register_service(

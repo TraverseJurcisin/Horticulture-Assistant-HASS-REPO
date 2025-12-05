@@ -189,6 +189,12 @@ class PlantProfileSensor(SensorEntity):
         return {"linked_sensor": self._linked_entity_id}
 
     @property
+    def sensor_type(self) -> str:
+        """Return the plant sensor type key (e.g. air_temperature)."""
+
+        return self._sensor_type
+
+    @property
     def device_info(self) -> Mapping[str, Any]:
         """Return device info to attach this sensor to the plant profile device."""
 
