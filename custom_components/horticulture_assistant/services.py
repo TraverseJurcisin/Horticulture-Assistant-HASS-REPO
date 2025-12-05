@@ -112,6 +112,7 @@ ENTITY_ID_SCHEMA = getattr(cv, "entity_id", vol.All(str, vol.Length(min=1)))
 # correspond to the roles supported by :mod:`update_sensors`.
 MEASUREMENT_CLASSES: Final = {
     "temperature": SensorDeviceClass.TEMPERATURE,
+    "soil_temperature": SensorDeviceClass.TEMPERATURE,
     "humidity": SensorDeviceClass.HUMIDITY,
     "illuminance": SensorDeviceClass.ILLUMINANCE,
     "moisture": SensorDeviceClass.MOISTURE,
@@ -126,7 +127,7 @@ SENSOR_TYPE_TO_MEASUREMENT: Final = {
     "air_humidity": "humidity",
     "soil_moisture": "moisture",
     "light": "illuminance",
-    "soil_temperature": "temperature",
+    "soil_temperature": "soil_temperature",
     "battery_level": "battery",
     "soil_conductivity": "conductivity",
 }

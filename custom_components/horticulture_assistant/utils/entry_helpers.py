@@ -645,7 +645,10 @@ def _normalise_profile_sensors(payload: Mapping[str, Any] | None) -> dict[str, l
         "soil_conductivity": "conductivity",
         "battery_level": "battery",
         "battery": "battery",
-        "soil_temperature": "temperature",
+        "soil_temperature": "soil_temperature",
+        "soil_temp": "soil_temperature",
+        "root_temperature": "soil_temperature",
+        "root_temp": "soil_temperature",
     }
     for alias, target in aliases.items():
         if alias in sensors and target not in sensors:

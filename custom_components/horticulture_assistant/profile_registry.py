@@ -123,11 +123,15 @@ _SENSOR_ROLE_ALIASES = {
     "carbon_dioxide": "co2",
     "battery": "battery",
     "battery_level": "battery",
-    "soil_temperature": "temperature",
+    "soil_temperature": "soil_temperature",
+    "soil_temp": "soil_temperature",
+    "root_temperature": "soil_temperature",
+    "root_temp": "soil_temperature",
 }
 
 _SENSOR_ROLE_LABELS = {
     "temperature": "Temperature",
+    "soil_temperature": "Soil Temperature",
     "humidity": "Humidity",
     "illuminance": "Light",
     "moisture": "Moisture",

@@ -187,7 +187,7 @@ class PlantProfileSensor(SensorEntity):
                 "light": ("illuminance", "lux"),
                 "soil_conductivity": ("conductivity", "ec"),
                 "battery_level": ("battery",),
-                "soil_temperature": ("temperature", "soil_temp", "root_temperature"),
+                "soil_temperature": ("soil_temp", "root_temperature", "root_temp"),
             }
             fallback_keys = aliases.get(sensor_type)
             if fallback_keys:

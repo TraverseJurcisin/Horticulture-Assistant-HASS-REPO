@@ -61,6 +61,7 @@ class SensorValidationResult:
 
 EXPECTED_DEVICE_CLASSES: dict[str, SensorDeviceClass] = {
     "temperature": SensorDeviceClass.TEMPERATURE,
+    "soil_temperature": SensorDeviceClass.TEMPERATURE,
     "humidity": SensorDeviceClass.HUMIDITY,
     "illuminance": SensorDeviceClass.ILLUMINANCE,
     "moisture": SensorDeviceClass.MOISTURE,
@@ -100,6 +101,7 @@ else:
 
 EXPECTED_UNITS: dict[str, set[Any]] = {
     "temperature": _TEMPERATURE_UNITS,
+    "soil_temperature": _TEMPERATURE_UNITS,
     "humidity": {_PERCENTAGE, "%", "percent"},
     "moisture": {_PERCENTAGE, "%", "percent"},
     "illuminance": {_LIGHT_LUX, "lx", "lux", "klx", "kilolux"},
