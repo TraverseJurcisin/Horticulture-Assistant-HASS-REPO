@@ -17,6 +17,7 @@ from typing import Any
 
 import homeassistant.helpers.config_validation as cv
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 
@@ -61,7 +62,6 @@ from .const import (
     DEFAULT_MODEL,
     DEFAULT_UPDATE_MINUTES,
     DOMAIN,
-    PLATFORMS,
     PROFILE_SCOPE_DEFAULT,
     signal_profile_contexts_updated,
 )
@@ -170,15 +170,19 @@ _ONBOARDING_STAGE_META: dict[str, dict[str, Any]] = {
 _STAGE_READY_STATUSES = {"success", "warning"}
 _STAGE_SATISFIED_STATUSES = {"success", "skipped", "warning"}
 
+PLATFORMS: tuple[Platform, ...] = (Platform.SENSOR, Platform.NUMBER)
 
-async def _async_forward_entry_platforms(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+
+async def _async_forward_entry_platforms(
+    hass: HomeAssistant, entry: ConfigEntry, platforms: tuple[Platform | str, ...]
+) -> bool:
     """Forward a config entry to all platforms with legacy fallbacks."""
 
     forward_setups = getattr(hass.config_entries, "async_forward_entry_setups", None)
     legacy_forward = getattr(hass.config_entries, "async_forward_entry_setup", None)
 
     if callable(forward_setups):
-        return bool(await forward_setups(entry, PLATFORMS))
+        return bool(await forward_setups(entry, platforms))
 
     if not callable(legacy_forward):
         return False
@@ -190,7 +194,7 @@ async def _async_forward_entry_platforms(hass: HomeAssistant, entry: ConfigEntry
         return result
 
     results = await asyncio.gather(
-        *(_forward(platform) for platform in PLATFORMS),
+        *(_forward(platform) for platform in platforms),
         return_exceptions=True,
     )
     for result in results:
@@ -920,6 +924,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Horticulture Assistant from a ConfigEntry."""
 
     domain_data = hass.data.setdefault(DOMAIN, {})
+    domain_data.setdefault("entities", {})
     service_lock: asyncio.Lock = domain_data.setdefault("service_registration_lock", asyncio.Lock())
     services_registered = bool(domain_data.get("services_registered"))
     if not services_registered:
@@ -927,6 +932,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         if services_registered:
             domain_data["services_registered"] = True
     entry_data = domain_data.setdefault(entry.entry_id, {"config_entry": entry})
+    entry_data.setdefault("entities", {})
     entry_data.setdefault("onboarding_errors", {})
     manager = _OnboardingManager(hass, entry, entry_data)
 
@@ -962,6 +968,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     last_completed = entry_data.get("onboarding_last_completed")
 
     entry_data = await store_entry_data(hass, entry)
+    entry_data.setdefault("entities", {})
     entry_data["onboarding_stage_state"] = existing_state
     entry_data["onboarding_history"] = existing_history
     entry_data["onboarding_timeline"] = existing_timeline
@@ -1338,22 +1345,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             calibration_ready, _ = manager.skip("calibration_services", "calibration services unavailable")
     entry_data["calibration_services_ready"] = calibration_ready
 
-    platform_ready = False
-    platform_dependencies_ready = manager.ensure_dependencies(
-        "platform_setup",
-        reason="service registration incomplete" if not services_ready else None,
-    )
-    if platform_dependencies_ready and services_ready:
-        forward_setups = getattr(hass.config_entries, "async_forward_entry_setups", None)
-        legacy_forward = getattr(hass.config_entries, "async_forward_entry_setup", None)
+    entry_platforms: tuple[Platform | str, ...] = PLATFORMS
+    forward_setups = getattr(hass.config_entries, "async_forward_entry_setups", None)
+    legacy_forward = getattr(hass.config_entries, "async_forward_entry_setup", None)
 
-        if callable(forward_setups) or callable(legacy_forward):
-            platform_ready, _ = await manager.guard_async(
-                "platform_setup",
-                _async_forward_entry_platforms(hass, entry),
-            )
-        else:
-            platform_ready, _ = manager.skip("platform_setup", "platform loader unavailable")
+    if callable(forward_setups) or callable(legacy_forward):
+        platform_ready, _ = await manager.guard_async(
+            "platform_setup",
+            _async_forward_entry_platforms(hass, entry, entry_platforms),
+        )
+    else:
+        platform_ready, _ = manager.skip("platform_setup", "platform loader unavailable")
 
     entry_data["platform_setup_ready"] = platform_ready
 
@@ -1498,11 +1500,13 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unload_platforms = getattr(hass.config_entries, "async_unload_platforms", None)
     legacy_unload = getattr(hass.config_entries, "async_forward_entry_unload", None)
 
+    entry_platforms: tuple[Platform | str, ...] = PLATFORMS
+
     if callable(unload_platforms):
-        unload_ok = await unload_platforms(entry, PLATFORMS)
+        unload_ok = await unload_platforms(entry, entry_platforms)
     elif callable(legacy_unload):
         results = await asyncio.gather(
-            *(legacy_unload(entry, platform) for platform in PLATFORMS),
+            *(legacy_unload(entry, platform) for platform in entry_platforms),
             return_exceptions=True,
         )
         unload_ok = all(result is True for result in results)
