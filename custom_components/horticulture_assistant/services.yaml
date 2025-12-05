@@ -24,15 +24,23 @@ link_sensor:
   description: "Attach an HA sensor entity to a profile for a specific role."
   fields:
     profile_id:
-      required: true
+      required: false
       selector: { text: {} }
     entity_id:
-      required: true
+      required: false
       selector: { entity: { domain: sensor } }
     role:
-      required: true
+      required: false
       description: "temperature | humidity | soil_moisture | illuminance | co2 | ph"
       selector: { select: { options: ["temperature","humidity","soil_moisture","illuminance","co2","ph"] } }
+    meter_entity:
+      required: false
+      description: "Plant profile sensor entity ID to relink (e.g. sensor.my_plant_soil_moisture)."
+      selector: { entity: { domain: sensor } }
+    new_sensor:
+      required: false
+      description: "Physical sensor entity ID to link to the plant profile sensor."
+      selector: { entity: { domain: sensor } }
 
 duplicate_profile:
   name: "Duplicate a profile"
