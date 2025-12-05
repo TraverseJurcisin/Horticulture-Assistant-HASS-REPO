@@ -1,6 +1,15 @@
 from __future__ import annotations
 
-from homeassistant.const import Platform
+from typing import TypedDict
+
+from homeassistant.components.sensor import SensorDeviceClass
+from homeassistant.const import (
+    CONCENTRATION_PARTS_PER_MILLION,
+    PERCENTAGE,
+    Platform,
+    UnitOfIlluminance,
+    UnitOfTemperature,
+)
 from homeassistant.helpers.entity import EntityCategory
 
 DOMAIN = "horticulture_assistant"
@@ -11,6 +20,57 @@ PLATFORMS: list[Platform] = [
     Platform.SWITCH,
     Platform.NUMBER,
 ]
+
+
+class PlantSensorMetadata(TypedDict, total=False):
+    """Metadata describing a plant sensor type."""
+
+    name: str
+    device_class: SensorDeviceClass | str
+    unit: str
+    icon: str
+
+
+# Fixed sensor types for each plant profile (TODO: only create sensors that are needed)
+PLANT_SENSOR_TYPES: dict[str, PlantSensorMetadata] = {
+    "air_temperature": {
+        "name": "Air Temperature",
+        "device_class": SensorDeviceClass.TEMPERATURE,
+        "unit": UnitOfTemperature.CELSIUS,
+        "icon": "mdi:thermometer",
+    },
+    "air_humidity": {
+        "name": "Air Humidity",
+        "device_class": SensorDeviceClass.HUMIDITY,
+        "unit": PERCENTAGE,
+        "icon": "mdi:water-percent",
+    },
+    "soil_moisture": {
+        "name": "Soil Moisture",
+        "device_class": SensorDeviceClass.MOISTURE,
+        "unit": PERCENTAGE,
+        "icon": "mdi:water-percent",
+    },
+    "soil_temperature": {
+        "name": "Soil Temperature",
+        "device_class": SensorDeviceClass.TEMPERATURE,
+        "unit": UnitOfTemperature.CELSIUS,
+        "icon": "mdi:thermometer",
+    },
+    "light_intensity": {
+        "name": "Light Intensity",
+        "device_class": SensorDeviceClass.ILLUMINANCE,
+        "unit": UnitOfIlluminance.LUX,
+        "icon": "mdi:brightness-5",
+    },
+    "co2": {
+        "name": "CO2",  # carbon dioxide concentration
+        "device_class": SensorDeviceClass.CO2,
+        "unit": CONCENTRATION_PARTS_PER_MILLION,
+        "icon": "mdi:molecule-co2",
+    },
+    # ... add other sensor types if needed (e.g., light dli, vpd, etc.) ...
+}
 
 SIGNAL_PROFILE_CONTEXTS_UPDATED = "horticulture_profile_contexts_updated"
 
