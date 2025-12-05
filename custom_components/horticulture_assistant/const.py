@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import TypedDict
 
-from homeassistant.components.sensor import SensorDeviceClass
+from homeassistant.components.sensor import SensorDeviceClass, UnitOfIlluminance
 from homeassistant.const import (
     PERCENTAGE,
     Platform,
-    UnitOfIlluminance,
     UnitOfTemperature,
 )
 from homeassistant.helpers.entity import EntityCategory
