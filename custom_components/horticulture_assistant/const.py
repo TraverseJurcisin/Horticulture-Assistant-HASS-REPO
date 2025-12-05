@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TypedDict
 
-from homeassistant.components.sensor import SensorDeviceClass, UnitOfIlluminance
+from homeassistant.components.sensor import SensorDeviceClass
 from homeassistant.const import (
     PERCENTAGE,
     Platform,
@@ -52,7 +52,7 @@ PLANT_SENSOR_TYPES: dict[str, PlantSensorMetadata] = {
     "light": {
         "name": "Light",
         "device_class": SensorDeviceClass.ILLUMINANCE,
-        "unit": UnitOfIlluminance.LUX,
+        "unit": "lx",
         "icon": "mdi:white-balance-sunny",
     },
     "soil_temperature": {
