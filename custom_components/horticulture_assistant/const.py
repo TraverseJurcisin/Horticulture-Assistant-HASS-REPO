@@ -3,7 +3,11 @@ from __future__ import annotations
 from typing import TypedDict
 
 from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.const import PERCENTAGE, Platform, UnitOfTemperature
+from homeassistant.const import (
+    PERCENTAGE,
+    Platform,
+    UnitOfTemperature,
+)
 from homeassistant.helpers.entity import EntityCategory
 
 DOMAIN = "horticulture_assistant"
@@ -45,7 +49,33 @@ PLANT_SENSOR_TYPES: dict[str, PlantSensorMetadata] = {
         "unit": PERCENTAGE,
         "icon": "mdi:water-percent",
     },
+    "light": {
+        "name": "Light",
+        "device_class": SensorDeviceClass.ILLUMINANCE,
+        "unit": "lx",
+        "icon": "mdi:white-balance-sunny",
+    },
+    "soil_temperature": {
+        "name": "Soil Temperature",
+        "device_class": SensorDeviceClass.TEMPERATURE,
+        "unit": UnitOfTemperature.CELSIUS,
+        "icon": "mdi:thermometer",
+    },
+    "battery_level": {
+        "name": "Battery Level",
+        "device_class": SensorDeviceClass.BATTERY,
+        "unit": PERCENTAGE,
+        "icon": "mdi:battery-medium",
+    },
+    "soil_conductivity": {
+        "name": "Soil Conductivity",
+        "device_class": SensorDeviceClass.CONDUCTIVITY,
+        "unit": "µS/cm",
+        "icon": "mdi:flash-outline",
+    },
 }
+# TODO: consider aggregating multiple linked sensors per metric (e.g. median moisture)
+# and allowing unused sensors to be disabled/removed when profiles don't require them.
 
 SIGNAL_PROFILE_CONTEXTS_UPDATED = "horticulture_profile_contexts_updated"
 

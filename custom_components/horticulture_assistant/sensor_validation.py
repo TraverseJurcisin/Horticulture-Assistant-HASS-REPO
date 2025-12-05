@@ -30,6 +30,7 @@ except ModuleNotFoundError:  # pragma: no cover - executed in stubbed env
         MOISTURE = "moisture"
         CO2 = "co2"
         CONDUCTIVITY = "conductivity"
+        BATTERY = "battery"
 
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
@@ -60,11 +61,14 @@ class SensorValidationResult:
 
 EXPECTED_DEVICE_CLASSES: dict[str, SensorDeviceClass] = {
     "temperature": SensorDeviceClass.TEMPERATURE,
+    "soil_temperature": SensorDeviceClass.TEMPERATURE,
     "humidity": SensorDeviceClass.HUMIDITY,
     "illuminance": SensorDeviceClass.ILLUMINANCE,
     "moisture": SensorDeviceClass.MOISTURE,
     "co2": SensorDeviceClass.CO2,
     "ec": SensorDeviceClass.CONDUCTIVITY,
+    "conductivity": SensorDeviceClass.CONDUCTIVITY,
+    "battery": SensorDeviceClass.BATTERY,
 }
 
 
@@ -97,11 +101,14 @@ else:
 
 EXPECTED_UNITS: dict[str, set[Any]] = {
     "temperature": _TEMPERATURE_UNITS,
+    "soil_temperature": _TEMPERATURE_UNITS,
     "humidity": {_PERCENTAGE, "%", "percent"},
     "moisture": {_PERCENTAGE, "%", "percent"},
     "illuminance": {_LIGHT_LUX, "lx", "lux", "klx", "kilolux"},
     "co2": _CO2_UNITS,
     "ec": {"µS/cm", "uS/cm", "us/cm", "mS/cm", "ds/m", "s/m"},
+    "conductivity": {"µs/cm", "us/cm", "ms/cm", "ds/m", "s/m"},
+    "battery": {_PERCENTAGE, "%", "percent"},
 }
 
 

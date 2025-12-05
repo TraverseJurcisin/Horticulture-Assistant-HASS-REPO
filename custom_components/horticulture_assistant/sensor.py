@@ -181,6 +181,23 @@ class PlantProfileSensor(SensorEntity):
             self._linked_entity_id = data_linked[sensor_type]
         elif isinstance(options_linked, Mapping) and sensor_type in options_linked:
             self._linked_entity_id = options_linked[sensor_type]
+        elif isinstance(data_linked, Mapping) or isinstance(options_linked, Mapping):
+            aliases: Mapping[str, tuple[str, ...]] = {
+                "soil_moisture": ("moisture",),
+                "light": ("illuminance", "lux"),
+                "soil_conductivity": ("conductivity", "ec"),
+                "battery_level": ("battery",),
+                "soil_temperature": ("soil_temp", "root_temperature", "root_temp"),
+            }
+            fallback_keys = aliases.get(sensor_type)
+            if fallback_keys:
+                for key in fallback_keys:
+                    if isinstance(data_linked, Mapping) and key in data_linked:
+                        self._linked_entity_id = data_linked[key]
+                        break
+                    if isinstance(options_linked, Mapping) and key in options_linked:
+                        self._linked_entity_id = options_linked[key]
+                        break
 
     @property
     def extra_state_attributes(self) -> Mapping[str, Any]:
