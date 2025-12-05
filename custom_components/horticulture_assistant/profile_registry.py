@@ -118,8 +118,12 @@ _SENSOR_ROLE_ALIASES = {
     "moisture": "moisture",
     "conductivity": "conductivity",
     "ec": "conductivity",
+    "soil_conductivity": "conductivity",
     "co2": "co2",
     "carbon_dioxide": "co2",
+    "battery": "battery",
+    "battery_level": "battery",
+    "soil_temperature": "temperature",
 }
 
 _SENSOR_ROLE_LABELS = {
@@ -129,6 +133,7 @@ _SENSOR_ROLE_LABELS = {
     "moisture": "Moisture",
     "conductivity": "Conductivity",
     "co2": "CO₂",
+    "battery": "Battery",
 }
 
 

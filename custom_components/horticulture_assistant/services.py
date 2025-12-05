@@ -118,12 +118,17 @@ MEASUREMENT_CLASSES: Final = {
     "co2": SensorDeviceClass.CO2,
     "ph": SensorDeviceClass.PH,
     "conductivity": SensorDeviceClass.CONDUCTIVITY,
+    "battery": SensorDeviceClass.BATTERY,
 }
 
 SENSOR_TYPE_TO_MEASUREMENT: Final = {
     "air_temperature": "temperature",
     "air_humidity": "humidity",
     "soil_moisture": "moisture",
+    "light": "illuminance",
+    "soil_temperature": "temperature",
+    "battery_level": "battery",
+    "soil_conductivity": "conductivity",
 }
 
 # Service name constants for profile management.

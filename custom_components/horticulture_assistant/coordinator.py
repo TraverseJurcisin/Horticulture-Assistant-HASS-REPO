@@ -194,6 +194,9 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         temperature = _resolve_primary_entity_id(sensors.get("temperature"))
         humidity = _resolve_primary_entity_id(sensors.get("humidity"))
         moisture = _resolve_primary_entity_id(sensors.get("moisture"))
+        soil_temperature = _resolve_primary_entity_id(sensors.get("soil_temperature"))
+        conductivity = _resolve_primary_entity_id(sensors.get("conductivity"))
+        battery = _resolve_primary_entity_id(sensors.get("battery"))
         dli: float | None = None
         ppfd: float | None = None
         vpd: float | None = None
@@ -201,6 +204,9 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         moisture_pct: float | None = None
         mold: float | None = None
         status: str | None = None
+        soil_temp_c: float | None = None
+        conductivity_val: float | None = None
+        battery_pct: float | None = None
 
         if illuminance:
             lux = get_numeric_state(self.hass, illuminance)
@@ -237,6 +243,25 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         if moisture:
             moisture_pct = get_numeric_state(self.hass, moisture)
 
+        if soil_temperature:
+            soil_temp = get_numeric_state(self.hass, soil_temperature)
+            if soil_temp is not None:
+                soil_state = self.hass.states.get(soil_temperature)
+                unit = soil_state.attributes.get("unit_of_measurement") if soil_state else None
+                if _is_fahrenheit(unit):
+                    soil_temp = TemperatureConverter.convert(
+                        soil_temp,
+                        UnitOfTemperature.FAHRENHEIT,
+                        UnitOfTemperature.CELSIUS,
+                    )
+                soil_temp_c = soil_temp
+
+        if conductivity:
+            conductivity_val = get_numeric_state(self.hass, conductivity)
+
+        if battery:
+            battery_pct = get_numeric_state(self.hass, battery)
+
         if t_c is not None and h is not None:
             dew_point = dew_point_c(t_c, h)
             vpd = vpd_kpa(t_c, h)
@@ -255,6 +280,9 @@ class HorticultureCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             "moisture": moisture_pct,
             "mold_risk": mold,
             "status": status,
+            "soil_temperature": soil_temp_c,
+            "conductivity": conductivity_val,
+            "battery": battery_pct,
         }
 
     async def async_shutdown(self) -> None:
