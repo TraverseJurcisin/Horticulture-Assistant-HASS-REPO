@@ -11,18 +11,27 @@ from typing import Any
 from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorEntityDescription, SensorStateClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import PERCENTAGE, UnitOfTemperature, UnitOfTime
-from homeassistant.core import HomeAssistant, callback
+from homeassistant.core import (
+    CALLBACK_TYPE,
+    Event,
+    EventStateChangedData,
+    HomeAssistant,
+    callback,
+)
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import EntityCategory
+from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
+    CONF_PLANT_NAME,
     CONF_PROFILES,
     DOMAIN,
     FEATURE_AI_ASSIST,
     FEATURE_CLOUD_SYNC,
     FEATURE_IRRIGATION_AUTOMATION,
+    PLANT_SENSOR_TYPES,
     signal_profile_contexts_updated,
 )
 from .coordinator import HorticultureCoordinator
@@ -124,6 +133,154 @@ PROFILE_METRIC_CATEGORIES: tuple[str, ...] = (
     "variables",
     "thresholds",
 )
+
+
+class PlantProfileSensor(SensorEntity):
+    """Sensor representing a plant profile measurement (e.g., soil moisture)."""
+
+    _attr_state_class = SensorStateClass.MEASUREMENT
+
+    def __init__(
+        self,
+        config_entry: ConfigEntry,
+        sensor_type: str,
+        profile_name: str,
+        info: Mapping[str, Any],
+    ) -> None:
+        """Initialize the plant profile sensor entity."""
+
+        self._entry_id = config_entry.entry_id
+        self._sensor_type = sensor_type
+        self._profile_name = profile_name
+        self._attr_name = f"{profile_name} {info.get('name', sensor_type)}"
+        self._attr_unique_id = f"{config_entry.entry_id}_{sensor_type}"
+        self._linked_entity_id: str | None = None
+        self._unsub_tracker: CALLBACK_TYPE | None = None
+        self._attr_native_value: float | str | None = None
+
+        device_class = info.get("device_class")
+        if isinstance(device_class, SensorDeviceClass):
+            self._attr_device_class = device_class
+        elif isinstance(device_class, str):
+            with suppress(AttributeError):
+                self._attr_device_class = getattr(SensorDeviceClass, device_class.upper())
+            if not getattr(self, "_attr_device_class", None):
+                self._attr_device_class = device_class
+
+        unit = info.get("unit")
+        if isinstance(unit, str):
+            self._attr_native_unit_of_measurement = unit
+
+        icon = info.get("icon")
+        if isinstance(icon, str):
+            self._attr_icon = icon
+
+        data_linked = config_entry.data.get("linked_sensors")
+        options_linked = config_entry.options.get("linked_sensors")
+        if isinstance(data_linked, Mapping) and sensor_type in data_linked:
+            self._linked_entity_id = data_linked[sensor_type]
+        elif isinstance(options_linked, Mapping) and sensor_type in options_linked:
+            self._linked_entity_id = options_linked[sensor_type]
+
+    @property
+    def extra_state_attributes(self) -> Mapping[str, Any]:
+        """Return extra attributes including linked sensor reference."""
+
+        return {"linked_sensor": self._linked_entity_id}
+
+    @property
+    def device_info(self) -> Mapping[str, Any]:
+        """Return device info to attach this sensor to the plant profile device."""
+
+        return {
+            "identifiers": {(DOMAIN, self._entry_id)},
+            "name": self._profile_name,
+            "manufacturer": "Horticulture Assistant",
+            "model": "Plant Profile",
+        }
+
+    async def async_added_to_hass(self) -> None:
+        """Register callbacks once entity is added to Home Assistant."""
+
+        await super().async_added_to_hass()
+        domain_data = self.hass.data.setdefault(DOMAIN, {})
+        entities = domain_data.setdefault("entities", {})
+        entities[self.unique_id] = self
+
+        if self._linked_entity_id:
+            state = self.hass.states.get(self._linked_entity_id)
+            if state and state.state not in (None, "unknown", "unavailable"):
+                try:
+                    self._attr_native_value = float(state.state)
+                except ValueError:
+                    self._attr_native_value = state.state
+                unit = state.attributes.get("unit_of_measurement")
+                if unit:
+                    self._attr_native_unit_of_measurement = unit
+            self._unsub_tracker = async_track_state_change_event(
+                self.hass,
+                [self._linked_entity_id],
+                self._async_sensor_state_changed,
+            )
+        self.async_write_ha_state()
+
+    async def async_will_remove_from_hass(self) -> None:
+        """Cleanup when entity is about to be removed."""
+
+        await super().async_will_remove_from_hass()
+        domain_data = self.hass.data.get(DOMAIN, {})
+        entities = domain_data.get("entities", {})
+        entities.pop(self.unique_id, None)
+        if self._unsub_tracker:
+            self._unsub_tracker()
+            self._unsub_tracker = None
+
+    @callback
+    def _async_sensor_state_changed(self, event: Event[EventStateChangedData] | None) -> None:
+        """Handle state changes of the linked physical sensor."""
+
+        new_state = event.data.get("new_state") if event else None
+        if not new_state:
+            return
+        if new_state.state in ("unknown", "unavailable"):
+            self._attr_native_value = None
+        else:
+            try:
+                self._attr_native_value = float(new_state.state)
+            except ValueError:
+                self._attr_native_value = new_state.state
+        unit = new_state.attributes.get("unit_of_measurement")
+        if unit:
+            self._attr_native_unit_of_measurement = unit
+        self.async_write_ha_state()
+
+    async def set_linked_sensor(self, new_entity_id: str | None) -> None:
+        """Link this plant profile sensor to a new physical sensor entity."""
+
+        if self._unsub_tracker:
+            self._unsub_tracker()
+            self._unsub_tracker = None
+        self._linked_entity_id = new_entity_id
+
+        if new_entity_id:
+            self._unsub_tracker = async_track_state_change_event(
+                self.hass, [new_entity_id], self._async_sensor_state_changed
+            )
+            state = self.hass.states.get(new_entity_id)
+            if state and state.state not in (None, "unknown", "unavailable"):
+                try:
+                    self._attr_native_value = float(state.state)
+                except ValueError:
+                    self._attr_native_value = state.state
+                unit = state.attributes.get("unit_of_measurement")
+                if unit:
+                    self._attr_native_unit_of_measurement = unit
+            else:
+                self._attr_native_value = None
+        else:
+            self._attr_native_value = None
+
+        self.async_write_ha_state()
 
 
 class PlantStatusSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):
@@ -418,8 +575,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     stored = collection.stored
     contexts = collection.contexts
 
+    hass.data.setdefault(DOMAIN, {}).setdefault("entities", {})
+
+    profile_name = entry.title or stored.get("plant_name") or entry.data.get(CONF_PLANT_NAME)
+    profile_sensors = [
+        PlantProfileSensor(entry, sensor_type, profile_name or entry.entry_id, info)
+        for sensor_type, info in PLANT_SENSOR_TYPES.items()
+    ]
+
     if not contexts:
         _LOGGER.debug("No plant profiles configured; skipping horticulture_assistant sensors")
+        if profile_sensors:
+            async_add_entities(profile_sensors)
         return
 
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
@@ -576,6 +743,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         return sensors
 
     sensors: list[SensorEntity] = [
+        *profile_sensors,
         HortiStatusSensor(coord_ai, coord_local, entry.entry_id, plant_name, plant_id, keep_stale),
         HortiRecommendationSensor(coord_ai, entry.entry_id, plant_name, plant_id, keep_stale),
         EntitlementSummarySensor(entry, plant_name),
