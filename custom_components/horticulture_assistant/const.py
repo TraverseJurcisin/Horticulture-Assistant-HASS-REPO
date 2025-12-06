@@ -63,7 +63,7 @@ PLANT_SENSOR_TYPES: dict[str, PlantSensorMetadata] = {
     },
     "battery_level": {
         "name": "Battery Level",
-        "device_class": SensorDeviceClass.BATTERY,
+        "device_class": getattr(SensorDeviceClass, "BATTERY", "battery"),
         "unit": PERCENTAGE,
         "icon": "mdi:battery-medium",
     },

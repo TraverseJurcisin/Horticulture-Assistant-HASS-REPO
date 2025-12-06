@@ -1359,6 +1359,25 @@ async def update_entry_data(
     entry_data["profile_devices"] = profile_devices
     entry_data["profile_contexts"] = profile_contexts
 
+    added_profiles = tuple(sorted(pid for pid in new_profile_ids if pid not in previous_profiles))
+    removed_profiles = tuple(sorted(pid for pid in previous_profiles if pid not in new_profile_ids))
+    updated_profiles: tuple[str, ...] = ()
+    if not added_profiles and not removed_profiles:
+        updated_profiles = tuple(sorted(new_profile_ids & previous_profiles))
+
+    if added_profiles or removed_profiles or updated_profiles:
+        async_dispatcher_send(
+            hass,
+            signal_profile_contexts_updated(entry.entry_id),
+            {
+                "added": added_profiles,
+                "removed": removed_profiles,
+                "updated": updated_profiles,
+            },
+        )
+        # TODO: consider auditing existing profile entities during startup to fill in
+        # any missing sensors or numbers from older entries.
+
     await async_sync_entry_devices(hass, entry, snapshot=snapshot)
     return entry_data
 

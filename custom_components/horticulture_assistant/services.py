@@ -119,7 +119,7 @@ MEASUREMENT_CLASSES: Final = {
     "co2": SensorDeviceClass.CO2,
     "ph": SensorDeviceClass.PH,
     "conductivity": SensorDeviceClass.CONDUCTIVITY,
-    "battery": SensorDeviceClass.BATTERY,
+    "battery": getattr(SensorDeviceClass, "BATTERY", "battery"),
 }
 
 SENSOR_TYPE_TO_MEASUREMENT: Final = {

@@ -3,6 +3,7 @@ import inspect
 from collections import defaultdict
 
 import pytest
+from homeassistant.helpers.dispatcher import async_dispatcher_send
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.horticulture_assistant.const import (
@@ -212,6 +213,57 @@ async def test_profile_metric_value_sensor_refreshes_on_context_update(hass):
 
     assert sensor.native_value is None
     assert sensor._attr_available is False
+
+
+@pytest.mark.asyncio
+async def test_profile_metric_value_sensor_created_without_value(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={
+            CONF_PLANT_ID: "plant-3",
+            CONF_PLANT_NAME: "Parsley",
+        },
+        options={
+            CONF_PROFILES: {
+                "plant-3": {
+                    "name": "Parsley",
+                    "resolved_targets": {"humidity_min": {"unit": "%"}},
+                }
+            },
+        },
+    )
+    entry.entry_id = "entry-3"
+    entry.async_on_unload = lambda func: None
+
+    await store_entry_data(hass, entry)
+    stored = get_entry_data(hass, entry)
+    stored["coordinator_ai"] = _DummyCoordinator(hass)
+    stored["coordinator_local"] = _DummyCoordinator(hass)
+    stored["keep_stale"] = True
+
+    added: list[ProfileMetricValueSensor] = []
+    pending: list[asyncio.Task] = []
+
+    def _add_entities(entities, update=False):
+        for entity in entities:
+            entity.hass = hass
+            result = entity.async_added_to_hass()
+            if inspect.isawaitable(result):
+                pending.append(asyncio.create_task(result))
+            if isinstance(entity, ProfileMetricValueSensor):
+                added.append(entity)
+
+    await async_setup_entry(hass, entry, _add_entities)
+
+    if pending:
+        await asyncio.gather(*pending)
+
+    humidity_sensors = [sensor for sensor in added if sensor.unique_id.endswith("humidity_min")]
+    assert humidity_sensors, "expected humidity metric sensor even when value missing"
+
+    humidity_sensor = humidity_sensors[0]
+    assert humidity_sensor.available is True
+    assert humidity_sensor.native_value is None
 
 
 @pytest.mark.asyncio
@@ -1094,3 +1146,77 @@ async def test_sensor_adds_context_entities_for_profile_updates(hass, monkeypatc
     assert f"{base}_vpd" in added_context_ids
     assert f"{base}_dew_point" in added_context_ids
     assert f"{base}_mold_risk" in added_context_ids
+
+
+@pytest.mark.asyncio
+async def test_sensor_platform_handles_profiles_added_after_setup(hass):
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={
+            CONF_PLANT_ID: "late-plant",
+            CONF_PLANT_NAME: "Late Plant",
+        },
+        options={},
+    )
+    entry.entry_id = "entry-late"
+    entry.async_on_unload = lambda func: None
+
+    await store_entry_data(hass, entry)
+    stored = get_entry_data(hass, entry)
+    stored["coordinator_ai"] = _DummyCoordinator(hass)
+    stored["coordinator_local"] = _DummyCoordinator(hass)
+    stored.setdefault("keep_stale", True)
+
+    added: list[object] = []
+    pending: list[asyncio.Task] = []
+
+    def _add_entities(entities, update=False):
+        for entity in entities:
+            entity.hass = hass
+            result = entity.async_added_to_hass()
+            if inspect.isawaitable(result):
+                pending.append(asyncio.create_task(result))
+            added.append(entity)
+
+    await async_setup_entry(hass, entry, _add_entities)
+
+    if pending:
+        await asyncio.gather(*pending)
+
+    assert added, "expected base sensors to be registered even without profiles"
+
+    added.clear()
+    pending.clear()
+
+    entry.options = {
+        CONF_PROFILES: {
+            "late-plant": {
+                "name": "Late Plant",
+                "resolved_targets": {"temperature_min": {"value": 19, "unit": "°C"}},
+                "sensors": {
+                    "temperature": ("sensor.temperature",),
+                    "humidity": ("sensor.humidity",),
+                },
+            }
+        }
+    }
+
+    await store_entry_data(hass, entry)
+
+    async_dispatcher_send(
+        hass,
+        signal_profile_contexts_updated(entry.entry_id),
+        {"added": ("late-plant",), "removed": (), "updated": ()},
+    )
+
+    await hass.async_block_till_done()
+
+    if pending:
+        await asyncio.gather(*pending)
+
+    assert any(isinstance(entity, PlantStatusSensor) for entity in added)
+    assert any(isinstance(entity, PlantPPFDSensor) for entity in added)
+    assert any(
+        isinstance(entity, ProfileMetricValueSensor) and entity.unique_id.endswith("resolved_targets_temperature_min")
+        for entity in added
+    )

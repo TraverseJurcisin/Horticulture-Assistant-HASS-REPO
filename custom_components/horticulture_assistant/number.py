@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from collections.abc import Iterable, Mapping
 from typing import Any
 
@@ -7,10 +8,11 @@ from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import EVENT_CORE_CONFIG_UPDATE, UnitOfTemperature
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import CATEGORY_CONTROL, CONF_PROFILES, signal_profile_contexts_updated
+from .const import CATEGORY_CONTROL, CONF_PROFILES, DOMAIN, signal_profile_contexts_updated
 from .entity_base import HorticultureBaseEntity
 from .profile.citations import manual_note
 from .profile.compat import get_resolved_target, set_resolved_target
@@ -36,6 +38,7 @@ THRESHOLD_SPECS = [
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
     collection = resolve_profile_context_collection(hass, entry)
+    entity_registry = er.async_get(hass)
 
     def _build_threshold_entities(context) -> list[ThresholdNumber]:
         profile_id = context.profile_id
@@ -57,31 +60,121 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         return numbers
 
     known_profiles: set[str] = set()
+    known_threshold_keys: dict[str, set[str]] = defaultdict(set)
     entities: list[ThresholdNumber] = []
+    pending_specs: dict[str, set[str]] = {}
+
+    def _sync_known_threshold_keys_from_registry() -> None:
+        """Align tracked threshold specs with the entity registry."""
+
+        registry_keys: dict[str, set[str]] = defaultdict(set)
+        for entity_entry in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
+            if entity_entry.domain != "number" or entity_entry.platform != DOMAIN:
+                continue
+            unique_id = entity_entry.unique_id
+            if not isinstance(unique_id, str):
+                continue
+            prefix = f"{entry.entry_id}_"
+            if not unique_id.startswith(prefix) or "_" not in unique_id[len(prefix) :]:
+                continue
+            remainder = unique_id.removeprefix(prefix)
+            profile_id, key = remainder.split("_", 1)
+            registry_keys[profile_id].add(key)
+
+        if registry_keys:
+            known_threshold_keys.clear()
+            for profile_id, keys in registry_keys.items():
+                known_threshold_keys[profile_id].update(keys)
+                known_profiles.add(profile_id)
+
     for context in collection.values():
         entities.extend(_build_threshold_entities(context))
-        known_profiles.add(context.profile_id)
+        pending_specs[context.profile_id] = {key for key, _ in THRESHOLD_SPECS}
 
     async_add_entities(entities, True)
+
+    for profile_id, specs in pending_specs.items():
+        known_profiles.add(profile_id)
+        known_threshold_keys[profile_id].update(specs)
+
+    _sync_known_threshold_keys_from_registry()
 
     @callback
     def _handle_profile_update(change: Mapping[str, Iterable[str]] | None) -> None:
         if not isinstance(change, Mapping):
             return
         added = tuple(change.get("added", ()))
-        if not added:
-            return
+        updated = tuple(change.get("updated", ()))
+        removed = tuple(change.get("removed", ()))
+
+        if removed:
+            for profile_id in removed:
+                known_profiles.discard(profile_id)
+                known_threshold_keys.pop(profile_id, None)
 
         updated_collection = resolve_profile_context_collection(hass, entry)
         new_entities: list[ThresholdNumber] = []
-        for profile_id in added:
-            if profile_id in known_profiles:
-                continue
+        pending: dict[str, set[str]] = {}
+
+        _sync_known_threshold_keys_from_registry()
+        for profile_id in (*added, *updated):
             context = updated_collection.contexts.get(profile_id)
             if context is None:
                 continue
-            new_entities.extend(_build_threshold_entities(context))
+            built_keys = known_threshold_keys.setdefault(profile_id, set())
+            missing_specs = [(key, unit) for key, unit in THRESHOLD_SPECS if key not in built_keys]
+            specs_to_build = missing_specs or (list(THRESHOLD_SPECS) if profile_id not in known_profiles else [])
+            if not specs_to_build:
+                continue
+            for key, unit in specs_to_build:
+                new_entities.append(
+                    ThresholdNumber(
+                        hass,
+                        entry,
+                        context.name,
+                        profile_id,
+                        key,
+                        unit,
+                        context.thresholds.get(key),
+                    )
+                )
+                pending.setdefault(profile_id, set()).add(key)
+            if profile_id not in known_profiles and profile_id not in pending:
+                pending[profile_id] = set()
+
+        for profile_id, specs in pending.items():
             known_profiles.add(profile_id)
+            if specs:
+                known_threshold_keys[profile_id].update(specs)
+
+        def _reconcile_existing_contexts() -> list[ThresholdNumber]:
+            reconciled: list[ThresholdNumber] = []
+            pending_reconciled: dict[str, set[str]] = {}
+            for profile_id, context in updated_collection.contexts.items():
+                built_keys = known_threshold_keys.setdefault(profile_id, set())
+                missing_specs = [(key, unit) for key, unit in THRESHOLD_SPECS if key not in built_keys]
+                if not missing_specs:
+                    known_profiles.add(profile_id)
+                    continue
+                for key, unit in missing_specs:
+                    reconciled.append(
+                        ThresholdNumber(
+                            hass,
+                            entry,
+                            context.name,
+                            profile_id,
+                            key,
+                            unit,
+                            context.thresholds.get(key),
+                        )
+                    )
+                    pending_reconciled.setdefault(profile_id, set()).add(key)
+            for profile_id, specs in pending_reconciled.items():
+                known_profiles.add(profile_id)
+                known_threshold_keys[profile_id].update(specs)
+            return reconciled
+
+        new_entities.extend(_reconcile_existing_contexts())
 
         if new_entities:
             async_add_entities(new_entities, True)

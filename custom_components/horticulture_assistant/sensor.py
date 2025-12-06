@@ -44,7 +44,11 @@ from .entity_base import HorticultureBaseEntity, HorticultureEntryEntity, Profil
 from .irrigation_bridge import PlantIrrigationRecommendationSensor
 from .profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION, SUCCESS_STATS_VERSION, YIELD_STATS_VERSION
 from .profile_monitor import ProfileMonitor
-from .utils.entry_helpers import ProfileContext, resolve_profile_context_collection
+from .utils.entry_helpers import (
+    ProfileContext,
+    profile_device_identifier,
+    resolve_profile_context_collection,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -145,15 +149,17 @@ class PlantProfileSensor(SensorEntity):
         config_entry: ConfigEntry,
         sensor_type: str,
         profile_name: str,
+        profile_id: str,
         info: Mapping[str, Any],
     ) -> None:
         """Initialize the plant profile sensor entity."""
 
         self._entry_id = config_entry.entry_id
         self._sensor_type = sensor_type
+        self._profile_id = profile_id
         self._profile_name = profile_name
         self._attr_name = f"{profile_name} {info.get('name', sensor_type)}"
-        self._attr_unique_id = f"{config_entry.entry_id}_{sensor_type}"
+        self._attr_unique_id = f"{config_entry.entry_id}_{profile_id}_{sensor_type}"
         self._linked_entity_id: str | None = None
         self._unsub_tracker: CALLBACK_TYPE | None = None
         self._attr_native_value: float | str | None = None
@@ -216,7 +222,7 @@ class PlantProfileSensor(SensorEntity):
         """Return device info to attach this sensor to the plant profile device."""
 
         return {
-            "identifiers": {(DOMAIN, self._entry_id)},
+            "identifiers": {profile_device_identifier(self._entry_id, self._profile_id)},
             "name": self._profile_name,
             "manufacturer": "Horticulture Assistant",
             "model": "Plant Profile",
@@ -601,23 +607,31 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     hass.data.setdefault(DOMAIN, {}).setdefault("entities", {})
 
     profile_name = entry.title or stored.get("plant_name") or entry.data.get(CONF_PLANT_NAME)
-    profile_sensors = [
-        PlantProfileSensor(entry, sensor_type, profile_name or entry.entry_id, info)
-        for sensor_type, info in PLANT_SENSOR_TYPES.items()
-    ]
-
-    if not contexts:
-        _LOGGER.debug("No plant profiles configured; skipping horticulture_assistant sensors")
-        if profile_sensors:
-            async_add_entities(profile_sensors)
-        return
+    default_plant_id = collection.plant_id or entry.entry_id
 
     coord_ai: HortiAICoordinator = stored["coordinator_ai"]
     coord_local: HortiLocalCoordinator = stored["coordinator_local"]
     profile_coord: HorticultureCoordinator | None = stored.get("coordinator")
     keep_stale: bool = stored.get("keep_stale", True)
 
+    if not contexts:
+        _LOGGER.debug("No plant profiles configured yet; awaiting updates")
+
     entity_registry = er.async_get(hass)
+
+    for entity_entry in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
+        if entity_entry.domain != "sensor" or entity_entry.platform != DOMAIN:
+            continue
+        unique_id = entity_entry.unique_id
+        if not isinstance(unique_id, str) or "_" not in unique_id:
+            continue
+        for sensor_type in PLANT_SENSOR_TYPES:
+            legacy_unique_id = f"{entry.entry_id}_{sensor_type}"
+            if unique_id != legacy_unique_id:
+                continue
+            new_unique_id = f"{entry.entry_id}_{default_plant_id}_{sensor_type}"
+            entity_registry.async_update_entity(entity_entry.entity_id, new_unique_id=new_unique_id)
+            break
     for entity_entry in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
         if entity_entry.domain != "sensor" or entity_entry.platform != DOMAIN:
             continue
@@ -647,9 +661,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             continue
         entity_registry.async_update_entity(entity_entry.entity_id, new_unique_id=remainder)
 
-    primary_context = collection.primary
-    plant_id = primary_context.profile_id
-    plant_name = primary_context.name
+    primary_context = contexts.get(collection.primary_id)
+    plant_id = (primary_context.profile_id if primary_context else default_plant_id) or entry.entry_id
+    plant_name = (primary_context.name if primary_context else collection.plant_name) or profile_name or entry.entry_id
 
     known_metric_keys: dict[str, set[tuple[str, str]]] = defaultdict(set)
     known_context_signatures: dict[str, set[str]] = defaultdict(set)
@@ -675,18 +689,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             if not isinstance(bucket, Mapping):
                 continue
             for key, meta in bucket.items():
-                if not isinstance(meta, Mapping):
-                    continue
-                value = meta.get("value")
-                if value is None:
-                    continue
+                payload = meta if isinstance(meta, Mapping) else {}
                 sensor = ProfileMetricValueSensor(
                     hass,
                     entry,
                     context,
                     category,
                     key,
-                    meta,
+                    payload,
                 )
                 sensors.append((sensor, (category, key)))
         return sensors
@@ -765,15 +775,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             )
         return sensors
 
-    sensors: list[SensorEntity] = [
-        *profile_sensors,
-        HortiStatusSensor(coord_ai, coord_local, entry.entry_id, plant_name, plant_id, keep_stale),
-        HortiRecommendationSensor(coord_ai, entry.entry_id, plant_name, plant_id, keep_stale),
-        EntitlementSummarySensor(entry, plant_name),
-    ]
+    def _build_profile_sensors(profile_id: str, name: str | None) -> list[PlantProfileSensor]:
+        return [
+            PlantProfileSensor(entry, sensor_type, name or entry.entry_id, profile_id, info)
+            for sensor_type, info in PLANT_SENSOR_TYPES.items()
+        ]
+
+    sensors: list[SensorEntity] = []
+
+    profile_sensor_profiles: set[str] = set()
 
     known_profiles: set[str] = set()
     for context in collection.values():
+        sensors.extend(_build_profile_sensors(context.profile_id, context.name))
+        profile_sensor_profiles.add(context.profile_id)
         context_sensors, metric_pairs = _build_context_sensors(context)
         sensors.extend(context_sensors)
         sensors.extend(sensor for sensor, _ in metric_pairs)
@@ -783,6 +798,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         if metric_pairs:
             known_metric_keys[context.profile_id].update(signature for _, signature in metric_pairs)
         known_profiles.add(context.profile_id)
+
+    if not profile_sensor_profiles:
+        sensors.extend(_build_profile_sensors(plant_id, plant_name))
+        profile_sensor_profiles.add(plant_id)
+
+    sensors.extend(
+        [
+            HortiStatusSensor(coord_ai, coord_local, entry.entry_id, plant_name, plant_id, keep_stale),
+            HortiRecommendationSensor(coord_ai, entry.entry_id, plant_name, plant_id, keep_stale),
+            EntitlementSummarySensor(entry, plant_name),
+        ]
+    )
 
     profile_registry = stored.get("profile_registry")
     profiles_map = _profiles_map()
@@ -827,6 +854,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 known_profiles.discard(profile_id)
                 known_metric_keys.pop(profile_id, None)
                 known_context_signatures.pop(profile_id, None)
+                profile_sensor_profiles.discard(profile_id)
 
         should_refresh = bool(updated)
 
@@ -835,6 +863,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             if profile_id in known_profiles:
                 continue
             context = updated_contexts.get(profile_id)
+            if profile_id not in profile_sensor_profiles:
+                new_entities.extend(_build_profile_sensors(profile_id, context.name if context else profile_id))
+                profile_sensor_profiles.add(profile_id)
             if context is not None:
                 context_sensors, metric_pairs = _build_context_sensors(context)
                 if context_sensors:
@@ -866,6 +897,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 known_metric_keys.pop(profile_id, None)
                 known_context_signatures.pop(profile_id, None)
                 continue
+            if profile_id not in profile_sensor_profiles:
+                new_entities.extend(_build_profile_sensors(profile_id, context.name))
+                profile_sensor_profiles.add(profile_id)
             context_sensors, metric_pairs = _build_context_sensors(context)
             existing_context_signatures = known_context_signatures.get(profile_id, set())
             new_context_sensors: list[SensorEntity] = []
@@ -1112,7 +1146,7 @@ class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity
         self._key = key
         self._meta: Mapping[str, Any] = meta
         self._value = meta.get("value") if isinstance(meta, Mapping) else None
-        self._attr_available = self._value is not None
+        self._attr_available = True
         self._attr_unique_id = self.profile_unique_id(f"{category}_{key}")
         label = key.replace("_", " ").title()
         prefix_map = {
@@ -1147,7 +1181,7 @@ class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity
         self._value = meta.get("value")
         unit = meta.get("unit") if isinstance(meta, Mapping) else None
         self._attr_native_unit_of_measurement = unit if isinstance(unit, str) else None
-        self._attr_available = self._value is not None
+        self._attr_available = True
 
     def _apply_missing_context(self) -> None:
         self._meta = {}

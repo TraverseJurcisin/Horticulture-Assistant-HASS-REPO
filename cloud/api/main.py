@@ -5,6 +5,13 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import Annotated, Any
 
+try:  # pragma: no cover - Python <3.11 fallback
+    from datetime import UTC
+except ImportError:  # pragma: no cover - fallback
+    from datetime import timezone
+
+    UTC = timezone.utc  # noqa: UP017
+
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 
 from custom_components.horticulture_assistant.cloudsync import (
@@ -27,7 +34,6 @@ from .auth import (
     principal_dependency,
 )
 
-UTC = datetime.UTC
 GLOBAL_TENANTS = {"public", "shared", "global"}
 
 
