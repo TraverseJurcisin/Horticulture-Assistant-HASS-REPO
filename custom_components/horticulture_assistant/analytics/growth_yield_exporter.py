@@ -8,7 +8,12 @@ from ..utils.path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
 
-UTC = datetime.UTC
+try:  # pragma: no cover - Python <3.11 fallback
+    from datetime import UTC
+except ImportError:  # pragma: no cover - fallback
+    from datetime import timezone
+
+    UTC = timezone.utc  # noqa: UP017
 
 
 def export_growth_yield(

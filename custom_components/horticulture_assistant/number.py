@@ -123,9 +123,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
                 continue
             built_keys = known_threshold_keys.setdefault(profile_id, set())
             missing_specs = [(key, unit) for key, unit in THRESHOLD_SPECS if key not in built_keys]
-            specs_to_build = missing_specs or (
-                [(key, unit) for key, unit in THRESHOLD_SPECS] if profile_id not in known_profiles else []
-            )
+            specs_to_build = missing_specs or (list(THRESHOLD_SPECS) if profile_id not in known_profiles else [])
             if not specs_to_build:
                 continue
             for key, unit in specs_to_build:
