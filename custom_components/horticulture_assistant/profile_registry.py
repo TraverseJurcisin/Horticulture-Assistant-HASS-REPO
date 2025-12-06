@@ -2012,7 +2012,7 @@ class ProfileRegistry:
         def _coerce_single_sensor(value: Any) -> str | None:
             if isinstance(value, str):
                 return value
-            if isinstance(value, Sequence) and not isinstance(value, (bytes, bytearray, str)):
+            if isinstance(value, Sequence) and not isinstance(value, bytes | bytearray | str):
                 # TODO: Support multiple sensors per metric (e.g. median of several sensors).
                 for candidate in value:
                     if isinstance(candidate, str) and candidate:
