@@ -3,16 +3,8 @@ from __future__ import annotations
 import re
 from collections.abc import Mapping, Sequence
 from dataclasses import asdict, dataclass, field
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any, Literal
-
-try:
-    from datetime import UTC
-except ImportError:  # pragma: no cover - Py<3.11 fallback
-    from datetime import timezone
-
-    UTC = timezone.utc  # noqa: UP017
-
 
 _NUMBER_PATTERN = re.compile(r"[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?")
 _FRACTION_PATTERN = re.compile(
