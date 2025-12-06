@@ -298,6 +298,10 @@ class PlantProfileSensor(SensorEntity):
     async def async_set_linked_sensor(self, new_entity_id: str | None) -> None:
         """Link this plant profile sensor to a new physical sensor entity."""
 
+        if new_entity_id == self._linked_entity_id and self._unsub_tracker is not None:
+            _LOGGER.debug("Linked sensor unchanged for %s; skipping rebind", self.unique_id)
+            return
+
         old_unsub = self._unsub_tracker
         self._unsub_tracker = None
         if callable(old_unsub):
