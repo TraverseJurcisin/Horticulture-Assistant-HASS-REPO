@@ -1361,9 +1361,7 @@ async def update_entry_data(
 
     added_profiles = tuple(sorted(pid for pid in new_profile_ids if pid not in previous_profiles))
     removed_profiles = tuple(sorted(pid for pid in previous_profiles if pid not in new_profile_ids))
-    updated_profiles: tuple[str, ...] = ()
-    if not added_profiles and not removed_profiles:
-        updated_profiles = tuple(sorted(new_profile_ids & previous_profiles))
+    updated_profiles = tuple(sorted(new_profile_ids & previous_profiles))
 
     if added_profiles or removed_profiles or updated_profiles:
         async_dispatcher_send(
@@ -2307,6 +2305,11 @@ def resolve_profile_context_collection(
     stored = dict(stored_raw) if isinstance(stored_raw, Mapping) else {}
 
     snapshot = stored.get("snapshot") if isinstance(stored.get("snapshot"), Mapping) else None
+    contexts_were_missing = False
+    existing_context_ids: set[str] = set()
+    raw_contexts = stored.get("profile_contexts") if isinstance(stored, Mapping) else None
+    if isinstance(raw_contexts, Mapping):
+        existing_context_ids = {pid for pid in raw_contexts if isinstance(pid, str) and pid}
     if snapshot is None:
         snapshot = build_entry_snapshot(entry)
         stored["snapshot"] = snapshot
@@ -2318,7 +2321,6 @@ def resolve_profile_context_collection(
         stored.setdefault("primary_profile_id", snapshot.get("primary_profile_id"))
         stored.setdefault("primary_profile_name", snapshot.get("primary_profile_name"))
 
-    raw_contexts = stored.get("profile_contexts") if isinstance(stored, Mapping) else None
     contexts: dict[str, ProfileContext] = {}
     if isinstance(raw_contexts, Mapping):
         for profile_id, payload in raw_contexts.items():
@@ -2331,6 +2333,41 @@ def resolve_profile_context_collection(
                 profile_id,
                 payload if isinstance(payload, Mapping) else {},
             )
+
+    if not contexts and isinstance(snapshot, Mapping):
+        contexts_were_missing = True
+        rebuilt_contexts: dict[str, dict[str, Any]] = {}
+        combined_profiles: dict[str, Mapping[str, Any]] = {}
+        stored_profiles = stored.get("profiles") if isinstance(stored.get("profiles"), Mapping) else None
+        snapshot_profiles = snapshot.get("profiles") if isinstance(snapshot.get("profiles"), Mapping) else None
+        if stored_profiles:
+            combined_profiles.update(stored_profiles)
+        if snapshot_profiles:
+            combined_profiles.update(snapshot_profiles)
+
+        candidate_ids = set(combined_profiles)
+        plant_pid = snapshot.get("plant_id") or stored.get("plant_id")
+        primary_pid = snapshot.get("primary_profile_id") or stored.get("primary_profile_id")
+        for pid in (primary_pid, plant_pid):
+            if isinstance(pid, str) and pid:
+                candidate_ids.add(pid)
+
+        for profile_id in candidate_ids:
+            if not isinstance(profile_id, str) or not profile_id:
+                continue
+            payload = combined_profiles.get(profile_id)
+            context_payload = _build_profile_context(entry, snapshot, profile_id, payload)
+            rebuilt_contexts[profile_id] = context_payload
+            contexts[profile_id] = _build_profile_context_from_payload(
+                hass,
+                entry,
+                stored,
+                profile_id,
+                context_payload,
+            )
+
+        if rebuilt_contexts:
+            stored["profile_contexts"] = rebuilt_contexts
 
     plant_id = stored.get("plant_id") if isinstance(stored, Mapping) else None
     plant_name = stored.get("plant_name") if isinstance(stored, Mapping) else None
@@ -2355,6 +2392,24 @@ def resolve_profile_context_collection(
 
     if not isinstance(plant_name, str) or not plant_name:
         plant_name = entry.title or plant_id or entry.entry_id
+
+    added_context_ids: tuple[str, ...] = ()
+    if isinstance(stored_raw, Mapping):
+        stored_raw.update(stored)
+        hass.data.setdefault(DOMAIN, {})[entry.entry_id] = stored_raw
+        if contexts_were_missing:
+            added_context_ids = tuple(sorted(set(stored.get("profile_contexts", {}))))
+        else:
+            added_contexts = set(contexts) - existing_context_ids
+            if added_contexts:
+                added_context_ids = tuple(sorted(added_contexts))
+
+    if added_context_ids:
+        async_dispatcher_send(
+            hass,
+            signal_profile_contexts_updated(entry.entry_id),
+            {"added": added_context_ids, "removed": (), "updated": ()},
+        )
 
     return ProfileContextCollection(
         entry=entry,

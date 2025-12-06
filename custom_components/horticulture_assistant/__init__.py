@@ -1456,11 +1456,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         added_ids = tuple(sorted(new_profile_ids - previous_context_ids))
         removed_ids = tuple(sorted(previous_context_ids - new_profile_ids))
-        if added_ids or removed_ids:
+        updated_ids = tuple(sorted(new_profile_ids & previous_context_ids))
+        if added_ids or removed_ids or updated_ids:
             async_dispatcher_send(
                 hass,
                 signal_profile_contexts_updated(updated_entry.entry_id),
-                {"added": added_ids, "removed": removed_ids},
+                {"added": added_ids, "removed": removed_ids, "updated": updated_ids},
             )
 
     unsubscribe = None

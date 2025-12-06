@@ -9,7 +9,6 @@ from typing import Any
 from unittest.mock import patch
 
 import pytest
-from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 import custom_components.horticulture_assistant.utils.entry_helpers as helpers
@@ -1638,6 +1637,68 @@ async def test_resolve_profile_context_collection_returns_empty_when_no_profiles
 
 
 @pytest.mark.asyncio
+async def test_resolve_profile_context_collection_rebuilds_missing_contexts(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "plant-rebuild", CONF_PLANT_NAME: "Plant"},
+        options={
+            CONF_PROFILES: {
+                "plant-rebuild": {
+                    "name": "Plant",
+                    "sensors": {"moisture": "sensor.moisture"},
+                    "thresholds": {"moisture_min": 15},
+                }
+            }
+        },
+    )
+
+    stored = await store_entry_data(hass, entry)
+    stored.pop("profile_contexts", None)
+
+    collection = resolve_profile_context_collection(hass, entry)
+    context = collection.contexts.get("plant-rebuild")
+
+    assert context is not None
+    assert context.thresholds.get("moisture_min") == 15
+    assert context.has_sensors("moisture")
+
+
+@pytest.mark.asyncio
+async def test_resolve_profile_context_collection_persists_rebuild_to_store(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "persisted", CONF_PLANT_NAME: "Persisted"},
+        options={
+            CONF_PROFILES: {
+                "persisted": {
+                    "name": "Persisted",
+                    "sensors": {"temperature": "sensor.temp"},
+                    "thresholds": {"temperature_min": 10},
+                }
+            }
+        },
+    )
+
+    stored = await store_entry_data(hass, entry)
+    stored.pop("profile_contexts", None)
+    stored.pop("snapshot", None)
+
+    with patch("custom_components.horticulture_assistant.utils.entry_helpers.async_dispatcher_send") as dispatcher:
+        collection = resolve_profile_context_collection(hass, entry)
+        await hass.async_block_till_done()
+
+    persisted = hass.data[DOMAIN][entry.entry_id].get("profile_contexts", {})
+    context = persisted.get("persisted", {})
+
+    assert collection.contexts.get("persisted") is not None
+    assert context.get("thresholds", {}).get("temperature_min") == 10
+    dispatcher.assert_called_once()
+    _, signal, payload = dispatcher.call_args.args
+    assert signal == helpers.signal_profile_contexts_updated(entry.entry_id)
+    assert payload["added"] == ("persisted",)
+
+
+@pytest.mark.asyncio
 async def test_update_entry_data_dispatches_profile_change(hass, tmp_path):
     hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
     entry = _make_entry(
@@ -1647,14 +1708,6 @@ async def test_update_entry_data_dispatches_profile_change(hass, tmp_path):
 
     await store_entry_data(hass, entry)
 
-    changes: list[dict] = []
-
-    unsub = async_dispatcher_connect(
-        hass,
-        helpers.signal_profile_contexts_updated(entry.entry_id),
-        lambda payload: changes.append(payload),
-    )
-
     entry.options = {
         **entry.options,
         CONF_PROFILES: {
@@ -1663,11 +1716,16 @@ async def test_update_entry_data_dispatches_profile_change(hass, tmp_path):
         },
     }
 
-    await update_entry_data(hass, entry)
-    await hass.async_block_till_done()
-    unsub()
+    with patch("custom_components.horticulture_assistant.utils.entry_helpers.async_dispatcher_send") as dispatcher:
+        await update_entry_data(hass, entry)
+        await hass.async_block_till_done()
 
-    assert any("beta" in change.get("added", ()) for change in changes)
+    dispatcher.assert_called()
+    added_payloads = [call.args[2].get("added", ()) for call in dispatcher.call_args_list if len(call.args) >= 3]
+    updated_payloads = [call.args[2].get("updated", ()) for call in dispatcher.call_args_list if len(call.args) >= 3]
+
+    assert any("beta" in payload for payload in added_payloads)
+    assert any("alpha" in payload for payload in updated_payloads)
 
 
 def test_serialise_device_info_converts_sets():
