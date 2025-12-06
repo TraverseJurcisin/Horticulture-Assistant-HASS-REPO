@@ -192,6 +192,7 @@ class ThresholdNumber(HorticultureBaseEntity, NumberEntity):
 
     _attr_entity_category = CATEGORY_CONTROL
     _attr_mode = NumberMode.BOX
+    _attr_native_step = 0.1
 
     def __init__(
         self,
