@@ -474,10 +474,12 @@ async def async_register_all(
                 linked_options = dict(raw_links)
             linked_options[sensor_type] = new_sensor_id
 
+            new_options = {**target_entry.options, "linked_sensors": linked_options}
             hass.config_entries.async_update_entry(
                 target_entry,
-                options={**target_entry.options, "linked_sensors": linked_options},
+                options=new_options,
             )
+            target_entry.options = new_options
 
             target_registry: ProfileRegistry | None = registry if target_entry.entry_id == entry.entry_id else None
             if target_registry is None:
