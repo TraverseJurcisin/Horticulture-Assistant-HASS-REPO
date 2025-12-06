@@ -68,7 +68,7 @@ EXPECTED_DEVICE_CLASSES: dict[str, SensorDeviceClass] = {
     "co2": SensorDeviceClass.CO2,
     "ec": SensorDeviceClass.CONDUCTIVITY,
     "conductivity": SensorDeviceClass.CONDUCTIVITY,
-    "battery": SensorDeviceClass.BATTERY,
+    "battery": getattr(SensorDeviceClass, "BATTERY", "battery"),
 }
 
 

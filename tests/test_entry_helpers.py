@@ -9,6 +9,7 @@ from typing import Any
 from unittest.mock import patch
 
 import pytest
+from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 import custom_components.horticulture_assistant.utils.entry_helpers as helpers
@@ -1634,6 +1635,39 @@ async def test_resolve_profile_context_collection_returns_empty_when_no_profiles
     collection = resolve_profile_context_collection(hass, entry)
     assert isinstance(collection, ProfileContextCollection)
     assert collection.contexts == {}
+
+
+@pytest.mark.asyncio
+async def test_update_entry_data_dispatches_profile_change(hass, tmp_path):
+    hass.config.path = lambda *parts: str(tmp_path.joinpath(*parts))
+    entry = _make_entry(
+        data={CONF_PLANT_ID: "alpha", CONF_PLANT_NAME: "Alpha"},
+        options={CONF_PROFILES: {"alpha": {"name": "Alpha"}}},
+    )
+
+    await store_entry_data(hass, entry)
+
+    changes: list[dict] = []
+
+    unsub = async_dispatcher_connect(
+        hass,
+        helpers.signal_profile_contexts_updated(entry.entry_id),
+        lambda payload: changes.append(payload),
+    )
+
+    entry.options = {
+        **entry.options,
+        CONF_PROFILES: {
+            **entry.options.get(CONF_PROFILES, {}),
+            "beta": {"name": "Beta"},
+        },
+    }
+
+    await update_entry_data(hass, entry)
+    await hass.async_block_till_done()
+    unsub()
+
+    assert any("beta" in change.get("added", ()) for change in changes)
 
 
 def test_serialise_device_info_converts_sets():
