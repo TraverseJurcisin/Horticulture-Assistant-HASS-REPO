@@ -70,6 +70,7 @@ from .entitlements import FeatureUnavailableError, derive_entitlements
 from .irrigation_bridge import async_apply_irrigation
 from .profile.statistics import EVENT_STATS_VERSION, NUTRIENT_STATS_VERSION, SUCCESS_STATS_VERSION
 from .profile_registry import ProfileRegistry
+from .sensor import PlantProfileSensor
 from .sensor_validation import collate_issue_messages, validate_sensor_links
 from .storage import LocalStore
 from .utils.entry_helpers import get_entry_data, get_primary_profile_id
@@ -131,6 +132,8 @@ SENSOR_TYPE_TO_MEASUREMENT: Final = {
     "battery_level": "battery",
     "soil_conductivity": "conductivity",
 }
+
+MEASUREMENT_TO_SENSOR_TYPE: Final = {value: key for key, value in SENSOR_TYPE_TO_MEASUREMENT.items()}
 
 # Service name constants for profile management.
 SERVICE_REPLACE_SENSOR = "replace_sensor"
@@ -326,6 +329,26 @@ async def async_register_all(
             )
         )
 
+    async def _async_update_runtime_sensor_link(profile_id: str, measurement: str, entity_id: str) -> None:
+        sensor_type = MEASUREMENT_TO_SENSOR_TYPE.get(measurement)
+
+        if sensor_type:
+            raw_links = entry.options.get("linked_sensors")
+            linked_options: dict[str, Any] = {}
+            if isinstance(raw_links, Mapping):
+                linked_options = dict(raw_links)
+            linked_options[sensor_type] = entity_id
+            new_options = {**entry.options, "linked_sensors": linked_options}
+            hass.config_entries.async_update_entry(entry, options=new_options)
+            entry.options = new_options
+
+        if hass_data := hass.data.get(DOMAIN, {}):
+            for entity in hass_data.get("entities", {}).values():
+                if not isinstance(entity, PlantProfileSensor):
+                    continue
+                if entity.profile_id == profile_id and entity.sensor_type == sensor_type:
+                    await entity.async_set_linked_sensor(entity_id)
+
     async def _refresh_profile() -> None:
         await _maybe_request_refresh(profile_coord)
 
@@ -391,6 +414,7 @@ async def async_register_all(
             await registry.async_replace_sensor(profile_id, measurement, entity_id)
         except ValueError as err:
             raise err
+        await _async_update_runtime_sensor_link(profile_id, measurement, entity_id)
         await _maybe_request_refresh(profile_coord)
         await _refresh_profile()
 
@@ -442,7 +466,7 @@ async def async_register_all(
             if target_entry is None:
                 raise vol.Invalid("linked config entry missing")
 
-            await entity_obj.set_linked_sensor(new_sensor_id)
+            await entity_obj.async_set_linked_sensor(new_sensor_id)
 
             linked_options: dict[str, Any] = {}
             raw_links = target_entry.options.get("linked_sensors")
@@ -461,7 +485,7 @@ async def async_register_all(
                 target_registry = target_data.get("profile_registry")
 
             if measurement and target_registry:
-                profile_id = get_primary_profile_id(target_entry)
+                profile_id = getattr(entity_obj, "profile_id", None) or get_primary_profile_id(target_entry)
                 if profile_id:
                     try:
                         await target_registry.async_link_sensors(profile_id, {measurement: new_sensor_id})
@@ -501,6 +525,7 @@ async def async_register_all(
             await registry.async_replace_sensor(profile_id, measurement, entity_id)
         except ValueError as err:
             raise err
+        await _async_update_runtime_sensor_link(profile_id, measurement, entity_id)
         await _maybe_request_refresh(profile_coord)
         await _refresh_profile()
 

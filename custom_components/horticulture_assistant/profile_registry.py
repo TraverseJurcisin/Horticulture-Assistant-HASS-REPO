@@ -1973,7 +1973,7 @@ class ProfileRegistry:
         profile = profiles.get(profile_id)
         if profile is None:
             raise ValueError(f"unknown profile {profile_id}")
-        cleaned: dict[str, str | list[str]] = {}
+        cleaned: dict[str, str] = {}
         for key, value in sensors.items():
             key_text = str(key) if not isinstance(key, str) else key
             if not key_text:
@@ -1981,7 +1981,13 @@ class ProfileRegistry:
             normalised = _normalise_sensor_value(value)
             if normalised is None:
                 continue
-            cleaned[key_text] = list(normalised) if isinstance(normalised, list) else normalised
+            if isinstance(normalised, list):
+                if not normalised:
+                    continue
+                # TODO: Support multiple sensors per metric (e.g. averaging) in future.
+                cleaned[key_text] = normalised[0]
+            else:
+                cleaned[key_text] = normalised
 
         validation = validate_sensor_links(self.hass, cleaned)
         if validation.errors:
@@ -2001,16 +2007,27 @@ class ProfileRegistry:
         )
         general = dict(prof_payload.get("general", {})) if isinstance(prof_payload.get("general"), Mapping) else {}
         existing = general.get("sensors") if isinstance(general.get("sensors"), Mapping) else {}
-        merged: dict[str, str | list[str]] = {
-            str(k): (list(v) if isinstance(v, list) else v) for k, v in existing.items() if isinstance(k, str)
-        }
+        merged: dict[str, str] = {}
+
+        def _coerce_single_sensor(value: Any) -> str | None:
+            if isinstance(value, str):
+                return value
+            if isinstance(value, Sequence) and not isinstance(value, (bytes, bytearray, str)):
+                # TODO: Support multiple sensors per metric (e.g. median of several sensors).
+                for candidate in value:
+                    if isinstance(candidate, str) and candidate:
+                        return candidate
+            return None
+
+        for k, v in existing.items():
+            coerced = _coerce_single_sensor(v)
+            if coerced:
+                merged[str(k)] = coerced
         for key, value in cleaned.items():
-            merged[str(key)] = list(value) if isinstance(value, list) else value
-        general["sensors"] = {key: list(value) if isinstance(value, list) else value for key, value in merged.items()}
+            merged[str(key)] = value
+        general["sensors"] = merged
         sync_general_section(prof_payload, general)
-        prof_payload["sensors"] = {
-            key: list(value) if isinstance(value, list) else value for key, value in merged.items()
-        }
+        prof_payload["sensors"] = dict(merged)
         profiles[profile_id] = prof_payload
         new_opts = dict(self.entry.options)
         new_opts[CONF_PROFILES] = profiles

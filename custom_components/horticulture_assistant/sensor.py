@@ -138,6 +138,16 @@ PROFILE_METRIC_CATEGORIES: tuple[str, ...] = (
     "thresholds",
 )
 
+SENSOR_TYPE_TO_MEASUREMENT = {
+    "air_temperature": "temperature",
+    "air_humidity": "humidity",
+    "soil_moisture": "moisture",
+    "light": "illuminance",
+    "soil_temperature": "soil_temperature",
+    "battery_level": "battery",
+    "soil_conductivity": "conductivity",
+}
+
 
 class PlantProfileSensor(SensorEntity):
     """Sensor representing a plant profile measurement (e.g., soil moisture)."""
@@ -154,6 +164,7 @@ class PlantProfileSensor(SensorEntity):
     ) -> None:
         """Initialize the plant profile sensor entity."""
 
+        self._entry = config_entry
         self._entry_id = config_entry.entry_id
         self._sensor_type = sensor_type
         self._profile_id = profile_id
@@ -218,6 +229,12 @@ class PlantProfileSensor(SensorEntity):
         return self._sensor_type
 
     @property
+    def profile_id(self) -> str:
+        """Return the profile id this entity represents."""
+
+        return self._profile_id
+
+    @property
     def device_info(self) -> Mapping[str, Any]:
         """Return device info to attach this sensor to the plant profile device."""
 
@@ -237,21 +254,16 @@ class PlantProfileSensor(SensorEntity):
         entities[self.unique_id] = self
 
         if self._linked_entity_id:
-            state = self.hass.states.get(self._linked_entity_id)
-            if state and state.state not in (None, "unknown", "unavailable"):
-                try:
-                    self._attr_native_value = float(state.state)
-                except ValueError:
-                    self._attr_native_value = state.state
-                unit = state.attributes.get("unit_of_measurement")
-                if unit:
-                    self._attr_native_unit_of_measurement = unit
-            self._unsub_tracker = async_track_state_change_event(
-                self.hass,
-                [self._linked_entity_id],
-                self._async_sensor_state_changed,
-            )
-        self.async_write_ha_state()
+            await self.async_set_linked_sensor(self._linked_entity_id)
+        else:
+            context_link = self._resolve_context_link()
+            await self.async_set_linked_sensor(context_link)
+        remove = async_dispatcher_connect(
+            self.hass,
+            signal_profile_contexts_updated(self._entry.entry_id),
+            self._handle_context_update,
+        )
+        self.async_on_remove(remove)
 
     async def async_will_remove_from_hass(self) -> None:
         """Cleanup when entity is about to be removed."""
@@ -283,15 +295,22 @@ class PlantProfileSensor(SensorEntity):
             self._attr_native_unit_of_measurement = unit
         self.async_write_ha_state()
 
-    async def set_linked_sensor(self, new_entity_id: str | None) -> None:
+    async def async_set_linked_sensor(self, new_entity_id: str | None) -> None:
         """Link this plant profile sensor to a new physical sensor entity."""
 
-        if self._unsub_tracker:
-            self._unsub_tracker()
-            self._unsub_tracker = None
+        old_unsub = self._unsub_tracker
+        self._unsub_tracker = None
+        if callable(old_unsub):
+            old_unsub()
+
+        previous = self._linked_entity_id
         self._linked_entity_id = new_entity_id
 
+        # Reset cached values so stale readings are cleared during re-link.
+        self._attr_native_value = None
+
         if new_entity_id:
+            # TODO: Support linking multiple sensors per metric in future (e.g., median of several sensors).
             self._unsub_tracker = async_track_state_change_event(
                 self.hass, [new_entity_id], self._async_sensor_state_changed
             )
@@ -306,10 +325,30 @@ class PlantProfileSensor(SensorEntity):
                     self._attr_native_unit_of_measurement = unit
             else:
                 self._attr_native_value = None
+            _LOGGER.debug("Linked %s to %s (previous: %s)", new_entity_id, self.unique_id, previous)
         else:
-            self._attr_native_value = None
+            _LOGGER.debug("Unlinked sensor from %s (previous: %s)", self.unique_id, previous)
 
         self.async_write_ha_state()
+
+    @callback
+    def _handle_context_update(self) -> None:
+        """Rebind when profile contexts change."""
+
+        linked = self._resolve_context_link()
+        if linked == self._linked_entity_id:
+            return
+        self.hass.async_create_task(self.async_set_linked_sensor(linked))
+
+    def _resolve_context_link(self) -> str | None:
+        """Return the configured sensor from the active profile context."""
+
+        collection = resolve_profile_context_collection(self.hass, self._entry)
+        context = collection.contexts.get(self._profile_id)
+        if context is None:
+            return None
+        role = SENSOR_TYPE_TO_MEASUREMENT.get(self._sensor_type, self._sensor_type)
+        return context.first_sensor(role)
 
 
 class PlantStatusSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):
