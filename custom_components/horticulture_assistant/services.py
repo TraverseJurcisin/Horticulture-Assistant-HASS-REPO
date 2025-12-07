@@ -342,8 +342,9 @@ async def async_register_all(
             hass.config_entries.async_update_entry(entry, options=new_options)
             entry.options = new_options
 
-        if hass_data := hass.data.get(DOMAIN, {}):
-            for entity in hass_data.get("entities", {}).values():
+        hass_data = getattr(hass, "data", None)
+        if isinstance(hass_data, Mapping) and (domain_data := hass_data.get(DOMAIN, {})):
+            for entity in domain_data.get("entities", {}).values():
                 if not isinstance(entity, PlantProfileSensor):
                     continue
                 if entity.profile_id == profile_id and entity.sensor_type == sensor_type:
