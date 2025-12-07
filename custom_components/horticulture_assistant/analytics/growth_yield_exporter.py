@@ -1,19 +1,13 @@
 import contextlib
 import datetime
 import logging
+from datetime import UTC
 from pathlib import Path
 
 from ..engine.plant_engine.utils import load_json, save_json
 from ..utils.path_utils import data_path
 
 _LOGGER = logging.getLogger(__name__)
-
-try:  # pragma: no cover - Python <3.11 fallback
-    from datetime import UTC
-except ImportError:  # pragma: no cover - fallback
-    from datetime import timezone
-
-    UTC = timezone.utc  # noqa: UP017
 
 
 def export_growth_yield(
