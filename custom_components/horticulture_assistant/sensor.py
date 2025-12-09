@@ -260,7 +260,12 @@ class PlantProfileSensor(SensorEntity):
 
     @property
     def available(self) -> bool:
-        """Virtual plant sensors remain available unless disabled by the user."""
+        """Virtual plant sensors remain available unless disabled by the user.
+
+        Even when no physical/linked sensor is configured we still expose the
+        entity as available so Home Assistant shows an ``unknown`` state instead
+        of hiding it as ``unavailable``.
+        """
 
         registry_entry = getattr(self, "registry_entry", None)
         if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
@@ -275,6 +280,11 @@ class PlantProfileSensor(SensorEntity):
             device = dr.async_get(self.hass).async_get(registry_entry.device_id)
             if device is not None and getattr(device, "disabled_by", None) is not None:
                 return False
+
+        # Absence of a linked sensor should not block availability; we want the
+        # entity to stay targetable immediately after startup.
+        if getattr(self, "_linked_entity_id", None) is None:
+            return True
 
         return True
 
