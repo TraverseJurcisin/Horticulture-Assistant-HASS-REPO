@@ -243,11 +243,9 @@ class ProfileContextEntityMixin:
             self._plant_name = context.name
 
     def _handle_context_removed(self) -> None:
-        """Mark the entity unavailable when the context disappears."""
+        """Clear cached context data when the profile disappears."""
 
         self._context = None
         self._context_available = False
-        if hasattr(self, "_attr_available"):
-            self._attr_available = False  # type: ignore[assignment]
         if hasattr(self, "async_write_ha_state") and getattr(self, "hass", None):
             self.async_write_ha_state()

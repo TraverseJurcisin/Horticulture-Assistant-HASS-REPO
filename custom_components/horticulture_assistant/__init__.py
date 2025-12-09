@@ -927,8 +927,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     domain_data.setdefault("entities", {})
     service_lock: asyncio.Lock = domain_data.setdefault("service_registration_lock", asyncio.Lock())
     services_registered = bool(domain_data.get("services_registered"))
-    if not services_registered:
-        services_registered = all(hass.services.has_service(DOMAIN, service) for service in ha_services.SERVICE_NAMES)
+    has_service = getattr(hass.services, "has_service", None)
+    if not services_registered and callable(has_service):
+        services_registered = all(has_service(DOMAIN, service) for service in ha_services.SERVICE_NAMES)
         if services_registered:
             domain_data["services_registered"] = True
     entry_data = domain_data.setdefault(entry.entry_id, {"config_entry": entry})
@@ -1293,7 +1294,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             async with service_lock:
                 if domain_data.get("services_registered"):
                     return True
-                if all(hass.services.has_service(DOMAIN, service) for service in ha_services.SERVICE_NAMES):
+                has_service = getattr(hass.services, "has_service", None)
+                if callable(has_service) and all(has_service(DOMAIN, service) for service in ha_services.SERVICE_NAMES):
                     domain_data["services_registered"] = True
                     return True
 

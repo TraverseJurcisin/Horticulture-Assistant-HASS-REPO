@@ -380,6 +380,11 @@ async def async_register_all(
             return None
         if isinstance(device_class, Enum):
             device_class = device_class.value
+        elif hasattr(device_class, "value"):
+            try:
+                device_class = device_class.value  # type: ignore[assignment]
+            except Exception:
+                device_class = str(device_class)
         return str(device_class).lower()
 
     def _normalise_registry_device_class(entry) -> str | None:
@@ -410,7 +415,7 @@ async def async_register_all(
             actual = _normalise_registry_device_class(reg_entry)
             expected_name = _expected_device_class_name(expected)
             if expected_name and actual is not None and actual != expected_name:
-                raise vol.Invalid("device class mismatch")
+                raise vol.Invalid(f"device class mismatch (expected {expected_name}, actual {actual})")
         try:
             await registry.async_replace_sensor(profile_id, measurement, entity_id)
         except ValueError as err:

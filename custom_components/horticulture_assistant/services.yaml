@@ -42,6 +42,33 @@ link_sensor:
       description: "Physical sensor entity ID to link to the plant profile sensor."
       selector: { entity: { domain: sensor } }
 
+replace_sensor:
+  name: "Replace linked sensor"
+  description: "Rebind a profile measurement to a different Home Assistant sensor."
+  fields:
+    profile_id:
+      required: true
+      selector: { text: {} }
+    measurement:
+      required: true
+      selector:
+        select:
+          options:
+            - temperature
+            - soil_temperature
+            - humidity
+            - illuminance
+            - moisture
+            - co2
+            - ph
+            - conductivity
+            - battery
+    entity_id:
+      required: true
+      selector:
+        entity:
+          domain: sensor
+
 duplicate_profile:
   name: "Duplicate a profile"
   fields:
