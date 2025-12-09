@@ -37,6 +37,9 @@ class HorticultureEntity(HorticultureBaseEntity, CoordinatorEntity[HorticultureC
         actions from targeting them immediately after setup. We instead mark
         them as available (yielding an ``unknown`` state because no value is
         set) until the coordinator reports a failure after its first attempt.
+        These entities should also stay available even when they have no
+        physical/linked sensor so they can be referenced in automations from
+        the moment Home Assistant boots.
         """
 
         if getattr(self, "_attr_available", None) is False:
