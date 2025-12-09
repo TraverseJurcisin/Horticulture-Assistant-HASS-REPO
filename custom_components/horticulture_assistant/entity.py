@@ -27,3 +27,26 @@ class HorticultureEntity(HorticultureBaseEntity, CoordinatorEntity[HorticultureC
         """Return a stable unique id for profile entities."""
 
         return super().profile_unique_id(key)
+
+    @property
+    def available(self) -> bool:
+        """Report entities as available while awaiting coordinator data.
+
+        Coordinator entities default to ``unavailable`` until a successful
+        refresh completes. For plant profile entities this prevents device
+        actions from targeting them immediately after setup. We instead mark
+        them as available (yielding an ``unknown`` state because no value is
+        set) until the coordinator reports a failure after its first attempt.
+        """
+
+        if getattr(self, "_attr_available", None) is False:
+            return False
+
+        coordinator = getattr(self, "coordinator", None)
+        if coordinator is None:
+            return True
+
+        if coordinator.last_update_success:
+            return True
+
+        return coordinator.last_update_success_time is None
