@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import asyncio
+import inspect
 from collections import defaultdict
 from collections.abc import Iterable, Mapping
 from typing import Any
@@ -39,6 +41,8 @@ THRESHOLD_SPECS = [
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
     collection = resolve_profile_context_collection(hass, entry)
     entity_registry = er.async_get(hass)
+    domain_data = hass.data.setdefault(DOMAIN, {})
+    add_lock: asyncio.Lock = domain_data.setdefault("add_entities_lock", asyncio.Lock())
 
     def _build_threshold_entities(context) -> list[ThresholdNumber]:
         profile_id = context.profile_id
@@ -91,7 +95,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         entities.extend(_build_threshold_entities(context))
         pending_specs[context.profile_id] = {key for key, _ in THRESHOLD_SPECS}
 
-    async_add_entities(entities, True)
+    async def _async_add_entities(new_entities: list[ThresholdNumber]) -> None:
+        async with add_lock:
+            add_result = async_add_entities(new_entities, True)
+            if inspect.isawaitable(add_result):
+                await add_result
+
+    await _async_add_entities(entities)
 
     for profile_id, specs in pending_specs.items():
         known_profiles.add(profile_id)
@@ -177,7 +187,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         new_entities.extend(_reconcile_existing_contexts())
 
         if new_entities:
-            async_add_entities(new_entities, True)
+            hass.async_create_task(_async_add_entities(new_entities))
 
     remove = async_dispatcher_connect(
         hass,

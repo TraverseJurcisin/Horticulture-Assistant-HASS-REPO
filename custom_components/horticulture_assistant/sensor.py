@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import inspect
 import logging
 from collections import defaultdict
@@ -43,6 +44,23 @@ from .utils.entry_helpers import (
     profile_device_identifier,
     resolve_profile_context_collection,
 )
+
+_DEVICE_REGISTRY_STUB = False
+
+try:  # pragma: no cover - executed in tests without full HA helpers
+    from homeassistant.helpers import device_registry as dr
+except (ImportError, ModuleNotFoundError):  # pragma: no cover - executed in stubbed env
+    _DEVICE_REGISTRY_STUB = True
+
+    class _DeviceRegistryStub:
+        def async_get(self, _device_id):
+            return None
+
+    class dr:  # type: ignore[override]
+        @staticmethod
+        def async_get(_hass):
+            return _DeviceRegistryStub()
+
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -150,6 +168,7 @@ class PlantProfileSensor(SensorEntity):
     """Sensor representing a plant profile measurement (e.g., soil moisture)."""
 
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_should_poll = False
 
     def __init__(
         self,
@@ -167,25 +186,33 @@ class PlantProfileSensor(SensorEntity):
         self._profile_id = profile_id
         self._profile_name = profile_name
         self._attr_name = f"{profile_name} {info.get('name', sensor_type)}"
-        self._attr_unique_id = f"{config_entry.entry_id}_{profile_id}_{sensor_type}"
+        self._attr_unique_id = f"horticulture_{profile_id}_{sensor_type}"
+        self._attr_available = True
         self._linked_entity_id: str | None = None
         self._unsub_tracker: CALLBACK_TYPE | None = None
         self._attr_native_value: float | str | None = None
 
-        device_class = info.get("device_class")
-        if isinstance(device_class, SensorDeviceClass):
-            self._attr_device_class = device_class
-        elif isinstance(device_class, str):
-            with suppress(AttributeError):
-                self._attr_device_class = getattr(SensorDeviceClass, device_class.upper())
-            if not getattr(self, "_attr_device_class", None):
-                self._attr_device_class = device_class
+        metadata = PLANT_SENSOR_TYPES.get(sensor_type, {})
 
-        unit = info.get("unit")
+        def _normalise_device_class(raw: Any) -> SensorDeviceClass | str | None:
+            if isinstance(raw, SensorDeviceClass):
+                return raw
+            if isinstance(raw, str):
+                try:
+                    return getattr(SensorDeviceClass, raw.upper())
+                except AttributeError:
+                    return raw
+            return None
+
+        device_class = _normalise_device_class(info.get("device_class"))
+        fallback_device_class = _normalise_device_class(metadata.get("device_class"))
+        self._attr_device_class = device_class or fallback_device_class
+
+        unit = info.get("unit") or metadata.get("unit")
         if isinstance(unit, str):
             self._attr_native_unit_of_measurement = unit
 
-        icon = info.get("icon")
+        icon = info.get("icon") or metadata.get("icon")
         if isinstance(icon, str):
             self._attr_icon = icon
 
@@ -230,6 +257,26 @@ class PlantProfileSensor(SensorEntity):
         """Return the profile id this entity represents."""
 
         return self._profile_id
+
+    @property
+    def available(self) -> bool:
+        """Virtual plant sensors remain available unless disabled by the user."""
+
+        registry_entry = getattr(self, "registry_entry", None)
+        if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
+            return False
+
+        if (
+            registry_entry is not None
+            and registry_entry.device_id
+            and self.hass is not None
+            and not _DEVICE_REGISTRY_STUB
+        ):
+            device = dr.async_get(self.hass).async_get(registry_entry.device_id)
+            if device is not None and getattr(device, "disabled_by", None) is not None:
+                return False
+
+        return True
 
     @property
     def device_info(self) -> Mapping[str, Any]:
@@ -338,6 +385,9 @@ class PlantProfileSensor(SensorEntity):
 
         linked = self._resolve_context_link()
         if linked == self._linked_entity_id:
+            if linked is None and self._attr_native_value is not None:
+                self._attr_native_value = None
+                self.async_write_ha_state()
             return
         self.hass.async_create_task(self.async_set_linked_sensor(linked))
 
@@ -399,6 +449,9 @@ class PlantStatusSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Senso
             self.async_write_ha_state()
 
     def _handle_context_removed(self) -> None:
+        self._attr_native_value = None
+        self._attr_extra_state_attributes = {}
+        self._attr_available = True
         self._monitor = None
         super()._handle_context_removed()
 
@@ -446,6 +499,9 @@ class PlantLastSampleSensor(ProfileContextEntityMixin, HorticultureBaseEntity, S
             self.async_write_ha_state()
 
     def _handle_context_removed(self) -> None:
+        self._attr_native_value = None
+        self._attr_extra_state_attributes = {"issues": [], "sensor_count": 0}
+        self._attr_available = True
         self._monitor = None
         super()._handle_context_removed()
 
@@ -644,7 +700,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     stored = collection.stored
     contexts = collection.contexts
 
-    hass.data.setdefault(DOMAIN, {}).setdefault("entities", {})
+    domain_data = hass.data.setdefault(DOMAIN, {})
+    domain_data.setdefault("entities", {})
+    add_lock: asyncio.Lock = domain_data.setdefault("add_entities_lock", asyncio.Lock())
+
+    # TODO: Refactor platform setup sequencing to ensure deterministic ordering.
 
     profile_name = entry.title or stored.get("plant_name") or entry.data.get(CONF_PLANT_NAME)
     default_plant_id = collection.plant_id or entry.entry_id
@@ -669,7 +729,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             legacy_unique_id = f"{entry.entry_id}_{sensor_type}"
             if unique_id != legacy_unique_id:
                 continue
-            new_unique_id = f"{entry.entry_id}_{default_plant_id}_{sensor_type}"
+            new_unique_id = f"horticulture_{default_plant_id}_{sensor_type}"
             entity_registry.async_update_entity(entity_entry.entity_id, new_unique_id=new_unique_id)
             break
     for entity_entry in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
@@ -700,6 +760,25 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         if remainder == unique_id:
             continue
         entity_registry.async_update_entity(entity_entry.entity_id, new_unique_id=remainder)
+
+    for entity_entry in er.async_entries_for_config_entry(entity_registry, entry.entry_id):
+        if entity_entry.domain != "sensor" or entity_entry.platform != DOMAIN:
+            continue
+        unique_id = entity_entry.unique_id
+        if not isinstance(unique_id, str) or unique_id.startswith("horticulture_"):
+            continue
+        candidate = unique_id
+        if candidate.startswith(f"{entry.entry_id}_"):
+            candidate = candidate.removeprefix(f"{entry.entry_id}_")
+        if "_" not in candidate:
+            continue
+        profile_id, sensor_type = candidate.rsplit("_", 1)
+        if sensor_type not in PLANT_SENSOR_TYPES:
+            continue
+        new_unique_id = f"horticulture_{profile_id}_{sensor_type}"
+        if new_unique_id == unique_id:
+            continue
+        entity_registry.async_update_entity(entity_entry.entity_id, new_unique_id=new_unique_id)
 
     primary_context = contexts.get(collection.primary_id)
     plant_id = (primary_context.profile_id if primary_context else default_plant_id) or entry.entry_id
@@ -873,7 +952,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         sensors.append(CloudOutboxSensor(cloud_manager, entry.entry_id, plant_name))
         sensors.append(CloudConnectionSensor(cloud_manager, entry.entry_id, plant_name))
 
-    async_add_entities(sensors, True)
+    async def _async_add_entities(entities: list[SensorEntity]) -> None:
+        async with add_lock:
+            add_result = async_add_entities(entities, True)
+            if inspect.isawaitable(add_result):
+                await add_result
+
+    await _async_add_entities(sensors)
 
     @callback
     def _handle_profile_update(change: Mapping[str, Iterable[str]] | None) -> None:
@@ -967,7 +1052,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
             should_refresh = should_refresh or bool(new_keys)
 
         if new_entities:
-            async_add_entities(new_entities, True)
+            hass.async_create_task(_async_add_entities(new_entities))
 
         if should_refresh and coordinator is not None:
             refresh = getattr(coordinator, "async_request_refresh", None)
@@ -1227,7 +1312,7 @@ class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity
         self._meta = {}
         self._value = None
         self._attr_native_unit_of_measurement = None
-        self._attr_available = False
+        self._attr_available = True
 
     def _handle_context_updated(self, context: ProfileContext) -> None:
         super()._handle_context_updated(context)
