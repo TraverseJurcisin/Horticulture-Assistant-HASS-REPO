@@ -827,10 +827,7 @@ class GardenSummarySensor(HorticultureEntryEntity, CoordinatorEntity[Horticultur
         if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
             return False
 
-        if getattr(self, "_attr_available", None) is False:
-            return False
-
-        return True
+        return getattr(self, "_attr_available", True) is not False
 
     @property
     def native_value(self):
@@ -1459,10 +1456,7 @@ class HortiStatusSensor(
         if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
             return False
 
-        if getattr(self, "_attr_available", None) is False:
-            return False
-
-        return True
+        return getattr(self, "_attr_available", True) is not False
 
 
 class HortiRecommendationSensor(
@@ -1503,10 +1497,7 @@ class HortiRecommendationSensor(
         if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
             return False
 
-        if getattr(self, "_attr_available", None) is False:
-            return False
-
-        return True
+        return getattr(self, "_attr_available", True) is not False
 
 
 class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):

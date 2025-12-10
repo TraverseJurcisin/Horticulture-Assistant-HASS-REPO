@@ -46,7 +46,4 @@ class HorticultureEntity(HorticultureBaseEntity, CoordinatorEntity[HorticultureC
         if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
             return False
 
-        if getattr(self, "_attr_available", None) is False:
-            return False
-
-        return True
+        return getattr(self, "_attr_available", True) is not False
