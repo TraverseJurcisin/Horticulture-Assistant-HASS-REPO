@@ -192,7 +192,7 @@ class PlantProfileSensor(SensorEntity):
         # Include the entry identifier so entities stay unique when multiple
         # config entries manage profiles with the same profile_id.
         self._attr_unique_id = f"horticulture_{entry_key}_{profile_id}_{sensor_type}"
-        self._attr_available = True
+        self._attr_available = False
         self._linked_entity_id: str | None = None
         self._unsub_tracker: CALLBACK_TYPE | None = None
         self._attr_native_value: float | str | None = None
@@ -264,6 +264,12 @@ class PlantProfileSensor(SensorEntity):
         return self._profile_id
 
     @property
+    def available(self) -> bool:
+        """Return True when the sensor has a value and is enabled."""
+
+        return super().available and self._attr_native_value is not None
+
+    @property
     def device_info(self) -> Mapping[str, Any]:
         """Return device info to attach this sensor to the plant profile device."""
 
@@ -274,174 +280,8 @@ class PlantProfileSensor(SensorEntity):
             "model": "Plant Profile",
         }
 
-
-class EstimatedFieldCapacitySensor(SensorEntity):
-    """Estimate field capacity as the peak observed raw moisture reading."""
-
-    _attr_device_class = SensorDeviceClass.MOISTURE
-    _attr_native_unit_of_measurement = PERCENTAGE
-    _attr_state_class = SensorStateClass.MEASUREMENT
-    _attr_has_entity_name = True
-    _attr_entity_registry_enabled_default = True
-    _attr_should_poll = True
-
-    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str, entry_id: str | None = None) -> None:
-        super().__init__()
-        self.hass = hass
-        self._entry_id = entry_id
-        self._profile_id = profile_id
-        self._plant_name = plant_name
-        self._attr_name = f"{plant_name} Estimated Field Capacity"
-        entry_key = entry_id or "entry"
-        # Scope unique id to the entry to avoid collisions across multiple
-        # config entries managing the same profile identifier.
-        self._attr_unique_id = f"{DOMAIN}_{entry_key}_{profile_id}_estimated_field_capacity"
-        self._attr_available = True
-        self._sensor_entity_id = f"sensor.{profile_id}_raw_moisture"
-        self._attr_native_value: float | None = None
-
-    @property
-    def native_value(self):
-        return getattr(self, "_attr_native_value", None)
-
-    async def async_update(self) -> None:
-        try:
-            state = getattr(self.hass, "states", None)
-            if state is None:
-                # TODO: handle missing sensor gracefully
-                self._attr_native_value = None
-                return
-            raw = state.get(self._sensor_entity_id)
-            if raw is None or getattr(raw, "state", None) is None:
-                # TODO: handle missing sensor gracefully
-                self._attr_native_value = None
-                return
-            try:
-                value = float(raw.state)
-            except (ValueError, TypeError):
-                # TODO: handle missing sensor gracefully
-                self._attr_native_value = None
-                return
-            previous = self._attr_native_value
-            if previous is None or value > previous:
-                self._attr_native_value = value
-        except Exception:  # noqa: BLE001
-            # TODO: handle missing sensor gracefully
-            self._attr_native_value = None
-
-    @property
-    def device_info(self) -> Mapping[str, Any]:
-        """Return device info so the sensor is grouped under the plant profile."""
-
-        return {
-            # Use the config entry identifier when available so HA groups the
-            # virtual metric with the parent plant device for automation targets.
-            "identifiers": {profile_device_identifier(self._entry_id, self._profile_id)},
-            "name": self._plant_name,
-            "manufacturer": "Horticulture Assistant",
-            "model": "Plant Profile",
-        }
-
-
-class EstimatedWiltingPointSensor(SensorEntity):
-    """Estimate wilting point as the lowest observed raw moisture reading."""
-
-    _attr_device_class = SensorDeviceClass.MOISTURE
-    _attr_native_unit_of_measurement = PERCENTAGE
-    _attr_state_class = SensorStateClass.MEASUREMENT
-    _attr_has_entity_name = True
-    _attr_entity_registry_enabled_default = True
-    _attr_should_poll = True
-
-    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str, entry_id: str | None = None) -> None:
-        super().__init__()
-        self.hass = hass
-        self._entry_id = entry_id
-        self._profile_id = profile_id
-        self._plant_name = plant_name
-        self._attr_name = f"{plant_name} Estimated Wilting Point"
-        entry_key = entry_id or "entry"
-        # Scope unique id to the entry to avoid collisions across multiple
-        # config entries managing the same profile identifier.
-        self._attr_unique_id = f"{DOMAIN}_{entry_key}_{profile_id}_estimated_wilting_point"
-        self._attr_available = True
-        self._sensor_entity_id = f"sensor.{profile_id}_raw_moisture"
-        self._attr_native_value: float | None = None
-
-    @property
-    def native_value(self):
-        return getattr(self, "_attr_native_value", None)
-
-    async def async_update(self) -> None:
-        try:
-            state = getattr(self.hass, "states", None)
-            if state is None:
-                # TODO: handle missing sensor gracefully
-                self._attr_native_value = None
-                return
-            raw = state.get(self._sensor_entity_id)
-            if raw is None or getattr(raw, "state", None) is None:
-                # TODO: handle missing sensor gracefully
-                self._attr_native_value = None
-                return
-            try:
-                value = float(raw.state)
-            except (ValueError, TypeError):
-                # TODO: handle missing sensor gracefully
-                self._attr_native_value = None
-                return
-            previous = self._attr_native_value
-            if previous is None or value < previous:
-                self._attr_native_value = value
-        except Exception:  # noqa: BLE001
-            # TODO: handle missing sensor gracefully
-            self._attr_native_value = None
-
-    @property
-    def available(self) -> bool:
-        """Virtual plant sensors remain available unless disabled by the user.
-
-        Even when no physical/linked sensor is configured we still expose the
-        entity as available so Home Assistant shows an ``unknown`` state instead
-        of hiding it as ``unavailable``.
-        """
-
-        registry_entry = getattr(self, "registry_entry", None)
-        if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
-            return False
-
-        if (
-            registry_entry is not None
-            and registry_entry.device_id
-            and self.hass is not None
-            and not _DEVICE_REGISTRY_STUB
-        ):
-            device = dr.async_get(self.hass).async_get(registry_entry.device_id)
-            if device is not None and getattr(device, "disabled_by", None) is not None:
-                return False
-
-        # Absence of a linked sensor should not block availability; we want the
-        # entity to stay targetable immediately after startup.
-        if getattr(self, "_linked_entity_id", None) is None:
-            return True
-
-        return True
-
-    @property
-    def device_info(self) -> Mapping[str, Any]:
-        """Return device info so the sensor is grouped under the plant profile."""
-
-        return {
-            # Use the config entry identifier when available so HA groups the
-            # virtual metric with the parent plant device for automation targets.
-            "identifiers": {profile_device_identifier(self._entry_id, self._profile_id)},
-            "name": self._plant_name,
-            "manufacturer": "Horticulture Assistant",
-            "model": "Plant Profile",
-        }
-
     async def async_added_to_hass(self) -> None:
-        """Register callbacks once entity is added to Home Assistant."""
+        """Register callbacks and fetch an initial state when added."""
 
         await super().async_added_to_hass()
         domain_data = self.hass.data.setdefault(DOMAIN, {})
@@ -459,6 +299,36 @@ class EstimatedWiltingPointSensor(SensorEntity):
             self._handle_context_update,
         )
         self.async_on_remove(remove)
+
+        await self.async_update()
+
+    async def async_update(self) -> None:
+        """Fetch the latest reading from the linked physical sensor."""
+
+        try:
+            self._attr_available = False
+            self._attr_native_value = None
+            entity_id = self._linked_entity_id or self._resolve_context_link()
+            if not entity_id or not getattr(self.hass, "states", None):
+                return
+
+            state = self.hass.states.get(entity_id)
+            if state is None or state.state in ("unknown", "unavailable"):
+                return
+
+            value: float | str
+            try:
+                value = float(state.state)
+            except ValueError:
+                value = state.state
+            self._attr_native_value = value
+            unit = state.attributes.get("unit_of_measurement")
+            if isinstance(unit, str):
+                self._attr_native_unit_of_measurement = unit
+            self._attr_available = True
+        except Exception:  # noqa: BLE001
+            self._attr_native_value = None
+            self._attr_available = False
 
     async def async_will_remove_from_hass(self) -> None:
         """Cleanup when entity is about to be removed."""
@@ -480,11 +350,13 @@ class EstimatedWiltingPointSensor(SensorEntity):
             return
         if new_state.state in ("unknown", "unavailable"):
             self._attr_native_value = None
+            self._attr_available = False
         else:
             try:
                 self._attr_native_value = float(new_state.state)
             except ValueError:
                 self._attr_native_value = new_state.state
+            self._attr_available = True
         unit = new_state.attributes.get("unit_of_measurement")
         if unit:
             self._attr_native_unit_of_measurement = unit
@@ -522,8 +394,10 @@ class EstimatedWiltingPointSensor(SensorEntity):
                 unit = state.attributes.get("unit_of_measurement")
                 if unit:
                     self._attr_native_unit_of_measurement = unit
+                self._attr_available = True
             else:
                 self._attr_native_value = None
+                self._attr_available = False
             _LOGGER.debug("Linked %s to %s (previous: %s)", new_entity_id, self.unique_id, previous)
         else:
             _LOGGER.debug("Unlinked sensor from %s (previous: %s)", self.unique_id, previous)
@@ -551,6 +425,160 @@ class EstimatedWiltingPointSensor(SensorEntity):
             return None
         role = SENSOR_TYPE_TO_MEASUREMENT.get(self._sensor_type, self._sensor_type)
         return context.first_sensor(role)
+
+
+class EstimatedFieldCapacitySensor(SensorEntity):
+    """Estimate field capacity as the peak observed raw moisture reading."""
+
+    _attr_device_class = SensorDeviceClass.MOISTURE
+    _attr_native_unit_of_measurement = PERCENTAGE
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
+    _attr_should_poll = True
+
+    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str, entry_id: str | None = None) -> None:
+        super().__init__()
+        self.hass = hass
+        self._entry_id = entry_id
+        self._profile_id = profile_id
+        self._plant_name = plant_name
+        self._attr_name = f"{plant_name} Estimated Field Capacity"
+        entry_key = entry_id or "entry"
+        # Scope unique id to the entry to avoid collisions across multiple
+        # config entries managing the same profile identifier.
+        self._attr_unique_id = f"{DOMAIN}_{entry_key}_{profile_id}_estimated_field_capacity"
+        self._attr_available = False
+        self._sensor_entity_id = f"sensor.{profile_id}_raw_moisture"
+        self._attr_native_value: float | None = None
+
+    @property
+    def native_value(self):
+        return getattr(self, "_attr_native_value", None)
+
+    async def async_update(self) -> None:
+        self._attr_available = False
+        try:
+            state = getattr(self.hass, "states", None)
+            if state is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            raw = state.get(self._sensor_entity_id)
+            if raw is None or getattr(raw, "state", None) is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            try:
+                value = float(raw.state)
+            except (ValueError, TypeError):
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            previous = self._attr_native_value
+            if previous is None or value > previous:
+                self._attr_native_value = value
+            self._attr_available = True
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_native_value = None
+            self._attr_available = False
+
+    @property
+    def available(self) -> bool:
+        """Report availability only when we have a measured value."""
+
+        return super().available and self._attr_native_value is not None
+
+    @property
+    def device_info(self) -> Mapping[str, Any]:
+        """Return device info so the sensor is grouped under the plant profile."""
+
+        return {
+            # Use the config entry identifier when available so HA groups the
+            # virtual metric with the parent plant device for automation targets.
+            "identifiers": {profile_device_identifier(self._entry_id, self._profile_id)},
+            "name": self._plant_name,
+            "manufacturer": "Horticulture Assistant",
+            "model": "Plant Profile",
+        }
+
+
+class EstimatedWiltingPointSensor(SensorEntity):
+    """Estimate wilting point as the lowest observed raw moisture reading."""
+
+    _attr_device_class = SensorDeviceClass.MOISTURE
+    _attr_native_unit_of_measurement = PERCENTAGE
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
+    _attr_should_poll = True
+
+    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str, entry_id: str | None = None) -> None:
+        super().__init__()
+        self.hass = hass
+        self._entry_id = entry_id
+        self._profile_id = profile_id
+        self._plant_name = plant_name
+        self._attr_name = f"{plant_name} Estimated Wilting Point"
+        entry_key = entry_id or "entry"
+        # Scope unique id to the entry to avoid collisions across multiple
+        # config entries managing the same profile identifier.
+        self._attr_unique_id = f"{DOMAIN}_{entry_key}_{profile_id}_estimated_wilting_point"
+        self._attr_available = False
+        self._sensor_entity_id = f"sensor.{profile_id}_raw_moisture"
+        self._attr_native_value: float | None = None
+
+    @property
+    def native_value(self):
+        return getattr(self, "_attr_native_value", None)
+
+    async def async_update(self) -> None:
+        self._attr_available = False
+        try:
+            state = getattr(self.hass, "states", None)
+            if state is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            raw = state.get(self._sensor_entity_id)
+            if raw is None or getattr(raw, "state", None) is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            try:
+                value = float(raw.state)
+            except (ValueError, TypeError):
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            previous = self._attr_native_value
+            if previous is None or value < previous:
+                self._attr_native_value = value
+            self._attr_available = True
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_native_value = None
+            self._attr_available = False
+
+    @property
+    def available(self) -> bool:
+        """Report availability only when we have a measured value."""
+
+        return super().available and self._attr_native_value is not None
+
+    @property
+    def device_info(self) -> Mapping[str, Any]:
+        """Return device info so the sensor is grouped under the plant profile."""
+
+        return {
+            # Use the config entry identifier when available so HA groups the
+            # virtual metric with the parent plant device for automation targets.
+            "identifiers": {profile_device_identifier(self._entry_id, self._profile_id)},
+            "name": self._plant_name,
+            "manufacturer": "Horticulture Assistant",
+            "model": "Plant Profile",
+        }
 
 
 class PlantStatusSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):
@@ -1268,7 +1296,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     async def _async_add_entities(entities: list[SensorEntity]) -> None:
         async with add_lock:
-            add_result = async_add_entities(entities, True)
+            add_result = async_add_entities(entities, update_before_add=True)
             if inspect.isawaitable(add_result):
                 await add_result
 
