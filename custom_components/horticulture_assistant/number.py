@@ -97,7 +97,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     async def _async_add_entities(new_entities: list[ThresholdNumber]) -> None:
         async with add_lock:
-            add_result = async_add_entities(new_entities, True)
+            add_result = async_add_entities(new_entities, update_before_add=True)
             if inspect.isawaitable(add_result):
                 await add_result
 
