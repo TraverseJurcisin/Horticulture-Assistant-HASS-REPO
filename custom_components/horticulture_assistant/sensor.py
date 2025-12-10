@@ -258,6 +258,102 @@ class PlantProfileSensor(SensorEntity):
 
         return self._profile_id
 
+
+class EstimatedFieldCapacitySensor(SensorEntity):
+    """Estimate field capacity as the peak observed raw moisture reading."""
+
+    _attr_device_class = SensorDeviceClass.MOISTURE
+    _attr_native_unit_of_measurement = PERCENTAGE
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_should_poll = True
+
+    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str) -> None:
+        super().__init__()
+        self.hass = hass
+        self._profile_id = profile_id
+        self._attr_name = f"{plant_name} Estimated Field Capacity"
+        self._attr_unique_id = f"{DOMAIN}_{profile_id}_estimated_field_capacity"
+        self._attr_available = True
+        self._sensor_entity_id = f"sensor.{profile_id}_raw_moisture"
+        self._attr_native_value: float | None = None
+
+    @property
+    def native_value(self):
+        return getattr(self, "_attr_native_value", None)
+
+    async def async_update(self) -> None:
+        try:
+            state = getattr(self.hass, "states", None)
+            if state is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            raw = state.get(self._sensor_entity_id)
+            if raw is None or getattr(raw, "state", None) is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            try:
+                value = float(raw.state)
+            except (ValueError, TypeError):
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            previous = self._attr_native_value
+            if previous is None or value > previous:
+                self._attr_native_value = value
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_native_value = None
+
+
+class EstimatedWiltingPointSensor(SensorEntity):
+    """Estimate wilting point as the lowest observed raw moisture reading."""
+
+    _attr_device_class = SensorDeviceClass.MOISTURE
+    _attr_native_unit_of_measurement = PERCENTAGE
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_should_poll = True
+
+    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str) -> None:
+        super().__init__()
+        self.hass = hass
+        self._profile_id = profile_id
+        self._attr_name = f"{plant_name} Estimated Wilting Point"
+        self._attr_unique_id = f"{DOMAIN}_{profile_id}_estimated_wilting_point"
+        self._attr_available = True
+        self._sensor_entity_id = f"sensor.{profile_id}_raw_moisture"
+        self._attr_native_value: float | None = None
+
+    @property
+    def native_value(self):
+        return getattr(self, "_attr_native_value", None)
+
+    async def async_update(self) -> None:
+        try:
+            state = getattr(self.hass, "states", None)
+            if state is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            raw = state.get(self._sensor_entity_id)
+            if raw is None or getattr(raw, "state", None) is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            try:
+                value = float(raw.state)
+            except (ValueError, TypeError):
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            previous = self._attr_native_value
+            if previous is None or value < previous:
+                self._attr_native_value = value
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_native_value = None
+
     @property
     def available(self) -> bool:
         """Virtual plant sensors remain available unless disabled by the user.
@@ -434,19 +530,30 @@ class PlantStatusSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Senso
         self._attr_icon = "mdi:sprout"
 
     async def async_update(self) -> None:
-        if self._monitor is None:
+        try:
+            if self._monitor is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                self._attr_extra_state_attributes = {}
+                return
+            result = self._monitor.evaluate()
+            if not getattr(result, "sensors", None):
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                self._attr_extra_state_attributes = {}
+                return
+            self._attr_native_value = result.health
+            icon_map = {
+                "ok": "mdi:sprout",
+                "attention": "mdi:alert-circle-outline",
+                "problem": "mdi:alert-circle",
+            }
+            self._attr_icon = icon_map.get(result.health, "mdi:sprout")
+            self._attr_extra_state_attributes = result.as_attributes()
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
             self._attr_native_value = None
             self._attr_extra_state_attributes = {}
-            return
-        result = self._monitor.evaluate()
-        self._attr_native_value = result.health
-        icon_map = {
-            "ok": "mdi:sprout",
-            "attention": "mdi:alert-circle-outline",
-            "problem": "mdi:alert-circle",
-        }
-        self._attr_icon = icon_map.get(result.health, "mdi:sprout")
-        self._attr_extra_state_attributes = result.as_attributes()
 
     def _handle_context_updated(self, context: ProfileContext) -> None:
         super()._handle_context_updated(context)
@@ -487,16 +594,27 @@ class PlantLastSampleSensor(ProfileContextEntityMixin, HorticultureBaseEntity, S
         self._attr_unique_id = self.profile_unique_id("last_sample")
 
     async def async_update(self) -> None:
-        if self._monitor is None:
+        try:
+            if self._monitor is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                self._attr_extra_state_attributes = {"issues": [], "sensor_count": 0}
+                return
+            result = self._monitor.evaluate()
+            if not getattr(result, "sensors", None):
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                self._attr_extra_state_attributes = {"issues": [], "sensor_count": 0}
+                return
+            self._attr_native_value = result.last_sample_at
+            self._attr_extra_state_attributes = {
+                "issues": [issue.as_dict() for issue in result.issues],
+                "sensor_count": len(result.sensors),
+            }
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
             self._attr_native_value = None
             self._attr_extra_state_attributes = {"issues": [], "sensor_count": 0}
-            return
-        result = self._monitor.evaluate()
-        self._attr_native_value = result.last_sample_at
-        self._attr_extra_state_attributes = {
-            "issues": [issue.as_dict() for issue in result.issues],
-            "sensor_count": len(result.sensors),
-        }
 
     def _handle_context_updated(self, context: ProfileContext) -> None:
         super()._handle_context_updated(context)
@@ -531,10 +649,24 @@ class CloudSyncSensor(HorticultureEntryEntity, SensorEntity):
 
     # pylint: disable=missing-return-doc
     def _cloud_status(self) -> dict[str, Any]:
-        status = self._manager.status()
-        configured = bool(status.get("configured"))
-        self._attr_available = configured
-        return status
+        try:
+            if self._manager is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_available = True
+                return {}
+
+            status = self._manager.status()
+            # TODO: handle missing sensor gracefully
+            # Keep the entity available even when the cloud sync manager reports not
+            # being configured; we want an "unknown" state instead of "unavailable"
+            # so Home Assistant does not unregister or hide the entity during
+            # startup or when credentials are missing.
+            self._attr_available = True
+            return status
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_available = True
+            return {}
 
 
 class CloudSnapshotAgeSensor(CloudSyncSensor):
@@ -550,16 +682,30 @@ class CloudSnapshotAgeSensor(CloudSyncSensor):
         self._attr_name = "Cloud Snapshot Age"
 
     async def async_update(self) -> None:
-        status = self._cloud_status()
-        age = status.get("cloud_snapshot_age_days")
-        self._attr_native_value = round(age, 3) if isinstance(age, int | float) else age
-        self._attr_extra_state_attributes = {
-            "oldest_age_days": status.get("cloud_snapshot_oldest_age_days"),
-            "cloud_cache_entries": status.get("cloud_cache_entries"),
-            "last_success_at": status.get("last_success_at"),
-            "connection_reason": (status.get("connection") or {}).get("reason"),
-            "manual_sync_last_run": (status.get("manual_sync") or {}).get("last_run_at"),
-        }
+        try:
+            status = self._cloud_status()
+            if not status:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                self._attr_extra_state_attributes = {}
+                return
+            age = status.get("cloud_snapshot_age_days")
+            if age is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+            else:
+                self._attr_native_value = round(age, 3) if isinstance(age, int | float) else age
+            self._attr_extra_state_attributes = {
+                "oldest_age_days": status.get("cloud_snapshot_oldest_age_days"),
+                "cloud_cache_entries": status.get("cloud_cache_entries"),
+                "last_success_at": status.get("last_success_at"),
+                "connection_reason": (status.get("connection") or {}).get("reason"),
+                "manual_sync_last_run": (status.get("manual_sync") or {}).get("last_run_at"),
+            }
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_native_value = None
+            self._attr_extra_state_attributes = {}
 
 
 class CloudOutboxSensor(CloudSyncSensor):
@@ -575,20 +721,34 @@ class CloudOutboxSensor(CloudSyncSensor):
         self._attr_name = "Cloud Outbox Size"
 
     async def async_update(self) -> None:
-        status = self._cloud_status()
-        outbox = status.get("outbox_size")
-        self._attr_native_value = int(outbox) if isinstance(outbox, int | float) else outbox
-        connection = status.get("connection") or {}
-        offline_queue = status.get("offline_queue") or {}
-        self._attr_extra_state_attributes = {
-            "last_push_error": status.get("last_push_error"),
-            "last_pull_error": status.get("last_pull_error"),
-            "connected": connection.get("connected"),
-            "local_only": connection.get("local_only"),
-            "offline_queue_reason": offline_queue.get("reason"),
-            "offline_queue_last_enqueued_at": offline_queue.get("last_enqueued_at"),
-            "offline_queue_last_error": offline_queue.get("last_error"),
-        }
+        try:
+            status = self._cloud_status()
+            if not status:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                self._attr_extra_state_attributes = {}
+                return
+            outbox = status.get("outbox_size")
+            if outbox is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+            else:
+                self._attr_native_value = int(outbox) if isinstance(outbox, int | float) else outbox
+            connection = status.get("connection") or {}
+            offline_queue = status.get("offline_queue") or {}
+            self._attr_extra_state_attributes = {
+                "last_push_error": status.get("last_push_error"),
+                "last_pull_error": status.get("last_pull_error"),
+                "connected": connection.get("connected"),
+                "local_only": connection.get("local_only"),
+                "offline_queue_reason": offline_queue.get("reason"),
+                "offline_queue_last_enqueued_at": offline_queue.get("last_enqueued_at"),
+                "offline_queue_last_error": offline_queue.get("last_error"),
+            }
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_native_value = None
+            self._attr_extra_state_attributes = {}
 
 
 class CloudConnectionSensor(CloudSyncSensor):
@@ -603,38 +763,48 @@ class CloudConnectionSensor(CloudSyncSensor):
         self._attr_name = "Cloud Connection"
 
     async def async_update(self) -> None:
-        status = self._cloud_status()
-        connection = status.get("connection") or {}
-        if not status.get("enabled"):
-            value = "disabled"
-        elif not status.get("configured"):
-            value = "not_configured"
-        elif connection.get("connected"):
-            value = "connected"
-        elif connection.get("local_only"):
-            value = str(connection.get("reason") or "local_only")
-        else:
-            value = "unknown"
-        self._attr_native_value = value
-        attrs = {
-            "reason": connection.get("reason"),
-            "local_only": connection.get("local_only"),
-            "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
-            "account_email": status.get("account_email"),
-            "tenant_id": status.get("tenant_id"),
-            "roles": status.get("roles"),
-            "organization_id": status.get("organization_id"),
-            "organization_name": status.get("organization_name"),
-            "organization_role": status.get("organization_role"),
-            "available_organizations": status.get("organizations"),
-            "manual_sync_last_run": (status.get("manual_sync") or {}).get("last_run_at"),
-            "manual_sync_error": (status.get("manual_sync") or {}).get("error"),
-            "token_expires_at": status.get("token_expires_at"),
-            "token_expires_in_seconds": status.get("token_expires_in_seconds"),
-            "token_expired": status.get("token_expired"),
-            "refresh_token_available": status.get("refresh_token"),
-        }
-        self._attr_extra_state_attributes = {k: v for k, v in attrs.items() if v is not None}
+        try:
+            status = self._cloud_status()
+            if not status:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                self._attr_extra_state_attributes = {}
+                return
+            connection = status.get("connection") or {}
+            if not status.get("enabled"):
+                value = "disabled"
+            elif not status.get("configured"):
+                value = "not_configured"
+            elif connection.get("connected"):
+                value = "connected"
+            elif connection.get("local_only"):
+                value = str(connection.get("reason") or "local_only")
+            else:
+                value = "unknown"
+            self._attr_native_value = value
+            attrs = {
+                "reason": connection.get("reason"),
+                "local_only": connection.get("local_only"),
+                "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
+                "account_email": status.get("account_email"),
+                "tenant_id": status.get("tenant_id"),
+                "roles": status.get("roles"),
+                "organization_id": status.get("organization_id"),
+                "organization_name": status.get("organization_name"),
+                "organization_role": status.get("organization_role"),
+                "available_organizations": status.get("organizations"),
+                "manual_sync_last_run": (status.get("manual_sync") or {}).get("last_run_at"),
+                "manual_sync_error": (status.get("manual_sync") or {}).get("error"),
+                "token_expires_at": status.get("token_expires_at"),
+                "token_expires_in_seconds": status.get("token_expires_in_seconds"),
+                "token_expired": status.get("token_expired"),
+                "refresh_token_available": status.get("refresh_token"),
+            }
+            self._attr_extra_state_attributes = {k: v for k, v in attrs.items() if v is not None}
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_native_value = None
+            self._attr_extra_state_attributes = {}
 
 
 class GardenSummarySensor(HorticultureEntryEntity, CoordinatorEntity[HorticultureCoordinator], SensorEntity):
@@ -652,16 +822,31 @@ class GardenSummarySensor(HorticultureEntryEntity, CoordinatorEntity[Horticultur
         self._attr_unique_id = f"{DOMAIN}_{entry_id}_garden_summary"
 
     @property
+    def available(self) -> bool:
+        registry_entry = getattr(self, "registry_entry", None)
+        if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
+            return False
+
+        if getattr(self, "_attr_available", None) is False:
+            return False
+
+        return True
+
+    @property
     def native_value(self):
         summary = (self.coordinator.data or {}).get("summary") or {}
         problems = summary.get("problem_profiles")
-        return problems if isinstance(problems, int | float) else 0
+        if problems is None:
+            # TODO: handle missing sensor gracefully
+            return None
+        return problems if isinstance(problems, int | float) else None
 
     @property
     def extra_state_attributes(self):
         summary = (self.coordinator.data or {}).get("summary")
         if not summary:
-            return None
+            # TODO: handle missing sensor gracefully
+            return {}
         attrs = {k: v for k, v in summary.items() if k != "status_counts"}
         counts = summary.get("status_counts") or {}
         for key, value in counts.items():
@@ -686,23 +871,75 @@ class EntitlementSummarySensor(HorticultureEntryEntity, SensorEntity):
         self._attr_name = "Feature entitlements"
 
     async def async_update(self) -> None:
-        entitlements = derive_entitlements(self._entry.options)
-        features = sorted(entitlements.features)
-        if FEATURE_AI_ASSIST in features or FEATURE_IRRIGATION_AUTOMATION in features:
-            state = "premium"
-        elif FEATURE_CLOUD_SYNC in features:
-            state = "cloud"
-        else:
-            state = "local"
-        self._attr_native_value = state
-        self._attr_extra_state_attributes = {
-            "features": features,
-            "roles": list(entitlements.roles),
-            "organization_role": entitlements.organization_role,
-            "organization_id": entitlements.organization_id,
-            "account_email": entitlements.account_email,
-            "source": entitlements.source,
-        }
+        try:
+            entitlements = derive_entitlements(self._entry.options)
+            features = sorted(entitlements.features)
+            if FEATURE_AI_ASSIST in features or FEATURE_IRRIGATION_AUTOMATION in features:
+                state = "premium"
+            elif FEATURE_CLOUD_SYNC in features:
+                state = "cloud"
+            else:
+                state = "local"
+            self._attr_native_value = state
+            self._attr_extra_state_attributes = {
+                "features": features,
+                "roles": list(entitlements.roles),
+                "organization_role": entitlements.organization_role,
+                "organization_id": entitlements.organization_id,
+                "account_email": entitlements.account_email,
+                "source": entitlements.source,
+            }
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_native_value = None
+            self._attr_extra_state_attributes = {}
+
+
+class DailyNitrogenAppliedSensor(SensorEntity):
+    """Summarize daily nitrogen application for a plant profile."""
+
+    _attr_native_unit_of_measurement = "mg"
+    _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_should_poll = True
+
+    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str) -> None:
+        super().__init__()
+        self.hass = hass
+        self._profile_id = profile_id
+        self._attr_name = f"{plant_name} Daily Nitrogen Applied"
+        self._attr_unique_id = f"{DOMAIN}_{profile_id}_daily_nitrogen_applied"
+        self._attr_available = True
+        self._attr_native_value: float | None = None
+
+    @property
+    def native_value(self):
+        return getattr(self, "_attr_native_value", None)
+
+    async def async_update(self) -> None:
+        try:
+            tracker = getattr(self.hass, "data", {}).get(DOMAIN, {}).get("nutrient_tracker")
+            if tracker is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_native_value = None
+                return
+            total = 0.0
+            today = datetime.now().date()
+            for record in getattr(tracker, "delivery_log", []):
+                if getattr(record, "plant_id", None) != self._profile_id:
+                    continue
+                if getattr(record, "timestamp", None) is None:
+                    continue
+                if record.timestamp.date() != today:
+                    continue
+                value = (record.ppm_delivered or {}).get("N")
+                if value is None:
+                    continue
+                total += float(value) * float(getattr(record, "volume_l", 0) or 0)
+            self._attr_native_value = round(total, 3)
+            self._attr_extra_state_attributes = {"plant_id": self._profile_id, "units": "mg"}
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_native_value = None
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
@@ -1181,8 +1418,12 @@ class HortiStatusSensor(
     @property
     def native_value(self):
         if not self.coordinator.last_update_success:
-            return "error"
+            # TODO: handle missing sensor gracefully
+            return None
         data = self.coordinator.data or {}
+        if "ok" not in data:
+            # TODO: handle missing sensor gracefully
+            return None
         return "ok" if data.get("ok") is True else "error"
 
     @property
@@ -1214,9 +1455,14 @@ class HortiStatusSensor(
 
     @property
     def available(self) -> bool:
-        if self._keep_stale:
-            return True
-        return super().available
+        registry_entry = getattr(self, "registry_entry", None)
+        if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
+            return False
+
+        if getattr(self, "_attr_available", None) is False:
+            return False
+
+        return True
 
 
 class HortiRecommendationSensor(
@@ -1253,9 +1499,14 @@ class HortiRecommendationSensor(
 
     @property
     def available(self) -> bool:
-        if self._keep_stale:
-            return True
-        return super().available
+        registry_entry = getattr(self, "registry_entry", None)
+        if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
+            return False
+
+        if getattr(self, "_attr_available", None) is False:
+            return False
+
+        return True
 
 
 class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEntity):

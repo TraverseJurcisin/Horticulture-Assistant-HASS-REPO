@@ -42,14 +42,11 @@ class HorticultureEntity(HorticultureBaseEntity, CoordinatorEntity[HorticultureC
         the moment Home Assistant boots.
         """
 
+        registry_entry = getattr(self, "registry_entry", None)
+        if registry_entry is not None and getattr(registry_entry, "disabled_by", None) is not None:
+            return False
+
         if getattr(self, "_attr_available", None) is False:
             return False
 
-        coordinator = getattr(self, "coordinator", None)
-        if coordinator is None:
-            return True
-
-        if coordinator.last_update_success:
-            return True
-
-        return coordinator.last_update_success_time is None
+        return True
