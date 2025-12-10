@@ -167,6 +167,8 @@ SENSOR_TYPE_TO_MEASUREMENT = {
 class PlantProfileSensor(SensorEntity):
     """Sensor representing a plant profile measurement (e.g., soil moisture)."""
 
+    _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
     _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_should_poll = False
 
@@ -186,7 +188,10 @@ class PlantProfileSensor(SensorEntity):
         self._profile_id = profile_id
         self._profile_name = profile_name
         self._attr_name = f"{profile_name} {info.get('name', sensor_type)}"
-        self._attr_unique_id = f"horticulture_{profile_id}_{sensor_type}"
+        entry_key = self._entry_id or "entry"
+        # Include the entry identifier so entities stay unique when multiple
+        # config entries manage profiles with the same profile_id.
+        self._attr_unique_id = f"horticulture_{entry_key}_{profile_id}_{sensor_type}"
         self._attr_available = True
         self._linked_entity_id: str | None = None
         self._unsub_tracker: CALLBACK_TYPE | None = None
@@ -258,6 +263,17 @@ class PlantProfileSensor(SensorEntity):
 
         return self._profile_id
 
+    @property
+    def device_info(self) -> Mapping[str, Any]:
+        """Return device info to attach this sensor to the plant profile device."""
+
+        return {
+            "identifiers": {profile_device_identifier(self._entry_id, self._profile_id)},
+            "name": self._profile_name,
+            "manufacturer": "Horticulture Assistant",
+            "model": "Plant Profile",
+        }
+
 
 class EstimatedFieldCapacitySensor(SensorEntity):
     """Estimate field capacity as the peak observed raw moisture reading."""
@@ -265,14 +281,21 @@ class EstimatedFieldCapacitySensor(SensorEntity):
     _attr_device_class = SensorDeviceClass.MOISTURE
     _attr_native_unit_of_measurement = PERCENTAGE
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
     _attr_should_poll = True
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str) -> None:
+    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str, entry_id: str | None = None) -> None:
         super().__init__()
         self.hass = hass
+        self._entry_id = entry_id
         self._profile_id = profile_id
+        self._plant_name = plant_name
         self._attr_name = f"{plant_name} Estimated Field Capacity"
-        self._attr_unique_id = f"{DOMAIN}_{profile_id}_estimated_field_capacity"
+        entry_key = entry_id or "entry"
+        # Scope unique id to the entry to avoid collisions across multiple
+        # config entries managing the same profile identifier.
+        self._attr_unique_id = f"{DOMAIN}_{entry_key}_{profile_id}_estimated_field_capacity"
         self._attr_available = True
         self._sensor_entity_id = f"sensor.{profile_id}_raw_moisture"
         self._attr_native_value: float | None = None
@@ -306,6 +329,19 @@ class EstimatedFieldCapacitySensor(SensorEntity):
             # TODO: handle missing sensor gracefully
             self._attr_native_value = None
 
+    @property
+    def device_info(self) -> Mapping[str, Any]:
+        """Return device info so the sensor is grouped under the plant profile."""
+
+        return {
+            # Use the config entry identifier when available so HA groups the
+            # virtual metric with the parent plant device for automation targets.
+            "identifiers": {profile_device_identifier(self._entry_id, self._profile_id)},
+            "name": self._plant_name,
+            "manufacturer": "Horticulture Assistant",
+            "model": "Plant Profile",
+        }
+
 
 class EstimatedWiltingPointSensor(SensorEntity):
     """Estimate wilting point as the lowest observed raw moisture reading."""
@@ -313,14 +349,21 @@ class EstimatedWiltingPointSensor(SensorEntity):
     _attr_device_class = SensorDeviceClass.MOISTURE
     _attr_native_unit_of_measurement = PERCENTAGE
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
     _attr_should_poll = True
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str) -> None:
+    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str, entry_id: str | None = None) -> None:
         super().__init__()
         self.hass = hass
+        self._entry_id = entry_id
         self._profile_id = profile_id
+        self._plant_name = plant_name
         self._attr_name = f"{plant_name} Estimated Wilting Point"
-        self._attr_unique_id = f"{DOMAIN}_{profile_id}_estimated_wilting_point"
+        entry_key = entry_id or "entry"
+        # Scope unique id to the entry to avoid collisions across multiple
+        # config entries managing the same profile identifier.
+        self._attr_unique_id = f"{DOMAIN}_{entry_key}_{profile_id}_estimated_wilting_point"
         self._attr_available = True
         self._sensor_entity_id = f"sensor.{profile_id}_raw_moisture"
         self._attr_native_value: float | None = None
@@ -386,11 +429,13 @@ class EstimatedWiltingPointSensor(SensorEntity):
 
     @property
     def device_info(self) -> Mapping[str, Any]:
-        """Return device info to attach this sensor to the plant profile device."""
+        """Return device info so the sensor is grouped under the plant profile."""
 
         return {
+            # Use the config entry identifier when available so HA groups the
+            # virtual metric with the parent plant device for automation targets.
             "identifiers": {profile_device_identifier(self._entry_id, self._profile_id)},
-            "name": self._profile_name,
+            "name": self._plant_name,
             "manufacturer": "Horticulture Assistant",
             "model": "Plant Profile",
         }
@@ -514,6 +559,7 @@ class PlantStatusSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Senso
     _attr_entity_category = EntityCategory.DIAGNOSTIC
     _attr_translation_key = "plant_status"
     _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
 
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry, context) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
@@ -580,6 +626,7 @@ class PlantLastSampleSensor(ProfileContextEntityMixin, HorticultureBaseEntity, S
     _attr_device_class = SensorDeviceClass.TIMESTAMP
     _attr_translation_key = "plant_last_sample"
     _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
 
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry, context) -> None:
         ProfileContextEntityMixin.__init__(self, hass, entry, context)
@@ -639,6 +686,7 @@ class CloudSyncSensor(HorticultureEntryEntity, SensorEntity):
 
     _attr_entity_category = EntityCategory.DIAGNOSTIC
     _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
     _attr_should_poll = True
     SCAN_INTERVAL = timedelta(minutes=1)
 
@@ -815,6 +863,7 @@ class GardenSummarySensor(HorticultureEntryEntity, CoordinatorEntity[Horticultur
     _attr_entity_category = EntityCategory.DIAGNOSTIC
     _attr_native_unit_of_measurement = "profiles"
     _attr_translation_key = "garden_summary"
+    _attr_entity_registry_enabled_default = True
 
     def __init__(self, coordinator: HorticultureCoordinator, entry_id: str, label: str) -> None:
         CoordinatorEntity.__init__(self, coordinator)
@@ -858,6 +907,7 @@ class EntitlementSummarySensor(HorticultureEntryEntity, SensorEntity):
     _attr_has_entity_name = True
     _attr_icon = "mdi:lock-check"
     _attr_should_poll = True
+    _attr_entity_registry_enabled_default = True
     SCAN_INTERVAL = timedelta(minutes=5)
 
     def __init__(self, entry: ConfigEntry, plant_name: str | None = None) -> None:
@@ -897,14 +947,21 @@ class DailyNitrogenAppliedSensor(SensorEntity):
 
     _attr_native_unit_of_measurement = "mg"
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
     _attr_should_poll = True
 
-    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str) -> None:
+    def __init__(self, hass: HomeAssistant, plant_name: str, profile_id: str, entry_id: str | None = None) -> None:
         super().__init__()
         self.hass = hass
+        self._entry_id = entry_id
         self._profile_id = profile_id
+        self._plant_name = plant_name
         self._attr_name = f"{plant_name} Daily Nitrogen Applied"
-        self._attr_unique_id = f"{DOMAIN}_{profile_id}_daily_nitrogen_applied"
+        entry_key = entry_id or "entry"
+        # Scope unique id to the entry to avoid collisions across multiple
+        # config entries managing the same profile identifier.
+        self._attr_unique_id = f"{DOMAIN}_{entry_key}_{profile_id}_daily_nitrogen_applied"
         self._attr_available = True
         self._attr_native_value: float | None = None
 
@@ -937,6 +994,19 @@ class DailyNitrogenAppliedSensor(SensorEntity):
         except Exception:  # noqa: BLE001
             # TODO: handle missing sensor gracefully
             self._attr_native_value = None
+
+    @property
+    def device_info(self) -> Mapping[str, Any]:
+        """Return device info so the sensor is grouped under the plant profile."""
+
+        return {
+            # Use the config entry identifier when available so HA groups the
+            # virtual metric with the parent plant device for automation targets.
+            "identifiers": {profile_device_identifier(self._entry_id, self._profile_id)},
+            "name": self._plant_name,
+            "manufacturer": "Horticulture Assistant",
+            "model": "Plant Profile",
+        }
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
@@ -1320,6 +1390,7 @@ class HortiStatusSensor(
 ):
     entity_description = HORTI_STATUS_DESCRIPTION
     _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -1466,6 +1537,7 @@ class HortiRecommendationSensor(
 ):
     entity_description = HORTI_RECOMMENDATION_DESCRIPTION
     _attr_has_entity_name = True
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -1505,6 +1577,7 @@ class ProfileMetricValueSensor(ProfileContextEntityMixin, HorticultureBaseEntity
 
     _attr_entity_category = EntityCategory.DIAGNOSTIC
     _attr_should_poll = False
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -1600,6 +1673,7 @@ class ProfileMetricSensor(HorticultureEntity, SensorEntity):
     """Generic profile metric sensor backed by the coordinator."""
 
     entity_description: SensorEntityDescription
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -1631,6 +1705,7 @@ class ProfileSuccessSensor(HorticultureEntity, SensorEntity):
     _attr_icon = "mdi:chart-bell-curve-cumulative"
     _attr_native_unit_of_measurement = PERCENTAGE
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -1712,6 +1787,7 @@ class ProfileYieldSensor(HorticultureEntity, SensorEntity):
     _attr_icon = "mdi:scale"
     _attr_native_unit_of_measurement = "g"
     _attr_state_class = SensorStateClass.TOTAL
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -1838,6 +1914,7 @@ class ProfileProvenanceSensor(HorticultureEntity, SensorEntity):
     _attr_native_unit_of_measurement = "targets"
     _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -1935,6 +2012,7 @@ class ProfileRunStatusSensor(HorticultureEntity, SensorEntity):
 
     _attr_icon = "mdi:timeline-clock-outline"
     _attr_entity_category = EntityCategory.DIAGNOSTIC
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -2005,6 +2083,7 @@ class ProfileFeedingSensor(HorticultureEntity, SensorEntity):
     _attr_entity_category = EntityCategory.DIAGNOSTIC
     _attr_native_unit_of_measurement = UnitOfTime.DAYS
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -2084,6 +2163,7 @@ class ProfileEventSensor(HorticultureEntity, SensorEntity):
     _attr_entity_category = EntityCategory.DIAGNOSTIC
     _attr_native_unit_of_measurement = "events"
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,

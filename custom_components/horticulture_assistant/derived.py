@@ -63,6 +63,7 @@ class PlantDLISensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEn
     _attr_translation_key = "dli"
     _attr_native_unit_of_measurement = "mol/m²/d"
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -162,6 +163,7 @@ class PlantPPFDSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorE
     _attr_translation_key = "ppfd"
     _attr_native_unit_of_measurement = "µmol/m²/s"
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -265,6 +267,7 @@ class PlantVPDSensor(ProfileContextEntityMixin, HorticultureBaseEntity, SensorEn
     _attr_translation_key = "vpd"
     _attr_native_unit_of_measurement = "kPa"
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -339,6 +342,7 @@ class PlantDewPointSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Sen
     _attr_native_unit_of_measurement = UnitOfTemperature.CELSIUS
     _attr_device_class = SensorDeviceClass.TEMPERATURE
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,
@@ -411,6 +415,7 @@ class PlantMoldRiskSensor(ProfileContextEntityMixin, HorticultureBaseEntity, Sen
 
     _attr_translation_key = "mold_risk"
     _attr_state_class = SensorStateClass.MEASUREMENT
+    _attr_entity_registry_enabled_default = True
 
     def __init__(
         self,

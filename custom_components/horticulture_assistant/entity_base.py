@@ -70,9 +70,14 @@ if TYPE_CHECKING:
 class HorticultureEntryEntity(Entity):
     """Device information for entities attached to the config entry."""
 
+    # Default registry enablement keeps entry-scoped sensors targetable out of the box.
+    _attr_entity_registry_enabled_default = True
+    _attr_has_entity_name = True
+
     def __init__(self, entry_id: str | None, *, default_device_name: str | None = None) -> None:
         self._entry_id = entry_id
         self._entry_device_name = default_device_name
+        self._attr_has_entity_name = True
         identifier = entry_device_identifier(entry_id)
         name = self._entry_device_name or f"Horticulture Assistant {entry_id or 'entry'}"
         self._attr_device_info = DeviceInfo(
@@ -102,6 +107,10 @@ class HorticultureEntryEntity(Entity):
 
 class HorticultureBaseEntity(Entity):
     """Common device information for sensors, binary sensors and switches."""
+
+    # Plant entities should ship enabled so they are immediately visible/targetable.
+    _attr_entity_registry_enabled_default = True
+    _attr_has_entity_name = True
 
     def __init__(
         self,
