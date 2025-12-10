@@ -145,12 +145,27 @@ class SensorHealthBinarySensor(HorticultureBaseBinarySensor):
 
     async def async_update(self):
         """Check if raw sensors are online (no missing or unavailable sensors)."""
+        try:
+            if self._monitor is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_is_on = None
+                self._attr_extra_state_attributes = {}
+                return
 
-        result = self._monitor.evaluate()
-        attention = result.issues_for("attention")
-        self._attr_is_on = bool(attention)
-        self._attr_available = bool(result.sensors)
-        self._attr_extra_state_attributes = result.as_attributes(severities=("attention",))
+            result = self._monitor.evaluate()
+            if not getattr(result, "sensors", None):
+                # TODO: handle missing sensor gracefully
+                self._attr_is_on = None
+                self._attr_extra_state_attributes = {}
+                return
+
+            attention = result.issues_for("attention")
+            self._attr_is_on = bool(attention)
+            self._attr_extra_state_attributes = result.as_attributes(severities=("attention",))
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_is_on = None
+            self._attr_extra_state_attributes = {}
 
 
 class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
@@ -172,56 +187,63 @@ class IrrigationReadinessBinarySensor(HorticultureBaseBinarySensor):
 
     async def async_update(self):
         """Determine if root zone is dry enough for watering."""
-
-        moisture_id = self._context.first_sensor("moisture") or self._context.first_sensor("soil_moisture")
-        if not moisture_id:
-            self._attr_is_on = False
-            self._attr_extra_state_attributes = {
-                "reason": "no_moisture_sensor",
-                "threshold": self._threshold,
-            }
-            return
-
-        state = self.hass.states.get(moisture_id)
-        if not state or state.state in ("unknown", "unavailable"):
-            _LOGGER.debug("Moisture sensor unavailable for irrigation readiness: %s", moisture_id)
-            self._attr_is_on = False
-            self._attr_extra_state_attributes = {
-                "reason": "sensor_unavailable",
-                "sensor": moisture_id,
-                "threshold": self._threshold,
-            }
-            return
-
         try:
-            moisture = float(state.state)
-        except (ValueError, TypeError):
-            _LOGGER.error("Invalid moisture value for irrigation readiness: %s", state.state)
-            self._attr_is_on = False
+            moisture_id = self._context.first_sensor("moisture") or self._context.first_sensor("soil_moisture")
+            if not moisture_id:
+                # TODO: handle missing sensor gracefully
+                self._attr_is_on = None
+                self._attr_extra_state_attributes = {
+                    "reason": "no_moisture_sensor",
+                    "threshold": self._threshold,
+                }
+                return
+
+            state = self.hass.states.get(moisture_id)
+            if not state or state.state in ("unknown", "unavailable"):
+                _LOGGER.debug("Moisture sensor unavailable for irrigation readiness: %s", moisture_id)
+                # TODO: handle missing sensor gracefully
+                self._attr_is_on = None
+                self._attr_extra_state_attributes = {
+                    "reason": "sensor_unavailable",
+                    "sensor": moisture_id,
+                    "threshold": self._threshold,
+                }
+                return
+
+            try:
+                moisture = float(state.state)
+            except (ValueError, TypeError):
+                _LOGGER.error("Invalid moisture value for irrigation readiness: %s", state.state)
+                # TODO: handle missing sensor gracefully
+                self._attr_is_on = None
+                self._attr_extra_state_attributes = {
+                    "reason": "invalid_state",
+                    "sensor": moisture_id,
+                    "value": state.state,
+                    "threshold": self._threshold,
+                }
+                return
+
+            threshold = (
+                self._context.get_threshold("moisture_min")
+                or self._context.get_threshold("soil_moisture_min")
+                or self._threshold
+            )
+            try:
+                threshold_value = float(threshold)
+            except (TypeError, ValueError):
+                threshold_value = self._threshold
+
+            self._attr_is_on = moisture <= threshold_value
             self._attr_extra_state_attributes = {
-                "reason": "invalid_state",
                 "sensor": moisture_id,
-                "value": state.state,
-                "threshold": self._threshold,
+                "moisture": moisture,
+                "threshold": threshold_value,
             }
-            return
-
-        threshold = (
-            self._context.get_threshold("moisture_min")
-            or self._context.get_threshold("soil_moisture_min")
-            or self._threshold
-        )
-        try:
-            threshold_value = float(threshold)
-        except (TypeError, ValueError):
-            threshold_value = self._threshold
-
-        self._attr_is_on = moisture <= threshold_value
-        self._attr_extra_state_attributes = {
-            "sensor": moisture_id,
-            "moisture": moisture,
-            "threshold": threshold_value,
-        }
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_is_on = None
+            self._attr_extra_state_attributes = {}
 
 
 class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
@@ -242,12 +264,27 @@ class FaultDetectionBinarySensor(HorticultureBaseBinarySensor):
 
     async def async_update(self):
         """Check for sensor faults or out-of-range values."""
+        try:
+            if self._monitor is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_is_on = None
+                self._attr_extra_state_attributes = {}
+                return
 
-        result = self._monitor.evaluate()
-        problems = result.issues_for("problem")
-        self._attr_is_on = bool(problems)
-        self._attr_available = bool(result.sensors)
-        self._attr_extra_state_attributes = result.as_attributes(severities=("problem",))
+            result = self._monitor.evaluate()
+            if not getattr(result, "sensors", None):
+                # TODO: handle missing sensor gracefully
+                self._attr_is_on = None
+                self._attr_extra_state_attributes = {}
+                return
+
+            problems = result.issues_for("problem")
+            self._attr_is_on = bool(problems)
+            self._attr_extra_state_attributes = result.as_attributes(severities=("problem",))
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_is_on = None
+            self._attr_extra_state_attributes = {}
 
 
 class CloudSyncBinarySensor(HorticultureEntryEntity, BinarySensorEntity):
@@ -262,11 +299,22 @@ class CloudSyncBinarySensor(HorticultureEntryEntity, BinarySensorEntity):
         self._entry_id = entry_id
 
     def _cloud_status(self) -> tuple[dict, dict, bool]:  # type: ignore[override]
-        status = self._manager.status()
-        connection = status.get("connection") or {}
-        configured = bool(connection.get("configured", status.get("configured")))
-        self._attr_available = configured
-        return status, connection, configured
+        try:
+            if self._manager is None:
+                # TODO: handle missing sensor gracefully
+                self._attr_available = True
+                return {}, {}, False
+
+            status = self._manager.status()
+            connection = status.get("connection") or {}
+            configured = bool(connection.get("configured", status.get("configured")))
+            # TODO: handle missing sensor gracefully
+            self._attr_available = True
+            return status, connection, configured
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_available = True
+            return {}, {}, False
 
 
 class CloudConnectionBinarySensor(CloudSyncBinarySensor):
@@ -280,18 +328,29 @@ class CloudConnectionBinarySensor(CloudSyncBinarySensor):
         self._attr_icon = "mdi:cloud-check"
 
     async def async_update(self) -> None:
-        status, connection, _configured = self._cloud_status()
-        self._attr_is_on = bool(connection.get("connected"))
-        self._attr_extra_state_attributes = {
-            "reason": connection.get("reason"),
-            "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
-            "last_success_age_seconds": connection.get("last_success_age_seconds"),
-            "cloud_snapshot_age_days": status.get("cloud_snapshot_age_days"),
-            "outbox_size": status.get("outbox_size"),
-            "cloud_cache_entries": status.get("cloud_cache_entries"),
-            "last_pull_error": status.get("last_pull_error"),
-            "last_push_error": status.get("last_push_error"),
-        }
+        try:
+            status, connection, _configured = self._cloud_status()
+            if not status:
+                # TODO: handle missing sensor gracefully
+                self._attr_is_on = None
+                self._attr_extra_state_attributes = {}
+                return
+
+            self._attr_is_on = bool(connection.get("connected"))
+            self._attr_extra_state_attributes = {
+                "reason": connection.get("reason"),
+                "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
+                "last_success_age_seconds": connection.get("last_success_age_seconds"),
+                "cloud_snapshot_age_days": status.get("cloud_snapshot_age_days"),
+                "outbox_size": status.get("outbox_size"),
+                "cloud_cache_entries": status.get("cloud_cache_entries"),
+                "last_pull_error": status.get("last_pull_error"),
+                "last_push_error": status.get("last_push_error"),
+            }
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_is_on = None
+            self._attr_extra_state_attributes = {}
 
 
 class LocalOnlyModeBinarySensor(CloudSyncBinarySensor):
@@ -305,19 +364,30 @@ class LocalOnlyModeBinarySensor(CloudSyncBinarySensor):
         self._attr_icon = "mdi:home-off"
 
     async def async_update(self) -> None:
-        status, connection, _configured = self._cloud_status()
-        local_only = connection.get("local_only")
-        if local_only is None:
-            local_only = not bool(connection.get("connected"))
-        self._attr_is_on = bool(local_only)
-        self._attr_extra_state_attributes = {
-            "reason": connection.get("reason"),
-            "connected": connection.get("connected"),
-            "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
-            "last_success_age_seconds": connection.get("last_success_age_seconds"),
-            "cloud_snapshot_age_days": status.get("cloud_snapshot_age_days"),
-            "outbox_size": status.get("outbox_size"),
-            "cloud_cache_entries": status.get("cloud_cache_entries"),
-            "last_pull_error": status.get("last_pull_error"),
-            "last_push_error": status.get("last_push_error"),
-        }
+        try:
+            status, connection, _configured = self._cloud_status()
+            if not status:
+                # TODO: handle missing sensor gracefully
+                self._attr_is_on = None
+                self._attr_extra_state_attributes = {}
+                return
+
+            local_only = connection.get("local_only")
+            if local_only is None:
+                local_only = not bool(connection.get("connected"))
+            self._attr_is_on = bool(local_only)
+            self._attr_extra_state_attributes = {
+                "reason": connection.get("reason"),
+                "connected": connection.get("connected"),
+                "last_success_at": connection.get("last_success_at") or status.get("last_success_at"),
+                "last_success_age_seconds": connection.get("last_success_age_seconds"),
+                "cloud_snapshot_age_days": status.get("cloud_snapshot_age_days"),
+                "outbox_size": status.get("outbox_size"),
+                "cloud_cache_entries": status.get("cloud_cache_entries"),
+                "last_pull_error": status.get("last_pull_error"),
+                "last_push_error": status.get("last_push_error"),
+            }
+        except Exception:  # noqa: BLE001
+            # TODO: handle missing sensor gracefully
+            self._attr_is_on = None
+            self._attr_extra_state_attributes = {}
